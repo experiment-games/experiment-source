@@ -20,7 +20,7 @@
 
 class CPlayerState
 {
-   public:
+    public:
     DECLARE_CLASS_NOBASE( CPlayerState );
     DECLARE_EMBEDDED_NETWORKVAR();
 

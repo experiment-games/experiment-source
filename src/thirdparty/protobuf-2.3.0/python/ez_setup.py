@@ -97,7 +97,7 @@ def use_setuptools(
     try:
         import pkg_resources
     except ImportError:
-        return do_download()       
+        return do_download()
     try:
         pkg_resources.require("setuptools>="+version); return
     except pkg_resources.VersionConflict, e:
@@ -145,7 +145,7 @@ I will start the download in %d seconds.
 
 (Note: if this machine does not have network access, please obtain the file
 
-   %s
+    %s
 
 and place it in this directory before rerunning this script.)
 ---------------------------------------------------------------------------""",
@@ -273,9 +273,3 @@ if __name__=='__main__':
         update_md5(sys.argv[2:])
     else:
         main(sys.argv[1:])
-
-
-
-
-
-

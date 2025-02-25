@@ -30,7 +30,7 @@ class CAPCController : public CPointEntity
 {
     typedef CPointEntity BaseClass;
 
-   public:
+    public:
     ~CAPCController( void );
     void Spawn( void );
     void Precache( void );
@@ -83,10 +83,10 @@ class CAPCController : public CPointEntity
 
     CBaseEntity *FindTarget( string_t targetName, CBaseEntity *pActivator );
 
-   protected:
+    protected:
     float m_yawCenter;     // "Center" yaw
     float m_yawRate;       // Max turn rate to track targets
-                           // Zero is full rotation
+                            // Zero is full rotation
     float m_yawTolerance;  // Tolerance angle
 
     float m_pitchCenter;     // "Center" pitch

@@ -25,7 +25,7 @@ class PropertyPage : public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( PropertyPage, EditablePanel );
 
-   public:
+    public:
 #ifdef LUA_SDK
     PropertyPage( Panel *parent, const char *panelName, lua_State *L = nullptr );
 #else
@@ -51,12 +51,12 @@ class PropertyPage : public EditablePanel
 
     virtual void SetVisible( bool state );
 
-   protected:
+    protected:
     // called to be notified of the tab button used to Activate this page
     // if overridden this must be chained back to
     MESSAGE_FUNC_PTR( OnPageTabActivated, "PageTabActivated", panel );
 
-   private:
+    private:
     PHandle _pageTab;
 };
 

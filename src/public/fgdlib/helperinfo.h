@@ -18,7 +18,7 @@ typedef CUtlVector< char * > CParameterList;
 //-----------------------------------------------------------------------------
 class CHelperInfo
 {
-   public:
+    public:
     inline CHelperInfo( void );
     inline ~CHelperInfo( void );
 
@@ -36,7 +36,7 @@ class CHelperInfo
     }
     inline const char *GetParameter( int nIndex ) const;
 
-   protected:
+    protected:
     char m_szName[MAX_HELPER_NAME_LEN];
     CParameterList m_Parameters;
 };

@@ -15,4 +15,3 @@ mad r0.rgb, t3, c0, r0
 
 mul r0.rgb, r0, c1 +
 mov r0.a, t0.a
-

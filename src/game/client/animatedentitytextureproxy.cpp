@@ -12,7 +12,7 @@
 
 class CAnimatedEntityTextureProxy : public CBaseAnimatedTextureProxy
 {
-   public:
+    public:
     CAnimatedEntityTextureProxy() {}
     virtual ~CAnimatedEntityTextureProxy() {}
 

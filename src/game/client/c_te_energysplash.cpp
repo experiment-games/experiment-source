@@ -19,7 +19,7 @@
 //-----------------------------------------------------------------------------
 class C_TEEnergySplash : public C_BaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLIENTCLASS();
 
     C_TEEnergySplash( void );
@@ -29,7 +29,7 @@ class C_TEEnergySplash : public C_BaseTempEntity
 
     virtual void Precache( void );
 
-   public:
+    public:
     Vector m_vecPos;
     Vector m_vecDir;
     bool m_bExplosive;

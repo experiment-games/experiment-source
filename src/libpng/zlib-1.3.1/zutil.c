@@ -63,7 +63,7 @@ uLong ZEXPORT zlibCompileFlags(void) {
 #if defined(ASMV) || defined(ASMINF)
     flags += 1 << 9;
 #endif
-     */
+    */
 #ifdef ZLIB_WINAPI
     flags += 1 << 10;
 #endif
@@ -134,9 +134,9 @@ const char * ZEXPORT zError(int err) {
 
 #if defined(_WIN32_WCE) && _WIN32_WCE < 0x800
     /* The older Microsoft C Run-Time Library for Windows CE doesn't have
-     * errno.  We define it as a global variable to simplify porting.
-     * Its value is always 0 and should not be used.
-     */
+    * errno.  We define it as a global variable to simplify porting.
+    * Its value is always 0 and should not be used.
+    */
     int errno = 0;
 #endif
 
@@ -206,8 +206,8 @@ voidpf ZLIB_INTERNAL zcalloc(voidpf opaque, unsigned items, unsigned size) {
     (void)opaque;
 
     /* If we allocate less than 65520 bytes, we assume that farmalloc
-     * will return a usable pointer which doesn't have to be normalized.
-     */
+    * will return a usable pointer which doesn't have to be normalized.
+    */
     if (bsize < 65520L) {
         buf = farmalloc(bsize);
         if (*(ush*)&buf != 0) return buf;
@@ -286,7 +286,7 @@ extern void free(voidpf ptr);
 voidpf ZLIB_INTERNAL zcalloc(voidpf opaque, unsigned items, unsigned size) {
     (void)opaque;
     return sizeof(uInt) > 2 ? (voidpf)malloc(items * size) :
-                              (voidpf)calloc(items, size);
+                            (voidpf)calloc(items, size);
 }
 
 void ZLIB_INTERNAL zcfree(voidpf opaque, voidpf ptr) {

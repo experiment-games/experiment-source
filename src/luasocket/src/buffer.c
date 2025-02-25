@@ -112,7 +112,7 @@ int buffer_meth_receive(lua_State *L, p_buffer buf) {
     lua_settop(L, 3);
     top = lua_gettop(L);
     /* initialize buffer with optional extra prefix
-     * (useful for concatenating previous partial results) */
+    * (useful for concatenating previous partial results) */
     luaL_buffinit(L, &b);
     luaL_addlstring(&b, part, size);
     /* receive new patterns */
@@ -122,7 +122,7 @@ int buffer_meth_receive(lua_State *L, p_buffer buf) {
         else if (p[0] == '*' && p[1] == 'a') err = recvall(buf, &b);
         else luaL_argcheck(L, 0, 2, "invalid receive pattern");
     /* get a fixed number of bytes (minus what was already partially
-     * received) */
+    * received) */
     } else {
         double n = lua_tonumber(L, 2);
         size_t wanted = (size_t) n;
@@ -133,7 +133,7 @@ int buffer_meth_receive(lua_State *L, p_buffer buf) {
     /* check if there was an error */
     if (err != IO_DONE) {
         /* we can't push anyting in the stack before pushing the
-         * contents of the buffer. this is the reason for the complication */
+        * contents of the buffer. this is the reason for the complication */
         luaL_pushresult(&b);
         lua_pushstring(L, buf->io->error(buf->io->ctx, err));
         lua_pushvalue(L, -2);

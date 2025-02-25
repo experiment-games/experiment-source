@@ -39,7 +39,7 @@ extern IVEngineClient *engine;
 
 class CCollisionEvent : public IPhysicsCollisionEvent, public IPhysicsCollisionSolver, public IPhysicsObjectEvent
 {
-   public:
+    public:
     CCollisionEvent( void );
 
     void ObjectSound( int index, vcollisionevent_t *pEvent );
@@ -115,10 +115,10 @@ class CCollisionEvent : public IPhysicsCollisionEvent, public IPhysicsCollisionS
         return m_inCallback > 0 ? true : false;
     }
 
-   private:
+    private:
     class CallbackContext
     {
-       public:
+        public:
         CallbackContext( CCollisionEvent *pOuter )
         {
             m_pOuter = pOuter;
@@ -129,7 +129,7 @@ class CCollisionEvent : public IPhysicsCollisionEvent, public IPhysicsCollisionS
             m_pOuter->m_inCallback--;
         }
 
-       private:
+        private:
         CCollisionEvent *m_pOuter;
     };
     friend class CallbackContext;
@@ -158,8 +158,8 @@ bool PhysIsInCallback()
 bool PhysicsDLLInit( CreateInterfaceFn physicsFactory )
 {
     if ( ( physics = ( IPhysics * )physicsFactory( VPHYSICS_INTERFACE_VERSION, NULL ) ) == NULL ||
-         ( physprops = ( IPhysicsSurfaceProps * )physicsFactory( VPHYSICS_SURFACEPROPS_INTERFACE_VERSION, NULL ) ) == NULL ||
-         ( physcollision = ( IPhysicsCollision * )physicsFactory( VPHYSICS_COLLISION_INTERFACE_VERSION, NULL ) ) == NULL )
+        ( physprops = ( IPhysicsSurfaceProps * )physicsFactory( VPHYSICS_SURFACEPROPS_INTERFACE_VERSION, NULL ) ) == NULL ||
+        ( physcollision = ( IPhysicsCollision * )physicsFactory( VPHYSICS_COLLISION_INTERFACE_VERSION, NULL ) ) == NULL )
     {
         return false;
     }
@@ -269,10 +269,10 @@ int CCollisionEvent::ShouldCollide_2( IPhysicsObject *pObj0, IPhysicsObject *pOb
         return 0;
 
 #if 0
-	int solid0 = pEntity0->GetSolid();
-	int solid1 = pEntity1->GetSolid();
-	int nSolidFlags0 = pEntity0->GetSolidFlags();
-	int nSolidFlags1 = pEntity1->GetSolidFlags();
+    int solid0 = pEntity0->GetSolid();
+    int solid1 = pEntity1->GetSolid();
+    int nSolidFlags0 = pEntity0->GetSolidFlags();
+    int nSolidFlags1 = pEntity1->GetSolidFlags();
 #endif
 
     int movetype0 = pEntity0->GetMoveType();
@@ -304,8 +304,8 @@ int CCollisionEvent::ShouldCollide_2( IPhysicsObject *pObj0, IPhysicsObject *pOb
 
     // AI movers don't collide with the world/static/pinned objects or other AI movers
     if ( ( aiMove0 && !pObj1->IsMoveable() ) ||
-         ( aiMove1 && !pObj0->IsMoveable() ) ||
-         ( aiMove0 && aiMove1 ) )
+        ( aiMove1 && !pObj0->IsMoveable() ) ||
+        ( aiMove0 && aiMove1 ) )
         return 0;
 
     // two objects under shadow control should not collide.  The AI will figure it out
@@ -344,7 +344,7 @@ int CCollisionEvent::ShouldSolvePenetration( IPhysicsObject *pObj0, IPhysicsObje
 // A class that implements an IClientSystem for physics
 class CPhysicsSystem : public CAutoGameSystemPerFrame
 {
-   public:
+    public:
     CPhysicsSystem( char const *name )
         : CAutoGameSystemPerFrame( name )
     {
@@ -369,7 +369,7 @@ class CPhysicsSystem : public CAutoGameSystemPerFrame
 
     void PhysicsSimulate();
 
-   private:
+    private:
     physicssound::soundlist_t m_impactSounds;
 };
 

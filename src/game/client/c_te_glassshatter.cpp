@@ -37,7 +37,7 @@ CLIENTEFFECT_REGISTER_END()
 // ###################################################
 class C_TEShatterSurface : public C_BaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_TEShatterSurface, C_BaseTempEntity );
     DECLARE_CLIENTCLASS();
 
@@ -46,11 +46,11 @@ class C_TEShatterSurface : public C_BaseTempEntity
 
     virtual void PostDataUpdate( DataUpdateType_t updateType );
 
-   private:
+    private:
     // Recording
     void RecordShatterSurface();
 
-   public:
+    public:
     Vector m_vecOrigin;
     QAngle m_vecAngles;
     Vector m_vecForce;

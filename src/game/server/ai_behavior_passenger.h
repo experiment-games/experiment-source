@@ -68,7 +68,7 @@ class CAI_PassengerBehavior : public CAI_SimpleBehavior
     DECLARE_CLASS( CAI_PassengerBehavior, CAI_SimpleBehavior );
     DECLARE_DATADESC()
 
-   public:
+    public:
     CAI_PassengerBehavior( void );
 
     enum
@@ -159,7 +159,7 @@ class CAI_PassengerBehavior : public CAI_SimpleBehavior
 
     virtual void OnRestore();
 
-   protected:
+    protected:
     virtual int SelectTransitionSchedule( void );
 
     bool SpeakIfAllowed( AIConcept_t concept, const char *modifiers = NULL, bool bRespondingToPlayer = false, char *pszOutResponseChosen = NULL, size_t bufsize = 0 );
@@ -225,13 +225,13 @@ class CAI_PassengerBehavior : public CAI_SimpleBehavior
     float m_flAnglesStartFrame;
     float m_flAnglesEndFrame;
 
-   protected:
+    protected:
     DEFINE_CUSTOM_SCHEDULE_PROVIDER;
 };
 
 class CTraceFilterVehicleTransition : public CTraceFilterSkipTwoEntities
 {
-   public:
+    public:
     DECLARE_CLASS( CTraceFilterVehicleTransition, CTraceFilterSkipTwoEntities );
 
     CTraceFilterVehicleTransition( const IHandleEntity *passentity, const IHandleEntity *passentity2, int collisionGroup )

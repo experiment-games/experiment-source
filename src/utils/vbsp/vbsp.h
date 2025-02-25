@@ -250,7 +250,7 @@ class CManifest;
 
 class CMapFile
 {
-   public:
+    public:
     CMapFile( void )
     {
         Init();
@@ -322,7 +322,7 @@ class CMapFile
 
     class CConnectionPairs
     {
-       public:
+        public:
         CConnectionPairs( epair_t *pair, CConnectionPairs *next )
         {
             m_Pair = pair;

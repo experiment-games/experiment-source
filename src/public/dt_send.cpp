@@ -1136,12 +1136,12 @@ void SendProxy_VectorXYToVectorXY( const SendProp *pProp, const void *pStruct, c
 #if 0  // We can't ship this since it changes the size of DTVariant to be 20 bytes instead of 16 and that breaks MODs!!!
 void SendProxy_QuaternionToQuaternion( const SendProp *pProp, const void *pStruct, const void *pData, DVariant *pOut, int iElement, int objectID)
 {
-	Quaternion& q = *(Quaternion*)pData;
-	Assert( q.IsValid() );
-	pOut->m_Vector[0] = q[0];
-	pOut->m_Vector[1] = q[1];
-	pOut->m_Vector[2] = q[2];
-	pOut->m_Vector[3] = q[3];
+    Quaternion& q = *(Quaternion*)pData;
+    Assert( q.IsValid() );
+    pOut->m_Vector[0] = q[0];
+    pOut->m_Vector[1] = q[1];
+    pOut->m_Vector[2] = q[2];
+    pOut->m_Vector[3] = q[3];
 }
 #endif
 
@@ -1239,7 +1239,7 @@ float AssignRangeMultiplier( int nBits, double range )
 
     // If the precision is messing us up, then adjust it so it won't.
     if ( ( unsigned long )( fHighLowMul * range ) > iHighValue ||
-         ( fHighLowMul * range ) > ( double )iHighValue )
+        ( fHighLowMul * range ) > ( double )iHighValue )
     {
         // Squeeze it down smaller and smaller until it's going to produce an integer
         // in the valid range when given the highest value.
@@ -1249,7 +1249,7 @@ float AssignRangeMultiplier( int nBits, double range )
         {
             fHighLowMul = ( float )( iHighValue / range ) * multipliers[i];
             if ( ( unsigned long )( fHighLowMul * range ) > iHighValue ||
-                 ( fHighLowMul * range ) > ( double )iHighValue )
+                ( fHighLowMul * range ) > ( double )iHighValue )
             {
             }
             else
@@ -1391,39 +1391,39 @@ SendProp SendPropVectorXY(
 
 #if 0  // We can't ship this since it changes the size of DTVariant to be 20 bytes instead of 16 and that breaks MODs!!!
 SendProp SendPropQuaternion(
-	const char *pVarName,
-	int offset,
-	int sizeofVar,
-	int nBits,					// Number of bits to use when encoding.
-	int flags,
-	float fLowValue,			// For floating point, low and high values.
-	float fHighValue,			// High value. If HIGH_DEFAULT, it's (1<<nBits).
-	SendVarProxyFn varProxy
-	)
+    const char *pVarName,
+    int offset,
+    int sizeofVar,
+    int nBits,					// Number of bits to use when encoding.
+    int flags,
+    float fLowValue,			// For floating point, low and high values.
+    float fHighValue,			// High value. If HIGH_DEFAULT, it's (1<<nBits).
+    SendVarProxyFn varProxy
+    )
 {
-	SendProp ret;
+    SendProp ret;
 
-	if(varProxy == SendProxy_QuaternionToQuaternion)
-	{
-		Assert(sizeofVar == sizeof(Quaternion));
-	}
+    if(varProxy == SendProxy_QuaternionToQuaternion)
+    {
+        Assert(sizeofVar == sizeof(Quaternion));
+    }
 
-	if ( nBits == 32 )
-		flags |= SPROP_NOSCALE;
+    if ( nBits == 32 )
+        flags |= SPROP_NOSCALE;
 
-	ret.m_Type = DPT_Quaternion;
-	ret.m_pVarName = pVarName;
-	ret.SetOffset( offset );
-	ret.m_nBits = nBits;
-	ret.SetFlags( flags );
-	ret.m_fLowValue = fLowValue;
-	ret.m_fHighValue = fHighValue;
-	ret.m_fHighLowMul = AssignRangeMultiplier( ret.m_nBits, ret.m_fHighValue - ret.m_fLowValue );
-	ret.SetProxyFn( varProxy );
-	if( ret.GetFlags() & (SPROP_COORD | SPROP_NOSCALE | SPROP_NORMAL | SPROP_COORD_MP | SPROP_COORD_MP_LOWPRECISION | SPROP_COORD_MP_INTEGRAL) )
-		ret.m_nBits = 0;
+    ret.m_Type = DPT_Quaternion;
+    ret.m_pVarName = pVarName;
+    ret.SetOffset( offset );
+    ret.m_nBits = nBits;
+    ret.SetFlags( flags );
+    ret.m_fLowValue = fLowValue;
+    ret.m_fHighValue = fHighValue;
+    ret.m_fHighLowMul = AssignRangeMultiplier( ret.m_nBits, ret.m_fHighValue - ret.m_fLowValue );
+    ret.SetProxyFn( varProxy );
+    if( ret.GetFlags() & (SPROP_COORD | SPROP_NOSCALE | SPROP_NORMAL | SPROP_COORD_MP | SPROP_COORD_MP_LOWPRECISION | SPROP_COORD_MP_INTEGRAL) )
+        ret.m_nBits = 0;
 
-	return ret;
+    return ret;
 }
 #endif
 
@@ -1675,7 +1675,7 @@ SendProp InternalSendPropArray(
     ret.m_pVarName = pName;
     ret.SetProxyFn( SendProxy_Empty );
     ret.m_pArrayProp = NULL;  // This gets set in SendTable_InitTable. It always points at the property that precedes
-                              // this one in the datatable's list.
+                            // this one in the datatable's list.
     ret.SetArrayLengthProxy( arrayLengthFn );
 
     return ret;

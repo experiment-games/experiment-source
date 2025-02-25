@@ -32,7 +32,7 @@ class CHudGeiger : public CHudElement, public vgui::Panel
 {
     DECLARE_CLASS_SIMPLE( CHudGeiger, vgui::Panel );
 
-   public:
+    public:
     CHudGeiger( const char *pElementName );
     void Init( void );
     void VidInit( void );
@@ -41,7 +41,7 @@ class CHudGeiger : public CHudElement, public vgui::Panel
     virtual void Paint( void );
     void MsgFunc_Geiger( bf_read &msg );
 
-   private:
+    private:
     int m_iGeigerRange;
     float m_flLastSoundTestTime;
 };

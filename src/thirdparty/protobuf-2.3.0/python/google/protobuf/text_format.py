@@ -64,10 +64,10 @@ def MessageToString(message):
 def PrintMessage(message, out, indent = 0):
   for field, value in message.ListFields():
     if field.label == descriptor.FieldDescriptor.LABEL_REPEATED:
-      for element in value:
+    for element in value:
         PrintField(field, element, out, indent)
     else:
-      PrintField(field, value, out, indent)
+    PrintField(field, value, out, indent)
 
 
 def PrintField(field, value, out, indent = 0):
@@ -81,9 +81,9 @@ def PrintField(field, value, out, indent = 0):
         field.type == descriptor.FieldDescriptor.TYPE_MESSAGE and
         field.message_type == field.extension_scope and
         field.label == descriptor.FieldDescriptor.LABEL_OPTIONAL):
-      out.write(field.message_type.full_name)
+    out.write(field.message_type.full_name)
     else:
-      out.write(field.full_name)
+    out.write(field.full_name)
     out.write(']')
   elif field.type == descriptor.FieldDescriptor.TYPE_GROUP:
     # For groups, use the capitalized name.
@@ -116,9 +116,9 @@ def PrintFieldValue(field, value, out, indent = 0):
     out.write('\"')
   elif field.cpp_type == descriptor.FieldDescriptor.CPPTYPE_BOOL:
     if value:
-      out.write("true")
+    out.write("true")
     else:
-      out.write("false")
+    out.write("false")
   else:
     out.write(str(value))
 
@@ -152,21 +152,21 @@ def _MergeField(tokenizer, message):
   if tokenizer.TryConsume('['):
     name = [tokenizer.ConsumeIdentifier()]
     while tokenizer.TryConsume('.'):
-      name.append(tokenizer.ConsumeIdentifier())
+    name.append(tokenizer.ConsumeIdentifier())
     name = '.'.join(name)
 
     if not message_descriptor.is_extendable:
-      raise tokenizer.ParseErrorPreviousToken(
-          'Message type "%s" does not have extensions.' %
-          message_descriptor.full_name)
+    raise tokenizer.ParseErrorPreviousToken(
+        'Message type "%s" does not have extensions.' %
+        message_descriptor.full_name)
     field = message.Extensions._FindExtensionByName(name)
     if not field:
-      raise tokenizer.ParseErrorPreviousToken(
-          'Extension "%s" not registered.' % name)
+    raise tokenizer.ParseErrorPreviousToken(
+        'Extension "%s" not registered.' % name)
     elif message_descriptor != field.containing_type:
-      raise tokenizer.ParseErrorPreviousToken(
-          'Extension "%s" does not extend message type "%s".' % (
-              name, message_descriptor.full_name))
+    raise tokenizer.ParseErrorPreviousToken(
+        'Extension "%s" does not extend message type "%s".' % (
+            name, message_descriptor.full_name))
     tokenizer.Consume(']')
   else:
     name = tokenizer.ConsumeIdentifier()
@@ -176,44 +176,44 @@ def _MergeField(tokenizer, message):
     # .proto file, which actually matches their type names, not their field
     # names.
     if not field:
-      field = message_descriptor.fields_by_name.get(name.lower(), None)
-      if field and field.type != descriptor.FieldDescriptor.TYPE_GROUP:
+    field = message_descriptor.fields_by_name.get(name.lower(), None)
+    if field and field.type != descriptor.FieldDescriptor.TYPE_GROUP:
         field = None
 
     if (field and field.type == descriptor.FieldDescriptor.TYPE_GROUP and
         field.message_type.name != name):
-      field = None
+    field = None
 
     if not field:
-      raise tokenizer.ParseErrorPreviousToken(
-          'Message type "%s" has no field named "%s".' % (
-              message_descriptor.full_name, name))
+    raise tokenizer.ParseErrorPreviousToken(
+        'Message type "%s" has no field named "%s".' % (
+            message_descriptor.full_name, name))
 
   if field.cpp_type == descriptor.FieldDescriptor.CPPTYPE_MESSAGE:
     tokenizer.TryConsume(':')
 
     if tokenizer.TryConsume('<'):
-      end_token = '>'
+    end_token = '>'
     else:
-      tokenizer.Consume('{')
-      end_token = '}'
+    tokenizer.Consume('{')
+    end_token = '}'
 
     if field.label == descriptor.FieldDescriptor.LABEL_REPEATED:
-      if field.is_extension:
+    if field.is_extension:
         sub_message = message.Extensions[field].add()
-      else:
+    else:
         sub_message = getattr(message, field.name).add()
     else:
-      if field.is_extension:
+    if field.is_extension:
         sub_message = message.Extensions[field]
-      else:
+    else:
         sub_message = getattr(message, field.name)
         sub_message.SetInParent()
 
     while not tokenizer.TryConsume(end_token):
-      if tokenizer.AtEnd():
+    if tokenizer.AtEnd():
         raise tokenizer.ParseErrorPreviousToken('Expected "%s".' % (end_token))
-      _MergeField(tokenizer, sub_message)
+    _MergeField(tokenizer, sub_message)
   else:
     _MergeScalarField(tokenizer, message, field)
 
@@ -238,17 +238,17 @@ def _MergeScalarField(tokenizer, message, field):
                     descriptor.FieldDescriptor.TYPE_SFIXED32):
     value = tokenizer.ConsumeInt32()
   elif field.type in (descriptor.FieldDescriptor.TYPE_INT64,
-                      descriptor.FieldDescriptor.TYPE_SINT64,
-                      descriptor.FieldDescriptor.TYPE_SFIXED64):
+                    descriptor.FieldDescriptor.TYPE_SINT64,
+                    descriptor.FieldDescriptor.TYPE_SFIXED64):
     value = tokenizer.ConsumeInt64()
   elif field.type in (descriptor.FieldDescriptor.TYPE_UINT32,
-                      descriptor.FieldDescriptor.TYPE_FIXED32):
+                    descriptor.FieldDescriptor.TYPE_FIXED32):
     value = tokenizer.ConsumeUint32()
   elif field.type in (descriptor.FieldDescriptor.TYPE_UINT64,
-                      descriptor.FieldDescriptor.TYPE_FIXED64):
+                    descriptor.FieldDescriptor.TYPE_FIXED64):
     value = tokenizer.ConsumeUint64()
   elif field.type in (descriptor.FieldDescriptor.TYPE_FLOAT,
-                      descriptor.FieldDescriptor.TYPE_DOUBLE):
+                    descriptor.FieldDescriptor.TYPE_DOUBLE):
     value = tokenizer.ConsumeFloat()
   elif field.type == descriptor.FieldDescriptor.TYPE_BOOL:
     value = tokenizer.ConsumeBool()
@@ -261,16 +261,16 @@ def _MergeScalarField(tokenizer, message, field):
     # a string literal (the enum name).
     enum_descriptor = field.enum_type
     if tokenizer.LookingAtInteger():
-      number = tokenizer.ConsumeInt32()
-      enum_value = enum_descriptor.values_by_number.get(number, None)
-      if enum_value is None:
+    number = tokenizer.ConsumeInt32()
+    enum_value = enum_descriptor.values_by_number.get(number, None)
+    if enum_value is None:
         raise tokenizer.ParseErrorPreviousToken(
             'Enum type "%s" has no value with number %d.' % (
                 enum_descriptor.full_name, number))
     else:
-      identifier = tokenizer.ConsumeIdentifier()
-      enum_value = enum_descriptor.values_by_name.get(identifier, None)
-      if enum_value is None:
+    identifier = tokenizer.ConsumeIdentifier()
+    enum_value = enum_descriptor.values_by_name.get(identifier, None)
+    if enum_value is None:
         raise tokenizer.ParseErrorPreviousToken(
             'Enum type "%s" has no value named %s.' % (
                 enum_descriptor.full_name, identifier))
@@ -280,14 +280,14 @@ def _MergeScalarField(tokenizer, message, field):
 
   if field.label == descriptor.FieldDescriptor.LABEL_REPEATED:
     if field.is_extension:
-      message.Extensions[field].append(value)
+    message.Extensions[field].append(value)
     else:
-      getattr(message, field.name).append(value)
+    getattr(message, field.name).append(value)
   else:
     if field.is_extension:
-      message.Extensions[field] = value
+    message.Extensions[field] = value
     else:
-      setattr(message, field.name, value)
+    setattr(message, field.name, value)
 
 
 class _Tokenizer(object):
@@ -301,15 +301,15 @@ class _Tokenizer(object):
 
   _WHITESPACE = re.compile('(\\s|(#.*$))+', re.MULTILINE)
   _TOKEN = re.compile(
-      '[a-zA-Z_][0-9a-zA-Z_+-]*|'           # an identifier
-      '[0-9+-][0-9a-zA-Z_.+-]*|'            # a number
-      '\"([^\"\n\\\\]|\\\\.)*(\"|\\\\?$)|'  # a double-quoted string
-      '\'([^\'\n\\\\]|\\\\.)*(\'|\\\\?$)')  # a single-quoted string
+    '[a-zA-Z_][0-9a-zA-Z_+-]*|'           # an identifier
+    '[0-9+-][0-9a-zA-Z_.+-]*|'            # a number
+    '\"([^\"\n\\\\]|\\\\.)*(\"|\\\\?$)|'  # a double-quoted string
+    '\'([^\'\n\\\\]|\\\\.)*(\'|\\\\?$)')  # a single-quoted string
   _IDENTIFIER = re.compile('\w+')
   _INTEGER_CHECKERS = [type_checkers.Uint32ValueChecker(),
-                       type_checkers.Int32ValueChecker(),
-                       type_checkers.Uint64ValueChecker(),
-                       type_checkers.Int64ValueChecker()]
+                        type_checkers.Int32ValueChecker(),
+                        type_checkers.Uint64ValueChecker(),
+                        type_checkers.Int64ValueChecker()]
   _FLOAT_INFINITY = re.compile('-?inf(inity)?f?', re.IGNORECASE)
   _FLOAT_NAN = re.compile("nanf?", re.IGNORECASE)
 
@@ -332,63 +332,63 @@ class _Tokenizer(object):
     """Checks the end of the text was reached.
 
     Returns:
-      True iff the end was reached.
+    True iff the end was reached.
     """
     return not self._lines and not self._current_line
 
   def _PopLine(self):
     while not self._current_line:
-      if not self._lines:
+    if not self._lines:
         self._current_line = ''
         return
-      self._line += 1
-      self._column = 0
-      self._current_line = self._lines.popleft()
+    self._line += 1
+    self._column = 0
+    self._current_line = self._lines.popleft()
 
   def _SkipWhitespace(self):
     while True:
-      self._PopLine()
-      match = re.match(self._WHITESPACE, self._current_line)
-      if not match:
+    self._PopLine()
+    match = re.match(self._WHITESPACE, self._current_line)
+    if not match:
         break
-      length = len(match.group(0))
-      self._current_line = self._current_line[length:]
-      self._column += length
+    length = len(match.group(0))
+    self._current_line = self._current_line[length:]
+    self._column += length
 
   def TryConsume(self, token):
     """Tries to consume a given piece of text.
 
     Args:
-      token: Text to consume.
+    token: Text to consume.
 
     Returns:
-      True iff the text was consumed.
+    True iff the text was consumed.
     """
     if self.token == token:
-      self.NextToken()
-      return True
+    self.NextToken()
+    return True
     return False
 
   def Consume(self, token):
     """Consumes a piece of text.
 
     Args:
-      token: Text to consume.
+    token: Text to consume.
 
     Raises:
-      ParseError: If the text couldn't be consumed.
+    ParseError: If the text couldn't be consumed.
     """
     if not self.TryConsume(token):
-      raise self._ParseError('Expected "%s".' % token)
+    raise self._ParseError('Expected "%s".' % token)
 
   def LookingAtInteger(self):
     """Checks if the current token is an integer.
 
     Returns:
-      True iff the current token is an integer.
+    True iff the current token is an integer.
     """
     if not self.token:
-      return False
+    return False
     c = self.token[0]
     return (c >= '0' and c <= '9') or c == '-' or c == '+'
 
@@ -396,14 +396,14 @@ class _Tokenizer(object):
     """Consumes protocol message field identifier.
 
     Returns:
-      Identifier string.
+    Identifier string.
 
     Raises:
-      ParseError: If an identifier couldn't be consumed.
+    ParseError: If an identifier couldn't be consumed.
     """
     result = self.token
     if not re.match(self._IDENTIFIER, result):
-      raise self._ParseError('Expected identifier.')
+    raise self._ParseError('Expected identifier.')
     self.NextToken()
     return result
 
@@ -411,15 +411,15 @@ class _Tokenizer(object):
     """Consumes a signed 32bit integer number.
 
     Returns:
-      The integer parsed.
+    The integer parsed.
 
     Raises:
-      ParseError: If a signed 32bit integer couldn't be consumed.
+    ParseError: If a signed 32bit integer couldn't be consumed.
     """
     try:
-      result = self._ParseInteger(self.token, is_signed=True, is_long=False)
+    result = self._ParseInteger(self.token, is_signed=True, is_long=False)
     except ValueError, e:
-      raise self._IntegerParseError(e)
+    raise self._IntegerParseError(e)
     self.NextToken()
     return result
 
@@ -427,15 +427,15 @@ class _Tokenizer(object):
     """Consumes an unsigned 32bit integer number.
 
     Returns:
-      The integer parsed.
+    The integer parsed.
 
     Raises:
-      ParseError: If an unsigned 32bit integer couldn't be consumed.
+    ParseError: If an unsigned 32bit integer couldn't be consumed.
     """
     try:
-      result = self._ParseInteger(self.token, is_signed=False, is_long=False)
+    result = self._ParseInteger(self.token, is_signed=False, is_long=False)
     except ValueError, e:
-      raise self._IntegerParseError(e)
+    raise self._IntegerParseError(e)
     self.NextToken()
     return result
 
@@ -443,15 +443,15 @@ class _Tokenizer(object):
     """Consumes a signed 64bit integer number.
 
     Returns:
-      The integer parsed.
+    The integer parsed.
 
     Raises:
-      ParseError: If a signed 64bit integer couldn't be consumed.
+    ParseError: If a signed 64bit integer couldn't be consumed.
     """
     try:
-      result = self._ParseInteger(self.token, is_signed=True, is_long=True)
+    result = self._ParseInteger(self.token, is_signed=True, is_long=True)
     except ValueError, e:
-      raise self._IntegerParseError(e)
+    raise self._IntegerParseError(e)
     self.NextToken()
     return result
 
@@ -459,15 +459,15 @@ class _Tokenizer(object):
     """Consumes an unsigned 64bit integer number.
 
     Returns:
-      The integer parsed.
+    The integer parsed.
 
     Raises:
-      ParseError: If an unsigned 64bit integer couldn't be consumed.
+    ParseError: If an unsigned 64bit integer couldn't be consumed.
     """
     try:
-      result = self._ParseInteger(self.token, is_signed=False, is_long=True)
+    result = self._ParseInteger(self.token, is_signed=False, is_long=True)
     except ValueError, e:
-      raise self._IntegerParseError(e)
+    raise self._IntegerParseError(e)
     self.NextToken()
     return result
 
@@ -475,26 +475,26 @@ class _Tokenizer(object):
     """Consumes an floating point number.
 
     Returns:
-      The number parsed.
+    The number parsed.
 
     Raises:
-      ParseError: If a floating point number couldn't be consumed.
+    ParseError: If a floating point number couldn't be consumed.
     """
     text = self.token
     if re.match(self._FLOAT_INFINITY, text):
-      self.NextToken()
-      if text.startswith('-'):
+    self.NextToken()
+    if text.startswith('-'):
         return -_INFINITY
-      return _INFINITY
+    return _INFINITY
 
     if re.match(self._FLOAT_NAN, text):
-      self.NextToken()
-      return _NAN
+    self.NextToken()
+    return _NAN
 
     try:
-      result = float(text)
+    result = float(text)
     except ValueError, e:
-      raise self._FloatParseError(e)
+    raise self._FloatParseError(e)
     self.NextToken()
     return result
 
@@ -502,28 +502,28 @@ class _Tokenizer(object):
     """Consumes a boolean value.
 
     Returns:
-      The bool parsed.
+    The bool parsed.
 
     Raises:
-      ParseError: If a boolean value couldn't be consumed.
+    ParseError: If a boolean value couldn't be consumed.
     """
     if self.token == 'true':
-      self.NextToken()
-      return True
+    self.NextToken()
+    return True
     elif self.token == 'false':
-      self.NextToken()
-      return False
+    self.NextToken()
+    return False
     else:
-      raise self._ParseError('Expected "true" or "false".')
+    raise self._ParseError('Expected "true" or "false".')
 
   def ConsumeString(self):
     """Consumes a string value.
 
     Returns:
-      The string parsed.
+    The string parsed.
 
     Raises:
-      ParseError: If a string value couldn't be consumed.
+    ParseError: If a string value couldn't be consumed.
     """
     return unicode(self.ConsumeByteString(), 'utf-8')
 
@@ -531,14 +531,14 @@ class _Tokenizer(object):
     """Consumes a byte array value.
 
     Returns:
-      The array parsed (as a string).
+    The array parsed (as a string).
 
     Raises:
-      ParseError: If a byte array value couldn't be consumed.
+    ParseError: If a byte array value couldn't be consumed.
     """
     list = [self._ConsumeSingleByteString()]
     while len(self.token) > 0 and self.token[0] in ('\'', '"'):
-      list.append(self._ConsumeSingleByteString())
+    list.append(self._ConsumeSingleByteString())
     return "".join(list)
 
   def _ConsumeSingleByteString(self):
@@ -550,15 +550,15 @@ class _Tokenizer(object):
     """
     text = self.token
     if len(text) < 1 or text[0] not in ('\'', '"'):
-      raise self._ParseError('Exptected string.')
+    raise self._ParseError('Exptected string.')
 
     if len(text) < 2 or text[-1] != text[0]:
-      raise self._ParseError('String missing ending quote.')
+    raise self._ParseError('String missing ending quote.')
 
     try:
-      result = _CUnescape(text[1:-1])
+    result = _CUnescape(text[1:-1])
     except ValueError, e:
-      raise self._ParseError(str(e))
+    raise self._ParseError(str(e))
     self.NextToken()
     return result
 
@@ -566,25 +566,25 @@ class _Tokenizer(object):
     """Parses an integer.
 
     Args:
-      text: The text to parse.
-      is_signed: True if a signed integer must be parsed.
-      is_long: True if a long integer must be parsed.
+    text: The text to parse.
+    is_signed: True if a signed integer must be parsed.
+    is_long: True if a long integer must be parsed.
 
     Returns:
-      The integer value.
+    The integer value.
 
     Raises:
-      ValueError: Thrown Iff the text is not a valid integer.
+    ValueError: Thrown Iff the text is not a valid integer.
     """
     pos = 0
     if text.startswith('-'):
-      pos += 1
+    pos += 1
 
     base = 10
     if text.startswith('0x', pos) or text.startswith('0X', pos):
-      base = 16
+    base = 16
     elif text.startswith('0', pos):
-      base = 8
+    base = 8
 
     # Do the actual parsing. Exception handling is propagated to caller.
     result = int(text, base)
@@ -598,10 +598,10 @@ class _Tokenizer(object):
     """Creates and *returns* a ParseError for the previously read token.
 
     Args:
-      message: A message to set for the exception.
+    message: A message to set for the exception.
 
     Returns:
-      A ParseError instance.
+    A ParseError instance.
     """
     return ParseError('%d:%d : %s' % (
         self._previous_line + 1, self._previous_column + 1, message))
@@ -622,8 +622,8 @@ class _Tokenizer(object):
     self._previous_line = self._line
     self._previous_column = self._column
     if self.AtEnd():
-      self.token = ''
-      return
+    self.token = ''
+    return
     self._column += len(self.token)
 
     # Make sure there is data to work on.
@@ -631,12 +631,12 @@ class _Tokenizer(object):
 
     match = re.match(self._TOKEN, self._current_line)
     if match:
-      token = match.group(0)
-      self._current_line = self._current_line[len(token):]
-      self.token = token
+    token = match.group(0)
+    self._current_line = self._current_line[len(token):]
+    self.token = token
     else:
-      self.token = self._current_line[0]
-      self._current_line = self._current_line[1:]
+    self.token = self._current_line[0]
+    self._current_line = self._current_line[1:]
     self._SkipWhitespace()
 
 

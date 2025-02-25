@@ -31,10 +31,10 @@ class TeamFortressViewport;
 //-----------------------------------------------------------------------------
 class CTeamMenu : public vgui::Frame, public IViewPortPanel
 {
-   private:
+    private:
     DECLARE_CLASS_SIMPLE( CTeamMenu, vgui::Frame );
 
-   public:
+    public:
     CTeamMenu( IViewPort *pViewPort );
     virtual ~CTeamMenu();
 
@@ -69,10 +69,10 @@ class CTeamMenu : public vgui::Frame, public IViewPortPanel
         BaseClass::SetParent( parent );
     }
 
-   public:
+    public:
     void AutoAssign();
 
-   protected:
+    protected:
     // int GetNumTeams() { return m_iNumTeams; }
 
     // VGUI2 overrides

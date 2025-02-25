@@ -15,7 +15,7 @@ class AR2Explosion : public CBaseParticleEntity
 {
     DECLARE_DATADESC();
 
-   public:
+    public:
     DECLARE_CLASS( AR2Explosion, CBaseParticleEntity );
     DECLARE_SERVERCLASS();
 
@@ -23,7 +23,7 @@ class AR2Explosion : public CBaseParticleEntity
 
     inline void SetMaterialName( const char *szMaterialName );
 
-   private:
+    private:
     CNetworkString( m_szMaterialName, 255 );
 };
 

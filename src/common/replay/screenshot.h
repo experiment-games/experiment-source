@@ -23,7 +23,7 @@
 
 class CReplayScreenshot : public CBaseReplaySerializeable
 {
-   public:
+    public:
     inline CReplayScreenshot( int nWidth = 0, int nHeight = 0, const char *pBaseFilename = NULL )
         : m_nWidth( nWidth ), m_nHeight( nHeight )
     {

@@ -65,16 +65,16 @@ class MockErrorCollector : public io::ErrorCollector {
   // implements ErrorCollector ---------------------------------------
   void AddError(int line, int column, const string& message) {
     strings::SubstituteAndAppend(&text_, "$0:$1: $2\n",
-                                 line, column, message);
+                                line, column, message);
   }
 };
 
 class MockValidationErrorCollector : public DescriptorPool::ErrorCollector {
  public:
   MockValidationErrorCollector(const SourceLocationTable& source_locations,
-                               io::ErrorCollector* wrapped_collector)
+                                io::ErrorCollector* wrapped_collector)
     : source_locations_(source_locations),
-      wrapped_collector_(wrapped_collector) {}
+    wrapped_collector_(wrapped_collector) {}
   ~MockValidationErrorCollector() {}
 
   // implements ErrorCollector ---------------------------------------
@@ -147,7 +147,7 @@ class ParserTest : public testing::Test {
   // Parse the text as a file and validate it (with a DescriptorPool), and
   // expect that the validation step reports the given errors.
   void ExpectHasValidationErrors(const char* text,
-                                 const char* expected_errors) {
+                                const char* expected_errors) {
     SetupParser(text);
     SourceLocationTable source_locations;
     parser_->RecordSourceLocationsTo(&source_locations);
@@ -159,9 +159,9 @@ class ParserTest : public testing::Test {
     ASSERT_EQ("", error_collector_.text_);
 
     MockValidationErrorCollector validation_error_collector(
-      source_locations, &error_collector_);
+    source_locations, &error_collector_);
     EXPECT_TRUE(pool_.BuildFileCollectingErrors(
-      file, &validation_error_collector) == NULL);
+    file, &validation_error_collector) == NULL);
     EXPECT_EQ(expected_errors, error_collector_.text_);
   }
 
@@ -718,7 +718,7 @@ TEST_F(ParseErrorTest, UnknownSyntaxIdentifier) {
   ExpectHasEarlyExitErrors(
     "syntax = \"no_such_syntax\";",
     "0:9: Unrecognized syntax identifier \"no_such_syntax\".  This parser "
-      "only recognizes \"proto2\".\n");
+    "only recognizes \"proto2\".\n");
   EXPECT_EQ("no_such_syntax", parser_->GetSyntaxIdentifier());
 }
 
@@ -1025,7 +1025,7 @@ TEST_F(ParserValidationErrorTest, PackageNameError) {
   ExpectHasValidationErrors(
     "package foo.bar;",
     "0:8: \"foo\" is already defined (as something other than a package) "
-      "in file \"bar.proto\".\n");
+    "in file \"bar.proto\".\n");
 }
 
 TEST_F(ParserValidationErrorTest, MessageNameError) {
@@ -1205,7 +1205,7 @@ void SortMessages(FileDescriptorProto *file_descriptor_proto) {
 
 TEST_F(ParseDecriptorDebugTest, TestAllDescriptorTypes) {
   const FileDescriptor* original_file =
-     protobuf_unittest::TestAllTypes::descriptor()->file();
+    protobuf_unittest::TestAllTypes::descriptor()->file();
   FileDescriptorProto expected;
   original_file->CopyTo(&expected);
 
@@ -1226,7 +1226,7 @@ TEST_F(ParseDecriptorDebugTest, TestAllDescriptorTypes) {
   parsed.set_name("google/protobuf/unittest.proto");
   // We need the imported dependency before we can build our parsed proto
   const FileDescriptor* import =
-       protobuf_unittest_import::ImportMessage::descriptor()->file();
+        protobuf_unittest_import::ImportMessage::descriptor()->file();
   FileDescriptorProto import_proto;
   import->CopyTo(&import_proto);
   ASSERT_TRUE(pool_.BuildFile(import_proto) != NULL);

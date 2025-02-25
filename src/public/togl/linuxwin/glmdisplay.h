@@ -75,32 +75,32 @@ struct GLMRendererInfoFields
 {
     /*properties of interest and their desired values.
 
-       kCGLRPFullScreen          =  54,		true
-       kCGLRPAccelerated         =  73,		true
-       kCGLRPWindow              =  80,		true
+        kCGLRPFullScreen          =  54,		true
+        kCGLRPAccelerated         =  73,		true
+        kCGLRPWindow              =  80,		true
 
-       kCGLRPRendererID          =  70,		informational
-       kCGLRPDisplayMask         =  84,		informational
-       kCGLRPBufferModes         = 100,		informational
-       kCGLRPColorModes          = 103,		informational
-       kCGLRPAccumModes          = 104,		informational
-       kCGLRPDepthModes          = 105,		informational
-       kCGLRPStencilModes        = 106,		informational
-       kCGLRPMaxAuxBuffers       = 107,		informational
-       kCGLRPMaxSampleBuffers    = 108,		informational
-       kCGLRPMaxSamples          = 109,		informational
-       kCGLRPSampleModes         = 110,		informational
-       kCGLRPSampleAlpha         = 111,		informational
-       kCGLRPVideoMemory         = 120,		informational
-       kCGLRPTextureMemory       = 121,		informational
-       kCGLRPRendererCount       = 128		number of renderers in the CGLRendererInfoObj under examination
+        kCGLRPRendererID          =  70,		informational
+        kCGLRPDisplayMask         =  84,		informational
+        kCGLRPBufferModes         = 100,		informational
+        kCGLRPColorModes          = 103,		informational
+        kCGLRPAccumModes          = 104,		informational
+        kCGLRPDepthModes          = 105,		informational
+        kCGLRPStencilModes        = 106,		informational
+        kCGLRPMaxAuxBuffers       = 107,		informational
+        kCGLRPMaxSampleBuffers    = 108,		informational
+        kCGLRPMaxSamples          = 109,		informational
+        kCGLRPSampleModes         = 110,		informational
+        kCGLRPSampleAlpha         = 111,		informational
+        kCGLRPVideoMemory         = 120,		informational
+        kCGLRPTextureMemory       = 121,		informational
+        kCGLRPRendererCount       = 128		number of renderers in the CGLRendererInfoObj under examination
 
-       kCGLRPOffScreen           =  53,		D/C
-       kCGLRPRobust              =  75,		FALSE or D/C - aka we're asking for no-fallback
-       kCGLRPBackingStore        =  76,		D/C
-       kCGLRPMPSafe              =  78,		D/C
-       kCGLRPMultiScreen         =  81,		D/C
-       kCGLRPCompliant           =  83,		D/C
+        kCGLRPOffScreen           =  53,		D/C
+        kCGLRPRobust              =  75,		FALSE or D/C - aka we're asking for no-fallback
+        kCGLRPBackingStore        =  76,		D/C
+        kCGLRPMPSafe              =  78,		D/C
+        kCGLRPMultiScreen         =  81,		D/C
+        kCGLRPCompliant           =  83,		D/C
     */
 
     //--------------------------- info we have from CGL renderer queries, IOKit, Gestalt

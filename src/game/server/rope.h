@@ -19,7 +19,7 @@ class CRopeKeyframe : public CBaseEntity, public IPositionWatcher
 {
     DECLARE_CLASS( CRopeKeyframe, CBaseEntity );
 
-   public:
+    public:
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
 
@@ -58,7 +58,7 @@ class CRopeKeyframe : public CBaseEntity, public IPositionWatcher
     static void ShakeRopes( const Vector &vCenter, float flRadius, float flMagnitude );
 
     // CBaseEntity overrides.
-   public:
+    public:
     // don't cross transitions
     virtual int ObjectCaps( void )
     {
@@ -82,12 +82,12 @@ class CRopeKeyframe : public CBaseEntity, public IPositionWatcher
     virtual void SetParent( CBaseEntity *pParentEntity, int iAttachment );
 
     // Input functions.
-   public:
+    public:
     void InputSetScrollSpeed( inputdata_t &inputdata );
     void InputSetForce( inputdata_t &inputdata );
     void InputBreak( inputdata_t &inputdata );
 
-   public:
+    public:
     bool Break( void );
     void DetachPoint( int iPoint );
 
@@ -121,7 +121,7 @@ class CRopeKeyframe : public CBaseEntity, public IPositionWatcher
     // IPositionWatcher
     virtual void NotifyPositionChanged( CBaseEntity *pEntity );
 
-   private:
+    private:
     void SetAttachmentPoint( CBaseHandle &hOutEnt, short &iOutAttachment, CBaseEntity *pEnt, int iAttachment );
 
     // This is normally called by Activate but if you create the rope at runtime,
@@ -134,7 +134,7 @@ class CRopeKeyframe : public CBaseEntity, public IPositionWatcher
 
     void UpdateBBox( bool bForceRelink );
 
-   public:
+    public:
     CNetworkVar( int, m_RopeFlags );  // Combination of ROPE_ defines in rope_shared.h
 
     string_t m_iNextLinkName;
@@ -160,7 +160,7 @@ class CRopeKeyframe : public CBaseEntity, public IPositionWatcher
 
     CNetworkVar( float, m_flScrollSpeed );
 
-   private:
+    private:
     // Used to detect changes.
     bool m_bStartPointValid;
     bool m_bEndPointValid;

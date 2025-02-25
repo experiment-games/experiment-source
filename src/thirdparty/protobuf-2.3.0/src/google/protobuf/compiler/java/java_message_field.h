@@ -50,7 +50,7 @@ namespace java
 
 class MessageFieldGenerator : public FieldGenerator
 {
-   public:
+    public:
     explicit MessageFieldGenerator( const FieldDescriptor* descriptor );
     ~MessageFieldGenerator();
 
@@ -66,7 +66,7 @@ class MessageFieldGenerator : public FieldGenerator
 
     string GetBoxedType() const;
 
-   private:
+    private:
     const FieldDescriptor* descriptor_;
     map< string, string > variables_;
 
@@ -75,7 +75,7 @@ class MessageFieldGenerator : public FieldGenerator
 
 class RepeatedMessageFieldGenerator : public FieldGenerator
 {
-   public:
+    public:
     explicit RepeatedMessageFieldGenerator( const FieldDescriptor* descriptor );
     ~RepeatedMessageFieldGenerator();
 
@@ -91,7 +91,7 @@ class RepeatedMessageFieldGenerator : public FieldGenerator
 
     string GetBoxedType() const;
 
-   private:
+    private:
     const FieldDescriptor* descriptor_;
     map< string, string > variables_;
 

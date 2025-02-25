@@ -156,7 +156,7 @@ bool CAI_MoveSolver::Solve( const AI_MoveSuggestion_t *pSuggestions, int nSugges
                 float degrade = abs( iOffset ) * positiveDegrade;
 
                 if ( ( ( current.flags & AIMS_FAVOR_LEFT ) && i > center ) ||
-                     ( ( current.flags & AIMS_FAVOR_RIGHT ) && i < center ) )
+                    ( ( current.flags & AIMS_FAVOR_RIGHT ) && i < center ) )
                 {
                     degrade *= 0.9;
                 }
@@ -266,7 +266,7 @@ bool CAI_MoveSolver::HaveRegulationForObstacle( CBaseEntity *pEntity )
     for ( int i = 0; i < m_Regulations.Count(); ++i )
     {
         if ( m_Regulations[i].hObstacleEntity != NULL &&
-             pEntity == m_Regulations[i].hObstacleEntity.Get() )
+            pEntity == m_Regulations[i].hObstacleEntity.Get() )
         {
             return true;
         }

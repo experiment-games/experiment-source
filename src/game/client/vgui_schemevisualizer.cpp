@@ -22,10 +22,10 @@ class CBorderVisualizerPanel : public Panel
 {
     DECLARE_CLASS_SIMPLE( CBorderVisualizerPanel, Panel );
 
-   public:
+    public:
     CBorderVisualizerPanel( Panel *pParent, const char *pName, IBorder *pBorder );
 
-   private:
+    private:
     virtual void Paint();
 
     IBorder *m_pBorder;
@@ -35,7 +35,7 @@ class CBorderVisualizerPanel : public Panel
 
 CBorderVisualizerPanel::CBorderVisualizerPanel( Panel *pParent, const char *pName, IBorder *pBorder )
     : Panel( pParent, pName ),
-      m_pBorder( pBorder )
+    m_pBorder( pBorder )
 {
     SetBgColor( Color( 255, 0, 0, 255 ) );
 }
@@ -55,10 +55,10 @@ class CColorVisualizerPanel : public Panel
 {
     DECLARE_CLASS_SIMPLE( CColorVisualizerPanel, Panel );
 
-   public:
+    public:
     CColorVisualizerPanel( Panel *pParent, const char *pName, const Color &color );
 
-   private:
+    private:
     virtual void Paint();
 
     Color m_Color;
@@ -68,7 +68,7 @@ class CColorVisualizerPanel : public Panel
 
 CColorVisualizerPanel::CColorVisualizerPanel( Panel *pParent, const char *pName, const Color &color )
     : Panel( pParent, pName ),
-      m_Color( color )
+    m_Color( color )
 {
 }
 
@@ -87,9 +87,9 @@ void CColorVisualizerPanel::Paint()
 
 CSchemeVisualizer::CSchemeVisualizer( vgui::Panel *pParent, IScheme *pViewScheme, const char *pSchemeName )
     : vgui::Frame( pParent, "SchemeVisualizer" ),
-      m_pViewScheme( pViewScheme ),
-      m_pList( NULL ),
-      m_nListDataType( LISTDATATYPE_INVALID )
+    m_pViewScheme( pViewScheme ),
+    m_pList( NULL ),
+    m_nListDataType( LISTDATATYPE_INVALID )
 {
     CFmtStr fmtTitle( "Scheme Visualizer - scheme: \"%s\"", pSchemeName );
     SetTitle( fmtTitle.Access(), true );

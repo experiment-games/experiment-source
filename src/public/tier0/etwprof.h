@@ -86,7 +86,7 @@ PLATFORM_INTERFACE void ETWReadPacket( const char *pFrom, int nWireSize, int nIn
 // pair of events to bracket some work.
 class CETWScope
 {
-   public:
+    public:
     CETWScope( const char *pMessage )
         : m_pMessage( pMessage )
     {
@@ -97,7 +97,7 @@ class CETWScope
         ETWEnd( m_pMessage, m_nStartTime );
     }
 
-   private:
+    private:
     // Private and unimplemented to disable copying.
     CETWScope( const CETWScope &rhs );
     CETWScope &operator=( const CETWScope &rhs );
@@ -158,12 +158,12 @@ inline void ETWReadPacket( const char *pFrom, int nWireSize, int nInSequenceNR, 
 // pair of events to bracket some work.
 class CETWScope
 {
-   public:
+    public:
     CETWScope( const char * )
     {
     }
 
-   private:
+    private:
     // Private and unimplemented to disable copying.
     CETWScope( const CETWScope &rhs );
     CETWScope &operator=( const CETWScope &rhs );

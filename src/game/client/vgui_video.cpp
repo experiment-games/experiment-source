@@ -18,10 +18,10 @@
 
 VideoPanel::VideoPanel( unsigned int nXPos, unsigned int nYPos, unsigned int nHeight, unsigned int nWidth, bool allowAlternateMedia )
     : BaseClass( NULL, "VideoPanel" ),
-      m_VideoMaterial( NULL ),
-      m_nPlaybackWidth( 0 ),
-      m_nPlaybackHeight( 0 ),
-      m_bAllowAlternateMedia( allowAlternateMedia )
+    m_VideoMaterial( NULL ),
+    m_nPlaybackWidth( 0 ),
+    m_nPlaybackHeight( 0 ),
+    m_bAllowAlternateMedia( allowAlternateMedia )
 {
     vgui::VPANEL pParent = enginevgui->GetPanel( PANEL_GAMEUIDLL );
     SetParent( pParent );
@@ -176,15 +176,15 @@ void VideoPanel::OnKeyCodePressed( vgui::KeyCode code )
 {
     // These keys cause the panel to shutdown
     if ( code == KEY_ESCAPE ||
-         code == KEY_BACKQUOTE ||
-         code == KEY_SPACE ||
-         code == KEY_ENTER ||
-         code == KEY_XBUTTON_A ||
-         code == KEY_XBUTTON_B ||
-         code == KEY_XBUTTON_X ||
-         code == KEY_XBUTTON_Y ||
-         code == KEY_XBUTTON_START ||
-         code == KEY_XBUTTON_BACK )
+        code == KEY_BACKQUOTE ||
+        code == KEY_SPACE ||
+        code == KEY_ENTER ||
+        code == KEY_XBUTTON_A ||
+        code == KEY_XBUTTON_B ||
+        code == KEY_XBUTTON_X ||
+        code == KEY_XBUTTON_Y ||
+        code == KEY_XBUTTON_START ||
+        code == KEY_XBUTTON_BACK )
     {
         OnClose();
     }

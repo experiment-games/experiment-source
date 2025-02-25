@@ -47,11 +47,11 @@ enum CameraMode_t
 //-----------------------------------------------------------------------------
 
 class CReplayPerformanceEditorPanel : public vgui::EditablePanel,
-                                      public IReplayPerformanceEditor
+                                    public IReplayPerformanceEditor
 {
     DECLARE_CLASS_SIMPLE( CReplayPerformanceEditorPanel, vgui::EditablePanel );
 
-   public:
+    public:
     CReplayPerformanceEditorPanel( Panel *parent, ReplayHandle_t hReplay );
     virtual ~CReplayPerformanceEditorPanel();
 
@@ -66,7 +66,7 @@ class CReplayPerformanceEditorPanel : public vgui::EditablePanel,
     void Exit();
     void Exit_ShowDialogs();
 
-   private:
+    private:
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
     virtual void ApplySettings( KeyValues *pInResourceData );
     virtual void PerformLayout();
@@ -110,7 +110,7 @@ class CReplayPerformanceEditorPanel : public vgui::EditablePanel,
 
     void HandleMouseWheel( int nDelta );
 
-   private:
+    private:
     enum ControlButtons_t
     {
         CTRLBUTTON_IN,

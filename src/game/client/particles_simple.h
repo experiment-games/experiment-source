@@ -27,7 +27,7 @@
 
 class CParticleEffect : public IParticleEffect
 {
-   public:
+    public:
     DECLARE_CLASS_NOBASE( CParticleEffect );
 
     friend class CRefCountAccessor;
@@ -65,7 +65,7 @@ class CParticleEffect : public IParticleEffect
     }
 
     // IParticleEffect overrides
-   public:
+    public:
     virtual void SetParticleCullRadius( float radius );
     virtual void NotifyRemove( void );
     virtual const Vector &GetSortOrigin();
@@ -88,7 +88,7 @@ class CParticleEffect : public IParticleEffect
     int AllocateToolParticleEffectId();
     int GetToolParticleEffectId() const;
 
-   protected:
+    protected:
     CParticleEffect( const char *pDebugName );
     virtual ~CParticleEffect();
 
@@ -98,7 +98,7 @@ class CParticleEffect : public IParticleEffect
     enum
     {
         FLAG_ALLOCATED = ( 1 << 1 ),  // Most of the CParticleEffects are dynamically allocated but
-                                      // some are member variables of a class. If they're member variables.
+                                    // some are member variables of a class. If they're member variables.
         FLAG_DONT_REMOVE = ( 1 << 2 ),
     };
 
@@ -113,13 +113,13 @@ class CParticleEffect : public IParticleEffect
     bool m_bSimulate;
     int m_nToolParticleEffectId;
 
-   private:
+    private:
     // Update the reference count.
     void AddRef();
     void Release();
 
     int m_RefCount;  // When this goes to zero and the effect has no more active
-                     // particles, (and it's dynamically allocated), it will delete itself.
+                    // particles, (and it's dynamically allocated), it will delete itself.
 
     CParticleEffect( const CParticleEffect & );  // not defined, not accessible
 };
@@ -142,12 +142,12 @@ enum SimpleParticleFlag_t
 {
     SIMPLE_PARTICLE_FLAG_WINDBLOWN = 0x1,
     SIMPLE_PARTICLE_FLAG_NO_VEL_DECAY = 0x2  // Used by the blood spray emitter. By default, it decays the
-                                             // particle velocity.
+                                            // particle velocity.
 };
 
 class SimpleParticle : public Particle
 {
-   public:
+    public:
     SimpleParticle()
         : m_iFlags( 0 ) {}
 
@@ -175,7 +175,7 @@ class SimpleParticle : public Particle
 class CSimpleEmitter : public CParticleEffect
 {
     // IParticleEffect overrides.
-   public:
+    public:
     DECLARE_CLASS( CSimpleEmitter, CParticleEffect );
 
     static CSmartPtr< CSimpleEmitter > Create( const char *pDebugName );
@@ -190,7 +190,7 @@ class CSimpleEmitter : public CParticleEffect
     SimpleParticle *AddSimpleParticle( PMaterialHandle hMaterial, const Vector &vOrigin, float flDieTime = 3, unsigned char uchSize = 10 );
 
     // Overridables for variants like CEmberEffect.
-   protected:
+    protected:
     CSimpleEmitter( const char *pDebugName = NULL );
     virtual ~CSimpleEmitter();
 
@@ -203,7 +203,7 @@ class CSimpleEmitter : public CParticleEffect
     float m_flNearClipMin;
     float m_flNearClipMax;
 
-   private:
+    private:
     CSimpleEmitter( const CSimpleEmitter & );  // not defined, not accessible
 };
 
@@ -213,14 +213,14 @@ class CSimpleEmitter : public CParticleEffect
 
 class CEmberEffect : public CSimpleEmitter
 {
-   public:
+    public:
     CEmberEffect( const char *pDebugName );
     static CSmartPtr< CEmberEffect > Create( const char *pDebugName );
 
     virtual void UpdateVelocity( SimpleParticle *pParticle, float timeDelta );
     virtual Vector UpdateColor( const SimpleParticle *pParticle );
 
-   private:
+    private:
     CEmberEffect( const CEmberEffect & );  // not defined, not accessible
 };
 
@@ -230,17 +230,17 @@ class CEmberEffect : public CSimpleEmitter
 
 class CFireSmokeEffect : public CSimpleEmitter
 {
-   public:
+    public:
     CFireSmokeEffect( const char *pDebugName );
     static CSmartPtr< CFireSmokeEffect > Create( const char *pDebugName );
 
     virtual void UpdateVelocity( SimpleParticle *pParticle, float timeDelta );
     virtual float UpdateAlpha( const SimpleParticle *pParticle );
 
-   protected:
+    protected:
     VPlane m_planeClip;
 
-   private:
+    private:
     CFireSmokeEffect( const CFireSmokeEffect & );  // not defined, not accessible
 };
 
@@ -250,13 +250,13 @@ class CFireSmokeEffect : public CSimpleEmitter
 
 class CFireParticle : public CSimpleEmitter
 {
-   public:
+    public:
     CFireParticle( const char *pDebugName );
     static CSmartPtr< CFireParticle > Create( const char *pDebugName );
 
     virtual Vector UpdateColor( const SimpleParticle *pParticle );
 
-   private:
+    private:
     CFireParticle( const CFireParticle & );  // not defined, not accessible
 };
 

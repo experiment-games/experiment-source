@@ -36,7 +36,7 @@ extern IReplayMovieManager *g_pReplayMovieManager;
 
 CReplayScreenshotSlideshowPanel::CReplayScreenshotSlideshowPanel( Panel *pParent, const char *pName, ReplayHandle_t hReplay )
     : CSlideshowPanel( pParent, pName ),
-      m_hReplay( hReplay )
+    m_hReplay( hReplay )
 {
     CGenericClassBasedReplay *pReplay = GetGenericClassBasedReplay( hReplay );
 
@@ -67,13 +67,13 @@ void CReplayScreenshotSlideshowPanel::PerformLayout()
 
 CReplayBrowserThumbnail::CReplayBrowserThumbnail( Panel *pParent, const char *pName, QueryableReplayItemHandle_t hReplayItem, IReplayItemManager *pReplayItemManager )
     : CReplayBasePanel( pParent, pName ),
-      m_hReplayItem( hReplayItem ),
-      m_pReplayItemManager( pReplayItemManager ),
-      m_bMouseOver( false ),
-      m_pMoviePlayer( NULL ),
-      m_flLastMovieScrubTime( 0.0f ),
-      m_flHoverStartTime( 0.0f ),
-      m_flLastProgressChangeTime( 0.0f )
+    m_hReplayItem( hReplayItem ),
+    m_pReplayItemManager( pReplayItemManager ),
+    m_bMouseOver( false ),
+    m_pMoviePlayer( NULL ),
+    m_flLastMovieScrubTime( 0.0f ),
+    m_flHoverStartTime( 0.0f ),
+    m_flLastProgressChangeTime( 0.0f )
 {
     SetScheme( "ClientScheme" );
 
@@ -429,7 +429,7 @@ IQueryableReplayItem *CReplayBrowserThumbnail::GetReplayItem()
 
 CReplayBrowserThumbnailRow::CReplayBrowserThumbnailRow( Panel *pParent, const char *pName, IReplayItemManager *pReplayItemManager )
     : BaseClass( pParent, pName ),
-      m_pReplayItemManager( pReplayItemManager )
+    m_pReplayItemManager( pReplayItemManager )
 {
     SetProportional( true );
 }
@@ -516,12 +516,12 @@ void CReplayBrowserThumbnailRow::PerformLayout()
 
 CBaseThumbnailCollection::CBaseThumbnailCollection( CReplayListPanel *pParent, const char *pName, IReplayItemManager *pReplayItemManager )
     : EditablePanel( pParent, pName ),
-      m_pReplayItemManager( pReplayItemManager ),
-      m_nStartX( XRES( 15 ) ),
-      m_pCaratLabel( NULL ),
-      m_pTitleLabel( NULL ),
-      m_pNoReplayItemsLabel( NULL ),
-      m_pRenderAllButton( NULL )
+    m_pReplayItemManager( pReplayItemManager ),
+    m_nStartX( XRES( 15 ) ),
+    m_pCaratLabel( NULL ),
+    m_pTitleLabel( NULL ),
+    m_pNoReplayItemsLabel( NULL ),
+    m_pRenderAllButton( NULL )
 {
     m_pParentListPanel = static_cast< CReplayListPanel * >( pParent );
     m_pShowNextButton = NULL;
@@ -853,8 +853,8 @@ void CBaseThumbnailCollection::PerformLayout()
 
 CReplayThumbnailCollection::CReplayThumbnailCollection( CReplayListPanel *pParent, const char *pName, IReplayItemManager *pReplayItemManager )
     : BaseClass( pParent, pName, pReplayItemManager ),
-      m_pWarningLabel( NULL ),
-      m_pUnconvertedBg( NULL )
+    m_pWarningLabel( NULL ),
+    m_pUnconvertedBg( NULL )
 {
     // Create additional panels for unconverted rows
     m_pLinePanel = new Panel( this, "Line" );

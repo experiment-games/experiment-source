@@ -6,23 +6,23 @@ FORCEARG=""
 
 case $OS in
 "Darwin")
-	BINNAME=vpc_osx
-	;;
+    BINNAME=vpc_osx
+    ;;
 "Linux")
-	BINNAME=vpc_linux
-	;;
+    BINNAME=vpc_linux
+    ;;
 *)
-	echo "Couldn't find appropriate VPC binary, fix the script."
-	exit -1
-	;;
+    echo "Couldn't find appropriate VPC binary, fix the script."
+    exit -1
+    ;;
 esac
 
 
 if [ $OS == "Darwin" ]; then
-	$SCRIPTPATH/$BINNAME $@
+    $SCRIPTPATH/$BINNAME $@
 elif [ $OS == "Linux" ]; then
-	$SCRIPTPATH/$BINNAME $@
+    $SCRIPTPATH/$BINNAME $@
 else
-	echo "Couldn't find appropriate VPC binary, fix the script."
-	exit -1
+    echo "Couldn't find appropriate VPC binary, fix the script."
+    exit -1
 fi

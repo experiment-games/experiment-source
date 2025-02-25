@@ -291,7 +291,7 @@ inline uint64 bswap_64( uint64 x )
 //    x = LittleEndian.Load16(p);
 class LittleEndian
 {
-   public:
+    public:
     // Conversion functions.
 #ifdef WORDS_BIGENDIAN
 
@@ -370,7 +370,7 @@ class LittleEndian
 // Some bit-manipulation functions.
 class Bits
 {
-   public:
+    public:
     // Return floor(log2(n)) for positive integer n.  Returns -1 iff n == 0.
     static int Log2Floor( uint32 n );
 
@@ -380,7 +380,7 @@ class Bits
     static int FindLSBSetNonZero( uint32 n );
     static int FindLSBSetNonZero64( uint64 n );
 
-   private:
+    private:
     DISALLOW_COPY_AND_ASSIGN( Bits );
 };
 
@@ -459,7 +459,7 @@ inline int Bits::FindLSBSetNonZero64( uint64 n )
 // Variable-length integer encoding.
 class Varint
 {
-   public:
+    public:
     // Maximum lengths of varint encoding of uint32.
     static const int kMax32 = 5;
 
@@ -480,8 +480,8 @@ class Varint
 };
 
 inline const char *Varint::Parse32WithLimit( const char *p,
-                                             const char *l,
-                                             uint32 *OUTPUT )
+                                            const char *l,
+                                            uint32 *OUTPUT )
 {
     const unsigned char *ptr = reinterpret_cast< const unsigned char * >( p );
     const unsigned char *limit = reinterpret_cast< const unsigned char * >( l );

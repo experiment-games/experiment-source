@@ -74,8 +74,8 @@ void ResetEntityFactoryDatabase( void )
 #endif
 #else
     for ( int i = m_EntityFactoryDatabase.First();
-          i != m_EntityFactoryDatabase.InvalidIndex();
-          i = m_EntityFactoryDatabase.Next( i ) )
+        i != m_EntityFactoryDatabase.InvalidIndex();
+        i = m_EntityFactoryDatabase.Next( i ) )
     {
         delete m_EntityFactoryDatabase[i];
     }
@@ -131,9 +131,9 @@ void CBaseScripted::InitScriptedEntity( void )
 #ifdef LUA_SDK
 #if 0
 #ifndef CLIENT_DLL
-	// Let the instance reinitialize itself for the client.
-	if (lua_isrefvalid(L, m_nTableReference))
-		return;
+    // Let the instance reinitialize itself for the client.
+    if (lua_isrefvalid(L, m_nTableReference))
+        return;
 #endif
 #endif
 

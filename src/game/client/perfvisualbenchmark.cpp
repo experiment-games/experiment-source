@@ -235,8 +235,8 @@ void CPerfVisualBenchmark::Stop()
     m_bIsOn = false;
     Print();
     engine->ClientCmd_Unrestricted( "host_timescale 0" );  // pause the mofo
-                                                           //	engine->ClientCmd_Unrestricted("unpause");				// unpause the mofo
-                                                           //	engine->ClientCmd_Unrestricted("wait");
+                                                            //	engine->ClientCmd_Unrestricted("unpause");				// unpause the mofo
+                                                            //	engine->ClientCmd_Unrestricted("wait");
     engine->ClientCmd_Unrestricted( "toggleconsole" );
 }
 

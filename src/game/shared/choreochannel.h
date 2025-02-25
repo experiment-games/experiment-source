@@ -25,7 +25,7 @@ class IChoreoStringPool;
 //-----------------------------------------------------------------------------
 class CChoreoChannel
 {
-   public:
+    public:
     // Construction
     CChoreoChannel( void );
     CChoreoChannel( const char *name );
@@ -75,7 +75,7 @@ class CChoreoChannel
 
     bool GetSortedCombinedEventList( char const *cctoken, CUtlRBTree< CChoreoEvent * > &sorted );
 
-   private:
+    private:
     // Initialize fields
     void Init( void );
 

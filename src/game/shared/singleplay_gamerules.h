@@ -24,7 +24,7 @@
 //=========================================================
 class CSingleplayRules : public CGameRules
 {
-   public:
+    public:
     DECLARE_CLASS( CSingleplayRules, CGameRules );
 
     // Functions to verify the single/multiplayer status of a game

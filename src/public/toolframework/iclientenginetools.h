@@ -25,7 +25,7 @@ struct AudioState_t;
 //-----------------------------------------------------------------------------
 class IClientEngineTools : public IBaseInterface
 {
-   public:
+    public:
     // Level init, shutdown
     virtual void LevelInitPreEntityAllTools() = 0;
     // entities are created / spawned / precached here

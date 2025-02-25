@@ -18,7 +18,7 @@
 //-----------------------------------------------------------------------------
 class ISteamUser
 {
-   public:
+    public:
     // returns the HSteamUser this interface represents
     // this is only used internally by the API, and by a few select interfaces that support multi-user
     virtual HSteamUser GetHSteamUser() = 0;

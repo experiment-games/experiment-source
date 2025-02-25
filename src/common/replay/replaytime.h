@@ -20,7 +20,7 @@ class KeyValues;
 
 class CReplayTime
 {
-   public:
+    public:
     CReplayTime();
 
     void InitDateAndTimeToNow();

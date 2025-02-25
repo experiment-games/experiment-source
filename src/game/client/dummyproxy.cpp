@@ -13,7 +13,7 @@
 
 class CDummyMaterialProxy : public IMaterialProxy
 {
-   public:
+    public:
     CDummyMaterialProxy();
     virtual ~CDummyMaterialProxy();
     virtual bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );

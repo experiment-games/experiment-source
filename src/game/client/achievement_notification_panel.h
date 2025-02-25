@@ -20,7 +20,7 @@ class CAchievementNotificationPanel : public CHudElement, public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CAchievementNotificationPanel, EditablePanel );
 
-   public:
+    public:
     CAchievementNotificationPanel( const char *pElementName );
 
     virtual void Init();
@@ -36,7 +36,7 @@ class CAchievementNotificationPanel : public CHudElement, public EditablePanel
 
     void AddNotification( const char *szIconBaseName, const wchar_t *pHeading, const wchar_t *pTitle );
 
-   private:
+    private:
     void ShowNextNotification();
     void SetXAndWide( Panel *pPanel, int x, int wide );
 

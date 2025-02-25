@@ -59,10 +59,10 @@ namespace cpp
 
 class ServiceGenerator
 {
-   public:
+    public:
     // See generator.cc for the meaning of dllexport_decl.
     explicit ServiceGenerator( const ServiceDescriptor* descriptor,
-                               const string& dllexport_decl );
+                                const string& dllexport_decl );
     ~ServiceGenerator();
 
     // Header stuff.
@@ -80,7 +80,7 @@ class ServiceGenerator
     // Generate implementations of everything declared by GenerateDeclarations().
     void GenerateImplementation( io::Printer* printer );
 
-   private:
+    private:
     enum RequestOrResponse
     {
         REQUEST,
@@ -102,7 +102,7 @@ class ServiceGenerator
 
     // Prints signatures for all methods in the
     void GenerateMethodSignatures( VirtualOrNon virtual_or_non,
-                                   io::Printer* printer );
+                                    io::Printer* printer );
 
     // Source file stuff.
 

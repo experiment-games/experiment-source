@@ -63,7 +63,7 @@ void CExperimentMachineGun::PrimaryAttack( void )
 
     // Abort here to handle burst and auto fire modes
     if ( ( UsesClipsForAmmo1() && m_iClip1 == 0 ) ||
-         ( !UsesClipsForAmmo1() && !pPlayer->GetAmmoCount( m_iPrimaryAmmoType ) ) )
+        ( !UsesClipsForAmmo1() && !pPlayer->GetAmmoCount( m_iPrimaryAmmoType ) ) )
         return;
 
     m_nShotsFired++;

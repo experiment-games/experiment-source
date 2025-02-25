@@ -19,7 +19,7 @@ class CEnvStarfield : public CBaseEntity
 {
     DECLARE_CLASS( CEnvStarfield, CBaseEntity );
 
-   public:
+    public:
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
 
@@ -32,7 +32,7 @@ class CEnvStarfield : public CBaseEntity
     void InputTurnOff( inputdata_t &inputdata );
     void InputSetDensity( inputdata_t &inputdata );
 
-   private:
+    private:
     CNetworkVar( bool, m_bOn );
     CNetworkVar( float, m_flDensity );
 };

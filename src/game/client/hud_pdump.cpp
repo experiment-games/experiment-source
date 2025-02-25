@@ -222,15 +222,15 @@ void CPDumpPanel::DumpEntity( C_BaseEntity *ent, int commands_acknowledged )
     Clear();
 
     CPredictionCopy datacompare( PC_EVERYTHING,
-                                 original_state_data,
-                                 data_type_original,
-                                 predicted_state_data,
-                                 data_type_predicted,
-                                 true,   // counterrors
-                                 true,   // reporterrors
-                                 false,  // copy data
-                                 true,   // describe fields
-                                 ::DumpComparision );
+                                original_state_data,
+                                data_type_original,
+                                predicted_state_data,
+                                data_type_predicted,
+                                true,   // counterrors
+                                true,   // reporterrors
+                                false,  // copy data
+                                true,   // describe fields
+                                ::DumpComparision );
     // Don't spew debugging info
     datacompare.TransferData( "", -1, ent->GetPredDescMap() );
 

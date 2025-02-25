@@ -22,16 +22,16 @@ class CBaseHLCombatWeapon : public CBaseCombatWeapon
 #ifndef _XBOX
     DECLARE_DATADESC();
 #else
-   protected:
+    protected:
     DECLARE_DATADESC();
 
-   private:
+    private:
 #endif
 #endif
 
     DECLARE_CLASS( CBaseHLCombatWeapon, CBaseCombatWeapon );
 
-   public:
+    public:
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
 
@@ -58,7 +58,7 @@ class CBaseHLCombatWeapon : public CBaseCombatWeapon
     int m_iPrimaryAttacks;    // # of primary attacks performed with this weapon
     int m_iSecondaryAttacks;  // # of secondary attacks performed with this weapon
 
-   protected:
+    protected:
     bool m_bLowered;        // Whether the viewmodel is raised or lowered
     float m_flRaiseTime;    // If lowered, the time we should raise the viewmodel
     float m_flHolsterTime;  // When the weapon was holstered

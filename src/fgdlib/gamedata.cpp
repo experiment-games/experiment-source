@@ -303,7 +303,7 @@ BOOL GameData::Load( const char *pszFilename )
         }
 
         if ( IsToken( szToken, "baseclass" ) || IsToken( szToken, "pointclass" ) || IsToken( szToken, "solidclass" ) || IsToken( szToken, "keyframeclass" ) ||
-             IsToken( szToken, "moveclass" ) || IsToken( szToken, "npcclass" ) || IsToken( szToken, "filterclass" ) )
+            IsToken( szToken, "moveclass" ) || IsToken( szToken, "npcclass" ) || IsToken( szToken, "filterclass" ) )
         {
             //
             // New class.

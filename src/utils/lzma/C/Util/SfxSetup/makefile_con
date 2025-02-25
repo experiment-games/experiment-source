@@ -29,6 +29,6 @@ OBJS = \
 !include "../../../CPP/Build.mak"
 
 $(7Z_OBJS): $(*B).c
-	$(COMPL_O1)
+    $(COMPL_O1)
 $(C_OBJS): ../../$(*B).c
-	$(COMPL_O1)
+    $(COMPL_O1)

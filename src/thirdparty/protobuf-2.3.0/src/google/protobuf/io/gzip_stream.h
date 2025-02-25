@@ -57,7 +57,7 @@ namespace io
 // A ZeroCopyInputStream that reads compressed data through zlib
 class LIBPROTOBUF_EXPORT GzipInputStream : public ZeroCopyInputStream
 {
-   public:
+    public:
     // Format key for constructor
     enum Format
     {
@@ -94,7 +94,7 @@ class LIBPROTOBUF_EXPORT GzipInputStream : public ZeroCopyInputStream
     bool Skip( int count );
     int64 ByteCount() const;
 
-   private:
+    private:
     Format format_;
 
     ZeroCopyInputStream* sub_stream_;
@@ -114,7 +114,7 @@ class LIBPROTOBUF_EXPORT GzipInputStream : public ZeroCopyInputStream
 
 class LIBPROTOBUF_EXPORT GzipOutputStream : public ZeroCopyOutputStream
 {
-   public:
+    public:
     // Format key for constructor
     enum Format
     {
@@ -189,7 +189,7 @@ class LIBPROTOBUF_EXPORT GzipOutputStream : public ZeroCopyOutputStream
     void BackUp( int count );
     int64 ByteCount() const;
 
-   private:
+    private:
     ZeroCopyOutputStream* sub_stream_;
     // Result from calling Next() on sub_stream_
     void* sub_data_;

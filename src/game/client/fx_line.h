@@ -37,7 +37,7 @@ struct FXLineData_t
 
 class CFXLine : public CClientSideEffect
 {
-   public:
+    public:
     CFXLine( const char *name, const FXLineData_t &data );
 
     ~CFXLine( void );
@@ -47,7 +47,7 @@ class CFXLine : public CClientSideEffect
     virtual void Destroy( void );
     virtual void Update( double frametime );
 
-   protected:
+    protected:
     FXLineData_t m_FXData;
 };
 

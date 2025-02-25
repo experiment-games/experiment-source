@@ -160,8 +160,8 @@ static int db_getinfo (lua_State *L) {
   }
   else {  /* stack level */
     if (!lua_getstack(L1, (int)luaL_checkinteger(L, arg + 1), &ar)) {
-      luaL_pushfail(L);  /* level out of range */
-      return 1;
+    luaL_pushfail(L);  /* level out of range */
+    return 1;
     }
   }
   if (!lua_getinfo(L1, options, &ar))
@@ -214,18 +214,18 @@ static int db_getlocal (lua_State *L) {
     const char *name;
     int level = (int)luaL_checkinteger(L, arg + 1);
     if (l_unlikely(!lua_getstack(L1, level, &ar)))  /* out of range? */
-      return luaL_argerror(L, arg+1, "level out of range");
+    return luaL_argerror(L, arg+1, "level out of range");
     checkstack(L, L1, 1);
     name = lua_getlocal(L1, &ar, nvar);
     if (name) {
-      lua_xmove(L1, L, 1);  /* move local value */
-      lua_pushstring(L, name);  /* push name */
-      lua_rotate(L, -2, 1);  /* re-order */
-      return 2;
+    lua_xmove(L1, L, 1);  /* move local value */
+    lua_pushstring(L, name);  /* push name */
+    lua_rotate(L, -2, 1);  /* re-order */
+    return 2;
     }
     else {
-      luaL_pushfail(L);  /* no name (nor value) */
-      return 1;
+    luaL_pushfail(L);  /* no name (nor value) */
+    return 1;
     }
   }
 }
@@ -328,7 +328,7 @@ static void hookf (lua_State *L, lua_Debug *ar) {
   if (lua_rawget(L, -2) == LUA_TFUNCTION) {  /* is there a hook function? */
     lua_pushstring(L, hooknames[(int)ar->event]);  /* push event name */
     if (ar->currentline >= 0)
-      lua_pushinteger(L, ar->currentline);  /* push current line */
+    lua_pushinteger(L, ar->currentline);  /* push current line */
     else lua_pushnil(L);
     lua_assert(lua_getinfo(L, "lS", ar));
     lua_call(L, 2, 0);  /* call hook function */
@@ -423,10 +423,10 @@ static int db_debug (lua_State *L) {
     lua_writestringerror("%s", "lua_debug> ");
     if (fgets(buffer, sizeof(buffer), stdin) == NULL ||
         strcmp(buffer, "cont\n") == 0)
-      return 0;
+    return 0;
     if (luaL_loadbuffer(L, buffer, strlen(buffer), "=(debug command)") ||
         lua_pcall(L, 0, 0, 0))
-      lua_writestringerror("%s\n", luaL_tolstring(L, -1, NULL));
+    lua_writestringerror("%s\n", luaL_tolstring(L, -1, NULL));
     lua_settop(L, 0);  /* remove eventual returns */
   }
 }
@@ -480,4 +480,3 @@ LUAMOD_API int luaopen_debug (lua_State *L) {
   luaL_newlib(L, dblib);
   return 1;
 }
-

@@ -30,7 +30,7 @@ namespace vgui
 //-----------------------------------------------------------------------------
 class ISystem : public IBaseInterface
 {
-   public:
+    public:
     // call when done with ISystem to clean up any memory allocation
     virtual void Shutdown() = 0;
 

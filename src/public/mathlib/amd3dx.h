@@ -47,31 +47,31 @@
 
  1. First argument of macro is a destination and
     second argument is a source operand.
-      ex) _asm PFCMPEQ (mm3, mm4)
-                         |    |
+    ex) _asm PFCMPEQ (mm3, mm4)
+                        |    |
                         dst  src
 
  2. The destination operand can be m0 to m7 only.
     The source operand can be any one of the register
     m0 to m7 or _eax, _ecx, _edx, _ebx, _esi, or _edi
     that contains effective address.
-      ex) _asm PFRCP    (MM7, MM6)
-      ex) _asm PFRCPIT2 (mm0, mm4)
-      ex) _asm PFMUL    (mm3, _edi)
+    ex) _asm PFRCP    (MM7, MM6)
+    ex) _asm PFRCPIT2 (mm0, mm4)
+    ex) _asm PFMUL    (mm3, _edi)
 
   3. The prefetch(w) takes one src operand _eax, ecx, _edx,
-     _ebx, _esi, or _edi that contains effective address.
-      ex) _asm PREFETCH (_edi)
+    _ebx, _esi, or _edi that contains effective address.
+    ex) _asm PREFETCH (_edi)
 
  For WATCOM C/C++ users, when using #pragma aux instead if
  _asm, all macro names should be prefixed by a p_ or P_.
  Macros should not be enclosed in quotes.
-              ex) p_pfrcp (MM7,MM6)
+            ex) p_pfrcp (MM7,MM6)
 
  NOTE: Not all instruction macros, nor all possible
-       combinations of operands have been explicitely
-       tested. If any errors are found, please report
-       them.
+        combinations of operands have been explicitely
+        tested. If any errors are found, please report
+        them.
 
  EXAMPLE
  =======
@@ -88,33 +88,33 @@
 
  void main ()
  {
-      float x = (float)1.25;
-      float y = (float)1.25;
-      float z, zz;
+    float x = (float)1.25;
+    float y = (float)1.25;
+    float z, zz;
 
-     _asm {
-              movd mm1, x
-              movd mm2, y
-              pfmul (mm1, mm2)
-              movd z, mm1
-              femms
-      }
+    _asm {
+            movd mm1, x
+            movd mm2, y
+            pfmul (mm1, mm2)
+            movd z, mm1
+            femms
+    }
 
-      printf ("value of z = %f\n", z);
+    printf ("value of z = %f\n", z);
 
-      //
-      // Demonstration of using the memory instead of
-      // multimedia register
-      //
-      _asm {
-              movd mm3, x
-              lea esi, y   // load effective address of y
-              pfmul (mm3, _esi)
-              movd zz, mm3
-              femms
-      }
+    //
+    // Demonstration of using the memory instead of
+    // multimedia register
+    //
+    _asm {
+            movd mm3, x
+            lea esi, y   // load effective address of y
+            pfmul (mm3, _esi)
+            movd zz, mm3
+            femms
+    }
 
-      printf ("value of zz = %f\n", zz);
+    printf ("value of zz = %f\n", zz);
   }
 
  #pragma aux EXAMPLE with WATCOM C/C++ v11.x
@@ -745,8 +745,8 @@
     }
 
 /* Prefetch with a short offset, < 127 or > -127
-   Carefull!  Doesn't check for your offset being
-   in range. */
+    Carefull!  Doesn't check for your offset being
+    in range. */
 
 #define PREFETCHM( src, off )                                                                     \
     {                                                                                             \

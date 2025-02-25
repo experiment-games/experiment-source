@@ -58,7 +58,7 @@ class CControlPointCountdown : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CControlPointCountdown, vgui::EditablePanel );
 
-   public:
+    public:
     CControlPointCountdown( Panel *parent, const char *name );
 
     virtual void ApplySchemeSettings( IScheme *scheme );
@@ -71,7 +71,7 @@ class CControlPointCountdown : public vgui::EditablePanel
         return m_flUnlockTime;
     }
 
-   private:
+    private:
     bool m_bFire5SecRemain;
     bool m_bFire4SecRemain;
     bool m_bFire3SecRemain;
@@ -89,7 +89,7 @@ class CControlPointProgressBar : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CControlPointProgressBar, vgui::EditablePanel );
 
-   public:
+    public:
     CControlPointProgressBar( Panel *parent );
 
     virtual void ApplySchemeSettings( IScheme *pScheme );
@@ -101,7 +101,7 @@ class CControlPointProgressBar : public vgui::EditablePanel
     void SetupForPoint( CControlPointIcon *pIcon );
     void UpdateBarText( void );
 
-   private:
+    private:
     CControlPointIcon *m_pAttachedToIcon;
     vgui::CircularProgressBar *m_pBar;
     vgui::Label *m_pBarText;
@@ -119,7 +119,7 @@ class CControlPointIconSwoop : public vgui::ImagePanel, public CGameEventListene
 {
     DECLARE_CLASS_SIMPLE( CControlPointIconSwoop, vgui::ImagePanel );
 
-   public:
+    public:
     CControlPointIconSwoop( Panel *parent, const char *name )
         : vgui::ImagePanel( parent, name )
     {
@@ -168,7 +168,7 @@ class CControlPointIconSwoop : public vgui::ImagePanel, public CGameEventListene
         }
     }
 
-   private:
+    private:
     float m_flStartCapAnimStart;
 };
 
@@ -179,7 +179,7 @@ class CControlPointIconCapArrow : public vgui::Panel
 {
     DECLARE_CLASS_SIMPLE( CControlPointIconCapArrow, vgui::Panel );
 
-   public:
+    public:
     CControlPointIconCapArrow( CControlPointIcon *pIcon, Panel *parent, const char *name );
 
     virtual void Paint( void );
@@ -190,7 +190,7 @@ class CControlPointIconCapArrow : public vgui::Panel
         m_pArrowMaterial = materials->FindMaterial( pszImage, TEXTURE_GROUP_VGUI );
     }
 
-   private:
+    private:
     IMaterial *m_pArrowMaterial;
     CControlPointIcon *m_pAttachedToIcon;
 };
@@ -202,7 +202,7 @@ class CControlPointIconCapturePulse : public vgui::ImagePanel
 {
     DECLARE_CLASS_SIMPLE( CControlPointIconCapturePulse, vgui::ImagePanel );
 
-   public:
+    public:
     CControlPointIconCapturePulse( Panel *parent, const char *name )
         : vgui::ImagePanel( parent, name )
     {
@@ -251,7 +251,7 @@ class CControlPointIconCapturePulse : public vgui::ImagePanel
         return BaseClass::IsVisible();
     }
 
-   private:
+    private:
     float m_flFinishCapAnimStart;
     int m_iShrinkSize;
 };
@@ -263,7 +263,7 @@ class CControlPointIconPulseable : public vgui::ImagePanel
 {
     DECLARE_CLASS_SIMPLE( CControlPointIconPulseable, vgui::ImagePanel );
 
-   public:
+    public:
     CControlPointIconPulseable( Panel *parent, const char *name, int iIndex )
         : vgui::ImagePanel( parent, name )
     {
@@ -287,7 +287,7 @@ class CControlPointIconPulseable : public vgui::ImagePanel
         return BaseClass::IsVisible();
     }
 
-   private:
+    private:
     int m_iCPIndex;
     float m_flStartCapAnimStart;
     float m_flPulseTime;
@@ -302,7 +302,7 @@ class CControlPointIcon : public vgui::EditablePanel, public CHudElement
 {
     DECLARE_CLASS_SIMPLE( CControlPointIcon, vgui::EditablePanel );
 
-   public:
+    public:
     CControlPointIcon( Panel *parent, const char *pName, int iIndex );
     ~CControlPointIcon( void );
 
@@ -349,10 +349,10 @@ class CControlPointIcon : public vgui::EditablePanel, public CHudElement
 
     void SetTimerTime( float flTime );  // used to display CCPTimerLogic countdowns
 
-   private:
+    private:
     virtual void OnTick();
 
-   private:
+    private:
     int m_iCPIndex;
     vgui::ImagePanel *m_pOverlayImage;
     CControlPointIconPulseable *m_pBaseImage;
@@ -383,7 +383,7 @@ class CControlPointIcon : public vgui::EditablePanel, public CHudElement
 //-----------------------------------------------------------------------------
 class CHudControlPointIcons : public CHudElement, public vgui::Panel
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CHudControlPointIcons, vgui::Panel );
 
     CHudControlPointIcons( const char *pName );
@@ -424,7 +424,7 @@ class CHudControlPointIcons : public CHudElement, public vgui::Panel
         return ( m_bFakingCapture && ( index == -1 || index == m_iCurrentCP ) );
     }
 
-   private:
+    private:
     int m_iCPTextures[CP_TEXTURE_COUNT];
     int m_iCPCappingTextures[CP_TEXTURE_COUNT];
     int m_iTeamBaseTextures[MAX_TEAMS];

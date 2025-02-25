@@ -21,7 +21,7 @@
 //-----------------------------------------------------------------------------
 class CTEFizz : public CBaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTEFizz, CBaseTempEntity );
 
     CTEFizz( const char* name );
@@ -33,7 +33,7 @@ class CTEFizz : public CBaseTempEntity
 
     DECLARE_SERVERCLASS();
 
-   public:
+    public:
     CNetworkVar( int, m_nEntity );
     CNetworkVar( int, m_nModelIndex );
     CNetworkVar( int, m_nDensity );

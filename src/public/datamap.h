@@ -74,7 +74,7 @@ typedef enum _fieldtypes
 template < int FIELD_TYPE >
 class CDatamapFieldSizeDeducer
 {
-   public:
+    public:
     enum
     {
         SIZE = 0
@@ -90,7 +90,7 @@ class CDatamapFieldSizeDeducer
     template <>                                      \
     class CDatamapFieldSizeDeducer< _fieldType >     \
     {                                                \
-       public:                                       \
+        public:                                       \
         enum                                         \
         {                                            \
             SIZE = _fieldSize                        \
@@ -431,7 +431,7 @@ struct datamap_t
 #define END_DATADESC()                                                             \
     }                                                                              \
     ;                                                                              \
-                                                                                   \
+                                                                                    \
     if ( sizeof( dataDesc ) > sizeof( dataDesc[0] ) )                              \
     {                                                                              \
         classNameTypedef::m_DataMap.dataNumFields = SIZE_OF_ARRAY( dataDesc ) - 1; \
@@ -491,7 +491,7 @@ inline void DataMapAccess( T *ignored, datamap_t **p )
 
 class CDatadescGeneratedNameHolder
 {
-   public:
+    public:
     CDatadescGeneratedNameHolder( const char *pszBase )
         : m_pszBase( pszBase )
     {
@@ -515,7 +515,7 @@ class CDatadescGeneratedNameHolder
         return pBuf;
     }
 
-   private:
+    private:
     const char *m_pszBase;
     size_t m_nLenBase;
     CUtlVector< char * > m_Names;

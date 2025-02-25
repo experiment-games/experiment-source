@@ -13,7 +13,7 @@
 
 class CNPC_Alyx : public CNPC_PlayerCompanion
 {
-   public:
+    public:
     DECLARE_CLASS( CNPC_Alyx, CNPC_PlayerCompanion );
 
     bool CreateBehaviors();

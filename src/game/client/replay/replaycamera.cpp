@@ -646,8 +646,8 @@ void C_ReplayCamera::FixupMovmentParents()
     // Find resource zone
 
     for ( ClientEntityHandle_t e = ClientEntityList().FirstHandle();
-          e != ClientEntityList().InvalidHandle();
-          e = ClientEntityList().NextHandle( e ) )
+        e != ClientEntityList().InvalidHandle();
+        e = ClientEntityList().NextHandle( e ) )
     {
         C_BaseEntity* ent = C_BaseEntity::Instance( e );
 

@@ -16,13 +16,13 @@
 
 class CBitVecAccessor
 {
-   public:
+    public:
     CBitVecAccessor( uint32 *pDWords, int iBit );
 
     void operator=( int val );
     operator uint32();
 
-   private:
+    private:
     uint32 *m_pDWords;
     int m_iBit;
 };
@@ -216,7 +216,7 @@ inline int CalcNumIntsForBits( int numBits )
 template < class BASE_OPS >
 class CBitVecT : public BASE_OPS
 {
-   public:
+    public:
     CBitVecT();
     CBitVecT( int numBits );  // Must be initialized with the number of bits
 
@@ -285,7 +285,7 @@ class CBitVecT : public BASE_OPS
 template < typename BITCOUNTTYPE >
 class CVarBitVecBase
 {
-   public:
+    public:
     bool IsFixedSize() const
     {
         return false;
@@ -314,7 +314,7 @@ class CVarBitVecBase
 
     int FindNextSetBit( int iStartBit ) const;  // returns -1 if no set bit was found
 
-   protected:
+    protected:
     CVarBitVecBase();
     CVarBitVecBase( int numBits );
     CVarBitVecBase( const CVarBitVecBase< BITCOUNTTYPE > &from );
@@ -331,7 +331,7 @@ class CVarBitVecBase
         return ::GetEndMask( GetNumBits() );
     }
 
-   private:
+    private:
     BITCOUNTTYPE m_numBits;      // Number of bits in the bitstring
     BITCOUNTTYPE m_numInts;      // Number of ints to needed to store bitstring
     uint32 m_iBitStringStorage;  // If the bit string fits in one int, it goes here
@@ -614,7 +614,7 @@ struct BitCountToEndMask_t< 31 >
 template < int NUM_BITS >
 class CFixedBitVecBase
 {
-   public:
+    public:
     bool IsFixedSize() const
     {
         return true;
@@ -644,7 +644,7 @@ class CFixedBitVecBase
 
     int FindNextSetBit( int iStartBit ) const;  // returns -1 if no set bit was found
 
-   protected:
+    protected:
     CFixedBitVecBase() {}
     CFixedBitVecBase( int numBits )
     {
@@ -653,13 +653,13 @@ class CFixedBitVecBase
 
     void ValidateOperand( const CFixedBitVecBase< NUM_BITS > &operand ) const {}  // no need, compiler does so statically
 
-   public:  // for test code
+    public:  // for test code
     unsigned GetEndMask() const
     {
         return static_cast< unsigned >( BitCountToEndMask_t< NUM_BITS % BITS_PER_INT >::MASK );
     }
 
-   private:
+    private:
     enum
     {
         NUM_INTS = ( NUM_BITS + ( BITS_PER_INT - 1 ) ) / BITS_PER_INT
@@ -676,7 +676,7 @@ class CFixedBitVecBase
 // inheritance instead of typedef to allow forward declarations
 class CVarBitVec : public CBitVecT< CVarBitVecBase< unsigned short > >
 {
-   public:
+    public:
     CVarBitVec()
     {
     }
@@ -689,7 +689,7 @@ class CVarBitVec : public CBitVecT< CVarBitVecBase< unsigned short > >
 
 class CLargeVarBitVec : public CBitVecT< CVarBitVecBase< int > >
 {
-   public:
+    public:
     CLargeVarBitVec()
     {
     }
@@ -705,7 +705,7 @@ class CLargeVarBitVec : public CBitVecT< CVarBitVecBase< int > >
 template < int NUM_BITS >
 class CBitVec : public CBitVecT< CFixedBitVecBase< NUM_BITS > >
 {
-   public:
+    public:
     CBitVec()
     {
     }

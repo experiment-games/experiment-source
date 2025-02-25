@@ -21,7 +21,7 @@ DEFINE_FALLBACK_SHADER( VertexLitGeneric, VertexLitGeneric_DX8 )
 DEFINE_FALLBACK_SHADER( Skin_DX9, VertexLitGeneric_DX8 )
 
 BEGIN_VS_SHADER( VertexLitGeneric_DX8,
-                 "Help for VertexLitGeneric" )
+                "Help for VertexLitGeneric" )
 BEGIN_SHADER_PARAMS
 SHADER_PARAM( SELFILLUMTINT, SHADER_PARAM_TYPE_COLOR, "[1 1 1]", "Self-illumination tint" )
 SHADER_PARAM( DETAIL, SHADER_PARAM_TYPE_TEXTURE, "shadertest/detail", "detail texture" )
@@ -531,8 +531,8 @@ void DrawUnbumpedUsingVertexShader( IMaterialVar **params, IShaderDynamicAPI *pS
         // FIXME: This isn't going to work until we make more vertex shaders that
         // pass the vertex color and alpha values through.
 #if 0
-			if ( IS_FLAG_SET( MATERIAL_VAR_VERTEXCOLOR ) || IS_FLAG_SET( MATERIAL_VAR_VERTEXALPHA ) )
-				fmt |= VERTEX_COLOR;
+            if ( IS_FLAG_SET( MATERIAL_VAR_VERTEXCOLOR ) || IS_FLAG_SET( MATERIAL_VAR_VERTEXALPHA ) )
+                fmt |= VERTEX_COLOR;
 #endif
 
         if ( params[ENVMAP]->IsTexture() && !bSkipEnvmap )
@@ -617,7 +617,7 @@ void DrawUnbumpedUsingVertexShader( IMaterialVar **params, IShaderDynamicAPI *pS
             }
 
             if ( IS_FLAG_SET( MATERIAL_VAR_ENVMAPSPHERE ) ||
-                 IS_FLAG_SET( MATERIAL_VAR_ENVMAPCAMERASPACE ) )
+                IS_FLAG_SET( MATERIAL_VAR_ENVMAPCAMERASPACE ) )
             {
                 LoadViewMatrixIntoVertexShaderConstant( VERTEX_SHADER_VIEWMODEL );
             }

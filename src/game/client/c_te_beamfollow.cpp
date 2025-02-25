@@ -22,7 +22,7 @@
 //-----------------------------------------------------------------------------
 class C_TEBeamFollow : public C_TEBaseBeam
 {
-   public:
+    public:
     DECLARE_CLASS( C_TEBeamFollow, C_TEBaseBeam );
     DECLARE_CLIENTCLASS();
 
@@ -31,7 +31,7 @@ class C_TEBeamFollow : public C_TEBaseBeam
 
     virtual void PostDataUpdate( DataUpdateType_t updateType );
 
-   public:
+    public:
     int m_iEntIndex;
 };
 

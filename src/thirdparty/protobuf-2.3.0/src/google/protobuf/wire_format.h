@@ -78,7 +78,7 @@ namespace internal
 // This class is really a namespace that contains only static methods
 class LIBPROTOBUF_EXPORT WireFormat
 {
-   public:
+    public:
     // Given a field return its WireType
     static inline WireFormatLite::WireType WireTypeForField(
         const FieldDescriptor* field );
@@ -108,7 +108,7 @@ class LIBPROTOBUF_EXPORT WireFormat
     // Required fields are NOT checked by this method.  You must call
     // IsInitialized() on the resulting message yourself.
     static bool ParseAndMergePartial( io::CodedInputStream* input,
-                                      Message* message );
+                                    Message* message );
 
     // Serialize a message in protocol buffer wire format.
     //
@@ -140,7 +140,7 @@ class LIBPROTOBUF_EXPORT WireFormat
     // Reads and ignores a message from the input.  If unknown_fields is non-NULL,
     // the contents will be added to it.
     static bool SkipMessage( io::CodedInputStream* input,
-                             UnknownFieldSet* unknown_fields );
+                            UnknownFieldSet* unknown_fields );
 
     // Write the contents of an UnknownFieldSet to the output.
     static void SerializeUnknownFields( const UnknownFieldSet& unknown_fields,
@@ -234,7 +234,7 @@ class LIBPROTOBUF_EXPORT WireFormat
     // Verifies that a string field is valid UTF8, logging an error if not.
     static void VerifyUTF8String( const char* data, int size, Operation op );
 
-   private:
+    private:
     // Verifies that a string field is valid UTF8, logging an error if not.
     static void VerifyUTF8StringFallback(
         const char* data,
@@ -247,7 +247,7 @@ class LIBPROTOBUF_EXPORT WireFormat
 // Subclass of FieldSkipper which saves skipped fields to an UnknownFieldSet.
 class LIBPROTOBUF_EXPORT UnknownFieldSetFieldSkipper : public FieldSkipper
 {
-   public:
+    public:
     UnknownFieldSetFieldSkipper( UnknownFieldSet* unknown_fields )
         : unknown_fields_( unknown_fields ) {}
     virtual ~UnknownFieldSetFieldSkipper() {}
@@ -257,7 +257,7 @@ class LIBPROTOBUF_EXPORT UnknownFieldSetFieldSkipper : public FieldSkipper
     virtual bool SkipMessage( io::CodedInputStream* input );
     virtual void SkipUnknownEnum( int field_number, int value );
 
-   private:
+    private:
     UnknownFieldSet* unknown_fields_;
 };
 

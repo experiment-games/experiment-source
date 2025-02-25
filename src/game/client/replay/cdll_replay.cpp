@@ -45,7 +45,7 @@ extern IReplayMovieManager *g_pReplayMovieManager;
 
 class CClientReplayImp : public IClientReplay
 {
-   public:
+    public:
     virtual uint64 GetServerSessionId()
     {
         return GetSteamWorksSGameStatsUploader().GetServerSessionID();

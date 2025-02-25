@@ -21,7 +21,7 @@ class CAI_PassengerBehaviorZombie : public CAI_PassengerBehavior
     DECLARE_CLASS( CAI_PassengerBehaviorZombie, CAI_PassengerBehavior );
     DECLARE_DATADESC()
 
-   public:
+    public:
     CAI_PassengerBehaviorZombie( void );
 
     enum
@@ -72,7 +72,7 @@ class CAI_PassengerBehaviorZombie : public CAI_PassengerBehavior
 
     DEFINE_CUSTOM_SCHEDULE_PROVIDER;
 
-   protected:
+    protected:
     int SelectOutsideSchedule( void );
     int SelectInsideSchedule( void );
     virtual int FindExitSequence( void );
@@ -82,7 +82,7 @@ class CAI_PassengerBehaviorZombie : public CAI_PassengerBehavior
     virtual void GatherVehicleStateConditions( void );
     virtual int FindEntrySequence( bool bNearest = false );
 
-   private:
+    private:
     void VehicleLeapAttackTouch( CBaseEntity *pOther );
     void VehicleLeapAttack( void );
     bool CanBeOnEnemyVehicle( void );

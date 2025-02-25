@@ -53,7 +53,7 @@ class CCrossbowBolt : public CBaseCombatCharacter
 {
     DECLARE_CLASS( CCrossbowBolt, CBaseCombatCharacter );
 
-   public:
+    public:
     CCrossbowBolt(){};
     ~CCrossbowBolt();
 
@@ -62,7 +62,7 @@ class CCrossbowBolt : public CBaseCombatCharacter
         return CLASS_NONE;
     }
 
-   public:
+    public:
     void Spawn( void );
     void Precache( void );
     void BubbleThink( void );
@@ -71,7 +71,7 @@ class CCrossbowBolt : public CBaseCombatCharacter
     unsigned int PhysicsSolidMaskForEntity() const;
     static CCrossbowBolt *BoltCreate( const Vector &vecOrigin, const QAngle &angAngles, CBasePlayer *pentOwner = NULL );
 
-   protected:
+    protected:
     bool CreateSprites( void );
 
     CHandle< CSprite > m_pGlowSprite;
@@ -423,7 +423,7 @@ class CWeaponCrossbow : public CBaseHLCombatWeapon
 {
     DECLARE_CLASS( CWeaponCrossbow, CBaseHLCombatWeapon );
 
-   public:
+    public:
     CWeaponCrossbow( void );
 
     virtual void Precache( void );
@@ -450,7 +450,7 @@ class CWeaponCrossbow : public CBaseHLCombatWeapon
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
 
-   private:
+    private:
     void StopEffects( void );
     void SetSkin( int skinNum );
     void CheckZoomToggle( void );
@@ -471,7 +471,7 @@ class CWeaponCrossbow : public CBaseHLCombatWeapon
     void SetChargerState( ChargerState_t state );
     void DoLoadEffect( void );
 
-   private:
+    private:
     // Charger effects
     ChargerState_t m_nChargeState;
     CHandle< CSprite > m_hChargerSprite;

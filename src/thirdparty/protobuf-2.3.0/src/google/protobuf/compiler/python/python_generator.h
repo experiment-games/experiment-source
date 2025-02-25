@@ -67,17 +67,17 @@ namespace python
 // CodeGenerator with the CommandLineInterface in your main() function.
 class LIBPROTOC_EXPORT Generator : public CodeGenerator
 {
-   public:
+    public:
     Generator();
     virtual ~Generator();
 
     // CodeGenerator methods.
     virtual bool Generate( const FileDescriptor* file,
-                           const string& parameter,
-                           OutputDirectory* output_directory,
-                           string* error ) const;
+                            const string& parameter,
+                            OutputDirectory* output_directory,
+                            string* error ) const;
 
-   private:
+    private:
     void PrintImports() const;
     void PrintFileDescriptor() const;
     void PrintTopLevelEnums() const;
@@ -111,11 +111,11 @@ class LIBPROTOC_EXPORT Generator : public CodeGenerator
         const Descriptor& descriptor,
         const Descriptor* containing_descriptor ) const;
     void FixForeignFieldsInField( const Descriptor* containing_type,
-                                  const FieldDescriptor& field,
-                                  const string& python_dict_name ) const;
+                                const FieldDescriptor& field,
+                                const string& python_dict_name ) const;
     string FieldReferencingExpression( const Descriptor* containing_type,
-                                       const FieldDescriptor& field,
-                                       const string& python_dict_name ) const;
+                                        const FieldDescriptor& field,
+                                        const string& python_dict_name ) const;
     template < typename DescriptorT >
     void FixContainingTypeInDescriptor(
         const DescriptorT& descriptor,
@@ -133,7 +133,7 @@ class LIBPROTOC_EXPORT Generator : public CodeGenerator
 
     void PrintEnumValueDescriptor( const EnumValueDescriptor& descriptor ) const;
     string OptionsValue( const string& class_name,
-                         const string& serialized_options ) const;
+                        const string& serialized_options ) const;
     bool GeneratingDescriptorProto() const;
 
     template < typename DescriptorT >

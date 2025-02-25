@@ -15,7 +15,7 @@ CAchievementMgr g_AchievementMgrHL2;  // global achievement mgr for HL2
 
 class CAchievementHL2KillBarnaclesWithOneBarrel : public CBaseAchievement
 {
-   protected:
+    protected:
     virtual void Init()
     {
         SetFlags( ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS | ACH_SAVE_WITH_GAME );
@@ -114,7 +114,7 @@ class CAchievementHL2BeatRavenholmNoWeapons : public CFailableAchievement
 
     int m_iInitialAttackCount;
 
-   public:
+    public:
     DECLARE_DATADESC()
 };
 DECLARE_ACHIEVEMENT( CAchievementHL2BeatRavenholmNoWeapons, ACHIEVEMENT_HL2_BEAT_RAVENHOLM_NOWEAPONS, "HL2_BEAT_RAVENHOLM_NOWEAPONS", 25 );
@@ -208,7 +208,7 @@ class CAchievementHL2DisintegrateSoldiersInField : public CBaseAchievement
                 pszName = V_UnqualifiedFileName( pszName );
 
                 if ( ( 0 == Q_stricmp( pszName, "combine_soldier.mdl" ) ) ||
-                     ( 0 == Q_stricmp( pszName, "combine_super_soldier.mdl" ) ) )
+                    ( 0 == Q_stricmp( pszName, "combine_super_soldier.mdl" ) ) )
                 {
                     IncrementCount();
                 }

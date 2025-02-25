@@ -25,39 +25,39 @@ $MacroRequired OUTLIBDIR	"$SRCDIR\lib\public$PLATSUBDIR"
 
 $Configuration	"Debug"
 {
-	$General
-	{
-		$OutputDirectory			".\Debug_$GAMENAME"			[$WIN32]
-		$IntermediateDirectory		".\Debug_$GAMENAME"			[$WIN32]
+    $General
+    {
+        $OutputDirectory			".\Debug_$GAMENAME"			[$WIN32]
+        $IntermediateDirectory		".\Debug_$GAMENAME"			[$WIN32]
 
-		$OutputDirectory			".\Debug_$GAMENAME_360"		[$X360]
-		$IntermediateDirectory		".\Debug_$GAMENAME_360"		[$X360]
-	}
+        $OutputDirectory			".\Debug_$GAMENAME_360"		[$X360]
+        $IntermediateDirectory		".\Debug_$GAMENAME_360"		[$X360]
+    }
 }
 
 $Configuration	"Release"
 {
-	$General
-	{
-		$OutputDirectory			".\Release_$GAMENAME"		[$WIN32]
-		$IntermediateDirectory		".\Release_$GAMENAME"		[$WIN32]
+    $General
+    {
+        $OutputDirectory			".\Release_$GAMENAME"		[$WIN32]
+        $IntermediateDirectory		".\Release_$GAMENAME"		[$WIN32]
 
-		$OutputDirectory			".\Release_$GAMENAME_360"	[$X360]
-		$IntermediateDirectory		".\Release_$GAMENAME_360"	[$X360]
-	}
+        $OutputDirectory			".\Release_$GAMENAME_360"	[$X360]
+        $IntermediateDirectory		".\Release_$GAMENAME_360"	[$X360]
+    }
 }
 
 $Configuration
 {
-	$Compiler
-	{
+    $Compiler
+    {
         $PreprocessorDefinitions        "$BASE;LUA_BUILD_AS_DLL"
-		$RuntimeLibrary						"Multi-threaded DLL (/MD)"
-		$WarningLevel						"Level 3 (/W3)"
+        $RuntimeLibrary						"Multi-threaded DLL (/MD)"
+        $WarningLevel						"Level 3 (/W3)"
         $EnableC++Exceptions	"Yes (/EHsc)" [!$X360]
 
-		"$CompileAs"    "Compile as C Code (/TC)"
-	}
+        "$CompileAs"    "Compile as C Code (/TC)"
+    }
 
     $CustomBuildStep
     {
@@ -71,8 +71,8 @@ $Configuration
 
 $Project "lua54"
 {
-	$Folder	"Source Files"
-	{
+    $Folder	"Source Files"
+    {
         $File	"lapi.c"
         $File   "lapi.h"
         $File   "lauxlib.c"

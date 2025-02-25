@@ -39,7 +39,7 @@ class CPathTrack : public CPointEntity
 {
     DECLARE_CLASS( CPathTrack, CPointEntity );
 
-   public:
+    public:
     CPathTrack();
 
     void Spawn( void );
@@ -127,7 +127,7 @@ class CPathTrack : public CPointEntity
     void InputEnablePath( inputdata_t &inputdata );
     void InputDisablePath( inputdata_t &inputdata );
 
-   private:
+    private:
     void Project( CPathTrack *pstart, CPathTrack *pend, Vector &origin, float dist );
     void SetPrevious( CPathTrack *pprevious );
     void Link( void );
@@ -156,7 +156,7 @@ class CPathTrack : public CPointEntity
 
 class CPathTrackVisitor
 {
-   public:
+    public:
     CPathTrackVisitor()
     {
         CPathTrack::BeginIteration();

@@ -22,7 +22,7 @@
 //-----------------------------------------------------------------------------
 class IDmElementFactoryInternal : public IDmElementFactory
 {
-   public:
+    public:
     virtual void SetElementTypeSymbol( CUtlSymbol sym ) = 0;
     virtual bool IsAbstract() const = 0;
 };
@@ -32,14 +32,14 @@ class IDmElementFactoryInternal : public IDmElementFactory
 //-----------------------------------------------------------------------------
 class CDmElementFactoryHelper
 {
-   public:
+    public:
     // Static list of helpers
     static CDmElementFactoryHelper *s_pHelpers[2];
 
     // Create all the hud elements
     static void InstallFactories();
 
-   public:
+    public:
     // Construction
     CDmElementFactoryHelper( const char *pClassName, IDmElementFactoryInternal *pFactory, bool bIsStandardFactory );
 
@@ -49,7 +49,7 @@ class CDmElementFactoryHelper
     const char *GetClassname();
     IDmElementFactoryInternal *GetFactory();
 
-   private:
+    private:
     // Next factory in list
     CDmElementFactoryHelper *m_pNext;
     // Creation function to use for this technology
@@ -76,7 +76,7 @@ inline IDmElementFactoryInternal *CDmElementFactoryHelper::GetFactory()
 template < class T >
 class CDmElementFactory : public IDmElementFactoryInternal
 {
-   public:
+    public:
     CDmElementFactory( const char *pLookupName )
         : m_pLookupName( pLookupName ) {}
 
@@ -107,14 +107,14 @@ class CDmElementFactory : public IDmElementFactoryInternal
         return false;
     }
 
-   private:
+    private:
     const char *m_pLookupName;
 };
 
 template < class T >
 class CDmAbstractElementFactory : public IDmElementFactoryInternal
 {
-   public:
+    public:
     CDmAbstractElementFactory() {}
 
     // Creation, destruction
@@ -138,7 +138,7 @@ class CDmAbstractElementFactory : public IDmElementFactoryInternal
         return true;
     }
 
-   private:
+    private:
 };
 
 //-----------------------------------------------------------------------------

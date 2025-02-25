@@ -480,7 +480,7 @@ bool CControlPointIcon::IsVisible( void )
 void CControlPointIcon::Paint( void )
 {
     if ( m_bCachedLockedState != IsPointLocked() ||
-         m_bCachedCountdownState != IsPointUnlockCountdownRunning() )
+        m_bCachedCountdownState != IsPointUnlockCountdownRunning() )
     {
         UpdateImage();
     }

@@ -16,14 +16,14 @@
 //--------------------------------------------------------------------------------------------------------
 class CExperimentSWeaponInfo : public FileWeaponInfo_t
 {
-   public:
+    public:
     DECLARE_CLASS_GAMEROOT( CExperimentSWeaponInfo, FileWeaponInfo_t );
 
     CExperimentSWeaponInfo();
 
     virtual void Parse( ::KeyValues *pKeyValuesData, const char *szWeaponName );
 
-   public:
+    public:
     int m_iPlayerDamage;
 };
 

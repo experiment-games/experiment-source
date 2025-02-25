@@ -23,12 +23,12 @@ class CReplayScreenshotSlideshowPanel : public CSlideshowPanel
 {
     DECLARE_CLASS_SIMPLE( CReplayScreenshotSlideshowPanel, CSlideshowPanel );
 
-   public:
+    public:
     CReplayScreenshotSlideshowPanel( Panel *pParent, const char *pName, ReplayHandle_t hReplay );
 
     virtual void PerformLayout();
 
-   private:
+    private:
     ReplayHandle_t m_hReplay;
 };
 
@@ -44,7 +44,7 @@ class CReplayBrowserThumbnail : public CReplayBasePanel
 {
     DECLARE_CLASS_SIMPLE( CReplayBrowserThumbnail, CReplayBasePanel );
 
-   public:
+    public:
     CReplayBrowserThumbnail( Panel *pParent, const char *pName, QueryableReplayItemHandle_t hReplayItem, IReplayItemManager *pReplayItemManager );
     ~CReplayBrowserThumbnail();
 
@@ -69,7 +69,7 @@ class CReplayBrowserThumbnail : public CReplayBasePanel
     CCrossfadableImagePanel *m_pScreenshotThumb;
     QueryableReplayItemHandle_t m_hReplayItem;
 
-   private:
+    private:
     void SetupReplayItemUserData( void *pUserData );
     void UpdateProgress( bool bDownloadPhase, const CReplay *pReplay );
 
@@ -99,7 +99,7 @@ class CReplayBrowserThumbnailRow : public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CReplayBrowserThumbnailRow, EditablePanel );
 
-   public:
+    public:
     CReplayBrowserThumbnailRow( Panel *pParent, const char *pName, IReplayItemManager *pReplayItemManager );
 
     void AddReplayThumbnail( const IQueryableReplayItem *pReplay );
@@ -132,7 +132,7 @@ class CBaseThumbnailCollection : public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CBaseThumbnailCollection, EditablePanel );
 
-   public:
+    public:
     CBaseThumbnailCollection( CReplayListPanel *pParent, const char *pName, IReplayItemManager *pReplayItemManager );
 
     void AddReplay( const IQueryableReplayItem *pItem );
@@ -161,7 +161,7 @@ class CBaseThumbnailCollection : public EditablePanel
     typedef CUtlVector< CReplayBrowserThumbnailRow * > RowContainer_t;
     RowContainer_t m_vecRows;
 
-   protected:
+    protected:
     // Called from PerformLayout() - layout any panels that should appear at the top (vertically)-most position
     virtual void LayoutUpperPanels( int nStartY, int nBgWidth ) = 0;
     virtual void LayoutBackgroundPanel( int nWide, int nTall ) {}
@@ -171,7 +171,7 @@ class CBaseThumbnailCollection : public EditablePanel
 
     int m_nStartX;
 
-   protected:
+    protected:
     CExLabel *m_pNoReplayItemsLabel;
     IReplayItemManager *m_pReplayItemManager;
 
@@ -187,7 +187,7 @@ class CBaseThumbnailCollection : public EditablePanel
     CExLabel *m_pTitleLabel;
     CExButton *m_pRenderAllButton;
 
-   private:
+    private:
     int GetRowStartY();
 
     CReplayListPanel *m_pParentListPanel;  // Parent gets altered so we keep this cached ptr around
@@ -200,7 +200,7 @@ class CReplayThumbnailCollection : public CBaseThumbnailCollection
 {
     DECLARE_CLASS_SIMPLE( CReplayThumbnailCollection, CBaseThumbnailCollection );
 
-   public:
+    public:
     CReplayThumbnailCollection( CReplayListPanel *pParent, const char *pName, IReplayItemManager *pReplayItemManager );
 
     virtual bool IsMovieCollection() const;
@@ -226,14 +226,14 @@ class CMovieThumbnailCollection : public CBaseThumbnailCollection
 {
     DECLARE_CLASS_SIMPLE( CMovieThumbnailCollection, CBaseThumbnailCollection );
 
-   public:
+    public:
     CMovieThumbnailCollection( CReplayListPanel *pParent, const char *pName, IReplayItemManager *pReplayItemManager, int nDay, int nMonth, int nYear, bool bShowSavedMoviesLabel );
     CMovieThumbnailCollection( CReplayListPanel *pParent, const char *pName, IReplayItemManager *pReplayItemManager, bool bShowSavedMoviesLabel );
 
     bool DoesDateMatch( int nDay, int nMonth, int nYear );
     virtual bool IsMovieCollection() const;
 
-   private:
+    private:
     void Init( int nDay, int nMonth, int nYear, bool bShowSavedMoviesLabel );
     virtual void PerformLayout();
     virtual void ApplySchemeSettings( IScheme *pScheme );

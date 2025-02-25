@@ -106,11 +106,11 @@ TEST(MessageTest, StreamsString) {
 // Tests that we can output strings containing embedded NULs.
 TEST(MessageTest, StreamsStringWithEmbeddedNUL) {
   const char char_array_with_nul[] =
-      "Here's a NUL\0 and some more string";
+    "Here's a NUL\0 and some more string";
   const ::std::string string_with_nul(char_array_with_nul,
-                                      sizeof(char_array_with_nul) - 1);
+                                    sizeof(char_array_with_nul) - 1);
   EXPECT_STREQ("Here's a NUL\\0 and some more string",
-               ToCString(Message() << string_with_nul));
+                ToCString(Message() << string_with_nul));
 }
 
 #endif  // GTEST_HAS_STD_STRING
@@ -129,9 +129,9 @@ TEST(MessageTest, StreamsInt) {
 // streamed to Message.
 TEST(MessageTest, StreamsBasicIoManip) {
   EXPECT_STREQ("Line 1.\nA NUL char \\0 in line 2.",
-               ToCString(Message() << "Line 1." << std::endl
-                         << "A NUL char " << std::ends << std::flush
-                         << " in line 2."));
+                ToCString(Message() << "Line 1." << std::endl
+                        << "A NUL char " << std::ends << std::flush
+                        << " in line 2."));
 }
 
 // Tests Message::GetString()

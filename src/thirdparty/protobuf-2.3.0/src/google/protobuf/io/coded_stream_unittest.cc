@@ -82,44 +82,44 @@ namespace {
 
 #define TEST_1D(FIXTURE, NAME, CASES)                                      \
   class FIXTURE##_##NAME##_DD : public FIXTURE {                           \
-   protected:                                                              \
+    protected:                                                              \
     template <typename CaseType>                                           \
     void DoSingleCase(const CaseType& CASES##_case);                       \
   };                                                                       \
-                                                                           \
+                                                                            \
   TEST_F(FIXTURE##_##NAME##_DD, NAME) {                                    \
     for (int i = 0; i < GOOGLE_ARRAYSIZE(CASES); i++) {                           \
-      SCOPED_TRACE(testing::Message()                                      \
+    SCOPED_TRACE(testing::Message()                                      \
         << #CASES " case #" << i << ": " << CASES[i]);                     \
-      DoSingleCase(CASES[i]);                                              \
+    DoSingleCase(CASES[i]);                                              \
     }                                                                      \
   }                                                                        \
-                                                                           \
+                                                                            \
   template <typename CaseType>                                             \
   void FIXTURE##_##NAME##_DD::DoSingleCase(const CaseType& CASES##_case)
 
 #define TEST_2D(FIXTURE, NAME, CASES1, CASES2)                             \
   class FIXTURE##_##NAME##_DD : public FIXTURE {                           \
-   protected:                                                              \
+    protected:                                                              \
     template <typename CaseType1, typename CaseType2>                      \
     void DoSingleCase(const CaseType1& CASES1##_case,                      \
-                      const CaseType2& CASES2##_case);                     \
+                    const CaseType2& CASES2##_case);                     \
   };                                                                       \
-                                                                           \
+                                                                            \
   TEST_F(FIXTURE##_##NAME##_DD, NAME) {                                    \
     for (int i = 0; i < GOOGLE_ARRAYSIZE(CASES1); i++) {                          \
-      for (int j = 0; j < GOOGLE_ARRAYSIZE(CASES2); j++) {                        \
+    for (int j = 0; j < GOOGLE_ARRAYSIZE(CASES2); j++) {                        \
         SCOPED_TRACE(testing::Message()                                    \
-          << #CASES1 " case #" << i << ": " << CASES1[i] << ", "           \
-          << #CASES2 " case #" << j << ": " << CASES2[j]);                 \
+        << #CASES1 " case #" << i << ": " << CASES1[i] << ", "           \
+        << #CASES2 " case #" << j << ": " << CASES2[j]);                 \
         DoSingleCase(CASES1[i], CASES2[j]);                                \
-      }                                                                    \
+    }                                                                    \
     }                                                                      \
   }                                                                        \
-                                                                           \
+                                                                            \
   template <typename CaseType1, typename CaseType2>                        \
   void FIXTURE##_##NAME##_DD::DoSingleCase(const CaseType1& CASES1##_case, \
-                                           const CaseType2& CASES2##_case)
+                                            const CaseType2& CASES2##_case)
 
 // ===================================================================
 
@@ -228,10 +228,10 @@ TEST_1D(CodedStreamTest, ExpectTag, kVarintCases) {
 
     // ExpectTag() produces false negatives for large values.
     if (kVarintCases_case.size <= 2) {
-      EXPECT_FALSE(coded_input.ExpectTag(expected_value + 1));
-      EXPECT_TRUE(coded_input.ExpectTag(expected_value));
+    EXPECT_FALSE(coded_input.ExpectTag(expected_value + 1));
+    EXPECT_TRUE(coded_input.ExpectTag(expected_value));
     } else {
-      EXPECT_FALSE(coded_input.ExpectTag(expected_value));
+    EXPECT_FALSE(coded_input.ExpectTag(expected_value));
     }
   }
 
@@ -251,7 +251,7 @@ TEST_1D(CodedStreamTest, ExpectTagFromArray, kVarintCases) {
   if (kVarintCases_case.size <= 2) {
     EXPECT_TRUE(NULL ==
                 CodedInputStream::ExpectTagFromArray(buffer_,
-                                                     expected_value + 1));
+                                                    expected_value + 1));
     EXPECT_TRUE(buffer_ + kVarintCases_case.size ==
                 CodedInputStream::ExpectTagFromArray(buffer_, expected_value));
   } else {
@@ -333,9 +333,9 @@ TEST_2D(CodedStreamTest, WriteVarint32SignExtended,
     EXPECT_FALSE(coded_output.HadError());
 
     if (kSignExtendedVarintCases_case < 0) {
-      EXPECT_EQ(10, coded_output.ByteCount());
+    EXPECT_EQ(10, coded_output.ByteCount());
     } else {
-      EXPECT_LE(coded_output.ByteCount(), 5);
+    EXPECT_LE(coded_output.ByteCount(), 5);
     }
   }
 
@@ -392,13 +392,13 @@ const VarintErrorCase kVarintErrorCases[] = {
 
   // Longer than 10 bytes.
   {{0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x01},
-   11, false},
+    11, false},
 };
 
 TEST_2D(CodedStreamTest, ReadVarint32Error, kVarintErrorCases, kBlockSizes) {
   memcpy(buffer_, kVarintErrorCases_case.bytes, kVarintErrorCases_case.size);
   ArrayInputStream input(buffer_, kVarintErrorCases_case.size,
-                         kBlockSizes_case);
+                        kBlockSizes_case);
   CodedInputStream coded_input(&input);
 
   uint32 value;
@@ -408,7 +408,7 @@ TEST_2D(CodedStreamTest, ReadVarint32Error, kVarintErrorCases, kBlockSizes) {
 TEST_2D(CodedStreamTest, ReadVarint64Error, kVarintErrorCases, kBlockSizes) {
   memcpy(buffer_, kVarintErrorCases_case.bytes, kVarintErrorCases_case.size);
   ArrayInputStream input(buffer_, kVarintErrorCases_case.size,
-                         kBlockSizes_case);
+                        kBlockSizes_case);
   CodedInputStream coded_input(&input);
 
   uint64 value;
@@ -446,7 +446,7 @@ TEST_1D(CodedStreamTest, VarintSize32, kVarintSizeCases) {
 
   EXPECT_EQ(kVarintSizeCases_case.size,
     CodedOutputStream::VarintSize32(
-      static_cast<uint32>(kVarintSizeCases_case.value)));
+    static_cast<uint32>(kVarintSizeCases_case.value)));
 }
 
 TEST_1D(CodedStreamTest, VarintSize64, kVarintSizeCases) {
@@ -554,7 +554,7 @@ TEST_1D(CodedStreamTest, ReadLittleEndian32FromArray, kFixed32Cases) {
 
   uint32 value;
   const uint8* end = CodedInputStream::ReadLittleEndian32FromArray(
-      buffer_, &value);
+    buffer_, &value);
   EXPECT_EQ(kFixed32Cases_case.value, value);
   EXPECT_TRUE(end == buffer_ + sizeof(value));
 }
@@ -564,7 +564,7 @@ TEST_1D(CodedStreamTest, ReadLittleEndian64FromArray, kFixed64Cases) {
 
   uint64 value;
   const uint8* end = CodedInputStream::ReadLittleEndian64FromArray(
-      buffer_, &value);
+    buffer_, &value);
   EXPECT_EQ(kFixed64Cases_case.value, value);
   EXPECT_TRUE(end == buffer_ + sizeof(value));
 }
@@ -1043,11 +1043,11 @@ class ReallyBigInputStream : public ZeroCopyInputStream {
     EXPECT_EQ(0, backup_amount_);
 
     switch (buffer_count_++) {
-      case 0:
+    case 0:
         *data = buffer_;
         *size = sizeof(buffer_);
         return true;
-      case 1:
+    case 1:
         // Return an enormously large buffer that, when combined with the 1k
         // returned already, should overflow the total_bytes_read_ counter in
         // CodedInputStream.  Note that we'll only read the first 1024 bytes
@@ -1055,7 +1055,7 @@ class ReallyBigInputStream : public ZeroCopyInputStream {
         *data = buffer_;
         *size = INT_MAX;
         return true;
-      default:
+    default:
         return false;
     }
   }

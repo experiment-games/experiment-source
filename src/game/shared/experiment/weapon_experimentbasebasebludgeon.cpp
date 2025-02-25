@@ -81,12 +81,12 @@ void CBaseExperimentBludgeonWeapon::ItemPostFrame( void )
         return;
 
     if ( ( pOwner->m_nButtons & IN_ATTACK ) &&
-         ( m_flNextPrimaryAttack <= gpGlobals->curtime ) )
+        ( m_flNextPrimaryAttack <= gpGlobals->curtime ) )
     {
         PrimaryAttack();
     }
     else if ( ( pOwner->m_nButtons & IN_ATTACK2 ) &&
-              ( m_flNextSecondaryAttack <= gpGlobals->curtime ) )
+            ( m_flNextSecondaryAttack <= gpGlobals->curtime ) )
     {
         SecondaryAttack();
     }
@@ -108,7 +108,7 @@ void CBaseExperimentBludgeonWeapon::PrimaryAttack()
     CExperiment_Player *pPlayer = ToExperimentPlayer( GetPlayerOwner() );
     // Move other players back to history positions based on local player's lag
     lagcompensation->StartLagCompensation( pPlayer,
-                                           pPlayer->GetCurrentCommand() );
+                                            pPlayer->GetCurrentCommand() );
 #endif
     Swing( false );
 #ifndef CLIENT_DLL
@@ -228,7 +228,7 @@ Activity CBaseExperimentBludgeonWeapon::ChooseIntersectionPointAndActivity(
 // Input  : &traceHit -
 //-----------------------------------------------------------------------------
 bool CBaseExperimentBludgeonWeapon::ImpactWater( const Vector &start,
-                                                 const Vector &end )
+                                                const Vector &end )
 {
     // FIXME: This doesn't handle the case of trying to splash while being
     // underwater, but that's not going to look good 		 right now anyway...
@@ -313,8 +313,8 @@ void CBaseExperimentBludgeonWeapon::Swing( int bIsSecondary )
     {
         float bludgeonHullRadius =
             1.732f * BLUDGEON_HULL_DIM;  // hull is +/- 16, so use cuberoot of 2
-                                         // to determine how big the hull is
-                                         // from center to the corner point
+                                        // to determine how big the hull is
+                                        // from center to the corner point
 
         // Back off by hull "radius"
         swingEnd -= forward * bludgeonHullRadius;

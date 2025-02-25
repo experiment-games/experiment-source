@@ -33,7 +33,7 @@ RAPIDJSON_NAMESPACE_BEGIN
 */
 class FileReadStream
 {
-   public:
+    public:
     typedef char Ch;  //!< Character type (byte).
 
     //! Constructor.
@@ -91,7 +91,7 @@ class FileReadStream
         return ( current_ + 4 <= bufferLast_ ) ? current_ : 0;
     }
 
-   private:
+    private:
     void Read()
     {
         if ( current_ < bufferLast_ )

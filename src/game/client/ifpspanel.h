@@ -25,14 +25,14 @@ class Panel;
 
 abstract_class IFPSPanel
 {
-   public:
+    public:
     virtual void Create( vgui::VPANEL parent ) = 0;
     virtual void Destroy( void ) = 0;
 };
 
 abstract_class IShowBlockingPanel
 {
-   public:
+    public:
     virtual void Create( vgui::VPANEL parent ) = 0;
     virtual void Destroy( void ) = 0;
 };

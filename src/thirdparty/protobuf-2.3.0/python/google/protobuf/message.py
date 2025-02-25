@@ -86,7 +86,7 @@ class Message(object):
     appended. Singular sub-messages and groups are recursively merged.
 
     Args:
-      other_msg: Message to merge into the current message.
+    other_msg: Message to merge into the current message.
     """
     raise NotImplementedError
 
@@ -97,10 +97,10 @@ class Message(object):
     message using MergeFrom.
 
     Args:
-      other_msg: Message to copy into the current one.
+    other_msg: Message to copy into the current one.
     """
     if self is other_msg:
-      return
+    return
     self.Clear()
     self.MergeFrom(other_msg)
 
@@ -121,8 +121,8 @@ class Message(object):
     """Checks if the message is initialized.
 
     Returns:
-      The method returns True if the message is initialized (i.e. all of its
-      required fields are set).
+    The method returns True if the message is initialized (i.e. all of its
+    required fields are set).
     """
     raise NotImplementedError
 
@@ -137,28 +137,28 @@ class Message(object):
 
     When we find a field in |serialized| that is already present
     in this message:
-      - If it's a "repeated" field, we append to the end of our list.
-      - Else, if it's a scalar, we overwrite our field.
-      - Else, (it's a nonrepeated composite), we recursively merge
+    - If it's a "repeated" field, we append to the end of our list.
+    - Else, if it's a scalar, we overwrite our field.
+    - Else, (it's a nonrepeated composite), we recursively merge
         into the existing composite.
 
     TODO(robinson): Document handling of unknown fields.
 
     Args:
-      serialized: Any object that allows us to call buffer(serialized)
+    serialized: Any object that allows us to call buffer(serialized)
         to access a string of bytes using the buffer interface.
 
     TODO(robinson): When we switch to a helper, this will return None.
 
     Returns:
-      The number of bytes read from |serialized|.
-      For non-group messages, this will always be len(serialized),
-      but for messages which are actually groups, this will
-      generally be less than len(serialized), since we must
-      stop when we reach an END_GROUP tag.  Note that if
-      we *do* stop because of an END_GROUP tag, the number
-      of bytes returned does not include the bytes
-      for the END_GROUP tag information.
+    The number of bytes read from |serialized|.
+    For non-group messages, this will always be len(serialized),
+    but for messages which are actually groups, this will
+    generally be less than len(serialized), since we must
+    stop when we reach an END_GROUP tag.  Note that if
+    we *do* stop because of an END_GROUP tag, the number
+    of bytes returned does not include the bytes
+    for the END_GROUP tag information.
     """
     raise NotImplementedError
 
@@ -171,11 +171,11 @@ class Message(object):
     """Serializes the protocol message to a binary string.
 
     Returns:
-      A binary string representation of the message if all of the required
-      fields in the message are set (i.e. the message is initialized).
+    A binary string representation of the message if all of the required
+    fields in the message are set (i.e. the message is initialized).
 
     Raises:
-      message.EncodeError if the message isn't initialized.
+    message.EncodeError if the message isn't initialized.
     """
     raise NotImplementedError
 
@@ -186,7 +186,7 @@ class Message(object):
     message is initialized.
 
     Returns:
-      A string representation of the partial message.
+    A string representation of the partial message.
     """
     raise NotImplementedError
 

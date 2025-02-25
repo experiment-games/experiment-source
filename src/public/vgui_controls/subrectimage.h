@@ -19,7 +19,7 @@
 //-----------------------------------------------------------------------------
 class CSubRectImage : public vgui::Image
 {
-   public:
+    public:
     CSubRectImage( const char *filename, bool hardwareFiltered, int subx, int suby, int subw, int subh );
     virtual ~CSubRectImage();
 
@@ -34,7 +34,7 @@ class CSubRectImage : public vgui::Image
     vgui::HTexture GetID();
     bool IsValid();
 
-   private:
+    private:
     vgui::HTexture _id;
     int sub[4];
     char *_filename;

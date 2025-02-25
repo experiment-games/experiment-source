@@ -86,7 +86,7 @@ enum BlendType_t
 //-----------------------------------------------------------------------------
 class CBaseShader : public IShader
 {
-   public:
+    public:
     // constructor
     CBaseShader();
 
@@ -116,7 +116,7 @@ class CBaseShader : public IShader
     virtual bool NeedsFullFrameBufferTexture( IMaterialVar **params, bool bCheckSpecificToThisFrame = true ) const;
     virtual bool IsTranslucent( IMaterialVar **params ) const;
 
-   public:
+    public:
     // These functions must be implemented by the shader
     virtual void OnInitShaderParams( IMaterialVar **ppParams, const char *pMaterialName ) {}
     virtual void OnInitShaderInstance( IMaterialVar **ppParams, IShaderInit *pShaderInit, const char *pMaterialName ) = 0;
@@ -259,7 +259,7 @@ class CBaseShader : public IShader
 
     static IMaterialVar **s_ppParams;
 
-   protected:
+    protected:
     SoftwareVertexShader_t m_SoftwareVertexShader;
 
     static const char *s_pTextureGroupName;  // Current material's texture group name.
@@ -267,7 +267,7 @@ class CBaseShader : public IShader
     static IShaderDynamicAPI *s_pShaderAPI;
     static IShaderInit *s_pShaderInit;
 
-   private:
+    private:
     static int s_nModulationFlags;
     static CMeshBuilder *s_pMeshBuilder;
 };
@@ -306,7 +306,7 @@ inline bool CBaseShader::IsWhite( int colorVar )
 
 class CBasePerMaterialContextData  // shaders can keep per material data in classes descended from this
 {
-   public:
+    public:
     uint32 m_nVarChangeID;
     bool m_bMaterialVarsChanged;  // set by mat system when material vars change. shader should rehtink and then clear the var
 

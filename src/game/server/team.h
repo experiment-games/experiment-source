@@ -21,7 +21,7 @@ class CTeam : public CBaseEntity
 {
     DECLARE_CLASS( CTeam, CBaseEntity );
 
-   public:
+    public:
     CTeam( void );
     virtual ~CTeam( void );
 
@@ -91,7 +91,7 @@ class CTeam : public CBaseEntity
 
     virtual int GetAliveMembers( void );
 
-   public:
+    public:
     CUtlVector< CTeamSpawnPoint * > m_aSpawnPoints;
     CUtlVector< CBasePlayer * > m_aPlayers;
 

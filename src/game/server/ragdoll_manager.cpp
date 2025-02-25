@@ -16,7 +16,7 @@
 
 class CRagdollManager : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CRagdollManager, CBaseEntity );
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
@@ -31,7 +31,7 @@ class CRagdollManager : public CBaseEntity
 
     int DrawDebugTextOverlays( void );
 
-   public:
+    public:
     void UpdateCurrentMaxRagDollCount();
 
     CNetworkVar( int, m_iCurrentMaxRagdollCount );

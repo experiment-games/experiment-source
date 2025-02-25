@@ -24,7 +24,7 @@ class CWorldItem : public CBaseAnimating
 {
     DECLARE_DATADESC();
 
-   public:
+    public:
     DECLARE_CLASS( CWorldItem, CBaseAnimating );
 
     bool KeyValue( const char *szKeyName, const char *szValue );

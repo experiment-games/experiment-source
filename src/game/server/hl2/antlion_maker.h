@@ -26,7 +26,7 @@
 
 class CAntlionTemplateMaker : public CTemplateNPCMaker
 {
-   public:
+    public:
     DECLARE_CLASS( CAntlionTemplateMaker, CTemplateNPCMaker );
 
     CAntlionTemplateMaker( void );
@@ -107,7 +107,7 @@ class CAntlionTemplateMaker : public CTemplateNPCMaker
     void DisableSpore( const char *sporename );
     void DisableAllSpores( void );
 
-   protected:
+    protected:
     void PrecacheTemplateEntity( CBaseEntity *pEntity );
 
     bool FindHintSpawnPosition( const Vector &origin, float radius, string_t hintGroupName, CAI_Hint **pHint, bool bRandom = false );
@@ -122,7 +122,7 @@ class CAntlionTemplateMaker : public CTemplateNPCMaker
     void PoolAdd( int iNumToAdd );
     void PoolRegenThink( void );
 
-   protected:
+    protected:
     // FIXME: The m_strSpawnGroup is redundant to the m_iszDestinationGroup in the base class NPC template maker
     string_t m_strSpawnGroup;   // if present, spawn children on the nearest node of this group (to the player)
     string_t m_strSpawnTarget;  // name of target to spawn near
@@ -138,7 +138,7 @@ class CAntlionTemplateMaker : public CTemplateNPCMaker
 
     EHANDLE m_hFightTarget;   // A normal entity pointer for fight position
     EHANDLE m_hProxyTarget;   // This is a self-held target that is created and used when a vector is passed in as a fight
-                              // goal, instead of an entity
+                            // goal, instead of an entity
     EHANDLE m_hFollowTarget;  // Target to follow
 
     CUtlVector< CHandle< CNPC_Antlion > > m_Children;
@@ -169,7 +169,7 @@ class CAntlionTemplateMaker : public CTemplateNPCMaker
 
 class CAntlionMakerManager : public CAutoGameSystem
 {
-   public:
+    public:
     CAntlionMakerManager( char const *name )
         : CAutoGameSystem( name )
     {
@@ -181,7 +181,7 @@ class CAntlionMakerManager : public CAutoGameSystem
     void BroadcastFightGoal( CBaseEntity *pFightGoal );
     void BroadcastFollowGoal( CBaseEntity *pFollowGoal );
 
-   protected:
+    protected:
     void GatherMakers( void );
 
     CUtlVector< CHandle< CAntlionTemplateMaker > > m_Makers;

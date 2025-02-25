@@ -148,7 +148,7 @@ inline bool StrtodDiyFp( const char* decimals, int dLen, int dExp, double* resul
     for ( ; i < dLen; i++ )
     {
         if ( significand > RAPIDJSON_UINT64_C2( 0x19999999, 0x99999999 ) ||
-             ( significand == RAPIDJSON_UINT64_C2( 0x19999999, 0x99999999 ) && decimals[i] > '5' ) )
+            ( significand == RAPIDJSON_UINT64_C2( 0x19999999, 0x99999999 ) && decimals[i] > '5' ) )
             break;
         significand = significand * 10u + static_cast< unsigned >( decimals[i] - '0' );
     }

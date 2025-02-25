@@ -279,7 +279,7 @@ struct interval_t
 template < class HandleType >
 class CBaseIntHandle
 {
-   public:
+    public:
     inline bool operator==( const CBaseIntHandle &other )
     {
         return m_Handle == other.m_Handle;
@@ -302,14 +302,14 @@ class CBaseIntHandle
 
     typedef HandleType HANDLE_TYPE;
 
-   protected:
+    protected:
     HandleType m_Handle;
 };
 
 template < class DummyType >
 class CIntHandle16 : public CBaseIntHandle< unsigned short >
 {
-   public:
+    public:
     inline CIntHandle16() {}
 
     static inline CIntHandle16< DummyType > MakeHandle( HANDLE_TYPE val )
@@ -317,7 +317,7 @@ class CIntHandle16 : public CBaseIntHandle< unsigned short >
         return CIntHandle16< DummyType >( val );
     }
 
-   protected:
+    protected:
     inline CIntHandle16( HANDLE_TYPE val )
     {
         m_Handle = val;
@@ -327,7 +327,7 @@ class CIntHandle16 : public CBaseIntHandle< unsigned short >
 template < class DummyType >
 class CIntHandle32 : public CBaseIntHandle< unsigned long >
 {
-   public:
+    public:
     inline CIntHandle32() {}
 
     static inline CIntHandle32< DummyType > MakeHandle( HANDLE_TYPE val )
@@ -335,7 +335,7 @@ class CIntHandle32 : public CBaseIntHandle< unsigned long >
         return CIntHandle32< DummyType >( val );
     }
 
-   protected:
+    protected:
     inline CIntHandle32( HANDLE_TYPE val )
     {
         m_Handle = val;

@@ -4,8 +4,8 @@
  */
 
 /* WARNING: this file should *not* be used by applications. It is
-   part of the implementation of the compression library and is
-   subject to change. Applications should only use zlib.h.
+    part of the implementation of the compression library and is
+    subject to change. Applications should only use zlib.h.
  */
 
 /* @(#) $Id$ */
@@ -33,8 +33,8 @@
 #define local static
 #endif
 /* since "static" is used to mean two completely different things in C, we
-   define "local" for the non-static meaning of "static", for readability
-   (compile with -Dlocal if your debugger can't find static symbols) */
+    define "local" for the non-static meaning of "static", for readability
+    (compile with -Dlocal if your debugger can't find static symbols) */
 
 typedef unsigned char uch;
 typedef uch FAR uchf;
@@ -269,6 +269,6 @@ void ZLIB_INTERNAL zcfree( voidpf opaque, voidpf ptr );
 
 /* Reverse the bytes in a 32-bit value */
 #define ZSWAP32( q ) ( ( ( ( q ) >> 24 ) & 0xff ) + ( ( ( q ) >> 8 ) & 0xff00 ) + \
-                       ( ( ( q ) & 0xff00 ) << 8 ) + ( ( ( q ) & 0xff ) << 24 ) )
+                        ( ( ( q ) & 0xff00 ) << 8 ) + ( ( ( q ) & 0xff ) << 24 ) )
 
 #endif /* ZUTIL_H */

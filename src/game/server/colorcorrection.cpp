@@ -28,7 +28,7 @@ class CColorCorrection : public CBaseEntity
 {
     DECLARE_CLASS( CColorCorrection, CBaseEntity );
 
-   public:
+    public:
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
 
@@ -49,7 +49,7 @@ class CColorCorrection : public CBaseEntity
     void InputSetFadeInDuration( inputdata_t &inputdata );
     void InputSetFadeOutDuration( inputdata_t &inputdata );
 
-   private:
+    private:
     void FadeIn( void );
     void FadeOut( void );
 
@@ -207,10 +207,10 @@ void CColorCorrection::FadeInThink( void )
 {
     // Check for conditions where we shouldnt fade in
     if ( m_flFadeInDuration <= 0 ||                // not set to fade in
-         m_flCurWeight >= m_flMaxWeight ||         // already past max weight
-         !m_bEnabled ||                            // fade in/out mutex
-         m_flMaxWeight == 0.0f ||                  // min==max
-         m_flStartFadeInWeight >= m_flMaxWeight )  // already at max weight
+        m_flCurWeight >= m_flMaxWeight ||         // already past max weight
+        !m_bEnabled ||                            // fade in/out mutex
+        m_flMaxWeight == 0.0f ||                  // min==max
+        m_flStartFadeInWeight >= m_flMaxWeight )  // already at max weight
     {
         SetNextThink( TICK_NEVER_THINK, s_pFadeInContextThink );
         return;
@@ -242,10 +242,10 @@ void CColorCorrection::FadeOutThink( void )
 {
     // Check for conditions where we shouldn't fade out
     if ( m_flFadeOutDuration <= 0 ||       // not set to fade out
-         m_flCurWeight <= 0.0f ||          // already faded out
-         m_bEnabled ||                     // fade in/out mutex
-         m_flMaxWeight == 0.0f ||          // min==max
-         m_flStartFadeOutWeight <= 0.0f )  // already at min weight
+        m_flCurWeight <= 0.0f ||          // already faded out
+        m_bEnabled ||                     // fade in/out mutex
+        m_flMaxWeight == 0.0f ||          // min==max
+        m_flStartFadeOutWeight <= 0.0f )  // already at min weight
     {
         SetNextThink( TICK_NEVER_THINK, s_pFadeOutContextThink );
         return;

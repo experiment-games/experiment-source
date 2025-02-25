@@ -23,7 +23,7 @@ namespace vgui
 //-----------------------------------------------------------------------------
 class Point
 {
-   public:
+    public:
     // constructors
     Point()
     {
@@ -51,7 +51,7 @@ class Point
         return ( x == rhs.x && y == rhs.y );
     }
 
-   private:
+    private:
     int x, y;
 };
 

@@ -430,7 +430,7 @@ bool SixenseInput::LoadModules()
             m_pControllerManager = reinterpret_cast< sixenseUtils::IControllerManager * >( factory( "ControllerManager", NULL ) );
 
             if ( m_pFPSViewAngles && m_pFPSPlayerMovement && m_pFPSEvents && m_pLaserPointer && m_pLeftDeriv &&
-                 m_pRightDeriv && m_pLeftButtonStates && m_pRightButtonStates && m_pControllerManager )
+                m_pRightDeriv && m_pLeftButtonStates && m_pRightButtonStates && m_pControllerManager )
             {
                 found_objects = true;
             }
@@ -475,49 +475,49 @@ bool SixenseInput::UnloadModules()
 }
 
 #if 0
-static void update_controller_manager_visibility( sixenseAllControllerData *acd ) 
+static void update_controller_manager_visibility( sixenseAllControllerData *acd )
 {
 
-	if( !SixenseInput::m_SixenseFrame ) return;
+    if( !SixenseInput::m_SixenseFrame ) return;
 
-	bool controllers_docked = acd->controllers[0].is_docked || acd->controllers[1].is_docked;
+    bool controllers_docked = acd->controllers[0].is_docked || acd->controllers[1].is_docked;
 
 
-	bool power_up_screens_showing = false;
-	// It's ok for there to be no device plugged in, don't show the controller manager in that case
-	std::string current_step = m_pControllerManager->getTextureFileName();
-	if( current_step == "1P2C/p1c2_power_up_0.tif" || current_step == "1P2C/p1c2_power_up_1.tif" ) 
-	{
-		power_up_screens_showing = true;
-	}
+    bool power_up_screens_showing = false;
+    // It's ok for there to be no device plugged in, don't show the controller manager in that case
+    std::string current_step = m_pControllerManager->getTextureFileName();
+    if( current_step == "1P2C/p1c2_power_up_0.tif" || current_step == "1P2C/p1c2_power_up_1.tif" )
+    {
+        power_up_screens_showing = true;
+    }
 
-	//Msg("current step %s\n", current_step.c_str() );
+    //Msg("current step %s\n", current_step.c_str() );
 
-	// if sixense is enabled, and the cm is trying to say something, and it's not trying to show the power up screens, and the controllers arent docked show the frame
-	if( g_pSixenseInput->IsEnabled() && 
-		m_pControllerManager->isMenuVisible() &&
-		!power_up_screens_showing && 
-		!controllers_docked ) 
-	{
-		if( !SixenseInput::m_SixenseFrame->IsVisible() ) 
-		{
-			SixenseInput::m_SixenseFrame->SetVisible( true );
-			SixenseInput::m_SixenseFrame->MoveToFront();
+    // if sixense is enabled, and the cm is trying to say something, and it's not trying to show the power up screens, and the controllers arent docked show the frame
+    if( g_pSixenseInput->IsEnabled() &&
+        m_pControllerManager->isMenuVisible() &&
+        !power_up_screens_showing &&
+        !controllers_docked )
+    {
+        if( !SixenseInput::m_SixenseFrame->IsVisible() )
+        {
+            SixenseInput::m_SixenseFrame->SetVisible( true );
+            SixenseInput::m_SixenseFrame->MoveToFront();
 
-			// Pause the engine if we can...
-			engine->ClientCmd_Unrestricted( "setpause nomsg" );
-		}
-	}
-	else 
-	{
-		if( SixenseInput::m_SixenseFrame->IsVisible() ) 	// otherwise turn it off
+            // Pause the engine if we can...
+            engine->ClientCmd_Unrestricted( "setpause nomsg" );
+        }
+    }
+    else
+    {
+        if( SixenseInput::m_SixenseFrame->IsVisible() ) 	// otherwise turn it off
 
-		{
-			SixenseInput::m_SixenseFrame->SetVisible( false );
-			engine->ClientCmd_Unrestricted( "unpause nomsg" );
+        {
+            SixenseInput::m_SixenseFrame->SetVisible( false );
+            engine->ClientCmd_Unrestricted( "unpause nomsg" );
 
-		}
-	}
+        }
+    }
 
 }
 #endif
@@ -530,33 +530,33 @@ static void controller_manager_setup_callback( sixenseUtils::IControllerManager:
 void SixenseInput::controllerManagerCallback( int iSetupStep )
 {
 #if 0
-	Msg( "controller_manager_setup_callback: %s\n", m_pControllerManager->getTextureFileName() );
+    Msg( "controller_manager_setup_callback: %s\n", m_pControllerManager->getTextureFileName() );
 
-	if ( m_pControllerManager->isMenuVisible() )
-	{
+    if ( m_pControllerManager->isMenuVisible() )
+    {
 
-		if ( SixenseInput::m_SixenseFrame )
-		{
+        if ( SixenseInput::m_SixenseFrame )
+        {
 
-			sixenseUtils::sixense_utils_string tex_name = m_pControllerManager->getTextureFileName();
+            sixenseUtils::sixense_utils_string tex_name = m_pControllerManager->getTextureFileName();
 
-			std::string image_name( tex_name.begin(), tex_name.end() );
+            std::string image_name( tex_name.begin(), tex_name.end() );
 
-			image_name = image_name.substr( image_name.find_last_of( '/' ) );
-			image_name = image_name.substr( 0, image_name.find_first_of( '.' ) );
+            image_name = image_name.substr( image_name.find_last_of( '/' ) );
+            image_name = image_name.substr( 0, image_name.find_first_of( '.' ) );
 
-			CUtlString cm_str( "../sixense_controller_manager" );
-			cm_str.Append( image_name.c_str() );
+            CUtlString cm_str( "../sixense_controller_manager" );
+            cm_str.Append( image_name.c_str() );
 
-			SixenseInput::m_SixenseFrame->setImage( cm_str );
+            SixenseInput::m_SixenseFrame->setImage( cm_str );
 
-		}
-	}
+        }
+    }
 
-	if ( m_pControllerManager->shouldPlaySound() == sixenseUtils::IControllerManager::SUCCESS_BEEP )
-	{
-		vgui::surface()->PlaySound( "UI/buttonclickrelease.wav" );
-	}
+    if ( m_pControllerManager->shouldPlaySound() == sixenseUtils::IControllerManager::SUCCESS_BEEP )
+    {
+        vgui::surface()->PlaySound( "UI/buttonclickrelease.wav" );
+    }
 #endif
 }
 
@@ -727,19 +727,19 @@ extern "C" int sixenseGetDebugParam( const char *param_name, float *val );
 static void inc_debug_val( const CCommand &args )
 {
 
-	if ( args.ArgC() != 3 )
-	{
-		Warning( "Incorrect parameters. Format: sixense_set_debug_val <var> <val>\n" );
-		return;
-	}
+    if ( args.ArgC() != 3 )
+    {
+        Warning( "Incorrect parameters. Format: sixense_set_debug_val <var> <val>\n" );
+        return;
+    }
 
-	float current;
-	sixenseGetDebugParam( args[1], &current );
+    float current;
+    sixenseGetDebugParam( args[1], &current );
 
-	float new_val = current + atof( args[2] );
-	sixenseSetDebugParam( args[1], new_val );
+    float new_val = current + atof( args[2] );
+    sixenseSetDebugParam( args[1], new_val );
 
-	Msg( "set \"%s\" to %f\n", args[1], new_val );
+    Msg( "set \"%s\" to %f\n", args[1], new_val );
 }
 
 ConCommand sixense_inc_debug_val( "sixense_inc_debug_val", inc_debug_val );
@@ -938,9 +938,9 @@ void SixenseInput::FireGameEvent( IGameEvent *pEvent )
 void SixenseInput::PlayerDroppedEntity( int entityID )
 {
     if ( UTIL_IsScaledCube( cl_entitylist->GetBaseEntity( entityID ) ) &&
-         !m_bIsIn1to1Mode &&
-         m_pFPSViewAngles &&
-         ( m_pFPSViewAngles->getParameter( sixenseUtils::IFPSViewAngles::AIM_METROID_MAX_SPEED ) <= sixense_aim_freeaim_max_speed.GetFloat() ) )
+        !m_bIsIn1to1Mode &&
+        m_pFPSViewAngles &&
+        ( m_pFPSViewAngles->getParameter( sixenseUtils::IFPSViewAngles::AIM_METROID_MAX_SPEED ) <= sixense_aim_freeaim_max_speed.GetFloat() ) )
     {
         m_pFPSViewAngles->forceMetroidBlend( m_pFPSViewAngles->getParameter( sixenseUtils::IFPSViewAngles::AIM_METROID_MAX_SPEED ) / sixense_aim_freeaim_max_speed.GetFloat() );
     }
@@ -1670,8 +1670,8 @@ bool SixenseInput::SixenseFrame( float flFrametime, CUserCmd *pCmd )
 
     // Update returns false if there aren't enough controllers to play, so disable all the sixense stuff
     if ( m_pFPSViewAngles->update( &m_pACD->controllers[m_nLeftIndex], &m_pACD->controllers[m_nRightIndex], flFrametime * 1000.0f ) == SIXENSE_FAILURE ||
-         m_pControllerManager->isMenuVisible() ||
-         vgui::surface()->IsCursorVisible() )
+        m_pControllerManager->isMenuVisible() ||
+        vgui::surface()->IsCursorVisible() )
     {
         return false;
     }
@@ -1859,10 +1859,10 @@ void SixenseInput::SwitchViewModes( CUserCmd *pCmd )
     //}
     // exit 1-to-1 if we dropped the object we were holding, or if the lock button was pressed again
     if ( ( !IsHoldingObject() && m_bIsIn1to1Mode && !m_bExitOneWhenAimingForwards ) ||
-         ( m_bIs1to1ModeLocked &&
-           !m_bIs1to1ModeScaling &&
-           m_pRightButtonStates->justPressed( lock_button ) &&
-           ( pPortalPlayer && !pPortalPlayer->IsScalingUseItem() && !pPortalPlayer->IsScalingUseItemTurret() ) ) )
+        ( m_bIs1to1ModeLocked &&
+            !m_bIs1to1ModeScaling &&
+            m_pRightButtonStates->justPressed( lock_button ) &&
+            ( pPortalPlayer && !pPortalPlayer->IsScalingUseItem() && !pPortalPlayer->IsScalingUseItemTurret() ) ) )
     {
         m_bExitOneWhenAimingForwards = true;
     }
@@ -1883,9 +1883,9 @@ void SixenseInput::SwitchViewModes( CUserCmd *pCmd )
 
     // if we just started scaling go into 1-to-1
     else if ( !m_bIs1to1ModeLocked &&
-              !m_bIs1to1ModeScaling &&
-              IsHoldingObject() &&
-              ( pPortalPlayer && ( pPortalPlayer->IsScalingUseItem() || pPortalPlayer->IsScalingUseItemTurret() ) ) )
+            !m_bIs1to1ModeScaling &&
+            IsHoldingObject() &&
+            ( pPortalPlayer && ( pPortalPlayer->IsScalingUseItem() || pPortalPlayer->IsScalingUseItemTurret() ) ) )
     {
         m_bIs1to1ModeScaling = true;
         SetOneToOneMode( true );
@@ -1895,8 +1895,8 @@ void SixenseInput::SwitchViewModes( CUserCmd *pCmd )
     else if (
         ( !IsHoldingObject() && m_bIsIn1to1Mode ) ||
         ( m_bIs1to1ModeLocked &&
-          m_bIs1to1ModeScaling &&
-          ( pPortalPlayer && !pPortalPlayer->IsScalingUseItem() && !pPortalPlayer->IsScalingUseItemTurret() ) ) )
+        m_bIs1to1ModeScaling &&
+        ( pPortalPlayer && !pPortalPlayer->IsScalingUseItem() && !pPortalPlayer->IsScalingUseItemTurret() ) ) )
     {
         m_bIs1to1ModeScaling = false;
         m_bIs1to1ModeRatcheting = false;
@@ -2239,7 +2239,7 @@ void SixenseInput::SixenseUpdateControllerManager()
     m_pControllerManager->update( m_pACD );
 
 #if 0
-	update_controller_manager_visibility( &acd );
+    update_controller_manager_visibility( &acd );
 #endif
 }
 
@@ -2439,10 +2439,10 @@ void SixenseInput::SixenseUpdateKeys( float flFrametime, CUserCmd *pCmd )
 
     // If the controller manager is up or the game is paused, don't do anything.
     if ( InMenuMode() ||
-         ( C_BasePlayer::GetLocalPlayer() && C_BasePlayer::GetLocalPlayer()->IsObserver() ) ||
-         ( m_nLeftIndex == -1 ) ||
-         ( m_nRightIndex == -1 ) ||
-         ( m_nGesturesDisabled == 1 ) )
+        ( C_BasePlayer::GetLocalPlayer() && C_BasePlayer::GetLocalPlayer()->IsObserver() ) ||
+        ( m_nLeftIndex == -1 ) ||
+        ( m_nRightIndex == -1 ) ||
+        ( m_nGesturesDisabled == 1 ) )
     {
         // No new data, set the keys to what they were last time we did have new data
 
@@ -2528,8 +2528,8 @@ void SixenseInput::SixenseUpdateKeys( float flFrametime, CUserCmd *pCmd )
             {
                 // if the class or team menus are up hide it with start
                 if ( ( Q_strcmp( panel->GetName(), "class_blue" ) == 0 ) ||
-                     ( Q_strcmp( panel->GetName(), "class_red" ) == 0 ) ||
-                     ( Q_strcmp( panel->GetName(), "team" ) == 0 ) )
+                    ( Q_strcmp( panel->GetName(), "class_red" ) == 0 ) ||
+                    ( Q_strcmp( panel->GetName(), "team" ) == 0 ) )
                 {
                     if ( m_pLeftButtonStates->buttonJustPressed( SIXENSE_BUTTON_START ) )
                     {
@@ -2769,8 +2769,8 @@ void SixenseInput::SixenseUpdateKeys( float flFrametime, CUserCmd *pCmd )
 
         // check to see how long the zoom button was pressed. If it was really short, we should lock the zoom
         if ( ( m_pACD->controllers[m_nRightIndex].buttons & SIXENSE_BUTTON_JOYSTICK ) &&
-             !momentary_zoom &&
-             ( C_BasePlayer::GetLocalPlayer() && C_BasePlayer::GetLocalPlayer()->IsZoomed() ) )
+            !momentary_zoom &&
+            ( C_BasePlayer::GetLocalPlayer() && C_BasePlayer::GetLocalPlayer()->IsZoomed() ) )
         {
             double current_time = sixenseUtils::Time::getTimeInMilliseconds();
             double button_held_time = current_time - zoom_button_press_time;
@@ -2813,11 +2813,11 @@ void SixenseInput::SixenseUpdateKeys( float flFrametime, CUserCmd *pCmd )
 
         // Button one-to-one
         if ( !sixense_dist_one_to_one_enabled.GetInt() && sixense_auto_one_to_one_enabled.GetInt() &&
-             IsHoldingObject() &&
-             !m_bIs1to1ModeScaling &&
-             ( C_Portal_Player::GetLocalPortalPlayer() &&
-               !C_Portal_Player::GetLocalPortalPlayer()->IsScalingUseItem() &&
-               !C_Portal_Player::GetLocalPortalPlayer()->IsScalingUseItemTurret() ) )
+            IsHoldingObject() &&
+            !m_bIs1to1ModeScaling &&
+            ( C_Portal_Player::GetLocalPortalPlayer() &&
+                !C_Portal_Player::GetLocalPortalPlayer()->IsScalingUseItem() &&
+                !C_Portal_Player::GetLocalPortalPlayer()->IsScalingUseItemTurret() ) )
         {
             // one to one
             if ( m_pFPSEvents->eventStarted( sixenseUtils::IFPSEvents::ONE_TO_ONE_CARRY ) )
@@ -2833,12 +2833,12 @@ void SixenseInput::SixenseUpdateKeys( float flFrametime, CUserCmd *pCmd )
 
         // dist one-to-one
         if ( sixense_dist_one_to_one_enabled.GetInt() &&
-             IsHoldingObject() &&
-             !m_bIs1to1ModeScaling &&
-             !m_bScalingLockedOneToOne &&
-             ( C_Portal_Player::GetLocalPortalPlayer() &&
-               !C_Portal_Player::GetLocalPortalPlayer()->IsScalingUseItem() &&
-               !C_Portal_Player::GetLocalPortalPlayer()->IsScalingUseItemTurret() ) )
+            IsHoldingObject() &&
+            !m_bIs1to1ModeScaling &&
+            !m_bScalingLockedOneToOne &&
+            ( C_Portal_Player::GetLocalPortalPlayer() &&
+                !C_Portal_Player::GetLocalPortalPlayer()->IsScalingUseItem() &&
+                !C_Portal_Player::GetLocalPortalPlayer()->IsScalingUseItemTurret() ) )
         {
             Vector3 cur_pos = Vector3( m_pACD->controllers[m_nRightIndex].pos );
 
@@ -2846,18 +2846,18 @@ void SixenseInput::SixenseUpdateKeys( float flFrametime, CUserCmd *pCmd )
 
             static float fEndOneToOneRatchetDelayTime = 0.0f;
             if ( !IsInOneToOneMode() &&
-                 ( C_Portal_Player::GetLocalPortalPlayer() && C_Portal_Player::GetLocalPortalPlayer()->GetActiveWeapon() ) &&
-                 ( ( delta_vec[2] < -sixense_dist_one_to_one_dist.GetFloat() ) ||         // start one to one if you reach forwards
-                   ( delta_vec[1] > 1.5f * sixense_dist_one_to_one_dist.GetFloat() ) ) )  // start one to one if you raise up 1.5 times the dist too...
+                ( C_Portal_Player::GetLocalPortalPlayer() && C_Portal_Player::GetLocalPortalPlayer()->GetActiveWeapon() ) &&
+                ( ( delta_vec[2] < -sixense_dist_one_to_one_dist.GetFloat() ) ||         // start one to one if you reach forwards
+                    ( delta_vec[1] > 1.5f * sixense_dist_one_to_one_dist.GetFloat() ) ) )  // start one to one if you raise up 1.5 times the dist too...
             {
                 SetOneToOneMode( true );
                 fEndOneToOneRatchetDelayTime = 0.0f;
             }
             else if ( IsInOneToOneMode() &&
-                      ( delta_vec[2] > -sixense_dist_one_to_one_dist.GetFloat() ) &&
-                      ( delta_vec[1] < 1.5f * sixense_dist_one_to_one_dist.GetFloat() ) &&
-                      ( delta_vec.length() < 2.0f * sixense_dist_one_to_one_dist.GetFloat() ) &&
-                      IsAimingForwards() )
+                    ( delta_vec[2] > -sixense_dist_one_to_one_dist.GetFloat() ) &&
+                    ( delta_vec[1] < 1.5f * sixense_dist_one_to_one_dist.GetFloat() ) &&
+                    ( delta_vec.length() < 2.0f * sixense_dist_one_to_one_dist.GetFloat() ) &&
+                    IsAimingForwards() )
             {
                 // if ratcheting when ending 1to1 mode, first end ratchet, then end 1to1 after a short delay so end ratchet can propogate to server
                 if ( m_bIs1to1ModeRatcheting )
@@ -2867,7 +2867,7 @@ void SixenseInput::SixenseUpdateKeys( float flFrametime, CUserCmd *pCmd )
                     fEndOneToOneRatchetDelayTime = gpGlobals->curtime;
                 }
                 else if ( ( fEndOneToOneRatchetDelayTime == 0.0f ) ||
-                          ( ( gpGlobals->curtime - fEndOneToOneRatchetDelayTime ) > sixense_dist_one_to_one_end_ratchet_delay.GetFloat() ) )
+                        ( ( gpGlobals->curtime - fEndOneToOneRatchetDelayTime ) > sixense_dist_one_to_one_end_ratchet_delay.GetFloat() ) )
                 {
                     SetOneToOneMode( false );
                     fEndOneToOneRatchetDelayTime = 0.0f;
@@ -2925,14 +2925,14 @@ void SixenseInput::SixenseUpdateKeys( float flFrametime, CUserCmd *pCmd )
 
     // jump
     if ( !jump_disabled &&
-         ( m_pFPSEvents->eventStarted( sixenseUtils::IFPSEvents::JUMP ) ||
-           ( m_pRightButtonStates->justPressed( SIXENSE_BUTTON_3 ) || m_pRightButtonStates->justPressed( SIXENSE_BUTTON_4 ) ) ) )
+        ( m_pFPSEvents->eventStarted( sixenseUtils::IFPSEvents::JUMP ) ||
+            ( m_pRightButtonStates->justPressed( SIXENSE_BUTTON_3 ) || m_pRightButtonStates->justPressed( SIXENSE_BUTTON_4 ) ) ) )
     {
         new_buttons |= IN_JUMP;
     }
 
     if ( m_pFPSEvents->eventStopped( sixenseUtils::IFPSEvents::JUMP ) ||
-         ( m_pRightButtonStates->justReleased( SIXENSE_BUTTON_3 ) || m_pRightButtonStates->justReleased( SIXENSE_BUTTON_4 ) ) )
+        ( m_pRightButtonStates->justReleased( SIXENSE_BUTTON_3 ) || m_pRightButtonStates->justReleased( SIXENSE_BUTTON_4 ) ) )
     {
         new_buttons &= ~IN_JUMP;
     }
@@ -3072,7 +3072,7 @@ void SixenseInput::SixenseUpdateMouseCursor()
     }
 
 #if 0
-	sixenseUtils::mouseAndKeyboardWin32::processQueue();
+    sixenseUtils::mouseAndKeyboardWin32::processQueue();
 #endif
 
     // Keep track of when the left button is down so we can turn it off if we leave mouse mode
@@ -3342,11 +3342,11 @@ QAngle SixenseInput::GetViewAngleOffset()
 #if 0
 static void printmat( std::string name, sixenseMath::Matrix4 mat )
 {
-	Msg( "%s\n", name.c_str() );
-	Msg( "[0][0]=%f  [1][0]=%f  [2][0]=%f  [3][0]=%f \n", mat[0][0], mat[1][0], mat[2][0], mat[3][0] );
-	Msg( "[0][1]=%f  [1][1]=%f  [2][1]=%f  [3][1]=%f \n", mat[0][1], mat[1][1], mat[2][1], mat[3][1] );
-	Msg( "[0][2]=%f  [1][2]=%f  [2][2]=%f  [3][2]=%f \n", mat[0][2], mat[1][2], mat[2][2], mat[3][2] );
-	Msg( "[0][3]=%f  [1][3]=%f  [2][3]=%f  [3][3]=%f \n\n", mat[0][3], mat[1][3], mat[2][3], mat[3][3] );
+    Msg( "%s\n", name.c_str() );
+    Msg( "[0][0]=%f  [1][0]=%f  [2][0]=%f  [3][0]=%f \n", mat[0][0], mat[1][0], mat[2][0], mat[3][0] );
+    Msg( "[0][1]=%f  [1][1]=%f  [2][1]=%f  [3][1]=%f \n", mat[0][1], mat[1][1], mat[2][1], mat[3][1] );
+    Msg( "[0][2]=%f  [1][2]=%f  [2][2]=%f  [3][2]=%f \n", mat[0][2], mat[1][2], mat[2][2], mat[3][2] );
+    Msg( "[0][3]=%f  [1][3]=%f  [2][3]=%f  [3][3]=%f \n\n", mat[0][3], mat[1][3], mat[2][3], mat[3][3] );
 
 }
 #endif

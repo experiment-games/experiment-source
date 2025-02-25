@@ -15,7 +15,7 @@
 
 class IWorkUnitDistributorCallbacks
 {
-   public:
+    public:
     // Called every 200ms or so as it does the work.
     // Return true to stop distributing work.
     virtual bool Update()
@@ -73,7 +73,7 @@ bool DistributeWorkDispatch( MessageBuffer *pBuf, int iSource, int iPacketID );
 double DistributeWork(
     uint64 nWorkUnits,            // how many work units to dole out
     char cPacketID,               // This packet ID must be reserved for DistributeWork and DistributeWorkDispatch
-                                  // must be registered with it.
+                                // must be registered with it.
     ProcessWorkUnitFn processFn,  // workers implement this to process a work unit and send results back
     ReceiveWorkUnitFn receiveFn   // the master implements this to receive a work unit
 );

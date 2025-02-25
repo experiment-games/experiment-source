@@ -38,7 +38,7 @@ The arguments are:
   buffer:     The string containing the encoded message.
   pos:        The current position in the string.
   end:        The position in the string where the current message ends.  May be
-              less than len(buffer) if we're reading a sub-message.
+            less than len(buffer) if we're reading a sub-message.
   message:    The message object into which we're parsing.
   field_dict: message._fields (avoids a hashtable lookup).
 The decoder reads the field and stores it into field_dict, returning the new
@@ -65,12 +65,12 @@ The arguments are:
   is_repeated:   Is the field a repeated field? (bool)
   is_packed:     Is the field a packed field? (bool)
   key:           The key to use when looking up the field within field_dict.
-                 (This is actually the FieldDescriptor but nothing in this
-                 file should depend on that.)
+                (This is actually the FieldDescriptor but nothing in this
+                file should depend on that.)
   new_default:   A function which takes a message object as a parameter and
-                 returns a new instance of the default value for this field.
-                 (This is called for repeated fields and sub-messages, when an
-                 instance does not already exist.)
+                returns a new instance of the default value for this field.
+                (This is called for repeated fields and sub-messages, when an
+                instance does not already exist.)
 
 As with encoders, we define a decoder constructor for every type of field.
 Then, for every field of every message class we construct an actual decoder.
@@ -106,14 +106,14 @@ def _VarintDecoder(mask):
     result = 0
     shift = 0
     while 1:
-      b = local_ord(buffer[pos])
-      result |= ((b & 0x7f) << shift)
-      pos += 1
-      if not (b & 0x80):
+    b = local_ord(buffer[pos])
+    result |= ((b & 0x7f) << shift)
+    pos += 1
+    if not (b & 0x80):
         result &= mask
         return (result, pos)
-      shift += 7
-      if shift >= 64:
+    shift += 7
+    if shift >= 64:
         raise _DecodeError('Too many bytes when decoding varint.')
   return DecodeVarint
 
@@ -126,18 +126,18 @@ def _SignedVarintDecoder(mask):
     result = 0
     shift = 0
     while 1:
-      b = local_ord(buffer[pos])
-      result |= ((b & 0x7f) << shift)
-      pos += 1
-      if not (b & 0x80):
+    b = local_ord(buffer[pos])
+    result |= ((b & 0x7f) << shift)
+    pos += 1
+    if not (b & 0x80):
         if result > 0x7fffffffffffffff:
-          result -= (1 << 64)
-          result |= ~mask
+        result -= (1 << 64)
+        result |= ~mask
         else:
-          result &= mask
+        result &= mask
         return (result, pos)
-      shift += 7
-      if shift >= 64:
+    shift += 7
+    if shift >= 64:
         raise _DecodeError('Too many bytes when decoding varint.')
   return DecodeVarint
 
@@ -175,57 +175,57 @@ def _SimpleDecoder(wire_type, decode_value):
   """Return a constructor for a decoder for fields of a particular type.
 
   Args:
-      wire_type:  The field's wire type.
-      decode_value:  A function which decodes an individual value, e.g.
+    wire_type:  The field's wire type.
+    decode_value:  A function which decodes an individual value, e.g.
         _DecodeVarint()
   """
 
   def SpecificDecoder(field_number, is_repeated, is_packed, key, new_default):
     if is_packed:
-      local_DecodeVarint = _DecodeVarint
-      def DecodePackedField(buffer, pos, end, message, field_dict):
+    local_DecodeVarint = _DecodeVarint
+    def DecodePackedField(buffer, pos, end, message, field_dict):
         value = field_dict.get(key)
         if value is None:
-          value = field_dict.setdefault(key, new_default(message))
+        value = field_dict.setdefault(key, new_default(message))
         (endpoint, pos) = local_DecodeVarint(buffer, pos)
         endpoint += pos
         if endpoint > end:
-          raise _DecodeError('Truncated message.')
+        raise _DecodeError('Truncated message.')
         while pos < endpoint:
-          (element, pos) = decode_value(buffer, pos)
-          value.append(element)
+        (element, pos) = decode_value(buffer, pos)
+        value.append(element)
         if pos > endpoint:
-          del value[-1]   # Discard corrupt value.
-          raise _DecodeError('Packed element was truncated.')
+        del value[-1]   # Discard corrupt value.
+        raise _DecodeError('Packed element was truncated.')
         return pos
-      return DecodePackedField
+    return DecodePackedField
     elif is_repeated:
-      tag_bytes = encoder.TagBytes(field_number, wire_type)
-      tag_len = len(tag_bytes)
-      def DecodeRepeatedField(buffer, pos, end, message, field_dict):
+    tag_bytes = encoder.TagBytes(field_number, wire_type)
+    tag_len = len(tag_bytes)
+    def DecodeRepeatedField(buffer, pos, end, message, field_dict):
         value = field_dict.get(key)
         if value is None:
-          value = field_dict.setdefault(key, new_default(message))
+        value = field_dict.setdefault(key, new_default(message))
         while 1:
-          (element, new_pos) = decode_value(buffer, pos)
-          value.append(element)
-          # Predict that the next tag is another copy of the same repeated
-          # field.
-          pos = new_pos + tag_len
-          if buffer[new_pos:pos] != tag_bytes or new_pos >= end:
+        (element, new_pos) = decode_value(buffer, pos)
+        value.append(element)
+        # Predict that the next tag is another copy of the same repeated
+        # field.
+        pos = new_pos + tag_len
+        if buffer[new_pos:pos] != tag_bytes or new_pos >= end:
             # Prediction failed.  Return.
             if new_pos > end:
-              raise _DecodeError('Truncated message.')
+            raise _DecodeError('Truncated message.')
             return new_pos
-      return DecodeRepeatedField
+    return DecodeRepeatedField
     else:
-      def DecodeField(buffer, pos, end, message, field_dict):
+    def DecodeField(buffer, pos, end, message, field_dict):
         (field_dict[key], pos) = decode_value(buffer, pos)
         if pos > end:
-          del field_dict[key]  # Discard corrupt value.
-          raise _DecodeError('Truncated message.')
+        del field_dict[key]  # Discard corrupt value.
+        raise _DecodeError('Truncated message.')
         return pos
-      return DecodeField
+    return DecodeField
 
   return SpecificDecoder
 
@@ -248,8 +248,8 @@ def _StructPackDecoder(wire_type, format):
   """Return a constructor for a decoder for a fixed-width field.
 
   Args:
-      wire_type:  The field's wire type.
-      format:  The format string to pass to struct.unpack().
+    wire_type:  The field's wire type.
+    format:  The format string to pass to struct.unpack().
   """
 
   value_size = struct.calcsize(format)
@@ -310,32 +310,32 @@ def StringDecoder(field_number, is_repeated, is_packed, key, new_default):
   assert not is_packed
   if is_repeated:
     tag_bytes = encoder.TagBytes(field_number,
-                                 wire_format.WIRETYPE_LENGTH_DELIMITED)
+                                wire_format.WIRETYPE_LENGTH_DELIMITED)
     tag_len = len(tag_bytes)
     def DecodeRepeatedField(buffer, pos, end, message, field_dict):
-      value = field_dict.get(key)
-      if value is None:
+    value = field_dict.get(key)
+    if value is None:
         value = field_dict.setdefault(key, new_default(message))
-      while 1:
+    while 1:
         (size, pos) = local_DecodeVarint(buffer, pos)
         new_pos = pos + size
         if new_pos > end:
-          raise _DecodeError('Truncated string.')
+        raise _DecodeError('Truncated string.')
         value.append(local_unicode(buffer[pos:new_pos], 'utf-8'))
         # Predict that the next tag is another copy of the same repeated field.
         pos = new_pos + tag_len
         if buffer[new_pos:pos] != tag_bytes or new_pos == end:
-          # Prediction failed.  Return.
-          return new_pos
+        # Prediction failed.  Return.
+        return new_pos
     return DecodeRepeatedField
   else:
     def DecodeField(buffer, pos, end, message, field_dict):
-      (size, pos) = local_DecodeVarint(buffer, pos)
-      new_pos = pos + size
-      if new_pos > end:
+    (size, pos) = local_DecodeVarint(buffer, pos)
+    new_pos = pos + size
+    if new_pos > end:
         raise _DecodeError('Truncated string.')
-      field_dict[key] = local_unicode(buffer[pos:new_pos], 'utf-8')
-      return new_pos
+    field_dict[key] = local_unicode(buffer[pos:new_pos], 'utf-8')
+    return new_pos
     return DecodeField
 
 
@@ -347,32 +347,32 @@ def BytesDecoder(field_number, is_repeated, is_packed, key, new_default):
   assert not is_packed
   if is_repeated:
     tag_bytes = encoder.TagBytes(field_number,
-                                 wire_format.WIRETYPE_LENGTH_DELIMITED)
+                                wire_format.WIRETYPE_LENGTH_DELIMITED)
     tag_len = len(tag_bytes)
     def DecodeRepeatedField(buffer, pos, end, message, field_dict):
-      value = field_dict.get(key)
-      if value is None:
+    value = field_dict.get(key)
+    if value is None:
         value = field_dict.setdefault(key, new_default(message))
-      while 1:
+    while 1:
         (size, pos) = local_DecodeVarint(buffer, pos)
         new_pos = pos + size
         if new_pos > end:
-          raise _DecodeError('Truncated string.')
+        raise _DecodeError('Truncated string.')
         value.append(buffer[pos:new_pos])
         # Predict that the next tag is another copy of the same repeated field.
         pos = new_pos + tag_len
         if buffer[new_pos:pos] != tag_bytes or new_pos == end:
-          # Prediction failed.  Return.
-          return new_pos
+        # Prediction failed.  Return.
+        return new_pos
     return DecodeRepeatedField
   else:
     def DecodeField(buffer, pos, end, message, field_dict):
-      (size, pos) = local_DecodeVarint(buffer, pos)
-      new_pos = pos + size
-      if new_pos > end:
+    (size, pos) = local_DecodeVarint(buffer, pos)
+    new_pos = pos + size
+    if new_pos > end:
         raise _DecodeError('Truncated string.')
-      field_dict[key] = buffer[pos:new_pos]
-      return new_pos
+    field_dict[key] = buffer[pos:new_pos]
+    return new_pos
     return DecodeField
 
 
@@ -380,46 +380,46 @@ def GroupDecoder(field_number, is_repeated, is_packed, key, new_default):
   """Returns a decoder for a group field."""
 
   end_tag_bytes = encoder.TagBytes(field_number,
-                                   wire_format.WIRETYPE_END_GROUP)
+                                    wire_format.WIRETYPE_END_GROUP)
   end_tag_len = len(end_tag_bytes)
 
   assert not is_packed
   if is_repeated:
     tag_bytes = encoder.TagBytes(field_number,
-                                 wire_format.WIRETYPE_START_GROUP)
+                                wire_format.WIRETYPE_START_GROUP)
     tag_len = len(tag_bytes)
     def DecodeRepeatedField(buffer, pos, end, message, field_dict):
-      value = field_dict.get(key)
-      if value is None:
+    value = field_dict.get(key)
+    if value is None:
         value = field_dict.setdefault(key, new_default(message))
-      while 1:
+    while 1:
         value = field_dict.get(key)
         if value is None:
-          value = field_dict.setdefault(key, new_default(message))
+        value = field_dict.setdefault(key, new_default(message))
         # Read sub-message.
         pos = value.add()._InternalParse(buffer, pos, end)
         # Read end tag.
         new_pos = pos+end_tag_len
         if buffer[pos:new_pos] != end_tag_bytes or new_pos > end:
-          raise _DecodeError('Missing group end tag.')
+        raise _DecodeError('Missing group end tag.')
         # Predict that the next tag is another copy of the same repeated field.
         pos = new_pos + tag_len
         if buffer[new_pos:pos] != tag_bytes or new_pos == end:
-          # Prediction failed.  Return.
-          return new_pos
+        # Prediction failed.  Return.
+        return new_pos
     return DecodeRepeatedField
   else:
     def DecodeField(buffer, pos, end, message, field_dict):
-      value = field_dict.get(key)
-      if value is None:
+    value = field_dict.get(key)
+    if value is None:
         value = field_dict.setdefault(key, new_default(message))
-      # Read sub-message.
-      pos = value._InternalParse(buffer, pos, end)
-      # Read end tag.
-      new_pos = pos+end_tag_len
-      if buffer[pos:new_pos] != end_tag_bytes or new_pos > end:
+    # Read sub-message.
+    pos = value._InternalParse(buffer, pos, end)
+    # Read end tag.
+    new_pos = pos+end_tag_len
+    if buffer[pos:new_pos] != end_tag_bytes or new_pos > end:
         raise _DecodeError('Missing group end tag.')
-      return new_pos
+    return new_pos
     return DecodeField
 
 
@@ -431,48 +431,48 @@ def MessageDecoder(field_number, is_repeated, is_packed, key, new_default):
   assert not is_packed
   if is_repeated:
     tag_bytes = encoder.TagBytes(field_number,
-                                 wire_format.WIRETYPE_LENGTH_DELIMITED)
+                                wire_format.WIRETYPE_LENGTH_DELIMITED)
     tag_len = len(tag_bytes)
     def DecodeRepeatedField(buffer, pos, end, message, field_dict):
-      value = field_dict.get(key)
-      if value is None:
+    value = field_dict.get(key)
+    if value is None:
         value = field_dict.setdefault(key, new_default(message))
-      while 1:
+    while 1:
         value = field_dict.get(key)
         if value is None:
-          value = field_dict.setdefault(key, new_default(message))
+        value = field_dict.setdefault(key, new_default(message))
         # Read length.
         (size, pos) = local_DecodeVarint(buffer, pos)
         new_pos = pos + size
         if new_pos > end:
-          raise _DecodeError('Truncated message.')
+        raise _DecodeError('Truncated message.')
         # Read sub-message.
         if value.add()._InternalParse(buffer, pos, new_pos) != new_pos:
-          # The only reason _InternalParse would return early is if it
-          # encountered an end-group tag.
-          raise _DecodeError('Unexpected end-group tag.')
+        # The only reason _InternalParse would return early is if it
+        # encountered an end-group tag.
+        raise _DecodeError('Unexpected end-group tag.')
         # Predict that the next tag is another copy of the same repeated field.
         pos = new_pos + tag_len
         if buffer[new_pos:pos] != tag_bytes or new_pos == end:
-          # Prediction failed.  Return.
-          return new_pos
+        # Prediction failed.  Return.
+        return new_pos
     return DecodeRepeatedField
   else:
     def DecodeField(buffer, pos, end, message, field_dict):
-      value = field_dict.get(key)
-      if value is None:
+    value = field_dict.get(key)
+    if value is None:
         value = field_dict.setdefault(key, new_default(message))
-      # Read length.
-      (size, pos) = local_DecodeVarint(buffer, pos)
-      new_pos = pos + size
-      if new_pos > end:
+    # Read length.
+    (size, pos) = local_DecodeVarint(buffer, pos)
+    new_pos = pos + size
+    if new_pos > end:
         raise _DecodeError('Truncated message.')
-      # Read sub-message.
-      if value._InternalParse(buffer, pos, new_pos) != new_pos:
+    # Read sub-message.
+    if value._InternalParse(buffer, pos, new_pos) != new_pos:
         # The only reason _InternalParse would return early is if it encountered
         # an end-group tag.
         raise _DecodeError('Unexpected end-group tag.')
-      return new_pos
+    return new_pos
     return DecodeField
 
 
@@ -487,10 +487,10 @@ def MessageSetItemDecoder(extensions_by_number):
 
   The message set message looks like this:
     message MessageSet {
-      repeated group Item = 1 {
+    repeated group Item = 1 {
         required int32 type_id = 2;
         required string message = 3;
-      }
+    }
     }
   """
 
@@ -510,34 +510,34 @@ def MessageSetItemDecoder(extensions_by_number):
     # Technically, type_id and message can appear in any order, so we need
     # a little loop here.
     while 1:
-      (tag_bytes, pos) = local_ReadTag(buffer, pos)
-      if tag_bytes == type_id_tag_bytes:
+    (tag_bytes, pos) = local_ReadTag(buffer, pos)
+    if tag_bytes == type_id_tag_bytes:
         (type_id, pos) = local_DecodeVarint(buffer, pos)
-      elif tag_bytes == message_tag_bytes:
+    elif tag_bytes == message_tag_bytes:
         (size, message_start) = local_DecodeVarint(buffer, pos)
         pos = message_end = message_start + size
-      elif tag_bytes == item_end_tag_bytes:
+    elif tag_bytes == item_end_tag_bytes:
         break
-      else:
+    else:
         pos = SkipField(buffer, pos, end, tag_bytes)
         if pos == -1:
-          raise _DecodeError('Missing group end tag.')
+        raise _DecodeError('Missing group end tag.')
 
     if pos > end:
-      raise _DecodeError('Truncated message.')
+    raise _DecodeError('Truncated message.')
 
     if type_id == -1:
-      raise _DecodeError('MessageSet item missing type_id.')
+    raise _DecodeError('MessageSet item missing type_id.')
     if message_start == -1:
-      raise _DecodeError('MessageSet item missing message.')
+    raise _DecodeError('MessageSet item missing message.')
 
     extension = extensions_by_number.get(type_id)
     if extension is not None:
-      value = field_dict.get(extension)
-      if value is None:
+    value = field_dict.get(extension)
+    if value is None:
         value = field_dict.setdefault(
             extension, extension.message_type._concrete_class())
-      if value._InternalParse(buffer, message_start,message_end) != message_end:
+    if value._InternalParse(buffer, message_start,message_end) != message_end:
         # The only reason _InternalParse would return early is if it encountered
         # an end-group tag.
         raise _DecodeError('Unexpected end-group tag.')
@@ -584,7 +584,7 @@ def _SkipGroup(buffer, pos, end):
     (tag_bytes, pos) = ReadTag(buffer, pos)
     new_pos = SkipField(buffer, pos, end, tag_bytes)
     if new_pos == -1:
-      return pos
+    return pos
     pos = new_pos
 
 def _EndGroup(buffer, pos, end):
@@ -609,15 +609,15 @@ def _FieldSkipper():
   """Constructs the SkipField function."""
 
   WIRETYPE_TO_SKIPPER = [
-      _SkipVarint,
-      _SkipFixed64,
-      _SkipLengthDelimited,
-      _SkipGroup,
-      _EndGroup,
-      _SkipFixed32,
-      _RaiseInvalidWireType,
-      _RaiseInvalidWireType,
-      ]
+    _SkipVarint,
+    _SkipFixed64,
+    _SkipLengthDelimited,
+    _SkipGroup,
+    _EndGroup,
+    _SkipFixed32,
+    _RaiseInvalidWireType,
+    _RaiseInvalidWireType,
+    ]
 
   wiretype_mask = wire_format.TAG_TYPE_MASK
   local_ord = ord

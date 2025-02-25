@@ -30,17 +30,17 @@
 
 class CBoneSetup
 {
-   public:
+    public:
     CBoneSetup( const CStudioHdr *pStudioHdr, int boneMask, const float poseParameter[], IPoseDebugger *pPoseDebugger = NULL );
     void InitPose( Vector pos[], Quaternion q[] );
     void AccumulatePose( Vector pos[], Quaternion q[], int sequence, float cycle, float flWeight, float flTime, CIKContext *pIKContext );
     void CalcAutoplaySequences( Vector pos[], Quaternion q[], float flRealTime, CIKContext *pIKContext );
 
-   private:
+    private:
     void AddSequenceLayers( Vector pos[], Quaternion q[], mstudioseqdesc_t &seqdesc, int sequence, float cycle, float flWeight, float flTime, CIKContext *pIKContext );
     void AddLocalLayers( Vector pos[], Quaternion q[], mstudioseqdesc_t &seqdesc, int sequence, float cycle, float flWeight, float flTime, CIKContext *pIKContext );
 
-   public:
+    public:
     const CStudioHdr *m_pStudioHdr;
     int m_boneMask;
     const float *m_flPoseParameter;
@@ -51,7 +51,7 @@ class CBoneSetup
 template < typename T >
 class CBoneSetupMemoryPool
 {
-   public:
+    public:
     T *Alloc()
     {
         T *p = ( T * )m_FreeBlocks.Pop();
@@ -72,7 +72,7 @@ class CBoneSetupMemoryPool
         m_FreeBlocks.Push( ( TSLNodeBase_t * )p );
     }
 
-   private:
+    private:
     CTSListBase m_FreeBlocks;
 };
 
@@ -1709,8 +1709,8 @@ void Studio_LocalPoseParameter( const CStudioHdr *pStudioHdr, const float posePa
             /*
             if (index > 0 && flSetting < 0.0)
             {
-              index--;
-              continue;
+            index--;
+            continue;
             }
             else
             */
@@ -2305,45 +2305,45 @@ CBoneSetup::CBoneSetup( const CStudioHdr *pStudioHdr, int boneMask, const float 
 //			adds autolayers, runs local ik rukes
 //-----------------------------------------------------------------------------
 void CalcPose(
-	const CStudioHdr *pStudioHdr,
-	CIKContext *pIKContext,
-	Vector pos[], 
-	Quaternion q[], 
-	int sequence, 
-	float cycle,
-	const float poseParameter[],
-	int boneMask,
-	float flWeight,
-	float flTime
-	)
+    const CStudioHdr *pStudioHdr,
+    CIKContext *pIKContext,
+    Vector pos[],
+    Quaternion q[],
+    int sequence,
+    float cycle,
+    const float poseParameter[],
+    int boneMask,
+    float flWeight,
+    float flTime
+    )
 {
-	mstudioseqdesc_t	&seqdesc = ((CStudioHdr *)pStudioHdr)->pSeqdesc( sequence );
+    mstudioseqdesc_t	&seqdesc = ((CStudioHdr *)pStudioHdr)->pSeqdesc( sequence );
 
-	Assert( flWeight >= 0.0f && flWeight <= 1.0f );
-	// This shouldn't be necessary, but the Assert should help us catch whoever is screwing this up
-	flWeight = clamp( flWeight, 0.0f, 1.0f );
+    Assert( flWeight >= 0.0f && flWeight <= 1.0f );
+    // This shouldn't be necessary, but the Assert should help us catch whoever is screwing this up
+    flWeight = clamp( flWeight, 0.0f, 1.0f );
 
-	// add any IK locks to prevent numautolayers from moving extremities 
-	CIKContext seq_ik;
-	if (seqdesc.numiklocks)
-	{
-		seq_ik.Init( pStudioHdr, vec3_angle, vec3_origin, 0.0, 0, boneMask ); // local space relative so absolute position doesn't mater
-		seq_ik.AddSequenceLocks( seqdesc, pos, q );
-	}
+    // add any IK locks to prevent numautolayers from moving extremities
+    CIKContext seq_ik;
+    if (seqdesc.numiklocks)
+    {
+        seq_ik.Init( pStudioHdr, vec3_angle, vec3_origin, 0.0, 0, boneMask ); // local space relative so absolute position doesn't mater
+        seq_ik.AddSequenceLocks( seqdesc, pos, q );
+    }
 
-	CalcPoseSingle( pStudioHdr, pos, q, seqdesc, sequence, cycle, poseParameter, boneMask, flTime );
+    CalcPoseSingle( pStudioHdr, pos, q, seqdesc, sequence, cycle, poseParameter, boneMask, flTime );
 
-	if ( pIKContext )
-	{
-		pIKContext->AddDependencies( seqdesc, sequence, cycle, poseParameter, flWeight );
-	}
-	
-	AddSequenceLayers( pStudioHdr, pIKContext, pos, q, seqdesc, sequence, cycle, poseParameter, boneMask, flWeight, flTime );
+    if ( pIKContext )
+    {
+        pIKContext->AddDependencies( seqdesc, sequence, cycle, poseParameter, flWeight );
+    }
 
-	if (seqdesc.numiklocks)
-	{
-		seq_ik.SolveSequenceLocks( seqdesc, pos, q );
-	}
+    AddSequenceLayers( pStudioHdr, pIKContext, pos, q, seqdesc, sequence, cycle, poseParameter, boneMask, flWeight, flTime );
+
+    if (seqdesc.numiklocks)
+    {
+        seq_ik.SolveSequenceLocks( seqdesc, pos, q );
+    }
 }
 #endif
 
@@ -2515,7 +2515,7 @@ void CalcBoneVelocityFromDerivative( const QAngle &vecAngles, Vector &velocity, 
 
 class CIKSolver
 {
-   public:
+    public:
     //-------- SOLVE TWO LINK INVERSE KINEMATICS -------------
     // Author: Ken Perlin
     //
@@ -4175,32 +4175,32 @@ void CIKContext::SolveDependencies( Vector pos[], Quaternion q[], matrix3x4_t bo
     }
 
 #if 0
-		Vector p1, p2, p3;
-		Quaternion q1, q2, q3;
+        Vector p1, p2, p3;
+        Quaternion q1, q2, q3;
 
-		// current p and q
-		MatrixAngles( boneToWorld[bone], q1, p1 );
+        // current p and q
+        MatrixAngles( boneToWorld[bone], q1, p1 );
 
-		
-		// target p and q
-		MatrixAngles( worldTarget, q2, p2 );
 
-		// blend in position and angles
-		p3 = p1 * (1.0 - m_ikRule[i].flWeight ) + p2 * m_ikRule[i].flWeight;
+        // target p and q
+        MatrixAngles( worldTarget, q2, p2 );
 
-		// do exact IK solution
-		// FIXME: once per link!
-		Studio_SolveIK(pchain, p3, boneToWorld );
+        // blend in position and angles
+        p3 = p1 * (1.0 - m_ikRule[i].flWeight ) + p2 * m_ikRule[i].flWeight;
 
-		// force angle (bad?)
-		QuaternionSlerp( q1, q2, m_ikRule[i].flWeight, q3 );
-		MatrixGetColumn( boneToWorld[bone], 3, p3 );
-		QuaternionMatrix( q3, p3, boneToWorld[bone] );
+        // do exact IK solution
+        // FIXME: once per link!
+        Studio_SolveIK(pchain, p3, boneToWorld );
 
-		// rebuild chain
-		SolveBone( m_pStudioHdr, pchain->pLink( 2 )->bone, boneToWorld, pos, q );
-		SolveBone( m_pStudioHdr, pchain->pLink( 1 )->bone, boneToWorld, pos, q );
-		SolveBone( m_pStudioHdr, pchain->pLink( 0 )->bone, boneToWorld, pos, q );
+        // force angle (bad?)
+        QuaternionSlerp( q1, q2, m_ikRule[i].flWeight, q3 );
+        MatrixGetColumn( boneToWorld[bone], 3, p3 );
+        QuaternionMatrix( q3, p3, boneToWorld[bone] );
+
+        // rebuild chain
+        SolveBone( m_pStudioHdr, pchain->pLink( 2 )->bone, boneToWorld, pos, q );
+        SolveBone( m_pStudioHdr, pchain->pLink( 1 )->bone, boneToWorld, pos, q );
+        SolveBone( m_pStudioHdr, pchain->pLink( 0 )->bone, boneToWorld, pos, q );
 #endif
 }
 
@@ -4527,15 +4527,15 @@ void DoAxisInterpBone(
         // invert it back into parent's space.
         VectorIRotate( tmp, bonetoworld.GetBone( pbones[pProc->control].parent ), control );
 #if 0
-		matrix3x4_t	tmpmatrix;
-		matrix3x4_t	controlmatrix;
-		MatrixInvert( bonetoworld.GetBone( pbones[pProc->control].parent ), tmpmatrix );
-		ConcatTransforms( tmpmatrix, bonetoworld.GetBone( pProc->control ), controlmatrix );
+        matrix3x4_t	tmpmatrix;
+        matrix3x4_t	controlmatrix;
+        MatrixInvert( bonetoworld.GetBone( pbones[pProc->control].parent ), tmpmatrix );
+        ConcatTransforms( tmpmatrix, bonetoworld.GetBone( pProc->control ), controlmatrix );
 
-		// pull out the control column
-		control.x = controlmatrix[0][pProc->axis];
-		control.y = controlmatrix[1][pProc->axis];
-		control.z = controlmatrix[2][pProc->axis];
+        // pull out the control column
+        control.x = controlmatrix[0][pProc->axis];
+        control.y = controlmatrix[1][pProc->axis];
+        control.z = controlmatrix[2][pProc->axis];
 #endif
     }
     else
@@ -4716,22 +4716,22 @@ void DoAimAtBone(
     }
 
     /*
-     * Uncomment this if the ConVar above is uncommented
-     *
+    * Uncomment this if the ConVar above is uncommented
+    *
 
     if ( !aim_constraint.GetBool() )
     {
-      // If the aim constraint is turned off then just copy the parent transform
-      // plus the offset value
+    // If the aim constraint is turned off then just copy the parent transform
+    // plus the offset value
 
-      matrix3x4_t boneToWorldSpace;
-      MatrixCopy ( bonetoworld.GetBone( pProc->parent ), boneToWorldSpace );
-      Vector boneWorldPosition;
-      VectorTransform( pProc->basepos, boneToWorldSpace, boneWorldPosition );
-      MatrixSetColumn( boneWorldPosition, 3, boneToWorldSpace );
-      MatrixCopy( boneToWorldSpace, bonetoworld.GetBoneForWrite( iBone ) );
+    matrix3x4_t boneToWorldSpace;
+    MatrixCopy ( bonetoworld.GetBone( pProc->parent ), boneToWorldSpace );
+    Vector boneWorldPosition;
+    VectorTransform( pProc->basepos, boneToWorldSpace, boneWorldPosition );
+    MatrixSetColumn( boneWorldPosition, 3, boneToWorldSpace );
+    MatrixCopy( boneToWorldSpace, bonetoworld.GetBoneForWrite( iBone ) );
 
-      return;
+    return;
     }
 
     */
@@ -4947,7 +4947,7 @@ float Studio_SetController( const CStudioHdr *pStudioHdr, int iController, float
 
     // ugly hack, invert value if a rotational controller and end < start
     if ( pbonecontroller->type & ( STUDIO_XR | STUDIO_YR | STUDIO_ZR ) &&
-         pbonecontroller->end < pbonecontroller->start )
+        pbonecontroller->end < pbonecontroller->start )
     {
         flReturnVal *= -1;
     }

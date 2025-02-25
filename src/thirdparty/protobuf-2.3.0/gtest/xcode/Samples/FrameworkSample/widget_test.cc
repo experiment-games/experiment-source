@@ -58,7 +58,7 @@ TEST(WidgetInitializerTest, TestConversion) {
   char buffer[max_size];
   widget.GetCharPtrValue(buffer, max_size);
   EXPECT_STREQ("name", buffer);
-}  
+}
 
 // Use the Google Test main that is linked into the framework. It does something
 // like this:

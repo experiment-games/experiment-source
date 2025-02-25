@@ -57,7 +57,7 @@ RecvPropEHandle( RECVINFO( m_hPlayer ) ),
 
 #define PITCH_CURVE_ZERO 10    // pitch less than this is clamped to zero
 #define PITCH_CURVE_LINEAR 45  // pitch greater than this is copied out
-                               // spline in between
+                                // spline in between
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor

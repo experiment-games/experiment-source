@@ -15,14 +15,14 @@
 // $sineVar : name of variable that controls the alpha level (float)
 class CAlphaMaterialProxy : public CEntityMaterialProxy
 {
-   public:
+    public:
     CAlphaMaterialProxy();
     virtual ~CAlphaMaterialProxy();
     virtual bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
     virtual void OnBind( C_BaseEntity *pEntity );
     virtual IMaterial *GetMaterial();
 
-   private:
+    private:
     IMaterialVar *m_AlphaVar;
 };
 

@@ -21,14 +21,14 @@ enum navproperties_t
 // Purpose:
 //-----------------------------------------------------------------------------
 class CLogicNavigation : public CLogicalEntity,
-                         public IEntityListener
+                        public IEntityListener
 {
     DECLARE_CLASS( CLogicNavigation, CLogicalEntity );
 
     bool KeyValue( const char *szKeyName, const char *szValue );
     void Activate( void );
 
-   private:
+    private:
     void UpdateOnRemove();
 
     void OnEntitySpawned( CBaseEntity *pEntity );

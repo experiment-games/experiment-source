@@ -11,13 +11,13 @@
   This script makes the following assumptions (these are faults of the script,
   not problems with the Autoconf):
     1. The AC_INIT macro will be contained within the first 1024 characters
-       of configure.ac
+        of configure.ac
     2. The version string will be 3 integers separated by periods and will be
-       surrounded by squre brackets, "[" and "]" (e.g. [1.0.1]). The first 
-       segment represents the major version, the second represents the minor
-       version and the third represents the fix version.
+        surrounded by squre brackets, "[" and "]" (e.g. [1.0.1]). The first
+        segment represents the major version, the second represents the minor
+        version and the third represents the fix version.
     3. No ")" character exists between the opening "(" and closing ")" of
-       AC_INIT, including in comments and character strings.
+        AC_INIT, including in comments and character strings.
 """
 
 import sys

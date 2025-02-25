@@ -938,7 +938,7 @@ bool ConceptStringLessFunc( const string_t &lhs, const string_t &rhs )
 
 class CConceptInfoMap : public CUtlMap< AIConcept_t, ConceptInfo_t * >
 {
-   public:
+    public:
     CConceptInfoMap()
         : CUtlMap< AIConcept_t, ConceptInfo_t * >( CaselessStringLessThan )
     {
@@ -1015,8 +1015,8 @@ void CAI_AllySpeechManager::OnSpokeConcept( CAI_PlayerAlly *pPlayerAlly, AIConce
                 pTalker = dynamic_cast< CAI_PlayerAlly * >( ppAIs[i] );
 
                 if ( pTalker && pTalker != pPlayerAlly &&
-                     ( pTalker->GetAbsOrigin() - pPlayerAlly->GetAbsOrigin() ).LengthSqr() < Square( TALKRANGE_MIN * 2 ) &&
-                     pPlayerAlly->FVisible( pTalker ) )
+                    ( pTalker->GetAbsOrigin() - pPlayerAlly->GetAbsOrigin() ).LengthSqr() < Square( TALKRANGE_MIN * 2 ) &&
+                    pPlayerAlly->FVisible( pTalker ) )
                 {
                     // Tell this guy he's already said the concept to the player, too.
                     pTalker->GetExpresser()->SetSpokeConcept( concept, NULL, false );
@@ -1760,8 +1760,8 @@ int CAI_PlayerAlly::SelectNonCombatSpeechSchedule()
 int CAI_PlayerAlly::TranslateSchedule( int schedule )
 {
     if ( ( GetState() == NPC_STATE_IDLE || GetState() == NPC_STATE_ALERT ) &&
-         ConditionInterruptsSchedule( schedule, COND_IDLE_INTERRUPT ) &&
-         !HasCondition( COND_RECEIVED_ORDERS ) )
+        ConditionInterruptsSchedule( schedule, COND_IDLE_INTERRUPT ) &&
+        !HasCondition( COND_RECEIVED_ORDERS ) )
     {
         int speechSchedule = SelectNonCombatSpeechSchedule();
         if ( speechSchedule != SCHED_NONE )
@@ -1883,8 +1883,8 @@ void CAI_PlayerAlly::OnKilledNPC( CBaseCombatCharacter *pKilled )
     if ( pKilled )
     {
         if ( !pKilled->IsNPC() ||
-             ( pKilled->MyNPCPointer()->GetLastPlayerDamageTime() == 0 ||
-               gpGlobals->curtime - pKilled->MyNPCPointer()->GetLastPlayerDamageTime() > 5 ) )
+            ( pKilled->MyNPCPointer()->GetLastPlayerDamageTime() == 0 ||
+                gpGlobals->curtime - pKilled->MyNPCPointer()->GetLastPlayerDamageTime() > 5 ) )
         {
             SpeakIfAllowed( TLK_ENEMY_DEAD );
         }

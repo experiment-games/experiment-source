@@ -107,9 +107,9 @@ static const char* kPathSeparator = ":";
 static bool IsWindowsAbsolutePath(const string& text) {
 #if defined(_WIN32) || defined(__CYGWIN__)
   return text.size() >= 3 && text[1] == ':' &&
-         isalpha(text[0]) &&
-         (text[2] == '/' || text[2] == '\\') &&
-         text.find_last_of(':') == 1;
+        isalpha(text[0]) &&
+        (text[2] == '/' || text[2] == '\\') &&
+        text.find_last_of(':') == 1;
 #else
   return false;
 #endif
@@ -164,11 +164,11 @@ bool TryCreateParentDirectory(const string& prefix, const string& filename) {
   for (int i = 0; i < parts.size() - 1; i++) {
     path_so_far += parts[i];
     if (mkdir(path_so_far.c_str(), 0777) != 0) {
-      if (errno != EEXIST) {
+    if (errno != EEXIST) {
         cerr << filename << ": while trying to create directory "
-             << path_so_far << ": " << strerror(errno) << endl;
+            << path_so_far << ": " << strerror(errno) << endl;
         return false;
-      }
+    }
     }
     path_so_far += '/';
   }
@@ -180,7 +180,7 @@ bool TryCreateParentDirectory(const string& prefix, const string& filename) {
 
 // A MultiFileErrorCollector that prints errors to stderr.
 class CommandLineInterface::ErrorPrinter : public MultiFileErrorCollector,
-                                           public io::ErrorCollector {
+                                            public io::ErrorCollector {
  public:
   ErrorPrinter(ErrorFormat format) : format_(format) {}
   ~ErrorPrinter() {}
@@ -194,15 +194,15 @@ class CommandLineInterface::ErrorPrinter : public MultiFileErrorCollector,
     // Users typically expect 1-based line/column numbers, so we add 1
     // to each here.
     if (line != -1) {
-      // Allow for both GCC- and Visual-Studio-compatible output.
-      switch (format_) {
+    // Allow for both GCC- and Visual-Studio-compatible output.
+    switch (format_) {
         case CommandLineInterface::ERROR_FORMAT_GCC:
-          cerr << ":" << (line + 1) << ":" << (column + 1);
-          break;
+        cerr << ":" << (line + 1) << ":" << (column + 1);
+        break;
         case CommandLineInterface::ERROR_FORMAT_MSVS:
-          cerr << "(" << (line + 1) << ") : error in column=" << (column + 1);
-          break;
-      }
+        cerr << "(" << (line + 1) << ") : error in column=" << (column + 1);
+        break;
+    }
     }
 
     cerr << ": " << message << endl;
@@ -241,7 +241,7 @@ class CommandLineInterface::MemoryOutputDirectory : public OutputDirectory {
   // implements OutputDirectory --------------------------------------
   io::ZeroCopyOutputStream* Open(const string& filename);
   io::ZeroCopyOutputStream* OpenForInsert(
-      const string& filename, const string& insertion_point);
+    const string& filename, const string& insertion_point);
 
  private:
   friend class MemoryOutputStream;
@@ -257,7 +257,7 @@ class CommandLineInterface::MemoryOutputStream
  public:
   MemoryOutputStream(MemoryOutputDirectory* directory, const string& filename);
   MemoryOutputStream(MemoryOutputDirectory* directory, const string& filename,
-                     const string& insertion_point);
+                    const string& insertion_point);
   virtual ~MemoryOutputStream();
 
   // implements ZeroCopyOutputStream ---------------------------------
@@ -298,37 +298,37 @@ bool CommandLineInterface::MemoryOutputDirectory::WriteAllToDisk(
   }
 
   for (map<string, string*>::const_iterator iter = files_.begin();
-       iter != files_.end(); ++iter) {
+        iter != files_.end(); ++iter) {
     const string& relative_filename = iter->first;
     const char* data = iter->second->data();
     int size = iter->second->size();
 
     if (!TryCreateParentDirectory(prefix, relative_filename)) {
-      return false;
+    return false;
     }
     string filename = prefix + relative_filename;
 
     // Create the output file.
     int file_descriptor;
     do {
-      file_descriptor =
+    file_descriptor =
         open(filename.c_str(), O_WRONLY | O_CREAT | O_TRUNC | O_BINARY, 0666);
     } while (file_descriptor < 0 && errno == EINTR);
 
     if (file_descriptor < 0) {
-      int error = errno;
-      cerr << filename << ": " << strerror(error);
-      return false;
+    int error = errno;
+    cerr << filename << ": " << strerror(error);
+    return false;
     }
 
     // Write the file.
     while (size > 0) {
-      int write_result;
-      do {
+    int write_result;
+    do {
         write_result = write(file_descriptor, data, size);
-      } while (write_result < 0 && errno == EINTR);
+    } while (write_result < 0 && errno == EINTR);
 
-      if (write_result <= 0) {
+    if (write_result <= 0) {
         // Write error.
 
         // FIXME(kenton):  According to the man page, if write() returns zero,
@@ -340,22 +340,22 @@ bool CommandLineInterface::MemoryOutputDirectory::WriteAllToDisk(
         //   suspect this never actually happens anyway.
 
         if (write_result < 0) {
-          int error = errno;
-          cerr << filename << ": write: " << strerror(error);
+        int error = errno;
+        cerr << filename << ": write: " << strerror(error);
         } else {
-          cerr << filename << ": write() returned zero?" << endl;
+        cerr << filename << ": write() returned zero?" << endl;
         }
         return false;
-      }
+    }
 
-      data += write_result;
-      size -= write_result;
+    data += write_result;
+    size -= write_result;
     }
 
     if (close(file_descriptor) != 0) {
-      int error = errno;
-      cerr << filename << ": close: " << strerror(error);
-      return false;
+    int error = errno;
+    cerr << filename << ": close: " << strerror(error);
+    return false;
     }
   }
 
@@ -372,7 +372,7 @@ bool CommandLineInterface::MemoryOutputDirectory::WriteAllToZip(
   int file_descriptor;
   do {
     file_descriptor =
-      open(filename.c_str(), O_WRONLY | O_CREAT | O_TRUNC | O_BINARY, 0666);
+    open(filename.c_str(), O_WRONLY | O_CREAT | O_TRUNC | O_BINARY, 0666);
   } while (file_descriptor < 0 && errno == EINTR);
 
   if (file_descriptor < 0) {
@@ -386,7 +386,7 @@ bool CommandLineInterface::MemoryOutputDirectory::WriteAllToZip(
   ZipWriter zip_writer(&stream);
 
   for (map<string, string*>::const_iterator iter = files_.begin();
-       iter != files_.end(); ++iter) {
+        iter != files_.end(); ++iter) {
     zip_writer.Write(iter->first, *iter->second);
   }
 
@@ -429,17 +429,17 @@ CommandLineInterface::MemoryOutputDirectory::OpenForInsert(
 CommandLineInterface::MemoryOutputStream::MemoryOutputStream(
     MemoryOutputDirectory* directory, const string& filename)
     : directory_(directory),
-      filename_(filename),
-      inner_(new io::StringOutputStream(&data_)) {
+    filename_(filename),
+    inner_(new io::StringOutputStream(&data_)) {
 }
 
 CommandLineInterface::MemoryOutputStream::MemoryOutputStream(
     MemoryOutputDirectory* directory, const string& filename,
     const string& insertion_point)
     : directory_(directory),
-      filename_(filename),
-      insertion_point_(insertion_point),
-      inner_(new io::StringOutputStream(&data_)) {
+    filename_(filename),
+    insertion_point_(insertion_point),
+    inner_(new io::StringOutputStream(&data_)) {
 }
 
 CommandLineInterface::MemoryOutputStream::~MemoryOutputStream() {
@@ -452,9 +452,9 @@ CommandLineInterface::MemoryOutputStream::~MemoryOutputStream() {
   if (insertion_point_.empty()) {
     // This was just a regular Open().
     if (*map_slot != NULL) {
-      cerr << filename_ << ": Tried to write the same file twice." << endl;
-      directory_->had_error_ = true;
-      return;
+    cerr << filename_ << ": Tried to write the same file twice." << endl;
+    directory_->had_error_ = true;
+    return;
     }
 
     *map_slot = new string;
@@ -464,15 +464,15 @@ CommandLineInterface::MemoryOutputStream::~MemoryOutputStream() {
 
     // If the data doens't end with a clean line break, add one.
     if (!data_.empty() && data_[data_.size() - 1] != '\n') {
-      data_.push_back('\n');
+    data_.push_back('\n');
     }
 
     // Find the file we are going to insert into.
     if (*map_slot == NULL) {
-      cerr << filename_ << ": Tried to insert into file that doesn't exist."
-           << endl;
-      directory_->had_error_ = true;
-      return;
+    cerr << filename_ << ": Tried to insert into file that doesn't exist."
+            << endl;
+    directory_->had_error_ = true;
+    return;
     }
     string* target = *map_slot;
 
@@ -482,10 +482,10 @@ CommandLineInterface::MemoryOutputStream::~MemoryOutputStream() {
     string::size_type pos = target->find(magic_string);
 
     if (pos == string::npos) {
-      cerr << filename_ << ": insertion point \"" << insertion_point_
-           << "\" not found." << endl;
-      directory_->had_error_ = true;
-      return;
+    cerr << filename_ << ": insertion point \"" << insertion_point_
+            << "\" not found." << endl;
+    directory_->had_error_ = true;
+    return;
     }
 
     // Seek backwards to the beginning of the line, which is where we will
@@ -495,33 +495,33 @@ CommandLineInterface::MemoryOutputStream::~MemoryOutputStream() {
     // up in the expected order in the final output.
     pos = target->find_last_of('\n', pos);
     if (pos == string::npos) {
-      // Insertion point is on the first line.
-      pos = 0;
+    // Insertion point is on the first line.
+    pos = 0;
     } else {
-      // Advance to character after '\n'.
-      ++pos;
+    // Advance to character after '\n'.
+    ++pos;
     }
 
     // Extract indent.
     string indent_(*target, pos, target->find_first_not_of(" \t", pos) - pos);
 
     if (indent_.empty()) {
-      // No indent.  This makes things easier.
-      target->insert(pos, data_);
+    // No indent.  This makes things easier.
+    target->insert(pos, data_);
     } else {
-      // Calculate how much space we need.
-      int indent_size = 0;
-      for (int i = 0; i < data_.size(); i++) {
+    // Calculate how much space we need.
+    int indent_size = 0;
+    for (int i = 0; i < data_.size(); i++) {
         if (data_[i] == '\n') indent_size += indent_.size();
-      }
+    }
 
-      // Make a hole for it.
-      target->insert(pos, data_.size() + indent_size, '\0');
+    // Make a hole for it.
+    target->insert(pos, data_.size() + indent_size, '\0');
 
-      // Now copy in the data.
-      string::size_type data_pos = 0;
-      char* target_ptr = string_as_array(target) + pos;
-      while (data_pos < data_.size()) {
+    // Now copy in the data.
+    string::size_type data_pos = 0;
+    char* target_ptr = string_as_array(target) + pos;
+    while (data_pos < data_.size()) {
         // Copy indent.
         memcpy(target_ptr, indent_.data(), indent_.size());
         target_ptr += indent_.size();
@@ -534,10 +534,10 @@ CommandLineInterface::MemoryOutputStream::~MemoryOutputStream() {
         memcpy(target_ptr, data_.data() + data_pos, line_length);
         target_ptr += line_length;
         data_pos += line_length;
-      }
+    }
 
-      GOOGLE_CHECK_EQ(target_ptr,
-          string_as_array(target) + pos + data_.size() + indent_size);
+    GOOGLE_CHECK_EQ(target_ptr,
+        string_as_array(target) + pos + data_.size() + indent_size);
     }
   }
 }
@@ -553,8 +553,8 @@ CommandLineInterface::CommandLineInterface()
 CommandLineInterface::~CommandLineInterface() {}
 
 void CommandLineInterface::RegisterGenerator(const string& flag_name,
-                                             CodeGenerator* generator,
-                                             const string& help_text) {
+                                            CodeGenerator* generator,
+                                            const string& help_text) {
   GeneratorInfo info;
   info.generator = generator;
   info.help_text = help_text;
@@ -578,7 +578,7 @@ int CommandLineInterface::Run(int argc, const char* const argv[]) {
   // Map input files to virtual paths if necessary.
   if (!inputs_are_proto_path_relative_) {
     if (!MakeInputsBeProtoPathRelative(&source_tree)) {
-      return 1;
+    return 1;
     }
   }
 
@@ -597,9 +597,9 @@ int CommandLineInterface::Run(int argc, const char* const argv[]) {
 
     // Enforce --disallow_services.
     if (disallow_services_ && parsed_file->service_count() > 0) {
-      cerr << parsed_file->name() << ": This file contains services, but "
-              "--disallow_services was used." << endl;
-      return 1;
+    cerr << parsed_file->name() << ": This file contains services, but "
+            "--disallow_services was used." << endl;
+    return 1;
     }
   }
 
@@ -612,44 +612,44 @@ int CommandLineInterface::Run(int argc, const char* const argv[]) {
   // Generate output.
   if (mode_ == MODE_COMPILE) {
     for (int i = 0; i < output_directives_.size(); i++) {
-      string output_location = output_directives_[i].output_location;
-      if (!HasSuffixString(output_location, ".zip") &&
-          !HasSuffixString(output_location, ".jar")) {
+    string output_location = output_directives_[i].output_location;
+    if (!HasSuffixString(output_location, ".zip") &&
+        !HasSuffixString(output_location, ".jar")) {
         AddTrailingSlash(&output_location);
-      }
-      MemoryOutputDirectory** map_slot = &output_directories[output_location];
+    }
+    MemoryOutputDirectory** map_slot = &output_directories[output_location];
 
-      if (*map_slot == NULL) {
+    if (*map_slot == NULL) {
         // First time we've seen this output location.
         *map_slot = new MemoryOutputDirectory;
-      }
+    }
 
-      if (!GenerateOutput(parsed_files, output_directives_[i], *map_slot)) {
+    if (!GenerateOutput(parsed_files, output_directives_[i], *map_slot)) {
         STLDeleteValues(&output_directories);
         return 1;
-      }
+    }
     }
   }
 
   // Write all output to disk.
   for (OutputDirectoryMap::iterator iter = output_directories.begin();
-       iter != output_directories.end(); ++iter) {
+        iter != output_directories.end(); ++iter) {
     const string& location = iter->first;
     MemoryOutputDirectory* directory = iter->second;
     if (HasSuffixString(location, "/")) {
-      if (!directory->WriteAllToDisk(location)) {
+    if (!directory->WriteAllToDisk(location)) {
         STLDeleteValues(&output_directories);
         return 1;
-      }
+    }
     } else {
-      if (HasSuffixString(location, ".jar")) {
+    if (HasSuffixString(location, ".jar")) {
         directory->AddJarManifest();
-      }
+    }
 
-      if (!directory->WriteAllToZip(location)) {
+    if (!directory->WriteAllToZip(location)) {
         STLDeleteValues(&output_directories);
         return 1;
-      }
+    }
     }
   }
 
@@ -657,26 +657,26 @@ int CommandLineInterface::Run(int argc, const char* const argv[]) {
 
   if (!descriptor_set_name_.empty()) {
     if (!WriteDescriptorSet(parsed_files)) {
-      return 1;
+    return 1;
     }
   }
 
   if (mode_ == MODE_ENCODE || mode_ == MODE_DECODE) {
     if (codec_type_.empty()) {
-      // HACK:  Define an EmptyMessage type to use for decoding.
-      DescriptorPool pool;
-      FileDescriptorProto file;
-      file.set_name("empty_message.proto");
-      file.add_message_type()->set_name("EmptyMessage");
-      GOOGLE_CHECK(pool.BuildFile(file) != NULL);
-      codec_type_ = "EmptyMessage";
-      if (!EncodeOrDecode(&pool)) {
+    // HACK:  Define an EmptyMessage type to use for decoding.
+    DescriptorPool pool;
+    FileDescriptorProto file;
+    file.set_name("empty_message.proto");
+    file.add_message_type()->set_name("EmptyMessage");
+    GOOGLE_CHECK(pool.BuildFile(file) != NULL);
+    codec_type_ = "EmptyMessage";
+    if (!EncodeOrDecode(&pool)) {
         return 1;
-      }
+    }
     } else {
-      if (!EncodeOrDecode(importer.pool())) {
+    if (!EncodeOrDecode(importer.pool())) {
         return 1;
-      }
+    }
     }
   }
 
@@ -704,31 +704,31 @@ bool CommandLineInterface::MakeInputsBeProtoPathRelative(
     string virtual_file, shadowing_disk_file;
     switch (source_tree->DiskFileToVirtualFile(
         input_files_[i], &virtual_file, &shadowing_disk_file)) {
-      case DiskSourceTree::SUCCESS:
+    case DiskSourceTree::SUCCESS:
         input_files_[i] = virtual_file;
         break;
-      case DiskSourceTree::SHADOWED:
+    case DiskSourceTree::SHADOWED:
         cerr << input_files_[i] << ": Input is shadowed in the --proto_path "
                 "by \"" << shadowing_disk_file << "\".  Either use the latter "
                 "file as your input or reorder the --proto_path so that the "
                 "former file's location comes first." << endl;
         return false;
-      case DiskSourceTree::CANNOT_OPEN:
+    case DiskSourceTree::CANNOT_OPEN:
         cerr << input_files_[i] << ": " << strerror(errno) << endl;
         return false;
-      case DiskSourceTree::NO_MAPPING:
+    case DiskSourceTree::NO_MAPPING:
         // First check if the file exists at all.
         if (access(input_files_[i].c_str(), F_OK) < 0) {
-          // File does not even exist.
-          cerr << input_files_[i] << ": " << strerror(ENOENT) << endl;
+        // File does not even exist.
+        cerr << input_files_[i] << ": " << strerror(ENOENT) << endl;
         } else {
-          cerr << input_files_[i] << ": File does not reside within any path "
-                  "specified using --proto_path (or -I).  You must specify a "
-                  "--proto_path which encompasses this file.  Note that the "
-                  "proto_path must be an exact prefix of the .proto file "
-                  "names -- protoc is too dumb to figure out when two paths "
-                  "(e.g. absolute and relative) are equivalent (it's harder "
-                  "than you think)." << endl;
+        cerr << input_files_[i] << ": File does not reside within any path "
+                "specified using --proto_path (or -I).  You must specify a "
+                "--proto_path which encompasses this file.  Note that the "
+                "proto_path must be an exact prefix of the .proto file "
+                "names -- protoc is too dumb to figure out when two paths "
+                "(e.g. absolute and relative) are equivalent (it's harder "
+                "than you think)." << endl;
         }
         return false;
     }
@@ -745,17 +745,17 @@ bool CommandLineInterface::ParseArguments(int argc, const char* const argv[]) {
     string name, value;
 
     if (ParseArgument(argv[i], &name, &value)) {
-      // Returned true => Use the next argument as the flag value.
-      if (i + 1 == argc || argv[i+1][0] == '-') {
+    // Returned true => Use the next argument as the flag value.
+    if (i + 1 == argc || argv[i+1][0] == '-') {
         cerr << "Missing value for flag: " << name << endl;
         if (name == "--decode") {
-          cerr << "To decode an unknown message, use --decode_raw." << endl;
+        cerr << "To decode an unknown message, use --decode_raw." << endl;
         }
         return false;
-      } else {
+    } else {
         ++i;
         value = argv[i];
-      }
+    }
     }
 
     if (!InterpretArgument(name, value)) return false;
@@ -776,7 +776,7 @@ bool CommandLineInterface::ParseArguments(int argc, const char* const argv[]) {
     return false;
   }
   if (mode_ == MODE_COMPILE && output_directives_.empty() &&
-      descriptor_set_name_.empty()) {
+    descriptor_set_name_.empty()) {
     cerr << "Missing output directives." << endl;
     return false;
   }
@@ -789,7 +789,7 @@ bool CommandLineInterface::ParseArguments(int argc, const char* const argv[]) {
 }
 
 bool CommandLineInterface::ParseArgument(const char* arg,
-                                         string* name, string* value) {
+                                        string* name, string* value) {
   bool parsed_value = false;
 
   if (arg[0] != '-') {
@@ -802,25 +802,25 @@ bool CommandLineInterface::ParseArgument(const char* arg,
     //   value.
     const char* equals_pos = strchr(arg, '=');
     if (equals_pos != NULL) {
-      *name = string(arg, equals_pos - arg);
-      *value = equals_pos + 1;
-      parsed_value = true;
+    *name = string(arg, equals_pos - arg);
+    *value = equals_pos + 1;
+    parsed_value = true;
     } else {
-      *name = arg;
+    *name = arg;
     }
   } else {
     // One dash:  One-character name, all subsequent characters are the
     //   value.
     if (arg[1] == '\0') {
-      // arg is just "-".  We treat this as an input file, except that at
-      // present this will just lead to a "file not found" error.
-      name->clear();
-      *value = arg;
-      parsed_value = true;
+    // arg is just "-".  We treat this as an input file, except that at
+    // present this will just lead to a "file not found" error.
+    name->clear();
+    *value = arg;
+    parsed_value = true;
     } else {
-      *name = string(arg, 2);
-      *value = arg + 2;
-      parsed_value = !value->empty();
+    *name = string(arg, 2);
+    *value = arg + 2;
+    parsed_value = !value->empty();
     }
   }
 
@@ -833,10 +833,10 @@ bool CommandLineInterface::ParseArgument(const char* arg,
   }
 
   if (*name == "-h" || *name == "--help" ||
-      *name == "--disallow_services" ||
-      *name == "--include_imports" ||
-      *name == "--version" ||
-      *name == "--decode_raw") {
+    *name == "--disallow_services" ||
+    *name == "--include_imports" ||
+    *name == "--version" ||
+    *name == "--decode_raw") {
     // HACK:  These are the only flags that don't take a value.
     //   They probably should not be hard-coded like this but for now it's
     //   not worth doing better.
@@ -848,15 +848,15 @@ bool CommandLineInterface::ParseArgument(const char* arg,
 }
 
 bool CommandLineInterface::InterpretArgument(const string& name,
-                                             const string& value) {
+                                            const string& value) {
   if (name.empty()) {
     // Not a flag.  Just a filename.
     if (value.empty()) {
-      cerr << "You seem to have passed an empty string as one of the "
-              "arguments to " << executable_name_ << ".  This is actually "
-              "sort of hard to do.  Congrats.  Unfortunately it is not valid "
-              "input so the program is going to die now." << endl;
-      return false;
+    cerr << "You seem to have passed an empty string as one of the "
+            "arguments to " << executable_name_ << ".  This is actually "
+            "sort of hard to do.  Congrats.  Unfortunately it is not valid "
+            "input so the program is going to die now." << endl;
+    return false;
     }
 
     input_files_.push_back(value);
@@ -869,52 +869,52 @@ bool CommandLineInterface::InterpretArgument(const string& name,
     SplitStringUsing(value, kPathSeparator, &parts);
 
     for (int i = 0; i < parts.size(); i++) {
-      string virtual_path;
-      string disk_path;
+    string virtual_path;
+    string disk_path;
 
-      int equals_pos = parts[i].find_first_of('=');
-      if (equals_pos == string::npos) {
+    int equals_pos = parts[i].find_first_of('=');
+    if (equals_pos == string::npos) {
         virtual_path = "";
         disk_path = parts[i];
-      } else {
+    } else {
         virtual_path = parts[i].substr(0, equals_pos);
         disk_path = parts[i].substr(equals_pos + 1);
-      }
+    }
 
-      if (disk_path.empty()) {
+    if (disk_path.empty()) {
         cerr << "--proto_path passed empty directory name.  (Use \".\" for "
                 "current directory.)" << endl;
         return false;
-      }
+    }
 
-      // Make sure disk path exists, warn otherwise.
-      if (access(disk_path.c_str(), F_OK) < 0) {
+    // Make sure disk path exists, warn otherwise.
+    if (access(disk_path.c_str(), F_OK) < 0) {
         cerr << disk_path << ": warning: directory does not exist." << endl;
-      }
+    }
 
-      proto_path_.push_back(make_pair(virtual_path, disk_path));
+    proto_path_.push_back(make_pair(virtual_path, disk_path));
     }
 
   } else if (name == "-o" || name == "--descriptor_set_out") {
     if (!descriptor_set_name_.empty()) {
-      cerr << name << " may only be passed once." << endl;
-      return false;
+    cerr << name << " may only be passed once." << endl;
+    return false;
     }
     if (value.empty()) {
-      cerr << name << " requires a non-empty value." << endl;
-      return false;
+    cerr << name << " requires a non-empty value." << endl;
+    return false;
     }
     if (mode_ != MODE_COMPILE) {
-      cerr << "Cannot use --encode or --decode and generate descriptors at the "
-              "same time." << endl;
-      return false;
+    cerr << "Cannot use --encode or --decode and generate descriptors at the "
+            "same time." << endl;
+    return false;
     }
     descriptor_set_name_ = value;
 
   } else if (name == "--include_imports") {
     if (imports_in_descriptor_set_) {
-      cerr << name << " may only be passed once." << endl;
-      return false;
+    cerr << name << " may only be passed once." << endl;
+    return false;
     }
     imports_in_descriptor_set_ = true;
 
@@ -924,57 +924,57 @@ bool CommandLineInterface::InterpretArgument(const string& name,
 
   } else if (name == "--version") {
     if (!version_info_.empty()) {
-      cout << version_info_ << endl;
+    cout << version_info_ << endl;
     }
     cout << "libprotoc "
-         << protobuf::internal::VersionString(GOOGLE_PROTOBUF_VERSION)
-         << endl;
+        << protobuf::internal::VersionString(GOOGLE_PROTOBUF_VERSION)
+        << endl;
     return false;  // Exit without running compiler.
 
   } else if (name == "--disallow_services") {
     disallow_services_ = true;
 
   } else if (name == "--encode" || name == "--decode" ||
-             name == "--decode_raw") {
+            name == "--decode_raw") {
     if (mode_ != MODE_COMPILE) {
-      cerr << "Only one of --encode and --decode can be specified." << endl;
-      return false;
+    cerr << "Only one of --encode and --decode can be specified." << endl;
+    return false;
     }
     if (!output_directives_.empty() || !descriptor_set_name_.empty()) {
-      cerr << "Cannot use " << name
-           << " and generate code or descriptors at the same time." << endl;
-      return false;
+    cerr << "Cannot use " << name
+            << " and generate code or descriptors at the same time." << endl;
+    return false;
     }
 
     mode_ = (name == "--encode") ? MODE_ENCODE : MODE_DECODE;
 
     if (value.empty() && name != "--decode_raw") {
-      cerr << "Type name for " << name << " cannot be blank." << endl;
-      if (name == "--decode") {
+    cerr << "Type name for " << name << " cannot be blank." << endl;
+    if (name == "--decode") {
         cerr << "To decode an unknown message, use --decode_raw." << endl;
-      }
-      return false;
+    }
+    return false;
     } else if (!value.empty() && name == "--decode_raw") {
-      cerr << "--decode_raw does not take a parameter." << endl;
-      return false;
+    cerr << "--decode_raw does not take a parameter." << endl;
+    return false;
     }
 
     codec_type_ = value;
 
   } else if (name == "--error_format") {
     if (value == "gcc") {
-      error_format_ = ERROR_FORMAT_GCC;
+    error_format_ = ERROR_FORMAT_GCC;
     } else if (value == "msvs") {
-      error_format_ = ERROR_FORMAT_MSVS;
+    error_format_ = ERROR_FORMAT_MSVS;
     } else {
-      cerr << "Unknown error format: " << value << endl;
-      return false;
+    cerr << "Unknown error format: " << value << endl;
+    return false;
     }
 
   } else if (name == "--plugin") {
     if (plugin_prefix_.empty()) {
-      cerr << "This compiler does not support plugins." << endl;
-      return false;
+    cerr << "This compiler does not support plugins." << endl;
+    return false;
     }
 
     string name;
@@ -982,17 +982,17 @@ bool CommandLineInterface::InterpretArgument(const string& name,
 
     string::size_type equals_pos = value.find_first_of('=');
     if (equals_pos == string::npos) {
-      // Use the basename of the file.
-      string::size_type slash_pos = value.find_last_of('/');
-      if (slash_pos == string::npos) {
+    // Use the basename of the file.
+    string::size_type slash_pos = value.find_last_of('/');
+    if (slash_pos == string::npos) {
         name = value;
-      } else {
-        name = value.substr(slash_pos + 1);
-      }
-      path = value;
     } else {
-      name = value.substr(0, equals_pos);
-      path = value.substr(equals_pos + 1);
+        name = value.substr(slash_pos + 1);
+    }
+    path = value;
+    } else {
+    name = value.substr(0, equals_pos);
+    path = value.substr(equals_pos + 1);
     }
 
     plugins_[name] = path;
@@ -1002,23 +1002,23 @@ bool CommandLineInterface::InterpretArgument(const string& name,
     const GeneratorInfo* generator_info = FindOrNull(generators_, name);
     if (generator_info == NULL &&
         (plugin_prefix_.empty() || !HasSuffixString(name, "_out"))) {
-      cerr << "Unknown flag: " << name << endl;
-      return false;
+    cerr << "Unknown flag: " << name << endl;
+    return false;
     }
 
     // It's an output flag.  Add it to the output directives.
     if (mode_ != MODE_COMPILE) {
-      cerr << "Cannot use --encode or --decode and generate code at the "
-              "same time." << endl;
-      return false;
+    cerr << "Cannot use --encode or --decode and generate code at the "
+            "same time." << endl;
+    return false;
     }
 
     OutputDirective directive;
     directive.name = name;
     if (generator_info == NULL) {
-      directive.generator = NULL;
+    directive.generator = NULL;
     } else {
-      directive.generator = generator_info->generator;
+    directive.generator = generator_info->generator;
     }
 
     // Split value at ':' to separate the generator parameter from the
@@ -1026,10 +1026,10 @@ bool CommandLineInterface::InterpretArgument(const string& name,
     // Windows-style absolute path.
     string::size_type colon_pos = value.find_first_of(':');
     if (colon_pos == string::npos || IsWindowsAbsolutePath(value)) {
-      directive.output_location = value;
+    directive.output_location = value;
     } else {
-      directive.parameter = value.substr(0, colon_pos);
-      directive.output_location = value.substr(colon_pos + 1);
+    directive.parameter = value.substr(0, colon_pos);
+    directive.output_location = value.substr(colon_pos + 1);
     }
 
     output_directives_.push_back(directive);
@@ -1084,13 +1084,13 @@ void CommandLineInterface::PrintHelpText() {
   }
 
   for (GeneratorMap::iterator iter = generators_.begin();
-       iter != generators_.end(); ++iter) {
+        iter != generators_.end(); ++iter) {
     // FIXME(kenton):  If the text is long enough it will wrap, which is ugly,
     //   but fixing this nicely (e.g. splitting on spaces) is probably more
     //   trouble than it's worth.
     cerr << "  " << iter->first << "=OUT_DIR "
-         << string(19 - iter->first.size(), ' ')  // Spaces for alignment.
-         << iter->second.help_text << endl;
+        << string(19 - iter->first.size(), ' ')  // Spaces for alignment.
+        << iter->second.help_text << endl;
   }
 }
 
@@ -1103,7 +1103,7 @@ bool CommandLineInterface::GenerateOutput(
   if (output_directive.generator == NULL) {
     // This is a plugin.
     GOOGLE_CHECK(HasPrefixString(output_directive.name, "--") &&
-          HasSuffixString(output_directive.name, "_out"))
+        HasSuffixString(output_directive.name, "_out"))
         << "Bad name for plugin generator: " << output_directive.name;
 
     // Strip the "--" and "_out" and add the plugin prefix.
@@ -1111,22 +1111,22 @@ bool CommandLineInterface::GenerateOutput(
         output_directive.name.substr(2, output_directive.name.size() - 6);
 
     if (!GeneratePluginOutput(parsed_files, plugin_name,
-                              output_directive.parameter,
-                              output_directory, &error)) {
-      cerr << output_directive.name << ": " << error << endl;
-      return false;
+                            output_directive.parameter,
+                            output_directory, &error)) {
+    cerr << output_directive.name << ": " << error << endl;
+    return false;
     }
   } else {
     // Regular generator.
     for (int i = 0; i < parsed_files.size(); i++) {
-      if (!output_directive.generator->Generate(
-          parsed_files[i], output_directive.parameter,
-          output_directory, &error)) {
+    if (!output_directive.generator->Generate(
+        parsed_files[i], output_directive.parameter,
+        output_directory, &error)) {
         // Generator returned an error.
         cerr << output_directive.name << ": " << parsed_files[i]->name() << ": "
-             << error << endl;
+            << error << endl;
         return false;
-      }
+    }
     }
   }
 
@@ -1151,7 +1151,7 @@ bool CommandLineInterface::GeneratePluginOutput(
   for (int i = 0; i < parsed_files.size(); i++) {
     request.add_file_to_generate(parsed_files[i]->name());
     GetTransitiveDependencies(parsed_files[i], &already_seen,
-                              request.mutable_proto_file());
+                            request.mutable_proto_file());
   }
 
   // Invoke the plugin.
@@ -1176,23 +1176,23 @@ bool CommandLineInterface::GeneratePluginOutput(
     const CodeGeneratorResponse::File& output_file = response.file(i);
 
     if (!output_file.insertion_point().empty()) {
-      // Open a file for insert.
-      // We reset current_output to NULL first so that the old file is closed
-      // before the new one is opened.
-      current_output.reset();
-      current_output.reset(output_directory->OpenForInsert(
-          output_file.name(), output_file.insertion_point()));
+    // Open a file for insert.
+    // We reset current_output to NULL first so that the old file is closed
+    // before the new one is opened.
+    current_output.reset();
+    current_output.reset(output_directory->OpenForInsert(
+        output_file.name(), output_file.insertion_point()));
     } else if (!output_file.name().empty()) {
-      // Starting a new file.  Open it.
-      // We reset current_output to NULL first so that the old file is closed
-      // before the new one is opened.
-      current_output.reset();
-      current_output.reset(output_directory->Open(output_file.name()));
+    // Starting a new file.  Open it.
+    // We reset current_output to NULL first so that the old file is closed
+    // before the new one is opened.
+    current_output.reset();
+    current_output.reset(output_directory->Open(output_file.name()));
     } else if (current_output == NULL) {
-      *error = strings::Substitute(
+    *error = strings::Substitute(
         "$0: First file chunk returned by plugin did not specify a file name.",
         plugin_name);
-      return false;
+    return false;
     }
 
     // Use CodedOutputStream for convenience; otherwise we'd need to provide
@@ -1241,33 +1241,33 @@ bool CommandLineInterface::EncodeOrDecode(const DescriptorPool* pool) {
     parser.AllowPartialMessage(true);
 
     if (!parser.Parse(&in, message.get())) {
-      cerr << "Failed to parse input." << endl;
-      return false;
+    cerr << "Failed to parse input." << endl;
+    return false;
     }
   } else {
     // Input is binary.
     if (!message->ParsePartialFromZeroCopyStream(&in)) {
-      cerr << "Failed to parse input." << endl;
-      return false;
+    cerr << "Failed to parse input." << endl;
+    return false;
     }
   }
 
   if (!message->IsInitialized()) {
     cerr << "warning:  Input message is missing required fields:  "
-         << message->InitializationErrorString() << endl;
+        << message->InitializationErrorString() << endl;
   }
 
   if (mode_ == MODE_ENCODE) {
     // Output is binary.
     if (!message->SerializePartialToZeroCopyStream(&out)) {
-      cerr << "output: I/O error." << endl;
-      return false;
+    cerr << "output: I/O error." << endl;
+    return false;
     }
   } else {
     // Output is text.
     if (!TextFormat::Print(*message, &out)) {
-      cerr << "output: I/O error." << endl;
-      return false;
+    cerr << "output: I/O error." << endl;
+    return false;
     }
   }
 
@@ -1281,19 +1281,19 @@ bool CommandLineInterface::WriteDescriptorSet(
   if (imports_in_descriptor_set_) {
     set<const FileDescriptor*> already_seen;
     for (int i = 0; i < parsed_files.size(); i++) {
-      GetTransitiveDependencies(
-          parsed_files[i], &already_seen, file_set.mutable_file());
+    GetTransitiveDependencies(
+        parsed_files[i], &already_seen, file_set.mutable_file());
     }
   } else {
     for (int i = 0; i < parsed_files.size(); i++) {
-      parsed_files[i]->CopyTo(file_set.add_file());
+    parsed_files[i]->CopyTo(file_set.add_file());
     }
   }
 
   int fd;
   do {
     fd = open(descriptor_set_name_.c_str(),
-              O_WRONLY | O_CREAT | O_TRUNC | O_BINARY, 0666);
+            O_WRONLY | O_CREAT | O_TRUNC | O_BINARY, 0666);
   } while (fd < 0 && errno == EINTR);
 
   if (fd < 0) {

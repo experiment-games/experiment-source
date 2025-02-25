@@ -38,7 +38,7 @@ extern ITempEnts *tempents;
 
 class CRagdollBoltEnumerator : public IPartitionEnumerator
 {
-   public:
+    public:
     // Forced constructor
     CRagdollBoltEnumerator( Ray_t &shot, Vector vOrigin )
     {
@@ -121,7 +121,7 @@ class CRagdollBoltEnumerator : public IPartitionEnumerator
         return ITERATION_CONTINUE;
     }
 
-   private:
+    private:
     Ray_t m_rayShot;
     Vector m_vWorld;
 };

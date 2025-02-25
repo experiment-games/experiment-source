@@ -132,7 +132,7 @@ char *CmdLib_FGets( char *pOut, int outSize, FileHandle_t hFile )
 // This pauses before exiting if they use -StopOnExit. Useful for debugging.
 class CExitStopper
 {
-   public:
+    public:
     ~CExitStopper()
     {
         if ( g_bStopOnExit )
@@ -338,14 +338,14 @@ void InstallExtraSpewHook( SpewHookFn pFn )
 #if 0
 void CmdLib_AllocError( unsigned long size )
 {
-	Error( "Error trying to allocate %d bytes.\n", size );
+    Error( "Error trying to allocate %d bytes.\n", size );
 }
 
 
 int CmdLib_NewHandler( size_t size )
 {
-	CmdLib_AllocError( size );
-	return 0;
+    CmdLib_AllocError( size );
+    return 0;
 }
 #endif
 

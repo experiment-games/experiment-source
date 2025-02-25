@@ -292,8 +292,8 @@ void CVoiceStatus::UpdateSpeakerStatus( int entindex, bool bTalking )
     if ( voice_clientdebug.GetInt() )
     {
         Msg( "CVoiceStatus::UpdateSpeakerStatus: ent %d talking = %d\n",
-             entindex,
-             bTalking );
+            entindex,
+            bTalking );
     }
 
     // Is it the local player talking?
@@ -568,9 +568,9 @@ void CVoiceStatus::SetPlayerBlockedState( int iPlayer, bool blocked )
     if ( voice_clientdebug.GetInt() )
     {
         Msg( "CVoiceStatus::SetPlayerBlockedState: setting player %d ban to "
-             "%d\n",
-             iPlayer,
-             !m_BanMgr.GetPlayerBan( pi.guid ) );
+            "%d\n",
+            iPlayer,
+            !m_BanMgr.GetPlayerBan( pi.guid ) );
     }
 
     m_BanMgr.SetPlayerBan( pi.guid, !m_BanMgr.GetPlayerBan( pi.guid ) );

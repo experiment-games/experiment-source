@@ -18,7 +18,7 @@ class Vector;
 
 class IHLTVDirector
 {
-   public:
+    public:
     virtual ~IHLTVDirector() {}
 
     virtual bool IsActive( void ) = 0;  // true if director is active

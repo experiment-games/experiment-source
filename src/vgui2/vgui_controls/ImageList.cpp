@@ -20,7 +20,7 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 class BlankImage : public IImage
 {
-   public:
+    public:
     virtual void Paint() {}
     virtual void SetPos( int x, int y ) {}
     virtual void GetContentSize( int &wide, int &tall )

@@ -25,7 +25,7 @@ class IReplaySessionRecorder;
 
 class IServerReplayContext : public IReplayContext
 {
-   public:
+    public:
     virtual void FlagForConVarSanityCheck() = 0;             // Checks replay_enable / replay_local_fileserver_path / replay_downloadurlport / replay_downloadurlpath
     virtual IGameEvent *CreateReplaySessionInfoEvent() = 0;  // Create "replay_sessioninfo" event w/ appropriate fields filled in
     virtual IReplaySessionRecorder *GetSessionRecorder() = 0;

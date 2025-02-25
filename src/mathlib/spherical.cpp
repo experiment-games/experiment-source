@@ -96,7 +96,7 @@ FORCEINLINE float SphericalHarmonic( int nL, int nM, float flTheta, float flPhi,
 
     if ( nM > 0 )
         return SQRT_2 * SHNormalizationFactor( nL, nM ) * cos( nM * flPhi ) *
-               AssociatedLegendrePolynomial( nL, nM, flCosTheta );
+                AssociatedLegendrePolynomial( nL, nM, flCosTheta );
 
     return SQRT_2 * SHNormalizationFactor( nL, -nM ) * sin( -nM * flPhi ) * AssociatedLegendrePolynomial( nL, -nM, flCosTheta );
 }

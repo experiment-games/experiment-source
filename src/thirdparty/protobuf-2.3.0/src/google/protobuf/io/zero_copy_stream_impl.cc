@@ -113,7 +113,7 @@ FileInputStream::CopyingFileInputStream::CopyingFileInputStream(
 FileInputStream::CopyingFileInputStream::~CopyingFileInputStream() {
   if (close_on_delete_) {
     if (!Close()) {
-      GOOGLE_LOG(ERROR) << "close() failed: " << strerror(errno_);
+    GOOGLE_LOG(ERROR) << "close() failed: " << strerror(errno_);
     }
   }
 }
@@ -153,7 +153,7 @@ int FileInputStream::CopyingFileInputStream::Skip(int count) {
   GOOGLE_CHECK(!is_closed_);
 
   if (!previous_seek_failed_ &&
-      lseek(file_, count, SEEK_CUR) != (off_t)-1) {
+    lseek(file_, count, SEEK_CUR) != (off_t)-1) {
     // Seek succeeded.
     return count;
   } else {
@@ -211,7 +211,7 @@ FileOutputStream::CopyingFileOutputStream::CopyingFileOutputStream(
 FileOutputStream::CopyingFileOutputStream::~CopyingFileOutputStream() {
   if (close_on_delete_) {
     if (!Close()) {
-      GOOGLE_LOG(ERROR) << "close() failed: " << strerror(errno_);
+    GOOGLE_LOG(ERROR) << "close() failed: " << strerror(errno_);
     }
   }
 }
@@ -241,24 +241,24 @@ bool FileOutputStream::CopyingFileOutputStream::Write(
   while (total_written < size) {
     int bytes;
     do {
-      bytes = write(file_, buffer_base + total_written, size - total_written);
+    bytes = write(file_, buffer_base + total_written, size - total_written);
     } while (bytes < 0 && errno == EINTR);
 
     if (bytes <= 0) {
-      // Write error.
+    // Write error.
 
-      // FIXME(kenton):  According to the man page, if write() returns zero,
-      //   there was no error; write() simply did not write anything.  It's
-      //   unclear under what circumstances this might happen, but presumably
-      //   errno won't be set in this case.  I am confused as to how such an
-      //   event should be handled.  For now I'm treating it as an error, since
-      //   retrying seems like it could lead to an infinite loop.  I suspect
-      //   this never actually happens anyway.
+    // FIXME(kenton):  According to the man page, if write() returns zero,
+    //   there was no error; write() simply did not write anything.  It's
+    //   unclear under what circumstances this might happen, but presumably
+    //   errno won't be set in this case.  I am confused as to how such an
+    //   event should be handled.  For now I'm treating it as an error, since
+    //   retrying seems like it could lead to an infinite loop.  I suspect
+    //   this never actually happens anyway.
 
-      if (bytes < 0) {
+    if (bytes < 0) {
         errno_ = errno;
-      }
-      return false;
+    }
+    return false;
     }
     total_written += bytes;
   }
@@ -411,7 +411,7 @@ int64 ConcatenatingInputStream::ByteCount() const {
 // ===================================================================
 
 LimitingInputStream::LimitingInputStream(ZeroCopyInputStream* input,
-                                         int64 limit)
+                                        int64 limit)
   : input_(input), limit_(limit) {}
 
 LimitingInputStream::~LimitingInputStream() {

@@ -82,7 +82,7 @@ enum
 
 class IAvi : public IAppSystem
 {
-   public:
+    public:
     // Necessary to call this before any other AVI interface methods
     virtual void SetMainWindow( void *hWnd ) = 0;
 

@@ -31,13 +31,13 @@ LUALIB_API lua_CBaseFlex *( luaL_checkbaseflex )( lua_State *L, int narg );
 */
 class CClientSideEntityManager
 {
-   public:
+    public:
     CClientSideEntityManager();
     ~CClientSideEntityManager();
 
     lua_CBaseFlex *CreateClientSideEntity( const char *pszModelName, RenderGroup_t renderGroup );
 
-   protected:
+    protected:
     void InitClientEntity( lua_CBaseFlex *pClientSideEntity, const model_t *pModel, RenderGroup_t renderGroup );
 };
 

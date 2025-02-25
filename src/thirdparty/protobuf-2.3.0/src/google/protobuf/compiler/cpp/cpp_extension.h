@@ -61,10 +61,10 @@ namespace cpp
 // since extensions are just simple identifiers with interesting types.
 class ExtensionGenerator
 {
-   public:
+    public:
     // See generator.cc for the meaning of dllexport_decl.
     explicit ExtensionGenerator( const FieldDescriptor* descriptor,
-                                 const string& dllexport_decl );
+                                const string& dllexport_decl );
     ~ExtensionGenerator();
 
     // Header stuff.
@@ -76,7 +76,7 @@ class ExtensionGenerator
     // Generate code to register the extension.
     void GenerateRegistration( io::Printer* printer );
 
-   private:
+    private:
     const FieldDescriptor* descriptor_;
     string type_traits_;
     string dllexport_decl_;

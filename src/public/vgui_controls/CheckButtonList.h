@@ -23,7 +23,7 @@ class CheckButtonList : public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CheckButtonList, EditablePanel );
 
-   public:
+    public:
     CheckButtonList( Panel *parent, const char *name );
     ~CheckButtonList();
 
@@ -47,16 +47,16 @@ class CheckButtonList : public EditablePanel
     void SetItemCheckable( int itemID, bool state );
 
     /* MESSAGES SENT
-      "CheckButtonChecked" - sent when one of the check buttons state has changed
+    "CheckButtonChecked" - sent when one of the check buttons state has changed
 
     */
 
-   protected:
+    protected:
     virtual void PerformLayout();
     virtual void ApplySchemeSettings( IScheme *pScheme );
     virtual void OnMouseWheeled( int delta );
 
-   private:
+    private:
     MESSAGE_FUNC_PARAMS( OnCheckButtonChecked, "CheckButtonChecked", pParams );
     MESSAGE_FUNC( OnScrollBarSliderMoved, "ScrollBarSliderMoved" );
 

@@ -66,7 +66,7 @@ class MockErrorCollector : public MultiFileErrorCollector {
   void AddError(const string& filename, int line, int column,
                 const string& message) {
     strings::SubstituteAndAppend(&text_, "$0:$1:$2: $3\n",
-                                 filename, line, column, message);
+                                filename, line, column, message);
   }
 };
 
@@ -86,9 +86,9 @@ class MockSourceTree : public SourceTree {
   io::ZeroCopyInputStream* Open(const string& filename) {
     const char* contents = FindPtrOrNull(files_, filename);
     if (contents == NULL) {
-      return NULL;
+    return NULL;
     } else {
-      return new io::ArrayInputStream(contents, strlen(contents));
+    return new io::ArrayInputStream(contents, strlen(contents));
     }
   }
 
@@ -202,11 +202,11 @@ TEST_F(ImporterTest, RecursiveImport) {
   EXPECT_TRUE(importer_.Import("recursive1.proto") == NULL);
   EXPECT_EQ(
     "recursive1.proto:-1:0: File recursively imports itself: recursive1.proto "
-      "-> recursive2.proto -> recursive1.proto\n"
+    "-> recursive2.proto -> recursive1.proto\n"
     "recursive2.proto:-1:0: Import \"recursive1.proto\" was not found "
-      "or had errors.\n"
+    "or had errors.\n"
     "recursive1.proto:-1:0: Import \"recursive2.proto\" was not found "
-      "or had errors.\n",
+    "or had errors.\n",
     error_collector_.text_);
 }
 
@@ -214,15 +214,15 @@ TEST_F(ImporterTest, RecursiveImport) {
 // descriptor_unittest, but are more convenient to test here.
 TEST_F(ImporterTest, MapFieldValid) {
   AddFile(
-      "map.proto",
-      "syntax = \"proto2\";\n"
-      "message Item {\n"
-      "  required string key = 1;\n"
-      "}\n"
-      "message Map {\n"
-      "  repeated Item items = 1 [experimental_map_key = \"key\"];\n"
-      "}\n"
-      );
+    "map.proto",
+    "syntax = \"proto2\";\n"
+    "message Item {\n"
+    "  required string key = 1;\n"
+    "}\n"
+    "message Map {\n"
+    "  repeated Item items = 1 [experimental_map_key = \"key\"];\n"
+    "}\n"
+    );
   const FileDescriptor* file = importer_.Import("map.proto");
   ASSERT_TRUE(file != NULL) << error_collector_.text_;
   EXPECT_EQ("", error_collector_.text_);
@@ -241,85 +241,85 @@ TEST_F(ImporterTest, MapFieldValid) {
 
 TEST_F(ImporterTest, MapFieldNotRepeated) {
   AddFile(
-      "map.proto",
-      "syntax = \"proto2\";\n"
-      "message Item {\n"
-      "  required string key = 1;\n"
-      "}\n"
-      "message Map {\n"
-      "  required Item items = 1 [experimental_map_key = \"key\"];\n"
-      "}\n"
-      );
+    "map.proto",
+    "syntax = \"proto2\";\n"
+    "message Item {\n"
+    "  required string key = 1;\n"
+    "}\n"
+    "message Map {\n"
+    "  required Item items = 1 [experimental_map_key = \"key\"];\n"
+    "}\n"
+    );
   EXPECT_TRUE(importer_.Import("map.proto") == NULL);
   EXPECT_SUBSTRING("only allowed for repeated fields", error());
 }
 
 TEST_F(ImporterTest, MapFieldNotMessageType) {
   AddFile(
-      "map.proto",
-      "syntax = \"proto2\";\n"
-      "message Map {\n"
-      "  repeated int32 items = 1 [experimental_map_key = \"key\"];\n"
-      "}\n"
-      );
+    "map.proto",
+    "syntax = \"proto2\";\n"
+    "message Map {\n"
+    "  repeated int32 items = 1 [experimental_map_key = \"key\"];\n"
+    "}\n"
+    );
   EXPECT_TRUE(importer_.Import("map.proto") == NULL);
   EXPECT_SUBSTRING("only allowed for fields with a message type", error());
 }
 
 TEST_F(ImporterTest, MapFieldTypeNotFound) {
   AddFile(
-      "map.proto",
-      "syntax = \"proto2\";\n"
-      "message Map {\n"
-      "  repeated Unknown items = 1 [experimental_map_key = \"key\"];\n"
-      "}\n"
-      );
+    "map.proto",
+    "syntax = \"proto2\";\n"
+    "message Map {\n"
+    "  repeated Unknown items = 1 [experimental_map_key = \"key\"];\n"
+    "}\n"
+    );
   EXPECT_TRUE(importer_.Import("map.proto") == NULL);
   EXPECT_SUBSTRING("not defined", error());
 }
 
 TEST_F(ImporterTest, MapFieldKeyNotFound) {
   AddFile(
-      "map.proto",
-      "syntax = \"proto2\";\n"
-      "message Item {\n"
-      "  required string key = 1;\n"
-      "}\n"
-      "message Map {\n"
-      "  repeated Item items = 1 [experimental_map_key = \"badkey\"];\n"
-      "}\n"
-      );
+    "map.proto",
+    "syntax = \"proto2\";\n"
+    "message Item {\n"
+    "  required string key = 1;\n"
+    "}\n"
+    "message Map {\n"
+    "  repeated Item items = 1 [experimental_map_key = \"badkey\"];\n"
+    "}\n"
+    );
   EXPECT_TRUE(importer_.Import("map.proto") == NULL);
   EXPECT_SUBSTRING("Could not find field", error());
 }
 
 TEST_F(ImporterTest, MapFieldKeyRepeated) {
   AddFile(
-      "map.proto",
-      "syntax = \"proto2\";\n"
-      "message Item {\n"
-      "  repeated string key = 1;\n"
-      "}\n"
-      "message Map {\n"
-      "  repeated Item items = 1 [experimental_map_key = \"key\"];\n"
-      "}\n"
-      );
+    "map.proto",
+    "syntax = \"proto2\";\n"
+    "message Item {\n"
+    "  repeated string key = 1;\n"
+    "}\n"
+    "message Map {\n"
+    "  repeated Item items = 1 [experimental_map_key = \"key\"];\n"
+    "}\n"
+    );
   EXPECT_TRUE(importer_.Import("map.proto") == NULL);
   EXPECT_SUBSTRING("must not name a repeated field", error());
 }
 
 TEST_F(ImporterTest, MapFieldKeyNotScalar) {
   AddFile(
-      "map.proto",
-      "syntax = \"proto2\";\n"
-      "message ItemKey { }\n"
-      "message Item {\n"
-      "  required ItemKey key = 1;\n"
-      "}\n"
-      "message Map {\n"
-      "  repeated Item items = 1 [experimental_map_key = \"key\"];\n"
-      "}\n"
-      );
+    "map.proto",
+    "syntax = \"proto2\";\n"
+    "message ItemKey { }\n"
+    "message Item {\n"
+    "  required ItemKey key = 1;\n"
+    "}\n"
+    "message Map {\n"
+    "  repeated Item items = 1 [experimental_map_key = \"key\"];\n"
+    "}\n"
+    );
   EXPECT_TRUE(importer_.Import("map.proto") == NULL);
   EXPECT_SUBSTRING("must name a scalar or string", error());
 }
@@ -333,16 +333,16 @@ class DiskSourceTreeTest : public testing::Test {
     dirnames_.push_back(TestTempDir() + "/test_proto2_import_path_2");
 
     for (int i = 0; i < dirnames_.size(); i++) {
-      if (File::Exists(dirnames_[i])) {
+    if (File::Exists(dirnames_[i])) {
         File::DeleteRecursively(dirnames_[i], NULL, NULL);
-      }
-      GOOGLE_CHECK(File::CreateDir(dirnames_[i].c_str(), DEFAULT_FILE_MODE));
+    }
+    GOOGLE_CHECK(File::CreateDir(dirnames_[i].c_str(), DEFAULT_FILE_MODE));
     }
   }
 
   virtual void TearDown() {
     for (int i = 0; i < dirnames_.size(); i++) {
-      File::DeleteRecursively(dirnames_[i], NULL, NULL);
+    File::DeleteRecursively(dirnames_[i], NULL, NULL);
     }
   }
 
@@ -355,7 +355,7 @@ class DiskSourceTreeTest : public testing::Test {
   }
 
   void ExpectFileContents(const string& filename,
-                          const char* expected_contents) {
+                        const char* expected_contents) {
     scoped_ptr<io::ZeroCopyInputStream> input(source_tree_.Open(filename));
 
     ASSERT_FALSE(input == NULL);
@@ -365,7 +365,7 @@ class DiskSourceTreeTest : public testing::Test {
     const void* data;
     int size;
     while (input->Next(&data, &size)) {
-      file_contents.append(reinterpret_cast<const char*>(data), size);
+    file_contents.append(reinterpret_cast<const char*>(data), size);
     }
 
     EXPECT_EQ(expected_contents, file_contents);
@@ -454,7 +454,7 @@ TEST_F(DiskSourceTreeTest, OrderingTrumpsSpecificity) {
 
   // Create the "bar" directory so we can put a file in it.
   ASSERT_TRUE(File::CreateDir((dirnames_[0] + "/bar").c_str(),
-                              DEFAULT_FILE_MODE));
+                            DEFAULT_FILE_MODE));
 
   // Add files and map paths.
   AddFile(dirnames_[0] + "/bar/foo", "Hello World!");
@@ -479,22 +479,22 @@ TEST_F(DiskSourceTreeTest, DiskFileToVirtualFile) {
 
   EXPECT_EQ(DiskSourceTree::NO_MAPPING,
     source_tree_.DiskFileToVirtualFile(
-      "/foo", &virtual_file, &shadowing_disk_file));
+    "/foo", &virtual_file, &shadowing_disk_file));
 
   EXPECT_EQ(DiskSourceTree::SHADOWED,
     source_tree_.DiskFileToVirtualFile(
-      dirnames_[1] + "/foo", &virtual_file, &shadowing_disk_file));
+    dirnames_[1] + "/foo", &virtual_file, &shadowing_disk_file));
   EXPECT_EQ("bar/foo", virtual_file);
   EXPECT_EQ(dirnames_[0] + "/foo", shadowing_disk_file);
 
   EXPECT_EQ(DiskSourceTree::CANNOT_OPEN,
     source_tree_.DiskFileToVirtualFile(
-      dirnames_[1] + "/baz", &virtual_file, &shadowing_disk_file));
+    dirnames_[1] + "/baz", &virtual_file, &shadowing_disk_file));
   EXPECT_EQ("bar/baz", virtual_file);
 
   EXPECT_EQ(DiskSourceTree::SUCCESS,
     source_tree_.DiskFileToVirtualFile(
-      dirnames_[0] + "/foo", &virtual_file, &shadowing_disk_file));
+    dirnames_[0] + "/foo", &virtual_file, &shadowing_disk_file));
   EXPECT_EQ("bar/foo", virtual_file);
 }
 
@@ -514,54 +514,54 @@ TEST_F(DiskSourceTreeTest, DiskFileToVirtualFileCanonicalization) {
   // "../.." should not be considered to be under "..".
   EXPECT_EQ(DiskSourceTree::NO_MAPPING,
     source_tree_.DiskFileToVirtualFile(
-      "../../baz", &virtual_file, &shadowing_disk_file));
+    "../../baz", &virtual_file, &shadowing_disk_file));
 
   // "/foo" is not mapped (it should not be misintepreted as being under ".").
   EXPECT_EQ(DiskSourceTree::NO_MAPPING,
     source_tree_.DiskFileToVirtualFile(
-      "/foo", &virtual_file, &shadowing_disk_file));
+    "/foo", &virtual_file, &shadowing_disk_file));
 
 #ifdef WIN32
   // "C:\foo" is not mapped (it should not be misintepreted as being under ".").
   EXPECT_EQ(DiskSourceTree::NO_MAPPING,
     source_tree_.DiskFileToVirtualFile(
-      "C:\\foo", &virtual_file, &shadowing_disk_file));
+    "C:\\foo", &virtual_file, &shadowing_disk_file));
 #endif  // WIN32
 
   // But "../baz" should be.
   EXPECT_EQ(DiskSourceTree::CANNOT_OPEN,
     source_tree_.DiskFileToVirtualFile(
-      "../baz", &virtual_file, &shadowing_disk_file));
+    "../baz", &virtual_file, &shadowing_disk_file));
   EXPECT_EQ("dir1/baz", virtual_file);
 
   // "../../foo/baz" is under "../../foo".
   EXPECT_EQ(DiskSourceTree::CANNOT_OPEN,
     source_tree_.DiskFileToVirtualFile(
-      "../../foo/baz", &virtual_file, &shadowing_disk_file));
+    "../../foo/baz", &virtual_file, &shadowing_disk_file));
   EXPECT_EQ("dir2/baz", virtual_file);
 
   // "foo/./bar/baz" is under "./foo/bar/.".
   EXPECT_EQ(DiskSourceTree::CANNOT_OPEN,
     source_tree_.DiskFileToVirtualFile(
-      "foo/bar/baz", &virtual_file, &shadowing_disk_file));
+    "foo/bar/baz", &virtual_file, &shadowing_disk_file));
   EXPECT_EQ("dir3/baz", virtual_file);
 
   // "bar" is under ".".
   EXPECT_EQ(DiskSourceTree::CANNOT_OPEN,
     source_tree_.DiskFileToVirtualFile(
-      "bar", &virtual_file, &shadowing_disk_file));
+    "bar", &virtual_file, &shadowing_disk_file));
   EXPECT_EQ("dir4/bar", virtual_file);
 
   // "/qux/baz" is under "/qux".
   EXPECT_EQ(DiskSourceTree::CANNOT_OPEN,
     source_tree_.DiskFileToVirtualFile(
-      "/qux/baz", &virtual_file, &shadowing_disk_file));
+    "/qux/baz", &virtual_file, &shadowing_disk_file));
   EXPECT_EQ("baz", virtual_file);
 
   // "/quux/bar" is under "/quux".
   EXPECT_EQ(DiskSourceTree::CANNOT_OPEN,
     source_tree_.DiskFileToVirtualFile(
-      "/quux/bar", &virtual_file, &shadowing_disk_file));
+    "/quux/bar", &virtual_file, &shadowing_disk_file));
   EXPECT_EQ("dir5/bar", virtual_file);
 }
 

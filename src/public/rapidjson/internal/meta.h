@@ -166,7 +166,7 @@ struct IsConst< const T > : TrueType
 template < typename CT, typename T >
 struct IsMoreConst
     : AndExpr< IsSame< typename RemoveConst< CT >::Type, typename RemoveConst< T >::Type >,
-               BoolType< IsConst< CT >::Value >= IsConst< T >::Value > >::Type
+                BoolType< IsConst< CT >::Value >= IsConst< T >::Value > >::Type
 {
 };
 
@@ -285,7 +285,7 @@ struct RemoveSfinaeTag< SfinaeTag& ( * )( T ) >
 
 #define RAPIDJSON_DISABLEIF_RETURN( cond, returntype )                                  \
     typename ::RAPIDJSON_NAMESPACE::internal::DisableIf< RAPIDJSON_REMOVEFPTR_( cond ), \
-                                                         RAPIDJSON_REMOVEFPTR_( returntype ) >::Type
+                                                        RAPIDJSON_REMOVEFPTR_( returntype ) >::Type
 
 }  // namespace internal
 RAPIDJSON_NAMESPACE_END

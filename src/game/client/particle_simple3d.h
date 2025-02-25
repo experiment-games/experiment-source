@@ -24,7 +24,7 @@
 
 class Particle3D : public Particle
 {
-   public:
+    public:
     Vector m_vecVelocity;
     QAngle m_vAngles;
     float m_flAngSpeed;  // Is same on all axis
@@ -40,7 +40,7 @@ class Particle3D : public Particle
     }
 
     float m_flLifeRemaining;  // How long it lives for.
-   public:
+    public:
     byte m_uchFrontColor[3];
     byte m_uchSize;
     byte m_uchBackColor[3];
@@ -53,7 +53,7 @@ class Particle3D : public Particle
 
 class CSimple3DEmitter : public CSimpleEmitter
 {
-   public:
+    public:
     CSimple3DEmitter( const char *pDebugName )
         : CSimpleEmitter( pDebugName ) {}
 
@@ -64,7 +64,7 @@ class CSimple3DEmitter : public CSimpleEmitter
 
     CParticleCollision m_ParticleCollision;
 
-   private:
+    private:
     CSimple3DEmitter( const CSimple3DEmitter & );
 };
 

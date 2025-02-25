@@ -21,7 +21,7 @@
 // This is a simple wrapper layer for UDP sockets.
 class CIPAddr
 {
-   public:
+    public:
     CIPAddr();
     CIPAddr( const int inputIP[4], const int inputPort );
     CIPAddr( int ip0, int ip1, int ip2, int ip3, int ipPort );
@@ -33,7 +33,7 @@ class CIPAddr
     // Setup to send to the local machine on the specified port.
     void SetupLocal( int inPort );
 
-   public:
+    public:
     unsigned char ip[4];
     unsigned short port;
 };
@@ -42,13 +42,13 @@ class CIPAddr
 // single contiguous chunk of memory.s
 class CChunkWalker
 {
-   public:
+    public:
     CChunkWalker( void const *const *pChunks, const int *pChunkLengths, int nChunks );
 
     int GetTotalLength() const;
     void CopyTo( void *pOut, int nBytes );
 
-   private:
+    private:
     void const *const *m_pChunks;
     const int *m_pChunkLengths;
     int m_nChunks;
@@ -75,12 +75,12 @@ class CChunkWalker
 // }
 class CWaitTimer
 {
-   public:
+    public:
     CWaitTimer( double flSeconds );
 
     bool ShouldKeepWaiting();
 
-   private:
+    private:
     unsigned long m_StartTime;
     unsigned long m_WaitMS;
 };
@@ -90,7 +90,7 @@ unsigned long SampleMilliseconds();
 
 class ISocket
 {
-   public:
+    public:
     // Call this when you're done.
     virtual void Release() = 0;
 

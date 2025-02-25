@@ -24,7 +24,7 @@ class CNPC_Hydra;
 
 class HydraBone
 {
-   public:
+    public:
     HydraBone( void )
     {
         vecPos = Vector( 0, 0, 0 );
@@ -62,7 +62,7 @@ class CNPC_Hydra : public CAI_BaseNPC
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
 
-   public:
+    public:
     CNPC_Hydra()
     {
     }
@@ -171,7 +171,7 @@ class CNPC_Hydra : public CAI_BaseNPC
 
     DEFINE_CUSTOM_AI;
 
-   private:
+    private:
 };
 
 //-----------------------------------------------------------------------------

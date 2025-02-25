@@ -31,7 +31,7 @@ class KeyValues;
 //-----------------------------------------------------------------------------
 class CTeamBitmapImage
 {
-   public:
+    public:
     // construction, destruction
     CTeamBitmapImage();
     ~CTeamBitmapImage();
@@ -45,14 +45,14 @@ class CTeamBitmapImage
     // Paint the sucka. Paint it the size of the parent panel
     void Paint( float yaw = 0.0f );
 
-   protected:
+    protected:
     // Wrapper so we can implement this with EHANDLES some day
     C_BaseEntity *GetEntity()
     {
         return m_pEntity;
     }
 
-   private:
+    private:
     enum
     {
         // NOTE: Was MAX_TF_TEAMS not 4, but I don't like the dependency here.

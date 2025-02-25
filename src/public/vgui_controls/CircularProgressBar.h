@@ -34,7 +34,7 @@ class CircularProgressBar : public ProgressBar
 {
     DECLARE_CLASS_SIMPLE( CircularProgressBar, ProgressBar );
 
-   public:
+    public:
     CircularProgressBar( Panel *parent, const char *panelName );
     ~CircularProgressBar();
 
@@ -68,14 +68,14 @@ class CircularProgressBar : public ProgressBar
         m_iStartSegment = val;
     }
 
-   protected:
+    protected:
     virtual void Paint();
     virtual void PaintBackground();
 
     void DrawCircleSegment( Color c, float flEndDegrees, bool clockwise /* = true */ );
     void SetImage( const char *imageName, progress_textures_t iPos );
 
-   private:
+    private:
     int m_iProgressDirection;
     int m_iStartSegment;
 

@@ -25,11 +25,11 @@ static void add_alias(lua_State *L, int index, const char *name, const char *tar
 static int compat_socket_unix_call(lua_State *L)
 {
     /* Look up socket.unix.stream in the socket.unix table (which is the first
-     * argument). */
+    * argument). */
     lua_getfield(L, 1, "stream");
 
     /* Replace the stack entry for the socket.unix table with the
-     * socket.unix.stream function. */
+    * socket.unix.stream function. */
     lua_replace(L, 1);
 
     /* Call socket.unix.stream, passing along any arguments. */
@@ -54,12 +54,12 @@ LUASOCKET_API int luaopen_socket_unix(lua_State *L)
         mod[i].func(L);
 
     /* Add backwards compatibility aliases "tcp" and "udp" for the "stream" and
-     * "dgram" functions. */
+    * "dgram" functions. */
     add_alias(L, socket_unix_table, "tcp", "stream");
     add_alias(L, socket_unix_table, "udp", "dgram");
 
     /* Add a backwards compatibility function and a metatable setup to call it
-     * for the old socket.unix() interface. */
+    * for the old socket.unix() interface. */
     lua_pushcfunction(L, compat_socket_unix_call);
     lua_setfield(L, socket_unix_table, "__call");
     lua_pushvalue(L, socket_unix_table);

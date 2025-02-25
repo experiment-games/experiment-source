@@ -1,7 +1,7 @@
 The non-test part of the code is expected to have 2 failures.
 
 gtest_output_test_.cc:#: error: Value of: false
-  Actual: false
+	Actual: false
 Expected: true
 gtest_output_test_.cc:#: error: Value of: 3
 Expected: 2
@@ -33,19 +33,19 @@ BarEnvironment::SetUp() called.
 [ RUN      ] FatalFailureTest.FatalFailureInSubroutine
 (expecting a failure that x should be 1)
 gtest_output_test_.cc:#: error: Value of: x
-  Actual: 2
+	Actual: 2
 Expected: 1
 [  FAILED  ] FatalFailureTest.FatalFailureInSubroutine
 [ RUN      ] FatalFailureTest.FatalFailureInNestedSubroutine
 (expecting a failure that x should be 1)
 gtest_output_test_.cc:#: error: Value of: x
-  Actual: 2
+	Actual: 2
 Expected: 1
 [  FAILED  ] FatalFailureTest.FatalFailureInNestedSubroutine
 [ RUN      ] FatalFailureTest.NonfatalFailureInSubroutine
 (expecting a failure on false)
 gtest_output_test_.cc:#: error: Value of: false
-  Actual: false
+	Actual: false
 Expected: true
 [  FAILED  ] FatalFailureTest.NonfatalFailureInSubroutine
 [----------] 1 test from LoggingTest
@@ -73,12 +73,12 @@ This failure is expected, and shouldn't have a trace.
 [ RUN      ] SCOPED_TRACETest.WorksInLoop
 (expected to fail)
 gtest_output_test_.cc:#: error: Value of: n
-  Actual: 1
+	Actual: 1
 Expected: 2
 Google Test trace:
 gtest_output_test_.cc:#: i = 1
 gtest_output_test_.cc:#: error: Value of: n
-  Actual: 2
+	Actual: 2
 Expected: 1
 Google Test trace:
 gtest_output_test_.cc:#: i = 2
@@ -86,12 +86,12 @@ gtest_output_test_.cc:#: i = 2
 [ RUN      ] SCOPED_TRACETest.WorksInSubroutine
 (expected to fail)
 gtest_output_test_.cc:#: error: Value of: n
-  Actual: 1
+	Actual: 1
 Expected: 2
 Google Test trace:
 gtest_output_test_.cc:#: n = 1
 gtest_output_test_.cc:#: error: Value of: n
-  Actual: 2
+	Actual: 2
 Expected: 1
 Google Test trace:
 gtest_output_test_.cc:#: n = 2
@@ -99,11 +99,11 @@ gtest_output_test_.cc:#: n = 2
 [ RUN      ] SCOPED_TRACETest.CanBeNested
 (expected to fail)
 gtest_output_test_.cc:#: error: Value of: n
-  Actual: 2
+	Actual: 2
 Expected: 1
 Google Test trace:
 gtest_output_test_.cc:#: n = 2
-gtest_output_test_.cc:#: 
+gtest_output_test_.cc:#:
 [  FAILED  ] SCOPED_TRACETest.CanBeNested
 [ RUN      ] SCOPED_TRACETest.CanBeRepeated
 (expected to fail)
@@ -283,12 +283,12 @@ case.
 [ RUN      ] ExpectNonfatalFailureTest.FailsWhenThereIsNoNonfatalFailure
 (expecting a failure)
 gtest.cc:#: error: Expected: 1 non-fatal failure
-  Actual: 0 failures
+	Actual: 0 failures
 [  FAILED  ] ExpectNonfatalFailureTest.FailsWhenThereIsNoNonfatalFailure
 [ RUN      ] ExpectNonfatalFailureTest.FailsWhenThereAreTwoNonfatalFailures
 (expecting a failure)
 gtest.cc:#: error: Expected: 1 non-fatal failure
-  Actual: 2 failures
+	Actual: 2 failures
 gtest_output_test_.cc:#: Non-fatal failure:
 Failed
 Expected non-fatal failure 1.
@@ -301,7 +301,7 @@ Expected non-fatal failure 2.
 [ RUN      ] ExpectNonfatalFailureTest.FailsWhenThereIsOneFatalFailure
 (expecting a failure)
 gtest.cc:#: error: Expected: 1 non-fatal failure
-  Actual:
+	Actual:
 gtest_output_test_.cc:#: Fatal failure:
 Failed
 Expected fatal failure.
@@ -310,12 +310,12 @@ Expected fatal failure.
 [ RUN      ] ExpectNonfatalFailureTest.FailsWhenStatementReturns
 (expecting a failure)
 gtest.cc:#: error: Expected: 1 non-fatal failure
-  Actual: 0 failures
+	Actual: 0 failures
 [  FAILED  ] ExpectNonfatalFailureTest.FailsWhenStatementReturns
 [ RUN      ] ExpectNonfatalFailureTest.FailsWhenStatementThrows
 (expecting a failure)
 gtest.cc:#: error: Expected: 1 non-fatal failure
-  Actual: 0 failures
+	Actual: 0 failures
 [  FAILED  ] ExpectNonfatalFailureTest.FailsWhenStatementThrows
 [----------] 8 tests from ExpectFatalFailureTest
 [ RUN      ] ExpectFatalFailureTest.CanReferenceGlobalVariables
@@ -327,12 +327,12 @@ gtest.cc:#: error: Expected: 1 non-fatal failure
 [ RUN      ] ExpectFatalFailureTest.FailsWhenThereIsNoFatalFailure
 (expecting a failure)
 gtest.cc:#: error: Expected: 1 fatal failure
-  Actual: 0 failures
+	Actual: 0 failures
 [  FAILED  ] ExpectFatalFailureTest.FailsWhenThereIsNoFatalFailure
 [ RUN      ] ExpectFatalFailureTest.FailsWhenThereAreTwoFatalFailures
 (expecting a failure)
 gtest.cc:#: error: Expected: 1 fatal failure
-  Actual: 2 failures
+	Actual: 2 failures
 gtest_output_test_.cc:#: Fatal failure:
 Failed
 Expected fatal failure.
@@ -345,7 +345,7 @@ Expected fatal failure.
 [ RUN      ] ExpectFatalFailureTest.FailsWhenThereIsOneNonfatalFailure
 (expecting a failure)
 gtest.cc:#: error: Expected: 1 fatal failure
-  Actual:
+	Actual:
 gtest_output_test_.cc:#: Non-fatal failure:
 Failed
 Expected non-fatal failure.
@@ -354,19 +354,19 @@ Expected non-fatal failure.
 [ RUN      ] ExpectFatalFailureTest.FailsWhenStatementReturns
 (expecting a failure)
 gtest.cc:#: error: Expected: 1 fatal failure
-  Actual: 0 failures
+	Actual: 0 failures
 [  FAILED  ] ExpectFatalFailureTest.FailsWhenStatementReturns
 [ RUN      ] ExpectFatalFailureTest.FailsWhenStatementThrows
 (expecting a failure)
 gtest.cc:#: error: Expected: 1 fatal failure
-  Actual: 0 failures
+	Actual: 0 failures
 [  FAILED  ] ExpectFatalFailureTest.FailsWhenStatementThrows
 [----------] 2 tests from TypedTest/0, where TypeParam = int
 [ RUN      ] TypedTest/0.Success
 [       OK ] TypedTest/0.Success
 [ RUN      ] TypedTest/0.Failure
 gtest_output_test_.cc:#: error: Value of: TypeParam()
-  Actual: 0
+	Actual: 0
 Expected: 1
 Expected failure
 [  FAILED  ] TypedTest/0.Failure
@@ -375,7 +375,7 @@ Expected failure
 [       OK ] Unsigned/TypedTestP/0.Success
 [ RUN      ] Unsigned/TypedTestP/0.Failure
 gtest_output_test_.cc:#: error: Value of: TypeParam()
-  Actual: \0
+	Actual: \0
 Expected: 1U
 Which is: 1
 Expected failure
@@ -385,7 +385,7 @@ Expected failure
 [       OK ] Unsigned/TypedTestP/1.Success
 [ RUN      ] Unsigned/TypedTestP/1.Failure
 gtest_output_test_.cc:#: error: Value of: TypeParam()
-  Actual: 0
+	Actual: 0
 Expected: 1U
 Which is: 1
 Expected failure
@@ -394,20 +394,20 @@ Expected failure
 [ RUN      ] ExpectFailureTest.ExpectFatalFailure
 (expecting 1 failure)
 gtest.cc:#: error: Expected: 1 fatal failure
-  Actual:
+	Actual:
 gtest_output_test_.cc:#: Success:
 Succeeded
 
 (expecting 1 failure)
 gtest.cc:#: error: Expected: 1 fatal failure
-  Actual:
+	Actual:
 gtest_output_test_.cc:#: Non-fatal failure:
 Failed
 Expected non-fatal failure.
 
 (expecting 1 failure)
 gtest.cc:#: error: Expected: 1 fatal failure containing "Some other fatal failure expected."
-  Actual:
+	Actual:
 gtest_output_test_.cc:#: Fatal failure:
 Failed
 Expected fatal failure.
@@ -416,20 +416,20 @@ Expected fatal failure.
 [ RUN      ] ExpectFailureTest.ExpectNonFatalFailure
 (expecting 1 failure)
 gtest.cc:#: error: Expected: 1 non-fatal failure
-  Actual:
+	Actual:
 gtest_output_test_.cc:#: Success:
 Succeeded
 
 (expecting 1 failure)
 gtest.cc:#: error: Expected: 1 non-fatal failure
-  Actual:
+	Actual:
 gtest_output_test_.cc:#: Fatal failure:
 Failed
 Expected fatal failure.
 
 (expecting 1 failure)
 gtest.cc:#: error: Expected: 1 non-fatal failure containing "Some other non-fatal failure."
-  Actual:
+	Actual:
 gtest_output_test_.cc:#: Non-fatal failure:
 Failed
 Expected non-fatal failure.
@@ -438,20 +438,20 @@ Expected non-fatal failure.
 [ RUN      ] ExpectFailureTest.ExpectFatalFailureOnAllThreads
 (expecting 1 failure)
 gtest.cc:#: error: Expected: 1 fatal failure
-  Actual:
+	Actual:
 gtest_output_test_.cc:#: Success:
 Succeeded
 
 (expecting 1 failure)
 gtest.cc:#: error: Expected: 1 fatal failure
-  Actual:
+	Actual:
 gtest_output_test_.cc:#: Non-fatal failure:
 Failed
 Expected non-fatal failure.
 
 (expecting 1 failure)
 gtest.cc:#: error: Expected: 1 fatal failure containing "Some other fatal failure expected."
-  Actual:
+	Actual:
 gtest_output_test_.cc:#: Fatal failure:
 Failed
 Expected fatal failure.
@@ -460,20 +460,20 @@ Expected fatal failure.
 [ RUN      ] ExpectFailureTest.ExpectNonFatalFailureOnAllThreads
 (expecting 1 failure)
 gtest.cc:#: error: Expected: 1 non-fatal failure
-  Actual:
+	Actual:
 gtest_output_test_.cc:#: Success:
 Succeeded
 
 (expecting 1 failure)
 gtest.cc:#: error: Expected: 1 non-fatal failure
-  Actual:
+	Actual:
 gtest_output_test_.cc:#: Fatal failure:
 Failed
 Expected fatal failure.
 
 (expecting 1 failure)
 gtest.cc:#: error: Expected: 1 non-fatal failure containing "Some other non-fatal failure."
-  Actual:
+	Actual:
 gtest_output_test_.cc:#: Non-fatal failure:
 Failed
 Expected non-fatal failure.
@@ -531,7 +531,7 @@ Expected fatal failure.
 [  FAILED  ] ExpectFailureTest.ExpectNonFatalFailureOnAllThreads
 
 40 FAILED TESTS
-  YOU HAVE 1 DISABLED TEST
+	YOU HAVE 1 DISABLED TEST
 
 Note: Google Test filter = FatalFailureTest.*:LoggingTest.*
 [==========] Running 4 tests from 2 test cases.
@@ -540,19 +540,19 @@ Note: Google Test filter = FatalFailureTest.*:LoggingTest.*
 [ RUN      ] FatalFailureTest.FatalFailureInSubroutine
 (expecting a failure that x should be 1)
 gtest_output_test_.cc:#: error: Value of: x
-  Actual: 2
+	Actual: 2
 Expected: 1
 [  FAILED  ] FatalFailureTest.FatalFailureInSubroutine (? ms)
 [ RUN      ] FatalFailureTest.FatalFailureInNestedSubroutine
 (expecting a failure that x should be 1)
 gtest_output_test_.cc:#: error: Value of: x
-  Actual: 2
+	Actual: 2
 Expected: 1
 [  FAILED  ] FatalFailureTest.FatalFailureInNestedSubroutine (? ms)
 [ RUN      ] FatalFailureTest.NonfatalFailureInSubroutine
 (expecting a failure on false)
 gtest_output_test_.cc:#: error: Value of: false
-  Actual: false
+	Actual: false
 Expected: true
 [  FAILED  ] FatalFailureTest.NonfatalFailureInSubroutine (? ms)
 [----------] 3 tests from FatalFailureTest (? ms total)
@@ -579,7 +579,7 @@ gtest_output_test_.cc:#: error: Expected: (3) >= (a[i]), actual: 3 vs 6
 [  FAILED  ] LoggingTest.InterleavingLoggingAndAssertions
 
  4 FAILED TESTS
-  YOU HAVE 1 DISABLED TEST
+	YOU HAVE 1 DISABLED TEST
 
 Note: Google Test filter = *DISABLED_*
 [==========] Running 1 test from 1 test case.
@@ -601,5 +601,4 @@ Note: This is test shard 1 of 2.
 [==========] 1 test from 1 test case ran.
 [  PASSED  ] 1 test.
 
-  YOU HAVE 1 DISABLED TEST
-
+	YOU HAVE 1 DISABLED TEST

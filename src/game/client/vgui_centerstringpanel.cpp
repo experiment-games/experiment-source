@@ -33,7 +33,7 @@ class CCenterStringLabel : public vgui::Label
 {
     DECLARE_CLASS_SIMPLE( CCenterStringLabel, vgui::Label );
 
-   public:
+    public:
     CCenterStringLabel( vgui::VPANEL parent );
     virtual ~CCenterStringLabel( void );
 
@@ -50,10 +50,10 @@ class CCenterStringLabel : public vgui::Label
     virtual void ColorPrint( int r, int g, int b, int a, wchar_t *text );
     virtual void Clear( void );
 
-   protected:
+    protected:
     MESSAGE_FUNC_INT_INT( OnScreenSizeChanged, "OnScreenSizeChanged", oldwide, oldtall );
 
-   private:
+    private:
     void ComputeSize( void );
 
     vgui::HFont m_hFont;

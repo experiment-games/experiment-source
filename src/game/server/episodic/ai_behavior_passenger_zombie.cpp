@@ -74,8 +74,8 @@ impactdamagetable_t gZombiePassengerImpactDamageTable =
 //-----------------------------------------------------------------------------
 CAI_PassengerBehaviorZombie::CAI_PassengerBehaviorZombie( void )
     : m_flLastVerticalLean( 0.0f ),
-      m_flLastLateralLean( 0.0f ),
-      m_flNextLeapTime( 0.0f )
+    m_flLastLateralLean( 0.0f ),
+    m_flNextLeapTime( 0.0f )
 {
 }
 
@@ -302,8 +302,8 @@ void CAI_PassengerBehaviorZombie::GatherConditions( void )
         CBasePlayer *pPlayer = AI_GetSinglePlayer();
 
         if ( pPlayer != NULL &&
-             GetOuter()->GetEnemy() == pPlayer &&
-             pPlayer->GetVehicleEntity() == m_hVehicle )
+            GetOuter()->GetEnemy() == pPlayer &&
+            pPlayer->GetVehicleEntity() == m_hVehicle )
         {
             // Can't be visible to the player and must be close enough
             bool bNotVisibleToPlayer = ( pPlayer->FInViewCone( GetOuter() ) == false );

@@ -121,7 +121,7 @@ int UTIL_EntitiesAlongRay( C_BaseEntity **pList, int listMax, const Ray_t &ray, 
 #define MAX_SPHERE_QUERY 256
 class CEntitySphereQuery
 {
-   public:
+    public:
     // currently this builds the list in the constructor
     // UNDONE: make an iterative query of ISpatialPartition so we could
     // make queries like this optimal
@@ -132,7 +132,7 @@ class CEntitySphereQuery
         m_listIndex++;
     }
 
-   private:
+    private:
     int m_listIndex;
     int m_listCount;
     C_BaseEntity *m_pList[MAX_SPHERE_QUERY];

@@ -327,7 +327,7 @@ C_BaseEntityClassList::~C_BaseEntityClassList()
 // here.
 class CDataChangedEvent
 {
-   public:
+    public:
     CDataChangedEvent()
     {
     }
@@ -382,7 +382,7 @@ static ConVar *g_pcv_ThreadMode = NULL;
 //-----------------------------------------------------------------------------
 class CGameClientExports : public IGameClientExports
 {
-   public:
+    public:
     // ingame voice manipulation
     bool IsPlayerGameVoiceMuted( int playerIndex )
     {
@@ -471,13 +471,13 @@ EXPOSE_SINGLE_INTERFACE( CGameClientExports, IGameClientExports, GAMECLIENTEXPOR
 
 class CClientDLLSharedAppSystems : public IClientDLLSharedAppSystems
 {
-   public:
+    public:
     CClientDLLSharedAppSystems()
     {
         AddAppSystem( "soundemittersystem" DLL_EXT_STRING,
-                      SOUNDEMITTERSYSTEM_INTERFACE_VERSION );
+                    SOUNDEMITTERSYSTEM_INTERFACE_VERSION );
         AddAppSystem( "scenefilecache" DLL_EXT_STRING,
-                      SCENE_FILE_CACHE_INTERFACE_VERSION );
+                    SCENE_FILE_CACHE_INTERFACE_VERSION );
     }
 
     virtual int Count()
@@ -493,7 +493,7 @@ class CClientDLLSharedAppSystems : public IClientDLLSharedAppSystems
         return m_Systems[idx].m_pInterfaceName;
     }
 
-   private:
+    private:
     void AddAppSystem( char const *moduleName, char const *interfaceName )
     {
         AppSystemInfo_t sys;
@@ -512,7 +512,7 @@ EXPOSE_SINGLE_INTERFACE( CClientDLLSharedAppSystems, IClientDLLSharedAppSystems,
 //-----------------------------------------------------------------------------
 class CHLVoiceStatusHelper : public IVoiceStatusHelper
 {
-   public:
+    public:
     virtual void GetPlayerTextColor( int entityIndex, int rawColor[3] )
     {
         rawColor[0] = rawColor[1] = rawColor[2] = 128;
@@ -568,7 +568,7 @@ ConVar cl_ShowBoneSetupEnts(
 
 class CBoneSetupEnt
 {
-   public:
+    public:
     char m_ModelName[128];
     int m_Index;
     int m_Count;
@@ -618,7 +618,7 @@ void DisplayBoneSetupEnts()
     unsigned short i;
     int nElements = 0;
     for ( i = g_BoneSetupEnts.FirstInorder(); i != g_BoneSetupEnts.LastInorder();
-          i = g_BoneSetupEnts.NextInorder( i ) )
+        i = g_BoneSetupEnts.NextInorder( i ) )
         ++nElements;
 
     engine->Con_NPrintf(
@@ -631,7 +631,7 @@ void DisplayBoneSetupEnts()
 
     printInfo.index = 2;
     for ( i = g_BoneSetupEnts.FirstInorder(); i != g_BoneSetupEnts.LastInorder();
-          i = g_BoneSetupEnts.NextInorder( i ) )
+        i = g_BoneSetupEnts.NextInorder( i ) )
     {
         CBoneSetupEnt *pEnt = &g_BoneSetupEnts[i];
 
@@ -666,12 +666,12 @@ void DisplayBoneSetupEnts()
 //-----------------------------------------------------------------------------
 class CHLClient : public IBaseClientDLL
 {
-   public:
+    public:
     CHLClient();
 
     virtual int Init( CreateInterfaceFn appSystemFactory,
-                      CreateInterfaceFn physicsFactory,
-                      CGlobalVarsBase *pGlobals );
+                    CreateInterfaceFn physicsFactory,
+                    CGlobalVarsBase *pGlobals );
 
     virtual void PostInit();
     virtual void Shutdown( void );
@@ -773,7 +773,7 @@ class CHLClient : public IBaseClientDLL
 
     // Matchmaking
     virtual void SetupGameProperties( CUtlVector< XUSER_CONTEXT > &contexts,
-                                      CUtlVector< XUSER_PROPERTY > &properties );
+                                    CUtlVector< XUSER_PROPERTY > &properties );
     virtual uint GetPresenceID( const char *pIDName );
     virtual const char *GetPropertyIdString( const uint id );
     virtual void GetPropertyDisplayString( uint id, uint value, char *pOutput, int nBytes );
@@ -809,12 +809,12 @@ class CHLClient : public IBaseClientDLL
     // Returns true if the disconnect command has been handled by the client
     virtual bool DisconnectAttempt( void );
 
-   public:
+    public:
     void PrecacheMaterial( const char *pMaterialName );
 
     virtual bool IsConnectedUserInfoChangeAllowed( IConVar *pCvar );
 
-   private:
+    private:
     void UncacheAllMaterials();
     void ResetStringTablePointers();
 
@@ -938,8 +938,8 @@ ISourceVirtualReality *g_pSourceVR = NULL;
 // Output : int
 //-----------------------------------------------------------------------------
 int CHLClient::Init( CreateInterfaceFn appSystemFactory,
-                     CreateInterfaceFn physicsFactory,
-                     CGlobalVarsBase *pGlobals )
+                    CreateInterfaceFn physicsFactory,
+                    CGlobalVarsBase *pGlobals )
 {
     InitCRTMemDebug();
     MathLib_Init( 2.2f, 2.2f, 0.0f, 2.0f );
@@ -964,93 +964,93 @@ int CHLClient::Init( CreateInterfaceFn appSystemFactory,
     // please don't collapse this into one monolithic boolean expression
     // (impossible to debug)
     if ( ( engine = ( IVEngineClient * )appSystemFactory(
-               VENGINE_CLIENT_INTERFACE_VERSION, NULL ) ) == NULL )
+                VENGINE_CLIENT_INTERFACE_VERSION, NULL ) ) == NULL )
         return false;
     if ( ( modelrender = ( IVModelRender * )appSystemFactory(
-               VENGINE_HUDMODEL_INTERFACE_VERSION, NULL ) ) == NULL )
+                VENGINE_HUDMODEL_INTERFACE_VERSION, NULL ) ) == NULL )
         return false;
     if ( ( effects = ( IVEfx * )appSystemFactory( VENGINE_EFFECTS_INTERFACE_VERSION,
-                                                  NULL ) ) == NULL )
+                                                NULL ) ) == NULL )
         return false;
     if ( ( enginetrace = ( IEngineTrace * )appSystemFactory(
-               INTERFACEVERSION_ENGINETRACE_CLIENT, NULL ) ) == NULL )
+                INTERFACEVERSION_ENGINETRACE_CLIENT, NULL ) ) == NULL )
         return false;
     if ( ( render = ( IVRenderView * )appSystemFactory(
-               VENGINE_RENDERVIEW_INTERFACE_VERSION, NULL ) ) == NULL )
+                VENGINE_RENDERVIEW_INTERFACE_VERSION, NULL ) ) == NULL )
         return false;
     if ( ( debugoverlay = ( IVDebugOverlay * )appSystemFactory(
-               VDEBUG_OVERLAY_INTERFACE_VERSION, NULL ) ) == NULL )
+                VDEBUG_OVERLAY_INTERFACE_VERSION, NULL ) ) == NULL )
         return false;
     if ( ( datacache = ( IDataCache * )appSystemFactory( DATACACHE_INTERFACE_VERSION,
-                                                         NULL ) ) == NULL )
+                                                        NULL ) ) == NULL )
         return false;
     if ( !mdlcache )
         return false;
     if ( ( modelinfo = ( IVModelInfoClient * )appSystemFactory(
-               VMODELINFO_CLIENT_INTERFACE_VERSION, NULL ) ) == NULL )
+                VMODELINFO_CLIENT_INTERFACE_VERSION, NULL ) ) == NULL )
         return false;
     if ( ( enginevgui = ( IEngineVGui * )appSystemFactory( VENGINE_VGUI_VERSION,
-                                                           NULL ) ) == NULL )
+                                                            NULL ) ) == NULL )
         return false;
 
     if ( ( networkstringtable = ( INetworkStringTableContainer * )appSystemFactory(
-               INTERFACENAME_NETWORKSTRINGTABLECLIENT, NULL ) ) == NULL )
+                INTERFACENAME_NETWORKSTRINGTABLECLIENT, NULL ) ) == NULL )
         return false;
     if ( ( partition = ( ISpatialPartition * )appSystemFactory(
-               INTERFACEVERSION_SPATIALPARTITION, NULL ) ) == NULL )
+                INTERFACEVERSION_SPATIALPARTITION, NULL ) ) == NULL )
         return false;
     if ( ( shadowmgr = ( IShadowMgr * )appSystemFactory(
-               ENGINE_SHADOWMGR_INTERFACE_VERSION, NULL ) ) == NULL )
+                ENGINE_SHADOWMGR_INTERFACE_VERSION, NULL ) ) == NULL )
         return false;
     if ( ( staticpropmgr = ( IStaticPropMgrClient * )appSystemFactory(
-               INTERFACEVERSION_STATICPROPMGR_CLIENT, NULL ) ) == NULL )
+                INTERFACEVERSION_STATICPROPMGR_CLIENT, NULL ) ) == NULL )
         return false;
     if ( ( enginesound = ( IEngineSound * )appSystemFactory(
-               IENGINESOUND_CLIENT_INTERFACE_VERSION, NULL ) ) == NULL )
+                IENGINESOUND_CLIENT_INTERFACE_VERSION, NULL ) ) == NULL )
         return false;
     if ( ( filesystem = ( IFileSystem * )appSystemFactory(
-               FILESYSTEM_INTERFACE_VERSION, NULL ) ) == NULL )
+                FILESYSTEM_INTERFACE_VERSION, NULL ) ) == NULL )
         return false;
     if ( ( random = ( IUniformRandomStream * )appSystemFactory(
-               VENGINE_CLIENT_RANDOM_INTERFACE_VERSION, NULL ) ) == NULL )
+                VENGINE_CLIENT_RANDOM_INTERFACE_VERSION, NULL ) ) == NULL )
         return false;
     if ( ( gameuifuncs = ( IGameUIFuncs * )appSystemFactory(
-               VENGINE_GAMEUIFUNCS_VERSION, NULL ) ) == NULL )
+                VENGINE_GAMEUIFUNCS_VERSION, NULL ) ) == NULL )
         return false;
     if ( ( gameeventmanager = ( IGameEventManager2 * )appSystemFactory(
-               INTERFACEVERSION_GAMEEVENTSMANAGER2, NULL ) ) == NULL )
+                INTERFACEVERSION_GAMEEVENTSMANAGER2, NULL ) ) == NULL )
         return false;
     if ( ( soundemitterbase = ( ISoundEmitterSystemBase * )appSystemFactory(
-               SOUNDEMITTERSYSTEM_INTERFACE_VERSION, NULL ) ) == NULL )
+                SOUNDEMITTERSYSTEM_INTERFACE_VERSION, NULL ) ) == NULL )
         return false;
     if ( ( inputsystem = ( IInputSystem * )appSystemFactory(
-               INPUTSYSTEM_INTERFACE_VERSION, NULL ) ) == NULL )
+                INPUTSYSTEM_INTERFACE_VERSION, NULL ) ) == NULL )
         return false;
     if ( ( scenefilecache = ( ISceneFileCache * )appSystemFactory(
-               SCENE_FILE_CACHE_INTERFACE_VERSION, NULL ) ) == NULL )
+                SCENE_FILE_CACHE_INTERFACE_VERSION, NULL ) ) == NULL )
         return false;
     if ( IsX360() && ( xboxsystem = ( IXboxSystem * )appSystemFactory(
-                           XBOXSYSTEM_INTERFACE_VERSION, NULL ) ) == NULL )
+                            XBOXSYSTEM_INTERFACE_VERSION, NULL ) ) == NULL )
         return false;
     if ( IsX360() && ( matchmaking = ( IMatchmaking * )appSystemFactory(
-                           VENGINE_MATCHMAKING_VERSION, NULL ) ) == NULL )
+                            VENGINE_MATCHMAKING_VERSION, NULL ) ) == NULL )
         return false;
 #ifndef _XBOX
     if ( ( gamestatsuploader = ( IUploadGameStats * )appSystemFactory(
-               INTERFACEVERSION_UPLOADGAMESTATS, NULL ) ) == NULL )
+                INTERFACEVERSION_UPLOADGAMESTATS, NULL ) ) == NULL )
         return false;
 #endif
     if ( ( g_pShaderApi = ( IShaderAPI * )appSystemFactory(
-               SHADERAPI_INTERFACE_VERSION, NULL ) ) == NULL )
+                SHADERAPI_INTERFACE_VERSION, NULL ) ) == NULL )
         return false;
 
 #if defined( REPLAY_ENABLED )
     if ( IsPC() && ( g_pEngineReplay = ( IEngineReplay * )appSystemFactory(
-                         ENGINE_REPLAY_INTERFACE_VERSION, NULL ) ) == NULL )
+                        ENGINE_REPLAY_INTERFACE_VERSION, NULL ) ) == NULL )
         return false;
     if ( IsPC() &&
-         ( g_pEngineClientReplay = ( IEngineClientReplay * )appSystemFactory(
-               ENGINE_REPLAY_CLIENT_INTERFACE_VERSION, NULL ) ) == NULL )
+        ( g_pEngineClientReplay = ( IEngineClientReplay * )appSystemFactory(
+                ENGINE_REPLAY_CLIENT_INTERFACE_VERSION, NULL ) ) == NULL )
         return false;
 #endif
 
@@ -1256,7 +1256,7 @@ bool CHLClient::ReplayInit( CreateInterfaceFn fnReplayFactory )
     if ( !IsPC() )
         return false;
     if ( ( g_pReplay = ( IReplaySystem * )fnReplayFactory( REPLAY_INTERFACE_VERSION,
-                                                           NULL ) ) == NULL )
+                                                            NULL ) ) == NULL )
         return false;
     if ( ( g_pClientReplayContext = g_pReplay->CL_GetContext() ) == NULL )
         return false;
@@ -1273,16 +1273,16 @@ bool CHLClient::ReplayPostInit()
     if ( ( g_pReplayManager = g_pClientReplayContext->GetReplayManager() ) == NULL )
         return false;
     if ( ( g_pReplayScreenshotManager =
-               g_pClientReplayContext->GetScreenshotManager() ) == NULL )
+                g_pClientReplayContext->GetScreenshotManager() ) == NULL )
         return false;
     if ( ( g_pReplayPerformanceManager =
-               g_pClientReplayContext->GetPerformanceManager() ) == NULL )
+                g_pClientReplayContext->GetPerformanceManager() ) == NULL )
         return false;
     if ( ( g_pReplayPerformanceController =
-               g_pClientReplayContext->GetPerformanceController() ) == NULL )
+                g_pClientReplayContext->GetPerformanceController() ) == NULL )
         return false;
     if ( ( g_pReplayMovieManager = g_pClientReplayContext->GetMovieManager() ) ==
-         NULL )
+        NULL )
         return false;
     return true;
 #else
@@ -1307,7 +1307,7 @@ void CHLClient::PostInit()
 
 #ifdef HL1MP_CLIENT_DLL
     if ( s_cl_load_hl1_content.GetBool() && steamapicontext &&
-         steamapicontext->SteamApps() )
+        steamapicontext->SteamApps() )
     {
         char szPath[MAX_PATH * 2];
         int ccFolder = steamapicontext->SteamApps()->GetAppInstallDir(
@@ -1699,7 +1699,7 @@ bool CHLClient::GetPlayerView( CViewSetup &playerView )
 // Matchmaking
 //-----------------------------------------------------------------------------
 void CHLClient::SetupGameProperties( CUtlVector< XUSER_CONTEXT > &contexts,
-                                     CUtlVector< XUSER_PROPERTY > &properties )
+                                    CUtlVector< XUSER_PROPERTY > &properties )
 {
     presence->SetupGameProperties( contexts, properties );
 }
@@ -1731,7 +1731,7 @@ void CHLClient::InvalidateMdlCache()
 {
     C_BaseAnimating *pAnimating;
     for ( C_BaseEntity *pEntity = ClientEntityList().FirstBaseEntity(); pEntity;
-          pEntity = ClientEntityList().NextBaseEntity( pEntity ) )
+        pEntity = ClientEntityList().NextBaseEntity( pEntity ) )
     {
         pAnimating = dynamic_cast< C_BaseAnimating * >( pEntity );
         if ( pAnimating )
@@ -2045,10 +2045,10 @@ void CHLClient::VoiceStatus( int entindex, qboolean bTalking )
 // Called when the string table for materials changes
 //-----------------------------------------------------------------------------
 void OnMaterialStringTableChanged( void *object,
-                                   INetworkStringTable *stringTable,
-                                   int stringNumber,
-                                   const char *newString,
-                                   void const *newData )
+                                    INetworkStringTable *stringTable,
+                                    int stringNumber,
+                                    const char *newString,
+                                    void const *newData )
 {
     // Make sure this puppy is precached
     gHLClient.PrecacheMaterial( newString );
@@ -2059,10 +2059,10 @@ void OnMaterialStringTableChanged( void *object,
 // Called when the string table for particle systems changes
 //-----------------------------------------------------------------------------
 void OnParticleSystemStringTableChanged( void *object,
-                                         INetworkStringTable *stringTable,
-                                         int stringNumber,
-                                         const char *newString,
-                                         void const *newData )
+                                        INetworkStringTable *stringTable,
+                                        int stringNumber,
+                                        const char *newString,
+                                        void const *newData )
 {
     // Make sure this puppy is precached
     g_pParticleSystemMgr->PrecacheParticleSystem( newString );
@@ -2323,7 +2323,7 @@ void UpdateClientRenderableInPVSStatus()
             if ( !( pInfo->m_InPVSStatus & INPVS_THISFRAME ) )
             {
                 if ( g_pClientLeafSystem->IsRenderableInPVS(
-                         pInfo->m_pRenderable ) )
+                        pInfo->m_pRenderable ) )
                 {
                     pInfo->m_InPVSStatus |= INPVS_THISFRAME;
                 }
@@ -2386,9 +2386,9 @@ void OnRenderStart()
 #ifdef PORTAL
     g_pPortalRender
         ->UpdatePortalPixelVisibility();  // updating this one or two lines
-                                          // before querying again just isn't
-                                          // cutting it. Update as soon as it's
-                                          // cheap to do so.
+                                        // before querying again just isn't
+                                        // cutting it. Update as soon as it's
+                                        // cheap to do so.
 #endif
 
     partition->SuppressLists( PARTITION_ALL_CLIENT_EDICTS, true );
@@ -2485,7 +2485,7 @@ void OnRenderStart()
         // to help track down bad math.
         FPExceptionEnabler enableExceptions;
         VPROF_BUDGET( "ParticleMgr()->Simulate",
-                      VPROF_BUDGETGROUP_PARTICLE_SIMULATION );
+                    VPROF_BUDGETGROUP_PARTICLE_SIMULATION );
         ParticleMgr()->Simulate( gpGlobals->frametime );
     }
 
@@ -2860,12 +2860,12 @@ void CHLClient::ClientAdjustStartSoundParams( StartSoundParams_t &params )
 
     // A player speaking
     if ( params.entchannel == CHAN_VOICE && GameRules() && pEntity &&
-         pEntity->IsPlayer() )
+        pEntity->IsPlayer() )
     {
         // Use high-pitched voices for other players if the local player has an
         // item that allows them to hear it (Pyro Goggles)
         if ( !GameRules()->IsLocalPlayer( params.soundsource ) &&
-             IsLocalPlayerUsingVisionFilterFlags( TF_VISION_FILTER_PYRO ) )
+            IsLocalPlayerUsingVisionFilterFlags( TF_VISION_FILTER_PYRO ) )
         {
             params.pitch *= 1.3f;
         }
@@ -2915,7 +2915,7 @@ bool CHLClient::DisconnectAttempt( void )
 bool CHLClient::IsConnectedUserInfoChangeAllowed( IConVar *pCvar )
 {
     return GameRules() ? GameRules()->IsConnectedUserInfoChangeAllowed( NULL )
-                       : true;
+                        : true;
 }
 
 #ifndef NO_STEAM

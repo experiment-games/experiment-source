@@ -21,7 +21,7 @@ class CBaseRecordingSession;
 
 class IRecordingSessionManager : public IBaseInterface
 {
-   public:
+    public:
     virtual CBaseRecordingSession *FindSession( ReplayHandle_t hSession ) = 0;
     virtual const CBaseRecordingSession *FindSession( ReplayHandle_t hSession ) const = 0;
     virtual void FlagSessionForFlush( CBaseRecordingSession *pSession, bool bForceImmediate ) = 0;

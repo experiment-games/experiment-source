@@ -112,12 +112,12 @@ unsigned int CLZMA::Uncompress( unsigned char *pInput, unsigned char *pOutput )
 
 CLZMAStream::CLZMAStream()
     : m_pDecoderState( NULL ),
-      m_nActualSize( 0 ),
-      m_nActualBytesRead( 0 ),
-      m_nCompressedSize( 0 ),
-      m_nCompressedBytesRead( 0 ),
-      m_bParsedHeader( false ),
-      m_bZIPStyleHeader( false )
+    m_nActualSize( 0 ),
+    m_nActualBytesRead( 0 ),
+    m_nCompressedSize( 0 ),
+    m_nCompressedBytesRead( 0 ),
+    m_bParsedHeader( false ),
+    m_bZIPStyleHeader( false )
 {
 }
 
@@ -258,7 +258,7 @@ void CLZMAStream::InitZIPHeader( unsigned int nCompressedSize, unsigned int nOri
     if ( m_bParsedHeader || m_bZIPStyleHeader )
     {
         AssertMsg( !m_bParsedHeader && !m_bZIPStyleHeader,
-                   "LZMA Stream: InitZIPHeader() called on stream past header" );
+                    "LZMA Stream: InitZIPHeader() called on stream past header" );
         return;
     }
 
@@ -301,8 +301,8 @@ CLZMAStream::eHeaderParse CLZMAStream::TryParseHeader( unsigned char *pInput, un
         if ( nLZMAPropertiesSize != LZMA_PROPS_SIZE )
         {
             Warning( "LZMA stream: Unexpected LZMA properties size: %hu, expecting %u. Version mismatch?\n",
-                     nLZMAPropertiesSize,
-                     LZMA_PROPS_SIZE );
+                    nLZMAPropertiesSize,
+                    LZMA_PROPS_SIZE );
             return eHeaderParse_Fail;
         }
 

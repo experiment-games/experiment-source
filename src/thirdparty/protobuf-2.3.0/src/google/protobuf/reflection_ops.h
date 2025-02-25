@@ -58,7 +58,7 @@ namespace internal
 // This class is really a namespace that contains only static methods.
 class LIBPROTOBUF_EXPORT ReflectionOps
 {
-   public:
+    public:
     static void Copy( const Message& from, Message* to );
     static void Merge( const Message& from, Message* to );
     static void Clear( Message* message );
@@ -69,10 +69,10 @@ class LIBPROTOBUF_EXPORT ReflectionOps
     // paths (e.g. "foo.bar[5].baz") to *names.  "prefix" will be attached to
     // the front of each name.
     static void FindInitializationErrors( const Message& message,
-                                          const string& prefix,
-                                          vector< string >* errors );
+                                        const string& prefix,
+                                        vector< string >* errors );
 
-   private:
+    private:
     // All methods are static.  No need to construct.
     GOOGLE_DISALLOW_EVIL_CONSTRUCTORS( ReflectionOps );
 };

@@ -58,17 +58,17 @@ void OnRenderCancelDialogButtonPressed( bool bConfirm, void *pContext )
 
 CReplayRenderOverlay::CReplayRenderOverlay( Panel *pParent )
     : BaseClass( pParent, "ReplayRenderOverlay" ),
-      m_pBottom( NULL ),
-      m_pCancelButton( NULL ),
-      m_pTitleLabel( NULL ),
-      m_pProgressLabel( NULL ),
-      m_pFilenameLabel( NULL ),
-      m_pRenderProgress( NULL ),
-      m_pRenderer( NULL ),
-      m_pPreviewCheckButton( NULL ),
-      m_unNumFrames( 0 ),
-      m_flStartTime( 0.0f ),
-      m_flPreviousTimeLeft( 0.0f )
+    m_pBottom( NULL ),
+    m_pCancelButton( NULL ),
+    m_pTitleLabel( NULL ),
+    m_pProgressLabel( NULL ),
+    m_pFilenameLabel( NULL ),
+    m_pRenderProgress( NULL ),
+    m_pRenderer( NULL ),
+    m_pPreviewCheckButton( NULL ),
+    m_unNumFrames( 0 ),
+    m_flStartTime( 0.0f ),
+    m_flPreviousTimeLeft( 0.0f )
 {
     if ( pParent == NULL )
     {

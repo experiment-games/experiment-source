@@ -22,10 +22,10 @@ struct StringTable_t;
 //-----------------------------------------------------------------------------
 class CStringRegistry
 {
-   private:
+    private:
     StringTable_t *m_pStringList;
 
-   public:
+    public:
     // returns a key for a given string
     unsigned short AddString( const char *stringText, int stringID );
 

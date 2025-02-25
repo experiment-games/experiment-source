@@ -85,21 +85,21 @@ string UnderscoresToCamelCase(const string& input, bool cap_next_letter) {
   // Note:  I distrust ctype.h due to locales.
   for (int i = 0; i < input.size(); i++) {
     if ('a' <= input[i] && input[i] <= 'z') {
-      if (cap_next_letter) {
+    if (cap_next_letter) {
         result += input[i] + ('A' - 'a');
-      } else {
-        result += input[i];
-      }
-      cap_next_letter = false;
-    } else if ('A' <= input[i] && input[i] <= 'Z') {
-      // Capital letters are left as-is.
-      result += input[i];
-      cap_next_letter = false;
-    } else if ('0' <= input[i] && input[i] <= '9') {
-      result += input[i];
-      cap_next_letter = true;
     } else {
-      cap_next_letter = true;
+        result += input[i];
+    }
+    cap_next_letter = false;
+    } else if ('A' <= input[i] && input[i] <= 'Z') {
+    // Capital letters are left as-is.
+    result += input[i];
+    cap_next_letter = false;
+    } else if ('0' <= input[i] && input[i] <= '9') {
+    result += input[i];
+    cap_next_letter = true;
+    } else {
+    cap_next_letter = true;
     }
   }
   return result;
@@ -132,9 +132,9 @@ string ClassName(const Descriptor* descriptor, bool qualified) {
 string ClassName(const EnumDescriptor* enum_descriptor, bool qualified) {
   if (enum_descriptor->containing_type() == NULL) {
     if (qualified) {
-      return DotsToColons(enum_descriptor->full_name());
+    return DotsToColons(enum_descriptor->full_name());
     } else {
-      return enum_descriptor->name();
+    return enum_descriptor->name();
     }
   } else {
     string result = ClassName(enum_descriptor->containing_type(), qualified);
@@ -147,7 +147,7 @@ string ClassName(const EnumDescriptor* enum_descriptor, bool qualified) {
 
 string SuperClassName(const Descriptor* descriptor) {
   return HasDescriptorMethods(descriptor->file()) ?
-      "::google::protobuf::Message" : "::google::protobuf::MessageLite";
+    "::google::protobuf::Message" : "::google::protobuf::MessageLite";
 }
 
 string FieldName(const FieldDescriptor* field) {
@@ -164,7 +164,7 @@ string FieldConstantName(const FieldDescriptor *field) {
   string result = "k" + field_name + "FieldNumber";
 
   if (!field->is_extension() &&
-      field->containing_type()->FindFieldByCamelcaseName(
+    field->containing_type()->FindFieldByCamelcaseName(
         field->camelcase_name()) != field) {
     // This field's camelcase name is not unique.  As a hack, add the field
     // number to the constant name.  This makes the constant rather useless,
@@ -243,58 +243,58 @@ const char* DeclaredTypeMethodName(FieldDescriptor::Type type) {
 string DefaultValue(const FieldDescriptor* field) {
   switch (field->cpp_type()) {
     case FieldDescriptor::CPPTYPE_INT32:
-      return SimpleItoa(field->default_value_int32());
+    return SimpleItoa(field->default_value_int32());
     case FieldDescriptor::CPPTYPE_UINT32:
-      return SimpleItoa(field->default_value_uint32()) + "u";
+    return SimpleItoa(field->default_value_uint32()) + "u";
     case FieldDescriptor::CPPTYPE_INT64:
-      return "GOOGLE_LONGLONG(" + SimpleItoa(field->default_value_int64()) + ")";
+    return "GOOGLE_LONGLONG(" + SimpleItoa(field->default_value_int64()) + ")";
     case FieldDescriptor::CPPTYPE_UINT64:
-      return "GOOGLE_ULONGLONG(" + SimpleItoa(field->default_value_uint64())+ ")";
+    return "GOOGLE_ULONGLONG(" + SimpleItoa(field->default_value_uint64())+ ")";
     case FieldDescriptor::CPPTYPE_DOUBLE: {
-      double value = field->default_value_double();
-      if (value == numeric_limits<double>::infinity()) {
+    double value = field->default_value_double();
+    if (value == numeric_limits<double>::infinity()) {
         return "::google::protobuf::internal::Infinity()";
-      } else if (value == -numeric_limits<double>::infinity()) {
+    } else if (value == -numeric_limits<double>::infinity()) {
         return "-::google::protobuf::internal::Infinity()";
-      } else if (value != value) {
+    } else if (value != value) {
         return "::google::protobuf::internal::NaN()";
-      } else {
+    } else {
         return SimpleDtoa(value);
-      }
+    }
     }
     case FieldDescriptor::CPPTYPE_FLOAT:
-      {
+    {
         float value = field->default_value_float();
         if (value == numeric_limits<float>::infinity()) {
-          return "static_cast<float>(::google::protobuf::internal::Infinity())";
+        return "static_cast<float>(::google::protobuf::internal::Infinity())";
         } else if (value == -numeric_limits<float>::infinity()) {
-          return "static_cast<float>(-::google::protobuf::internal::Infinity())";
+        return "static_cast<float>(-::google::protobuf::internal::Infinity())";
         } else if (value != value) {
-          return "static_cast<float>(::google::protobuf::internal::NaN())";
+        return "static_cast<float>(::google::protobuf::internal::NaN())";
         } else {
-          string float_value = SimpleFtoa(value);
-          // If floating point value contains a period (.) or an exponent
-          // (either E or e), then append suffix 'f' to make it a float
-          // literal.
-          if (float_value.find_first_of(".eE") != string::npos) {
+        string float_value = SimpleFtoa(value);
+        // If floating point value contains a period (.) or an exponent
+        // (either E or e), then append suffix 'f' to make it a float
+        // literal.
+        if (float_value.find_first_of(".eE") != string::npos) {
             float_value.push_back('f');
-          }
-          return float_value;
         }
-      }
+        return float_value;
+        }
+    }
     case FieldDescriptor::CPPTYPE_BOOL:
-      return field->default_value_bool() ? "true" : "false";
+    return field->default_value_bool() ? "true" : "false";
     case FieldDescriptor::CPPTYPE_ENUM:
-      // Lazy:  Generate a static_cast because we don't have a helper function
-      //   that constructs the full name of an enum value.
-      return strings::Substitute(
-          "static_cast< $0 >($1)",
-          ClassName(field->enum_type(), true),
-          field->default_value_enum()->number());
+    // Lazy:  Generate a static_cast because we don't have a helper function
+    //   that constructs the full name of an enum value.
+    return strings::Substitute(
+        "static_cast< $0 >($1)",
+        ClassName(field->enum_type(), true),
+        field->default_value_enum()->number());
     case FieldDescriptor::CPPTYPE_STRING:
-      return "\"" + CEscape(field->default_value_string()) + "\"";
+    return "\"" + CEscape(field->default_value_string()) + "\"";
     case FieldDescriptor::CPPTYPE_MESSAGE:
-      return FieldMessageTypeName(field) + "::default_instance()";
+    return FieldMessageTypeName(field) + "::default_instance()";
   }
   // Can't actually get here; make compiler happy.  (We could add a default
   // case above but then we wouldn't get the nice compiler warning when a
@@ -308,13 +308,13 @@ string FilenameIdentifier(const string& filename) {
   string result;
   for (int i = 0; i < filename.size(); i++) {
     if (ascii_isalnum(filename[i])) {
-      result.push_back(filename[i]);
+    result.push_back(filename[i]);
     } else {
-      // Not alphanumeric.  To avoid any possibility of name conflicts we
-      // use the hex code for the character.
-      result.push_back('_');
-      char buffer[kFastToBufferSize];
-      result.append(FastHexToBuffer(static_cast<uint8>(filename[i]), buffer));
+    // Not alphanumeric.  To avoid any possibility of name conflicts we
+    // use the hex code for the character.
+    result.push_back('_');
+    char buffer[kFastToBufferSize];
+    result.append(FastHexToBuffer(static_cast<uint8>(filename[i]), buffer));
     }
   }
   return result;

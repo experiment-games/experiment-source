@@ -259,8 +259,8 @@ void LightDesc_t::SetupOldStyleAttenuation( float fQuadraticAttn, float fLinearA
         fConstantAttn = 0;
 
     if ( ( fConstantAttn < EQUAL_EPSILON ) &&
-         ( fLinearAttn < EQUAL_EPSILON ) &&
-         ( fQuadraticAttn < EQUAL_EPSILON ) )
+        ( fLinearAttn < EQUAL_EPSILON ) &&
+        ( fQuadraticAttn < EQUAL_EPSILON ) )
         fConstantAttn = 1;
 
     m_Attenuation2 = fQuadraticAttn;

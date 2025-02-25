@@ -17,14 +17,14 @@ class LButton : public Button
 
     LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( LButton, "Button" );
 
-   public:
+    public:
     // You can optionally pass in the panel to send the click message to and the name of the command to send to that panel.
     LButton( Panel *parent, const char *panelName, const char *text, Panel *pActionSignalTarget = NULL, const char *pCmd = NULL, lua_State *L = NULL );
 
-   public:
+    public:
     virtual void DoClick( void );
 
-   protected:
+    protected:
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme )
     {
         LUA_CALL_PANEL_METHOD_BEGIN( "ApplySchemeSettings" );

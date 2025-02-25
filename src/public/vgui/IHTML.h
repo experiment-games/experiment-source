@@ -26,7 +26,7 @@ namespace vgui
 //-----------------------------------------------------------------------------
 class IHTML
 {
-   public:
+    public:
     // open a new page
     virtual void OpenURL( const char * ) = 0;
 
@@ -143,7 +143,7 @@ enum EWebPageLoadError
 //-----------------------------------------------------------------------------
 class IHTMLEvents
 {
-   public:
+    public:
     // unused functions we keep around so the vtable layout is binary compatible
     virtual bool Obsolete_OnStartURL( const char *url, const char *target, bool first ) = 0;
     virtual void Obsolete_OnFinishURL( const char *url ) = 0;

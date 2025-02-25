@@ -18,9 +18,9 @@ def c2, 0,0,1,0
 tex t0
 
 ; Sample the lightmaps
-tex t1 
-tex t2 
-tex t3 
+tex t1
+tex t2
+tex t3
 
 ; output = lightmapColor[0] * n.r + lightmapColor[1] * n.g + lightmapColor[2] * n.b
 

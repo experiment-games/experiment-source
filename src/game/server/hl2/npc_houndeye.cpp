@@ -229,9 +229,9 @@ int CNPC_Houndeye::RangeAttack1Conditions( float flDot, float flDist )
 int CNPC_Houndeye::GetSoundInterests( void )
 {
     return SOUND_WORLD |
-           SOUND_COMBAT |
-           SOUND_PLAYER |
-           SOUND_DANGER;
+            SOUND_COMBAT |
+            SOUND_PLAYER |
+            SOUND_DANGER;
 }
 
 //=========================================================
@@ -620,14 +620,14 @@ void CNPC_Houndeye::NPCThink( void )
         }
     }
     /*
-      if (GetCollisionGroup() == HL2COLLISION_GROUP_HOUNDEYE)
-      {
+    if (GetCollisionGroup() == HL2COLLISION_GROUP_HOUNDEYE)
+    {
         NDebugOverlay::Box(GetAbsOrigin(), GetHullMins(), GetHullMaxs(), 0, 255, 0, 0, 0);
-      }
-      else
-      {
+    }
+    else
+    {
         NDebugOverlay::Box(GetAbsOrigin(), GetHullMins(), GetHullMaxs(), 255, 0, 0, 0, 0);
-      }
+    }
     */
     BaseClass::NPCThink();
 }
@@ -913,7 +913,7 @@ void CNPC_Houndeye::RunTask( const Task_t *pTask )
             /*//<<TEMP>>
             if ( pev->skin < HOUNDEYE_EYE_FRAMES - 1 )
             {
-              pev->skin++;
+            pev->skin++;
             }
             */
             break;
@@ -955,11 +955,11 @@ void CNPC_Houndeye::PrescheduleThink( void )
         /*//<<TEMP>>//<<TEMP>>
         if ( ( pev->skin == 0 ) && random->RandomInt(0,0x7F) == 0 )
         {// start blinking!
-          pev->skin = HOUNDEYE_EYE_FRAMES - 1;
+        pev->skin = HOUNDEYE_EYE_FRAMES - 1;
         }
         else if ( pev->skin != 0 )
         {// already blinking
-          pev->skin--;
+        pev->skin--;
         }
         */
     }
@@ -1041,7 +1041,7 @@ int CNPC_Houndeye::SelectSchedule( void )
         case NPC_STATE_ALERT:
         {
             if ( HasCondition( COND_LIGHT_DAMAGE ) ||
-                 HasCondition( COND_HEAVY_DAMAGE ) )
+                HasCondition( COND_HEAVY_DAMAGE ) )
             {
                 return SCHED_TAKE_COVER_FROM_ORIGIN;
             }
@@ -1084,7 +1084,7 @@ int CNPC_Houndeye::SelectSchedule( void )
             }
 
             if ( HasCondition( COND_LIGHT_DAMAGE ) |
-                 HasCondition( COND_HEAVY_DAMAGE ) )
+                HasCondition( COND_HEAVY_DAMAGE ) )
             {
                 if ( random->RandomFloat( 0, 1 ) <= 0.4 )
                 {

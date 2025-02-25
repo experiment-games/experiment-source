@@ -16,7 +16,7 @@
 // Tony; prefixing everything in this so that i can make IGameInfo an extension of CGameRules and not stomp on anything, since gamerules isn't an entity.
 abstract_class IGameInfo
 {
-   public:
+    public:
     // returns an enumerated id for the current game type
     virtual const int GetInfo_GameType() = 0;
     // returns a name associated with the gametype, if defined.
@@ -37,7 +37,7 @@ abstract_class IGameInfo
 #define INTERFACEVERSION_GAMEINFOMANAGER "GameInfoManager001"
 abstract_class IGameInfoManager
 {
-   public:
+    public:
     virtual IGameInfo *GetGameInfo() = 0;
 };
 #endif  // IGAMEINFO_H

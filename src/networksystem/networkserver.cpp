@@ -135,7 +135,7 @@ IConnectedClient *CNetworkServer::FindClientByAddress( const netadr_t &adr )
 
 CConnectedClient::CConnectedClient( CNetworkServer *server, netadr_t &remote, CTcpClientSocket *pSocket )
     : m_bMarkedForDeletion( false ),
-      m_pStreamSocket( pSocket )
+    m_pStreamSocket( pSocket )
 {
     m_RemoteAddress = remote;
 }

@@ -64,7 +64,7 @@ class CFuncTank : public CBaseEntity
 {
     DECLARE_CLASS( CFuncTank, CBaseEntity );
 
-   public:
+    public:
     CFuncTank();
     ~CFuncTank();
     void Spawn( void );
@@ -188,7 +188,7 @@ class CFuncTank : public CBaseEntity
     virtual void DoMuzzleFlash( void );
     virtual const char *GetTracerType( void );
 
-   protected:
+    protected:
     virtual float GetShotSpeed()
     {
         return 0;
@@ -223,7 +223,7 @@ class CFuncTank : public CBaseEntity
         return m_hController && m_hController->MyNPCPointer() && ( m_spawnflags & SF_TANK_NPC );
     }
 
-   private:
+    private:
     void TrackTarget( void );
     int DrawDebugTextOverlays( void );
     void DrawDebugGeometryOverlays( void );
@@ -242,11 +242,11 @@ class CFuncTank : public CBaseEntity
     void InputSetTargetPosition( inputdata_t &inputdata );
     void InputSetTargetEntityName( inputdata_t &inputdata );
 
-   protected:
+    protected:
     virtual void InputSetTargetEntity( inputdata_t &inputdata );
     virtual void InputClearTargetEntity( inputdata_t &inputdata );
 
-   private:
+    private:
     void InputFindNPCToManTank( inputdata_t &inputdata );
     void InputStopFindingNPCs( inputdata_t &inputdata );
     void InputStartFindingNPCs( inputdata_t &inputdata );
@@ -294,7 +294,7 @@ class CFuncTank : public CBaseEntity
     // Purpose:
     void ComputeLeadingPosition( const Vector &vecShootPosition, CBaseEntity *pTarget, Vector *pLeadPosition );
 
-   protected:
+    protected:
     virtual void ControllerPostFrame( void );
 
     virtual void TankActivate( void );
@@ -327,7 +327,7 @@ class CFuncTank : public CBaseEntity
 
     int m_nBulletCount;
 
-   private:
+    private:
     // This is either the player manning the func_tank, or an NPC. The NPC is either manning the tank, or running
     // to the man point. If he's en-route, m_bNPCInRoute will be true.
     CHandle< CBaseCombatCharacter > m_hController;
@@ -339,7 +339,7 @@ class CFuncTank : public CBaseEntity
     float m_yawCenterWorld;  // "Center" yaw in world space
     float m_yawRate;         // Max turn rate to track targets
     float m_yawRange;        // Range of turning motion (one-sided: 30 is +/- 30 degress from center)
-                             // Zero is full rotation
+                            // Zero is full rotation
     float m_yawTolerance;    // Tolerance angle
 
     float m_pitchCenter;       // "Center" pitch

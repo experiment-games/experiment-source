@@ -232,7 +232,7 @@ class CFilterName : public CBaseFilter
     DECLARE_CLASS( CFilterName, CBaseFilter );
     DECLARE_DATADESC();
 
-   public:
+    public:
     string_t m_iFilterName;
 
     bool PassesFilterImpl( CBaseEntity *pCaller, CBaseEntity *pEntity )
@@ -266,7 +266,7 @@ DEFINE_KEYFIELD( m_iFilterName, FIELD_STRING, "filtername" ),
     DECLARE_CLASS( CFilterClass, CBaseFilter );
     DECLARE_DATADESC();
 
-   public:
+    public:
     string_t m_iFilterClass;
 
     bool PassesFilterImpl( CBaseEntity *pCaller, CBaseEntity *pEntity )
@@ -292,7 +292,7 @@ DEFINE_KEYFIELD( m_iFilterClass, FIELD_STRING, "filterclass" ),
     DECLARE_CLASS( FilterTeam, CBaseFilter );
     DECLARE_DATADESC();
 
-   public:
+    public:
     int m_iFilterTeam;
 
     bool PassesFilterImpl( CBaseEntity *pCaller, CBaseEntity *pEntity )
@@ -318,7 +318,7 @@ DEFINE_KEYFIELD( m_iFilterTeam, FIELD_INTEGER, "filterteam" ),
     DECLARE_CLASS( CFilterMassGreater, CBaseFilter );
     DECLARE_DATADESC();
 
-   public:
+    public:
     float m_fFilterMass;
 
     bool PassesFilterImpl( CBaseEntity *pCaller, CBaseEntity *pEntity )
@@ -347,7 +347,7 @@ DEFINE_KEYFIELD( m_fFilterMass, FIELD_FLOAT, "filtermass" ),
     DECLARE_CLASS( FilterDamageType, CBaseFilter );
     DECLARE_DATADESC();
 
-   protected:
+    protected:
     bool PassesFilterImpl( CBaseEntity *pCaller, CBaseEntity *pEntity )
     {
         ASSERT( false );
@@ -385,11 +385,11 @@ DEFINE_KEYFIELD( m_iDamageType, FIELD_INTEGER, "damagetype" ),
     // m_iszPlayerName
     DECLARE_DATADESC();
 
-   public:
+    public:
     virtual bool PassesFilterImpl( CBaseEntity *pCaller, CBaseEntity *pEntity );
     virtual bool PassesDamageFilterImpl( const CTakeDamageInfo &info );
 
-   private:
+    private:
     bool PassesNameFilter( CBaseEntity *pCaller );
     bool PassesProximityFilter( CBaseEntity *pCaller, CBaseEntity *pEnemy );
     bool PassesMobbedFilter( CBaseEntity *pCaller, CBaseEntity *pEnemy );

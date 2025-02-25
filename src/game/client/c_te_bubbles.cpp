@@ -19,7 +19,7 @@
 //-----------------------------------------------------------------------------
 class C_TEBubbles : public C_BaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_TEBubbles, C_BaseTempEntity );
     DECLARE_CLIENTCLASS();
 
@@ -28,7 +28,7 @@ class C_TEBubbles : public C_BaseTempEntity
 
     virtual void PostDataUpdate( DataUpdateType_t updateType );
 
-   public:
+    public:
     Vector m_vecMins;
     Vector m_vecMaxs;
     float m_fHeight;

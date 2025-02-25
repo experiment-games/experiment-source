@@ -60,7 +60,7 @@ void InitParamsSkin_DX9( CBaseVSShader *pShader, IMaterialVar **params, const ch
 
     // Write over $basetexture with $info.m_nBumpmap if we are going to be using diffuse normal mapping.
     if ( info.m_nAlbedo != -1 && g_pConfig->UseBumpmapping() && info.m_nBumpmap != -1 && params[info.m_nBumpmap]->IsDefined() && params[info.m_nAlbedo]->IsDefined() &&
-         params[info.m_nBaseTexture]->IsDefined() )
+        params[info.m_nBaseTexture]->IsDefined() )
     {
         params[info.m_nBaseTexture]->SetStringValue( params[info.m_nAlbedo]->GetStringValue() );
     }
@@ -135,7 +135,7 @@ void InitSkin_DX9( CBaseVSShader *pShader, IMaterialVar **params, VertexLitGener
         }
 
         if ( ( info.m_nWrinkle != -1 ) && ( info.m_nStretch != -1 ) &&
-             params[info.m_nWrinkle]->IsDefined() && params[info.m_nStretch]->IsDefined() )
+            params[info.m_nWrinkle]->IsDefined() && params[info.m_nStretch]->IsDefined() )
         {
             pShader->LoadTexture( info.m_nWrinkle, TEXTUREFLAGS_SRGB );
             pShader->LoadTexture( info.m_nStretch, TEXTUREFLAGS_SRGB );
@@ -159,19 +159,19 @@ void InitSkin_DX9( CBaseVSShader *pShader, IMaterialVar **params, VertexLitGener
     }
 
     if ( ( info.m_nPhongExponentTexture != -1 ) && params[info.m_nPhongExponentTexture]->IsDefined() &&
-         ( info.m_nPhong != -1 ) && params[info.m_nPhong]->IsDefined() )
+        ( info.m_nPhong != -1 ) && params[info.m_nPhong]->IsDefined() )
     {
         pShader->LoadTexture( info.m_nPhongExponentTexture );
     }
 
     if ( ( info.m_nDiffuseWarpTexture != -1 ) && params[info.m_nDiffuseWarpTexture]->IsDefined() &&
-         ( info.m_nPhong != -1 ) && params[info.m_nPhong]->IsDefined() )
+        ( info.m_nPhong != -1 ) && params[info.m_nPhong]->IsDefined() )
     {
         pShader->LoadTexture( info.m_nDiffuseWarpTexture );
     }
 
     if ( ( info.m_nPhongWarpTexture != -1 ) && params[info.m_nPhongWarpTexture]->IsDefined() &&
-         ( info.m_nPhong != -1 ) && params[info.m_nPhong]->IsDefined() )
+        ( info.m_nPhong != -1 ) && params[info.m_nPhong]->IsDefined() )
     {
         pShader->LoadTexture( info.m_nPhongWarpTexture );
     }
@@ -193,7 +193,7 @@ void InitSkin_DX9( CBaseVSShader *pShader, IMaterialVar **params, VertexLitGener
             SET_FLAGS2( MATERIAL_VAR2_DIFFUSE_BUMPMAPPED_MODEL );
 
             if ( ( info.m_nNormalWrinkle != -1 ) && ( info.m_nNormalStretch != -1 ) &&
-                 params[info.m_nNormalWrinkle]->IsDefined() && params[info.m_nNormalStretch]->IsDefined() )
+                params[info.m_nNormalWrinkle]->IsDefined() && params[info.m_nNormalStretch]->IsDefined() )
             {
                 pShader->LoadTexture( info.m_nNormalWrinkle );
                 pShader->LoadTexture( info.m_nNormalStretch );
@@ -214,7 +214,7 @@ void InitSkin_DX9( CBaseVSShader *pShader, IMaterialVar **params, VertexLitGener
 
 class CSkin_DX9_Context : public CBasePerMaterialContextData
 {
-   public:
+    public:
     CCommandBufferBuilder< CFixedCommandStorageBuffer< 800 > > m_SemiStaticCmdsOut;
     bool m_bFastPath;
 };
@@ -228,12 +228,12 @@ void DrawSkin_DX9_Internal( CBaseVSShader *pShader, IMaterialVar **params, IShad
     bool bHasBump = ( info.m_nBumpmap != -1 ) && params[info.m_nBumpmap]->IsTexture();
 
     bool bHasBaseTextureWrinkle = bHasBaseTexture &&
-                                  ( info.m_nWrinkle != -1 ) && params[info.m_nWrinkle]->IsTexture() &&
-                                  ( info.m_nStretch != -1 ) && params[info.m_nStretch]->IsTexture();
+                                ( info.m_nWrinkle != -1 ) && params[info.m_nWrinkle]->IsTexture() &&
+                                ( info.m_nStretch != -1 ) && params[info.m_nStretch]->IsTexture();
 
     bool bHasBumpWrinkle = bHasBump &&
-                           ( info.m_nNormalWrinkle != -1 ) && params[info.m_nNormalWrinkle]->IsTexture() &&
-                           ( info.m_nNormalStretch != -1 ) && params[info.m_nNormalStretch]->IsTexture();
+                            ( info.m_nNormalWrinkle != -1 ) && params[info.m_nNormalWrinkle]->IsTexture() &&
+                            ( info.m_nNormalStretch != -1 ) && params[info.m_nNormalStretch]->IsTexture();
 
     bool bHasVertexColor = IS_FLAG_SET( MATERIAL_VAR_VERTEXCOLOR );
     bool bHasVertexAlpha = IS_FLAG_SET( MATERIAL_VAR_VERTEXALPHA );
@@ -737,13 +737,13 @@ void DrawSkin_DX9_Internal( CBaseVSShader *pShader, IMaterialVar **params, IShad
         if ( hasDetailTexture )
         {
 #if 0  // needs constant change
-			if ( info.m_nDetailTint  != -1 )
-				pShader->SetPixelShaderConstantGammaToLinear( 10, info.m_nDetailTint );
-			else
-			{
-				float boring_tint[4]={1,1,1,1};
-				pShaderAPI->SetPixelShaderConstant( 10, boring_tint, 1 );
-			}
+            if ( info.m_nDetailTint  != -1 )
+                pShader->SetPixelShaderConstantGammaToLinear( 10, info.m_nDetailTint );
+            else
+            {
+                float boring_tint[4]={1,1,1,1};
+                pShaderAPI->SetPixelShaderConstant( 10, boring_tint, 1 );
+            }
 #endif
         }
 

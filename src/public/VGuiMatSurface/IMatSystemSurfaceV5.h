@@ -19,7 +19,7 @@ namespace MatSystemSurfaceV5
 
 class IMatSystemSurface : public SurfaceV30::ISurface
 {
-   public:
+    public:
     // Hook needed to get input to work.
     // If the app drives the input (like the engine needs to do for VCR mode),
     // it can set bLetAppDriveInput to true and call HandleWindowMessage for the Windows messages.
@@ -79,7 +79,7 @@ class IMatSystemSurface : public SurfaceV30::ISurface
 //-----------------------------------------------------------------------------
 class IMatSystemSurfaceV5 : public MatSystemSurfaceV5::IMatSystemSurface
 {
-   public:
+    public:
 };
 
 #endif  // IMATSYSTEMSURFACEV5_H

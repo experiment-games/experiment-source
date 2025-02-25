@@ -60,9 +60,9 @@ class DescriptorTest(unittest.TestCase):
         filename=None,
         file=self.my_file,
         values=[
-          descriptor.EnumValueDescriptor(name='FOREIGN_FOO', index=0, number=4),
-          descriptor.EnumValueDescriptor(name='FOREIGN_BAR', index=1, number=5),
-          descriptor.EnumValueDescriptor(name='FOREIGN_BAZ', index=2, number=6),
+        descriptor.EnumValueDescriptor(name='FOREIGN_FOO', index=0, number=4),
+        descriptor.EnumValueDescriptor(name='FOREIGN_BAR', index=1, number=5),
+        descriptor.EnumValueDescriptor(name='FOREIGN_BAZ', index=2, number=6),
         ])
     self.my_message = descriptor.Descriptor(
         name='NestedMessage',
@@ -71,7 +71,7 @@ class DescriptorTest(unittest.TestCase):
         file=self.my_file,
         containing_type=None,
         fields=[
-          descriptor.FieldDescriptor(
+        descriptor.FieldDescriptor(
             name='bb',
             full_name='protobuf_unittest.TestAllTypes.NestedMessage.bb',
             index=0, number=1,
@@ -82,7 +82,7 @@ class DescriptorTest(unittest.TestCase):
         ],
         nested_types=[],
         enum_types=[
-          self.my_enum,
+        self.my_enum,
         ],
         extensions=[])
     self.my_method = descriptor.MethodDescriptor(
@@ -113,17 +113,17 @@ class DescriptorTest(unittest.TestCase):
 
   def testGetOptions(self):
     self.assertEqual(self.my_enum.GetOptions(),
-                     descriptor_pb2.EnumOptions())
+                    descriptor_pb2.EnumOptions())
     self.assertEqual(self.my_enum.values[0].GetOptions(),
-                     descriptor_pb2.EnumValueOptions())
+                    descriptor_pb2.EnumValueOptions())
     self.assertEqual(self.my_message.GetOptions(),
-                     descriptor_pb2.MessageOptions())
+                    descriptor_pb2.MessageOptions())
     self.assertEqual(self.my_message.fields[0].GetOptions(),
-                     descriptor_pb2.FieldOptions())
+                    descriptor_pb2.FieldOptions())
     self.assertEqual(self.my_method.GetOptions(),
-                     descriptor_pb2.MethodOptions())
+                    descriptor_pb2.MethodOptions())
     self.assertEqual(self.my_service.GetOptions(),
-                     descriptor_pb2.ServiceOptions())
+                    descriptor_pb2.ServiceOptions())
 
   def testFileDescriptorReferences(self):
     self.assertEqual(self.my_enum.file, self.my_file)
@@ -147,7 +147,7 @@ class DescriptorCopyToProtoTest(unittest.TestCase):
         % (str(actual_proto), str(expected_proto)))
 
   def _InternalTestCopyToProto(self, desc, expected_proto_class,
-                               expected_proto_ascii):
+                                expected_proto_ascii):
     actual = expected_proto_class()
     desc.CopyToProto(actual)
     self._AssertProtoEqual(
@@ -161,14 +161,14 @@ class DescriptorCopyToProtoTest(unittest.TestCase):
 
   def testCopyToProto_NestedMessage(self):
     TEST_NESTED_MESSAGE_ASCII = """
-      name: 'NestedMessage'
-      field: <
+    name: 'NestedMessage'
+    field: <
         name: 'bb'
         number: 1
         label: 1  # Optional
         type: 5  # TYPE_INT32
-      >
-      """
+    >
+    """
 
     self._InternalTestCopyToProto(
         unittest_pb2.TestAllTypes.NestedMessage.DESCRIPTOR,
@@ -177,15 +177,15 @@ class DescriptorCopyToProtoTest(unittest.TestCase):
 
   def testCopyToProto_ForeignNestedMessage(self):
     TEST_FOREIGN_NESTED_ASCII = """
-      name: 'TestForeignNested'
-      field: <
+    name: 'TestForeignNested'
+    field: <
         name: 'foreign_nested'
         number: 1
         label: 1  # Optional
         type: 11  # TYPE_MESSAGE
         type_name: '.protobuf_unittest.TestAllTypes.NestedMessage'
-      >
-      """
+    >
+    """
 
     self._InternalTestCopyToProto(
         unittest_pb2.TestForeignNested.DESCRIPTOR,
@@ -194,20 +194,20 @@ class DescriptorCopyToProtoTest(unittest.TestCase):
 
   def testCopyToProto_ForeignEnum(self):
     TEST_FOREIGN_ENUM_ASCII = """
-      name: 'ForeignEnum'
-      value: <
+    name: 'ForeignEnum'
+    value: <
         name: 'FOREIGN_FOO'
         number: 4
-      >
-      value: <
+    >
+    value: <
         name: 'FOREIGN_BAR'
         number: 5
-      >
-      value: <
+    >
+    value: <
         name: 'FOREIGN_BAZ'
         number: 6
-      >
-      """
+    >
+    """
 
     self._InternalTestCopyToProto(
         unittest_pb2._FOREIGNENUM,
@@ -216,17 +216,17 @@ class DescriptorCopyToProtoTest(unittest.TestCase):
 
   def testCopyToProto_Options(self):
     TEST_DEPRECATED_FIELDS_ASCII = """
-      name: 'TestDeprecatedFields'
-      field: <
+    name: 'TestDeprecatedFields'
+    field: <
         name: 'deprecated_int32'
         number: 1
         label: 1  # Optional
         type: 5  # TYPE_INT32
         options: <
-          deprecated: true
+        deprecated: true
         >
-      >
-      """
+    >
+    """
 
     self._InternalTestCopyToProto(
         unittest_pb2.TestDeprecatedFields.DESCRIPTOR,
@@ -235,12 +235,12 @@ class DescriptorCopyToProtoTest(unittest.TestCase):
 
   def testCopyToProto_AllExtensions(self):
     TEST_EMPTY_MESSAGE_WITH_EXTENSIONS_ASCII = """
-      name: 'TestEmptyMessageWithExtensions'
-      extension_range: <
+    name: 'TestEmptyMessageWithExtensions'
+    extension_range: <
         start: 1
         end: 536870912
-      >
-      """
+    >
+    """
 
     self._InternalTestCopyToProto(
         unittest_pb2.TestEmptyMessageWithExtensions.DESCRIPTOR,
@@ -249,20 +249,20 @@ class DescriptorCopyToProtoTest(unittest.TestCase):
 
   def testCopyToProto_SeveralExtensions(self):
     TEST_MESSAGE_WITH_SEVERAL_EXTENSIONS_ASCII = """
-      name: 'TestMultipleExtensionRanges'
-      extension_range: <
+    name: 'TestMultipleExtensionRanges'
+    extension_range: <
         start: 42
         end: 43
-      >
-      extension_range: <
+    >
+    extension_range: <
         start: 4143
         end: 4244
-      >
-      extension_range: <
+    >
+    extension_range: <
         start: 65536
         end: 536870912
-      >
-      """
+    >
+    """
 
     self._InternalTestCopyToProto(
         unittest_pb2.TestMultipleExtensionRanges.DESCRIPTOR,
@@ -271,38 +271,38 @@ class DescriptorCopyToProtoTest(unittest.TestCase):
 
   def testCopyToProto_FileDescriptor(self):
     UNITTEST_IMPORT_FILE_DESCRIPTOR_ASCII = ("""
-      name: 'google/protobuf/unittest_import.proto'
-      package: 'protobuf_unittest_import'
-      message_type: <
+    name: 'google/protobuf/unittest_import.proto'
+    package: 'protobuf_unittest_import'
+    message_type: <
         name: 'ImportMessage'
         field: <
-          name: 'd'
-          number: 1
-          label: 1  # Optional
-          type: 5  # TYPE_INT32
+        name: 'd'
+        number: 1
+        label: 1  # Optional
+        type: 5  # TYPE_INT32
         >
-      >
-      """ +
-      """enum_type: <
+    >
+    """ +
+    """enum_type: <
         name: 'ImportEnum'
         value: <
-          name: 'IMPORT_FOO'
-          number: 7
+        name: 'IMPORT_FOO'
+        number: 7
         >
         value: <
-          name: 'IMPORT_BAR'
-          number: 8
+        name: 'IMPORT_BAR'
+        number: 8
         >
         value: <
-          name: 'IMPORT_BAZ'
-          number: 9
+        name: 'IMPORT_BAZ'
+        number: 9
         >
-      >
-      options: <
+    >
+    options: <
         java_package: 'com.google.protobuf.test'
         optimize_for: 1  # SPEED
-      >
-      """)
+    >
+    """)
 
     self._InternalTestCopyToProto(
         unittest_import_pb2.DESCRIPTOR,
@@ -311,18 +311,18 @@ class DescriptorCopyToProtoTest(unittest.TestCase):
 
   def testCopyToProto_ServiceDescriptor(self):
     TEST_SERVICE_ASCII = """
-      name: 'TestService'
-      method: <
+    name: 'TestService'
+    method: <
         name: 'Foo'
         input_type: '.protobuf_unittest.FooRequest'
         output_type: '.protobuf_unittest.FooResponse'
-      >
-      method: <
+    >
+    method: <
         name: 'Bar'
         input_type: '.protobuf_unittest.BarRequest'
         output_type: '.protobuf_unittest.BarResponse'
-      >
-      """
+    >
+    """
 
     self._InternalTestCopyToProto(
         unittest_pb2.TestService.DESCRIPTOR,

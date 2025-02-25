@@ -577,7 +577,7 @@ void CNavMesh::CommandNavBuildLadder( void )
  */
 class PlaceFloodFillFunctor
 {
-   public:
+    public:
     PlaceFloodFillFunctor( CNavArea *area )
     {
         m_initialPlace = area->GetPlace();
@@ -593,7 +593,7 @@ class PlaceFloodFillFunctor
         return true;
     }
 
-   private:
+    private:
     unsigned int m_initialPlace;
 };
 
@@ -619,7 +619,7 @@ void CNavMesh::OnEditModeEnd( void )
 //--------------------------------------------------------------------------------------------------------------
 class DrawSelectedSet
 {
-   public:
+    public:
     DrawSelectedSet( const Vector &shift )
     {
         m_count = 0;
@@ -644,7 +644,7 @@ class DrawSelectedSet
 //--------------------------------------------------------------------------------------------------------
 class AddToDragSet
 {
-   public:
+    public:
     AddToDragSet( Extent &area, int zMin, int zMax, bool bDragDeselecting )
     {
         m_nTolerance = 1;
@@ -737,46 +737,46 @@ void CNavMesh::DrawEditMode( void )
     /* IN_PROGRESS:
     if ( !IsEditMode( PLACE_PAINTING ) && nav_snap_to_grid.GetBool() )
     {
-      Vector center = SnapToGrid( m_editCursorPos );
+    Vector center = SnapToGrid( m_editCursorPos );
 
-      const int GridCount = 3;
-      const int GridArraySize = GridCount * 2 + 1;
-      const int GridSize = GetGridSize();
+    const int GridCount = 3;
+    const int GridArraySize = GridCount * 2 + 1;
+    const int GridSize = GetGridSize();
 
-      // fill in an array of heights for the grid
-      Vector pos[GridArraySize][GridArraySize];
-      int x, y;
-      for ( x=0; x<GridArraySize; ++x )
-      {
+    // fill in an array of heights for the grid
+    Vector pos[GridArraySize][GridArraySize];
+    int x, y;
+    for ( x=0; x<GridArraySize; ++x )
+    {
         for ( y=0; y<GridArraySize; ++y )
         {
-          pos[x][y] = center;
-          pos[x][y].x += (x-GridCount) * GridSize;
-          pos[x][y].y += (y-GridCount) * GridSize;
-          pos[x][y].z += 36.0f;
+        pos[x][y] = center;
+        pos[x][y].x += (x-GridCount) * GridSize;
+        pos[x][y].y += (y-GridCount) * GridSize;
+        pos[x][y].z += 36.0f;
 
-          GetGroundHeight( pos[x][y], &pos[x][y].z );
+        GetGroundHeight( pos[x][y], &pos[x][y].z );
         }
-      }
+    }
 
-      for ( x=1; x<GridArraySize; ++x )
-      {
+    for ( x=1; x<GridArraySize; ++x )
+    {
         for ( y=1; y<GridArraySize; ++y )
         {
-          NavDrawLine( pos[x-1][y-1], pos[x-1][y], NavGridColor );
-          NavDrawLine( pos[x-1][y-1], pos[x][y-1], NavGridColor );
+        NavDrawLine( pos[x-1][y-1], pos[x-1][y], NavGridColor );
+        NavDrawLine( pos[x-1][y-1], pos[x][y-1], NavGridColor );
 
-          if ( x == GridArraySize-1 )
-          {
+        if ( x == GridArraySize-1 )
+        {
             NavDrawLine( pos[x][y-1], pos[x][y], NavGridColor );
-          }
-
-          if ( y == GridArraySize-1 )
-          {
-            NavDrawLine( pos[x-1][y], pos[x][y], NavGridColor );
-          }
         }
-      }
+
+        if ( y == GridArraySize-1 )
+        {
+            NavDrawLine( pos[x-1][y], pos[x][y], NavGridColor );
+        }
+        }
+    }
     }
     */
 
@@ -1192,7 +1192,7 @@ void CNavMesh::CommandNavDelete( void )
 //--------------------------------------------------------------------------------------------------------------
 class SelectCollector
 {
-   public:
+    public:
     SelectCollector( void )
     {
         m_count = 0;
@@ -1942,7 +1942,7 @@ void CNavMesh::CommandNavBeginShiftXY( void )
  */
 class ShiftSet
 {
-   public:
+    public:
     ShiftSet( const Vector &shift )
     {
         m_shift = shift;
@@ -1978,7 +1978,7 @@ class ShiftSet
         return true;
     }
 
-   private:
+    private:
     CUtlVector< CNavLadder * > m_ladders;
     Vector m_shift;
 };
@@ -2135,9 +2135,9 @@ void CNavMesh::CommandNavSelectInvalidAreas( void )
                     float se = area->GetZ( x + GenerationStepSize, y + GenerationStepSize );
 
                     if ( !IsHeightDifferenceValid( nw, ne, sw, se ) ||
-                         !IsHeightDifferenceValid( ne, nw, sw, se ) ||
-                         !IsHeightDifferenceValid( sw, ne, nw, se ) ||
-                         !IsHeightDifferenceValid( se, ne, sw, nw ) )
+                        !IsHeightDifferenceValid( ne, nw, sw, se ) ||
+                        !IsHeightDifferenceValid( sw, ne, nw, se ) ||
+                        !IsHeightDifferenceValid( se, ne, sw, nw ) )
                     {
                         AddToSelectedSet( area );
                     }
@@ -3648,7 +3648,7 @@ class RadiusSelect
     float m_radiusSquared;
     int m_selected;
 
-   public:
+    public:
     RadiusSelect( const Vector &origin, float radius )
     {
         m_origin = origin;

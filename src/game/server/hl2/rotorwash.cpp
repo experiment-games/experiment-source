@@ -16,7 +16,7 @@
 
 class CRotorWashEmitter : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CRotorWashEmitter, CBaseEntity );
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
@@ -34,7 +34,7 @@ class CRotorWashEmitter : public CBaseEntity
     int ShouldTransmit( const CCheckTransmitInfo *pInfo );
     int UpdateTransmitState( void );
 
-   protected:
+    protected:
     CNetworkVar( bool, m_bEmit );
     CNetworkVar( float, m_flAltitude );
 };

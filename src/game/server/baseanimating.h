@@ -35,7 +35,7 @@ class CBaseAnimating : public CBaseEntity
     LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( CBaseAnimating, LUA_BASEANIMATINGLIBNAME )
 #endif
 
-   public:
+    public:
     DECLARE_CLASS( CBaseAnimating, CBaseEntity );
 
     CBaseAnimating();
@@ -214,13 +214,13 @@ class CBaseAnimating : public CBaseEntity
     bool HasPoseParameter( int iSequence, int iParameter );
     float EdgeLimitPoseParameter( int iParameter, float flValue, float flBase = 0.0f );
 
-   protected:
+    protected:
     // The modus operandi for pose parameters is that you should not use the const char * version of the functions
     // in general code -- it causes many many string comparisons, which is slower than you think. Better is to
     // save off your pose parameters in member variables in your derivation of this function:
     virtual void PopulatePoseParameters( void );
 
-   public:
+    public:
     int LookupBone( const char *szName );
     void GetBonePosition( const char *szName, Vector &origin, QAngle &angles );
     void GetBonePosition( int iBone, Vector &origin, QAngle &angles );
@@ -449,7 +449,7 @@ class CBaseAnimating : public CBaseEntity
         Q_strncpy( pOut, STRING( m_SubMaterialOverrides[iIndex] ), nLength );
     }
 
-   private:
+    private:
     void LockStudioHdr();
     void UnlockStudioHdr();
 
@@ -460,7 +460,7 @@ class CBaseAnimating : public CBaseEntity
 
     bool CanSkipAnimation( void );
 
-   public:
+    public:
     CNetworkVar( int, m_nForceBone );
     CNetworkVector( m_vecForce );
 
@@ -474,12 +474,12 @@ class CBaseAnimating : public CBaseEntity
     // was pev->framerate
     CNetworkVar( float, m_flPlaybackRate );
 
-   public:
+    public:
     void InitStepHeightAdjust( void );
     void SetIKGroundContactInfo( float minHeight, float maxHeight );
     void UpdateStepOrigin( void );
 
-   protected:
+    protected:
     float m_flIKGroundContactTime;
     float m_flIKGroundMinHeight;
     float m_flIKGroundMaxHeight;
@@ -490,11 +490,11 @@ class CBaseAnimating : public CBaseEntity
     CIKContext *m_pIk;
     int m_iIKCounter;
 
-   public:
+    public:
     Vector GetStepOrigin( void ) const;
     QAngle GetStepAngles( void ) const;
 
-   private:
+    private:
     bool m_bSequenceFinished;         // flag set when StudioAdvanceFrame moves across a frame boundry
     bool m_bSequenceLoops;            // true if the sequence loops
     bool m_bResetSequenceInfoOnLoad;  // true if a ResetSequenceInfo was queued up during dynamic load
@@ -526,7 +526,7 @@ class CBaseAnimating : public CBaseEntity
     memhandle_t m_boneCacheHandle;
     unsigned short m_fBoneCacheFlags;  // Used for bone cache state on model
 
-   protected:
+    protected:
     CNetworkVar( float, m_fadeMinDist );  // Point at which fading is absolute
     CNetworkVar( float, m_fadeMaxDist );  // Point at which fading is inactive
     CNetworkVar( float, m_flFadeScale );  // Scale applied to min / max
@@ -535,10 +535,10 @@ class CBaseAnimating : public CBaseEntity
     CNetworkString( m_MaterialOverride, MAX_PATH );
     CNetworkArray( string_t, m_SubMaterialOverrides, MAX_SUB_MATERIAL_OVERRIDES );
 
-   public:
+    public:
     COutputEvent m_OnIgnite;
 
-   private:
+    private:
     CStudioHdr *m_pStudioHdr;
     CThreadFastMutex m_StudioHdrInitLock;
     CThreadFastMutex m_BoneSetupMutex;

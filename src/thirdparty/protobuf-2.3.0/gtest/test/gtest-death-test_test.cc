@@ -82,7 +82,7 @@ namespace internal {
 class ReplaceDeathTestFactory {
  public:
   explicit ReplaceDeathTestFactory(DeathTestFactory* new_factory)
-      : unit_test_impl_(GetUnitTestImpl()) {
+    : unit_test_impl_(GetUnitTestImpl()) {
     old_factory_ = unit_test_impl_->death_test_factory_.release();
     unit_test_impl_->death_test_factory_.reset(new_factory);
   }
@@ -127,9 +127,9 @@ class TestForDeathTest : public testing::Test {
   // A method of the test fixture that may die.
   void MemberFunction() {
     if (should_die_) {
-      fprintf(stderr, "%s", "death inside MemberFunction().");
-      fflush(stderr);
-      _exit(1);
+    fprintf(stderr, "%s", "death inside MemberFunction().");
+    fflush(stderr);
+    _exit(1);
     }
   }
 
@@ -146,7 +146,7 @@ class MayDie {
   // A member function that may die.
   void MemberFunction() const {
     if (should_die_) {
-      GTEST_LOG_(FATAL) << "death inside MayDie::MemberFunction().";
+    GTEST_LOG_(FATAL) << "death inside MayDie::MemberFunction().";
     }
   }
 
@@ -323,11 +323,11 @@ TEST_F(TestForDeathTest, SwitchStatement) {
 
   switch (0)
     default:
-      ASSERT_DEATH(_exit(1), "") << "exit in default switch handler";
+    ASSERT_DEATH(_exit(1), "") << "exit in default switch handler";
 
   switch (0)
     case 0:
-      EXPECT_DEATH(_exit(1), "") << "exit in switch case";
+    EXPECT_DEATH(_exit(1), "") << "exit in switch case";
 
 #ifdef _MSC_VER
 #pragma warning(pop)
@@ -491,7 +491,7 @@ TEST_F(TestForDeathTest, CompoundStatement) {
 // Tests that code that doesn't die causes a death test to fail.
 TEST_F(TestForDeathTest, DoesNotDie) {
   EXPECT_NONFATAL_FAILURE(EXPECT_DEATH(DieIf(false), "DieIf"),
-                          "failed to die");
+                        "failed to die");
 }
 
 // Tests that a death test fails when the error message isn't expected.
@@ -513,7 +513,7 @@ void ExpectDeathTestHelper(bool* aborted) {
 TEST_F(TestForDeathTest, EXPECT_DEATH) {
   bool aborted = true;
   EXPECT_NONFATAL_FAILURE(ExpectDeathTestHelper(&aborted),
-                          "failed to die");
+                        "failed to die");
   EXPECT_FALSE(aborted);
 }
 
@@ -542,10 +542,10 @@ TEST_F(TestForDeathTest, SingleEvaluation) {
 // Tests that run-away death tests are reported as failures.
 TEST_F(TestForDeathTest, Runaway) {
   EXPECT_NONFATAL_FAILURE(EXPECT_DEATH(static_cast<void>(0), "Foo"),
-                          "failed to die.");
+                        "failed to die.");
 
   EXPECT_FATAL_FAILURE(ASSERT_DEATH(return, "Bar"),
-                       "illegal return in test statement.");
+                        "illegal return in test statement.");
 }
 
 
@@ -560,7 +560,7 @@ TEST_F(TestForDeathTest, TestExpectDebugDeath) {
   int sideeffect = 0;
 
   EXPECT_DEBUG_DEATH(DieInDebugElse12(&sideeffect),
-                     "death.*DieInDebugElse12");
+                    "death.*DieInDebugElse12");
 
 #ifdef NDEBUG
   // Checks that the assignment occurs in opt mode (sideeffect).
@@ -608,7 +608,7 @@ void ExpectDebugDeathHelper(bool* aborted) {
 #if GTEST_OS_WINDOWS
 TEST(PopUpDeathTest, DoesNotShowPopUpOnAbort) {
   printf("This test should be considered failing if it shows "
-         "any pop-up dialogs.\n");
+        "any pop-up dialogs.\n");
   fflush(stdout);
 
   EXPECT_DEATH({
@@ -619,7 +619,7 @@ TEST(PopUpDeathTest, DoesNotShowPopUpOnAbort) {
 
 TEST(PopUpDeathTest, DoesNotShowPopUpOnThrow) {
   printf("This test should be considered failing if it shows "
-         "any pop-up dialogs.\n");
+        "any pop-up dialogs.\n");
   fflush(stdout);
 
   EXPECT_DEATH({
@@ -671,8 +671,8 @@ static void TestExitMacros() {
 
   EXPECT_NONFATAL_FAILURE({  // NOLINT
     EXPECT_EXIT({
-      testing::GTEST_FLAG(catch_exceptions) = false;
-      *static_cast<int*>(NULL) = 1;
+    testing::GTEST_FLAG(catch_exceptions) = false;
+    *static_cast<int*>(NULL) = 1;
     }, testing::ExitedWithCode(0), "") << "This failure is expected.";
   }, "This failure is expected.");
 #endif  // GTEST_OS_WINDOWS && !GTEST_OS_WINDOWS_MINGW
@@ -719,12 +719,12 @@ class MockDeathTestFactory : public DeathTestFactory {
  public:
   MockDeathTestFactory();
   virtual bool Create(const char* statement,
-                      const ::testing::internal::RE* regex,
-                      const char* file, int line, DeathTest** test);
+                    const ::testing::internal::RE* regex,
+                    const char* file, int line, DeathTest** test);
 
   // Sets the parameters for subsequent calls to Create.
   void SetParameters(bool create, DeathTest::TestRole role,
-                     int status, bool passed);
+                    int status, bool passed);
 
   // Accessors.
   int AssumeRoleCalls() const { return assume_role_calls_; }
@@ -773,7 +773,7 @@ class MockDeathTest : public DeathTest {
  public:
   MockDeathTest(MockDeathTestFactory *parent,
                 TestRole role, int status, bool passed) :
-      parent_(parent), role_(role), status_(status), passed_(passed) {
+    parent_(parent), role_(role), status_(status), passed_(passed) {
   }
   virtual ~MockDeathTest() {
     parent_->test_deleted_ = true;
@@ -804,20 +804,20 @@ class MockDeathTest : public DeathTest {
 // MockDeathTestFactory constructor.
 MockDeathTestFactory::MockDeathTestFactory()
     : create_(true),
-      role_(DeathTest::OVERSEE_TEST),
-      status_(0),
-      passed_(true),
-      assume_role_calls_(0),
-      wait_calls_(0),
-      passed_args_(),
-      abort_args_() {
+    role_(DeathTest::OVERSEE_TEST),
+    status_(0),
+    passed_(true),
+    assume_role_calls_(0),
+    wait_calls_(0),
+    passed_args_(),
+    abort_args_() {
 }
 
 
 // Sets the parameters for subsequent calls to Create.
 void MockDeathTestFactory::SetParameters(bool create,
-                                         DeathTest::TestRole role,
-                                         int status, bool passed) {
+                                        DeathTest::TestRole role,
+                                        int status, bool passed) {
   create_ = create;
   role_ = role;
   status_ = status;
@@ -834,10 +834,10 @@ void MockDeathTestFactory::SetParameters(bool create,
 // MockDeathTest object with parameters taken from the last call
 // to SetParameters (if create_ is true).  Always returns true.
 bool MockDeathTestFactory::Create(const char* /*statement*/,
-                                  const ::testing::internal::RE* /*regex*/,
-                                  const char* /*file*/,
-                                  int /*line*/,
-                                  DeathTest** test) {
+                                const ::testing::internal::RE* /*regex*/,
+                                const char* /*file*/,
+                                int /*line*/,
+                                DeathTest** test) {
   test_deleted_ = false;
   if (create_) {
     *test = new MockDeathTest(this, role_, status_, passed_);
@@ -872,8 +872,8 @@ class MacroLogicDeathTest : public testing::Test {
   // MockDeathTest, or the remainder of the routine will not be executed.
   static void RunReturningDeathTest(bool* flag) {
     ASSERT_DEATH({  // NOLINT
-      *flag = true;
-      return;
+    *flag = true;
+    return;
     }, "");
   }
 };
@@ -1155,7 +1155,7 @@ TEST(ConditionalDeathMacrosTest, WarnsWhenDeathTestsNotAvailable) {
   EXPECT_DEATH_IF_SUPPORTED(;, "");
   String output = GetCapturedStderr();
   ASSERT_TRUE(NULL != strstr(output.c_str(),
-                             "Death tests are not supported on this platform"));
+                            "Death tests are not supported on this platform"));
   ASSERT_TRUE(NULL != strstr(output.c_str(), ";"));
 
   // The streamed message should not be printed as there is no test failure.
@@ -1168,7 +1168,7 @@ TEST(ConditionalDeathMacrosTest, WarnsWhenDeathTestsNotAvailable) {
   ASSERT_DEATH_IF_SUPPORTED(;, "");  // NOLINT
   output = GetCapturedStderr();
   ASSERT_TRUE(NULL != strstr(output.c_str(),
-                             "Death tests are not supported on this platform"));
+                            "Death tests are not supported on this platform"));
   ASSERT_TRUE(NULL != strstr(output.c_str(), ";"));
 
   CaptureStderr();
@@ -1229,12 +1229,12 @@ TEST(ConditionalDeathMacrosSyntaxDeathTest, SwitchStatement) {
 
   switch (0)
     default:
-      ASSERT_DEATH_IF_SUPPORTED(_exit(1), "")
-          << "exit in default switch handler";
+    ASSERT_DEATH_IF_SUPPORTED(_exit(1), "")
+        << "exit in default switch handler";
 
   switch (0)
     case 0:
-      EXPECT_DEATH_IF_SUPPORTED(_exit(1), "") << "exit in switch case";
+    EXPECT_DEATH_IF_SUPPORTED(_exit(1), "") << "exit in switch case";
 
 #ifdef _MSC_VER
 #pragma warning(pop)

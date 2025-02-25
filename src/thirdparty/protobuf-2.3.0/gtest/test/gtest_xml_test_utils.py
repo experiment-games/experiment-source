@@ -57,19 +57,19 @@ class GTestXMLTestCase(gtest_test_utils.TestCase):
 
     *  It has the same tag name as expected_node.
     *  It has the same set of attributes as expected_node, each with
-       the same value as the corresponding attribute of expected_node.
-       An exception is any attribute named "time", which needs only be
-       convertible to a floating-point number.
+        the same value as the corresponding attribute of expected_node.
+        An exception is any attribute named "time", which needs only be
+        convertible to a floating-point number.
     *  It has an equivalent set of child nodes (including elements and
-       CDATA sections) as expected_node.  Note that we ignore the
-       order of the children as they are not guaranteed to be in any
-       particular order.
+        CDATA sections) as expected_node.  Note that we ignore the
+        order of the children as they are not guaranteed to be in any
+        particular order.
     """
 
     if expected_node.nodeType == Node.CDATA_SECTION_NODE:
-      self.assertEquals(Node.CDATA_SECTION_NODE, actual_node.nodeType)
-      self.assertEquals(expected_node.nodeValue, actual_node.nodeValue)
-      return
+    self.assertEquals(Node.CDATA_SECTION_NODE, actual_node.nodeType)
+    self.assertEquals(expected_node.nodeValue, actual_node.nodeValue)
+    return
 
     self.assertEquals(Node.ELEMENT_NODE, actual_node.nodeType)
     self.assertEquals(Node.ELEMENT_NODE, expected_node.nodeType)
@@ -81,13 +81,13 @@ class GTestXMLTestCase(gtest_test_utils.TestCase):
         expected_attributes.length, actual_attributes.length,
         "attribute numbers differ in element " + actual_node.tagName)
     for i in range(expected_attributes.length):
-      expected_attr = expected_attributes.item(i)
-      actual_attr   = actual_attributes.get(expected_attr.name)
-      self.assert_(
-          actual_attr is not None,
-          "expected attribute %s not found in element %s" %
-          (expected_attr.name, actual_node.tagName))
-      self.assertEquals(expected_attr.value, actual_attr.value,
+    expected_attr = expected_attributes.item(i)
+    actual_attr   = actual_attributes.get(expected_attr.name)
+    self.assert_(
+        actual_attr is not None,
+        "expected attribute %s not found in element %s" %
+        (expected_attr.name, actual_node.tagName))
+    self.assertEquals(expected_attr.value, actual_attr.value,
                         " values of attribute %s in element %s differ" %
                         (expected_attr.name, actual_node.tagName))
 
@@ -97,10 +97,10 @@ class GTestXMLTestCase(gtest_test_utils.TestCase):
         len(expected_children), len(actual_children),
         "number of child elements differ in element " + actual_node.tagName)
     for child_id, child in expected_children.iteritems():
-      self.assert_(child_id in actual_children,
-                   '<%s> is not in <%s> (in element %s)' %
-                   (child_id, actual_children, actual_node.tagName))
-      self.AssertEquivalentNodes(child, actual_children[child_id])
+    self.assert_(child_id in actual_children,
+                    '<%s> is not in <%s> (in element %s)' %
+                    (child_id, actual_children, actual_node.tagName))
+    self.AssertEquivalentNodes(child, actual_children[child_id])
 
   identifying_attribute = {
     "testsuites": "name",
@@ -124,21 +124,21 @@ class GTestXMLTestCase(gtest_test_utils.TestCase):
 
     children = {}
     for child in element.childNodes:
-      if child.nodeType == Node.ELEMENT_NODE:
+    if child.nodeType == Node.ELEMENT_NODE:
         self.assert_(child.tagName in self.identifying_attribute,
-                     "Encountered unknown element <%s>" % child.tagName)
+                    "Encountered unknown element <%s>" % child.tagName)
         childID = child.getAttribute(self.identifying_attribute[child.tagName])
         self.assert_(childID not in children)
         children[childID] = child
-      elif child.nodeType in [Node.TEXT_NODE, Node.CDATA_SECTION_NODE]:
+    elif child.nodeType in [Node.TEXT_NODE, Node.CDATA_SECTION_NODE]:
         if "detail" not in children:
-          if (child.nodeType == Node.CDATA_SECTION_NODE or
-              not child.nodeValue.isspace()):
+        if (child.nodeType == Node.CDATA_SECTION_NODE or
+            not child.nodeValue.isspace()):
             children["detail"] = child.ownerDocument.createCDATASection(
                 child.nodeValue)
         else:
-          children["detail"].nodeValue += child.nodeValue
-      else:
+        children["detail"].nodeValue += child.nodeValue
+    else:
         self.fail("Encountered unexpected node type %d" % child.nodeType)
     return children
 
@@ -148,25 +148,25 @@ class GTestXMLTestCase(gtest_test_utils.TestCase):
     information that may change from run to run.
 
     *  The "time" attribute of <testsuites>, <testsuite> and <testcase>
-       elements is replaced with a single asterisk, if it contains
-       only digit characters.
+        elements is replaced with a single asterisk, if it contains
+        only digit characters.
     *  The line number reported in the first line of the "message"
-       attribute of <failure> elements is replaced with a single asterisk.
+        attribute of <failure> elements is replaced with a single asterisk.
     *  The directory names in file paths are removed.
     *  The stack traces are removed.
     """
 
     if element.tagName in ("testsuites", "testsuite", "testcase"):
-      time = element.getAttributeNode("time")
-      time.value = re.sub(r"^\d+(\.\d+)?$", "*", time.value)
+    time = element.getAttributeNode("time")
+    time.value = re.sub(r"^\d+(\.\d+)?$", "*", time.value)
     elif element.tagName == "failure":
-      for child in element.childNodes:
-        if child.nodeType == Node.CDATA_SECTION_NODE:
-          # Removes the source line number.
-          cdata = re.sub(r"^.*[/\\](.*:)\d+\n", "\\1*\n", child.nodeValue)
-          # Removes the actual stack trace.
-          child.nodeValue = re.sub(r"\nStack trace:\n(.|\n)*",
-                                   "", cdata)
     for child in element.childNodes:
-      if child.nodeType == Node.ELEMENT_NODE:
+        if child.nodeType == Node.CDATA_SECTION_NODE:
+        # Removes the source line number.
+        cdata = re.sub(r"^.*[/\\](.*:)\d+\n", "\\1*\n", child.nodeValue)
+        # Removes the actual stack trace.
+        child.nodeValue = re.sub(r"\nStack trace:\n(.|\n)*",
+                                    "", cdata)
+    for child in element.childNodes:
+    if child.nodeType == Node.ELEMENT_NODE:
         self.NormalizeXml(child)

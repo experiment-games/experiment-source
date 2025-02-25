@@ -13,7 +13,7 @@
 
 class CEntityDissolve : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_SERVERCLASS();
     DECLARE_CLASS( CEntityDissolve, CBaseEntity );
 
@@ -64,7 +64,7 @@ class CEntityDissolve : public CBaseEntity
     CNetworkVar( float, m_flFadeOutStart );
     CNetworkVar( float, m_flFadeOutLength );
 
-   protected:
+    protected:
     void InputDissolve( inputdata_t &inputdata );
     void DissolveThink( void );
     void ElectrocuteThink( void );

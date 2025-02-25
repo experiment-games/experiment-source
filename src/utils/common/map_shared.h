@@ -24,7 +24,7 @@ struct LoadEntity_t
 
 class CMapError
 {
-   public:
+    public:
     void BrushState( int brushID )
     {
         m_brushID = brushID;
@@ -65,7 +65,7 @@ class CMapError
         printf( "Brush %i, Side %i: %s\n", m_brushID, m_sideIndex, pWarningString );
     }
 
-   private:
+    private:
     int m_brushID;
     int m_sideIndex;
     char m_textureName[80];

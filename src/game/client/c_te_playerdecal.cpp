@@ -110,7 +110,7 @@ CLIENTEFFECT_REGISTER_END()
 //-----------------------------------------------------------------------------
 class C_TEPlayerDecal : public C_BaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_TEPlayerDecal, C_BaseTempEntity );
     DECLARE_CLIENTCLASS();
 
@@ -121,7 +121,7 @@ class C_TEPlayerDecal : public C_BaseTempEntity
 
     virtual void Precache( void );
 
-   public:
+    public:
     int m_nPlayer;
     Vector m_vecOrigin;
     int m_nEntity;

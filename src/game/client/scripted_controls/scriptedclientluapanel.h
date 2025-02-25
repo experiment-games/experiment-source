@@ -15,7 +15,7 @@ class CScriptedClientLuaPanel : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CScriptedClientLuaPanel, vgui::EditablePanel );
 
-   public:
+    public:
     CScriptedClientLuaPanel( lua_State *L );
     virtual ~CScriptedClientLuaPanel();
 

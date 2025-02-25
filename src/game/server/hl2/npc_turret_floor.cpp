@@ -153,22 +153,22 @@ DEFINE_FIELD( m_iAmmoType, FIELD_INTEGER ),
 //-----------------------------------------------------------------------------
 CNPC_FloorTurret::CNPC_FloorTurret( void )
     : m_bActive( false ),
-      m_hEyeGlow( NULL ),
-      m_hLaser( NULL ),
-      m_iAmmoType( -1 ),
-      m_bAutoStart( false ),
-      m_flPingTime( 0.0f ),
-      m_flNextActivateSoundTime( 0.0f ),
-      m_bCarriedByPlayer( false ),
-      m_bUseCarryAngles( false ),
-      m_flPlayerDropTime( 0.0f ),
-      m_flShotTime( 0.0f ),
-      m_flLastSight( 0.0f ),
-      m_bBlinkState( false ),
-      m_flThrashTime( 0.0f ),
-      m_pMotionController( NULL ),
-      m_bEnabled( false ),
-      m_bSelfDestructing( false )
+    m_hEyeGlow( NULL ),
+    m_hLaser( NULL ),
+    m_iAmmoType( -1 ),
+    m_bAutoStart( false ),
+    m_flPingTime( 0.0f ),
+    m_flNextActivateSoundTime( 0.0f ),
+    m_bCarriedByPlayer( false ),
+    m_bUseCarryAngles( false ),
+    m_flPlayerDropTime( 0.0f ),
+    m_flShotTime( 0.0f ),
+    m_flLastSight( 0.0f ),
+    m_bBlinkState( false ),
+    m_flThrashTime( 0.0f ),
+    m_pMotionController( NULL ),
+    m_bEnabled( false ),
+    m_bSelfDestructing( false )
 {
     m_vecGoalAngles.Init();
 

@@ -25,7 +25,7 @@
 /// </summary>
 abstract_class INetworkSystem : public IAppSystem
 {
-   public:
+    public:
     static uint GetHeaderBytes()
     {
         Assert( ( NETWORK_MESSAGE_HEADER_BITS % 8 ) == 0 );

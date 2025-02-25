@@ -50,7 +50,7 @@ static ConVar cc_smallfontlength( "cc_smallfontlength", "300", 0, "If text strea
 // The width and height are stored so that layout can be quickly recomputed each frame
 class CCloseCaptionWorkUnit
 {
-   public:
+    public:
     CCloseCaptionWorkUnit();
     ~CCloseCaptionWorkUnit();
 
@@ -96,7 +96,7 @@ class CCloseCaptionWorkUnit
         Msg( "x = %i, y = %i, w = %i h = %i text %s\n", m_nX, m_nY, m_nWidth, m_nHeight, buf );
     }
 
-   private:
+    private:
     int m_nX;
     int m_nY;
     int m_nWidth;
@@ -112,13 +112,13 @@ class CCloseCaptionWorkUnit
 
 CCloseCaptionWorkUnit::CCloseCaptionWorkUnit()
     : m_nWidth( 0 ),
-      m_nHeight( 0 ),
-      m_bBold( false ),
-      m_bItalic( false ),
-      m_pszStream( 0 ),
-      m_Color( Color( 255, 255, 255, 255 ) ),
-      m_hFont( 0 ),
-      m_flFadeStartTime( 0 )
+    m_nHeight( 0 ),
+    m_bBold( false ),
+    m_bItalic( false ),
+    m_pszStream( 0 ),
+    m_Color( Color( 255, 255, 255, 255 ) ),
+    m_hFont( 0 ),
+    m_flFadeStartTime( 0 )
 {
 }
 
@@ -222,7 +222,7 @@ Color CCloseCaptionWorkUnit::GetColor() const
 //-----------------------------------------------------------------------------
 class CCloseCaptionItem
 {
-   public:
+    public:
     CCloseCaptionItem(
         const wchar_t *stream,
         float timetolive,
@@ -231,12 +231,12 @@ class CCloseCaptionItem
         bool valid,
         bool fromplayer )
         : m_flTimeToLive( 0.0f ),
-          m_flAddedTime( addedtime ),
-          m_bValid( false ),
-          m_nTotalWidth( 0 ),
-          m_nTotalHeight( 0 ),
-          m_bSizeComputed( false ),
-          m_bFromPlayer( fromplayer )
+        m_flAddedTime( addedtime ),
+        m_bValid( false ),
+        m_nTotalWidth( 0 ),
+        m_nTotalHeight( 0 ),
+        m_bSizeComputed( false ),
+        m_bFromPlayer( fromplayer )
 
     {
         SetStream( stream );
@@ -362,7 +362,7 @@ class CCloseCaptionItem
         float totalfadeintime = fadeintimehidden + fadeintime;
 
         if ( totalfadeintime > 0.001f &&
-             time_since_start < totalfadeintime )
+            time_since_start < totalfadeintime )
         {
             if ( time_since_start >= fadeintimehidden )
             {
@@ -379,7 +379,7 @@ class CCloseCaptionItem
         }
 
         if ( fadeouttime > 0.001f &&
-             time_until_end < fadeouttime )
+            time_until_end < fadeouttime )
         {
             float f = time_until_end / fadeouttime;
             f = clamp( f, 0.0f, 1.0f );
@@ -404,7 +404,7 @@ class CCloseCaptionItem
         return m_bFromPlayer;
     }
 
-   private:
+    private:
     wchar_t m_szStream[MAX_CAPTION_CHARACTERS];
 
     float m_flPreDisplayTime;
@@ -460,12 +460,12 @@ struct AsyncCaptionData_t
 
     AsyncCaptionData_t()
         : m_nBlockNum( -1 ),
-          m_pBlockData( 0 ),
-          m_nFileIndex( -1 ),
-          m_nBlockSize( 0 ),
-          m_bLoadPending( false ),
-          m_bLoadCompleted( false ),
-          m_hAsyncControl( NULL )
+        m_pBlockData( 0 ),
+        m_nFileIndex( -1 ),
+        m_nBlockSize( 0 ),
+        m_bLoadPending( false ),
+        m_bLoadCompleted( false ),
+        m_hAsyncControl( NULL )
     {
     }
 
@@ -555,7 +555,7 @@ struct AsyncCaptionData_t
 //-----------------------------------------------------------------------------
 class CAsyncCaptionResourceManager : public CAutoGameSystem, public CManagedDataCacheClient< AsyncCaptionData_t, asynccaptionparams_t >
 {
-   public:
+    public:
     CAsyncCaptionResourceManager()
         : CAutoGameSystem( "CAsyncCaptionResourceManager" )
     {
@@ -788,7 +788,7 @@ class CAsyncCaptionResourceManager : public CAutoGameSystem, public CManagedData
         }
     }
 
-   private:
+    private:
     CUtlVector< AsyncCaption_t > m_Db;
 };
 
@@ -805,10 +805,10 @@ DECLARE_HUD_MESSAGE( CHudCloseCaption, CloseCaption );
 
 CHudCloseCaption::CHudCloseCaption( const char *pElementName )
     : CHudElement( pElementName ),
-      vgui::Panel( NULL, "HudCloseCaption" ),
-      m_CloseCaptionRepeats( 0, 0, CaptionTokenLessFunc ),
-      m_CurrentLanguage( UTL_INVAL_SYMBOL ),
-      m_bPaintDebugInfo( false )
+    vgui::Panel( NULL, "HudCloseCaption" ),
+    m_CloseCaptionRepeats( 0, 0, CaptionTokenLessFunc ),
+    m_CurrentLanguage( UTL_INVAL_SYMBOL ),
+    m_bPaintDebugInfo( false )
 {
     vgui::Panel *pParent = g_pClientMode->GetViewport();
     SetParent( pParent );
@@ -1026,8 +1026,8 @@ void CHudCloseCaption::Paint( void )
 
     // If shrunk to zero and faded out, nothing left to do
     if ( !visibleitems.Count() &&
-         m_nGoalHeight == m_nCurrentHeight &&
-         m_flGoalAlpha == m_flCurrentAlpha )
+        m_nGoalHeight == m_nCurrentHeight &&
+        m_flGoalAlpha == m_flCurrentAlpha )
     {
         m_flGoalHeightStartTime = 0;
         m_flGoalHeightFinishTime = 0;
@@ -1038,8 +1038,8 @@ void CHudCloseCaption::Paint( void )
 
     // Continue growth?
     if ( m_flGoalHeightFinishTime &&
-         m_flGoalHeightStartTime &&
-         m_flGoalHeightFinishTime > m_flGoalHeightStartTime )
+        m_flGoalHeightStartTime &&
+        m_flGoalHeightFinishTime > m_flGoalHeightStartTime )
     {
         float togo = m_nGoalHeight - m_nCurrentHeight;
         float alphatogo = m_flGoalAlpha - m_flCurrentAlpha;
@@ -1969,11 +1969,11 @@ int CRCString( const char *str )
 
 class CAsyncCaption
 {
-   public:
+    public:
     CAsyncCaption()
         : m_flDuration( 0.0f ),
-          m_bIsStream( false ),
-          m_bFromPlayer( false )
+        m_bIsStream( false ),
+        m_bFromPlayer( false )
     {
     }
 
@@ -2199,7 +2199,7 @@ class CAsyncCaption
         m_bDirect = state;
     }
 
-   private:
+    private:
     float m_flDuration;
     bool m_bIsStream : 1;
     bool m_bFromPlayer : 1;
@@ -2209,9 +2209,9 @@ class CAsyncCaption
     {
         caption_t()
             : token( 0 ),
-              dirindex( -1 ),
-              fileindex( -1 ),
-              stream( 0 )
+            dirindex( -1 ),
+            fileindex( -1 ),
+            stream( 0 )
         {
         }
 

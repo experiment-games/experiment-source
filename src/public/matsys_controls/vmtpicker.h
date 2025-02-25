@@ -29,11 +29,11 @@ class CVMTPicker : public CBaseAssetPicker
 {
     DECLARE_CLASS_SIMPLE( CVMTPicker, CBaseAssetPicker );
 
-   public:
+    public:
     CVMTPicker( vgui::Panel *pParent, bool bAllowMultiselect = false );
     virtual ~CVMTPicker();
 
-   private:
+    private:
     // Derived classes have this called when the previewed asset changes
     virtual void OnSelectedAssetPicked( const char *pAssetName );
 
@@ -50,7 +50,7 @@ class CVMTPickerFrame : public CBaseAssetPickerFrame
 {
     DECLARE_CLASS_SIMPLE( CVMTPickerFrame, CBaseAssetPickerFrame );
 
-   public:
+    public:
     CVMTPickerFrame( vgui::Panel *pParent, const char *pTitle, bool bAllowMultiselect = false );
 };
 

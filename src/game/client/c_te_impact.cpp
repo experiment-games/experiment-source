@@ -17,7 +17,7 @@ extern IPhysicsSurfaceProps *physprops;
 
 class C_TEImpact : public C_BaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_TEImpact, C_BaseTempEntity );
 
     DECLARE_CLIENTCLASS();
@@ -31,7 +31,7 @@ class C_TEImpact : public C_BaseTempEntity
     virtual void PlayImpactSound( trace_t &tr );
     virtual void PerformCustomEffects( trace_t &tr, Vector &shotDir );
 
-   public:
+    public:
     Vector m_vecOrigin;
     Vector m_vecNormal;
     int m_iType;

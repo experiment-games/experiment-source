@@ -27,7 +27,7 @@ class CHudDeathNotice : public CHudElement, public vgui::Panel
 {
     DECLARE_CLASS_SIMPLE( CHudDeathNotice, vgui::Panel );
 
-   public:
+    public:
     CHudDeathNotice( const char *pElementName );
     void Init( void );
     void VidInit( void );
@@ -38,7 +38,7 @@ class CHudDeathNotice : public CHudElement, public vgui::Panel
 
     void FireGameEvent( KeyValues *event );
 
-   private:
+    private:
     CHudTexture *m_iconD_skull;  // sprite index of skull icon
 
     vgui::HFont m_hTextFont;

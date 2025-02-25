@@ -45,13 +45,13 @@ namespace cpp {
 namespace {
 
 void SetMessageVariables(const FieldDescriptor* descriptor,
-                         map<string, string>* variables) {
+                        map<string, string>* variables) {
   SetCommonFieldVariables(descriptor, variables);
   (*variables)["type"] = FieldMessageTypeName(descriptor);
   (*variables)["stream_writer"] = (*variables)["declared_type"] +
-      (HasFastArraySerialization(descriptor->message_type()->file()) ?
-       "MaybeToArray" :
-       "");
+    (HasFastArraySerialization(descriptor->message_type()->file()) ?
+        "MaybeToArray" :
+        "");
 }
 
 }  // namespace
@@ -117,12 +117,12 @@ void MessageFieldGenerator::
 GenerateMergeFromCodedStream(io::Printer* printer) const {
   if (descriptor_->type() == FieldDescriptor::TYPE_MESSAGE) {
     printer->Print(variables_,
-      "DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(\n"
-      "     input, mutable_$name$()));\n");
+    "DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(\n"
+    "     input, mutable_$name$()));\n");
   } else {
     printer->Print(variables_,
-      "DO_(::google::protobuf::internal::WireFormatLite::ReadGroupNoVirtual(\n"
-      "      $number$, input, mutable_$name$()));\n");
+    "DO_(::google::protobuf::internal::WireFormatLite::ReadGroupNoVirtual(\n"
+    "      $number$, input, mutable_$name$()));\n");
   }
 }
 
@@ -225,12 +225,12 @@ void RepeatedMessageFieldGenerator::
 GenerateMergeFromCodedStream(io::Printer* printer) const {
   if (descriptor_->type() == FieldDescriptor::TYPE_MESSAGE) {
     printer->Print(variables_,
-      "DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(\n"
-      "      input, add_$name$()));\n");
+    "DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(\n"
+    "      input, add_$name$()));\n");
   } else {
     printer->Print(variables_,
-      "DO_(::google::protobuf::internal::WireFormatLite::ReadGroupNoVirtual(\n"
-      "      $number$, input, add_$name$()));\n");
+    "DO_(::google::protobuf::internal::WireFormatLite::ReadGroupNoVirtual(\n"
+    "      $number$, input, add_$name$()));\n");
   }
 }
 

@@ -20,10 +20,10 @@ class CLogicMeasureMovement : public CLogicalEntity
     DECLARE_DATADESC();
     DECLARE_CLASS( CLogicMeasureMovement, CLogicalEntity );
 
-   public:
+    public:
     virtual void Activate();
 
-   private:
+    private:
     void SetMeasureTarget( const char *pName );
     void SetMeasureReference( const char *pName );
     void SetTarget( const char *pName );
@@ -39,7 +39,7 @@ class CLogicMeasureMovement : public CLogicalEntity
 
     void MeasureThink();
 
-   private:
+    private:
     enum
     {
         MEASURE_POSITION = 0,

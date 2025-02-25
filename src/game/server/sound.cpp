@@ -153,7 +153,7 @@ dynpitchvol_t rgdpvpreset[CDPVPRESETMAX] =
 
 class CAmbientGeneric : public CPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CAmbientGeneric, CPointEntity );
 
     bool KeyValue( const char *szKeyName, const char *szValue );
@@ -467,8 +467,8 @@ void CAmbientGeneric::Activate( void )
     if ( PortalGameRules() && PortalGameRules()->ShouldRemoveRadio() )
     {
         if ( V_strcmp( STRING( gpGlobals->mapname ), "testchmb_a_00" ) == 0 ||
-             V_strcmp( STRING( gpGlobals->mapname ), "testchmb_a_11" ) == 0 ||
-             V_strcmp( STRING( gpGlobals->mapname ), "testchmb_a_14" ) == 0 )
+            V_strcmp( STRING( gpGlobals->mapname ), "testchmb_a_11" ) == 0 ||
+            V_strcmp( STRING( gpGlobals->mapname ), "testchmb_a_14" ) == 0 )
         {
             if ( V_strcmp( STRING( GetEntityName() ), "radio_sound" ) == 0 )
             {
@@ -486,8 +486,8 @@ void CAmbientGeneric::Activate( void )
         // If we are loading a saved game, we can't write into the init/signon buffer here, so just issue
         //  as a regular sound message...
         if ( gpGlobals->eLoadType == MapLoad_Transition ||
-             gpGlobals->eLoadType == MapLoad_LoadGame ||
-             g_pGameRules->InRoundRestart() )
+            gpGlobals->eLoadType == MapLoad_LoadGame ||
+            g_pGameRules->InRoundRestart() )
         {
             flags = SND_NOFLAGS;
         }
@@ -827,7 +827,7 @@ void CAmbientGeneric::InitModulationParms( void )
 
     if ( ( m_dpv.spinupsav || m_dpv.spindownsav || ( m_dpv.lfotype && m_dpv.lfomodpitch ) ) && ( m_dpv.pitch == PITCH_NORM ) )
         m_dpv.pitch = PITCH_NORM + 1;  // must never send 'no pitch' as first pitch
-                                       // if we intend to pitch shift later!
+                                        // if we intend to pitch shift later!
 }
 
 //-----------------------------------------------------------------------------
@@ -873,7 +873,7 @@ void CAmbientGeneric::SendSound( SoundFlags_t flags )
     else
     {
         if ( ( flags == SND_STOP ) &&
-             ( m_nSoundSourceEntIndex != -1 ) )
+            ( m_nSoundSourceEntIndex != -1 ) )
         {
             UTIL_EmitAmbientSound( m_nSoundSourceEntIndex, GetAbsOrigin(), szSoundFile, 0, SNDLVL_NONE, flags, 0 );
         }
@@ -1271,18 +1271,18 @@ int SENTENCEG_PlaySequentialSz( edict_t *entity, const char *szgroupname, float 
 
 void SENTENCEG_Stop(edict_t *entity, int isentenceg, int ipick)
 {
-	char buffer[64];
-	char sznum[8];
-	
-	if (!fSentencesInit)
-		return;
+    char buffer[64];
+    char sznum[8];
 
-	if (isentenceg < 0 || ipick < 0)
-		return;
+    if (!fSentencesInit)
+        return;
 
-	Q_snprintf(buffer,sizeof(buffer),"!%s%d", engine->SentenceGroupNameFromIndex( isentenceg ), ipick );
+    if (isentenceg < 0 || ipick < 0)
+        return;
 
-	UTIL_StopSound(entity, CHAN_VOICE, buffer);
+    Q_snprintf(buffer,sizeof(buffer),"!%s%d", engine->SentenceGroupNameFromIndex( isentenceg ), ipick );
+
+    UTIL_StopSound(entity, CHAN_VOICE, buffer);
 }
 #endif
 

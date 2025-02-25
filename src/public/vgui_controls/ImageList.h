@@ -25,7 +25,7 @@ namespace vgui
 //-----------------------------------------------------------------------------
 class ImageList
 {
-   public:
+    public:
     ImageList( bool deleteImagesWhenDone );
     ~ImageList();
 
@@ -45,7 +45,7 @@ class ImageList
     // image index 0 is always the blank image
     vgui::IImage *GetImage( int imageIndex );
 
-   private:
+    private:
     CUtlVector< vgui::IImage * > m_Images;
     bool m_bDeleteImagesWhenDone;
 };

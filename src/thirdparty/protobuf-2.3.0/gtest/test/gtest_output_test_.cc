@@ -197,16 +197,16 @@ TEST(SCOPED_TRACETest, CanBeRepeated) {
 
   SCOPED_TRACE("A");
   ADD_FAILURE()
-      << "This failure is expected, and should contain trace point A.";
+    << "This failure is expected, and should contain trace point A.";
 
   SCOPED_TRACE("B");
   ADD_FAILURE()
-      << "This failure is expected, and should contain trace point A and B.";
+    << "This failure is expected, and should contain trace point A and B.";
 
   {
     SCOPED_TRACE("C");
     ADD_FAILURE() << "This failure is expected, and should contain "
-                  << "trace point A, B, and C.";
+                << "trace point A, B, and C.";
   }
 
   SCOPED_TRACE("D");
@@ -215,7 +215,7 @@ TEST(SCOPED_TRACETest, CanBeRepeated) {
 }
 
 TEST(DisabledTestsWarningTest,
-     DISABLED_AlsoRunDisabledTestsFlagSuppressesWarning) {
+    DISABLED_AlsoRunDisabledTestsFlagSuppressesWarning) {
   // This test body is intentionally empty.  Its sole purpose is for
   // verifying that the --gtest_also_run_disabled_tests flag
   // suppresses the "YOU HAVE 12 DISABLED TESTS" warning at the end of
@@ -276,14 +276,14 @@ class FatalFailureInFixtureConstructorTest : public testing::Test {
 
   virtual void SetUp() {
     ADD_FAILURE() << "UNEXPECTED failure in SetUp().  "
-                  << "We should never get here, as the test fixture c'tor "
-                  << "had a fatal failure.";
+                << "We should never get here, as the test fixture c'tor "
+                << "had a fatal failure.";
   }
 
   virtual void TearDown() {
     ADD_FAILURE() << "UNEXPECTED failure in TearDown().  "
-                  << "We should never get here, as the test fixture c'tor "
-                  << "had a fatal failure.";
+                << "We should never get here, as the test fixture c'tor "
+                << "had a fatal failure.";
   }
  private:
   void Init() {
@@ -345,7 +345,7 @@ class FatalFailureInSetUpTest : public testing::Test {
 
 TEST_F(FatalFailureInSetUpTest, FailureInSetUp) {
   FAIL() << "UNEXPECTED failure in the test function.  "
-         << "We should never get here, as SetUp() failed.";
+        << "We should never get here, as SetUp() failed.";
 }
 
 #if GTEST_OS_WINDOWS
@@ -364,7 +364,7 @@ class ExceptionInFixtureCtorTest : public testing::Test {
  protected:
   ExceptionInFixtureCtorTest() {
     printf("(expecting a failure on thrown exception "
-           "in the test fixture's constructor)\n");
+            "in the test fixture's constructor)\n");
 
     ThrowSEH();
   }
@@ -375,23 +375,23 @@ class ExceptionInFixtureCtorTest : public testing::Test {
 
   virtual void SetUp() {
     FAIL() << "UNEXPECTED failure in SetUp().  "
-           << "We should never get here, as the test fixture c'tor threw.";
+            << "We should never get here, as the test fixture c'tor threw.";
   }
 
   virtual void TearDown() {
     FAIL() << "UNEXPECTED failure in TearDown().  "
-           << "We should never get here, as the test fixture c'tor threw.";
+            << "We should never get here, as the test fixture c'tor threw.";
   }
  private:
   void Deinit() {
     FAIL() << "UNEXPECTED failure in the d'tor.  "
-           << "We should never get here, as the test fixture c'tor threw.";
+            << "We should never get here, as the test fixture c'tor threw.";
   }
 };
 
 TEST_F(ExceptionInFixtureCtorTest, ExceptionInFixtureCtor) {
   FAIL() << "UNEXPECTED failure in the test function.  "
-         << "We should never get here, as the test fixture c'tor threw.";
+        << "We should never get here, as the test fixture c'tor threw.";
 }
 
 // Tests exceptions thrown in SetUp().
@@ -418,7 +418,7 @@ class ExceptionInSetUpTest : public testing::Test {
 
 TEST_F(ExceptionInSetUpTest, ExceptionInSetUp) {
   FAIL() << "UNEXPECTED failure in the test function.  "
-         << "We should never get here, as SetUp() threw.";
+        << "We should never get here, as SetUp() threw.";
 }
 
 // Tests that TearDown() and the test fixture d'tor are always called,
@@ -501,7 +501,7 @@ class MixedUpTestCaseWithSameTestNameTest : public testing::Test {
 };
 
 TEST_F(MixedUpTestCaseWithSameTestNameTest,
-       TheSecondTestWithThisNameShouldFail) {}
+        TheSecondTestWithThisNameShouldFail) {}
 
 }  // namespace foo
 
@@ -521,7 +521,7 @@ class MixedUpTestCaseWithSameTestNameTest : public testing::Test {
 // Expected to fail.  We rely on the golden file to check that Google Test
 // generates the right error message.
 TEST_F(MixedUpTestCaseWithSameTestNameTest,
-       TheSecondTestWithThisNameShouldFail) {}
+        TheSecondTestWithThisNameShouldFail) {}
 
 }  // namespace bar
 
@@ -623,7 +623,7 @@ TEST(ExpectNonfatalFailureTest, FailsWhenStatementThrows) {
   printf("(expecting a failure)\n");
   try {
     EXPECT_NONFATAL_FAILURE({
-      throw 0;
+    throw 0;
     }, "");
   } catch(int) {  // NOLINT
   }
@@ -706,7 +706,7 @@ TEST(ExpectFatalFailureTest, FailsWhenStatementThrows) {
   printf("(expecting a failure)\n");
   try {
     EXPECT_FATAL_FAILURE({
-      throw 0;
+    throw 0;
     }, "");
   } catch(int) {  // NOLINT
   }
@@ -815,9 +815,9 @@ class ExpectFailureTest : public testing::Test {
   };
   static void AddFailure(FailureMode failure) {
     if (failure == FATAL_FAILURE) {
-      FAIL() << "Expected fatal failure.";
+    FAIL() << "Expected fatal failure.";
     } else {
-      ADD_FAILURE() << "Expected non-fatal failure.";
+    ADD_FAILURE() << "Expected non-fatal failure.";
     }
   }
 };
@@ -829,11 +829,11 @@ TEST_F(ExpectFailureTest, ExpectFatalFailure) {
   // Expected fatal failure, but got a non-fatal failure.
   printf("(expecting 1 failure)\n");
   EXPECT_FATAL_FAILURE(AddFailure(NONFATAL_FAILURE), "Expected non-fatal "
-                       "failure.");
+                        "failure.");
   // Wrong message.
   printf("(expecting 1 failure)\n");
   EXPECT_FATAL_FAILURE(AddFailure(FATAL_FAILURE), "Some other fatal failure "
-                       "expected.");
+                        "expected.");
 }
 
 TEST_F(ExpectFailureTest, ExpectNonFatalFailure) {
@@ -846,7 +846,7 @@ TEST_F(ExpectFailureTest, ExpectNonFatalFailure) {
   // Wrong message.
   printf("(expecting 1 failure)\n");
   EXPECT_NONFATAL_FAILURE(AddFailure(NONFATAL_FAILURE), "Some other non-fatal "
-                          "failure.");
+                        "failure.");
 }
 
 #if GTEST_IS_THREADSAFE && GTEST_HAS_PTHREAD
@@ -856,9 +856,9 @@ class ExpectFailureWithThreadsTest : public ExpectFailureTest {
   static void AddFailureInOtherThread(FailureMode failure) {
     pthread_t tid;
     pthread_create(&tid,
-                   NULL,
-                   ExpectFailureWithThreadsTest::FailureThread,
-                   &failure);
+                    NULL,
+                    ExpectFailureWithThreadsTest::FailureThread,
+                    &failure);
     pthread_join(tid, NULL);
   }
  private:
@@ -873,14 +873,14 @@ TEST_F(ExpectFailureWithThreadsTest, ExpectFatalFailure) {
   // We only intercept the current thread.
   printf("(expecting 2 failures)\n");
   EXPECT_FATAL_FAILURE(AddFailureInOtherThread(FATAL_FAILURE),
-                       "Expected fatal failure.");
+                        "Expected fatal failure.");
 }
 
 TEST_F(ExpectFailureWithThreadsTest, ExpectNonFatalFailure) {
   // We only intercept the current thread.
   printf("(expecting 2 failures)\n");
   EXPECT_NONFATAL_FAILURE(AddFailureInOtherThread(NONFATAL_FAILURE),
-                          "Expected non-fatal failure.");
+                        "Expected non-fatal failure.");
 }
 
 typedef ExpectFailureWithThreadsTest ScopedFakeTestPartResultReporterTest;
@@ -910,26 +910,26 @@ TEST_F(ExpectFailureTest, ExpectFatalFailureOnAllThreads) {
   // Expected fatal failure, but got a non-fatal failure.
   printf("(expecting 1 failure)\n");
   EXPECT_FATAL_FAILURE_ON_ALL_THREADS(AddFailure(NONFATAL_FAILURE),
-                                      "Expected non-fatal failure.");
+                                    "Expected non-fatal failure.");
   // Wrong message.
   printf("(expecting 1 failure)\n");
   EXPECT_FATAL_FAILURE_ON_ALL_THREADS(AddFailure(FATAL_FAILURE),
-                                      "Some other fatal failure expected.");
+                                    "Some other fatal failure expected.");
 }
 
 TEST_F(ExpectFailureTest, ExpectNonFatalFailureOnAllThreads) {
   // Expected non-fatal failure, but succeeds.
   printf("(expecting 1 failure)\n");
   EXPECT_NONFATAL_FAILURE_ON_ALL_THREADS(SUCCEED(), "Expected non-fatal "
-                                         "failure.");
+                                        "failure.");
   // Expected non-fatal failure, but got a fatal failure.
   printf("(expecting 1 failure)\n");
   EXPECT_NONFATAL_FAILURE_ON_ALL_THREADS(AddFailure(FATAL_FAILURE),
-                                         "Expected fatal failure.");
+                                        "Expected fatal failure.");
   // Wrong message.
   printf("(expecting 1 failure)\n");
   EXPECT_NONFATAL_FAILURE_ON_ALL_THREADS(AddFailure(NONFATAL_FAILURE),
-                                         "Some other non-fatal failure.");
+                                        "Some other non-fatal failure.");
 }
 
 
@@ -960,8 +960,8 @@ class BarEnvironment : public testing::Environment {
 };
 
 GTEST_DEFINE_bool_(internal_skip_environment_and_ad_hoc_tests, false,
-                   "This flag causes the program to skip test environment "
-                   "tests and ad hoc tests.");
+                    "This flag causes the program to skip test environment "
+                    "tests and ad hoc tests.");
 
 // The main function.
 //
@@ -980,7 +980,7 @@ int main(int argc, char **argv) {
   // for it.
   testing::InitGoogleTest(&argc, argv);
   if (argc >= 2 &&
-      String(argv[1]) == "--gtest_internal_skip_environment_and_ad_hoc_tests")
+    String(argv[1]) == "--gtest_internal_skip_environment_and_ad_hoc_tests")
     GTEST_FLAG(internal_skip_environment_and_ad_hoc_tests) = true;
 
 #if GTEST_HAS_DEATH_TEST

@@ -52,7 +52,7 @@ $var maxtuple = 10  $$ Maximum number of Combine arguments we want to support.
 // class. It must be derived from testing::TestWithParam<T>, where T is
 // the type of your parameter values. TestWithParam<T> is itself derived
 // from testing::Test. T can be any copyable type. If it's a raw pointer,
-// you are responsible for managing the lifespan of the pointed values. 
+// you are responsible for managing the lifespan of the pointed values.
 
 class FooTest : public ::testing::TestWithParam<const char*> {
   // You can implement all the usual class fixture members here.
@@ -60,7 +60,7 @@ class FooTest : public ::testing::TestWithParam<const char*> {
 
 // Then, use the TEST_P macro to define as many parameterized tests
 // for this fixture as you want. The _P suffix is for "parameterized"
-// or "pattern", whichever you prefer to think. 
+// or "pattern", whichever you prefer to think.
 
 TEST_P(FooTest, DoesBlah) {
   // Inside a test, access the test parameter with the GetParam() method
@@ -124,7 +124,7 @@ const char* pets[] = {"cat", "dog"};
 INSTANTIATE_TEST_CASE_P(AnotherInstantiationName, FooTest, ValuesIn(pets));
 
 // The tests from the instantiation above will have these names:
-// 
+//
 //    * AnotherInstantiationName/FooTest.DoesBlah/0 for "cat"
 //    * AnotherInstantiationName/FooTest.DoesBlah/1 for "dog"
 //    * AnotherInstantiationName/FooTest.HasBlahBlah/0 for "cat"
@@ -205,7 +205,7 @@ namespace testing {
 template <typename T, typename IncrementT>
 internal::ParamGenerator<T> Range(T start, T end, IncrementT step) {
   return internal::ParamGenerator<T>(
-      new internal::RangeGenerator<T, IncrementT>(start, end, step));
+    new internal::RangeGenerator<T, IncrementT>(start, end, step));
 }
 
 template <typename T>
@@ -274,9 +274,9 @@ internal::ParamGenerator<
   ForwardIterator begin,
   ForwardIterator end) {
   typedef typename ::std::iterator_traits<ForwardIterator>::value_type
-      ParamType;
+    ParamType;
   return internal::ParamGenerator<ParamType>(
-      new internal::ValuesInIteratorRangeGenerator<ParamType>(begin, end));
+    new internal::ValuesInIteratorRangeGenerator<ParamType>(begin, end));
 }
 
 template <typename T, size_t N>
@@ -401,7 +401,7 @@ template <$for j, [[typename Generator$j]]>
 internal::CartesianProductHolder$i<$for j, [[Generator$j]]> Combine(
     $for j, [[const Generator$j& g$j]]) {
   return internal::CartesianProductHolder$i<$for j, [[Generator$j]]>(
-      $for j, [[g$j]]);
+    $for j, [[g$j]]);
 }
 
 ]]
@@ -411,40 +411,40 @@ internal::CartesianProductHolder$i<$for j, [[Generator$j]]> Combine(
 
 #define TEST_P(test_case_name, test_name) \
   class GTEST_TEST_CLASS_NAME_(test_case_name, test_name) \
-      : public test_case_name { \
-   public: \
+    : public test_case_name { \
+    public: \
     GTEST_TEST_CLASS_NAME_(test_case_name, test_name)() {} \
     virtual void TestBody(); \
-   private: \
+    private: \
     static int AddToRegistry() { \
-      ::testing::UnitTest::GetInstance()->parameterized_test_registry(). \
-          GetTestCasePatternHolder<test_case_name>(\
-              #test_case_name, __FILE__, __LINE__)->AddTestPattern(\
-                  #test_case_name, \
-                  #test_name, \
-                  new ::testing::internal::TestMetaFactory< \
-                      GTEST_TEST_CLASS_NAME_(test_case_name, test_name)>()); \
-      return 0; \
+    ::testing::UnitTest::GetInstance()->parameterized_test_registry(). \
+        GetTestCasePatternHolder<test_case_name>(\
+            #test_case_name, __FILE__, __LINE__)->AddTestPattern(\
+                #test_case_name, \
+                #test_name, \
+                new ::testing::internal::TestMetaFactory< \
+                    GTEST_TEST_CLASS_NAME_(test_case_name, test_name)>()); \
+    return 0; \
     } \
     static int gtest_registering_dummy_; \
     GTEST_DISALLOW_COPY_AND_ASSIGN_(\
         GTEST_TEST_CLASS_NAME_(test_case_name, test_name)); \
   }; \
   int GTEST_TEST_CLASS_NAME_(test_case_name, \
-                             test_name)::gtest_registering_dummy_ = \
-      GTEST_TEST_CLASS_NAME_(test_case_name, test_name)::AddToRegistry(); \
+                            test_name)::gtest_registering_dummy_ = \
+    GTEST_TEST_CLASS_NAME_(test_case_name, test_name)::AddToRegistry(); \
   void GTEST_TEST_CLASS_NAME_(test_case_name, test_name)::TestBody()
 
 #define INSTANTIATE_TEST_CASE_P(prefix, test_case_name, generator) \
   ::testing::internal::ParamGenerator<test_case_name::ParamType> \
-      gtest_##prefix##test_case_name##_EvalGenerator_() { return generator; } \
+    gtest_##prefix##test_case_name##_EvalGenerator_() { return generator; } \
   int gtest_##prefix##test_case_name##_dummy_ = \
-      ::testing::UnitTest::GetInstance()->parameterized_test_registry(). \
-          GetTestCasePatternHolder<test_case_name>(\
-              #test_case_name, __FILE__, __LINE__)->AddTestCaseInstantiation(\
-                  #prefix, \
-                  &gtest_##prefix##test_case_name##_EvalGenerator_, \
-                  __FILE__, __LINE__)
+    ::testing::UnitTest::GetInstance()->parameterized_test_registry(). \
+        GetTestCasePatternHolder<test_case_name>(\
+            #test_case_name, __FILE__, __LINE__)->AddTestCaseInstantiation(\
+                #prefix, \
+                &gtest_##prefix##test_case_name##_EvalGenerator_, \
+                __FILE__, __LINE__)
 
 }  // namespace testing
 

@@ -16,7 +16,7 @@
 //-----------------------------------------------------------------------------
 class CHLInput : public CInput
 {
-   public:
+    public:
 };
 
 static CHLInput g_Input;

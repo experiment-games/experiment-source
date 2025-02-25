@@ -244,7 +244,7 @@ float CPropAPC::PassengerDamageModifier( const CTakeDamageInfo &info )
 
     // bullets, slashing and headbutts don't hurt us in the apc, neither do rockets
     if ( ( DmgInfo.GetDamageType() & DMG_BULLET ) || ( DmgInfo.GetDamageType() & DMG_SLASH ) ||
-         ( DmgInfo.GetDamageType() & DMG_CLUB ) || ( DmgInfo.GetDamageType() & DMG_BLAST ) )
+        ( DmgInfo.GetDamageType() & DMG_CLUB ) || ( DmgInfo.GetDamageType() & DMG_BLAST ) )
         return ( 0 );
 
     // Accept everything else by default

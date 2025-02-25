@@ -21,13 +21,13 @@
 
 class CParticleLight : public CServerOnlyPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CParticleLight, CServerOnlyPointEntity );
     DECLARE_DATADESC();
 
     CParticleLight();
 
-   public:
+    public:
     float m_flIntensity;
     Vector m_vColor;    // 0-255
     string_t m_PSName;  // Name of the particle system entity this light affects.

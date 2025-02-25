@@ -28,7 +28,7 @@
 template < class T, class I = unsigned short >
 class CUtlNTree
 {
-   public:
+    public:
     typedef T ElemType_t;
     typedef I IndexType_t;
 
@@ -98,7 +98,7 @@ class CUtlNTree
     bool IsValidIndex( I i ) const;
     bool IsInTree( I i ) const;
 
-   protected:
+    protected:
     // What the linked list element looks like
     struct Node_t
     {
@@ -108,7 +108,7 @@ class CUtlNTree
         I m_PrevSibling;
         I m_NextSibling;
 
-       private:
+        private:
         // No copy constructor for these...
         Node_t( const Node_t& );
     };

@@ -166,12 +166,12 @@ char ( &IsNullLiteralHelper( ... ) )[2];  // NOLINT
 
 // Appends the user-supplied message to the Google-Test-generated message.
 String AppendUserMessage( const String& gtest_msg,
-                          const Message& user_msg );
+                        const Message& user_msg );
 
 // A helper class for creating scoped traces in user programs.
 class ScopedTrace
 {
-   public:
+    public:
     // The c'tor pushes the given source file location and message onto
     // a trace stack maintained by Google Test.
     ScopedTrace( const char* file, int line, const Message& message );
@@ -182,7 +182,7 @@ class ScopedTrace
     // Don't inherit from ScopedTrace!
     ~ScopedTrace();
 
-   private:
+    private:
     GTEST_DISALLOW_COPY_AND_ASSIGN_( ScopedTrace );
 } GTEST_ATTRIBUTE_UNUSED_;  // A ScopedTrace object does its job in its
                             // c'tor and d'tor.  Therefore it doesn't
@@ -306,10 +306,10 @@ GTEST_FORMAT_IMPL_( ::wstring, String::ShowWideCStringQuoted )
 // *_STRCASEEQ*.  When it's true, the string " (ignoring case)" will
 // be inserted into the message.
 AssertionResult EqFailure( const char* expected_expression,
-                           const char* actual_expression,
-                           const String& expected_value,
-                           const String& actual_value,
-                           bool ignoring_case );
+                            const char* actual_expression,
+                            const String& expected_value,
+                            const String& actual_value,
+                            bool ignoring_case );
 
 // This template class represents an IEEE floating-point number
 // (either single-precision or double-precision, depending on the
@@ -343,7 +343,7 @@ AssertionResult EqFailure( const char* expected_expression,
 template < typename RawType >
 class FloatingPoint
 {
-   public:
+    public:
     // Defines the unsigned integer type that has the same size as the
     // floating point number.
     typedef typename TypeWithSize< sizeof( RawType ) >::UInt Bits;
@@ -462,7 +462,7 @@ class FloatingPoint
         return DistanceBetweenSignAndMagnitudeNumbers( u_.bits_, rhs.u_.bits_ ) <= kMaxUlps;
     }
 
-   private:
+    private:
     // The data type used to store the actual floating-point number.
     union FloatingPointUnion
     {
@@ -528,7 +528,7 @@ typedef const void* TypeId;
 template < typename T >
 class TypeIdHelper
 {
-   public:
+    public:
     // dummy_ must not have a const type.  Otherwise an overly eager
     // compiler (e.g. MSVC 7.1 & 8.0) may try to merge
     // TypeIdHelper<T>::dummy_ for different Ts as an "optimization".
@@ -562,17 +562,17 @@ TypeId GetTestTypeId();
 // of a Test object.
 class TestFactoryBase
 {
-   public:
+    public:
     virtual ~TestFactoryBase() {}
 
     // Creates a test instance to run. The instance is both created and destroyed
     // within TestInfoImpl::Run()
     virtual Test* CreateTest() = 0;
 
-   protected:
+    protected:
     TestFactoryBase() {}
 
-   private:
+    private:
     GTEST_DISALLOW_COPY_AND_ASSIGN_( TestFactoryBase );
 };
 
@@ -581,7 +581,7 @@ class TestFactoryBase
 template < class TestClass >
 class TestFactoryImpl : public TestFactoryBase
 {
-   public:
+    public:
     virtual Test* CreateTest()
     {
         return new TestClass;
@@ -651,7 +651,7 @@ TestInfo* MakeAndRegisterTestInfo(
 // State of the definition of a type-parameterized test case.
 class TypedTestCasePState
 {
-   public:
+    public:
     TypedTestCasePState()
         : registered_( false ) {}
 
@@ -663,11 +663,11 @@ class TypedTestCasePState
         if ( registered_ )
         {
             fprintf( stderr,
-                     "%s Test %s must be defined before "
-                     "REGISTER_TYPED_TEST_CASE_P(%s, ...).\n",
-                     FormatFileLocation( file, line ).c_str(),
-                     test_name,
-                     case_name );
+                    "%s Test %s must be defined before "
+                    "REGISTER_TYPED_TEST_CASE_P(%s, ...).\n",
+                    FormatFileLocation( file, line ).c_str(),
+                    test_name,
+                    case_name );
             fflush( stderr );
             posix::Abort();
         }
@@ -683,7 +683,7 @@ class TypedTestCasePState
         int line,
         const char* registered_tests );
 
-   private:
+    private:
     bool registered_;
     ::std::set< const char* > defined_test_names_;
 };
@@ -721,7 +721,7 @@ inline String GetPrefixUntilComma( const char* str )
 template < GTEST_TEMPLATE_ Fixture, class TestSel, typename Types >
 class TypeParameterizedTest
 {
-   public:
+    public:
     // 'index' is the index of the test in the type list 'Types'
     // specified in INSTANTIATE_TYPED_TEST_CASE_P(Prefix, TestCase,
     // Types).  Valid values for 'index' are [0, N - 1] where N is the
@@ -753,7 +753,7 @@ class TypeParameterizedTest
 template < GTEST_TEMPLATE_ Fixture, class TestSel >
 class TypeParameterizedTest< Fixture, TestSel, Types0 >
 {
-   public:
+    public:
     static bool Register( const char* /*prefix*/, const char* /*case_name*/, const char* /*test_names*/, int /*index*/ )
     {
         return true;
@@ -767,7 +767,7 @@ class TypeParameterizedTest< Fixture, TestSel, Types0 >
 template < GTEST_TEMPLATE_ Fixture, typename Tests, typename Types >
 class TypeParameterizedTestCase
 {
-   public:
+    public:
     static bool Register( const char* prefix, const char* case_name, const char* test_names )
     {
         typedef typename Tests::Head Head;
@@ -785,7 +785,7 @@ class TypeParameterizedTestCase
 template < GTEST_TEMPLATE_ Fixture, typename Types >
 class TypeParameterizedTestCase< Fixture, Templates0, Types >
 {
-   public:
+    public:
     static bool Register( const char* /*prefix*/, const char* /*case_name*/, const char* /*test_names*/ )
     {
         return true;
@@ -825,7 +825,7 @@ inline bool AlwaysFalse()
 // but it's good enough for our purposes.
 class Random
 {
-   public:
+    public:
     static const UInt32 kMaxRange = 1u << 31;
 
     explicit Random( UInt32 seed )
@@ -840,7 +840,7 @@ class Random
     // 0 or greater than kMaxRange.
     UInt32 Generate( UInt32 range );
 
-   private:
+    private:
     UInt32 state_;
     GTEST_DISALLOW_COPY_AND_ASSIGN_( Random );
 };
@@ -974,11 +974,11 @@ class Random
 #define GTEST_TEST_( test_case_name, test_name, parent_class, parent_id )                                                                                                                                                       \
     class GTEST_TEST_CLASS_NAME_( test_case_name, test_name ) : public parent_class                                                                                                                                             \
     {                                                                                                                                                                                                                           \
-       public:                                                                                                                                                                                                                  \
+        public:                                                                                                                                                                                                                  \
         GTEST_TEST_CLASS_NAME_( test_case_name, test_name )                                                                                                                                                                     \
         () {}                                                                                                                                                                                                                   \
                                                                                                                                                                                                                                 \
-       private:                                                                                                                                                                                                                 \
+        private:                                                                                                                                                                                                                 \
         virtual void TestBody();                                                                                                                                                                                                \
         static ::testing::TestInfo* const test_info_;                                                                                                                                                                           \
         GTEST_DISALLOW_COPY_AND_ASSIGN_(                                                                                                                                                                                        \

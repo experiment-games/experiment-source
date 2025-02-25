@@ -1,4 +1,4 @@
-//======= Copyright © 1996-2006, Valve Corporation, All rights reserved. ======
+//======= Copyright ï¿½ 1996-2006, Valve Corporation, All rights reserved. ======
 //
 // Purpose: Utility classes for creating, registering & deregistering
 //          Maya MPx* derived classes
@@ -46,7 +46,7 @@ class CMSyntaxHelp;
 //=============================================================================
 class CVsMayaMPxFactoryBase
 {
-   public:
+    public:
     // Registers all MPx derived things that have been allocated
     static MStatus RegisterEverything( MFnPlugin &pluginFn );
 
@@ -81,11 +81,11 @@ class CVsMayaMPxFactoryBase
         return m_bEnabled;
     }
 
-   protected:
+    protected:
     // Constructor
     CVsMayaMPxFactoryBase();
 
-   private:
+    private:
     // The next factory
     CVsMayaMPxFactoryBase *m_pNextFactory;
 
@@ -122,7 +122,7 @@ class CVsMayaMPxFactoryBase
 template < class T >
 class CVsMayaMPxFactory : public CVsMayaMPxFactoryBase
 {
-   private:
+    private:
     // Register the thing associated with this factory
     virtual MStatus Register( MFnPlugin &pluginFn ) const
     {
@@ -158,7 +158,7 @@ class CVsMayaMPxFactory : public CVsMayaMPxFactoryBase
 //============================================================================
 class CVsMayaMPxCommand : public MPxCommand
 {
-   public:
+    public:
     virtual const MString &GetName() const
     {
         return m_nullStr;
@@ -168,7 +168,7 @@ class CVsMayaMPxCommand : public MPxCommand
         return m_nullStr;
     }
 
-   protected:
+    protected:
     // Derived classes must specify this to override syntax
     virtual void SpecifySyntax( MSyntax &mSyntax, ValveMaya::CMSyntaxHelp &help );
     ValveMaya::CMSyntaxHelp *GetSyntaxHelp()
@@ -176,7 +176,7 @@ class CVsMayaMPxCommand : public MPxCommand
         return m_pSyntaxHelp;
     }
 
-   private:
+    private:
     ValveMaya::CMSyntaxHelp *m_pSyntaxHelp;
 
     static MStatus Register(
@@ -201,7 +201,7 @@ class CVsMayaMPxCommand : public MPxCommand
 template < class T >
 class CVsMayaMPxCommandDecorator : public T
 {
-   public:
+    public:
     static const MString &Name()
     {
         return s_name;
@@ -225,7 +225,7 @@ class CVsMayaMPxCommandDecorator : public T
         return CVsMayaMPxFactoryBase::kCommand;
     }
 
-   private:
+    private:
     friend class CVsMayaMPxFactoryBase;
     template < class U >
     friend class CVsMayaMPxFactory;
@@ -276,7 +276,7 @@ class CVsMayaMPxCommandDecorator : public T
 //============================================================================
 class CVsMayaMPxToolCommand : public MPxToolCommand
 {
-   public:
+    public:
     virtual const MString &GetName() const
     {
         return m_nullStr;
@@ -286,7 +286,7 @@ class CVsMayaMPxToolCommand : public MPxToolCommand
         return m_nullStr;
     }
 
-   protected:
+    protected:
     // Derived classes must specify this to override syntax
     virtual void SpecifySyntax( MSyntax &mSyntax, ValveMaya::CMSyntaxHelp &help );
     ValveMaya::CMSyntaxHelp *GetSyntaxHelp()
@@ -294,7 +294,7 @@ class CVsMayaMPxToolCommand : public MPxToolCommand
         return m_pSyntaxHelp;
     }
 
-   private:
+    private:
     ValveMaya::CMSyntaxHelp *m_pSyntaxHelp;
 
     static MStatus Register(
@@ -319,7 +319,7 @@ class CVsMayaMPxToolCommand : public MPxToolCommand
 template < class T >
 class CVsMayaMPxToolCommandDecorator : public T
 {
-   public:
+    public:
     static const MString &Name()
     {
         return s_name;
@@ -343,7 +343,7 @@ class CVsMayaMPxToolCommandDecorator : public T
         return CVsMayaMPxFactoryBase::kCommand;
     }
 
-   private:
+    private:
     friend class CVsMayaMPxFactoryBase;
     template < class U >
     friend class CVsMayaMPxFactory;
@@ -394,11 +394,11 @@ class CVsMayaMPxToolCommandDecorator : public T
 //=============================================================================
 class CVsMayaMPxFileTranslator : public MPxFileTranslator
 {
-   public:
+    public:
     virtual const MString &GetName() const = 0;
     virtual const MString &GetGUIName() const = 0;
 
-   protected:
+    protected:
     static MStatus Register(
         MFnPlugin &pluginFn,
         const MString &name,
@@ -418,7 +418,7 @@ class CVsMayaMPxFileTranslator : public MPxFileTranslator
 template < class T >
 class CVsMayaMPxFileTranslatorDecorator : public T
 {
-   public:
+    public:
     virtual const MString &GetName() const
     {
         return s_name;
@@ -439,7 +439,7 @@ class CVsMayaMPxFileTranslatorDecorator : public T
         return CVsMayaMPxFactoryBase::kFileTranslator;
     }
 
-   private:
+    private:
     template < class U >
     friend class CVsMayaMPxFactory;
 
@@ -472,10 +472,10 @@ class CVsMayaMPxFileTranslatorDecorator : public T
 //============================================================================
 class CVsMayaMPxNode : public MPxNode
 {
-   public:
+    public:
     virtual const MString &GetName() const = 0;
 
-   protected:
+    protected:
     static MStatus Register(
         MFnPlugin &pluginFn,
         const MString &name,
@@ -497,7 +497,7 @@ class CVsMayaMPxNode : public MPxNode
 template < class T >
 class CVsMayaMPxNodeDecorator : public T
 {
-   public:
+    public:
     static const MString &Name()
     {
         return s_name;
@@ -518,7 +518,7 @@ class CVsMayaMPxNodeDecorator : public T
         return s_classification.length() ? CVsMayaMPxFactoryBase::kShaderNode : CVsMayaMPxFactoryBase::kDependencyNode;
     }
 
-   private:
+    private:
     template < class U >
     friend class CVsMayaMPxFactory;
 
@@ -555,10 +555,10 @@ class CVsMayaMPxNodeDecorator : public T
 //============================================================================
 class CVsMayaMPxTransform : public MPxTransform
 {
-   public:
+    public:
     virtual const MString &GetName() const = 0;
 
-   protected:
+    protected:
 #if MAYA_API_VERSION >= 200900
 
     static MStatus Register(
@@ -598,7 +598,7 @@ class CVsMayaMPxTransform : public MPxTransform
 template < class T >
 class CVsMayaMPxTransformDecorator : public T
 {
-   public:
+    public:
     static const MString &Name()
     {
         return s_name;
@@ -619,7 +619,7 @@ class CVsMayaMPxTransformDecorator : public T
         return CVsMayaMPxFactoryBase::kTransform;
     }
 
-   private:
+    private:
     template < class U >
     friend class CVsMayaMPxFactory;
 
@@ -666,10 +666,10 @@ class CVsMayaMPxTransformDecorator : public T
 //============================================================================
 class CVsMayaMPxLocatorNode : public MPxLocatorNode
 {
-   public:
+    public:
     virtual const MString &GetName() const = 0;
 
-   protected:
+    protected:
     static MStatus Register(
         MFnPlugin &pluginFn,
         const MString &name,
@@ -690,7 +690,7 @@ class CVsMayaMPxLocatorNode : public MPxLocatorNode
 template < class T >
 class CVsMayaMPxLocatorNodeDecorator : public T
 {
-   public:
+    public:
     static const MString &Name()
     {
         return s_name;
@@ -711,7 +711,7 @@ class CVsMayaMPxLocatorNodeDecorator : public T
         return CVsMayaMPxFactoryBase::kLocatorNode;
     }
 
-   private:
+    private:
     template < class U >
     friend class CVsMayaMPxFactory;
 
@@ -746,10 +746,10 @@ class CVsMayaMPxLocatorNodeDecorator : public T
 //============================================================================
 class CVsMayaMPxDragAndDropBehavior : public MPxDragAndDropBehavior
 {
-   public:
+    public:
     virtual const MString &GetName() const = 0;
 
-   protected:
+    protected:
     static MStatus Register(
         MFnPlugin &pluginFn,
         const MString &name,
@@ -768,7 +768,7 @@ class CVsMayaMPxDragAndDropBehavior : public MPxDragAndDropBehavior
 template < class T >
 class CVsMayaMPxDragAndDropBehaviorDecorator : public T
 {
-   public:
+    public:
     static const MString &Name()
     {
         return s_name;
@@ -789,7 +789,7 @@ class CVsMayaMPxDragAndDropBehaviorDecorator : public T
         return CVsMayaMPxFactoryBase::kLocatorNode;
     }
 
-   private:
+    private:
     template < class U >
     friend class CVsMayaMPxFactory;
 
@@ -822,10 +822,10 @@ class CVsMayaMPxDragAndDropBehaviorDecorator : public T
 //============================================================================
 class CVsMayaMPxShapeNode : public MPxSurfaceShape
 {
-   public:
+    public:
     virtual const MString &GetName() const = 0;
 
-   protected:
+    protected:
     static MStatus Register(
         MFnPlugin &pluginFn,
         const MString &name,
@@ -847,7 +847,7 @@ class CVsMayaMPxShapeNode : public MPxSurfaceShape
 template < class T, class U >
 class CVsMayaMPxShapeNodeDecorator : public T
 {
-   public:
+    public:
     static const MString &Name()
     {
         return s_name;
@@ -868,7 +868,7 @@ class CVsMayaMPxShapeNodeDecorator : public T
         return CVsMayaMPxFactoryBase::kLocatorNode;
     }
 
-   private:
+    private:
     template < class U >
     friend class CVsMayaMPxFactory;
 
@@ -911,10 +911,10 @@ class CVsMayaMPxShapeNodeDecorator : public T
 //============================================================================
 class CVsMayaMPxImageFile : public MPxImageFile
 {
-   public:
+    public:
     virtual const MString &GetName() const = 0;
 
-   protected:
+    protected:
     static MStatus Register(
         MFnPlugin &pluginFn,
         const MString &name,
@@ -934,7 +934,7 @@ class CVsMayaMPxImageFile : public MPxImageFile
 template < class T >
 class CVsMayaMPxImageFileDecorator : public T
 {
-   public:
+    public:
     static const MString &Name()
     {
         return s_name;
@@ -955,7 +955,7 @@ class CVsMayaMPxImageFileDecorator : public T
         return CVsMayaMPxFactoryBase::kImageFile;
     }
 
-   private:
+    private:
     template < class T >
     friend class CVsMayaMPxFactory;
 
@@ -1001,10 +1001,10 @@ class CVsMayaMPxImageFileDecorator : public T
 //============================================================================
 class CVsMayaMPxDeformerNode : public MPxDeformerNode
 {
-   public:
+    public:
     virtual const MString &GetName() const = 0;
 
-   protected:
+    protected:
     static MStatus Register(
         MFnPlugin &pluginFn,
         const MString &name,
@@ -1026,7 +1026,7 @@ class CVsMayaMPxDeformerNode : public MPxDeformerNode
 template < class T >
 class CVsMayaMPxDeformerNodeDecorator : public T
 {
-   public:
+    public:
     static const MString &Name()
     {
         return s_name;
@@ -1047,7 +1047,7 @@ class CVsMayaMPxDeformerNodeDecorator : public T
         return s_classification.length() ? CVsMayaMPxFactoryBase::kShaderNode : CVsMayaMPxFactoryBase::kDependencyNode;
     }
 
-   private:
+    private:
     template < class U >
     friend class CVsMayaMPxFactory;
 

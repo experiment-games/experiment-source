@@ -35,7 +35,7 @@ class CWeaponExtinguisher : public CHLSelectFireMachineGun
 {
     DECLARE_DATADESC();
 
-   public:
+    public:
     DECLARE_CLASS( CWeaponExtinguisher, CHLSelectFireMachineGun );
 
     DECLARE_SERVERCLASS();
@@ -49,7 +49,7 @@ class CWeaponExtinguisher : public CHLSelectFireMachineGun
     void Event_Killed( const CTakeDamageInfo &info );
     void Equip( CBaseCombatCharacter *pOwner );
 
-   protected:
+    protected:
     void StartJet( void );
     void StopJet( void );
 
@@ -266,7 +266,7 @@ void CWeaponExtinguisher::ItemPostFrame( void )
 
 class CExtinguisherCharger : public CBaseToggle
 {
-   public:
+    public:
     DECLARE_CLASS( CExtinguisherCharger, CBaseToggle );
 
     void Spawn( void );
@@ -278,7 +278,7 @@ class CExtinguisherCharger : public CBaseToggle
         return ( BaseClass::ObjectCaps() | FCAP_CONTINUOUS_USE ) & ~FCAP_ACROSS_TRANSITION;
     }
 
-   protected:
+    protected:
     float m_flNextCharge;
     bool m_bSoundOn;
 

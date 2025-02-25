@@ -43,11 +43,11 @@ enum FSErrorMode_t
 
 class CFSSteamSetupInfo
 {
-   public:
+    public:
     CFSSteamSetupInfo();
 
     // Inputs.
-   public:
+    public:
     // If this is set, then the init code will look in this directory up to the root for gameinfo.txt.
     // It must be set for FileSystem_LoadSearchPaths to work.
     //
@@ -86,17 +86,17 @@ class CFSSteamSetupInfo
     bool m_bNoGameInfo;
 
     // Outputs (if it returns FS_OK).
-   public:
+    public:
     char m_GameInfoPath[512];  // The directory that gameinfo.txt lives in.
 };
 
 class CFSLoadModuleInfo : public CFSSteamSetupInfo
 {
-   public:
+    public:
     CFSLoadModuleInfo();
 
     // Inputs.
-   public:
+    public:
     // Full path to the file system DLL (gotten from FileSystem_GetFileSystemDLLName).
     const char *m_pFileSystemDLLName;
 
@@ -104,7 +104,7 @@ class CFSLoadModuleInfo : public CFSSteamSetupInfo
     CreateInterfaceFn m_ConnectFactory;
 
     // Outputs (if it returns FS_OK).
-   public:
+    public:
     // The filesystem you got from FileSystem_LoadFileSystemModule.
     IFileSystem *m_pFileSystem;
     CSysModule *m_pModule;
@@ -112,11 +112,11 @@ class CFSLoadModuleInfo : public CFSSteamSetupInfo
 
 class CFSMountContentInfo
 {
-   public:
+    public:
     CFSMountContentInfo();
 
     // Inputs.
-   public:
+    public:
     // See CFSLoadModuleInfo::m_bToolsMode (this valid should always be the same as you passed to CFSLoadModuleInfo::m_bToolsMode).
     bool m_bToolsMode;
 
@@ -130,11 +130,11 @@ class CFSMountContentInfo
 
 class CFSSearchPathsInit
 {
-   public:
+    public:
     CFSSearchPathsInit();
 
     // Inputs.
-   public:
+    public:
     // This specifies the directory where gameinfo.txt is. This must be set.
     const char *m_pDirectoryName;
 
@@ -150,7 +150,7 @@ class CFSSearchPathsInit
     bool m_bLowViolence;
 
     // Outputs.
-   public:
+    public:
     // This is the location of the first search path called "game", which also becomes your "mod" search path.
     char m_ModPath[512];
 };

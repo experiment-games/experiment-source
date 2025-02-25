@@ -26,14 +26,14 @@ class CHudFlashlight : public CHudElement, public vgui::Panel
 {
     DECLARE_CLASS_SIMPLE( CHudFlashlight, vgui::Panel );
 
-   public:
+    public:
     CHudFlashlight( const char *pElementName );
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
 
-   protected:
+    protected:
     virtual void Paint();
 
-   private:
+    private:
     void SetFlashlightState( bool flashlightOn );
     void Reset( void );
 

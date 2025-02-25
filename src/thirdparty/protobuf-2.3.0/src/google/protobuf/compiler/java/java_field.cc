@@ -53,15 +53,15 @@ void FieldGenerator::GenerateParsingCodeFromPacked(io::Printer* printer) const {
   //   - This FieldGenerator doesn't support packing, and this method should
   //     never have been called.
   GOOGLE_LOG(FATAL) << "GenerateParsingCodeFromPacked() "
-             << "called on field generator that does not support packing.";
+            << "called on field generator that does not support packing.";
 }
 
 FieldGeneratorMap::FieldGeneratorMap(const Descriptor* descriptor)
   : descriptor_(descriptor),
     field_generators_(
-      new scoped_ptr<FieldGenerator>[descriptor->field_count()]),
+    new scoped_ptr<FieldGenerator>[descriptor->field_count()]),
     extension_generators_(
-      new scoped_ptr<FieldGenerator>[descriptor->extension_count()]) {
+    new scoped_ptr<FieldGenerator>[descriptor->extension_count()]) {
 
   // Construct all the FieldGenerators.
   for (int i = 0; i < descriptor->field_count(); i++) {
@@ -75,20 +75,20 @@ FieldGeneratorMap::FieldGeneratorMap(const Descriptor* descriptor)
 FieldGenerator* FieldGeneratorMap::MakeGenerator(const FieldDescriptor* field) {
   if (field->is_repeated()) {
     switch (GetJavaType(field)) {
-      case JAVATYPE_MESSAGE:
+    case JAVATYPE_MESSAGE:
         return new RepeatedMessageFieldGenerator(field);
-      case JAVATYPE_ENUM:
+    case JAVATYPE_ENUM:
         return new RepeatedEnumFieldGenerator(field);
-      default:
+    default:
         return new RepeatedPrimitiveFieldGenerator(field);
     }
   } else {
     switch (GetJavaType(field)) {
-      case JAVATYPE_MESSAGE:
+    case JAVATYPE_MESSAGE:
         return new MessageFieldGenerator(field);
-      case JAVATYPE_ENUM:
+    case JAVATYPE_ENUM:
         return new EnumFieldGenerator(field);
-      default:
+    default:
         return new PrimitiveFieldGenerator(field);
     }
   }

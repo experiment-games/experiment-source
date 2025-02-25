@@ -25,7 +25,7 @@ class PropertyDialog : public Frame
 {
     DECLARE_CLASS_SIMPLE( PropertyDialog, Frame );
 
-   public:
+    public:
 #ifdef LUA_SDK
     PropertyDialog( Panel *parent, const char *panelName, lua_State *L = nullptr );
 #else
@@ -53,11 +53,11 @@ class PropertyDialog : public Frame
     void SetApplyButtonVisible( bool state );
 
     /* MESSAGES SENT
-      "ResetData"			- sent when page is loaded.  Data should be reloaded from document into controls.
-      "ApplyChanges"		- sent when the OK / Apply button is pressed.  Changed data should be written into document.
+    "ResetData"			- sent when page is loaded.  Data should be reloaded from document into controls.
+    "ApplyChanges"		- sent when the OK / Apply button is pressed.  Changed data should be written into document.
     */
 
-   protected:
+    protected:
     // Called when the OK button is pressed.  Simply closes the dialog.
     virtual bool OnOK( bool applyOnly );
 
@@ -75,7 +75,7 @@ class PropertyDialog : public Frame
     void EnableApplyButton( bool bEnable );
 
 #ifndef LUA_SDK
-   private:
+    private:
 #endif
     PropertySheet *_propertySheet;
     Button *_okButton;

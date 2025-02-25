@@ -23,7 +23,7 @@ class CFishPool;
  */
 class CFish : public CBaseAnimating
 {
-   public:
+    public:
     DECLARE_CLASS( CFish, CBaseAnimating );
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
@@ -47,7 +47,7 @@ class CFish : public CBaseAnimating
     void ResetVisible( void );       ///< zero the visible vector
     void AddVisible( CFish *fish );  ///< add this fish to our visible vector
 
-   private:
+    private:
     friend void SendProxy_FishOriginX( const SendProp *pProp, const void *pStruct, const void *pData, DVariant *pOut, int iElement, int objectID );
     friend void SendProxy_FishOriginY( const SendProp *pProp, const void *pStruct, const void *pData, DVariant *pOut, int iElement, int objectID );
 
@@ -91,7 +91,7 @@ class CFish : public CBaseAnimating
  */
 class CFishPool : public CBaseEntity, public CGameEventListener
 {
-   public:
+    public:
     DECLARE_CLASS( CFishPool, CBaseEntity );
     DECLARE_DATADESC();
 
@@ -108,7 +108,7 @@ class CFishPool : public CBaseEntity, public CGameEventListener
     float GetWaterLevel( void ) const;  ///< return Z coordinate of water in world coords
     float GetMaxRange( void ) const;    ///< return how far a fish is allowed to wander
 
-   private:
+    private:
     int m_fishCount;    ///< number of fish in the pool
     float m_maxRange;   ///< how far a fish is allowed to wander
     float m_swimDepth;  ///< the depth the fish swim below the water surface

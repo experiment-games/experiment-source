@@ -60,7 +60,7 @@ class CLaserDot : public CBaseEntity
 {
     DECLARE_CLASS( CLaserDot, CBaseEntity );
 
-   public:
+    public:
     CLaserDot( void );
     ~CLaserDot( void );
 
@@ -113,7 +113,7 @@ class CLaserDot : public CBaseEntity
     CMaterialReference m_hSpriteMaterial;
 #endif
 
-   protected:
+    protected:
     Vector m_vecSurfaceNormal;
     EHANDLE m_hTargetEnt;
     bool m_bVisibleLaserDot;
@@ -122,7 +122,7 @@ class CLaserDot : public CBaseEntity
     DECLARE_NETWORKCLASS();
     DECLARE_DATADESC();
 
-   public:
+    public:
     CLaserDot *m_pNext;
 };
 
@@ -690,7 +690,7 @@ class CInfoAPCMissileHint : public CBaseEntity
 {
     DECLARE_DATADESC();
 
-   public:
+    public:
     DECLARE_CLASS( CInfoAPCMissileHint, CBaseEntity );
 
     virtual void Spawn();
@@ -699,7 +699,7 @@ class CInfoAPCMissileHint : public CBaseEntity
 
     static CBaseEntity *FindAimTarget( CBaseEntity *pMissile, const char *pTargetName, const Vector &vecCurrentTargetPos, const Vector &vecCurrentTargetVel );
 
-   private:
+    private:
     EHANDLE m_hTarget;
 
     typedef CHandle< CInfoAPCMissileHint > APCMissileHintHandle_t;

@@ -32,7 +32,7 @@ class CAI_BaseNPCFlyerNew : public CAI_BaseNPC
 {
     DECLARE_CLASS( CAI_BaseNPCFlyerNew, CAI_BaseNPC );
 
-   public:
+    public:
     //	DEFINE_CUSTOM_AI;
 
     virtual void StartTask( const Task_t *pTask );
@@ -43,7 +43,7 @@ class CAI_BaseNPCFlyerNew : public CAI_BaseNPC
 
     CAI_BaseNPCFlyerNew();
 
-   protected:
+    protected:
     // Call this to set up a flyer
     void SpawnFlyer();
 

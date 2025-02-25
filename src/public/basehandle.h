@@ -23,7 +23,7 @@ class CBaseHandle
 {
     friend class CBaseEntityList;
 
-   public:
+    public:
     CBaseHandle();
     CBaseHandle( const CBaseHandle &other );
     CBaseHandle( unsigned long value );
@@ -55,7 +55,7 @@ class CBaseHandle
     // Note: this is implemented in game code (ehandle.h)
     IHandleEntity *Get() const;
 
-   protected:
+    protected:
     // The low NUM_SERIAL_BITS hold the index. If this value is less than MAX_EDICTS, then the entity is networkable.
     // The high NUM_SERIAL_NUM_BITS bits are the serial number.
     unsigned long m_Index;

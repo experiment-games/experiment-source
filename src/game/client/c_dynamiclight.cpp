@@ -30,13 +30,13 @@
 //-----------------------------------------------------------------------------
 class C_DynamicLight : public C_BaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_DynamicLight, C_BaseEntity );
     DECLARE_CLIENTCLASS();
 
     C_DynamicLight();
 
-   public:
+    public:
     void OnDataChanged( DataUpdateType_t updateType );
     bool ShouldDraw();
     void ClientThink( void );
@@ -51,7 +51,7 @@ class C_DynamicLight : public C_BaseEntity
     float m_OuterAngle;
     float m_SpotRadius;
 
-   private:
+    private:
     dlight_t* m_pDynamicLight;
     dlight_t* m_pSpotlightEnd;
 
@@ -135,8 +135,8 @@ void C_DynamicLight::ClientThink( void )
         {
 #if DLIGHT_NO_WORLD_USES_ELIGHT
             m_pDynamicLight = ShouldBeElight() != 0
-                                  ? effects->CL_AllocElight( index )
-                                  : effects->CL_AllocDlight( index );
+                                ? effects->CL_AllocElight( index )
+                                : effects->CL_AllocDlight( index );
 #else
             m_pDynamicLight = effects->CL_AllocDlight( index );
 #endif

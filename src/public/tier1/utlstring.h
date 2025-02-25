@@ -45,14 +45,14 @@ inline size_t strnlen( const char *s, size_t n )
 //-----------------------------------------------------------------------------
 class CUtlString
 {
-   public:
+    public:
     typedef enum
     {
         PATTERN_NONE = 0x00000000,
         PATTERN_DIRECTORY = 0x00000001
     } TUtlStringPattern;
 
-   public:
+    public:
     CUtlString();
     CUtlString( const char *pString );
     CUtlString( const char *pString, int length );
@@ -225,7 +225,7 @@ class CUtlString
     // const CUtlString& and cannot just return "".
     static const CUtlString &GetEmptyString();
 
-   private:
+    private:
     // INTERNALS
     // AllocMemory allocates enough space for length characters plus a terminating zero.
     // Previous characters are preserved, the buffer is null-terminated, but new characters
@@ -330,7 +330,7 @@ inline CUtlString::operator const char *() const
 template < typename T >
 class StringFuncs
 {
-   public:
+    public:
     static T *Duplicate( const T *pValue );
     // Note that this function takes a character count, and does not guarantee null-termination.
     static void Copy( T *out_pOut, const T *pIn, int iLengthInChars );
@@ -345,7 +345,7 @@ class StringFuncs
 template <>
 class StringFuncs< char >
 {
-   public:
+    public:
     static char *Duplicate( const char *pValue )
     {
         return strdup( pValue );
@@ -384,7 +384,7 @@ class StringFuncs< char >
 template <>
 class StringFuncs< wchar_t >
 {
-   public:
+    public:
     static wchar_t *Duplicate( const wchar_t *pValue )
     {
         return wcsdup( pValue );
@@ -427,7 +427,7 @@ class StringFuncs< wchar_t >
 template < typename T = char >
 class CUtlConstStringBase
 {
-   public:
+    public:
     CUtlConstStringBase()
         : m_pString( NULL ) {}
     explicit CUtlConstStringBase( const T *pString )
@@ -523,7 +523,7 @@ class CUtlConstStringBase
     // implement Find/Insert/Remove functions that take const char* params.
     typedef const T *AltArgumentType_t;
 
-   protected:
+    protected:
     const T *m_pString;
 };
 

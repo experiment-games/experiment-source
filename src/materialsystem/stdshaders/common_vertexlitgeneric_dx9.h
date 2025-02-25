@@ -44,8 +44,8 @@ float3 PixelShaderAmbientLight( const float3 worldNormal, const float3 cAmbientC
     float3 isNegative = ( worldNormal >= 0.0 ) ? 0 : nSquared;
     float3 isPositive = ( worldNormal >= 0.0 ) ? nSquared : 0;
     linearColor = isPositive.x * cAmbientCube[0] + isNegative.x * cAmbientCube[1] +
-                  isPositive.y * cAmbientCube[2] + isNegative.y * cAmbientCube[3] +
-                  isPositive.z * cAmbientCube[4] + isNegative.z * cAmbientCube[5];
+                isPositive.y * cAmbientCube[2] + isNegative.y * cAmbientCube[3] +
+                isPositive.z * cAmbientCube[4] + isNegative.z * cAmbientCube[5];
     return linearColor;
 }
 
@@ -57,8 +57,8 @@ float3 VertexShaderAmbientLight( const float3 worldNormal, const float3 cAmbient
     int3 isNegative = ( worldNormal < 0.0 );
     float3 linearColor;
     linearColor = nSquared.x * cAmbientCube[isNegative.x] +
-                  nSquared.y * cAmbientCube[isNegative.y + 2] +
-                  nSquared.z * cAmbientCube[isNegative.z + 4];
+                nSquared.y * cAmbientCube[isNegative.y + 2] +
+                nSquared.z * cAmbientCube[isNegative.z + 4];
     return linearColor;
 }
 
@@ -159,9 +159,9 @@ float3 PixelShaderGetLightColor( PixelShaderLightInfo cLightInfo[3], int nLightI
 
 void SpecularAndRimTerms( const float3 vWorldNormal, const float3 vLightDir, const float fSpecularExponent, const float3 vEyeDir, const bool bDoAmbientOcclusion, const float fAmbientOcclusion, const bool bDoSpecularWarp, in sampler specularWarpSampler, const float fFresnel, const float3 color, const bool bDoRimLighting, const float fRimExponent,
 
-                          // Outputs
-                          out float3 specularLighting,
-                          out float3 rimLighting )
+                        // Outputs
+                        out float3 specularLighting,
+                        out float3 rimLighting )
 {
     rimLighting = float3( 0.0f, 0.0f, 0.0f );
 
@@ -232,9 +232,9 @@ float Fresnel( const float3 vNormal, const float3 vEyeDir, float3 vRanges )
 
 void PixelShaderDoSpecularLight( const float3 vWorldPos, const float3 vWorldNormal, const float fSpecularExponent, const float3 vEyeDir, const float fAtten, const float3 vLightColor, const float3 vLightDir, const bool bDoAmbientOcclusion, const float fAmbientOcclusion, const bool bDoSpecularWarp, in sampler specularWarpSampler, float fFresnel, const bool bDoRimLighting, const float fRimExponent,
 
-                                 // Outputs
-                                 out float3 specularLighting,
-                                 out float3 rimLighting )
+                                // Outputs
+                                out float3 specularLighting,
+                                out float3 rimLighting )
 {
     // Compute Specular and rim terms
     SpecularAndRimTerms( vWorldNormal, vLightDir, fSpecularExponent, vEyeDir, bDoAmbientOcclusion, fAmbientOcclusion, bDoSpecularWarp, specularWarpSampler, fFresnel, vLightColor * fAtten, bDoRimLighting, fRimExponent, specularLighting, rimLighting );
@@ -337,11 +337,11 @@ float3 PixelShaderDoRimLighting( const float3 worldNormal, const float3 vEyeDir,
 // Called directly by newer shaders or through the following wrapper for older shaders
 float3 PixelShaderDoLighting( const float3 worldPos, const float3 worldNormal, const float3 staticLightingColor, const bool bStaticLight, const bool bAmbientLight, const float4 lightAtten, const float3 cAmbientCube[6], in sampler NormalizeSampler, const int nNumLights, PixelShaderLightInfo cLightInfo[3], const bool bHalfLambert,
 
-                              // New optional/experimental parameters
-                              const bool bDoAmbientOcclusion,
-                              const float fAmbientOcclusion,
-                              const bool bDoLightingWarp,
-                              in sampler lightWarpSampler )
+                            // New optional/experimental parameters
+                            const bool bDoAmbientOcclusion,
+                            const float fAmbientOcclusion,
+                            const bool bDoLightingWarp,
+                            in sampler lightWarpSampler )
 {
     float3 linearColor = PixelShaderDoLightingLinear( worldPos, worldNormal, staticLightingColor, bStaticLight, bAmbientLight, lightAtten, cAmbientCube, NormalizeSampler, nNumLights, cLightInfo, bHalfLambert, bDoAmbientOcclusion, fAmbientOcclusion, bDoLightingWarp, lightWarpSampler );
 

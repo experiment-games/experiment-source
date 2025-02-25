@@ -4,10 +4,10 @@ ps.1.1
 tex t0
 
 ; Perform matrix multiply to get a local normal bump.  Then
-; reflect the eye vector through the normal and sample from 
+; reflect the eye vector through the normal and sample from
 ; a cubic environment map.
 texm3x3pad t1, t0_bx2
-texm3x3pad t2, t0_bx2		
+texm3x3pad t2, t0_bx2
 texm3x3vspec t3, t0_bx2
 
 mul r0.rgb, t3, c1				; envmap color * envmaptint
@@ -23,4 +23,3 @@ mul_sat r1.a, r1.a, 1-t2.a			; quintic
 
 ; t1.a is now the fresnel factor
 add_sat r0.a, r1.a, r0.a			; Now we have the final blend factor between cheap water + refraction
-

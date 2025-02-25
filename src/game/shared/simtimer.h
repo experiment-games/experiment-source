@@ -20,7 +20,7 @@
 
 class CSimpleSimTimer
 {
-   public:
+    public:
     CSimpleSimTimer()
         : m_next( -1 )
     {
@@ -69,7 +69,7 @@ class CSimpleSimTimer
 
     DECLARE_SIMPLE_DATADESC();
 
-   protected:
+    protected:
     float m_next;
 };
 
@@ -77,7 +77,7 @@ class CSimpleSimTimer
 
 class CSimTimer : public CSimpleSimTimer
 {
-   public:
+    public:
     CSimTimer( float interval = 0.0, bool startExpired = true )
     {
         Set( interval, startExpired );
@@ -108,7 +108,7 @@ class CSimTimer : public CSimpleSimTimer
 
     DECLARE_SIMPLE_DATADESC();
 
-   private:
+    private:
     float m_interval;
 };
 
@@ -117,7 +117,7 @@ class CSimTimer : public CSimpleSimTimer
 
 class CRandSimTimer : public CSimpleSimTimer
 {
-   public:
+    public:
     CRandSimTimer( float minInterval = 0.0, float maxInterval = 0.0, bool startExpired = true )
     {
         Set( minInterval, maxInterval, startExpired );
@@ -161,7 +161,7 @@ class CRandSimTimer : public CSimpleSimTimer
 
     DECLARE_SIMPLE_DATADESC();
 
-   private:
+    private:
     float m_minInterval;
     float m_maxInterval;
 };
@@ -170,7 +170,7 @@ class CRandSimTimer : public CSimpleSimTimer
 
 class CStopwatchBase : public CSimpleSimTimer
 {
-   public:
+    public:
     CStopwatchBase()
     {
         m_fIsRunning = false;
@@ -193,14 +193,14 @@ class CStopwatchBase : public CSimpleSimTimer
 
     DECLARE_SIMPLE_DATADESC();
 
-   protected:
+    protected:
     bool m_fIsRunning;
 };
 
 //-------------------------------------
 class CSimpleStopwatch : public CStopwatchBase
 {
-   public:
+    public:
     void Start( float minCountdown, float maxCountdown = 0.0 )
     {
         m_fIsRunning = true;
@@ -221,7 +221,7 @@ class CSimpleStopwatch : public CStopwatchBase
 
 class CStopwatch : public CStopwatchBase
 {
-   public:
+    public:
     CStopwatch( float interval = 0.0 )
     {
         Set( interval );
@@ -250,7 +250,7 @@ class CStopwatch : public CStopwatchBase
 
     DECLARE_SIMPLE_DATADESC();
 
-   private:
+    private:
     float m_interval;
 };
 
@@ -258,7 +258,7 @@ class CStopwatch : public CStopwatchBase
 
 class CRandStopwatch : public CStopwatchBase
 {
-   public:
+    public:
     CRandStopwatch( float minInterval = 0.0, float maxInterval = 0.0 )
     {
         Set( minInterval, maxInterval );
@@ -301,7 +301,7 @@ class CRandStopwatch : public CStopwatchBase
 
     DECLARE_SIMPLE_DATADESC();
 
-   private:
+    private:
     float m_minInterval;
     float m_maxInterval;
 };
@@ -310,7 +310,7 @@ class CRandStopwatch : public CStopwatchBase
 
 class CThinkOnceSemaphore
 {
-   public:
+    public:
     CThinkOnceSemaphore()
         : m_lastTime( -1 )
     {
@@ -334,7 +334,7 @@ class CThinkOnceSemaphore
         m_lastTime = gpGlobals->curtime;
     }
 
-   private:
+    private:
     float m_lastTime;
 };
 

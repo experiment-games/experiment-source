@@ -6,7 +6,7 @@ use Text::Wrap;
 srand(31456);
 
 print <<END
-//========= Copyright © 1996-2006, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2006, Valve Corporation, All rights reserved. ============//
 //
 // Purpose: static data for noise() primitives.
 //
@@ -38,8 +38,8 @@ print "static int perm_d[]={\n",wrap('    ','    ',join(",",@perm_a)),"\n};\n\n"
 
 for ($i=0;$i<256;$i++)
   {
-	$float_perm=(1.0/255.0)*$perm_a[$i];
-	$perm_a[$i] = sprintf("%f",$float_perm);
+    $float_perm=(1.0/255.0)*$perm_a[$i];
+    $perm_a[$i] = sprintf("%f",$float_perm);
   }
 &fisher_yates_shuffle(\@perm_a);
 print "static float impulse_xcoords[]={\n",wrap('    ','    ',join(",",@perm_a)),"\n};\n\n";

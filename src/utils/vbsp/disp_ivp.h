@@ -20,7 +20,7 @@ struct dmodel_t;
 // so we can share the code in VBSP.
 class CVBSPTesselateHelper : public CBaseTesselateHelper
 {
-   public:
+    public:
     void EndTriangle()
     {
         m_pIndices->AddToTail( m_TempIndices[0] );
@@ -35,7 +35,7 @@ class CVBSPTesselateHelper : public CBaseTesselateHelper
         return dummy;
     }
 
-   public:
+    public:
     CUtlVector< unsigned short > *m_pIndices;
 };
 

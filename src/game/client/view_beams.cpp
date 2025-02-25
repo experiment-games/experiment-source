@@ -59,12 +59,12 @@ extern IViewEffects *vieweffects;
 class CViewRenderBeams : public IViewRenderBeams
 {
     // Construction
-   public:
+    public:
     CViewRenderBeams( void );
     virtual ~CViewRenderBeams( void );
 
     // Implement IViewRenderBeams
-   public:
+    public:
     virtual void InitBeams( void );
     virtual void ShutdownBeams( void );
     virtual void ClearBeams( void );
@@ -99,7 +99,7 @@ class CViewRenderBeams : public IViewRenderBeams
     }
     virtual void UpdateBeamInfo( Beam_t *pBeam, BeamInfo_t &beamInfo );
 
-   private:
+    private:
     void FreeDeadTrails( BeamTrail_t **trail );
     void UpdateBeam( Beam_t *pbeam, float frametime );
     void DrawBeamWithHalo( Beam_t *pbeam, int frame, int rendermode, float *color, float *srcColor, const model_t *sprite, const model_t *halosprite, float flHDRColorScale );
@@ -121,7 +121,7 @@ class CViewRenderBeams : public IViewRenderBeams
     void BeamFree( Beam_t *pBeam );
 
     // DATA
-   private:
+    private:
     enum
     {
 
@@ -419,7 +419,7 @@ int Beam_t::DrawModel( int flags )
 {
 #ifdef PORTAL
     if ( ( !g_pPortalRender->IsRenderingPortal() && !m_bDrawInMainRender ) ||
-         ( g_pPortalRender->IsRenderingPortal() && !m_bDrawInPortalRender ) )
+        ( g_pPortalRender->IsRenderingPortal() && !m_bDrawInPortalRender ) )
     {
         return 0;
     }
@@ -784,16 +784,16 @@ int CViewRenderBeams::CullBeam( const Vector &start, const Vector &end, int pvsO
 Beam_t *CViewRenderBeams::CreateGenericBeam( BeamInfo_t &beamInfo )
 {
 #if 0
-	if ( BeamCreationAllowed() == false )
-	{
-		//NOTENOTE: If you've hit this, you may not add a beam where you have attempted to.
-		//			Most often this means that you have added it in an entity's DrawModel function.
-		//			Move this to the ClientThink function instead!
+    if ( BeamCreationAllowed() == false )
+    {
+        //NOTENOTE: If you've hit this, you may not add a beam where you have attempted to.
+        //			Most often this means that you have added it in an entity's DrawModel function.
+        //			Move this to the ClientThink function instead!
 
-		DevMsg( "ERROR: Beam created too late in frame!\n" );
-		Assert(0);
-		return NULL;
-	}
+        DevMsg( "ERROR: Beam created too late in frame!\n" );
+        Assert(0);
+        return NULL;
+    }
 #endif
 
     Beam_t *pBeam = BeamAlloc( beamInfo.m_bRenderable );
@@ -863,8 +863,8 @@ Beam_t *CViewRenderBeams::CreateBeamEnts( BeamInfo_t &beamInfo )
 {
     // Don't start temporary beams out of the PVS
     if ( beamInfo.m_flLife != 0 &&
-         ( !beamInfo.m_pStartEnt || beamInfo.m_pStartEnt->GetModel() == NULL ||
-           !beamInfo.m_pEndEnt || beamInfo.m_pEndEnt->GetModel() == NULL ) )
+        ( !beamInfo.m_pStartEnt || beamInfo.m_pStartEnt->GetModel() == NULL ||
+            !beamInfo.m_pEndEnt || beamInfo.m_pEndEnt->GetModel() == NULL ) )
     {
         return NULL;
     }
@@ -1348,8 +1348,8 @@ Beam_t *CViewRenderBeams::CreateBeamRing( BeamInfo_t &beamInfo )
 {
     // Don't start temporary beams out of the PVS
     if ( beamInfo.m_flLife != 0 &&
-         ( !beamInfo.m_pStartEnt || beamInfo.m_pStartEnt->GetModel() == NULL ||
-           !beamInfo.m_pEndEnt || beamInfo.m_pEndEnt->GetModel() == NULL ) )
+        ( !beamInfo.m_pStartEnt || beamInfo.m_pStartEnt->GetModel() == NULL ||
+            !beamInfo.m_pEndEnt || beamInfo.m_pEndEnt->GetModel() == NULL ) )
     {
         return NULL;
     }
@@ -1590,7 +1590,7 @@ void CViewRenderBeams::UpdateTempEntBeams( void )
 
         // Retire old beams
         if ( !( pBeam->flags & FBEAM_FOREVER ) &&
-             pBeam->die <= gpGlobals->curtime )
+            pBeam->die <= gpGlobals->curtime )
         {
             // Reset links
             if ( pPrev )
@@ -1719,13 +1719,13 @@ void CViewRenderBeams::DrawBeamFollow( const model_t *pSprite, Beam_t *pbeam, in
 // Output  :
 //------------------------------------------------------------------------------
 void CViewRenderBeams::DrawBeamWithHalo( Beam_t *pbeam,
-                                         int frame,
-                                         int rendermode,
-                                         float *color,
-                                         float *srcColor,
-                                         const model_t *sprite,
-                                         const model_t *halosprite,
-                                         float flHDRColorScale )
+                                        int frame,
+                                        int rendermode,
+                                        float *color,
+                                        float *srcColor,
+                                        const model_t *sprite,
+                                        const model_t *halosprite,
+                                        float flHDRColorScale )
 {
     Vector beamDir = pbeam->attachment[1] - pbeam->attachment[0];
     VectorNormalize( beamDir );

@@ -24,4 +24,3 @@ mul r1.rgb, c1, t0			; Self illum * tint
 + mul r1.a, t0.a, 1-t2.a	; Reduce self-illum amount based on 1 - detailalpha
 
 lrp r0.rgb, t0.a, r1, r0	; Blend between self-illum + base * lightmap
-

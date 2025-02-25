@@ -400,8 +400,8 @@ bool CNPC_GroundTurret::FVisible( CBaseEntity *pEntity, int traceMask, CBaseEnti
     if ( BaseClass::FVisible( pEntity, traceMask, ppBlocker ) )
         return true;
     if ( ( pEntity->GetAbsOrigin().AsVector2D() - GetAbsOrigin().AsVector2D() ).LengthSqr() < Square( 10 * 12 ) &&
-         FInViewCone( pEntity->GetAbsOrigin() ) &&
-         BaseClass::FVisible( pEntity->GetAbsOrigin() + Vector( 0, 0, 1 ), traceMask, ppBlocker ) )
+        FInViewCone( pEntity->GetAbsOrigin() ) &&
+        BaseClass::FVisible( pEntity->GetAbsOrigin() + Vector( 0, 0, 1 ), traceMask, ppBlocker ) )
         return true;
     return false;
 }

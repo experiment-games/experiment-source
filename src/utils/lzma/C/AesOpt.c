@@ -26,9 +26,9 @@ void MY_FAST_CALL AesCbc_Encode_Intel(__m128i *p, __m128i *data, size_t numBlock
     m = _mm_xor_si128(m, p[2]);
     do
     {
-      m = _mm_aesenc_si128(m, w[0]);
-      m = _mm_aesenc_si128(m, w[1]);
-      w += 2;
+    m = _mm_aesenc_si128(m, w[0]);
+    m = _mm_aesenc_si128(m, w[1]);
+    w += 2;
     }
     while (--numRounds2 != 0);
     m = _mm_aesenc_si128(m, w[0]);
@@ -61,27 +61,27 @@ void MY_FAST_CALL AesCbc_Decode_Intel(__m128i *p, __m128i *data, size_t numBlock
     const __m128i *w = p + numRounds2 * 2;
     __m128i m0, m1, m2;
     {
-      const __m128i t = w[2];
-      m0 = _mm_xor_si128(t, data[0]);
-      m1 = _mm_xor_si128(t, data[1]);
-      m2 = _mm_xor_si128(t, data[2]);
+    const __m128i t = w[2];
+    m0 = _mm_xor_si128(t, data[0]);
+    m1 = _mm_xor_si128(t, data[1]);
+    m2 = _mm_xor_si128(t, data[2]);
     }
     numRounds2--;
     do
     {
-      AES_DEC(1)
-      AES_DEC(0)
-      w -= 2;
+    AES_DEC(1)
+    AES_DEC(0)
+    w -= 2;
     }
     while (--numRounds2 != 0);
     AES_DEC(1)
     AES_DEC_LAST(0)
 
     {
-      __m128i t;
-      t = _mm_xor_si128(m0, iv); iv = data[0]; data[0] = t;
-      t = _mm_xor_si128(m1, iv); iv = data[1]; data[1] = t;
-      t = _mm_xor_si128(m2, iv); iv = data[2]; data[2] = t;
+    __m128i t;
+    t = _mm_xor_si128(m0, iv); iv = data[0]; data[0] = t;
+    t = _mm_xor_si128(m1, iv); iv = data[1]; data[1] = t;
+    t = _mm_xor_si128(m2, iv); iv = data[2]; data[2] = t;
     }
   }
   for (; numBlocks != 0; numBlocks--, data++)
@@ -92,9 +92,9 @@ void MY_FAST_CALL AesCbc_Decode_Intel(__m128i *p, __m128i *data, size_t numBlock
     numRounds2--;
     do
     {
-      m = _mm_aesdec_si128(m, w[1]);
-      m = _mm_aesdec_si128(m, w[0]);
-      w -= 2;
+    m = _mm_aesdec_si128(m, w[1]);
+    m = _mm_aesdec_si128(m, w[0]);
+    w -= 2;
     }
     while (--numRounds2 != 0);
     m = _mm_aesdec_si128(m, w[1]);
@@ -119,17 +119,17 @@ void MY_FAST_CALL AesCtr_Code_Intel(__m128i *p, __m128i *data, size_t numBlocks)
     const __m128i *w = p;
     __m128i m0, m1, m2;
     {
-      const __m128i t = w[2];
-      ctr = _mm_add_epi64(ctr, one); m0 = _mm_xor_si128(ctr, t);
-      ctr = _mm_add_epi64(ctr, one); m1 = _mm_xor_si128(ctr, t);
-      ctr = _mm_add_epi64(ctr, one); m2 = _mm_xor_si128(ctr, t);
+    const __m128i t = w[2];
+    ctr = _mm_add_epi64(ctr, one); m0 = _mm_xor_si128(ctr, t);
+    ctr = _mm_add_epi64(ctr, one); m1 = _mm_xor_si128(ctr, t);
+    ctr = _mm_add_epi64(ctr, one); m2 = _mm_xor_si128(ctr, t);
     }
     w += 3;
     do
     {
-      AES_ENC(0)
-      AES_ENC(1)
-      w += 2;
+    AES_ENC(0)
+    AES_ENC(1)
+    w += 2;
     }
     while (--numRounds2 != 0);
     AES_ENC(0)
@@ -148,9 +148,9 @@ void MY_FAST_CALL AesCtr_Code_Intel(__m128i *p, __m128i *data, size_t numBlocks)
     w += 3;
     do
     {
-      m = _mm_aesenc_si128(m, w[0]);
-      m = _mm_aesenc_si128(m, w[1]);
-      w += 2;
+    m = _mm_aesenc_si128(m, w[0]);
+    m = _mm_aesenc_si128(m, w[1]);
+    w += 2;
     }
     while (--numRounds2 != 0);
     m = _mm_aesenc_si128(m, w[0]);

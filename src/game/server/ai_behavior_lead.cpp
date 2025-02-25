@@ -277,7 +277,7 @@ bool CAI_LeadBehavior::GetClosestPointOnRoute( const Vector &targetPos, Vector *
         /*
         if ( builtwaypoints )
         {
-          NDebugOverlay::Line( vecPrevPos, waypoint->GetPos(), 0,0,255,true, 10.0 );
+        NDebugOverlay::Line( vecPrevPos, waypoint->GetPos(), 0,0,255,true, 10.0 );
         }
         */
         vecPrevPos = waypoint->GetPos();
@@ -755,7 +755,7 @@ void CAI_LeadBehavior::StartTask( const Task_t *pTask )
         {
             // If we're leading, and we're supposed to run, run instead of walking
             if ( m_run &&
-                 ( IsCurSchedule( SCHED_LEAD_WAITFORPLAYER, false ) || IsCurSchedule( SCHED_LEAD_PLAYER, false ) || IsCurSchedule( SCHED_LEAD_SPEAK_THEN_LEAD_PLAYER, false ) || IsCurSchedule( SCHED_LEAD_RETRIEVE, false ) ) )
+                ( IsCurSchedule( SCHED_LEAD_WAITFORPLAYER, false ) || IsCurSchedule( SCHED_LEAD_PLAYER, false ) || IsCurSchedule( SCHED_LEAD_SPEAK_THEN_LEAD_PLAYER, false ) || IsCurSchedule( SCHED_LEAD_RETRIEVE, false ) ) )
             {
                 ChainStartTask( TASK_RUN_PATH );
             }
@@ -960,7 +960,7 @@ void CAI_LeadBehavior::RunTask( const Task_t *pTask )
         {
             // If we're leading, and we're supposed to run, run instead of walking
             if ( m_run &&
-                 ( IsCurSchedule( SCHED_LEAD_WAITFORPLAYER, false ) || IsCurSchedule( SCHED_LEAD_PLAYER, false ) || IsCurSchedule( SCHED_LEAD_SPEAK_THEN_LEAD_PLAYER, false ) || IsCurSchedule( SCHED_LEAD_RETRIEVE, false ) ) )
+                ( IsCurSchedule( SCHED_LEAD_WAITFORPLAYER, false ) || IsCurSchedule( SCHED_LEAD_PLAYER, false ) || IsCurSchedule( SCHED_LEAD_SPEAK_THEN_LEAD_PLAYER, false ) || IsCurSchedule( SCHED_LEAD_RETRIEVE, false ) ) )
             {
                 ChainRunTask( TASK_RUN_PATH );
             }
@@ -1336,11 +1336,11 @@ AI_END_CUSTOM_SCHEDULE_PROVIDER()
 //
 
 class CAI_LeadGoal : public CAI_GoalEntity,
-                     public CAI_LeadBehaviorHandler
+                    public CAI_LeadBehaviorHandler
 {
     DECLARE_CLASS( CAI_LeadGoal, CAI_GoalEntity );
 
-   public:
+    public:
     CAI_LeadGoal()
         : m_fArrived( false )
     {
@@ -1364,7 +1364,7 @@ class CAI_LeadGoal : public CAI_GoalEntity,
 
     DECLARE_DATADESC();
 
-   private:
+    private:
     virtual void OnEvent( int event );
     void InputSetSuccess( inputdata_t &inputdata );
     void InputSetFailure( inputdata_t &inputdata );
@@ -1625,11 +1625,11 @@ class CAI_LeadGoal_Weapon : public CAI_LeadGoal
 {
     DECLARE_CLASS( CAI_LeadGoal_Weapon, CAI_LeadGoal );
 
-   public:
+    public:
     virtual const char *GetConceptModifiers( const char *pszConcept );
     virtual void InputActivate( inputdata_t &inputdata );
 
-   private:
+    private:
     string_t m_iszWeaponName;
     string_t m_iszMissingWeaponConceptModifier;
 

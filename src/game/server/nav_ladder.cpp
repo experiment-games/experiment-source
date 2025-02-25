@@ -220,17 +220,17 @@ bool CNavLadder::IsConnected( const CNavArea *area, LadderDirectionType dir ) co
     else if ( dir == LADDER_UP )
     {
         return ( area == m_topForwardArea ||
-                 area == m_topLeftArea ||
-                 area == m_topRightArea ||
-                 area == m_topBehindArea );
+                area == m_topLeftArea ||
+                area == m_topRightArea ||
+                area == m_topBehindArea );
     }
     else
     {
         return ( area == m_bottomArea ||
-                 area == m_topForwardArea ||
-                 area == m_topLeftArea ||
-                 area == m_topRightArea ||
-                 area == m_topBehindArea );
+                area == m_topForwardArea ||
+                area == m_topLeftArea ||
+                area == m_topRightArea ||
+                area == m_topBehindArea );
     }
 }
 
@@ -569,7 +569,7 @@ void CNavLadder::Load( CUtlBuffer &fileBuffer, unsigned int version )
  */
 class IsLadderFreeFunctor
 {
-   public:
+    public:
     IsLadderFreeFunctor( const CNavLadder *ladder, const CBasePlayer *ignore )
     {
         m_ladder = ladder;

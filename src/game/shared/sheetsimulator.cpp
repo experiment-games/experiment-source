@@ -25,7 +25,7 @@
 //-----------------------------------------------------------------------------
 
 CSheetSimulator::CSheetSimulator( TraceLineFunc_t traceline,
-                                  TraceHullFunc_t traceHull )
+                                TraceHullFunc_t traceHull )
     : m_pFixedPoint( 0 ), m_ControlPoints( 0 ), m_TraceLine( traceline ), m_TraceHull( traceHull )
 {
 }
@@ -286,7 +286,7 @@ void CSheetSimulator::ComputeForces()
         {
             // Case where we're connected to a control point
             dx = m_Particle[m_Springs[i].m_Particle1].m_Position -
-                 m_ControlPoints[-m_Springs[i].m_Particle2 - 1];
+                m_ControlPoints[-m_Springs[i].m_Particle2 - 1];
             dv = m_Particle[m_Springs[i].m_Particle1].m_Velocity;
 
             springConstant = m_FixedSpringConstant;
@@ -295,9 +295,9 @@ void CSheetSimulator::ComputeForces()
         {
             // Case where we're connected to another part of the shield
             dx = m_Particle[m_Springs[i].m_Particle1].m_Position -
-                 m_Particle[m_Springs[i].m_Particle2].m_Position;
+                m_Particle[m_Springs[i].m_Particle2].m_Position;
             dv = m_Particle[m_Springs[i].m_Particle1].m_Velocity -
-                 m_Particle[m_Springs[i].m_Particle2].m_Velocity;
+                m_Particle[m_Springs[i].m_Particle2].m_Velocity;
 
             springConstant = m_PointSpringConstant;
         }
@@ -392,7 +392,7 @@ void CSheetSimulator::InitPosition( int i )
         VectorSubtract( m_ControlPoints[i], m_Origin, delta );
         int maxdist = VectorNormalize( delta );
         float dist = ( m_pCollisionPlanes[i].dist - DotProduct( m_Origin, m_pCollisionPlanes[i].normal ) ) /
-                     DotProduct( delta, m_pCollisionPlanes[i].normal );
+                    DotProduct( delta, m_pCollisionPlanes[i].normal );
 
         if ( dist > maxdist )
             dist = maxdist;
@@ -594,7 +594,7 @@ void CSheetSimulator::ClampPointsToCollisionPlanes()
 //-----------------------------------------------------------------------------
 CIterativeSheetSimulator::CIterativeSheetSimulator( TraceLineFunc_t traceline, TraceHullFunc_t traceHull )
     : CSheetSimulator( traceline, traceHull ),
-      m_SimulationSteps( 0 )
+    m_SimulationSteps( 0 )
 {
 }
 

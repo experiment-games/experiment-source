@@ -34,7 +34,7 @@ extern void* g_pUtlSortVectorQSortContext;
 template < class T >
 class CUtlSortVectorDefaultLess
 {
-   public:
+    public:
     bool Less( const T& lhs, const T& rhs, void* )
     {
         return lhs < rhs;
@@ -46,7 +46,7 @@ class CUtlSortVector : public BaseVector
 {
     typedef BaseVector BaseClass;
 
-   public:
+    public:
     /// constructor
     CUtlSortVector( int nGrowSize = 0, int initSize = 0 );
     CUtlSortVector( T* pMemory, int numElements );
@@ -88,7 +88,7 @@ class CUtlSortVector : public BaseVector
     template < typename TKey >
     int FindUnsorted( const TKey& src ) const;
 
-   protected:
+    protected:
     // No copy constructor
     CUtlSortVector( const CUtlSortVector< T, LessFunc >& );
 
@@ -137,7 +137,7 @@ class CUtlSortVector : public BaseVector
     void* m_pLessContext;
     bool m_bNeedsSort;
 
-   private:
+    private:
     template < typename TKey >
     int FindLessOrEqual( const TKey& search, bool* pFound ) const;
 

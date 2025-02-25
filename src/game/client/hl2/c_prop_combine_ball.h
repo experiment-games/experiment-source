@@ -16,7 +16,7 @@ class C_PropCombineBall : public C_BaseAnimating
     DECLARE_CLASS( C_PropCombineBall, C_BaseAnimating );
     DECLARE_CLIENTCLASS();
 
-   public:
+    public:
     C_PropCombineBall( void );
 
     virtual RenderGroup_t GetRenderGroup( void );
@@ -24,7 +24,7 @@ class C_PropCombineBall : public C_BaseAnimating
     virtual void OnDataChanged( DataUpdateType_t updateType );
     virtual int DrawModel( int flags );
 
-   protected:
+    protected:
     void DrawMotionBlur( void );
     void DrawFlicker( void );
     virtual bool InitMaterials( void );

@@ -107,7 +107,7 @@ CUtlLinkedList< C_RopeKeyframe *, int > g_Ropes;
 static Vector g_FullBright_LightValues[ROPE_MAX_SEGMENTS];
 class CFullBrightLightValuesInit
 {
-   public:
+    public:
     CFullBrightLightValuesInit()
     {
         for ( int i = 0; i < ROPE_MAX_SEGMENTS; i++ )
@@ -119,7 +119,7 @@ class CFullBrightLightValuesInit
 static Vector g_RopeSubdivs[MAX_ROPE_SUBDIVS][MAX_ROPE_SUBDIVS];
 class CSubdivInit
 {
-   public:
+    public:
     CSubdivInit()
     {
         for ( int iSubdiv = 0; iSubdiv < MAX_ROPE_SUBDIVS; iSubdiv++ )
@@ -145,7 +145,7 @@ static float g_flLockFalloff = 0.3;
 
 class CQueuedRopeMemoryManager
 {
-   public:
+    public:
     CQueuedRopeMemoryManager( void )
     {
         m_nCurrentStack = 0;
@@ -215,7 +215,7 @@ struct RopeSegData_t
 
 class CRopeManager : public IRopeManager
 {
-   public:
+    public:
     CRopeManager();
     ~CRopeManager();
 
@@ -234,10 +234,10 @@ class CRopeManager : public IRopeManager
     bool IsHolidayLightMode( void );
     int GetHolidayLightStyle( void );
 
-   private:
+    private:
     struct RopeRenderData_t;
 
-   public:
+    public:
     void DrawRenderCache_NonQueued( bool bShadowDepth, RopeRenderData_t *pRenderCache, int nRenderCacheCount, const Vector &vCurrentViewForward, const Vector &vCurrentViewOrigin, C_RopeKeyframe::BuildRopeQueuedData_t *pBuildRopeQueuedData );
 
     void ResetSegmentCache( int nMaxSegments );
@@ -250,11 +250,11 @@ class CRopeManager : public IRopeManager
 
     void RemoveRopeFromQueuedRenderCaches( C_RopeKeyframe *pRope );
 
-   private:
+    private:
     void RenderNonSolidRopes( IMatRenderContext *pRenderContext, IMaterial *pMaterial, int nVertCount, int nIndexCount );
     void RenderSolidRopes( IMatRenderContext *pRenderContext, IMaterial *pMaterial, int nVertCount, int nIndexCount, bool bRenderNonSolid );
 
-   private:
+    private:
     struct RopeRenderData_t
     {
         IMaterial *m_pSolidMaterial;
@@ -364,7 +364,7 @@ void CRopeManager::AddToRenderCache( C_RopeKeyframe *pRope )
     for ( ; iRenderCache < nRenderCacheCount; ++iRenderCache )
     {
         if ( ( pRope->GetSolidMaterial() == m_aRenderCache[iRenderCache].m_pSolidMaterial ) &&
-             ( pRope->GetBackMaterial() == m_aRenderCache[iRenderCache].m_pBackMaterial ) )
+            ( pRope->GetBackMaterial() == m_aRenderCache[iRenderCache].m_pBackMaterial ) )
             break;
     }
 
@@ -556,8 +556,8 @@ void CRopeManager::DrawRenderCache( bool bShadowDepth )
             return;  // nothing to draw
 
         size_t iMemoryNeeded = ( iRenderCacheCount * sizeof( CRopeManager::RopeRenderData_t ) ) +
-                               ( iRopeCount * sizeof( C_RopeKeyframe::BuildRopeQueuedData_t ) ) +
-                               ( iNodeCount * ( sizeof( Vector ) * 2 ) );
+                                ( iRopeCount * sizeof( C_RopeKeyframe::BuildRopeQueuedData_t ) ) +
+                                ( iNodeCount * ( sizeof( Vector ) * 2 ) );
 
         void *pMemory = m_QueuedModeMemory.Alloc( iMemoryNeeded );
 
@@ -940,8 +940,8 @@ void C_RopeKeyframe::CPhysicsDelegate::ApplyConstraints( CSimplePhysics::CNode *
 
     // Collide with the world.
     if ( ( ( m_pKeyframe->m_RopeFlags & ROPE_COLLIDE ) &&
-           rope_collide.GetInt() ) ||
-         ( rope_collide.GetInt() == 2 ) )
+            rope_collide.GetInt() ) ||
+        ( rope_collide.GetInt() == 2 ) )
     {
         CTimeAdder adder( &g_RopeCollideTicks );
 

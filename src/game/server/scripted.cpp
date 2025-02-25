@@ -460,12 +460,12 @@ void CAI_ScriptedSequence::Blocked( CBaseEntity *pOther )
 void CAI_ScriptedSequence::Touch( CBaseEntity *pOther )
 {
     /*
-      DevMsg( 2,  "Cine Touch\n" );
-      if (m_pentTarget && OFFSET(pOther->pev) == OFFSET(m_pentTarget))
-      {
+    DevMsg( 2,  "Cine Touch\n" );
+    if (m_pentTarget && OFFSET(pOther->pev) == OFFSET(m_pentTarget))
+    {
         CAI_BaseNPC *pTarget = GetClassPtr((CAI_BaseNPC *)VARS(m_pentTarget));
         pTarget->m_NPCState == NPC_STATE_SCRIPT;
-      }
+    }
     */
 }
 
@@ -543,9 +543,9 @@ CAI_BaseNPC *CAI_ScriptedSequence::FindScriptEntity()
         if ( m_hForcedTarget )
         {
             Warning( "Code forced %s(%s), to be the target of scripted sequence %s, but it can't play it.\n",
-                     pEntity->GetClassname(),
-                     pEntity->GetDebugName(),
-                     GetDebugName() );
+                    pEntity->GetClassname(),
+                    pEntity->GetDebugName(),
+                    GetDebugName() );
             pEntity = NULL;
             UTIL_Remove( this );
             return NULL;
@@ -814,7 +814,7 @@ bool CAI_ScriptedSequence::StartSequence( CAI_BaseNPC *pTarget, string_t iszSeq,
 
     // If the target was hidden even though we woke it up, only make it drawable if we're not still on the preidle seq...
     if ( m_bTargetWasAsleep &&
-         iszSeq != m_iszPreIdle )
+        iszSeq != m_iszPreIdle )
     {
         m_bTargetWasAsleep = false;
         // Show it
@@ -1537,10 +1537,10 @@ class CAI_ScriptedSchedule : public CBaseEntity
 {
     DECLARE_CLASS( CAI_ScriptedSchedule, CBaseEntity );
 
-   public:
+    public:
     CAI_ScriptedSchedule( void );
 
-   private:
+    private:
     void StartSchedule( CAI_BaseNPC *pTarget );
     void StopSchedule( CAI_BaseNPC *pTarget );
     void ScriptThink( void );
@@ -1880,7 +1880,7 @@ void CAI_ScriptedSchedule::StopSchedule( CAI_BaseNPC *pTarget )
 
 class CAI_ScriptedSentence : public CPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CAI_ScriptedSentence, CPointEntity );
 
     void Spawn( void );
@@ -1901,7 +1901,7 @@ class CAI_ScriptedSentence : public CPointEntity
     bool AcceptableSpeaker( CAI_BaseNPC *pNPC );
     int StartSentence( CAI_BaseNPC *pTarget );
 
-   private:
+    private:
     string_t m_iszSentence;  // string index for sentence name
     string_t m_iszEntity;    // entity that is wanted for this sentence
     float m_flRadius;        // range to search

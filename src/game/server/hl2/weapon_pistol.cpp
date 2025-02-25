@@ -37,7 +37,7 @@ class CWeaponPistol : public CBaseHLCombatWeapon
 {
     DECLARE_DATADESC();
 
-   public:
+    public:
     DECLARE_CLASS( CWeaponPistol, CBaseHLCombatWeapon );
 
     CWeaponPistol( void );
@@ -75,10 +75,10 @@ class CWeaponPistol : public CBaseHLCombatWeapon
         if ( pistol_use_new_accuracy.GetBool() )
         {
             float ramp = RemapValClamped( m_flAccuracyPenalty,
-                                          0.0f,
-                                          PISTOL_ACCURACY_MAXIMUM_PENALTY_TIME,
-                                          0.0f,
-                                          1.0f );
+                                        0.0f,
+                                        PISTOL_ACCURACY_MAXIMUM_PENALTY_TIME,
+                                        0.0f,
+                                        1.0f );
 
             // We lerp from very accurate to inaccurate over time
             VectorLerp( VECTOR_CONE_1DEGREES, VECTOR_CONE_6DEGREES, ramp, cone );
@@ -109,7 +109,7 @@ class CWeaponPistol : public CBaseHLCombatWeapon
 
     DECLARE_ACTTABLE();
 
-   private:
+    private:
     float m_flSoonestPrimaryAttack;
     float m_flLastAttackTime;
     float m_flAccuracyPenalty;

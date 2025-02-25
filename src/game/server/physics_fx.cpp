@@ -115,17 +115,17 @@ void PhysicsSplash( IPhysicsFluidController *pFluid, IPhysicsObject *pObject, CB
 
         for ( int i = 0; i < splashes; i++ )
         {
-          point = RandomVector( -32.0f, 32.0f );
-          point[2] = 0.0f;
+        point = RandomVector( -32.0f, 32.0f );
+        point[2] = 0.0f;
 
-          point += corner[i];
+        point += corner[i];
 
-          data.m_vOrigin = point;
-          data.m_vNormal = normal;
-          VectorAngles( normal, data.m_vAngles );
-          data.m_flScale = random->RandomFloat( 4, 6 );
+        data.m_vOrigin = point;
+        data.m_vNormal = normal;
+        VectorAngles( normal, data.m_vAngles );
+        data.m_flScale = random->RandomFloat( 4, 6 );
 
-          DispatchEffect( "watersplash", data );
+        DispatchEffect( "watersplash", data );
         }
         */
 
@@ -222,17 +222,17 @@ void PhysicsSplash( IPhysicsFluidController *pFluid, IPhysicsObject *pObject, CB
     /*
     for ( i = 0; i < splashes; i++ )
     {
-      point = RandomVector( -8.0f, 8.0f );
-      point[2] = 0.0f;
+    point = RandomVector( -8.0f, 8.0f );
+    point[2] = 0.0f;
 
-      point += centerPoint + axes[0] * random->RandomFloat( -1, 1 ) + axes[1] * random->RandomFloat( -1, 1 );
+    point += centerPoint + axes[0] * random->RandomFloat( -1, 1 ) + axes[1] * random->RandomFloat( -1, 1 );
 
-      data.m_vOrigin = point;
-      data.m_vNormal = normal;
-      VectorAngles( normal, data.m_vAngles );
-      data.m_flScale = size + random->RandomFloat( -2, 4 );
+    data.m_vOrigin = point;
+    data.m_vNormal = normal;
+    VectorAngles( normal, data.m_vAngles );
+    data.m_flScale = size + random->RandomFloat( -2, 4 );
 
-      DispatchEffect( "watersplash", data );
+    DispatchEffect( "watersplash", data );
     }
     */
 }

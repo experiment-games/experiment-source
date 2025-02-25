@@ -23,7 +23,7 @@
  */
 class LivePlayerCounter
 {
-   public:
+    public:
     static const bool EXCLUDE_BOTS = false;
     LivePlayerCounter( int team, bool includeBots = true )
     {
@@ -60,7 +60,7 @@ class LivePlayerCounter
  */
 class DeadPlayerCounter
 {
-   public:
+    public:
     static const bool EXCLUDE_BOTS = false;
     DeadPlayerCounter( int team, bool includeBots = true )
     {
@@ -97,7 +97,7 @@ class DeadPlayerCounter
  */
 class PlayerCounter
 {
-   public:
+    public:
     static const bool EXCLUDE_BOTS = false;
     PlayerCounter( int team, int lifeState = -1, bool includeBots = true )
     {
@@ -136,7 +136,7 @@ class PlayerCounter
  */
 class ClosestPlayerScan
 {
-   public:
+    public:
     static const bool EXCLUDE_BOTS = false;
     ClosestPlayerScan( const Vector &spot, int team, float maxRange = 0.0f, CBasePlayer *ignore = NULL, bool includeBots = true )
     {
@@ -207,7 +207,7 @@ class ClosestPlayerScan
  */
 class ClosestActorScan
 {
-   public:
+    public:
     ClosestActorScan( const Vector &spot, int team, float maxRange = 0.0f, CBaseCombatCharacter *ignore = NULL )
     {
         m_spot = spot;
@@ -274,7 +274,7 @@ class CShowViewportPanel
     bool m_show;
     KeyValues *m_data;
 
-   public:
+    public:
     CShowViewportPanel( int team, const char *panelName, bool show, KeyValues *data = NULL )
     {
         m_team = team;
@@ -348,7 +348,7 @@ inline bool ForEachActor( Functor &func )
  */
 class IActorFunctor
 {
-   public:
+    public:
     virtual void OnBeginIteration( void ) {}  // invoked once before iteration begins
 
     virtual bool operator()( CBaseCombatCharacter *them ) = 0;
@@ -417,7 +417,7 @@ inline bool ForEachActor( IActorFunctor &func )
 //--------------------------------------------------------------------------------------------------------
 class CTraceFilterOnlyClassname : public CTraceFilterSimple
 {
-   public:
+    public:
     CTraceFilterOnlyClassname( const IHandleEntity *passentity, const char *pchClassname, int collisionGroup )
         : CTraceFilterSimple( passentity, collisionGroup ), m_pchClassname( pchClassname )
     {
@@ -432,7 +432,7 @@ class CTraceFilterOnlyClassname : public CTraceFilterSimple
         return FClassnameIs( pEntity, m_pchClassname ) && CTraceFilterSimple::ShouldHitEntity( pHandleEntity, contentsMask );
     }
 
-   private:
+    private:
     const char *m_pchClassname;
 };
 

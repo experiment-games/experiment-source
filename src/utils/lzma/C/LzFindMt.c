@@ -60,7 +60,7 @@ void MtSync_StopWriting(CMtSync *p)
     p->csWasEntered = False;
   }
   Semaphore_Release1(&p->freeSemaphore);
- 
+
   Event_Wait(&p->wasStopped);
 
   while (myNumBlocks++ != p->numProcessedBlocks)
@@ -78,7 +78,7 @@ void MtSync_Destruct(CMtSync *p)
     MtSync_StopWriting(p);
     p->exit = True;
     if (p->needStart)
-      Event_Set(&p->canStart);
+    Event_Set(&p->canStart);
     Thread_Wait(&p->thread);
     Thread_Close(&p->thread);
   }
@@ -110,12 +110,12 @@ static SRes MtSync_Create2(CMtSync *p, THREAD_FUNC_TYPE startAddress, void *obj,
   RINOK_THREAD(AutoResetEvent_CreateNotSignaled(&p->canStart));
   RINOK_THREAD(AutoResetEvent_CreateNotSignaled(&p->wasStarted));
   RINOK_THREAD(AutoResetEvent_CreateNotSignaled(&p->wasStopped));
-  
+
   RINOK_THREAD(Semaphore_Create(&p->freeSemaphore, numBlocks, numBlocks));
   RINOK_THREAD(Semaphore_Create(&p->filledSemaphore, 0, numBlocks));
 
   p->needStart = True;
-  
+
   RINOK_THREAD(Thread_Create(&p->thread, startAddress, obj));
   p->wasCreated = True;
   return SZ_OK;
@@ -157,32 +157,32 @@ void HashThreadFunc(CMatchFinderMt *mt)
     Event_Set(&p->wasStarted);
     for (;;)
     {
-      if (p->exit)
+    if (p->exit)
         return;
-      if (p->stopWriting)
-      {
+    if (p->stopWriting)
+    {
         p->numProcessedBlocks = numProcessedBlocks;
         Event_Set(&p->wasStopped);
         break;
-      }
+    }
 
-      {
+    {
         CMatchFinder *mf = mt->MatchFinder;
         if (MatchFinder_NeedMove(mf))
         {
-          CriticalSection_Enter(&mt->btSync.cs);
-          CriticalSection_Enter(&mt->hashSync.cs);
-          {
+        CriticalSection_Enter(&mt->btSync.cs);
+        CriticalSection_Enter(&mt->hashSync.cs);
+        {
             const Byte *beforePtr = MatchFinder_GetPointerToCurrentPos(mf);
             const Byte *afterPtr;
             MatchFinder_MoveBlock(mf);
             afterPtr = MatchFinder_GetPointerToCurrentPos(mf);
             mt->pointerToCurPos -= beforePtr - afterPtr;
             mt->buffer -= beforePtr - afterPtr;
-          }
-          CriticalSection_Leave(&mt->btSync.cs);
-          CriticalSection_Leave(&mt->hashSync.cs);
-          continue;
+        }
+        CriticalSection_Leave(&mt->btSync.cs);
+        CriticalSection_Leave(&mt->hashSync.cs);
+        continue;
         }
 
         Semaphore_Wait(&p->freeSemaphore);
@@ -190,29 +190,29 @@ void HashThreadFunc(CMatchFinderMt *mt)
         MatchFinder_ReadIfRequired(mf);
         if (mf->pos > (kMtMaxValForNormalize - kMtHashBlockSize))
         {
-          UInt32 subValue = (mf->pos - mf->historySize - 1);
-          MatchFinder_ReduceOffsets(mf, subValue);
-          MatchFinder_Normalize3(subValue, mf->hash + mf->fixedHashSize, mf->hashMask + 1);
+        UInt32 subValue = (mf->pos - mf->historySize - 1);
+        MatchFinder_ReduceOffsets(mf, subValue);
+        MatchFinder_Normalize3(subValue, mf->hash + mf->fixedHashSize, mf->hashMask + 1);
         }
         {
-          UInt32 *heads = mt->hashBuf + ((numProcessedBlocks++) & kMtHashNumBlocksMask) * kMtHashBlockSize;
-          UInt32 num = mf->streamPos - mf->pos;
-          heads[0] = 2;
-          heads[1] = num;
-          if (num >= mf->numHashBytes)
-          {
+        UInt32 *heads = mt->hashBuf + ((numProcessedBlocks++) & kMtHashNumBlocksMask) * kMtHashBlockSize;
+        UInt32 num = mf->streamPos - mf->pos;
+        heads[0] = 2;
+        heads[1] = num;
+        if (num >= mf->numHashBytes)
+        {
             num = num - mf->numHashBytes + 1;
             if (num > kMtHashBlockSize - 2)
-              num = kMtHashBlockSize - 2;
+            num = kMtHashBlockSize - 2;
             mt->GetHeadsFunc(mf->buffer, mf->pos, mf->hash + mf->fixedHashSize, mf->hashMask, heads + 2, num, mf->crc);
             heads[0] += num;
-          }
-          mf->pos += num;
-          mf->buffer += num;
         }
-      }
+        mf->pos += num;
+        mf->buffer += num;
+        }
+    }
 
-      Semaphore_Release1(&p->filledSemaphore);
+    Semaphore_Release1(&p->filledSemaphore);
     }
   }
 }
@@ -252,45 +252,45 @@ Int32 NO_INLINE GetMatchesSpecN(UInt32 lenLimit, UInt32 pos, const Byte *cur, CL
     UInt32 delta = pos - curMatch;
     if (cutValue-- == 0 || delta >= _cyclicBufferSize)
     {
-      *ptr0 = *ptr1 = kEmptyHashValue;
-      break;
+    *ptr0 = *ptr1 = kEmptyHashValue;
+    break;
     }
     {
-      CLzRef *pair = son + ((_cyclicBufferPos - delta + ((delta > _cyclicBufferPos) ? _cyclicBufferSize : 0)) << 1);
-      const Byte *pb = cur - delta;
-      UInt32 len = (len0 < len1 ? len0 : len1);
-      if (pb[len] == cur[len])
-      {
+    CLzRef *pair = son + ((_cyclicBufferPos - delta + ((delta > _cyclicBufferPos) ? _cyclicBufferSize : 0)) << 1);
+    const Byte *pb = cur - delta;
+    UInt32 len = (len0 < len1 ? len0 : len1);
+    if (pb[len] == cur[len])
+    {
         if (++len != lenLimit && pb[len] == cur[len])
-          while (++len != lenLimit)
+        while (++len != lenLimit)
             if (pb[len] != cur[len])
-              break;
+            break;
         if (maxLen < len)
         {
-          *distances++ = maxLen = len;
-          *distances++ = delta - 1;
-          if (len == lenLimit)
-          {
+        *distances++ = maxLen = len;
+        *distances++ = delta - 1;
+        if (len == lenLimit)
+        {
             *ptr1 = pair[0];
             *ptr0 = pair[1];
             break;
-          }
         }
-      }
-      if (pb[len] < cur[len])
-      {
+        }
+    }
+    if (pb[len] < cur[len])
+    {
         *ptr1 = curMatch;
         ptr1 = pair + 1;
         curMatch = *ptr1;
         len1 = len;
-      }
-      else
-      {
+    }
+    else
+    {
         *ptr0 = curMatch;
         ptr0 = pair;
         curMatch = *ptr0;
         len0 = len;
-      }
+    }
     }
   }
   pos++;
@@ -320,60 +320,60 @@ void BtGetMatches(CMatchFinderMt *p, UInt32 *distances)
   {
     if (p->hashBufPos == p->hashBufPosLimit)
     {
-      MatchFinderMt_GetNextBlock_Hash(p);
-      distances[1] = numProcessed + p->hashNumAvail;
-      if (p->hashNumAvail >= p->numHashBytes)
+    MatchFinderMt_GetNextBlock_Hash(p);
+    distances[1] = numProcessed + p->hashNumAvail;
+    if (p->hashNumAvail >= p->numHashBytes)
         continue;
-      for (; p->hashNumAvail != 0; p->hashNumAvail--)
+    for (; p->hashNumAvail != 0; p->hashNumAvail--)
         distances[curPos++] = 0;
-      break;
+    break;
     }
     {
-      UInt32 size = p->hashBufPosLimit - p->hashBufPos;
-      UInt32 lenLimit = p->matchMaxLen;
-      UInt32 pos = p->pos;
-      UInt32 cyclicBufferPos = p->cyclicBufferPos;
-      if (lenLimit >= p->hashNumAvail)
+    UInt32 size = p->hashBufPosLimit - p->hashBufPos;
+    UInt32 lenLimit = p->matchMaxLen;
+    UInt32 pos = p->pos;
+    UInt32 cyclicBufferPos = p->cyclicBufferPos;
+    if (lenLimit >= p->hashNumAvail)
         lenLimit = p->hashNumAvail;
-      {
+    {
         UInt32 size2 = p->hashNumAvail - lenLimit + 1;
         if (size2 < size)
-          size = size2;
+        size = size2;
         size2 = p->cyclicBufferSize - cyclicBufferPos;
         if (size2 < size)
-          size = size2;
-      }
-      #ifndef MFMT_GM_INLINE
-      while (curPos < limit && size-- != 0)
-      {
+        size = size2;
+    }
+    #ifndef MFMT_GM_INLINE
+    while (curPos < limit && size-- != 0)
+    {
         UInt32 *startDistances = distances + curPos;
         UInt32 num = (UInt32)(GetMatchesSpec1(lenLimit, pos - p->hashBuf[p->hashBufPos++],
-          pos, p->buffer, p->son, cyclicBufferPos, p->cyclicBufferSize, p->cutValue,
-          startDistances + 1, p->numHashBytes - 1) - startDistances);
+        pos, p->buffer, p->son, cyclicBufferPos, p->cyclicBufferSize, p->cutValue,
+        startDistances + 1, p->numHashBytes - 1) - startDistances);
         *startDistances = num - 1;
         curPos += num;
         cyclicBufferPos++;
         pos++;
         p->buffer++;
-      }
-      #else
-      {
+    }
+    #else
+    {
         UInt32 posRes;
         curPos = limit - GetMatchesSpecN(lenLimit, pos, p->buffer, p->son, cyclicBufferPos, p->cyclicBufferSize, p->cutValue,
-          distances + curPos, p->numHashBytes - 1, p->hashBuf + p->hashBufPos, (Int32)(limit - curPos) , size, &posRes);
+        distances + curPos, p->numHashBytes - 1, p->hashBuf + p->hashBufPos, (Int32)(limit - curPos) , size, &posRes);
         p->hashBufPos += posRes - pos;
         cyclicBufferPos += posRes - pos;
         p->buffer += posRes - pos;
         pos = posRes;
-      }
-      #endif
+    }
+    #endif
 
-      numProcessed += pos - p->pos;
-      p->hashNumAvail -= pos - p->pos;
-      p->pos = pos;
-      if (cyclicBufferPos == p->cyclicBufferSize)
+    numProcessed += pos - p->pos;
+    p->hashNumAvail -= pos - p->pos;
+    p->pos = pos;
+    if (cyclicBufferPos == p->cyclicBufferSize)
         cyclicBufferPos = 0;
-      p->cyclicBufferPos = cyclicBufferPos;
+    p->cyclicBufferPos = cyclicBufferPos;
     }
   }
   distances[0] = curPos;
@@ -387,7 +387,7 @@ void BtFillBlock(CMatchFinderMt *p, UInt32 globalBlockIndex)
     CriticalSection_Enter(&sync->cs);
     sync->csWasEntered = True;
   }
-  
+
   BtGetMatches(p, p->btBuf + (globalBlockIndex & kMtBtNumBlocksMask) * kMtBtBlockSize);
 
   if (p->pos > kMtMaxValForNormalize - kMtBtBlockSize)
@@ -414,18 +414,18 @@ void BtThreadFunc(CMatchFinderMt *mt)
     Event_Set(&p->wasStarted);
     for (;;)
     {
-      if (p->exit)
+    if (p->exit)
         return;
-      if (p->stopWriting)
-      {
+    if (p->stopWriting)
+    {
         p->numProcessedBlocks = blockIndex;
         MtSync_StopWriting(&mt->hashSync);
         Event_Set(&p->wasStopped);
         break;
-      }
-      Semaphore_Wait(&p->freeSemaphore);
-      BtFillBlock(mt, blockIndex++);
-      Semaphore_Release1(&p->filledSemaphore);
+    }
+    Semaphore_Wait(&p->freeSemaphore);
+    BtFillBlock(mt, blockIndex++);
+    Semaphore_Release1(&p->filledSemaphore);
     }
   }
 }
@@ -474,7 +474,7 @@ SRes MatchFinderMt_Create(CMatchFinderMt *p, UInt32 historySize, UInt32 keepAddB
   {
     p->hashBuf = (UInt32 *)alloc->Alloc(alloc, (kHashBufferSize + kBtBufferSize) * sizeof(UInt32));
     if (p->hashBuf == 0)
-      return SZ_ERROR_MEM;
+    return SZ_ERROR_MEM;
     p->btBuf = p->hashBuf + kHashBufferSize;
   }
   keepAddBufferBefore += (kHashBufferSize + kBtBufferSize);
@@ -562,15 +562,15 @@ UInt32 * MixMatches2(CMatchFinderMt *p, UInt32 matchMinPos, UInt32 *distances)
   const Byte *cur = p->pointerToCurPos;
   UInt32 lzPos = p->lzPos;
   MT_HASH2_CALC
-      
+
   curMatch2 = hash[hash2Value];
   hash[hash2Value] = lzPos;
 
   if (curMatch2 >= matchMinPos)
     if (cur[(ptrdiff_t)curMatch2 - lzPos] == cur[0])
     {
-      *distances++ = 2;
-      *distances++ = lzPos - curMatch2 - 1;
+    *distances++ = 2;
+    *distances++ = lzPos - curMatch2 - 1;
     }
   return distances;
 }
@@ -585,7 +585,7 @@ UInt32 * MixMatches3(CMatchFinderMt *p, UInt32 matchMinPos, UInt32 *distances)
 
   curMatch2 = hash[                hash2Value];
   curMatch3 = hash[kFix3HashSize + hash3Value];
-  
+
   hash[                hash2Value] =
   hash[kFix3HashSize + hash3Value] =
     lzPos;
@@ -595,8 +595,8 @@ UInt32 * MixMatches3(CMatchFinderMt *p, UInt32 matchMinPos, UInt32 *distances)
     distances[1] = lzPos - curMatch2 - 1;
     if (cur[(ptrdiff_t)curMatch2 - lzPos + 2] == cur[2])
     {
-      distances[0] = 3;
-      return distances + 2;
+    distances[0] = 3;
+    return distances + 2;
     }
     distances[0] = 2;
     distances += 2;
@@ -617,11 +617,11 @@ UInt32 *MixMatches4(CMatchFinderMt *p, UInt32 matchMinPos, UInt32 *distances)
   const Byte *cur = p->pointerToCurPos;
   UInt32 lzPos = p->lzPos;
   MT_HASH4_CALC
-      
+
   curMatch2 = hash[                hash2Value];
   curMatch3 = hash[kFix3HashSize + hash3Value];
   curMatch4 = hash[kFix4HashSize + hash4Value];
-  
+
   hash[                hash2Value] =
   hash[kFix3HashSize + hash3Value] =
   hash[kFix4HashSize + hash4Value] =
@@ -632,8 +632,8 @@ UInt32 *MixMatches4(CMatchFinderMt *p, UInt32 matchMinPos, UInt32 *distances)
     distances[1] = lzPos - curMatch2 - 1;
     if (cur[(ptrdiff_t)curMatch2 - lzPos + 2] == cur[2])
     {
-      distances[0] =  (cur[(ptrdiff_t)curMatch2 - lzPos + 3] == cur[3]) ? 4 : 3;
-      return distances + 2;
+    distances[0] =  (cur[(ptrdiff_t)curMatch2 - lzPos + 3] == cur[3]) ? 4 : 3;
+    return distances + 2;
     }
     distances[0] = 2;
     distances += 2;
@@ -643,8 +643,8 @@ UInt32 *MixMatches4(CMatchFinderMt *p, UInt32 matchMinPos, UInt32 *distances)
     distances[1] = lzPos - curMatch3 - 1;
     if (cur[(ptrdiff_t)curMatch3 - lzPos + 3] == cur[3])
     {
-      distances[0] = 4;
-      return distances + 2;
+    distances[0] = 4;
+    return distances + 2;
     }
     distances[0] = 3;
     distances += 2;
@@ -652,12 +652,12 @@ UInt32 *MixMatches4(CMatchFinderMt *p, UInt32 matchMinPos, UInt32 *distances)
 
   if (curMatch4 >= matchMinPos)
     if (
-      cur[(ptrdiff_t)curMatch4 - lzPos] == cur[0] &&
-      cur[(ptrdiff_t)curMatch4 - lzPos + 3] == cur[3]
-      )
+    cur[(ptrdiff_t)curMatch4 - lzPos] == cur[0] &&
+    cur[(ptrdiff_t)curMatch4 - lzPos + 3] == cur[3]
+    )
     {
-      *distances++ = 4;
-      *distances++ = lzPos - curMatch4 - 1;
+    *distances++ = 4;
+    *distances++ = lzPos - curMatch4 - 1;
     }
   return distances;
 }
@@ -675,8 +675,8 @@ UInt32 MatchFinderMt2_GetMatches(CMatchFinderMt *p, UInt32 *distances)
     UInt32 i;
     for (i = 0; i < len; i += 2)
     {
-      *distances++ = *btBuf++;
-      *distances++ = *btBuf++;
+    *distances++ = *btBuf++;
+    *distances++ = *btBuf++;
     }
   }
   INCREASE_LZ_POS
@@ -692,7 +692,7 @@ UInt32 MatchFinderMt_GetMatches(CMatchFinderMt *p, UInt32 *distances)
   if (len == 0)
   {
     if (p->btNumAvailBytes-- >= 4)
-      len = (UInt32)(p->MixMatchesFunc(p, p->lzPos - p->historySize, distances) - (distances));
+    len = (UInt32)(p->MixMatchesFunc(p, p->lzPos - p->historySize, distances) - (distances));
   }
   else
   {
@@ -702,8 +702,8 @@ UInt32 MatchFinderMt_GetMatches(CMatchFinderMt *p, UInt32 *distances)
     distances2 = p->MixMatchesFunc(p, p->lzPos - btBuf[1], distances);
     do
     {
-      *distances2++ = *btBuf++;
-      *distances2++ = *btBuf++;
+    *distances2++ = *btBuf++;
+    *distances2++ = *btBuf++;
     }
     while ((len -= 2) != 0);
     len  = (UInt32)(distances2 - (distances));
@@ -725,19 +725,19 @@ void MatchFinderMt0_Skip(CMatchFinderMt *p, UInt32 num)
 void MatchFinderMt2_Skip(CMatchFinderMt *p, UInt32 num)
 {
   SKIP_HEADER_MT(2)
-      UInt32 hash2Value;
-      MT_HASH2_CALC
-      hash[hash2Value] = p->lzPos;
+    UInt32 hash2Value;
+    MT_HASH2_CALC
+    hash[hash2Value] = p->lzPos;
   SKIP_FOOTER_MT
 }
 
 void MatchFinderMt3_Skip(CMatchFinderMt *p, UInt32 num)
 {
   SKIP_HEADER_MT(3)
-      UInt32 hash2Value, hash3Value;
-      MT_HASH3_CALC
-      hash[kFix3HashSize + hash3Value] =
-      hash[                hash2Value] =
+    UInt32 hash2Value, hash3Value;
+    MT_HASH3_CALC
+    hash[kFix3HashSize + hash3Value] =
+    hash[                hash2Value] =
         p->lzPos;
   SKIP_FOOTER_MT
 }
@@ -746,11 +746,11 @@ void MatchFinderMt3_Skip(CMatchFinderMt *p, UInt32 num)
 void MatchFinderMt4_Skip(CMatchFinderMt *p, UInt32 num)
 {
   SKIP_HEADER_MT(4)
-      UInt32 hash2Value, hash3Value, hash4Value;
-      MT_HASH4_CALC
-      hash[kFix4HashSize + hash4Value] =
-      hash[kFix3HashSize + hash3Value] =
-      hash[                hash2Value] =
+    UInt32 hash2Value, hash3Value, hash4Value;
+    MT_HASH4_CALC
+    hash[kFix4HashSize + hash4Value] =
+    hash[kFix3HashSize + hash3Value] =
+    hash[                hash2Value] =
         p->lzPos;
   SKIP_FOOTER_MT
 }
@@ -766,29 +766,29 @@ void MatchFinderMt_CreateVTable(CMatchFinderMt *p, IMatchFinder *vTable)
   switch(p->MatchFinder->numHashBytes)
   {
     case 2:
-      p->GetHeadsFunc = GetHeads2;
-      p->MixMatchesFunc = (Mf_Mix_Matches)0;
-      vTable->Skip = (Mf_Skip_Func)MatchFinderMt0_Skip;
-      vTable->GetMatches = (Mf_GetMatches_Func)MatchFinderMt2_GetMatches;
-      break;
+    p->GetHeadsFunc = GetHeads2;
+    p->MixMatchesFunc = (Mf_Mix_Matches)0;
+    vTable->Skip = (Mf_Skip_Func)MatchFinderMt0_Skip;
+    vTable->GetMatches = (Mf_GetMatches_Func)MatchFinderMt2_GetMatches;
+    break;
     case 3:
-      p->GetHeadsFunc = GetHeads3;
-      p->MixMatchesFunc = (Mf_Mix_Matches)MixMatches2;
-      vTable->Skip = (Mf_Skip_Func)MatchFinderMt2_Skip;
-      break;
+    p->GetHeadsFunc = GetHeads3;
+    p->MixMatchesFunc = (Mf_Mix_Matches)MixMatches2;
+    vTable->Skip = (Mf_Skip_Func)MatchFinderMt2_Skip;
+    break;
     default:
     /* case 4: */
-      p->GetHeadsFunc = p->MatchFinder->bigHash ? GetHeads4b : GetHeads4;
-      /* p->GetHeadsFunc = GetHeads4; */
-      p->MixMatchesFunc = (Mf_Mix_Matches)MixMatches3;
-      vTable->Skip = (Mf_Skip_Func)MatchFinderMt3_Skip;
-      break;
+    p->GetHeadsFunc = p->MatchFinder->bigHash ? GetHeads4b : GetHeads4;
+    /* p->GetHeadsFunc = GetHeads4; */
+    p->MixMatchesFunc = (Mf_Mix_Matches)MixMatches3;
+    vTable->Skip = (Mf_Skip_Func)MatchFinderMt3_Skip;
+    break;
     /*
     default:
-      p->GetHeadsFunc = GetHeads5;
-      p->MixMatchesFunc = (Mf_Mix_Matches)MixMatches4;
-      vTable->Skip = (Mf_Skip_Func)MatchFinderMt4_Skip;
-      break;
+    p->GetHeadsFunc = GetHeads5;
+    p->MixMatchesFunc = (Mf_Mix_Matches)MixMatches4;
+    vTable->Skip = (Mf_Skip_Func)MatchFinderMt4_Skip;
+    break;
     */
   }
 }

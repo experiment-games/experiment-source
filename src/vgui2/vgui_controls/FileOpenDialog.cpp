@@ -80,7 +80,7 @@ static int ListFileNameSortFunc( ListPanel *pPanel, const ListPanelItem &item1, 
     int num2 = Q_atoi( string2 );
 
     if ( num1 != 0 &&
-         num2 != 0 )
+        num2 != 0 )
     {
         if ( num1 < num2 )
             return -1;
@@ -204,7 +204,7 @@ namespace vgui
 
 class FileCompletionMenu : public Menu
 {
-   public:
+    public:
     FileCompletionMenu( Panel *parent, const char *panelName )
         : Menu( parent, panelName )
     {
@@ -224,7 +224,7 @@ class FileCompletionEdit : public TextEntry
 {
     DECLARE_CLASS_SIMPLE( FileCompletionEdit, TextEntry );
 
-   public:
+    public:
     FileCompletionEdit( Panel *parent );
     ~FileCompletionEdit();
 
@@ -242,7 +242,7 @@ class FileCompletionEdit : public TextEntry
     virtual void OnKeyCodeTyped( KeyCode code );
     MESSAGE_FUNC_INT( OnMenuItemHighlight, "MenuItemHighlight", itemID );
 
-   private:
+    private:
     FileCompletionMenu *m_pDropDown;
 };
 
@@ -987,7 +987,7 @@ void FileOpenDialog::NewFolder( char const *folderName )
     {
         Q_MakeAbsolutePath( pFullPath, sizeof( pFullPath ), pNewFolderName, pCurrentDirectory );
         if ( !g_pFullFileSystem->FileExists( pFullPath, NULL ) &&
-             !g_pFullFileSystem->IsDirectory( pFullPath, NULL ) )
+            !g_pFullFileSystem->IsDirectory( pFullPath, NULL ) )
         {
             g_pFullFileSystem->CreateDirHierarchy( pFullPath, NULL );
             m_pFileNameEdit->SetText( pNewFolderName );
@@ -1040,7 +1040,7 @@ void FileOpenDialog::ValidatePath()
 
     struct _stat buf;
     if ( ( 0 == _stat( fullpath, &buf ) ) &&
-         ( 0 != ( buf.st_mode & S_IFDIR ) ) )
+        ( 0 != ( buf.st_mode & S_IFDIR ) ) )
     {
         Q_AppendSlash( fullpath, sizeof( fullpath ) );
         Q_strncpy( m_szLastPath, fullpath, sizeof( m_szLastPath ) );
@@ -1511,7 +1511,7 @@ void FileOpenDialog::OnOpen()
 
     // If the name specified is a directory, then change directory
     if ( g_pFullFileSystem->IsDirectory( pFullPath, NULL ) &&
-         ( !IsOSX() || ( IsOSX() && !Q_stristr( pFullPath, ".app" ) ) ) )
+        ( !IsOSX() || ( IsOSX() && !Q_stristr( pFullPath, ".app" ) ) ) )
     {
         // it's a directory; change to the specified directory
         if ( !bSpecifiedDirectory )

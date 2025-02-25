@@ -209,7 +209,7 @@ static int os_clock (lua_State *L) {
 static void setfield (lua_State *L, const char *key, int value, int delta) {
   #if (defined(LUA_NUMTIME) && LUA_MAXINTEGER <= INT_MAX)
     if (l_unlikely(value > LUA_MAXINTEGER - delta))
-      luaL_error(L, "field '%s' is out-of-bound", key);
+    luaL_error(L, "field '%s' is out-of-bound", key);
   #endif
   lua_pushinteger(L, (lua_Integer)value + delta);
   lua_setfield(L, -2, key);
@@ -254,14 +254,14 @@ static int getfield (lua_State *L, const char *key, int d, int delta) {
   lua_Integer res = lua_tointegerx(L, -1, &isnum);
   if (!isnum) {  /* field is not an integer? */
     if (l_unlikely(t != LUA_TNIL))  /* some other value? */
-      return luaL_error(L, "field '%s' is not an integer", key);
+    return luaL_error(L, "field '%s' is not an integer", key);
     else if (l_unlikely(d < 0))  /* absent field; no default? */
-      return luaL_error(L, "field '%s' missing in date table", key);
+    return luaL_error(L, "field '%s' missing in date table", key);
     res = d;
   }
   else {
     if (!(res >= 0 ? res - delta <= INT_MAX : INT_MIN + delta <= res))
-      return luaL_error(L, "field '%s' is out-of-bound", key);
+    return luaL_error(L, "field '%s' is out-of-bound", key);
     res -= delta;
   }
   lua_pop(L, 1);
@@ -275,11 +275,11 @@ static const char *checkoption (lua_State *L, const char *conv,
   int oplen = 1;  /* length of options being checked */
   for (; *option != '\0' && oplen <= convlen; option += oplen) {
     if (*option == '|')  /* next block? */
-      oplen++;  /* will check options with next length (+1) */
+    oplen++;  /* will check options with next length (+1) */
     else if (memcmp(conv, option, oplen) == 0) {  /* match? */
-      memcpy(buff, conv, oplen);  /* copy valid option to buffer */
-      buff[oplen] = '\0';
-      return conv + oplen;  /* return next item */
+    memcpy(buff, conv, oplen);  /* copy valid option to buffer */
+    buff[oplen] = '\0';
+    return conv + oplen;  /* return next item */
     }
   }
   luaL_argerror(L, 1,
@@ -313,7 +313,7 @@ static int os_date (lua_State *L) {
     stm = l_localtime(&t, &tmr);
   if (stm == NULL)  /* invalid date? */
     return luaL_error(L,
-                 "date result cannot be represented in this installation");
+                "date result cannot be represented in this installation");
   if (strcmp(s, "*t") == 0) {
     lua_createtable(L, 0, 9);  /* 9 = number of fields */
     setallfields(L, stm);
@@ -324,16 +324,16 @@ static int os_date (lua_State *L) {
     cc[0] = '%';
     luaL_buffinit(L, &b);
     while (s < se) {
-      if (*s != '%')  /* not a conversion specifier? */
+    if (*s != '%')  /* not a conversion specifier? */
         luaL_addchar(&b, *s++);
-      else {
+    else {
         size_t reslen;
         char *buff = luaL_prepbuffsize(&b, SIZETIMEFMT);
         s++;  /* skip '%' */
         s = checkoption(L, s, se - s, cc + 1);  /* copy specifier to 'cc' */
         reslen = strftime(buff, SIZETIMEFMT, cc, stm);
         luaL_addsize(&b, reslen);
-      }
+    }
     }
     luaL_pushresult(&b);
   }
@@ -361,7 +361,7 @@ static int os_time (lua_State *L) {
   }
   if (t != (time_t)(l_timet)t || t == (time_t)(-1))
     return luaL_error(L,
-                  "time result cannot be represented in this installation");
+                "time result cannot be represented in this installation");
   l_pushtime(L, t);
   return 1;
 }
@@ -379,9 +379,9 @@ static int os_difftime (lua_State *L) {
 
 static int os_setlocale (lua_State *L) {
   static const int cat[] = {LC_ALL, LC_COLLATE, LC_CTYPE, LC_MONETARY,
-                      LC_NUMERIC, LC_TIME};
+                    LC_NUMERIC, LC_TIME};
   static const char *const catnames[] = {"all", "collate", "ctype", "monetary",
-     "numeric", "time", NULL};
+    "numeric", "time", NULL};
   const char *l = luaL_optstring(L, 1, NULL);
   int op = luaL_checkoption(L, 2, "all", catnames);
   lua_pushstring(L, setlocale(cat[op], l));
@@ -425,4 +425,3 @@ LUAMOD_API int luaopen_os (lua_State *L) {
   luaL_newlib(L, syslib);
   return 1;
 }
-

@@ -34,7 +34,7 @@ typedef unsigned long HScheme;
 //-----------------------------------------------------------------------------
 class ClientModeExperimentNormal : public ClientModeShared
 {
-   public:
+    public:
     DECLARE_CLASS( ClientModeExperimentNormal, ClientModeShared );
 
     ClientModeExperimentNormal();

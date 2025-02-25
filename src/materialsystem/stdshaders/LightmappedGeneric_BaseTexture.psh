@@ -11,4 +11,3 @@ ps.1.1
 ; Get the color from the texture
 tex t0
 mul r0, t0, c0
-

@@ -63,7 +63,7 @@ class CGameEvent;
 
 abstract_class IGameEvent
 {
-   public:
+    public:
     virtual ~IGameEvent(){};
     virtual const char *GetName() const = 0;  // get event name
 
@@ -89,7 +89,7 @@ abstract_class IGameEvent
 
 abstract_class IGameEventListener2
 {
-   public:
+    public:
     virtual ~IGameEventListener2( void ){};
 
     // FireEvent is called by EventManager if event just occured
@@ -99,7 +99,7 @@ abstract_class IGameEventListener2
 
 abstract_class IGameEventManager2 : public IBaseInterface
 {
-   public:
+    public:
     virtual ~IGameEventManager2( void ){};
 
     // load game event descriptions from a file eg "resource\gameevents.res"
@@ -142,7 +142,7 @@ abstract_class IGameEventManager2 : public IBaseInterface
 
 abstract_class IGameEventListener
 {
-   public:
+    public:
     virtual ~IGameEventListener( void ){};
 
     // FireEvent is called by EventManager if event just occured
@@ -152,7 +152,7 @@ abstract_class IGameEventListener
 
 abstract_class IGameEventManager : public IBaseInterface
 {
-   public:
+    public:
     virtual ~IGameEventManager( void ){};
 
     // load game event descriptions from a file eg "resource\gameevents.res"

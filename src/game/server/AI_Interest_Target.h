@@ -21,7 +21,7 @@
 
 class CAI_InterestTarget_t
 {
-   public:
+    public:
     enum CAI_InterestTarget_e
     {
         LOOKAT_ENTITY = 0,
@@ -29,13 +29,13 @@ class CAI_InterestTarget_t
         LOOKAT_BOTH
     };
 
-   public:
+    public:
     bool IsThis( CBaseEntity *pThis );
     const Vector &GetPosition( void );
     bool IsActive( void );
     float Interest( void );
 
-   public:
+    public:
     CAI_InterestTarget_e m_eType;  // ????
 
     EHANDLE m_hTarget;
@@ -50,7 +50,7 @@ class CAI_InterestTarget_t
 
 class CAI_InterestTarget : public CUtlVector< CAI_InterestTarget_t >
 {
-   public:
+    public:
     void Add( CBaseEntity *pTarget, float flImportance, float flDuration, float flRamp );
     void Add( const Vector &vecPosition, float flImportance, float flDuration, float flRamp );
     void Add( CBaseEntity *pTarget, const Vector &vecPosition, float flImportance, float flDuration, float flRamp );
@@ -77,7 +77,7 @@ class CAI_InterestTarget : public CUtlVector< CAI_InterestTarget_t >
         }
     };
 
-   private:
+    private:
     void Add( CAI_InterestTarget_t::CAI_InterestTarget_e type, CBaseEntity *pTarget, const Vector &vecPosition, float flImportance, float flDuration, float flRamp );
 };
 

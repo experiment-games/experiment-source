@@ -17,7 +17,7 @@
 
 class CBaseReplaySerializeable : public IReplaySerializeable
 {
-   public:
+    public:
     CBaseReplaySerializeable();
 
     virtual void SetHandle( ReplayHandle_t h );
@@ -33,7 +33,7 @@ class CBaseReplaySerializeable : public IReplaySerializeable
     virtual void OnUnload();
     virtual void OnAddedToDirtyList();
 
-   private:
+    private:
     ReplayHandle_t m_hThis;
     bool m_bLocked;
 };

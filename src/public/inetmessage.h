@@ -19,7 +19,7 @@ class INetChannel;
 
 class INetMessage
 {
-   public:
+    public:
     virtual ~INetMessage(){};
 
     // Use these to setup who can hear whose voice.

@@ -49,8 +49,8 @@ void CScriptedClientLuaPanel::CreateDefaultPanels( void )
 {
     // Was a nice idea, but is called on game init and not level init
 #if 0
-	LUA_CALL_HOOK_BEGIN( "CreateDefaultPanels" );
-	LUA_CALL_HOOK_END( 0, 0 );
+    LUA_CALL_HOOK_BEGIN( "CreateDefaultPanels" );
+    LUA_CALL_HOOK_END( 0, 0 );
 #endif
 }
 

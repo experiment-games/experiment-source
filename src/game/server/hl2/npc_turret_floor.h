@@ -55,7 +55,7 @@ class CNPC_FloorTurret : public CNPCBaseInteractive< CAI_BaseNPC >, public CDefa
 {
     DECLARE_CLASS( CNPC_FloorTurret, CNPCBaseInteractive< CAI_BaseNPC > );
 
-   public:
+    public:
     CNPC_FloorTurret( void );
 
     virtual void Precache( void );
@@ -210,7 +210,7 @@ class CNPC_FloorTurret : public CNPCBaseInteractive< CAI_BaseNPC >, public CDefa
     static float fMaxTipControllerVelocity;
     static float fMaxTipControllerAngularVelocity;
 
-   protected:
+    protected:
     virtual bool PreThink( turretState_e state );
     virtual void Shoot( const Vector &vecSrc, const Vector &vecDirToEnemy, bool bStrict = false );
     virtual void SetEyeState( eyeState_t state );
@@ -231,7 +231,7 @@ class CNPC_FloorTurret : public CNPCBaseInteractive< CAI_BaseNPC >, public CDefa
     void DryFire( void );
     void UpdateMuzzleMatrix();
 
-   protected:
+    protected:
     matrix3x4_t m_muzzleToWorld;
     int m_muzzleToWorldTick;
     int m_iAmmoType;
@@ -297,7 +297,7 @@ class CTurretTipController : public CPointEntity, public IMotionEvent
     DECLARE_CLASS( CTurretTipController, CPointEntity );
     DECLARE_DATADESC();
 
-   public:
+    public:
     ~CTurretTipController( void );
     void Spawn( void );
     void Activate( void );
@@ -325,7 +325,7 @@ class CTurretTipController : public CPointEntity, public IMotionEvent
     // IMotionEvent
     virtual simresult_e Simulate( IPhysicsMotionController *pController, IPhysicsObject *pObject, float deltaTime, Vector &linear, AngularImpulse &angular );
 
-   private:
+    private:
     bool m_bEnabled;
     float m_flSuspendTime;
     Vector m_worldGoalAxis;

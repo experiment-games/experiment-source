@@ -55,7 +55,7 @@ enum EMatchMakingServerResponse
 // namely: its IP, its connection port, and its query port.
 class servernetadr_t
 {
-   public:
+    public:
     servernetadr_t()
         : m_usConnectionPort( 0 ), m_usQueryPort( 0 ), m_unIP( 0 ) {}
 
@@ -86,7 +86,7 @@ class servernetadr_t
         m_unIP = that.m_unIP;
     }
 
-   private:
+    private:
     const char *ToString( uint32 unIP, uint16 usPort ) const;
     uint16 m_usConnectionPort;  // (in HOST byte order)
     uint16 m_usQueryPort;
@@ -166,13 +166,13 @@ inline bool servernetadr_t::operator<( const servernetadr_t &netadr ) const
 //-----------------------------------------------------------------------------
 class gameserveritem_t
 {
-   public:
+    public:
     gameserveritem_t();
 
     const char *GetName() const;
     void SetName( const char *pName );
 
-   public:
+    public:
     servernetadr_t m_NetAdr;                                     ///< IP/Query Port/Connection Port for this server
     int m_nPing;                                                 ///< current ping time in milliseconds
     bool m_bHadSuccessfulResponse;                               ///< server has responded successfully in the past
@@ -189,12 +189,12 @@ class gameserveritem_t
     uint32 m_ulTimeLastPlayed;                                   ///< time (in unix time) when this server was last played on (for favorite/history servers)
     int m_nServerVersion;                                        ///< server version as reported to Steam
 
-   private:
+    private:
     /// Game server name
     char m_szServerName[k_cbMaxGameServerName];
 
     // For data added after SteamMatchMaking001 add it here
-   public:
+    public:
     /// the tags this server exposes
     char m_szGameTags[k_cbMaxGameServerTags];
 

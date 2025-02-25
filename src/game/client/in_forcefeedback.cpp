@@ -37,7 +37,7 @@ typedef CUtlVector< LPDIRECTINPUTEFFECT > vecEffectPtr_t;
 
 class EffectMap_t
 {
-   public:
+    public:
     FORCEFEEDBACK_t effect;
     char const *effectfile;
     vecEffectPtr_t *pVecEffectPtr;
@@ -656,7 +656,7 @@ void CInput::ForceFeedback_Think()
     if ( FAILED( hr ) )
     {
         if ( hr == DIERR_INPUTLOST ||
-             hr == DIERR_NOTACQUIRED )
+            hr == DIERR_NOTACQUIRED )
         {
             ForceFeedback_Reaquire();
         }

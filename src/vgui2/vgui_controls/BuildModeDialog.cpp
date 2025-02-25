@@ -53,7 +53,7 @@ class CSmallTextEntry : public TextEntry
 {
     DECLARE_CLASS_SIMPLE( CSmallTextEntry, TextEntry );
 
-   public:
+    public:
     CSmallTextEntry( Panel *parent, char const *panelName )
         : BaseClass( parent, panelName )
     {
@@ -72,7 +72,7 @@ class CSmallTextEntry : public TextEntry
 //-----------------------------------------------------------------------------
 class BuildModeDialog::PanelList
 {
-   public:
+    public:
     CUtlVector< PanelItem_t > m_PanelList;
 
     void AddItem( Panel *label, TextEntry *edit, ComboBox *combo, Button *button, const char *name, int type )
@@ -113,7 +113,7 @@ class BuildModeLocalizedStringEditDialog : public Frame
 {
     DECLARE_CLASS_SIMPLE( BuildModeLocalizedStringEditDialog, Frame );
 
-   public:
+    public:
 #pragma warning( disable : 4355 )
     BuildModeLocalizedStringEditDialog()
         : Frame( this, NULL )
@@ -157,7 +157,7 @@ class BuildModeLocalizedStringEditDialog : public Frame
         }
     }
 
-   private:
+    private:
     virtual void PerformLayout()
     {
     }
@@ -190,13 +190,13 @@ class BuildModeLocalizedStringEditDialog : public Frame
 
 class CBuildModeDialogMgr
 {
-   public:
+    public:
     void Add( BuildModeDialog *pDlg );
     void Remove( BuildModeDialog *pDlg );
 
     int Count() const;
 
-   private:
+    private:
     CUtlVector< BuildModeDialog * > m_vecBuildDialogs;
 };
 
@@ -286,10 +286,10 @@ class CBuildModeNavCombo : public ComboBox
 {
     DECLARE_CLASS_SIMPLE( CBuildModeNavCombo, ComboBox );
 
-   public:
+    public:
     CBuildModeNavCombo( Panel *parent, const char *panelName, int numLines, bool allowEdit, bool getParents, Panel *context )
         : BaseClass( parent, panelName, numLines, allowEdit ),
-          m_bParents( getParents )
+        m_bParents( getParents )
     {
         m_hContext = context;
     }
@@ -334,7 +334,7 @@ class CBuildModeNavCombo : public ComboBox
         }
     }
 
-   private:
+    private:
     bool m_bParents;
     vgui::PHandle m_hContext;
 };

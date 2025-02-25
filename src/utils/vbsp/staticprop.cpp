@@ -147,7 +147,7 @@ bool LoadStudioModel( char const* pModelName, char const* pEntityType, CUtlBuffe
 
     // Check that it's valid
     if ( strncmp( ( const char* )buf.PeekGet(), "IDST", 4 ) &&
-         strncmp( ( const char* )buf.PeekGet(), "IDAG", 4 ) )
+        strncmp( ( const char* )buf.PeekGet(), "IDAG", 4 ) )
     {
         return false;
     }
@@ -397,25 +397,25 @@ static void ComputeConvexHullLeaves_R( int node, int depth, int* pNodeList, Vect
             ++depth;
 
             ComputeConvexHullLeaves_R( pNode->children[1],
-                                       depth,
-                                       pNodeList,
-                                       mins,
-                                       maxs,
-                                       origin,
-                                       angles,
-                                       pCollide,
-                                       leafList );
+                                        depth,
+                                        pNodeList,
+                                        mins,
+                                        maxs,
+                                        origin,
+                                        angles,
+                                        pCollide,
+                                        leafList );
 
             pNodeList[depth - 1] = -node - 1;
             ComputeConvexHullLeaves_R( pNode->children[0],
-                                       depth,
-                                       pNodeList,
-                                       mins,
-                                       maxs,
-                                       origin,
-                                       angles,
-                                       pCollide,
-                                       leafList );
+                                        depth,
+                                        pNodeList,
+                                        mins,
+                                        maxs,
+                                        origin,
+                                        angles,
+                                        pCollide,
+                                        leafList );
             return;
         }
     }

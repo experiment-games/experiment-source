@@ -38,9 +38,9 @@ void Lzma2Enc_Destroy( CLzma2EncHandle p );
 SRes Lzma2Enc_SetProps( CLzma2EncHandle p, const CLzma2EncProps *props );
 Byte Lzma2Enc_WriteProperties( CLzma2EncHandle p );
 SRes Lzma2Enc_Encode( CLzma2EncHandle p,
-                      ISeqOutStream *outStream,
-                      ISeqInStream *inStream,
-                      ICompressProgress *progress );
+                    ISeqOutStream *outStream,
+                    ISeqInStream *inStream,
+                    ICompressProgress *progress );
 
 /* ---------- One Call Interface ---------- */
 

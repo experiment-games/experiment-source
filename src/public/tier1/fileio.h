@@ -30,7 +30,7 @@ const int64 k_nGigabyte = k_nMegabyte * k_nKiloByte;
 
 class CPathString
 {
-   public:
+    public:
     // Constructors: Automatically fixes slashes and removes double slashes when the object is
     // constructed, and then knows how to append magic \\?\ on Windows for unicode paths
     CPathString( const char *pchUTF8Path );
@@ -42,7 +42,7 @@ class CPathString
     // Gets wchar_t based path, with \\?\ pre-pended (allowing long paths on Win32, should only be used with unicode aware filesystem calls)
     const wchar_t *GetWCharPathPrePended();
 
-   private:
+    private:
     void PopulateWCharPath();
 
     char *m_pchUTF8Path;
@@ -55,7 +55,7 @@ class CPathString
 //-----------------------------------------------------------------------------
 class CDirWatcher
 {
-   public:
+    public:
     CDirWatcher();
     ~CDirWatcher();
 
@@ -69,18 +69,18 @@ class CDirWatcher
     void Validate( CValidator &validator, const char *pchName );
 #endif
 
-   private:
+    private:
     CUtlLinkedList< CUtlString > m_listChangedFiles;
     void *m_hFile;
     void *m_pOverlapped;
     void *m_pFileInfo;
 #ifdef OSX
-   public:
+    public:
     struct timespec m_modTime;
     void AddFileToChangeList( const char *pchFile );
     CUtlString m_BaseDir;
 
-   private:
+    private:
     void *m_WatcherStream;
 #endif
     friend class CDirWatcherFriend;

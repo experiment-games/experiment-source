@@ -9,7 +9,7 @@
 
 class SixenseGestureBindings
 {
-   public:
+    public:
     SixenseGestureBindings();
 
     // Add a new binding. release_command can be empty. If press_command starts with '+', a release_command is generated with '-'.
@@ -43,7 +43,7 @@ class SixenseGestureBindings
     // Allow per-game authorization of commmands in general
     bool AllowCommand( char * );
 
-   protected:
+    protected:
     typedef struct
     {
         int m_Action;
@@ -67,7 +67,7 @@ class SixenseGestureBindings
     // Help deallocate a binding
     void FreeStrings( GestureBinding binding );
 
-   private:
+    private:
     CUtlLinkedList< GestureBinding > m_GestureBindingList;
 };
 

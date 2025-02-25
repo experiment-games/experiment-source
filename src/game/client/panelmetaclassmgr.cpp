@@ -172,7 +172,7 @@ vgui::Panel* CPanelWrapper::GetPanel()
 //-----------------------------------------------------------------------------
 class CPanelMetaClassMgrImp : public IPanelMetaClassMgr
 {
-   public:
+    public:
     // constructor, destructor
     CPanelMetaClassMgrImp();
     virtual ~CPanelMetaClassMgrImp();
@@ -181,13 +181,13 @@ class CPanelMetaClassMgrImp : public IPanelMetaClassMgr
     virtual void LoadMetaClassDefinitionFile( const char* pLevelName );
     virtual void InstallPanelType( const char* pPanelName, IPanelFactory* pFactory );
     virtual vgui::Panel* CreatePanelMetaClass( const char* pMetaClassName,
-                                               int sortorder,
-                                               void* pInitData,
-                                               vgui::Panel* pParent,
-                                               const char* pChainName );
+                                                int sortorder,
+                                                void* pInitData,
+                                                vgui::Panel* pParent,
+                                                const char* pChainName );
     virtual void DestroyPanelMetaClass( vgui::Panel* pPanel );
 
-   private:
+    private:
     struct MetaClassDict_t
     {
         unsigned short m_KeyValueIndex;
@@ -264,9 +264,9 @@ void CPanelMetaClassMgrImp::InstallPanelType( const char* pPanelName, IPanelFact
 // Parse a single metaclass
 //-----------------------------------------------------------------------------
 bool CPanelMetaClassMgrImp::ParseSingleMetaClass( const char* pFileName,
-                                                  const char* pMetaClassName,
-                                                  KeyValues* pMetaClassValues,
-                                                  int keyValueIndex )
+                                                const char* pMetaClassName,
+                                                KeyValues* pMetaClassValues,
+                                                int keyValueIndex )
 {
     // Complain about duplicately defined metaclass names...
     if ( m_MetaClassDict.Find( pMetaClassName ) != m_MetaClassDict.InvalidIndex() )
@@ -402,10 +402,10 @@ static void KeyValueChainRecursive( KeyValues* pKeyValues, const char* pSectionN
 // Create, destroy panel...
 //-----------------------------------------------------------------------------
 vgui::Panel* CPanelMetaClassMgrImp::CreatePanelMetaClass( const char* pMetaClassName,
-                                                          int sortorder,
-                                                          void* pInitData,
-                                                          vgui::Panel* pParent,
-                                                          const char* pChainName )
+                                                        int sortorder,
+                                                        void* pInitData,
+                                                        vgui::Panel* pParent,
+                                                        const char* pChainName )
 {
     // Search for the metaclass name
     int i = m_MetaClassDict.Find( pMetaClassName );

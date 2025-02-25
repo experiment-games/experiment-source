@@ -314,57 +314,57 @@ void CQC_EyesDlg::GenerateQCText()
 
     AddText( "//head controllers\n" );
     AddText( "$attachment \"eyes\" \"ValveBiped.Bip01_Head1\" %.2f %.2f %.2f absolute\n",
-             p.m_flLeftEye[0] - ( ( fabs( p.m_flRightEye[0] ) + p.m_flLeftEye[0] ) * 0.5 ),
-             ( p.m_flLeftEye[1] + p.m_flRightEye[1] ) * 0.5,
-             ( p.m_flLeftEye[2] + p.m_flRightEye[2] ) * 0.5 );
+            p.m_flLeftEye[0] - ( ( fabs( p.m_flRightEye[0] ) + p.m_flLeftEye[0] ) * 0.5 ),
+            ( p.m_flLeftEye[1] + p.m_flRightEye[1] ) * 0.5,
+            ( p.m_flLeftEye[2] + p.m_flRightEye[2] ) * 0.5 );
 
     AddText( "$attachment \"mouth\" \"ValveBiped.Bip01_Head1\" 0.80 -5.80 -0.15 rotate 0 -80 -90\n\n" );
 
     AddText( "$model %s \"%s.smd\" {\n",
-             p.m_ModelFilename,
-             p.m_ReferenceFilename );
+            p.m_ModelFilename,
+            p.m_ReferenceFilename );
 
     AddText( "\teyeball righteye \"ValveBiped.Bip01_Head1\" %.2f %.2f %.2f \"%s_r\" %.2f 4 \"%s_r\" %.2f\n",
-             p.m_flRightEye[0],
-             p.m_flRightEye[1],
-             p.m_flRightEye[2],
-             p.m_EyeballPrefix,
-             p.m_flEyeballSize,
-             p.m_PupilPrefix,
-             p.m_flIrisSize );
+            p.m_flRightEye[0],
+            p.m_flRightEye[1],
+            p.m_flRightEye[2],
+            p.m_EyeballPrefix,
+            p.m_flEyeballSize,
+            p.m_PupilPrefix,
+            p.m_flIrisSize );
 
     AddText( "\teyeball lefteye \"ValveBiped.Bip01_Head1\" %.2f %.2f %.2f \"%s_l\" %.2f -4 \"%s_l\" %.2f\n\n",
-             p.m_flLeftEye[0],
-             p.m_flLeftEye[1],
-             p.m_flLeftEye[2],
-             p.m_EyeballPrefix,
-             p.m_flEyeballSize,
-             p.m_PupilPrefix,
-             p.m_flIrisSize );
+            p.m_flLeftEye[0],
+            p.m_flLeftEye[1],
+            p.m_flLeftEye[2],
+            p.m_EyeballPrefix,
+            p.m_flEyeballSize,
+            p.m_PupilPrefix,
+            p.m_flIrisSize );
 
     AddText( "\teyelid  upper_right \"%s\" lowerer 1 %.2f neutral 0 %.2f raiser 2 %.2f split 0.1 eyeball righteye\n",
-             p.m_ExpressionsFilename,
-             p.m_flRightUpperLidLowered - p.m_flRightEye[2],
-             p.m_flRightUpperLidNeutral - p.m_flRightEye[2],
-             p.m_flRightUpperLidRaised - p.m_flRightEye[2] );
+            p.m_ExpressionsFilename,
+            p.m_flRightUpperLidLowered - p.m_flRightEye[2],
+            p.m_flRightUpperLidNeutral - p.m_flRightEye[2],
+            p.m_flRightUpperLidRaised - p.m_flRightEye[2] );
 
     AddText( "\teyelid  lower_right \"%s\" lowerer 3 %.2f neutral 0 %.2f raiser 4 %.2f split 0.1 eyeball righteye\n",
-             p.m_ExpressionsFilename,
-             p.m_flRightLowerLidLowered - p.m_flRightEye[2],
-             p.m_flRightLowerLidNeutral - p.m_flRightEye[2],
-             p.m_flRightLowerLidRaised - p.m_flRightEye[2] );
+            p.m_ExpressionsFilename,
+            p.m_flRightLowerLidLowered - p.m_flRightEye[2],
+            p.m_flRightLowerLidNeutral - p.m_flRightEye[2],
+            p.m_flRightLowerLidRaised - p.m_flRightEye[2] );
 
     AddText( "\teyelid  upper_left \"%s\" lowerer 1 %.2f neutral 0 %.2f raiser 2 %.2f split -0.1 eyeball lefteye\n",
-             p.m_ExpressionsFilename,
-             p.m_flLeftUpperLidLowered - p.m_flLeftEye[2],
-             p.m_flLeftUpperLidNeutral - p.m_flLeftEye[2],
-             p.m_flLeftUpperLidRaised - p.m_flLeftEye[2] );
+            p.m_ExpressionsFilename,
+            p.m_flLeftUpperLidLowered - p.m_flLeftEye[2],
+            p.m_flLeftUpperLidNeutral - p.m_flLeftEye[2],
+            p.m_flLeftUpperLidRaised - p.m_flLeftEye[2] );
 
     AddText( "\teyelid  lower_left \"%s\" lowerer 3 %.2f neutral 0 %.2f raiser 4 %.2f split -0.1 eyeball lefteye\n\n",
-             p.m_ExpressionsFilename,
-             p.m_flLeftLowerLidLowered - p.m_flLeftEye[2],
-             p.m_flLeftLowerLidNeutral - p.m_flLeftEye[2],
-             p.m_flLeftLowerLidRaised - p.m_flLeftEye[2] );
+            p.m_ExpressionsFilename,
+            p.m_flLeftLowerLidLowered - p.m_flLeftEye[2],
+            p.m_flLeftLowerLidNeutral - p.m_flLeftEye[2],
+            p.m_flLeftLowerLidRaised - p.m_flLeftEye[2] );
 
     AddText( "\tmouth 0 \"mouth\" \"ValveBiped.Bip01_Head1\" 0 1 0     // mouth illumination\n" );
     AddText( "\tflexfile \"%s\" {\n", p.m_ExpressionsFilename );

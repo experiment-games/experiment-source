@@ -17,14 +17,14 @@
 // $sineVar : name of variable that controls the alpha level (float)
 class CShieldProxy : public CEntityMaterialProxy
 {
-   public:
+    public:
     CShieldProxy();
     virtual ~CShieldProxy();
     virtual bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
     virtual void OnBind( C_BaseEntity *pC_BaseEntity );
     virtual IMaterial *GetMaterial();
 
-   private:
+    private:
     IMaterialVar *m_AlphaVar;
     IMaterialVar *m_pTextureScrollVar;
     float m_ScrollRate;

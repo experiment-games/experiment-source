@@ -66,68 +66,68 @@ int Bcj2_Decode(
 
     SizeT limit = size0 - inPos;
     if (outSize - outPos < limit)
-      limit = outSize - outPos;
+    limit = outSize - outPos;
     while (limit != 0)
     {
-      Byte b = buf0[inPos];
-      outBuf[outPos++] = b;
-      if (IsJ(prevByte, b))
+    Byte b = buf0[inPos];
+    outBuf[outPos++] = b;
+    if (IsJ(prevByte, b))
         break;
-      inPos++;
-      prevByte = b;
-      limit--;
+    inPos++;
+    prevByte = b;
+    limit--;
     }
 
     if (limit == 0 || outPos == outSize)
-      break;
+    break;
 
     b = buf0[inPos++];
 
     if (b == 0xE8)
-      prob = p + prevByte;
+    prob = p + prevByte;
     else if (b == 0xE9)
-      prob = p + 256;
+    prob = p + 256;
     else
-      prob = p + 257;
+    prob = p + 257;
 
     IF_BIT_0(prob)
     {
-      UPDATE_0(prob)
-      prevByte = b;
+    UPDATE_0(prob)
+    prevByte = b;
     }
     else
     {
-      UInt32 dest;
-      const Byte *v;
-      UPDATE_1(prob)
-      if (b == 0xE8)
-      {
+    UInt32 dest;
+    const Byte *v;
+    UPDATE_1(prob)
+    if (b == 0xE8)
+    {
         v = buf1;
         if (size1 < 4)
-          return SZ_ERROR_DATA;
+        return SZ_ERROR_DATA;
         buf1 += 4;
         size1 -= 4;
-      }
-      else
-      {
+    }
+    else
+    {
         v = buf2;
         if (size2 < 4)
-          return SZ_ERROR_DATA;
+        return SZ_ERROR_DATA;
         buf2 += 4;
         size2 -= 4;
-      }
-      dest = (((UInt32)v[0] << 24) | ((UInt32)v[1] << 16) |
-          ((UInt32)v[2] << 8) | ((UInt32)v[3])) - ((UInt32)outPos + 4);
-      outBuf[outPos++] = (Byte)dest;
-      if (outPos == outSize)
+    }
+    dest = (((UInt32)v[0] << 24) | ((UInt32)v[1] << 16) |
+        ((UInt32)v[2] << 8) | ((UInt32)v[3])) - ((UInt32)outPos + 4);
+    outBuf[outPos++] = (Byte)dest;
+    if (outPos == outSize)
         break;
-      outBuf[outPos++] = (Byte)(dest >> 8);
-      if (outPos == outSize)
+    outBuf[outPos++] = (Byte)(dest >> 8);
+    if (outPos == outSize)
         break;
-      outBuf[outPos++] = (Byte)(dest >> 16);
-      if (outPos == outSize)
+    outBuf[outPos++] = (Byte)(dest >> 16);
+    if (outPos == outSize)
         break;
-      outBuf[outPos++] = prevByte = (Byte)(dest >> 24);
+    outBuf[outPos++] = prevByte = (Byte)(dest >> 24);
     }
   }
   return (outPos == outSize) ? SZ_OK : SZ_ERROR_DATA;

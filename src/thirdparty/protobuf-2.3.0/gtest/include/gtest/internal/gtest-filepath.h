@@ -60,7 +60,7 @@ namespace internal
 
 class FilePath
 {
-   public:
+    public:
     FilePath()
         : pathname_( "" ) {}
     FilePath( const FilePath& rhs )
@@ -106,15 +106,15 @@ class FilePath
     // than zero (e.g., 12), returns "dir/test_12.xml".
     // On Windows platform, uses \ as the separator rather than /.
     static FilePath MakeFileName( const FilePath& directory,
-                                  const FilePath& base_name,
-                                  int number,
-                                  const char* extension );
+                                const FilePath& base_name,
+                                int number,
+                                const char* extension );
 
     // Given directory = "dir", relative_path = "test.xml",
     // returns "dir/test.xml".
     // On Windows, uses \ as the separator rather than /.
     static FilePath ConcatPaths( const FilePath& directory,
-                                 const FilePath& relative_path );
+                                const FilePath& relative_path );
 
     // Returns a pathname for a file that does not currently exist. The pathname
     // will be directory/base_name.extension or
@@ -193,7 +193,7 @@ class FilePath
     // Returns true if pathname describes an absolute path.
     bool IsAbsolutePath() const;
 
-   private:
+    private:
     // Replaces multiple consecutive separators with a single separator.
     // For example, "bar///foo" becomes "bar/foo". Does not eliminate other
     // redundancies that might be in a pathname involving "." or "..".

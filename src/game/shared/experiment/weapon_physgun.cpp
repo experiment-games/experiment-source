@@ -111,7 +111,7 @@ class CGravControllerPoint : public IMotionEvent
 {
     DECLARE_SIMPLE_DATADESC();
 
-   public:
+    public:
     CGravControllerPoint( void );
     ~CGravControllerPoint( void );
     void AttachEntity( CBasePlayer *pPlayer, CBaseEntity *pEntity, IPhysicsObject *pPhys, short physicsbone, const Vector &position );
@@ -167,7 +167,7 @@ class CGravControllerPoint : public IMotionEvent
 
     IPhysicsMotionController *m_controller;
 
-   private:
+    private:
     hlshadowcontrol_params_t m_shadow;
 };
 
@@ -325,7 +325,7 @@ class CWeaponGravityGun : public CBaseExperimentCombatWeapon
 {
     DECLARE_DATADESC();
 
-   public:
+    public:
     DECLARE_CLASS( CWeaponGravityGun, CBaseExperimentCombatWeapon );
 
     DECLARE_NETWORKCLASS();
@@ -480,7 +480,7 @@ class CWeaponGravityGun : public CBaseExperimentCombatWeapon
 
     CBaseEntity *GetBeamEntity();
 
-   private:
+    private:
     CNetworkVar( int, m_active );
     bool m_useDown;
     CNetworkHandle( CBaseEntity, m_hObject );
@@ -598,7 +598,7 @@ DEFINE_FIELD( m_active, FIELD_INTEGER ),
     END_DATADESC()
 
         enum physgun_soundstate { SS_SCANNING,
-                                  SS_LOCKEDON };
+                                SS_LOCKEDON };
 enum physgun_soundIndex
 {
     SI_LOCKEDON = 0,

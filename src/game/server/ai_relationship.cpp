@@ -27,7 +27,7 @@ class CAI_Relationship : public CBaseEntity, public IEntityListener
 {
     DECLARE_CLASS( CAI_Relationship, CBaseEntity );
 
-   public:
+    public:
     CAI_Relationship()
         : m_iPreviousDisposition( -1 ) {}
 
@@ -50,7 +50,7 @@ class CAI_Relationship : public CBaseEntity, public IEntityListener
     void OnEntitySpawned( CBaseEntity *pEntity );
     void OnEntityDeleted( CBaseEntity *pEntity );
 
-   private:
+    private:
     void ApplyRelationshipThink( void );
     CBaseEntity *FindEntityForProceduralName( string_t iszName, CBaseEntity *pActivator, CBaseEntity *pCaller );
     void DiscloseNPCLocation( CBaseCombatCharacter *pSubject, CBaseCombatCharacter *pTarget );
@@ -65,7 +65,7 @@ class CAI_Relationship : public CBaseEntity, public IEntityListener
     int m_iPreviousRank;
     bool m_bReciprocal;
 
-   public:
+    public:
     // Input functions
     void InputApplyRelationship( inputdata_t &inputdata );
     void InputRevertRelationship( inputdata_t &inputdata );
@@ -462,9 +462,9 @@ void CAI_Relationship::ChangeRelationships( int disposition, int iReverting, CBa
                 }
             }
             else if ( pSubject->IRelationType( pTarget ) != disposition ||
-                      pSubject->IRelationPriority( pTarget ) != m_iRank ||
-                      HasSpawnFlags( SF_RELATIONSHIP_NOTIFY_SUBJECT ) ||
-                      HasSpawnFlags( SF_RELATIONSHIP_NOTIFY_TARGET ) )
+                    pSubject->IRelationPriority( pTarget ) != m_iRank ||
+                    HasSpawnFlags( SF_RELATIONSHIP_NOTIFY_SUBJECT ) ||
+                    HasSpawnFlags( SF_RELATIONSHIP_NOTIFY_TARGET ) )
             {
                 // Apply the relationship to the subject
                 pSubject->AddEntityRelationship( pTarget, ( Disposition_t )disposition, m_iRank );

@@ -109,7 +109,7 @@ struct mstudioaxisinterpbone_t
 
     mstudioaxisinterpbone_t() {}
 
-   private:
+    private:
     // No copy constructors allowed
     mstudioaxisinterpbone_t( const mstudioaxisinterpbone_t &vOther );
 };
@@ -124,7 +124,7 @@ struct mstudioquatinterpinfo_t
 
     mstudioquatinterpinfo_t() {}
 
-   private:
+    private:
     // No copy constructors allowed
     mstudioquatinterpinfo_t( const mstudioquatinterpinfo_t &vOther );
 };
@@ -142,7 +142,7 @@ struct mstudioquatinterpbone_t
 
     mstudioquatinterpbone_t() {}
 
-   private:
+    private:
     // No copy constructors allowed
     mstudioquatinterpbone_t( const mstudioquatinterpbone_t &vOther );
 };
@@ -202,7 +202,7 @@ struct mstudiojigglebone_t
     float baseMaxForward;
     float baseForwardFriction;
 
-   private:
+    private:
     // No copy constructors allowed
     // mstudiojigglebone_t(const mstudiojigglebone_t& vOther);
 };
@@ -219,7 +219,7 @@ struct mstudioaimatbone_t
 
     mstudioaimatbone_t() {}
 
-   private:
+    private:
     // No copy constructors allowed
     mstudioaimatbone_t( const mstudioaimatbone_t &vOther );
 };
@@ -238,7 +238,7 @@ struct mstudiotwistbonetarget_t
 
     mstudiotwistbonetarget_t() {}
 
-   private:
+    private:
     // No copy constructors allowed
     mstudiotwistbonetarget_t( const mstudiotwistbonetarget_t &vOther );
 };
@@ -265,7 +265,7 @@ struct mstudiotwistbone_t
 
     mstudiotwistbone_t() {}
 
-   private:
+    private:
     // No copy constructors allowed
     mstudiotwistbone_t( const mstudiotwistbone_t &vOther );
 };
@@ -319,7 +319,7 @@ struct mstudiobone_t
 
     mstudiobone_t() {}
 
-   private:
+    private:
     // No copy constructors allowed
     mstudiobone_t( const mstudiobone_t &vOther );
 };
@@ -402,7 +402,7 @@ struct mstudiolinearbone_t
 
     mstudiolinearbone_t() {}
 
-   private:
+    private:
     // No copy constructors allowed
     mstudiolinearbone_t( const mstudiolinearbone_t &vOther );
 };
@@ -432,7 +432,7 @@ struct mstudioboneflexdrivercontrol_t
 
     mstudioboneflexdrivercontrol_t() {}
 
-   private:
+    private:
     // No copy constructors allowed
     mstudioboneflexdrivercontrol_t( const mstudioboneflexdrivercontrol_t &vOther );
 };
@@ -458,7 +458,7 @@ struct mstudioboneflexdriver_t
 
     mstudioboneflexdriver_t() {}
 
-   private:
+    private:
     // No copy constructors allowed
     mstudioboneflexdriver_t( const mstudioboneflexdriver_t &vOther );
 };
@@ -531,7 +531,7 @@ struct mstudiobbox_t
 
     mstudiobbox_t() {}
 
-   private:
+    private:
     // No copy constructors allowed
     mstudiobbox_t( const mstudiobbox_t &vOther );
 };
@@ -611,7 +611,7 @@ struct mstudioikerror_t
 
     mstudioikerror_t() {}
 
-   private:
+    private:
     // No copy constructors allowed
     mstudioikerror_t( const mstudioikerror_t &vOther );
 };
@@ -632,7 +632,7 @@ struct mstudiocompressedikerror_t
     };
     mstudiocompressedikerror_t() {}
 
-   private:
+    private:
     // No copy constructors allowed
     mstudiocompressedikerror_t( const mstudiocompressedikerror_t &vOther );
 };
@@ -692,7 +692,7 @@ struct mstudioikrule_t
 
     mstudioikrule_t() {}
 
-   private:
+    private:
     // No copy constructors allowed
     mstudioikrule_t( const mstudioikrule_t &vOther );
 };
@@ -862,7 +862,7 @@ struct mstudiomovement_t
 
     mstudiomovement_t() {}
 
-   private:
+    private:
     // No copy constructors allowed
     mstudiomovement_t( const mstudiomovement_t &vOther );
 };
@@ -957,7 +957,7 @@ struct mstudioanimdesc_t
 
     mstudioanimdesc_t() {}
 
-   private:
+    private:
     // No copy constructors allowed
     mstudioanimdesc_t( const mstudioanimdesc_t &vOther );
 };
@@ -1133,7 +1133,7 @@ struct mstudioseqdesc_t
 
     mstudioseqdesc_t() {}
 
-   private:
+    private:
     // No copy constructors allowed
     mstudioseqdesc_t( const mstudioseqdesc_t &vOther );
 };
@@ -1270,7 +1270,7 @@ struct mstudiovertanim_t
     byte speed;  // 255/max_length_in_flex
     byte side;   // 255/left_right
 
-   protected:
+    protected:
     union
     {
         short delta[3];
@@ -1283,7 +1283,7 @@ struct mstudiovertanim_t
         float16 flNDelta[3];
     };
 
-   public:
+    public:
     inline void ConvertToFixed( float flVertAnimFixedPointScale )
     {
         delta[0] = flDelta[0].GetFloat() / flVertAnimFixedPointScale;
@@ -1347,7 +1347,7 @@ struct mstudiovertanim_t
 
     class CSortByIndex
     {
-       public:
+        public:
         bool operator()( const mstudiovertanim_t &left, const mstudiovertanim_t &right ) const
         {
             return left.index < right.index;
@@ -1482,7 +1482,7 @@ struct mstudiovertex_t
 
     mstudiovertex_t() {}
 
-   private:
+    private:
     // No copy constructors allowed
     mstudiovertex_t( const mstudiovertex_t &vOther );
 };
@@ -1540,7 +1540,7 @@ struct mstudioeyeball_t
 
     mstudioeyeball_t() {}
 
-   private:
+    private:
     // No copy constructors allowed
     mstudioeyeball_t( const mstudioeyeball_t &vOther );
 };
@@ -1555,7 +1555,7 @@ struct mstudioiklink_t
 
     mstudioiklink_t() {}
 
-   private:
+    private:
     // No copy constructors allowed
     mstudioiklink_t( const mstudioiklink_t &vOther );
 };
@@ -1666,7 +1666,7 @@ struct mstudiomesh_t
 
     mstudiomesh_t() {}
 
-   private:
+    private:
     // No copy constructors allowed
     mstudiomesh_t( const mstudiomesh_t &vOther );
 };
@@ -1959,7 +1959,7 @@ struct mstudiomouth_t
 
     mstudiomouth_t() {}
 
-   private:
+    private:
     // No copy constructors allowed
     mstudiomouth_t( const mstudiomouth_t &vOther );
 };
@@ -2003,7 +2003,7 @@ struct mstudiosrcbonetransform_t
 
 class virtualgroup_t
 {
-   public:
+    public:
     virtualgroup_t( void )
     {
         cache = NULL;
@@ -2166,7 +2166,7 @@ struct thinModelVertices_t
         GetBoneWeights( pModel->vertexdata.GetGlobalVertexIndex( modelIndex ), pBoneWeights );
     }
 
-   private:
+    private:
     void GetPosition( int vertIndex, Vector *pPosition ) const
     {
         Assert( pPosition );
@@ -2213,9 +2213,9 @@ struct thinModelVertices_t
 
             /*
             if ( i < ( m_numBoneInfluences - 1 ) )
-              pBoneWeights->weight[i] = pBaseWeight[i];
+            pBoneWeights->weight[i] = pBaseWeight[i];
             else
-              pBoneWeights->weight[i] = 1.0f - sum;
+            pBoneWeights->weight[i] = 1.0f - sum;
             sum += pBoneWeights->weight[i];
 
             pBoneWeights->bone[i] = ( i < m_numBoneInfluences ) ? pBaseIndex[i] : 0;
@@ -2253,7 +2253,7 @@ struct vertexStreamFileHeader_t
     int uv2ElementSize;  // size of each uv2 element
     int pad;             // pad
 
-   public:
+    public:
     // Accessor to uv2 stream
     const void *GetStreamUv2() const
     {
@@ -2290,7 +2290,7 @@ struct vertexFileHeader_t
     int vertexDataStart;               // offset from base to vertex block
     int tangentDataStart;              // offset from base to tangent block
 
-   public:
+    public:
     // Accessor to fat vertex data
     const mstudiovertex_t *GetVertexData() const
     {
@@ -2881,7 +2881,7 @@ struct studiohdr_t
 
     studiohdr_t() {}
 
-   private:
+    private:
     // No copy constructors allowed
     studiohdr_t( const studiohdr_t &vOther );
 
@@ -2897,7 +2897,7 @@ class IMDLCache;
 
 class CStudioHdr
 {
-   public:
+    public:
     CStudioHdr( void );
     CStudioHdr( const studiohdr_t *pStudioHdr, IMDLCache *mdlcache = NULL );
     ~CStudioHdr()
@@ -2908,7 +2908,7 @@ class CStudioHdr
     void Init( const studiohdr_t *pStudioHdr, IMDLCache *mdlcache = NULL );
     void Term();
 
-   public:
+    public:
     inline bool IsVirtual( void )
     {
         return ( m_pVModel != NULL );
@@ -2932,7 +2932,7 @@ class CStudioHdr
     const studiohdr_t *pSeqStudioHdr( int sequence );
     const studiohdr_t *pAnimStudioHdr( int animation );
 
-   private:
+    private:
     mutable const studiohdr_t *m_pStudioHdr;
     mutable virtualmodel_t *m_pVModel;
 
@@ -2944,7 +2944,7 @@ class CStudioHdr
     int *m_pFrameUnlockCounter;
     CThreadFastMutex m_FrameUnlockCounterMutex;
 
-   public:
+    public:
     inline int numbones( void ) const
     {
         return m_pStudioHdr->numbones;
@@ -3191,7 +3191,7 @@ class CStudioHdr
         return m_pStudioHdr->BoneFlexDriver( i );
     }
 
-   public:
+    public:
     int IsSequenceLooping( int iSequence );
     float GetSequenceCycleRate( int iSequence );
 
@@ -3199,7 +3199,7 @@ class CStudioHdr
     void RunFlexRulesOld( const float *src, float *dest );
     void RunFlexRulesNew( const float *src, float *dest );
 
-   public:
+    public:
     inline int boneFlags( int iBone ) const
     {
         return m_boneFlags[iBone];
@@ -3217,11 +3217,11 @@ class CStudioHdr
         return m_boneParent[iBone];
     }
 
-   private:
+    private:
     CUtlVector< int > m_boneFlags;
     CUtlVector< int > m_boneParent;
 
-   public:
+    public:
     // This class maps an activity to sequences allowed for that activity, accelerating the resolution
     // of SelectWeightedSequence(), especially on PowerPC. Iterating through every sequence
     // attached to a model turned out to be a very destructive cache access pattern on 360.
@@ -3233,7 +3233,7 @@ class CStudioHdr
     // Studio.
     class CActivityToSequenceMapping /* final */
     {
-       public:
+        public:
         // A tuple of a sequence and its corresponding weight. Lists of these correspond to activities.
         struct SequenceTuple
         {
@@ -3275,7 +3275,7 @@ class CStudioHdr
 
             class HashFuncs
             {
-               public:
+                public:
                 // dummy constructor (gndn)
                 HashFuncs( int ) {}
 
@@ -3333,7 +3333,7 @@ class CStudioHdr
         static void ReleaseMapping( CActivityToSequenceMapping *pMap );
         static void ResetMappings();
 
-       private:
+        private:
         /// Allocate my internal array. (It is freed in the destructor.) Also,
         /// build the hash of activities to sequences and populate m_pSequenceTuples.
         void Initialize( const CStudioHdr *pstudiohdr );
@@ -3415,7 +3415,7 @@ class CStudioHdr
     }
 
 #ifdef STUDIO_ENABLE_PERF_COUNTERS
-   public:
+    public:
     inline void ClearPerfCounters( void )
     {
         m_nPerfAnimatedBones = 0;
@@ -3435,7 +3435,7 @@ class CModelAccess
 {
 public:
   CModelAccess(CStudioHdr *pSemaphore)
-   : m_pStudioHdr(pSemaphore)
+    : m_pStudioHdr(pSemaphore)
   {
     m_pStudioHdr->IncrementAccess();
   }
@@ -3800,7 +3800,7 @@ inline void Studio_SetRootLOD( studiohdr_t *pStudioHdr, int rootLOD )
 {
     // honor studiohdr restriction of root lod in case requested root lod exceeds restriction.
     if ( pStudioHdr->numAllowedRootLODs > 0 &&
-         rootLOD >= pStudioHdr->numAllowedRootLODs )
+        rootLOD >= pStudioHdr->numAllowedRootLODs )
     {
         rootLOD = pStudioHdr->numAllowedRootLODs - 1;
     }

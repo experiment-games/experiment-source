@@ -121,24 +121,24 @@ def _SimpleSizer(compute_value_size):
   def SpecificSizer(field_number, is_repeated, is_packed):
     tag_size = _TagSize(field_number)
     if is_packed:
-      local_VarintSize = _VarintSize
-      def PackedFieldSize(value):
+    local_VarintSize = _VarintSize
+    def PackedFieldSize(value):
         result = 0
         for element in value:
-          result += compute_value_size(element)
+        result += compute_value_size(element)
         return result + local_VarintSize(result) + tag_size
-      return PackedFieldSize
+    return PackedFieldSize
     elif is_repeated:
-      def RepeatedFieldSize(value):
+    def RepeatedFieldSize(value):
         result = tag_size * len(value)
         for element in value:
-          result += compute_value_size(element)
+        result += compute_value_size(element)
         return result
-      return RepeatedFieldSize
+    return RepeatedFieldSize
     else:
-      def FieldSize(value):
+    def FieldSize(value):
         return tag_size + compute_value_size(value)
-      return FieldSize
+    return FieldSize
 
   return SpecificSizer
 
@@ -150,24 +150,24 @@ def _ModifiedSizer(compute_value_size, modify_value):
   def SpecificSizer(field_number, is_repeated, is_packed):
     tag_size = _TagSize(field_number)
     if is_packed:
-      local_VarintSize = _VarintSize
-      def PackedFieldSize(value):
+    local_VarintSize = _VarintSize
+    def PackedFieldSize(value):
         result = 0
         for element in value:
-          result += compute_value_size(modify_value(element))
+        result += compute_value_size(modify_value(element))
         return result + local_VarintSize(result) + tag_size
-      return PackedFieldSize
+    return PackedFieldSize
     elif is_repeated:
-      def RepeatedFieldSize(value):
+    def RepeatedFieldSize(value):
         result = tag_size * len(value)
         for element in value:
-          result += compute_value_size(modify_value(element))
+        result += compute_value_size(modify_value(element))
         return result
-      return RepeatedFieldSize
+    return RepeatedFieldSize
     else:
-      def FieldSize(value):
+    def FieldSize(value):
         return tag_size + compute_value_size(modify_value(value))
-      return FieldSize
+    return FieldSize
 
   return SpecificSizer
 
@@ -179,21 +179,21 @@ def _FixedSizer(value_size):
   def SpecificSizer(field_number, is_repeated, is_packed):
     tag_size = _TagSize(field_number)
     if is_packed:
-      local_VarintSize = _VarintSize
-      def PackedFieldSize(value):
+    local_VarintSize = _VarintSize
+    def PackedFieldSize(value):
         result = len(value) * value_size
         return result + local_VarintSize(result) + tag_size
-      return PackedFieldSize
+    return PackedFieldSize
     elif is_repeated:
-      element_size = value_size + tag_size
-      def RepeatedFieldSize(value):
+    element_size = value_size + tag_size
+    def RepeatedFieldSize(value):
         return len(value) * element_size
-      return RepeatedFieldSize
+    return RepeatedFieldSize
     else:
-      field_size = value_size + tag_size
-      def FieldSize(value):
+    field_size = value_size + tag_size
+    def FieldSize(value):
         return field_size
-      return FieldSize
+    return FieldSize
 
   return SpecificSizer
 
@@ -227,16 +227,16 @@ def StringSizer(field_number, is_repeated, is_packed):
   assert not is_packed
   if is_repeated:
     def RepeatedFieldSize(value):
-      result = tag_size * len(value)
-      for element in value:
+    result = tag_size * len(value)
+    for element in value:
         l = local_len(element.encode('utf-8'))
         result += local_VarintSize(l) + l
-      return result
+    return result
     return RepeatedFieldSize
   else:
     def FieldSize(value):
-      l = local_len(value.encode('utf-8'))
-      return tag_size + local_VarintSize(l) + l
+    l = local_len(value.encode('utf-8'))
+    return tag_size + local_VarintSize(l) + l
     return FieldSize
 
 
@@ -249,16 +249,16 @@ def BytesSizer(field_number, is_repeated, is_packed):
   assert not is_packed
   if is_repeated:
     def RepeatedFieldSize(value):
-      result = tag_size * len(value)
-      for element in value:
+    result = tag_size * len(value)
+    for element in value:
         l = local_len(element)
         result += local_VarintSize(l) + l
-      return result
+    return result
     return RepeatedFieldSize
   else:
     def FieldSize(value):
-      l = local_len(value)
-      return tag_size + local_VarintSize(l) + l
+    l = local_len(value)
+    return tag_size + local_VarintSize(l) + l
     return FieldSize
 
 
@@ -269,14 +269,14 @@ def GroupSizer(field_number, is_repeated, is_packed):
   assert not is_packed
   if is_repeated:
     def RepeatedFieldSize(value):
-      result = tag_size * len(value)
-      for element in value:
+    result = tag_size * len(value)
+    for element in value:
         result += element.ByteSize()
-      return result
+    return result
     return RepeatedFieldSize
   else:
     def FieldSize(value):
-      return tag_size + value.ByteSize()
+    return tag_size + value.ByteSize()
     return FieldSize
 
 
@@ -288,16 +288,16 @@ def MessageSizer(field_number, is_repeated, is_packed):
   assert not is_packed
   if is_repeated:
     def RepeatedFieldSize(value):
-      result = tag_size * len(value)
-      for element in value:
+    result = tag_size * len(value)
+    for element in value:
         l = element.ByteSize()
         result += local_VarintSize(l) + l
-      return result
+    return result
     return RepeatedFieldSize
   else:
     def FieldSize(value):
-      l = value.ByteSize()
-      return tag_size + local_VarintSize(l) + l
+    l = value.ByteSize()
+    return tag_size + local_VarintSize(l) + l
     return FieldSize
 
 
@@ -310,14 +310,14 @@ def MessageSetItemSizer(field_number):
 
   The message set message looks like this:
     message MessageSet {
-      repeated group Item = 1 {
+    repeated group Item = 1 {
         required int32 type_id = 2;
         required string message = 3;
-      }
+    }
     }
   """
   static_size = (_TagSize(1) * 2 + _TagSize(2) + _VarintSize(field_number) +
-                 _TagSize(3))
+                _TagSize(3))
   local_VarintSize = _VarintSize
 
   def FieldSize(value):
@@ -339,9 +339,9 @@ def _VarintEncoder():
     bits = value & 0x7f
     value >>= 7
     while value:
-      write(local_chr(0x80|bits))
-      bits = value & 0x7f
-      value >>= 7
+    write(local_chr(0x80|bits))
+    bits = value & 0x7f
+    value >>= 7
     return write(local_chr(bits))
 
   return EncodeVarint
@@ -354,13 +354,13 @@ def _SignedVarintEncoder():
   local_chr = chr
   def EncodeSignedVarint(write, value):
     if value < 0:
-      value += (1 << 64)
+    value += (1 << 64)
     bits = value & 0x7f
     value >>= 7
     while value:
-      write(local_chr(0x80|bits))
-      bits = value & 0x7f
-      value >>= 7
+    write(local_chr(0x80|bits))
+    bits = value & 0x7f
+    value >>= 7
     return write(local_chr(bits))
 
   return EncodeSignedVarint
@@ -393,39 +393,39 @@ def _SimpleEncoder(wire_type, encode_value, compute_value_size):
   """Return a constructor for an encoder for fields of a particular type.
 
   Args:
-      wire_type:  The field's wire type, for encoding tags.
-      encode_value:  A function which encodes an individual value, e.g.
+    wire_type:  The field's wire type, for encoding tags.
+    encode_value:  A function which encodes an individual value, e.g.
         _EncodeVarint().
-      compute_value_size:  A function which computes the size of an individual
+    compute_value_size:  A function which computes the size of an individual
         value, e.g. _VarintSize().
   """
 
   def SpecificEncoder(field_number, is_repeated, is_packed):
     if is_packed:
-      tag_bytes = TagBytes(field_number, wire_format.WIRETYPE_LENGTH_DELIMITED)
-      local_EncodeVarint = _EncodeVarint
-      def EncodePackedField(write, value):
+    tag_bytes = TagBytes(field_number, wire_format.WIRETYPE_LENGTH_DELIMITED)
+    local_EncodeVarint = _EncodeVarint
+    def EncodePackedField(write, value):
         write(tag_bytes)
         size = 0
         for element in value:
-          size += compute_value_size(element)
+        size += compute_value_size(element)
         local_EncodeVarint(write, size)
         for element in value:
-          encode_value(write, element)
-      return EncodePackedField
+        encode_value(write, element)
+    return EncodePackedField
     elif is_repeated:
-      tag_bytes = TagBytes(field_number, wire_type)
-      def EncodeRepeatedField(write, value):
+    tag_bytes = TagBytes(field_number, wire_type)
+    def EncodeRepeatedField(write, value):
         for element in value:
-          write(tag_bytes)
-          encode_value(write, element)
-      return EncodeRepeatedField
+        write(tag_bytes)
+        encode_value(write, element)
+    return EncodeRepeatedField
     else:
-      tag_bytes = TagBytes(field_number, wire_type)
-      def EncodeField(write, value):
+    tag_bytes = TagBytes(field_number, wire_type)
+    def EncodeField(write, value):
         write(tag_bytes)
         return encode_value(write, value)
-      return EncodeField
+    return EncodeField
 
   return SpecificEncoder
 
@@ -436,30 +436,30 @@ def _ModifiedEncoder(wire_type, encode_value, compute_value_size, modify_value):
 
   def SpecificEncoder(field_number, is_repeated, is_packed):
     if is_packed:
-      tag_bytes = TagBytes(field_number, wire_format.WIRETYPE_LENGTH_DELIMITED)
-      local_EncodeVarint = _EncodeVarint
-      def EncodePackedField(write, value):
+    tag_bytes = TagBytes(field_number, wire_format.WIRETYPE_LENGTH_DELIMITED)
+    local_EncodeVarint = _EncodeVarint
+    def EncodePackedField(write, value):
         write(tag_bytes)
         size = 0
         for element in value:
-          size += compute_value_size(modify_value(element))
+        size += compute_value_size(modify_value(element))
         local_EncodeVarint(write, size)
         for element in value:
-          encode_value(write, modify_value(element))
-      return EncodePackedField
+        encode_value(write, modify_value(element))
+    return EncodePackedField
     elif is_repeated:
-      tag_bytes = TagBytes(field_number, wire_type)
-      def EncodeRepeatedField(write, value):
+    tag_bytes = TagBytes(field_number, wire_type)
+    def EncodeRepeatedField(write, value):
         for element in value:
-          write(tag_bytes)
-          encode_value(write, modify_value(element))
-      return EncodeRepeatedField
+        write(tag_bytes)
+        encode_value(write, modify_value(element))
+    return EncodeRepeatedField
     else:
-      tag_bytes = TagBytes(field_number, wire_type)
-      def EncodeField(write, value):
+    tag_bytes = TagBytes(field_number, wire_type)
+    def EncodeField(write, value):
         write(tag_bytes)
         return encode_value(write, modify_value(value))
-      return EncodeField
+    return EncodeField
 
   return SpecificEncoder
 
@@ -468,8 +468,8 @@ def _StructPackEncoder(wire_type, format):
   """Return a constructor for an encoder for a fixed-width field.
 
   Args:
-      wire_type:  The field's wire type, for encoding tags.
-      format:  The format string to pass to struct.pack().
+    wire_type:  The field's wire type, for encoding tags.
+    format:  The format string to pass to struct.pack().
   """
 
   value_size = struct.calcsize(format)
@@ -477,27 +477,27 @@ def _StructPackEncoder(wire_type, format):
   def SpecificEncoder(field_number, is_repeated, is_packed):
     local_struct_pack = struct.pack
     if is_packed:
-      tag_bytes = TagBytes(field_number, wire_format.WIRETYPE_LENGTH_DELIMITED)
-      local_EncodeVarint = _EncodeVarint
-      def EncodePackedField(write, value):
+    tag_bytes = TagBytes(field_number, wire_format.WIRETYPE_LENGTH_DELIMITED)
+    local_EncodeVarint = _EncodeVarint
+    def EncodePackedField(write, value):
         write(tag_bytes)
         local_EncodeVarint(write, len(value) * value_size)
         for element in value:
-          write(local_struct_pack(format, element))
-      return EncodePackedField
+        write(local_struct_pack(format, element))
+    return EncodePackedField
     elif is_repeated:
-      tag_bytes = TagBytes(field_number, wire_type)
-      def EncodeRepeatedField(write, value):
+    tag_bytes = TagBytes(field_number, wire_type)
+    def EncodeRepeatedField(write, value):
         for element in value:
-          write(tag_bytes)
-          write(local_struct_pack(format, element))
-      return EncodeRepeatedField
+        write(tag_bytes)
+        write(local_struct_pack(format, element))
+    return EncodeRepeatedField
     else:
-      tag_bytes = TagBytes(field_number, wire_type)
-      def EncodeField(write, value):
+    tag_bytes = TagBytes(field_number, wire_type)
+    def EncodeField(write, value):
         write(tag_bytes)
         return write(local_struct_pack(format, value))
-      return EncodeField
+    return EncodeField
 
   return SpecificEncoder
 
@@ -538,31 +538,31 @@ def BoolEncoder(field_number, is_repeated, is_packed):
     tag_bytes = TagBytes(field_number, wire_format.WIRETYPE_LENGTH_DELIMITED)
     local_EncodeVarint = _EncodeVarint
     def EncodePackedField(write, value):
-      write(tag_bytes)
-      local_EncodeVarint(write, len(value))
-      for element in value:
+    write(tag_bytes)
+    local_EncodeVarint(write, len(value))
+    for element in value:
         if element:
-          write(true_byte)
+        write(true_byte)
         else:
-          write(false_byte)
+        write(false_byte)
     return EncodePackedField
   elif is_repeated:
     tag_bytes = TagBytes(field_number, wire_format.WIRETYPE_VARINT)
     def EncodeRepeatedField(write, value):
-      for element in value:
+    for element in value:
         write(tag_bytes)
         if element:
-          write(true_byte)
+        write(true_byte)
         else:
-          write(false_byte)
+        write(false_byte)
     return EncodeRepeatedField
   else:
     tag_bytes = TagBytes(field_number, wire_format.WIRETYPE_VARINT)
     def EncodeField(write, value):
-      write(tag_bytes)
-      if value:
+    write(tag_bytes)
+    if value:
         return write(true_byte)
-      return write(false_byte)
+    return write(false_byte)
     return EncodeField
 
 
@@ -575,7 +575,7 @@ def StringEncoder(field_number, is_repeated, is_packed):
   assert not is_packed
   if is_repeated:
     def EncodeRepeatedField(write, value):
-      for element in value:
+    for element in value:
         encoded = element.encode('utf-8')
         write(tag)
         local_EncodeVarint(write, local_len(encoded))
@@ -583,10 +583,10 @@ def StringEncoder(field_number, is_repeated, is_packed):
     return EncodeRepeatedField
   else:
     def EncodeField(write, value):
-      encoded = value.encode('utf-8')
-      write(tag)
-      local_EncodeVarint(write, local_len(encoded))
-      return write(encoded)
+    encoded = value.encode('utf-8')
+    write(tag)
+    local_EncodeVarint(write, local_len(encoded))
+    return write(encoded)
     return EncodeField
 
 
@@ -599,16 +599,16 @@ def BytesEncoder(field_number, is_repeated, is_packed):
   assert not is_packed
   if is_repeated:
     def EncodeRepeatedField(write, value):
-      for element in value:
+    for element in value:
         write(tag)
         local_EncodeVarint(write, local_len(element))
         write(element)
     return EncodeRepeatedField
   else:
     def EncodeField(write, value):
-      write(tag)
-      local_EncodeVarint(write, local_len(value))
-      return write(value)
+    write(tag)
+    local_EncodeVarint(write, local_len(value))
+    return write(value)
     return EncodeField
 
 
@@ -620,16 +620,16 @@ def GroupEncoder(field_number, is_repeated, is_packed):
   assert not is_packed
   if is_repeated:
     def EncodeRepeatedField(write, value):
-      for element in value:
+    for element in value:
         write(start_tag)
         element._InternalSerialize(write)
         write(end_tag)
     return EncodeRepeatedField
   else:
     def EncodeField(write, value):
-      write(start_tag)
-      value._InternalSerialize(write)
-      return write(end_tag)
+    write(start_tag)
+    value._InternalSerialize(write)
+    return write(end_tag)
     return EncodeField
 
 
@@ -641,16 +641,16 @@ def MessageEncoder(field_number, is_repeated, is_packed):
   assert not is_packed
   if is_repeated:
     def EncodeRepeatedField(write, value):
-      for element in value:
+    for element in value:
         write(tag)
         local_EncodeVarint(write, element.ByteSize())
         element._InternalSerialize(write)
     return EncodeRepeatedField
   else:
     def EncodeField(write, value):
-      write(tag)
-      local_EncodeVarint(write, value.ByteSize())
-      return value._InternalSerialize(write)
+    write(tag)
+    local_EncodeVarint(write, value.ByteSize())
+    return value._InternalSerialize(write)
     return EncodeField
 
 
@@ -663,17 +663,17 @@ def MessageSetItemEncoder(field_number):
 
   The message set message looks like this:
     message MessageSet {
-      repeated group Item = 1 {
+    repeated group Item = 1 {
         required int32 type_id = 2;
         required string message = 3;
-      }
+    }
     }
   """
   start_bytes = "".join([
-      TagBytes(1, wire_format.WIRETYPE_START_GROUP),
-      TagBytes(2, wire_format.WIRETYPE_VARINT),
-      _VarintBytes(field_number),
-      TagBytes(3, wire_format.WIRETYPE_LENGTH_DELIMITED)])
+    TagBytes(1, wire_format.WIRETYPE_START_GROUP),
+    TagBytes(2, wire_format.WIRETYPE_VARINT),
+    _VarintBytes(field_number),
+    TagBytes(3, wire_format.WIRETYPE_LENGTH_DELIMITED)])
   end_bytes = TagBytes(1, wire_format.WIRETYPE_END_GROUP)
   local_EncodeVarint = _EncodeVarint
 

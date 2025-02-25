@@ -20,7 +20,7 @@ class CBeam;
 
 class CTripmineGrenade : public CBaseGrenade
 {
-   public:
+    public:
     DECLARE_CLASS( CTripmineGrenade, CBaseGrenade );
 
     CTripmineGrenade();
@@ -43,12 +43,12 @@ class CTripmineGrenade : public CBaseGrenade
     void AttachToEntity( CBaseEntity *pOther );
     bool MakeConstraint( CBaseEntity *pOther );
 
-   public:
+    public:
     EHANDLE m_hOwner;
     // Added for following
     EHANDLE m_hAttachEntity;
 
-   private:
+    private:
     float m_flPowerUp;
     Vector m_vecDir;
     Vector m_vecEnd;
@@ -63,7 +63,7 @@ class CTripmineGrenade : public CBaseGrenade
     bool m_bAttached;
     IPhysicsConstraint *m_pConstraint;
     Vector m_vAttachedPosition;  // if the attached position changes, we need to
-                                 // detonate
+                                // detonate
 
     DECLARE_DATADESC();
 };

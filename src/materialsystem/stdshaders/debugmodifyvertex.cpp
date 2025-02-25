@@ -52,8 +52,8 @@ SHADER_DRAW
             {
                 float const* pPos = MeshBuilder()->Position();
                 MeshBuilder()->Position3f( pPos[0] + amp * sin( currTime + pPos[2] / 4 ),
-                                           pPos[1] + amp * sin( currTime + pPos[2] / 4 + 2 * 3.14 / 3 ),
-                                           pPos[2] + amp * sin( currTime + pPos[2] / 4 + 4 * 3.14 / 3 ) );
+                                            pPos[1] + amp * sin( currTime + pPos[2] / 4 + 2 * 3.14 / 3 ),
+                                            pPos[2] + amp * sin( currTime + pPos[2] / 4 + 4 * 3.14 / 3 ) );
                 MeshBuilder()->AdvanceVertex();
             }
         }
@@ -63,7 +63,7 @@ SHADER_DRAW
         SHADOW_STATE
         {
             pShaderShadow->DrawFlags( SHADER_DRAW_POSITION | SHADER_DRAW_COLOR |
-                                      SHADER_DRAW_TEXCOORD0 );
+                                    SHADER_DRAW_TEXCOORD0 );
             FogToFogColor();
         }
         DYNAMIC_STATE

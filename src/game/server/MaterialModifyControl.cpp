@@ -29,7 +29,7 @@ ConVar debug_materialmodifycontrol( "debug_materialmodifycontrol", "0" );
 
 class CMaterialModifyControl : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CMaterialModifyControl, CBaseEntity );
 
     CMaterialModifyControl();
@@ -52,7 +52,7 @@ class CMaterialModifyControl : public CBaseEntity
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
 
-   private:
+    private:
     CNetworkString( m_szMaterialName, MATERIAL_MODIFY_STRING_SIZE );
     CNetworkString( m_szMaterialVar, MATERIAL_MODIFY_STRING_SIZE );
     CNetworkString( m_szMaterialVarValue, MATERIAL_MODIFY_STRING_SIZE );

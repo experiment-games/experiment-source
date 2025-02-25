@@ -23,7 +23,7 @@ class CTEMetalSparks : public CBaseTempEntity
 {
     DECLARE_CLASS( CTEMetalSparks, CBaseTempEntity );
 
-   public:
+    public:
     CTEMetalSparks( const char* name );
     virtual ~CTEMetalSparks( void );
 
@@ -31,7 +31,7 @@ class CTEMetalSparks : public CBaseTempEntity
 
     DECLARE_SERVERCLASS();
 
-   public:
+    public:
     CNetworkVector( m_vecPos );
     CNetworkVector( m_vecDir );
 };
@@ -112,7 +112,7 @@ class CTEArmorRicochet : public CTEMetalSparks
 {
     DECLARE_CLASS( CTEArmorRicochet, CTEMetalSparks );
 
-   public:
+    public:
     CTEArmorRicochet( const char* name )
         : CTEMetalSparks( name ) {}
     DECLARE_SERVERCLASS();

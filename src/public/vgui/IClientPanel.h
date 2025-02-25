@@ -40,7 +40,7 @@ enum EInterfaceID
 //-----------------------------------------------------------------------------
 class IClientPanel
 {
-   public:
+    public:
     virtual VPANEL GetVPanel() = 0;
 
     // straight interface to Panel functions

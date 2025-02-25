@@ -119,7 +119,7 @@ float ApplyViewLocking( float flAngleRaw, float flAngleClamped, ViewLockData_t &
     // Lock the view if we're in the linear part of the curve, and keep it locked
     // until some duration after we return to the flat (zero) part of the curve.
     if ( ( eCurvePart == RemapAngleRange_CurvePart_Linear ) ||
-         ( lockData.bLocked && ( eCurvePart == RemapAngleRange_CurvePart_Spline ) ) )
+        ( lockData.bLocked && ( eCurvePart == RemapAngleRange_CurvePart_Spline ) ) )
     {
         // Msg( "LOCKED\n" );
         lockData.bLocked = true;
@@ -209,13 +209,13 @@ void RemapViewAngles( ViewSmoothingData_t *pData, QAngle &vehicleEyeAngles )
 // Purpose: Vehicle dampening shared between server and client
 //-----------------------------------------------------------------------------
 void SharedVehicleViewSmoothing( CBasePlayer *pPlayer,
-                                 Vector *pAbsOrigin,
-                                 QAngle *pAbsAngles,
-                                 bool bEnterAnimOn,
-                                 bool bExitAnimOn,
-                                 const Vector &vecEyeExitEndpoint,
-                                 ViewSmoothingData_t *pData,
-                                 float *pFOV )
+                                Vector *pAbsOrigin,
+                                QAngle *pAbsAngles,
+                                bool bEnterAnimOn,
+                                bool bExitAnimOn,
+                                const Vector &vecEyeExitEndpoint,
+                                ViewSmoothingData_t *pData,
+                                float *pFOV )
 {
     int eyeAttachmentIndex = pData->pVehicle->LookupAttachment( "vehicle_driver_eyes" );
     matrix3x4_t vehicleEyePosToWorld;

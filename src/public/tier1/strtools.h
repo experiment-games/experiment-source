@@ -895,7 +895,7 @@ bool V_GenerateUniqueName( OUT_Z_CAP( memsize ) char *name, int memsize, const c
 //
 class CStrAutoEncode
 {
-   public:
+    public:
     // ctor
     explicit CStrAutoEncode( const char *pch )
     {
@@ -991,7 +991,7 @@ class CStrAutoEncode
 #endif
     }
 
-   private:
+    private:
     // ensure we have done any conversion work required to farm out a
     // UTF-8 encoded string.
     //

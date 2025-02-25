@@ -24,7 +24,7 @@ namespace vgui
 //-----------------------------------------------------------------------------
 class RadioImage : public TextImage
 {
-   public:
+    public:
     RadioImage( RadioButton *radioButton )
         : TextImage( "n" )
     {
@@ -48,7 +48,7 @@ class RadioImage : public TextImage
 
     Color _bgColor;
 
-   private:
+    private:
     RadioButton *_radioButton;
 };
 
@@ -60,7 +60,7 @@ class RadioButton : public ToggleButton
 {
     DECLARE_CLASS_SIMPLE( RadioButton, ToggleButton );
 
-   public:
+    public:
     RadioButton( Panel *parent, const char *panelName, const char *text );
     ~RadioButton();
 
@@ -81,7 +81,7 @@ class RadioButton : public ToggleButton
     // any action signals or messages to other radio buttons
     virtual void SilentSetSelected( bool state );
 
-   protected:
+    protected:
     virtual void DoClick();
 
     virtual void Paint();
@@ -98,7 +98,7 @@ class RadioButton : public ToggleButton
 
     RadioButton *FindBestRadioButton( int direction );
 
-   private:
+    private:
     RadioImage *_radioBoxImage;
     int _oldTabPosition;
     Color _selectedFgColor;

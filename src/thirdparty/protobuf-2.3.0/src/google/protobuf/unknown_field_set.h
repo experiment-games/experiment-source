@@ -64,7 +64,7 @@ class UnknownField;  // below
 // the Reflection interface which is independent of any serialization scheme.
 class LIBPROTOBUF_EXPORT UnknownFieldSet
 {
-   public:
+    public:
     UnknownFieldSet();
     ~UnknownFieldSet();
 
@@ -122,7 +122,7 @@ class LIBPROTOBUF_EXPORT UnknownFieldSet
         return ParseFromArray( data.data(), data.size() );
     }
 
-   private:
+    private:
     void ClearFallback();
 
     vector< UnknownField >* fields_;
@@ -133,7 +133,7 @@ class LIBPROTOBUF_EXPORT UnknownFieldSet
 // Represents one field in an UnknownFieldSet.
 class LIBPROTOBUF_EXPORT UnknownField
 {
-   public:
+    public:
     enum Type
     {
         TYPE_VARINT,
@@ -165,7 +165,7 @@ class LIBPROTOBUF_EXPORT UnknownField
     inline string* mutable_length_delimited();
     inline UnknownFieldSet* mutable_group();
 
-   private:
+    private:
     friend class UnknownFieldSet;
 
     // If this UnknownField contains a pointer, delete it.

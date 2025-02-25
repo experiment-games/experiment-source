@@ -612,15 +612,15 @@ int TestBrushToPlanenum( bspbrush_t *brush, int planenum, int *numsplits, qboole
         ( *epsilonbrush )++;
 
 #if 0
-	if (*numsplits == 0)
-	{	//	didn't really need to be split
-		if (front)
-			s = PSIDE_FRONT;
-		else if (back)
-			s = PSIDE_BACK;
-		else
-			s = 0;
-	}
+    if (*numsplits == 0)
+    {	//	didn't really need to be split
+        if (front)
+            s = PSIDE_FRONT;
+        else if (back)
+            s = PSIDE_BACK;
+        else
+            s = 0;
+    }
 #endif
 
     return s;
@@ -667,51 +667,51 @@ qboolean WindingIsTiny( winding_t *w )
 #if 0
 qboolean WindingIsTiny2 (winding_t *w)
 {
-	int		i, j;
-	vec_t	len;
-	Vector	delta;
-	int		edges;
+    int		i, j;
+    vec_t	len;
+    Vector	delta;
+    int		edges;
 
-	vec_t maxLen = 0;
-	Vector maxEdge = vec3_origin;
+    vec_t maxLen = 0;
+    Vector maxEdge = vec3_origin;
 
-	edges = 0;
-	for (i=0 ; i<w->numpoints ; i++)
-	{
-		j = i == w->numpoints - 1 ? 0 : i+1;
-		VectorSubtract (w->p[j], w->p[i], delta);
-		len = VectorLength (delta);
-		if (len > maxLen)
-		{
-			maxEdge = delta;
-			maxLen = len;
-		}
-	}
-	Vector normal;
-	vec_t dist;
-	WindingPlane (w, normal, &dist); // normal can come back vec3_origin in some cases
-	VectorNormalize(maxEdge);
-	Vector cross = CrossProduct(normal, maxEdge);
-	VectorNormalize(cross);
-	Vector mins, maxs;
-	ClearBounds( mins, maxs );
-	for (i=0 ; i<w->numpoints ; i++)
-	{
-		Vector point;
-		point.x = DotProduct( w->p[i], maxEdge );
-		point.y = DotProduct( w->p[i], cross );
-		point.z = DotProduct( w->p[i], normal );
-		AddPointToBounds( point, mins, maxs );
-	}
+    edges = 0;
+    for (i=0 ; i<w->numpoints ; i++)
+    {
+        j = i == w->numpoints - 1 ? 0 : i+1;
+        VectorSubtract (w->p[j], w->p[i], delta);
+        len = VectorLength (delta);
+        if (len > maxLen)
+        {
+            maxEdge = delta;
+            maxLen = len;
+        }
+    }
+    Vector normal;
+    vec_t dist;
+    WindingPlane (w, normal, &dist); // normal can come back vec3_origin in some cases
+    VectorNormalize(maxEdge);
+    Vector cross = CrossProduct(normal, maxEdge);
+    VectorNormalize(cross);
+    Vector mins, maxs;
+    ClearBounds( mins, maxs );
+    for (i=0 ; i<w->numpoints ; i++)
+    {
+        Vector point;
+        point.x = DotProduct( w->p[i], maxEdge );
+        point.y = DotProduct( w->p[i], cross );
+        point.z = DotProduct( w->p[i], normal );
+        AddPointToBounds( point, mins, maxs );
+    }
 
-	// check to see if the size in the plane is too small in either dimension
-	Vector size = maxs - mins;
-	for ( i = 0; i < 2; i++ )
-	{
-		if ( size[i] < EDGE_LENGTH )
-			return true;
-	}
-	return false;
+    // check to see if the size in the plane is too small in either dimension
+    Vector size = maxs - mins;
+    for ( i = 0; i < 2; i++ )
+    {
+        if ( size[i] < EDGE_LENGTH )
+            return true;
+    }
+    return false;
 }
 #endif
 
@@ -1141,11 +1141,11 @@ void SplitBrush( bspbrush_t *brush, int planenum, bspbrush_t **front, bspbrush_t
             if ( !cw[j] )
                 continue;
 #if 0
-			if (WindingIsTiny (cw[j]))
-			{
-				FreeWinding (cw[j]);
-				continue;
-			}
+            if (WindingIsTiny (cw[j]))
+            {
+                FreeWinding (cw[j]);
+                continue;
+            }
 #endif
 
             //
@@ -1247,9 +1247,9 @@ SplitBrushList
 ================
 */
 void SplitBrushList( bspbrush_t *brushes,
-                     node_t *node,
-                     bspbrush_t **front,
-                     bspbrush_t **back )
+                    node_t *node,
+                    bspbrush_t **front,
+                    bspbrush_t **back )
 {
     bspbrush_t *brush, *newbrush, *newbrush2;
     side_t *side;

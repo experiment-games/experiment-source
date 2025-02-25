@@ -21,7 +21,7 @@ static bool g_bEnableProxy = true;
 
 class CTest_ProxyToggle_Networkable : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTest_ProxyToggle_Networkable, CBaseEntity );
     DECLARE_SERVERCLASS();
 

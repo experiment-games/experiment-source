@@ -20,7 +20,7 @@
 
 class CBullseyeList : public CAutoGameSystem
 {
-   public:
+    public:
     CBullseyeList( char const *name )
         : CAutoGameSystem( name )
     {

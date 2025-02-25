@@ -8,9 +8,9 @@
 
 #define cpuid( in, a, b, c, d ) \
     asm( "pushl %%ebx\n\t"      \
-         "cpuid\n\t"            \
-         "movl %%ebx,%%esi\n\t" \
-         "pop %%ebx" : "=a"( a ), "=S"( b ), "=c"( c ), "=d"( d ) : "a"( in ) );
+        "cpuid\n\t"            \
+        "movl %%ebx,%%esi\n\t" \
+        "pop %%ebx" : "=a"( a ), "=S"( b ), "=c"( c ), "=d"( d ) : "a"( in ) );
 
 bool CheckMMXTechnology( void )
 {

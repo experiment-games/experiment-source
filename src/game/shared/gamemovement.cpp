@@ -92,9 +92,9 @@ void CMoveData::SetAbsOrigin( const Vector &vec )
 {
     CGameMovement *gm = dynamic_cast< CGameMovement * >( g_pGameMovement );
     if ( gm && gm->GetMoveData() &&
-         gm->player &&
-         gm->player->entindex() == 1 &&
-         gm->player->GetMoveType() == MOVETYPE_WALK )
+        gm->player &&
+        gm->player->entindex() == 1 &&
+        gm->player->GetMoveType() == MOVETYPE_WALK )
     {
         trace_t pm;
         gm->TracePlayerBBox( vec, vec, gm->PlayerSolidMask(), COLLISION_GROUP_PLAYER_MOVEMENT, pm );
@@ -116,7 +116,7 @@ static ConVar diffcheck( "diffcheck", "0", FCVAR_REPLICATED );
 
 class IDiffMgr
 {
-   public:
+    public:
     virtual void StartCommand( bool bServer, int nCommandNumber ) = 0;
     virtual void AddToDiff( bool bServer, int nCommandNumber, char const *string ) = 0;
     virtual void Validate( bool bServer, int nCommandNumber ) = 0;
@@ -126,7 +126,7 @@ static IDiffMgr *g_pDiffMgr = NULL;
 
 class CDiffStr
 {
-   public:
+    public:
     CDiffStr()
     {
         m_str[0] = 0;
@@ -147,14 +147,14 @@ class CDiffStr
         return m_str;
     }
 
-   private:
+    private:
     char m_str[128];
 };
 
 // Per tick data
 class CDiffInfo
 {
-   public:
+    public:
     CDiffInfo()
         : m_nCommandNumber( 0 ) {}
     CDiffInfo( const CDiffInfo &src )
@@ -177,11 +177,11 @@ class CDiffInfo
 
 class CDiffManager : public IDiffMgr
 {
-   public:
+    public:
     CDiffManager()
         : m_Client( 0, 0, CDiffInfo::Less ),
-          m_Server( 0, 0, CDiffInfo::Less ),
-          m_flLastSpew( -1.0f )
+        m_Server( 0, 0, CDiffInfo::Less ),
+        m_flLastSpew( -1.0f )
     {
         g_pDiffMgr = this;
     }
@@ -280,7 +280,7 @@ class CDiffManager : public IDiffMgr
 
         bool bSpew = false;
         if ( serverslot->m_Lines.Count() !=
-             clientslot->m_Lines.Count() )
+            clientslot->m_Lines.Count() )
         {
             return DIFFCHECK_DIFFERS;
         }
@@ -348,7 +348,7 @@ class CDiffManager : public IDiffMgr
             {
                 int prev = m_Server.PrevInorder( nCur );
                 if ( m_Server.IsValidIndex( prev ) &&
-                     ClientRecordExists( m_Server[prev].m_nCommandNumber ) )
+                    ClientRecordExists( m_Server[prev].m_nCommandNumber ) )
                 {
                     // SpewRecords( "prev", prev );
                     vecPrev.AddToHead( prev );
@@ -405,15 +405,15 @@ class CDiffManager : public IDiffMgr
             bool bDiffers = Q_stricmp( sv, cl ) ? true : false;
 
             Msg( "%s%s%d:  sv[%50.50s] cl[%50.50s]\n",
-                 prefix,
-                 bDiffers ? "+++" : "   ",
-                 serverslot->m_nCommandNumber,
-                 sv,
-                 cl );
+                prefix,
+                bDiffers ? "+++" : "   ",
+                serverslot->m_nCommandNumber,
+                sv,
+                cl );
         }
     }
 
-   private:
+    private:
     CUtlRBTree< CDiffInfo, int > m_Server;
     CUtlRBTree< CDiffInfo, int > m_Client;
     float m_flLastSpew;
@@ -598,15 +598,15 @@ void DrawDispCollPlane( CBaseTrace *pTrace )
     vecPlanePoints[3] = vecImpactPoint + ( vecBasisU * flLength ) + ( vecBasisV * -flLength );
 
 #if 0
-	// Test facing.
-	Vector vecEdges[2];
-	vecEdges[0] = vecPlanePoints[1] - vecPlanePoints[0];
-	vecEdges[1] = vecPlanePoints[2] - vecPlanePoints[0];
-	Vector vecCross = vecEdges[0].Cross( vecEdges[1] );
-	if ( vecCross.Dot( vecNormal ) < 0.0f )
-	{
-		// Reverse winding.
-	}
+    // Test facing.
+    Vector vecEdges[2];
+    vecEdges[0] = vecPlanePoints[1] - vecPlanePoints[0];
+    vecEdges[1] = vecPlanePoints[2] - vecPlanePoints[0];
+    Vector vecCross = vecEdges[0].Cross( vecEdges[1] );
+    if ( vecCross.Dot( vecNormal ) < 0.0f )
+    {
+        // Reverse winding.
+    }
 #endif
 
     // Draw the plane.
@@ -782,11 +782,11 @@ Vector CGameMovement::GetPlayerViewOffset( bool ducked ) const
 //-----------------------------------------------------------------------------
 inline void CGameMovement::TracePlayerBBox( const Vector& start, const Vector& end, unsigned int fMask, int collisionGroup, trace_t& pm )
 {
-	VPROF( "CGameMovement::TracePlayerBBox" );
+    VPROF( "CGameMovement::TracePlayerBBox" );
 
-	Ray_t ray;
-	ray.Init( start, end, GetPlayerMins(), GetPlayerMaxs() );
-	UTIL_TraceRay( ray, fMask, mv->m_nPlayerHandle.Get(), collisionGroup, &pm );
+    Ray_t ray;
+    ray.Init( start, end, GetPlayerMins(), GetPlayerMaxs() );
+    UTIL_TraceRay( ray, fMask, mv->m_nPlayerHandle.Get(), collisionGroup, &pm );
 }
 #endif
 
@@ -829,12 +829,12 @@ void CGameMovement::PlantFootprint( surfacedata_t *psurface )
     // Use the wet footprint if we're wet...
     if (IsWet())
     {
-      footprintDecal = DECAL_FOOTPRINT_WET;
+    footprintDecal = DECAL_FOOTPRINT_WET;
     }
     else
     {
-      // FIXME: Activate this once we decide to pull the trigger on it.
-      // NOTE: We could add in snow, mud, others here
+    // FIXME: Activate this once we decide to pull the trigger on it.
+    // NOTE: We could add in snow, mud, others here
 //			switch(psurface->gameMaterial)
 //			{
 //			case 'D':
@@ -845,26 +845,26 @@ void CGameMovement::PlantFootprint( surfacedata_t *psurface )
 
     if (footprintDecal != -1)
     {
-      Vector right;
-      AngleVectors( pev->angles, 0, &right, 0 );
+    Vector right;
+    AngleVectors( pev->angles, 0, &right, 0 );
 
-      // Figure out where the top of the stepping leg is
-      trace_t tr;
-      Vector hipOrigin;
-      VectorMA( pev->origin,
+    // Figure out where the top of the stepping leg is
+    trace_t tr;
+    Vector hipOrigin;
+    VectorMA( pev->origin,
         m_IsFootprintOnLeft ? -PLAYER_HALFWIDTH : PLAYER_HALFWIDTH,
         right, hipOrigin );
 
-      // Find where that leg hits the ground
-      UTIL_TraceLine( hipOrigin, hipOrigin + Vector(0, 0, -COORD_EXTENT * 1.74),
-              MASK_SOLID_BRUSHONLY, edict(), COLLISION_GROUP_NONE, &tr);
+    // Find where that leg hits the ground
+    UTIL_TraceLine( hipOrigin, hipOrigin + Vector(0, 0, -COORD_EXTENT * 1.74),
+            MASK_SOLID_BRUSHONLY, edict(), COLLISION_GROUP_NONE, &tr);
 
-      unsigned char mType = TEXTURETYPE_Find( &tr );
+    unsigned char mType = TEXTURETYPE_Find( &tr );
 
-      // Splat a decal
-      CPVSFilter filter( tr.endpos );
-      te->FootprintDecal( filter, 0.0f, &tr.endpos, &right, ENTINDEX(tr.u.ent),
-                 gDecals[footprintDecal].index, mType );
+    // Splat a decal
+    CPVSFilter filter( tr.endpos );
+    te->FootprintDecal( filter, 0.0f, &tr.endpos, &right, ENTINDEX(tr.u.ent),
+                gDecals[footprintDecal].index, mType );
 
     }
   }
@@ -886,37 +886,37 @@ void CBasePlayer::UpdateWetness()
 
   trace_t tr;
   UTIL_TraceLine( pev->origin, pev->origin + Vector(0, 0, -COORD_EXTENT * 1.74),
-          MASK_SOLID_BRUSHONLY, edict(), COLLISION_GROUP_NONE, &tr);
+        MASK_SOLID_BRUSHONLY, edict(), COLLISION_GROUP_NONE, &tr);
   if (tr.surface.flags & SURF_WET)
   {
     if (! (pev->flags & FL_INRAIN) )
     {
-      // Transition...
-      // Figure out how wet we are now (we were drying off...)
-      float wetness = (m_WetTime - gpGlobals->time) / DRY_TIME;
-      if (wetness < 0.0f)
+    // Transition...
+    // Figure out how wet we are now (we were drying off...)
+    float wetness = (m_WetTime - gpGlobals->time) / DRY_TIME;
+    if (wetness < 0.0f)
         wetness = 0.0f;
 
-      // Here, wet time represents the time at which we get totally wet
-      m_WetTime = gpGlobals->time + (1.0 - wetness) * WET_TIME;
+    // Here, wet time represents the time at which we get totally wet
+    m_WetTime = gpGlobals->time + (1.0 - wetness) * WET_TIME;
 
-      pev->flags |= FL_INRAIN;
+    pev->flags |= FL_INRAIN;
     }
   }
   else
   {
     if ((pev->flags & FL_INRAIN) != 0)
     {
-      // Transition...
-      // Figure out how wet we are now (we were getting more wet...)
-      float wetness = 1.0f + (gpGlobals->time - m_WetTime) / WET_TIME;
-      if (wetness > 1.0f)
+    // Transition...
+    // Figure out how wet we are now (we were getting more wet...)
+    float wetness = 1.0f + (gpGlobals->time - m_WetTime) / WET_TIME;
+    if (wetness > 1.0f)
         wetness = 1.0f;
 
-      // Here, wet time represents the time at which we get totally dry
-      m_WetTime = gpGlobals->time + wetness * DRY_TIME;
+    // Here, wet time represents the time at which we get totally dry
+    m_WetTime = gpGlobals->time + wetness * DRY_TIME;
 
-      pev->flags &= ~FL_INRAIN;
+    pev->flags &= ~FL_INRAIN;
     }
   }
 }
@@ -993,15 +993,15 @@ void CGameMovement::CheckParameters( void )
     QAngle v_angle;
 
     if ( player->GetMoveType() != MOVETYPE_ISOMETRIC &&
-         player->GetMoveType() != MOVETYPE_NOCLIP &&
-         player->GetMoveType() != MOVETYPE_OBSERVER )
+        player->GetMoveType() != MOVETYPE_NOCLIP &&
+        player->GetMoveType() != MOVETYPE_OBSERVER )
     {
         float spd;
         float maxspeed;
 
         spd = ( mv->m_flForwardMove * mv->m_flForwardMove ) +
-              ( mv->m_flSideMove * mv->m_flSideMove ) +
-              ( mv->m_flUpMove * mv->m_flUpMove );
+            ( mv->m_flSideMove * mv->m_flSideMove ) +
+            ( mv->m_flUpMove * mv->m_flUpMove );
 
         maxspeed = mv->m_flClientMaxSpeed;
         if ( maxspeed != 0.0 )
@@ -1048,8 +1048,8 @@ void CGameMovement::CheckParameters( void )
     }
 
     if ( player->GetFlags() & FL_FROZEN ||
-         player->GetFlags() & FL_ONTRAIN ||
-         IsDead() )
+        player->GetFlags() & FL_ONTRAIN ||
+        IsDead() )
     {
         mv->m_flForwardMove = 0;
         mv->m_flSideMove = 0;
@@ -1066,7 +1066,7 @@ void CGameMovement::CheckParameters( void )
 
         // Now adjust roll angle
         if ( player->GetMoveType() != MOVETYPE_ISOMETRIC &&
-             player->GetMoveType() != MOVETYPE_NOCLIP )
+            player->GetMoveType() != MOVETYPE_NOCLIP )
         {
             mv->m_vecAngles[ROLL] = CalcRoll( v_angle, mv->m_vecVelocity, sv_rollangle.GetFloat(), sv_rollspeed.GetFloat() );
         }
@@ -1217,7 +1217,7 @@ void CGameMovement::FinishMove( void )
 }
 
 #define PUNCH_DAMPING 9.0f           // bigger number makes the response more damped, smaller is less damped
-                                     // currently the system will overshoot, with larger damping values it won't
+                                    // currently the system will overshoot, with larger damping values it won't
 #define PUNCH_SPRING_CONSTANT 65.0f  // bigger number increases the speed at which the view corrects
 
 //-----------------------------------------------------------------------------
@@ -1887,9 +1887,9 @@ void CGameMovement::StayOnGround( void )
     // Now trace down from a known safe position
     TracePlayerBBox( start, end, PlayerSolidMask(), COLLISION_GROUP_PLAYER_MOVEMENT, trace );
     if ( trace.fraction > 0.0f &&        // must go somewhere
-         trace.fraction < 1.0f &&        // must hit something
-         !trace.startsolid &&            // can't be embedded in a solid
-         trace.plane.normal[2] >= 0.7 )  // can't hit a steep slope that we can't stand on anyway
+        trace.fraction < 1.0f &&        // must hit something
+        !trace.startsolid &&            // can't be embedded in a solid
+        trace.plane.normal[2] >= 0.7 )  // can't hit a steep slope that we can't stand on anyway
     {
         float flDelta = fabs( mv->GetAbsOrigin().z - trace.endpos.z );
 
@@ -2062,7 +2062,7 @@ void CGameMovement::FullWalkMove()
 
         // If we are falling again, then we must not trying to jump out of water any more.
         if ( mv->m_vecVelocity[2] < 0 &&
-             player->m_flWaterJumpTime )
+            player->m_flWaterJumpTime )
         {
             player->m_flWaterJumpTime = 0;
         }
@@ -2143,7 +2143,7 @@ void CGameMovement::FullWalkMove()
     }
 
     if ( ( m_nOldWaterLevel == WL_NotInWater && player->GetWaterLevel() != WL_NotInWater ) ||
-         ( m_nOldWaterLevel != WL_NotInWater && player->GetWaterLevel() == WL_NotInWater ) )
+        ( m_nOldWaterLevel != WL_NotInWater && player->GetWaterLevel() == WL_NotInWater ) )
     {
         PlaySwimSound();
 #if !defined( CLIENT_DLL )
@@ -2723,8 +2723,8 @@ int CGameMovement::TryPlayerMove( Vector *pFirstDest, trace_t *pFirstTrace )
         // Only give this a try for first impact plane because you can get yourself stuck in an acute corner by jumping in place
         //  and pressing forward and nobody was really using this bounce/reflection feature anyway...
         if ( numplanes == 1 &&
-             player->GetMoveType() == MOVETYPE_WALK &&
-             player->GetGroundEntity() == NULL )
+            player->GetMoveType() == MOVETYPE_WALK &&
+            player->GetGroundEntity() == NULL )
         {
             for ( i = 0; i < numplanes; i++ )
             {
@@ -3827,7 +3827,7 @@ void CGameMovement::CategorizePosition( void )
 
     // Was on ground, but now suddenly am not
     if ( bMovingUpRapidly ||
-         ( bMovingUp && player->GetMoveType() == MOVETYPE_LADDER ) )
+        ( bMovingUp && player->GetMoveType() == MOVETYPE_LADDER ) )
     {
         SetGroundEntity( NULL );
     }
@@ -3847,7 +3847,7 @@ void CGameMovement::CategorizePosition( void )
                 SetGroundEntity( NULL );
                 // probably want to add a check for a +z velocity too!
                 if ( ( mv->m_vecVelocity.z > 0.0f ) &&
-                     ( player->GetMoveType() != MOVETYPE_NOCLIP ) )
+                    ( player->GetMoveType() != MOVETYPE_NOCLIP ) )
                 {
                     player->m_surfaceFriction = 0.25f;
                 }
@@ -4279,7 +4279,7 @@ void CGameMovement::SetDuckedEyeOffset( float duckFraction )
     Vector vecStandViewOffset = GetPlayerViewOffset( false );
     Vector temp = player->GetViewOffset();
     temp.z = ( ( vecDuckViewOffset.z - fMore ) * duckFraction ) +
-             ( vecStandViewOffset.z * ( 1 - duckFraction ) );
+            ( vecStandViewOffset.z * ( 1 - duckFraction ) );
     player->SetViewOffset( temp );
 }
 
@@ -4585,10 +4585,10 @@ void CGameMovement::PlayerMove( void )
 
     // Always try and unstick us unless we are using a couple of the movement modes
     if ( player->GetMoveType() != MOVETYPE_NOCLIP &&
-         player->GetMoveType() != MOVETYPE_NONE &&
-         player->GetMoveType() != MOVETYPE_ISOMETRIC &&
-         player->GetMoveType() != MOVETYPE_OBSERVER &&
-         !player->pl.deadflag )
+        player->GetMoveType() != MOVETYPE_NONE &&
+        player->GetMoveType() != MOVETYPE_ISOMETRIC &&
+        player->GetMoveType() != MOVETYPE_OBSERVER &&
+        !player->pl.deadflag )
     {
         if ( CheckInterval( STUCK ) )
         {
@@ -4602,8 +4602,8 @@ void CGameMovement::PlayerMove( void )
 
     // Now that we are "unstuck", see where we are (player->GetWaterLevel() and type, player->GetGroundEntity()).
     if ( player->GetMoveType() != MOVETYPE_WALK ||
-         mv->m_bGameCodeMovedPlayer ||
-         !sv_optimizedmovement.GetBool() )
+        mv->m_bGameCodeMovedPlayer ||
+        !sv_optimizedmovement.GetBool() )
     {
         CategorizePosition();
     }
@@ -4642,7 +4642,7 @@ void CGameMovement::PlayerMove( void )
         // if ( bCheckLadder || player->GetMoveType() == MOVETYPE_LADDER )
         {
             if ( !LadderMove() &&
-                 ( player->GetMoveType() == MOVETYPE_LADDER ) )
+                ( player->GetMoveType() == MOVETYPE_LADDER ) )
             {
                 // Clear ladder stuff unless player is dead or riding a train
                 // It will be reset immediately again next frame if necessary
@@ -4653,14 +4653,14 @@ void CGameMovement::PlayerMove( void )
     }
 
 #if 0
-	Msg("%i, %i, %s, player = %8x, move type = %2i, ground entity = %8x, velocity = (%f %f %f)\n",
-		player->CurrentCommandNumber(),
-		player->m_nTickBase,
-		player->IsServer() ? "SERVER" : "CLIENT",
-		player,
-		player->GetMoveType(),
-		player->GetGroundEntity(),
-		mv->m_vecVelocity[0], mv->m_vecVelocity[1], mv->m_vecVelocity[2]);
+    Msg("%i, %i, %s, player = %8x, move type = %2i, ground entity = %8x, velocity = (%f %f %f)\n",
+        player->CurrentCommandNumber(),
+        player->m_nTickBase,
+        player->IsServer() ? "SERVER" : "CLIENT",
+        player,
+        player->GetMoveType(),
+        player->GetGroundEntity(),
+        mv->m_vecVelocity[0], mv->m_vecVelocity[1], mv->m_vecVelocity[2]);
 
 #endif
 
@@ -4859,7 +4859,7 @@ void CGameMovement::FullTossMove( void )
     if ( player->GetGroundEntity() != NULL )
     {
         if ( VectorCompare( player->GetBaseVelocity(), vec3_origin ) &&
-             VectorCompare( mv->m_vecVelocity, vec3_origin ) )
+            VectorCompare( mv->m_vecVelocity, vec3_origin ) )
             return;
     }
 

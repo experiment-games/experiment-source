@@ -9,7 +9,7 @@
 
 class IPaintHTML
 {
-   public:
+    public:
     enum EPaintTarget
     {
         ePaintBrowser,
@@ -23,7 +23,7 @@ class IPaintHTML
 
 class IInputEventHTML
 {
-   public:
+    public:
     enum EMouseButton
     {
         eButtonLeft,

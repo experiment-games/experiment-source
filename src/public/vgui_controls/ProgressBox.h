@@ -30,7 +30,7 @@ class ProgressBox : public Frame
 {
     DECLARE_CLASS_SIMPLE( ProgressBox, Frame );
 
-   public:
+    public:
     // title - Text to be displayed in the title bar of the window
     // text - Text message in the message box
     // parent - parent panel of the message box, by default it has no parent.
@@ -58,12 +58,12 @@ class ProgressBox : public Frame
 
     /* custom messages:
 
-      "ProgressBoxCancelled"
+    "ProgressBoxCancelled"
         sent if the user pressed the cancel button (must be enabled & visible for this to happen)
 
     */
 
-   protected:
+    protected:
     virtual void PerformLayout();
     virtual void OnClose();
     virtual void OnCloseFrameButtonPressed();
@@ -75,7 +75,7 @@ class ProgressBox : public Frame
     // called when the update has been cancelled
     virtual void OnCancel();
 
-   private:
+    private:
     MESSAGE_FUNC( OnShutdownRequest, "ShutdownRequest" );
     void Init();
     void UpdateTitle();

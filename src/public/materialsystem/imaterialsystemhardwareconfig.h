@@ -83,7 +83,7 @@ enum VertexCompressionType_t
 //-----------------------------------------------------------------------------
 class IMaterialSystemHardwareConfig
 {
-   public:
+    public:
     // on xbox, some methods are inlined to return constants
 
     DEFCONFIGMETHOD( bool, HasDestAlphaBuffer(), true );

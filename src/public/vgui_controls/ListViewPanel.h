@@ -30,7 +30,7 @@ class ListViewPanel : public Panel
 {
     DECLARE_CLASS_SIMPLE( ListViewPanel, Panel );
 
-   public:
+    public:
     ListViewPanel( Panel *parent, const char *panelName );
     ~ListViewPanel();
 
@@ -70,7 +70,7 @@ class ListViewPanel : public Panel
     // sets this single item as the only selected item
     virtual void SetSingleSelectedItem( int itemID );
 
-   protected:
+    protected:
     // overrides
     virtual void OnMouseWheeled( int delta );
     virtual void OnSizeChanged( int wide, int tall );
@@ -84,7 +84,7 @@ class ListViewPanel : public Panel
     MESSAGE_FUNC( OnSliderMoved, "ScrollBarSliderMoved" );
     virtual int GetItemsPerColumn();
 
-   private:
+    private:
     ScrollBar *m_hbar;
 
     friend class ListViewItem;

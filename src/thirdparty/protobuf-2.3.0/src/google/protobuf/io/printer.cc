@@ -63,47 +63,47 @@ void Printer::Print(const map<string, string>& variables, const char* text) {
 
   for (int i = 0; i < size; i++) {
     if (text[i] == '\n') {
-      // Saw newline.  If there is more text, we may need to insert an indent
-      // here.  So, write what we have so far, including the '\n'.
-      WriteRaw(text + pos, i - pos + 1);
-      pos = i + 1;
+    // Saw newline.  If there is more text, we may need to insert an indent
+    // here.  So, write what we have so far, including the '\n'.
+    WriteRaw(text + pos, i - pos + 1);
+    pos = i + 1;
 
-      // Setting this true will cause the next WriteRaw() to insert an indent
-      // first.
-      at_start_of_line_ = true;
+    // Setting this true will cause the next WriteRaw() to insert an indent
+    // first.
+    at_start_of_line_ = true;
 
     } else if (text[i] == variable_delimiter_) {
-      // Saw the start of a variable name.
+    // Saw the start of a variable name.
 
-      // Write what we have so far.
-      WriteRaw(text + pos, i - pos);
-      pos = i + 1;
+    // Write what we have so far.
+    WriteRaw(text + pos, i - pos);
+    pos = i + 1;
 
-      // Find closing delimiter.
-      const char* end = strchr(text + pos, variable_delimiter_);
-      if (end == NULL) {
+    // Find closing delimiter.
+    const char* end = strchr(text + pos, variable_delimiter_);
+    if (end == NULL) {
         GOOGLE_LOG(DFATAL) << " Unclosed variable name.";
         end = text + pos;
-      }
-      int endpos = end - text;
+    }
+    int endpos = end - text;
 
-      string varname(text + pos, endpos - pos);
-      if (varname.empty()) {
+    string varname(text + pos, endpos - pos);
+    if (varname.empty()) {
         // Two delimiters in a row reduce to a literal delimiter character.
         WriteRaw(&variable_delimiter_, 1);
-      } else {
+    } else {
         // Replace with the variable's value.
         map<string, string>::const_iterator iter = variables.find(varname);
         if (iter == variables.end()) {
-          GOOGLE_LOG(DFATAL) << " Undefined variable: " << varname;
+        GOOGLE_LOG(DFATAL) << " Undefined variable: " << varname;
         } else {
-          WriteRaw(iter->second.data(), iter->second.size());
+        WriteRaw(iter->second.data(), iter->second.size());
         }
-      }
+    }
 
-      // Advance past this variable.
-      i = endpos;
-      pos = endpos + 1;
+    // Advance past this variable.
+    i = endpos;
+    pos = endpos + 1;
     }
   }
 

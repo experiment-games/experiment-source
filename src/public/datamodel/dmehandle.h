@@ -28,7 +28,7 @@
 template < class DmeType, bool Counted = false >
 class CDmeHandle : public CDmeElementRefHelper
 {
-   public:
+    public:
     CDmeHandle()
         : m_handle( DMELEMENT_HANDLE_INVALID )
     {
@@ -204,7 +204,7 @@ class CDmeHandle : public CDmeElementRefHelper
         return ( Get() == NULL );
     }
 
-   private:
+    private:
     DmElementHandle_t m_handle;
 };
 
@@ -222,21 +222,21 @@ typedef CUtlVector< CDmeHandle< CDmElement > > DmeHandleVec_t;
 template < typename T >
 class CDmAttributeUndoStorageType
 {
-   public:
+    public:
     typedef T UndoStorageType;
 };
 
 template <>
 class CDmAttributeUndoStorageType< DmElementHandle_t >
 {
-   public:
+    public:
     typedef CDmeCountedHandle UndoStorageType;
 };
 
 template <>
 class CDmAttributeUndoStorageType< CUtlVector< DmElementHandle_t > >
 {
-   public:
+    public:
     typedef CUtlVector< CDmeCountedHandle > UndoStorageType;
 };
 

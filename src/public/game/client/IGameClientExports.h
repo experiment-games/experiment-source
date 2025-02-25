@@ -18,7 +18,7 @@
 //-----------------------------------------------------------------------------
 abstract_class IGameClientExports : public IBaseInterface
 {
-   public:
+    public:
 #ifndef _XBOX
     // ingame voice manipulation
     virtual bool IsPlayerGameVoiceMuted( int playerIndex ) = 0;

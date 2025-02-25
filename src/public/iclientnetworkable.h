@@ -31,7 +31,7 @@ enum ShouldTransmitState_t
 enum DataUpdateType_t
 {
     DATA_UPDATE_CREATED = 0,  // indicates it was created +and+ entered the pvs
-                              //	DATA_UPDATE_ENTERED_PVS,
+                            //	DATA_UPDATE_ENTERED_PVS,
     DATA_UPDATE_DATATABLE_CHANGED,
     //	DATA_UPDATE_LEFT_PVS,
     //	DATA_UPDATE_DESTROYED,		// FIXME: Could enable this, but it's a little worrying
@@ -40,7 +40,7 @@ enum DataUpdateType_t
 
 abstract_class IClientNetworkable
 {
-   public:
+    public:
     // Gets at the containing class...
     virtual IClientUnknown* GetIClientUnknown() = 0;
 

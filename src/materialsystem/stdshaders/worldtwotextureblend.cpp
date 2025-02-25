@@ -21,7 +21,7 @@ extern ConVar r_flashlight_version2;
 
 // FIXME: Need to make a dx9 version so that "CENTROID" works.
 BEGIN_VS_SHADER( WorldTwoTextureBlend,
-                 "Help for WorldTwoTextureBlend" )
+                "Help for WorldTwoTextureBlend" )
 
 BEGIN_SHADER_PARAMS
 SHADER_PARAM_OVERRIDE( BASETEXTURE, SHADER_PARAM_TYPE_TEXTURE, "shadertest/WorldTwoTextureBlend", "iris texture", 0 )
@@ -31,8 +31,8 @@ SHADER_PARAM( DETAIL, SHADER_PARAM_TYPE_TEXTURE, "shadertest/WorldTwoTextureBlen
 SHADER_PARAM( DETAILFRAME, SHADER_PARAM_TYPE_INTEGER, "0", "frame number for $detail" )
 SHADER_PARAM( DETAILSCALE, SHADER_PARAM_TYPE_FLOAT, "1.0", "scale of the detail texture" )
 SHADER_PARAM( DETAIL_ALPHA_MASK_BASE_TEXTURE, SHADER_PARAM_TYPE_BOOL, "0",
-              "If this is 1, then when detail alpha=0, no base texture is blended and when "
-              "detail alpha=1, you get detail*base*lightmap" )
+            "If this is 1, then when detail alpha=0, no base texture is blended and when "
+            "detail alpha=1, you get detail*base*lightmap" )
 SHADER_PARAM( BUMPMAP, SHADER_PARAM_TYPE_TEXTURE, "models/shadertest/shader1_normal", "bump map" )
 SHADER_PARAM( BUMPFRAME, SHADER_PARAM_TYPE_INTEGER, "0", "frame number for $bumpmap" )
 SHADER_PARAM( BUMPTRANSFORM, SHADER_PARAM_TYPE_MATRIX, "center .5 .5 scale 1 1 rotate 0 translate 0 0", "$bumpmap texcoord transform" )
@@ -69,8 +69,8 @@ SHADER_INIT_PARAMS()
 
     // Write over $basetexture with $albedo if we are going to be using diffuse normal mapping.
     if ( g_pConfig->UseBumpmapping() && params[BUMPMAP]->IsDefined() && params[ALBEDO]->IsDefined() &&
-         params[BASETEXTURE]->IsDefined() &&
-         !( params[NODIFFUSEBUMPLIGHTING]->IsDefined() && params[NODIFFUSEBUMPLIGHTING]->GetIntValue() ) )
+        params[BASETEXTURE]->IsDefined() &&
+        !( params[NODIFFUSEBUMPLIGHTING]->IsDefined() && params[NODIFFUSEBUMPLIGHTING]->GetIntValue() ) )
     {
         params[BASETEXTURE]->SetStringValue( params[ALBEDO]->GetStringValue() );
     }
@@ -356,7 +356,7 @@ void DrawPass( IMaterialVar **params, IShaderDynamicAPI *pShaderAPI, IShaderShad
         // for the texture transform.
         bool bHasTextureTransform =
             !( params[BASETEXTURETRANSFORM]->MatrixIsIdentity() &&
-               params[BUMPTRANSFORM]->MatrixIsIdentity() );
+                params[BUMPTRANSFORM]->MatrixIsIdentity() );
 
         bool bVertexShaderFastPath = !bHasTextureTransform;
         if ( params[DETAIL]->IsTexture() )

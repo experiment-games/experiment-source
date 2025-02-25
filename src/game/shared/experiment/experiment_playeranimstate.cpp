@@ -184,7 +184,7 @@ void CExperimentPlayerAnimState::Update( float eyeYaw, float eyePitch )
 }
 
 void CExperimentPlayerAnimState::DoAnimationEvent( PlayerAnimEvent_t event,
-                                                   int nData )
+                                                    int nData )
 {
     Activity iGestureActivity = ACT_INVALID;
 
@@ -450,7 +450,7 @@ bool CExperimentPlayerAnimState::SetupPoseParameters( CStudioHdr *pStudioHdr )
             GetBasePlayer()->LookupPoseParameter( pStudioHdr, "move_y" );
 
         if ( ( m_PoseParameterData.m_iMoveX == 0 ) &&
-             ( m_PoseParameterData.m_iMoveY == 0 ) )
+            ( m_PoseParameterData.m_iMoveY == 0 ) )
             return false;
     }
     else
@@ -462,7 +462,7 @@ bool CExperimentPlayerAnimState::SetupPoseParameters( CStudioHdr *pStudioHdr )
             GetBasePlayer()->LookupPoseParameter( pStudioHdr, "move_yaw" );
 
         if ( ( m_PoseParameterData.m_iMoveX < 0 ) ||
-             ( m_PoseParameterData.m_iMoveY < 0 ) )
+            ( m_PoseParameterData.m_iMoveY < 0 ) )
             return false;
     }
 
@@ -494,34 +494,34 @@ void CExperimentPlayerAnimState::EstimateYaw( void )
         return;
 
 #if 0  // 9way
-       // Get the player's velocity and angles.
-	Vector vecEstVelocity;
-	GetOuterAbsVelocity( vecEstVelocity );
-	QAngle angles = GetBasePlayer()->GetLocalAngles();
+        // Get the player's velocity and angles.
+    Vector vecEstVelocity;
+    GetOuterAbsVelocity( vecEstVelocity );
+    QAngle angles = GetBasePlayer()->GetLocalAngles();
 
-	// If we are not moving, sync up the feet and eyes slowly.
-	if ( vecEstVelocity.x == 0.0f && vecEstVelocity.y == 0.0f )
-	{
-		float flYawDelta = angles[YAW] - m_PoseParameterData.m_flEstimateYaw;
-		flYawDelta = AngleNormalize( flYawDelta );
+    // If we are not moving, sync up the feet and eyes slowly.
+    if ( vecEstVelocity.x == 0.0f && vecEstVelocity.y == 0.0f )
+    {
+        float flYawDelta = angles[YAW] - m_PoseParameterData.m_flEstimateYaw;
+        flYawDelta = AngleNormalize( flYawDelta );
 
-		if ( flDeltaTime < 0.25f )
-		{
-			flYawDelta *= ( flDeltaTime * 4.0f );
-		}
-		else
-		{
-			flYawDelta *= flDeltaTime;
-		}
+        if ( flDeltaTime < 0.25f )
+        {
+            flYawDelta *= ( flDeltaTime * 4.0f );
+        }
+        else
+        {
+            flYawDelta *= flDeltaTime;
+        }
 
-		m_PoseParameterData.m_flEstimateYaw += flYawDelta;
-		AngleNormalize( m_PoseParameterData.m_flEstimateYaw );
-	}
-	else
-	{
-		m_PoseParameterData.m_flEstimateYaw = ( atan2( vecEstVelocity.y, vecEstVelocity.x ) * 180.0f / M_PI );
-		m_PoseParameterData.m_flEstimateYaw = clamp( m_PoseParameterData.m_flEstimateYaw, -180.0f, 180.0f );
-	}
+        m_PoseParameterData.m_flEstimateYaw += flYawDelta;
+        AngleNormalize( m_PoseParameterData.m_flEstimateYaw );
+    }
+    else
+    {
+        m_PoseParameterData.m_flEstimateYaw = ( atan2( vecEstVelocity.y, vecEstVelocity.x ) * 180.0f / M_PI );
+        m_PoseParameterData.m_flEstimateYaw = clamp( m_PoseParameterData.m_flEstimateYaw, -180.0f, 180.0f );
+    }
 #else
     float dt = gpGlobals->frametime;
 
@@ -625,8 +625,8 @@ void CExperimentPlayerAnimState::ComputePoseParam_MoveYaw( CStudioHdr *pStudioHd
     {
         // Tony; oops, i inverted this previously above.
         GetBasePlayer()->SetPoseParameter( pStudioHdr,
-                                           m_PoseParameterData.m_iMoveY,
-                                           flYaw );
+                                            m_PoseParameterData.m_iMoveY,
+                                            flYaw );
     }
 }
 
@@ -754,7 +754,7 @@ float CExperimentPlayerAnimState::GetCurrentMaxGroundSpeed()
 }
 
 bool CExperimentPlayerAnimState::ShouldResetMainSequence( int iCurrentSequence,
-                                                          int iNewSequence )
+                                                        int iNewSequence )
 {
     if ( IsAirborne() )
     {
@@ -763,7 +763,7 @@ bool CExperimentPlayerAnimState::ShouldResetMainSequence( int iCurrentSequence,
             // Only reset active mid-air jump sequence if we're transitioning
             // away from that animation
             return iNewSequence !=
-                   SelectWeightedSequence( TranslateActivity( ACT_HL2MP_JUMP ) );
+                    SelectWeightedSequence( TranslateActivity( ACT_HL2MP_JUMP ) );
         }
         m_bFreshJump = false;
     }

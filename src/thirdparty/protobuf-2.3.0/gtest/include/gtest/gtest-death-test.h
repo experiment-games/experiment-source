@@ -179,11 +179,11 @@ GTEST_DECLARE_string_( death_test_style );
 // Tests that an exit code describes a normal exit with a given exit code.
 class ExitedWithCode
 {
-   public:
+    public:
     explicit ExitedWithCode( int exit_code );
     bool operator()( int exit_status ) const;
 
-   private:
+    private:
     // No implementation - assignment is unsupported.
     void operator=( const ExitedWithCode& other );
 
@@ -195,11 +195,11 @@ class ExitedWithCode
 // given signal.
 class KilledBySignal
 {
-   public:
+    public:
     explicit KilledBySignal( int signum );
     bool operator()( int exit_status ) const;
 
-   private:
+    private:
     const int signum_;
 };
 #endif  // !GTEST_OS_WINDOWS

@@ -27,7 +27,7 @@
 
 class C_SteamJet : public C_BaseParticleEntity, public IPrototypeAppEffect
 {
-   public:
+    public:
     DECLARE_CLIENTCLASS();
     DECLARE_CLASS( C_SteamJet, C_BaseParticleEntity );
 
@@ -36,7 +36,7 @@ class C_SteamJet : public C_BaseParticleEntity, public IPrototypeAppEffect
 
     class SteamJetParticle : public Particle
     {
-       public:
+        public:
         Vector m_Velocity;
         float m_flRoll;
         float m_flRollDelta;
@@ -52,22 +52,22 @@ class C_SteamJet : public C_BaseParticleEntity, public IPrototypeAppEffect
     }
 
     // C_BaseEntity
-   public:
+    public:
     virtual void OnDataChanged( DataUpdateType_t updateType );
 
     // IPrototypeAppEffect
-   public:
+    public:
     virtual void Start( CParticleMgr *pParticleMgr, IPrototypeArgAccess *pArgs );
     virtual bool GetPropEditInfo( RecvTable **ppTable, void **ppObj );
 
     // IParticleEffect
-   public:
+    public:
     virtual void Update( float fTimeDelta );
     virtual void RenderParticles( CParticleRenderIterator *pIterator );
     virtual void SimulateParticles( CParticleSimulateIterator *pIterator );
 
     // Stuff from the datatable
-   public:
+    public:
     float m_SpreadSpeed;
     float m_Speed;
     float m_StartSize;
@@ -82,10 +82,10 @@ class C_SteamJet : public C_BaseParticleEntity, public IPrototypeAppEffect
     int m_spawnflags;
     float m_flRollSpeed;
 
-   private:
+    private:
     void UpdateLightingRamp();
 
-   private:
+    private:
     // Stored the last time it updates the lighting ramp, so it can cache the values.
     Vector m_vLastRampUpdatePos;
     QAngle m_vLastRampUpdateAngles;
@@ -99,7 +99,7 @@ class C_SteamJet : public C_BaseParticleEntity, public IPrototypeAppEffect
     PMaterialHandle m_MaterialHandle;
     TimedEvent m_ParticleSpawn;
 
-   private:
+    private:
     C_SteamJet( const C_SteamJet & );
 };
 
@@ -447,7 +447,7 @@ void C_SteamJet::SimulateParticles( CParticleSimulateIterator *pIterator )
 void C_SteamJet::UpdateLightingRamp()
 {
     if ( VectorsAreEqual( m_vLastRampUpdatePos, GetAbsOrigin(), 0.1 ) &&
-         QAnglesAreEqual( m_vLastRampUpdateAngles, GetAbsAngles(), 0.1 ) )
+        QAnglesAreEqual( m_vLastRampUpdateAngles, GetAbsAngles(), 0.1 ) )
     {
         return;
     }

@@ -22,7 +22,7 @@ void CPointEntity::Spawn( void )
 
 class CNullEntity : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CNullEntity, CBaseEntity );
 
     void Spawn( void );
@@ -37,7 +37,7 @@ LINK_ENTITY_TO_CLASS( info_null, CNullEntity );
 
 class CBaseDMStart : public CPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CBaseDMStart, CPointEntity );
 
     bool IsTriggered( CBaseEntity *pEntity );
@@ -46,7 +46,7 @@ class CBaseDMStart : public CPointEntity
 
     string_t m_Master;
 
-   private:
+    private:
 };
 
 BEGIN_DATADESC( CBaseDMStart )

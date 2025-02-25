@@ -49,10 +49,10 @@ bool CheckMMXTechnology( void )
         _asm
         {
 #ifdef CPUID
-			xor edx, edx  // Clue the compiler that EDX is about to be used.
+            xor edx, edx  // Clue the compiler that EDX is about to be used.
 #endif
             mov eax, 1    // set up CPUID to return processor version and features
-               //      0 = vendor string, 1 = version info, 2 = cache info
+                //      0 = vendor string, 1 = version info, 2 = cache info
             CPUID  // code bytes = 0fh,  0a2h
             mov RegEDX, edx  // features returned in edx
         }
@@ -107,10 +107,10 @@ bool CheckSSETechnology( void )
         _asm
         {
 #ifdef CPUID
-			xor edx, edx  // Clue the compiler that EDX is about to be used.
+            xor edx, edx  // Clue the compiler that EDX is about to be used.
 #endif
             mov eax, 1    // set up CPUID to return processor version and features
-               //      0 = vendor string, 1 = version info, 2 = cache info
+                //      0 = vendor string, 1 = version info, 2 = cache info
             CPUID  // code bytes = 0fh,  0a2h
             mov RegEDX, edx  // features returned in edx
         }
@@ -136,7 +136,7 @@ bool CheckSSETechnology( void )
                 _asm
                 {
                     // Attempt execution of a SSE instruction to make sure OS supports SSE FPU context switches
-					xorps xmm0, xmm0
+                    xorps xmm0, xmm0
                     // This will work on Win2k+ (Including masking SSE FPU exception to "normalized" values)
                     // This will work on Win98+ (But no "masking" of FPU exceptions provided)
                 }
@@ -173,10 +173,10 @@ bool CheckSSE2Technology( void )
         _asm
         {
 #ifdef CPUID
-			xor edx, edx  // Clue the compiler that EDX is about to be used.
+            xor edx, edx  // Clue the compiler that EDX is about to be used.
 #endif
             mov eax, 1    // set up CPUID to return processor version and features
-               //      0 = vendor string, 1 = version info, 2 = cache info
+                //      0 = vendor string, 1 = version info, 2 = cache info
             CPUID  // code bytes = 0fh,  0a2h
             mov RegEDX, edx  // features returned in edx
         }
@@ -199,7 +199,7 @@ bool CheckSSE2Technology( void )
                 _asm
                 {
                     // Attempt execution of a SSE2 instruction to make sure OS supports SSE FPU context switches
-					xorpd xmm0, xmm0
+                    xorpd xmm0, xmm0
                 }
             }
             __except ( EXCEPTION_EXECUTE_HANDLER )
@@ -256,10 +256,10 @@ bool Check3DNowTechnology( void )
             {
                 _asm
                 {
-					mov			eax, 0x80000001  // setup to test for CPU features
-					CPUID  // code bytes = 0fh,  0a2h
-					shr			edx, 31  // If bit 31 is set, we have 3DNow support!
-					mov			retval, edx  // Save the return value for end of function
+                    mov			eax, 0x80000001  // setup to test for CPU features
+                    CPUID  // code bytes = 0fh,  0a2h
+                    shr			edx, 31  // If bit 31 is set, we have 3DNow support!
+                    mov			retval, edx  // Save the return value for end of function
                 }
             }
             __except ( EXCEPTION_EXECUTE_HANDLER )

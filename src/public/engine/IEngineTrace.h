@@ -40,7 +40,7 @@ enum TraceType_t
 
 abstract_class ITraceFilter
 {
-   public:
+    public:
     virtual bool ShouldHitEntity( IHandleEntity * pEntity, int contentsMask ) = 0;
     virtual TraceType_t GetTraceType() const = 0;
 };
@@ -52,7 +52,7 @@ abstract_class ITraceFilter
 // This is the one most normal traces will inherit from
 class CTraceFilter : public ITraceFilter
 {
-   public:
+    public:
     virtual TraceType_t GetTraceType() const
     {
         return TRACE_EVERYTHING;
@@ -61,7 +61,7 @@ class CTraceFilter : public ITraceFilter
 
 class CTraceFilterEntitiesOnly : public ITraceFilter
 {
-   public:
+    public:
     virtual TraceType_t GetTraceType() const
     {
         return TRACE_ENTITIES_ONLY;
@@ -73,7 +73,7 @@ class CTraceFilterEntitiesOnly : public ITraceFilter
 //-----------------------------------------------------------------------------
 class CTraceFilterWorldOnly : public ITraceFilter
 {
-   public:
+    public:
     bool ShouldHitEntity( IHandleEntity *pServerEntity, int contentsMask )
     {
         return false;
@@ -86,7 +86,7 @@ class CTraceFilterWorldOnly : public ITraceFilter
 
 class CTraceFilterWorldAndPropsOnly : public ITraceFilter
 {
-   public:
+    public:
     bool ShouldHitEntity( IHandleEntity *pServerEntity, int contentsMask )
     {
         return false;
@@ -99,7 +99,7 @@ class CTraceFilterWorldAndPropsOnly : public ITraceFilter
 
 class CTraceFilterHitAll : public CTraceFilter
 {
-   public:
+    public:
     virtual bool ShouldHitEntity( IHandleEntity *pServerEntity, int contentsMask )
     {
         return true;
@@ -111,7 +111,7 @@ class CTraceFilterHitAll : public CTraceFilter
 //-----------------------------------------------------------------------------
 abstract_class IEntityEnumerator
 {
-   public:
+    public:
     // This gets called with each handle
     virtual bool EnumEntity( IHandleEntity * pHandleEntity ) = 0;
 };
@@ -123,7 +123,7 @@ abstract_class IEntityEnumerator
 #define INTERFACEVERSION_ENGINETRACE_CLIENT "EngineTraceClient003"
 abstract_class IEngineTrace
 {
-   public:
+    public:
     // Returns the contents mask + entity at a particular world-space position
     virtual int GetPointContents( const Vector &vecAbsPosition, IHandleEntity **ppEntity = NULL ) = 0;
 

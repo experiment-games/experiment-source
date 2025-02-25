@@ -38,7 +38,7 @@ enum RouteType
  */
 class ShortestPathCost
 {
-   public:
+    public:
     float operator()( CNavArea *area, CNavArea *fromArea, const CNavLadder *ladder, const CFuncElevator *elevator, float length )
     {
         if ( fromArea == NULL )
@@ -628,13 +628,13 @@ void SearchSurroundingAreas( CNavArea *startArea, const Vector &startPos, Functo
  */
 class ISearchSurroundingAreasFunctor
 {
-   public:
+    public:
     virtual ~ISearchSurroundingAreasFunctor() {}
 
     /**
-     * Perform user-defined action on area.
-     * Return 'false' to end the search (ie: you found what you were looking for)
-     */
+    * Perform user-defined action on area.
+    * Return 'false' to end the search (ie: you found what you were looking for)
+    */
     virtual bool operator()( CNavArea *area, CNavArea *priorArea, float travelDistanceSoFar ) = 0;
 
     // return true if 'adjArea' should be included in the ongoing search
@@ -644,8 +644,8 @@ class ISearchSurroundingAreasFunctor
     }
 
     /**
-     * Collect adjacent areas to continue the search by calling 'IncludeInSearch' on each
-     */
+    * Collect adjacent areas to continue the search by calling 'IncludeInSearch' on each
+    */
     virtual void IterateAdjacentAreas( CNavArea *area, CNavArea *priorArea, float travelDistanceSoFar )
     {
         // search adjacent outgoing connections
@@ -824,7 +824,7 @@ inline void CollectSurroundingAreas( CUtlVector< CNavArea * > *nearbyAreaVector,
  */
 class FarAwayFunctor
 {
-   public:
+    public:
     float operator()( CNavArea *area, CNavArea *fromArea, const CNavLadder *ladder )
     {
         if ( area == fromArea )
@@ -840,7 +840,7 @@ class FarAwayFunctor
  */
 class FarAwayFromPositionFunctor
 {
-   public:
+    public:
     FarAwayFromPositionFunctor( const Vector &pos )
         : m_pos( pos )
     {
@@ -851,7 +851,7 @@ class FarAwayFromPositionFunctor
         return 1.0f / ( m_pos - area->GetCenter() ).Length();
     }
 
-   private:
+    private:
     const Vector &m_pos;
 };
 

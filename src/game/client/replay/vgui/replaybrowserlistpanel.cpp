@@ -41,8 +41,8 @@ DECLARE_BUILD_FACTORY( CReplayListPanel );
 
 CReplayListPanel::CReplayListPanel( Panel *pParent, const char *pName )
     : BaseClass( pParent, pName ),
-      m_pPrevHoverPanel( NULL ),
-      m_pPreviewPanel( NULL )
+    m_pPrevHoverPanel( NULL ),
+    m_pPreviewPanel( NULL )
 {
     ivgui()->AddTickSignal( GetVPanel(), 10 );
 

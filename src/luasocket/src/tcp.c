@@ -86,8 +86,8 @@ static t_opt optget[] = {
 #endif
     {"linger",      opt_get_linger},
     {"error",       opt_get_error},
-	{"recv-buffer-size",     opt_get_recv_buf_size},
-	{"send-buffer-size",     opt_get_send_buf_size},
+    {"recv-buffer-size",     opt_get_recv_buf_size},
+    {"send-buffer-size",     opt_get_send_buf_size},
     {NULL,          NULL}
 };
 
@@ -107,8 +107,8 @@ static t_opt optset[] = {
 #endif
     {"ipv6-v6only", opt_set_ip6_v6only},
     {"linger",      opt_set_linger},
-	{"recv-buffer-size",     opt_set_recv_buf_size},
-	{"send-buffer-size",     opt_set_send_buf_size},
+    {"recv-buffer-size",     opt_set_recv_buf_size},
+    {"send-buffer-size",     opt_set_send_buf_size},
 #ifdef TCP_DEFER_ACCEPT
     {"tcp-defer-accept", opt_set_tcp_defer_accept},
 #endif
@@ -399,8 +399,8 @@ static int tcp_create(lua_State *L, int family) {
     /* set its type as master object */
     auxiliar_setclass(L, "tcp{master}", -1);
     /* if family is AF_UNSPEC, we leave the socket invalid and
-     * store AF_UNSPEC into family. This will allow it to later be
-     * replaced with an AF_INET6 or AF_INET socket upon first use. */
+    * store AF_UNSPEC into family. This will allow it to later be
+    * replaced with an AF_INET6 or AF_INET socket upon first use. */
     tcp->sock = SOCKET_INVALID;
     tcp->family = family;
     io_init(&tcp->io, (p_send) socket_send, (p_recv) socket_recv,
@@ -468,7 +468,7 @@ static int global_connect(lua_State *L) {
     /* make sure we try to connect only to the same family */
     connecthints.ai_family = tcp->family;
     err = inet_tryconnect(&tcp->sock, &tcp->family, remoteaddr, remoteserv,
-         &tcp->tm, &connecthints);
+        &tcp->tm, &connecthints);
     if (err) {
         socket_destroy(&tcp->sock);
         lua_pushnil(L);

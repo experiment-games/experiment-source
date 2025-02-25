@@ -35,7 +35,7 @@ typedef intp UtlSymLargeId_t;
 
 class CUtlSymbolLarge
 {
-   public:
+    public:
     // constructor, destructor
     CUtlSymbolLarge()
     {
@@ -101,7 +101,7 @@ class CUtlSymbolLarge
         return u.m_Id != UTL_INVAL_SYMBOL_LARGE ? true : false;
     }
 
-   private:
+    private:
     // Disallowed
     CUtlSymbolLarge( const char *pStr );        // they need to go through the table to assign the ptr
     bool operator==( const char *pStr ) const;  // disallow since we don't know if the table this is from was case sensitive or not... maybe we don't care
@@ -153,7 +153,7 @@ struct CUtlSymbolTableLargeBaseTreeEntry_t
 template < class TreeType, bool CASEINSENSITIVE >
 class CTreeEntryLess
 {
-   public:
+    public:
     CTreeEntryLess( int ignored = 0 ) {}  // permits default initialization to NULL in CUtlRBTree
     bool operator!() const
     {
@@ -181,7 +181,7 @@ class CTreeEntryLess
 template < bool CASEINSENSITIVE >
 class CNonThreadsafeTree : public CUtlRBTree< CUtlSymbolTableLargeBaseTreeEntry_t *, intp, CTreeEntryLess< CNonThreadsafeTree< CASEINSENSITIVE >, CASEINSENSITIVE > >
 {
-   public:
+    public:
     typedef CUtlRBTree< CUtlSymbolTableLargeBaseTreeEntry_t *, intp, CTreeEntryLess< CNonThreadsafeTree, CASEINSENSITIVE > > CNonThreadsafeTreeType;
 
     CNonThreadsafeTree()
@@ -222,7 +222,7 @@ class CNonThreadsafeTree : public CUtlRBTree< CUtlSymbolTableLargeBaseTreeEntry_
 template < int BUCKET_COUNT, class KEYTYPE, bool CASEINSENSITIVE >
 class CCThreadsafeTreeHashMethod
 {
-   public:
+    public:
     static int Hash( const KEYTYPE &key, int nBucketMask )
     {
         uint32 nHash = key->HashValue();
@@ -244,19 +244,19 @@ class CCThreadsafeTreeHashMethod
 
 /*
   NOTE:  So the only crappy thing about using a CUtlTSHash here is that the KEYTYPE is a CUtlSymbolTableLargeBaseTreeEntry_t ptr which has both the
-   hash and the string since with strings there is a good chance of hash collision after you have a fair number of strings so we have to implement
-   a Compare method (above) which falls back to strcmp/stricmp if the hashes are equal.  This means that all of the data is in the KEYTYPE of the hash and the
-   payload doesn't matter.  So I made the payload also be a pointer to a CUtlSymbolTableLargeBaseTreeEntry_t since that makes using the API more convenient
+    hash and the string since with strings there is a good chance of hash collision after you have a fair number of strings so we have to implement
+    a Compare method (above) which falls back to strcmp/stricmp if the hashes are equal.  This means that all of the data is in the KEYTYPE of the hash and the
+    payload doesn't matter.  So I made the payload also be a pointer to a CUtlSymbolTableLargeBaseTreeEntry_t since that makes using the API more convenient
 
   TODO:  If we have a CUtlTSHash that was all about the existence of the KEYTYPE and didn't require a payload (or template on 'void') then we could eliminate
-   50% of the pointer overhead used for this data structure.
+    50% of the pointer overhead used for this data structure.
 */
 
 // Thread safe version is based on the
 template < bool CASEINSENSITIVE >
 class CThreadsafeTree : public CUtlTSHash< CUtlSymbolTableLargeBaseTreeEntry_t *, 2048, CUtlSymbolTableLargeBaseTreeEntry_t *, CCThreadsafeTreeHashMethod< 2048, CUtlSymbolTableLargeBaseTreeEntry_t *, CASEINSENSITIVE > >
 {
-   public:
+    public:
     typedef CUtlTSHash< CUtlSymbolTableLargeBaseTreeEntry_t *, 2048, CUtlSymbolTableLargeBaseTreeEntry_t *, CCThreadsafeTreeHashMethod< 2048, CUtlSymbolTableLargeBaseTreeEntry_t *, CASEINSENSITIVE > > CThreadsafeTreeType;
 
     CThreadsafeTree()
@@ -297,7 +297,7 @@ class CThreadsafeTree : public CUtlTSHash< CUtlSymbolTableLargeBaseTreeEntry_t *
 template < class TreeType, bool CASEINSENSITIVE, size_t POOL_SIZE = MIN_STRING_POOL_SIZE >
 class CUtlSymbolTableLargeBase
 {
-   public:
+    public:
     // constructor, destructor
     CUtlSymbolTableLargeBase();
     ~CUtlSymbolTableLargeBase();
@@ -340,7 +340,7 @@ class CUtlSymbolTableLargeBase
         return unBytesUsed;
     }
 
-   protected:
+    protected:
     struct StringPool_t
     {
         int m_TotalLen;  // How large is
@@ -353,7 +353,7 @@ class CUtlSymbolTableLargeBase
     // stores the string data
     CUtlVector< StringPool_t * > m_StringPools;
 
-   private:
+    private:
     int FindPoolWithSpace( int len ) const;
 };
 

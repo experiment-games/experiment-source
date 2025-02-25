@@ -18,7 +18,7 @@ class C_VoteController : public C_BaseEntity, public CGameEventListener
 {
     DECLARE_CLASS( C_VoteController, C_BaseEntity );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
 
     C_VoteController();
@@ -32,7 +32,7 @@ class C_VoteController : public C_BaseEntity, public CGameEventListener
 
     void FireGameEvent( IGameEvent *event );
 
-   protected:
+    protected:
     void ResetData();
 
     int m_iActiveIssueIndex;

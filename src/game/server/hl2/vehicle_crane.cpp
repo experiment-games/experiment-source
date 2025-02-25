@@ -702,13 +702,13 @@ void CPropCrane::RunCraneMovement( float flTime )
     /*
     if ( (m_flNextDangerSoundTime < gpGlobals->curtime) && (m_hCraneMagnet->GetTotalMassAttachedObjects() > 0) )
     {
-      // Trace down from the magnet and make a danger sound on the ground
-      trace_t tr;
-      Vector vecSource = m_hCraneMagnet->GetAbsOrigin();
-      UTIL_TraceLine( vecSource, vecSource - Vector(0,0,2048), MASK_SOLID_BRUSHONLY, m_hCraneMagnet, 0, &tr );
+    // Trace down from the magnet and make a danger sound on the ground
+    trace_t tr;
+    Vector vecSource = m_hCraneMagnet->GetAbsOrigin();
+    UTIL_TraceLine( vecSource, vecSource - Vector(0,0,2048), MASK_SOLID_BRUSHONLY, m_hCraneMagnet, 0, &tr );
 
-      if ( tr.fraction < 1.0 )
-      {
+    if ( tr.fraction < 1.0 )
+    {
         // Make the volume proportional to the amount of mass on the magnet
         float flVolume = clamp( (m_hCraneMagnet->GetTotalMassAttachedObjects() * 0.5), 100.f, 600.f );
         CSoundEnt::InsertSound( SOUND_DANGER, tr.endpos, flVolume, 0.2, this );
@@ -717,9 +717,9 @@ void CPropCrane::RunCraneMovement( float flTime )
         //Vector vecVolume = Vector(flVolume,flVolume,flVolume) * 0.5;
         //NDebugOverlay::Box( tr.endpos, -vecVolume, vecVolume, 255,0,0, false, 0.3 );
         //NDebugOverlay::Cross3D( tr.endpos, -Vector(10,10,10), Vector(10,10,10), 255,0,0, false, 0.3 );
-      }
+    }
 
-      m_flNextDangerSoundTime = gpGlobals->curtime + 0.3;
+    m_flNextDangerSoundTime = gpGlobals->curtime + 0.3;
     }
     */
 

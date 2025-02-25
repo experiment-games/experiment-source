@@ -31,7 +31,7 @@ typedef enum
 
 abstract_class IPhonemeExtractor
 {
-   public:
+    public:
     virtual PE_APITYPE GetAPIType() const = 0;
 
     // Used for menus, etc

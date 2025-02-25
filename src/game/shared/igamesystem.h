@@ -24,7 +24,7 @@
 // FIXME: Remove all ifdef CLIENT_DLL if we can...
 abstract_class IGameSystem
 {
-   public:
+    public:
     // GameSystems are expected to implement these methods.
     virtual char const *Name() = 0;
 
@@ -101,7 +101,7 @@ abstract_class IGameSystem
 
 class IGameSystemPerFrame : public IGameSystem
 {
-   public:
+    public:
     // destructor, cleans up automagically....
     virtual ~IGameSystemPerFrame();
 
@@ -127,7 +127,7 @@ class IGameSystemPerFrame : public IGameSystem
 // and usually only want to implement a few of the callbacks
 class CBaseGameSystem : public IGameSystem
 {
-   public:
+    public:
     virtual char const *Name()
     {
         return "unnamed";
@@ -158,7 +158,7 @@ class CBaseGameSystem : public IGameSystem
         return false;
     }
 
-   private:
+    private:
     // Prevent anyone derived from CBaseGameSystem from implementing these, they need
     //  to derive from CBaseGameSystemPerFrame below!!!
 #ifdef CLIENT_DLL
@@ -183,7 +183,7 @@ class CBaseGameSystem : public IGameSystem
 // and usually only want to implement a few of the callbacks
 class CBaseGameSystemPerFrame : public IGameSystemPerFrame
 {
-   public:
+    public:
     virtual char const *Name()
     {
         return "unnamed";
@@ -236,7 +236,7 @@ class CBaseGameSystemPerFrame : public IGameSystemPerFrame
 // and usually only want to implement a few of the callbacks
 class CAutoGameSystem : public CBaseGameSystem
 {
-   public:
+    public:
     CAutoGameSystem( char const *name = NULL );  // hooks in at startup, no need to explicitly add
     CAutoGameSystem *m_pNext;
 
@@ -245,7 +245,7 @@ class CAutoGameSystem : public CBaseGameSystem
         return m_pszName ? m_pszName : "unnamed";
     }
 
-   private:
+    private:
     char const *m_pszName;
 };
 
@@ -254,7 +254,7 @@ class CAutoGameSystem : public CBaseGameSystem
 //-----------------------------------------------------------------------------
 class CAutoGameSystemPerFrame : public CBaseGameSystemPerFrame
 {
-   public:
+    public:
     CAutoGameSystemPerFrame( char const *name = NULL );
     CAutoGameSystemPerFrame *m_pNext;
 
@@ -263,7 +263,7 @@ class CAutoGameSystemPerFrame : public CBaseGameSystemPerFrame
         return m_pszName ? m_pszName : "unnamed";
     }
 
-   private:
+    private:
     char const *m_pszName;
 };
 
@@ -273,7 +273,7 @@ class CAutoGameSystemPerFrame : public CBaseGameSystemPerFrame
 //-----------------------------------------------------------------------------
 class IToolFrameworkServer
 {
-   public:
+    public:
     virtual void PreSetupVisibility() = 0;
 };
 

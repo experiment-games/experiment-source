@@ -20,7 +20,7 @@
 
 class VideoPlayerPanel : public vgui::Panel  // Should this be EditablePanel ?
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( VideoPlayerPanel, vgui::Panel );
 
     VideoPlayerPanel( vgui::Panel *parent, const char *panelName, int nXpos, int nYpos, int nWidth, int nHeight, const char *pVideoFile = NULL );
@@ -66,7 +66,7 @@ class VideoPlayerPanel : public vgui::Panel  // Should this be EditablePanel ?
     float GetVolume();
     bool SetVolume( float newVolume );
 
-   protected:
+    protected:
     virtual void OnTick( void )
     {
         BaseClass::OnTick();
@@ -76,7 +76,7 @@ class VideoPlayerPanel : public vgui::Panel  // Should this be EditablePanel ?
         BaseClass::OnCommand( pcCommand );
     }
 
-   private:
+    private:
     IVideoMaterial *m_VideoMaterial;
     IMaterial *m_pMaterial;
 

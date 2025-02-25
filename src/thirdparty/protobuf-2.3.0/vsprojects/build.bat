@@ -9,12 +9,12 @@ set dirsuffix=\2012
 
 @rem Note that we no longer build separate debug libraries
 for /d %%d in ( "release|Win32" "release|x64") do (
-	@rem Note that this message seems to display out of order for some reason...
-	echo Building %%d
-	devenv protobuf_2010.sln /clean %%d
-	devenv protobuf_2010.sln /build %%d /project libprotobuf-lite
-	@rem Note that building libprotoc also ensures that libprotobuf builds
-	devenv protobuf_2010.sln /build %%d /project libprotoc
+    @rem Note that this message seems to display out of order for some reason...
+    echo Building %%d
+    devenv protobuf_2010.sln /clean %%d
+    devenv protobuf_2010.sln /build %%d /project libprotobuf-lite
+    @rem Note that building libprotoc also ensures that libprotobuf builds
+    devenv protobuf_2010.sln /build %%d /project libprotoc
 )
 
 p4 edit ..\..\..\lib\public%dirsuffix%\libproto*.lib

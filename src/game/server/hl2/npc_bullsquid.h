@@ -21,7 +21,7 @@ class CNPC_Bullsquid : public CAI_BaseNPC
     DECLARE_CLASS( CNPC_Bullsquid, CAI_BaseNPC );
     DECLARE_DATADESC();
 
-   public:
+    public:
     void Spawn( void );
     void Precache( void );
     Class_T Classify( void );
@@ -60,7 +60,7 @@ class CNPC_Bullsquid : public CAI_BaseNPC
 
     DEFINE_CUSTOM_AI;
 
-   private:
+    private:
     bool m_fCanThreatDisplay;  // this is so the squid only does the "I see a headcrab!" dance one time.
     float m_flLastHurtTime;    // we keep track of this, because if something hurts a squid, it will forget about its love of headcrabs for a while.
     float m_flNextSpitTime;    // last time the bullsquid used the spit attack.

@@ -21,7 +21,7 @@ class CBaseEntity;
 
 class CTakeDamageInfo
 {
-   public:
+    public:
     DECLARE_CLASS_NOBASE( CTakeDamageInfo );
 
     CTakeDamageInfo();
@@ -32,7 +32,7 @@ class CTakeDamageInfo
 
 #if 0
 #ifdef LUA_SDK
-					CTakeDamageInfo &operator=( const CTakeDamageInfo &from );
+                    CTakeDamageInfo &operator=( const CTakeDamageInfo &from );
 #endif
 #endif
 
@@ -129,7 +129,7 @@ class CTakeDamageInfo
     // private:
     void CopyDamageToBaseDamage();
 
-   protected:
+    protected:
     void Init( CBaseEntity *pInflictor, CBaseEntity *pAttacker, CBaseEntity *pWeapon, const Vector &damageForce, const Vector &damagePosition, const Vector &reportedPosition, float flDamage, int bitsDamageType, int iKillType );
 
     Vector m_vecDamageForce;
@@ -163,7 +163,7 @@ class CMultiDamage : public CTakeDamageInfo
 {
     DECLARE_CLASS( CMultiDamage, CTakeDamageInfo );
 
-   public:
+    public:
     CMultiDamage();
 
     bool IsClear( void )
@@ -175,7 +175,7 @@ class CMultiDamage : public CTakeDamageInfo
 
     void Init( CBaseEntity *pTarget, CBaseEntity *pInflictor, CBaseEntity *pAttacker, CBaseEntity *pWeapon, const Vector &damageForce, const Vector &damagePosition, const Vector &reportedPosition, float flDamage, int bitsDamageType, int iKillType );
 
-   protected:
+    protected:
     EHANDLE m_hTarget;
 
     DECLARE_SIMPLE_DATADESC();
@@ -396,9 +396,9 @@ inline void CTakeDamageInfo::CopyDamageToBaseDamage()
 #ifdef LUA_SDK
 CTakeDamageInfo& CTakeDamageInfo::operator=( const CTakeDamageInfo& from )
 {
-	memcpy( this, &from, sizeof(*this) );
+    memcpy( this, &from, sizeof(*this) );
 
-	return *this;
+    return *this;
 }
 #endif
 #endif

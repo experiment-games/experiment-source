@@ -26,7 +26,7 @@ class ICvar;
 //-----------------------------------------------------------------------------
 class IShaderDLL
 {
-   public:
+    public:
     // Adds a shader to the list of shaders
     virtual void InsertShader( IShader *pShader ) = 0;
 };

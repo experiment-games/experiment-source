@@ -28,7 +28,7 @@ class CBitmapButton : public vgui::Button
 {
     typedef vgui::Button BaseClass;
 
-   public:
+    public:
     enum ButtonImageType_t
     {
         BUTTON_ENABLED = 0,
@@ -55,7 +55,7 @@ class CBitmapButton : public vgui::Button
     virtual void Paint( void );
     virtual void PaintBackground( void ) {}
 
-   private:
+    private:
     BitmapImage m_pImage[BUTTON_STATE_COUNT];
     bool m_bImageLoaded[BUTTON_STATE_COUNT];
 };

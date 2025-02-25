@@ -119,9 +119,9 @@ SRes SzAr_DecodeFolder( const CSzAr *p, UInt32 folderIndex, ILookInStream *strea
   Extracting cache:
     If you need to decompress more than one file, you can send
     these values from previous call:
-      *blockIndex,
-      *outBuffer,
-      *outBufferSize
+    *blockIndex,
+    *outBuffer,
+    *outBufferSize
     You can consider "*outBuffer" as cache of solid block. If your archive is solid,
     it will increase decompression speed.
 

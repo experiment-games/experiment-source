@@ -29,14 +29,14 @@ DEFINE_FIELD( m_iDmg, FIELD_INTEGER ),
     //---------------------------------------------------------
     //---------------------------------------------------------
     void CBaseSpriteProjectile::Spawn( char *pszModel,
-                                       const Vector &vecOrigin,
-                                       const Vector &vecVelocity,
-                                       edict_t *pOwner,
-                                       MoveType_t iMovetype,
-                                       MoveCollide_t nMoveCollide,
-                                       int iDamage,
-                                       int iDamageType,
-                                       CBaseEntity *pIntendedTarget )
+                                        const Vector &vecOrigin,
+                                        const Vector &vecVelocity,
+                                        edict_t *pOwner,
+                                        MoveType_t iMovetype,
+                                        MoveCollide_t nMoveCollide,
+                                        int iDamage,
+                                        int iDamageType,
+                                        CBaseEntity *pIntendedTarget )
 {
     Precache();
 

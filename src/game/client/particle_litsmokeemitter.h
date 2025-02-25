@@ -20,7 +20,7 @@
 
 class CLitSmokeEmitter : public CSimpleEmitter
 {
-   public:
+    public:
     CLitSmokeEmitter( const char *pDebugName );
 
     virtual void Update( float flTimeDelta );
@@ -46,7 +46,7 @@ class CLitSmokeEmitter : public CSimpleEmitter
 
     class LitSmokeParticle : public Particle
     {
-       public:
+        public:
         Vector m_vecVelocity;
         byte m_uchColor[4];
         float m_flLifetime;
@@ -55,10 +55,10 @@ class CLitSmokeEmitter : public CSimpleEmitter
         byte m_uchEndSize;
     };
 
-   private:
+    private:
     CLitSmokeEmitter( const CLitSmokeEmitter & );  // not defined, not accessible
 
-   private:
+    private:
     bool m_bInitted;
     PMaterialHandle m_hSmokeMaterial;
 };

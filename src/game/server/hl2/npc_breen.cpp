@@ -24,7 +24,7 @@
 //-----------------------------------------------------------------------------
 class CNPC_Breen : public CAI_BaseActor
 {
-   public:
+    public:
     DECLARE_CLASS( CNPC_Breen, CAI_BaseActor );
 
     void Spawn( void );

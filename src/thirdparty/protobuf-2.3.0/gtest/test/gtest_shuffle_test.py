@@ -84,9 +84,9 @@ def RunAndReturnOutput(extra_env, args):
     return gtest_test_utils.Subprocess([COMMAND] + args).output
   finally:
     for key in extra_env.iterkeys():
-      if key in original_env:
+    if key in original_env:
         os.environ[key] = original_env[key]
-      else:
+    else:
         del os.environ[key]
 
 
@@ -105,10 +105,10 @@ def GetTestsForAllIterations(extra_env, args):
   test_iterations = []
   for line in RunAndReturnOutput(extra_env, args).split('\n'):
     if line.startswith('----'):
-      tests = []
-      test_iterations.append(tests)
+    tests = []
+    test_iterations.append(tests)
     elif line.strip():
-      tests.append(line.strip())  # 'TestCaseName.TestName'
+    tests.append(line.strip())  # 'TestCaseName.TestName'
 
   return test_iterations
 
@@ -128,7 +128,7 @@ def GetTestCases(tests):
   for test in tests:
     test_case = test.split('.')[0]
     if not test_case in test_cases:
-      test_cases.append(test_case)
+    test_cases.append(test_case)
 
   return test_cases
 
@@ -150,8 +150,8 @@ def CalculateTestLists():
   if not SHARDED_TESTS:
     SHARDED_TESTS.extend(
         GetTestsForAllIterations({TOTAL_SHARDS_ENV_VAR: '3',
-                                  SHARD_INDEX_ENV_VAR: '1'},
-                                 [])[0])
+                                SHARD_INDEX_ENV_VAR: '1'},
+                                [])[0])
 
   if not SHUFFLED_ALL_TESTS:
     SHUFFLED_ALL_TESTS.extend(GetTestsForAllIterations(
@@ -168,8 +168,8 @@ def CalculateTestLists():
   if not SHUFFLED_SHARDED_TESTS:
     SHUFFLED_SHARDED_TESTS.extend(
         GetTestsForAllIterations({TOTAL_SHARDS_ENV_VAR: '3',
-                                  SHARD_INDEX_ENV_VAR: '1'},
-                                 [ShuffleFlag(), RandomSeedFlag(1)])[0])
+                                SHARD_INDEX_ENV_VAR: '1'},
+                                [ShuffleFlag(), RandomSeedFlag(1)])[0])
 
 
 class GTestShuffleUnitTest(gtest_test_utils.TestCase):
@@ -188,13 +188,13 @@ class GTestShuffleUnitTest(gtest_test_utils.TestCase):
     self.assert_(SHUFFLED_ALL_TESTS != ALL_TESTS, SHUFFLED_ALL_TESTS)
     self.assert_(SHUFFLED_ACTIVE_TESTS != ACTIVE_TESTS, SHUFFLED_ACTIVE_TESTS)
     self.assert_(SHUFFLED_FILTERED_TESTS != FILTERED_TESTS,
-                 SHUFFLED_FILTERED_TESTS)
+                SHUFFLED_FILTERED_TESTS)
     self.assert_(SHUFFLED_SHARDED_TESTS != SHARDED_TESTS,
-                 SHUFFLED_SHARDED_TESTS)
+                SHUFFLED_SHARDED_TESTS)
 
   def testShuffleChangesTestCaseOrder(self):
     self.assert_(GetTestCases(SHUFFLED_ALL_TESTS) != GetTestCases(ALL_TESTS),
-                 GetTestCases(SHUFFLED_ALL_TESTS))
+                GetTestCases(SHUFFLED_ALL_TESTS))
     self.assert_(
         GetTestCases(SHUFFLED_ACTIVE_TESTS) != GetTestCases(ACTIVE_TESTS),
         GetTestCases(SHUFFLED_ACTIVE_TESTS))
@@ -207,56 +207,56 @@ class GTestShuffleUnitTest(gtest_test_utils.TestCase):
 
   def testShuffleDoesNotRepeatTest(self):
     for test in SHUFFLED_ALL_TESTS:
-      self.assertEqual(1, SHUFFLED_ALL_TESTS.count(test),
-                       '%s appears more than once' % (test,))
+    self.assertEqual(1, SHUFFLED_ALL_TESTS.count(test),
+                        '%s appears more than once' % (test,))
     for test in SHUFFLED_ACTIVE_TESTS:
-      self.assertEqual(1, SHUFFLED_ACTIVE_TESTS.count(test),
-                       '%s appears more than once' % (test,))
+    self.assertEqual(1, SHUFFLED_ACTIVE_TESTS.count(test),
+                        '%s appears more than once' % (test,))
     for test in SHUFFLED_FILTERED_TESTS:
-      self.assertEqual(1, SHUFFLED_FILTERED_TESTS.count(test),
-                       '%s appears more than once' % (test,))
+    self.assertEqual(1, SHUFFLED_FILTERED_TESTS.count(test),
+                        '%s appears more than once' % (test,))
     for test in SHUFFLED_SHARDED_TESTS:
-      self.assertEqual(1, SHUFFLED_SHARDED_TESTS.count(test),
-                       '%s appears more than once' % (test,))
+    self.assertEqual(1, SHUFFLED_SHARDED_TESTS.count(test),
+                        '%s appears more than once' % (test,))
 
   def testShuffleDoesNotCreateNewTest(self):
     for test in SHUFFLED_ALL_TESTS:
-      self.assert_(test in ALL_TESTS, '%s is an invalid test' % (test,))
+    self.assert_(test in ALL_TESTS, '%s is an invalid test' % (test,))
     for test in SHUFFLED_ACTIVE_TESTS:
-      self.assert_(test in ACTIVE_TESTS, '%s is an invalid test' % (test,))
+    self.assert_(test in ACTIVE_TESTS, '%s is an invalid test' % (test,))
     for test in SHUFFLED_FILTERED_TESTS:
-      self.assert_(test in FILTERED_TESTS, '%s is an invalid test' % (test,))
+    self.assert_(test in FILTERED_TESTS, '%s is an invalid test' % (test,))
     for test in SHUFFLED_SHARDED_TESTS:
-      self.assert_(test in SHARDED_TESTS, '%s is an invalid test' % (test,))
+    self.assert_(test in SHARDED_TESTS, '%s is an invalid test' % (test,))
 
   def testShuffleIncludesAllTests(self):
     for test in ALL_TESTS:
-      self.assert_(test in SHUFFLED_ALL_TESTS, '%s is missing' % (test,))
+    self.assert_(test in SHUFFLED_ALL_TESTS, '%s is missing' % (test,))
     for test in ACTIVE_TESTS:
-      self.assert_(test in SHUFFLED_ACTIVE_TESTS, '%s is missing' % (test,))
+    self.assert_(test in SHUFFLED_ACTIVE_TESTS, '%s is missing' % (test,))
     for test in FILTERED_TESTS:
-      self.assert_(test in SHUFFLED_FILTERED_TESTS, '%s is missing' % (test,))
+    self.assert_(test in SHUFFLED_FILTERED_TESTS, '%s is missing' % (test,))
     for test in SHARDED_TESTS:
-      self.assert_(test in SHUFFLED_SHARDED_TESTS, '%s is missing' % (test,))
+    self.assert_(test in SHUFFLED_SHARDED_TESTS, '%s is missing' % (test,))
 
   def testShuffleLeavesDeathTestsAtFront(self):
     non_death_test_found = False
     for test in SHUFFLED_ACTIVE_TESTS:
-      if 'DeathTest.' in test:
+    if 'DeathTest.' in test:
         self.assert_(not non_death_test_found,
-                     '%s appears after a non-death test' % (test,))
-      else:
+                    '%s appears after a non-death test' % (test,))
+    else:
         non_death_test_found = True
 
   def _VerifyTestCasesDoNotInterleave(self, tests):
     test_cases = []
     for test in tests:
-      [test_case, _] = test.split('.')
-      if test_cases and test_cases[-1] != test_case:
+    [test_case, _] = test.split('.')
+    if test_cases and test_cases[-1] != test_case:
         test_cases.append(test_case)
         self.assertEqual(1, test_cases.count(test_case),
-                         'Test case %s is not grouped together in %s' %
-                         (test_case, tests))
+                        'Test case %s is not grouped together in %s' %
+                        (test_case, tests))
 
   def testShuffleDoesNotInterleaveTestCases(self):
     self._VerifyTestCasesDoNotInterleave(SHUFFLED_ALL_TESTS)
@@ -302,23 +302,23 @@ class GTestShuffleUnitTest(gtest_test_utils.TestCase):
             {}, [ShuffleFlag(), RandomSeedFlag(1), RepeatFlag(3)]))
 
     self.assert_(tests_in_iteration1 != tests_in_iteration2,
-                 tests_in_iteration1)
+                tests_in_iteration1)
     self.assert_(tests_in_iteration1 != tests_in_iteration3,
-                 tests_in_iteration1)
+                tests_in_iteration1)
     self.assert_(tests_in_iteration2 != tests_in_iteration3,
-                 tests_in_iteration2)
+                tests_in_iteration2)
 
   def testShuffleShardedTestsPreservesPartition(self):
     # If we run M tests on N shards, the same M tests should be run in
     # total, regardless of the random seeds used by the shards.
     [tests1] = GetTestsForAllIterations({TOTAL_SHARDS_ENV_VAR: '3',
-                                         SHARD_INDEX_ENV_VAR: '0'},
+                                        SHARD_INDEX_ENV_VAR: '0'},
                                         [ShuffleFlag(), RandomSeedFlag(1)])
     [tests2] = GetTestsForAllIterations({TOTAL_SHARDS_ENV_VAR: '3',
-                                         SHARD_INDEX_ENV_VAR: '1'},
+                                        SHARD_INDEX_ENV_VAR: '1'},
                                         [ShuffleFlag(), RandomSeedFlag(20)])
     [tests3] = GetTestsForAllIterations({TOTAL_SHARDS_ENV_VAR: '3',
-                                         SHARD_INDEX_ENV_VAR: '2'},
+                                        SHARD_INDEX_ENV_VAR: '2'},
                                         [ShuffleFlag(), RandomSeedFlag(25)])
     sorted_sharded_tests = tests1 + tests2 + tests3
     sorted_sharded_tests.sort()

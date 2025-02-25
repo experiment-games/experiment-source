@@ -257,22 +257,22 @@ void ReadLightFile( char *filename )
                     if ( strcmp( texlights[j].filename, filename ) == 0 )
                     {
                         Msg( "ERROR\a: Duplication of '%s' in file '%s'!\n",
-                             texlights[j].name,
-                             texlights[j].filename );
+                            texlights[j].name,
+                            texlights[j].filename );
                     }
                     else if ( texlights[j].value[0] != value[0] || texlights[j].value[1] != value[1] || texlights[j].value[2] != value[2] )
                     {
                         Warning( "Warning: Overriding '%s' from '%s' with '%s'!\n",
-                                 texlights[j].name,
-                                 texlights[j].filename,
-                                 filename );
+                                texlights[j].name,
+                                texlights[j].filename,
+                                filename );
                     }
                     else
                     {
                         Warning( "Warning: Redundant '%s' def in '%s' AND '%s'!\n",
-                                 texlights[j].name,
-                                 texlights[j].filename,
-                                 filename );
+                                texlights[j].name,
+                                texlights[j].filename,
+                                filename );
                     }
                     break;
                 }
@@ -642,15 +642,15 @@ void MakePatchForFace( int fn, winding_t *w )
     MaterialSystemMaterial_t hMaterial = FindMaterial( pMaterialName, &bFound, false );
     if ( bFound )
     {
-      const char *pChopValue = GetMaterialVar( hMaterial, "%chop" );
-      if ( pChopValue )
-      {
+    const char *pChopValue = GetMaterialVar( hMaterial, "%chop" );
+    if ( pChopValue )
+    {
         float flChopValue;
         if ( sscanf( pChopValue, "%f", &flChopValue ) > 0 )
         {
-          patch->chop = flChopValue;
+        patch->chop = flChopValue;
         }
-      }
+    }
     }
     */
 }
@@ -962,10 +962,10 @@ void SubdividePatches( void )
         g_FacePatches[pCur->faceNumber] = pCur - g_Patches.Base();
 
 #if 0
-		CPatch *prev;
-		prev = face_g_Patches[g_Patches[i].faceNumber];
-		g_Patches[i].next = prev;
-		face_g_Patches[g_Patches[i].faceNumber] = &g_Patches[i];
+        CPatch *prev;
+        prev = face_g_Patches[g_Patches[i].faceNumber];
+        g_Patches[i].next = prev;
+        face_g_Patches[g_Patches[i].faceNumber] = &g_Patches[i];
 #endif
     }
 
@@ -1016,14 +1016,14 @@ void SubdividePatches( void )
         }
 
 #if 0
-		if (g_Patches[i].child1 == g_Patches.InvalidIndex() )
-		{
-			if( g_Patches[i].clusterNumber != -1 )
-			{
-				g_Patches[i].nextclusterchild = cluster_children[g_Patches[i].clusterNumber];
-				cluster_children[g_Patches[i].clusterNumber] = &g_Patches[i];
-			}
-		}
+        if (g_Patches[i].child1 == g_Patches.InvalidIndex() )
+        {
+            if( g_Patches[i].clusterNumber != -1 )
+            {
+                g_Patches[i].nextclusterchild = cluster_children[g_Patches[i].clusterNumber];
+                cluster_children[g_Patches[i].clusterNumber] = &g_Patches[i];
+            }
+        }
 #endif
     }
 
@@ -1160,20 +1160,20 @@ void MakeTransfer( int ndxPatch1, int ndxPatch2, transfer_t *all_transfers )
     transfer->transfer = trans;
 
 #if 0
-	// DEBUG! Dump patches and transfer connection for displacements.  This creates a lot of data, so only
-	// use it when you really want it - that is why it is #if-ed out.
-	if ( g_bDumpPatches )
-	{
-		if ( !pFpTrans )
-		{
-			pFpTrans = g_pFileSystem->Open( "trans.txt", "w" );
-		}
-		Vector light = pPatch1->totallight.light[0] + pPatch1->directlight;
-		WriteWinding( pFpTrans, pPatch1->winding, light );
-		light = pPatch2->totallight.light[0] + pPatch2->directlight;
-		WriteWinding( pFpTrans, pPatch2->winding, light );
-		WriteLine( pFpTrans, pPatch1->origin, pPatch2->origin, Vector( 255, 0, 255 ) );
-	}
+    // DEBUG! Dump patches and transfer connection for displacements.  This creates a lot of data, so only
+    // use it when you really want it - that is why it is #if-ed out.
+    if ( g_bDumpPatches )
+    {
+        if ( !pFpTrans )
+        {
+            pFpTrans = g_pFileSystem->Open( "trans.txt", "w" );
+        }
+        Vector light = pPatch1->totallight.light[0] + pPatch1->directlight;
+        WriteWinding( pFpTrans, pPatch1->winding, light );
+        light = pPatch2->totallight.light[0] + pPatch2->directlight;
+        WriteWinding( pFpTrans, pPatch2->winding, light );
+        WriteLine( pFpTrans, pPatch1->origin, pPatch2->origin, Vector( 255, 0, 255 ) );
+    }
 #endif
 
     pPatch1->numtransfers++;
@@ -1627,36 +1627,36 @@ void BounceLight( void )
     }
 
 #if 0
-	FileHandle_t dFp = g_pFileSystem->Open( "lightemit.txt", "w" );
+    FileHandle_t dFp = g_pFileSystem->Open( "lightemit.txt", "w" );
 
-	unsigned int uiPatchCount = g_Patches.Size();
-	for (i=0 ; i<uiPatchCount; i++)
-	{
-		CmdLib_FPrintf( dFp, "Emit %d: %f %f %f\n", i, emitlight[i].x, emitlight[i].y, emitlight[i].z );
-	}
+    unsigned int uiPatchCount = g_Patches.Size();
+    for (i=0 ; i<uiPatchCount; i++)
+    {
+        CmdLib_FPrintf( dFp, "Emit %d: %f %f %f\n", i, emitlight[i].x, emitlight[i].y, emitlight[i].z );
+    }
 
-	g_pFileSystem->Close( dFp );
+    g_pFileSystem->Close( dFp );
 
-	for (i=0; i<num_patches ; i++)
-	{
-		Vector total;
+    for (i=0; i<num_patches ; i++)
+    {
+        Vector total;
 
-		VectorSubtract (g_Patches[i].maxs, g_Patches[i].mins, total);
-		Msg("%4d %4d %4d %4d (%d) %.0f", i, g_Patches[i].parent, g_Patches[i].child1, g_Patches[i].child2, g_Patches[i].samples, g_Patches[i].area );
-		Msg(" [%.0f %.0f %.0f]", total[0], total[1], total[2] );
-		if (g_Patches[i].child1 != g_Patches.InvalidIndex() )
-		{
-			Vector tmp;
-			VectorScale( g_Patches[i].totallight.light[0], g_Patches[i].area, tmp );
+        VectorSubtract (g_Patches[i].maxs, g_Patches[i].mins, total);
+        Msg("%4d %4d %4d %4d (%d) %.0f", i, g_Patches[i].parent, g_Patches[i].child1, g_Patches[i].child2, g_Patches[i].samples, g_Patches[i].area );
+        Msg(" [%.0f %.0f %.0f]", total[0], total[1], total[2] );
+        if (g_Patches[i].child1 != g_Patches.InvalidIndex() )
+        {
+            Vector tmp;
+            VectorScale( g_Patches[i].totallight.light[0], g_Patches[i].area, tmp );
 
-			VectorMA( tmp, -g_Patches[g_Patches[i].child1].area, g_Patches[g_Patches[i].child1].totallight.light[0], tmp );
-			VectorMA( tmp, -g_Patches[g_Patches[i].child2].area, g_Patches[g_Patches[i].child2].totallight.light[0], tmp );
-			// Msg("%.0f ", VectorLength( tmp ) );
-			// Msg("%d ", g_Patches[i].samples - g_Patches[g_Patches[i].child1].samples - g_Patches[g_Patches[i].child2].samples );
-			// Msg("%d ", g_Patches[i].samples );
-		}
-		Msg("\n");
-	}
+            VectorMA( tmp, -g_Patches[g_Patches[i].child1].area, g_Patches[g_Patches[i].child1].totallight.light[0], tmp );
+            VectorMA( tmp, -g_Patches[g_Patches[i].child2].area, g_Patches[g_Patches[i].child2].totallight.light[0], tmp );
+            // Msg("%.0f ", VectorLength( tmp ) );
+            // Msg("%d ", g_Patches[i].samples - g_Patches[g_Patches[i].child1].samples - g_Patches[g_Patches[i].child2].samples );
+            // Msg("%d ", g_Patches[i].samples );
+        }
+        Msg("\n");
+    }
 #endif
 
     i = 0;
@@ -1890,60 +1890,60 @@ void MakeAllScales( void )
 // corresponds to which dface.
 #if 0
 #include "iscratchpad3d.h"
-	void ScratchPad_DrawWorld()
-	{
-		IScratchPad3D *pPad = ScratchPad3D_Create();
-		pPad->SetAutoFlush( false );
+    void ScratchPad_DrawWorld()
+    {
+        IScratchPad3D *pPad = ScratchPad3D_Create();
+        pPad->SetAutoFlush( false );
 
-		for ( int i=0; i < numfaces; i++ )
-		{
-			dface_t *f = &g_pFaces[i];
+        for ( int i=0; i < numfaces; i++ )
+        {
+            dface_t *f = &g_pFaces[i];
 
-			// Draw the face's outline, then put text for its face index on it too.
-			CUtlVector<Vector> points;
-			for ( int iEdge = 0; iEdge < f->numedges; iEdge++ )
-			{
-				int v;
-				int se = dsurfedges[f->firstedge + iEdge];
-				if ( se < 0 )
-					v = dedges[-se].v[1];
-				else
-					v = dedges[se].v[0];
-			
-				dvertex_t *dv = &dvertexes[v];
-				points.AddToTail( dv->point );
-			}
+            // Draw the face's outline, then put text for its face index on it too.
+            CUtlVector<Vector> points;
+            for ( int iEdge = 0; iEdge < f->numedges; iEdge++ )
+            {
+                int v;
+                int se = dsurfedges[f->firstedge + iEdge];
+                if ( se < 0 )
+                    v = dedges[-se].v[1];
+                else
+                    v = dedges[se].v[0];
 
-			// Draw the outline.
-			Vector vCenter( 0, 0, 0 );
-			for ( iEdge=0; iEdge < points.Count(); iEdge++ )
-			{
-				pPad->DrawLine( CSPVert( points[iEdge] ), CSPVert( points[(iEdge+1)%points.Count()] ) );
-				vCenter += points[iEdge];
-			}
-			vCenter /= points.Count();
+                dvertex_t *dv = &dvertexes[v];
+                points.AddToTail( dv->point );
+            }
 
-			// Draw the text.
-			char str[512];
-			Q_snprintf( str, sizeof( str ), "%d", i );
+            // Draw the outline.
+            Vector vCenter( 0, 0, 0 );
+            for ( iEdge=0; iEdge < points.Count(); iEdge++ )
+            {
+                pPad->DrawLine( CSPVert( points[iEdge] ), CSPVert( points[(iEdge+1)%points.Count()] ) );
+                vCenter += points[iEdge];
+            }
+            vCenter /= points.Count();
 
-			CTextParams params;
+            // Draw the text.
+            char str[512];
+            Q_snprintf( str, sizeof( str ), "%d", i );
 
-			params.m_bCentered = true;
-			params.m_bOutline = true;
-			params.m_flLetterWidth = 2;
-			params.m_vColor.Init( 1, 0, 0 );
-			
-			VectorAngles( dplanes[f->planenum].normal, params.m_vAngles );
-			params.m_bTwoSided = true;
+            CTextParams params;
 
-			params.m_vPos = vCenter;
-			
-			pPad->DrawText( str, params );
-		}
+            params.m_bCentered = true;
+            params.m_bOutline = true;
+            params.m_flLetterWidth = 2;
+            params.m_vColor.Init( 1, 0, 0 );
 
-		pPad->Release();
-	}
+            VectorAngles( dplanes[f->planenum].normal, params.m_vAngles );
+            params.m_bTwoSided = true;
+
+            params.m_vPos = vCenter;
+
+            pPad->DrawText( str, params );
+        }
+
+        pPad->Release();
+    }
 #endif
 
 bool RadWorld_Go()
@@ -2107,7 +2107,7 @@ void VRAD_LoadBSP( char const *pFilename )
     {
         // Otherwise, try looking in the BIN directory from which we were run from
         Msg( "Could not find lights.rad in %s.\nTrying VRAD BIN directory instead...\n",
-             global_lights );
+            global_lights );
         GetModuleFileName( NULL, global_lights, sizeof( global_lights ) );
         Q_ExtractFilePath( global_lights, global_lights, sizeof( global_lights ) );
         strcat( global_lights, "lights.rad" );
@@ -2223,7 +2223,7 @@ void VRAD_LoadBSP( char const *pFilename )
     printf( "Done (%.2f seconds)\n", end - start );
 
 #if 0  // To test only k-d build
-	exit(0);
+    exit(0);
 #endif
 
     RadWorld_Start();

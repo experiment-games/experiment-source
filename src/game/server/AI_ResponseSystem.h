@@ -17,14 +17,14 @@
 
 abstract_class IResponseFilter
 {
-   public:
+    public:
     virtual ~IResponseFilter() {}
     virtual bool IsValidResponse( ResponseType_t type, const char *pszValue ) = 0;
 };
 
 abstract_class IResponseSystem
 {
-   public:
+    public:
     virtual ~IResponseSystem() {}
 
     virtual bool FindBestResponse( const AI_CriteriaSet &set, AI_Response &response, IResponseFilter *pFilter = NULL ) = 0;

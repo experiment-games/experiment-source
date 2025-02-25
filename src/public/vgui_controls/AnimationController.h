@@ -27,7 +27,7 @@ class AnimationController : public Panel
 {
     DECLARE_CLASS_SIMPLE( AnimationController, Panel );
 
-   public:
+    public:
     AnimationController( Panel *parent );
     ~AnimationController();
 
@@ -80,7 +80,7 @@ class AnimationController : public Panel
     void RunAnimationCommand( vgui::Panel *panel, const char *variable, float targetValue, float startDelaySeconds, float durationSeconds, Interpolators_e interpolator, float animParameter = 0 );
     void RunAnimationCommand( vgui::Panel *panel, const char *variable, Color targetValue, float startDelaySeconds, float durationSeconds, Interpolators_e interpolator, float animParameter = 0 );
 
-   private:
+    private:
     bool UpdateScreenSize();
 
     bool LoadScriptFile( const char *fileName );

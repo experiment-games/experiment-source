@@ -18,20 +18,20 @@ class IMySQLRowSet;
 
 class CColumnValue
 {
-   public:
+    public:
     CColumnValue( IMySQLRowSet *pSQL, int iColumn );
 
     const char *String();
     long Int32();
 
-   private:
+    private:
     IMySQLRowSet *m_pSQL;
     int m_iColumn;
 };
 
 class IMySQLRowSet
 {
-   public:
+    public:
     virtual void Release() = 0;
 
     // Get the number of columns in the data returned from the last query (if it was a select statement).
@@ -60,7 +60,7 @@ class IMySQLRowSet
 
 class IMySQL : public IMySQLRowSet
 {
-   public:
+    public:
     virtual bool InitMySQL( const char *pDBName, const char *pHostName = "", const char *pUserName = "", const char *pPassword = "" ) = 0;
     virtual void Release() = 0;
 

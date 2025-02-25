@@ -23,7 +23,7 @@ extern short g_sModelIndexFireball;  // (in combatweapon.cpp) holds the index fo
 //-----------------------------------------------------------------------------
 class CTEExplosion : public CTEParticleSystem
 {
-   public:
+    public:
     DECLARE_CLASS( CTEExplosion, CTEParticleSystem );
     DECLARE_SERVERCLASS();
 
@@ -32,7 +32,7 @@ class CTEExplosion : public CTEParticleSystem
 
     virtual void Test( const Vector& current_origin, const QAngle& current_angles );
 
-   public:
+    public:
     CNetworkVar( int, m_nModelIndex );
     CNetworkVar( float, m_fScale );
     CNetworkVar( int, m_nFrameRate );

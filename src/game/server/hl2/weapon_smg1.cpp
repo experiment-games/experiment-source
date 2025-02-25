@@ -27,7 +27,7 @@ class CWeaponSMG1 : public CHLSelectFireMachineGun
 {
     DECLARE_DATADESC();
 
-   public:
+    public:
     DECLARE_CLASS( CWeaponSMG1, CHLSelectFireMachineGun );
 
     CWeaponSMG1();
@@ -75,7 +75,7 @@ class CWeaponSMG1 : public CHLSelectFireMachineGun
 
     DECLARE_ACTTABLE();
 
-   protected:
+    protected:
     Vector m_vecTossVelocity;
     float m_flNextGrenadeCheck;
 };
@@ -412,10 +412,10 @@ int CWeaponSMG1::WeaponRangeAttack2Condition( float flDot, float flDist )
     return COND_NONE;
 
     /*
-      // --------------------------------------------------------
-      // Assume things haven't changed too much since last time
-      // --------------------------------------------------------
-      if (gpGlobals->curtime < m_flNextGrenadeCheck )
+    // --------------------------------------------------------
+    // Assume things haven't changed too much since last time
+    // --------------------------------------------------------
+    if (gpGlobals->curtime < m_flNextGrenadeCheck )
         return m_lastGrenadeCondition;
     */
 

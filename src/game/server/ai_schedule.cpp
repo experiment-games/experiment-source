@@ -80,12 +80,12 @@ bool CAI_SchedulesManager::LoadAllSchedules( void )
 
 // UNDONE: enable this after the schedules are all loaded (right now some load in monster spawns)
 #if 0
-		// If not in developer mode, free the string memory.  Otherwise
-		// keep it around for debugging information
-		if (!g_pDeveloper->GetInt())
-		{
-			ClearStringRegistries();
-		}
+        // If not in developer mode, free the string memory.  Otherwise
+        // keep it around for debugging information
+        if (!g_pDeveloper->GetInt())
+        {
+            ClearStringRegistries();
+        }
 #endif
     }
     return true;

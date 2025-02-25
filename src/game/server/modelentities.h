@@ -22,7 +22,7 @@
 //-----------------------------------------------------------------------------
 class CFuncBrush : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CFuncBrush, CBaseEntity );
 
     virtual void Spawn( void );

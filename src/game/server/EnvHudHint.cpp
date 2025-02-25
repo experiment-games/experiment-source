@@ -21,13 +21,13 @@
 //-----------------------------------------------------------------------------
 class CEnvHudHint : public CPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CEnvHudHint, CPointEntity );
 
     void Spawn( void );
     void Precache( void );
 
-   private:
+    private:
     inline bool AllPlayers( void )
     {
         return ( m_spawnflags & SF_HUDHINT_ALLPLAYERS ) != 0;

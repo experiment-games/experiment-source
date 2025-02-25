@@ -30,7 +30,7 @@ class CMessageCharsPanel : public vgui::Panel
 {
     typedef vgui::Panel BaseClass;
 
-   public:
+    public:
     // Internal pool of such messages
     typedef struct message_s
     {
@@ -74,7 +74,7 @@ class CMessageCharsPanel : public vgui::Panel
 
     void Clear( void );
 
-   private:
+    private:
     // Allocate a new message
     message_t *AllocMessage( void );
     // Clear out all messages
@@ -358,10 +358,10 @@ void CMessageCharsPanel::RemoveStringsByID( int messageID )
 
 class CMessageChars : public IMessageChars
 {
-   private:
+    private:
     CMessageCharsPanel *messageCharsPanel;
 
-   public:
+    public:
     CMessageChars( void )
     {
         messageCharsPanel = NULL;

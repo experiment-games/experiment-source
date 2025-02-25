@@ -50,7 +50,7 @@ namespace cpp
 
 class EnumFieldGenerator : public FieldGenerator
 {
-   public:
+    public:
     explicit EnumFieldGenerator( const FieldDescriptor* descriptor );
     ~EnumFieldGenerator();
 
@@ -67,7 +67,7 @@ class EnumFieldGenerator : public FieldGenerator
     void GenerateSerializeWithCachedSizesToArray( io::Printer* printer ) const;
     void GenerateByteSize( io::Printer* printer ) const;
 
-   private:
+    private:
     const FieldDescriptor* descriptor_;
     map< string, string > variables_;
 
@@ -76,7 +76,7 @@ class EnumFieldGenerator : public FieldGenerator
 
 class RepeatedEnumFieldGenerator : public FieldGenerator
 {
-   public:
+    public:
     explicit RepeatedEnumFieldGenerator( const FieldDescriptor* descriptor );
     ~RepeatedEnumFieldGenerator();
 
@@ -94,7 +94,7 @@ class RepeatedEnumFieldGenerator : public FieldGenerator
     void GenerateSerializeWithCachedSizesToArray( io::Printer* printer ) const;
     void GenerateByteSize( io::Printer* printer ) const;
 
-   private:
+    private:
     const FieldDescriptor* descriptor_;
     map< string, string > variables_;
 

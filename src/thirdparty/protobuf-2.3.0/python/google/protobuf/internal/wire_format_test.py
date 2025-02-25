@@ -45,7 +45,7 @@ class WireFormatTest(unittest.TestCase):
     field_number = 0xabc
     tag_type = 2
     self.assertEqual((field_number << 3) | tag_type,
-                     wire_format.PackTag(field_number, tag_type))
+                    wire_format.PackTag(field_number, tag_type))
     PackTag = wire_format.PackTag
     # Number too high.
     self.assertRaises(message.EncodeError, PackTag, field_number, 6)
@@ -55,7 +55,7 @@ class WireFormatTest(unittest.TestCase):
   def testUnpackTag(self):
     # Test field numbers that will require various varint sizes.
     for expected_field_number in (1, 15, 16, 2047, 2048):
-      for expected_wire_type in range(6):  # Highest-numbered wiretype is 5.
+    for expected_wire_type in range(6):  # Highest-numbered wiretype is 5.
         field_number, wire_type = wire_format.UnpackTag(
             wire_format.PackTag(expected_field_number, expected_wire_type))
         self.assertEqual(expected_field_number, field_number)
@@ -103,12 +103,12 @@ class WireFormatTest(unittest.TestCase):
   def NumericByteSizeTestHelper(self, byte_size_fn, value, expected_value_size):
     # Use field numbers that cause various byte sizes for the tag information.
     for field_number, tag_bytes in ((15, 1), (16, 2), (2047, 2), (2048, 3)):
-      expected_size = expected_value_size + tag_bytes
-      actual_size = byte_size_fn(field_number, value)
-      self.assertEqual(expected_size, actual_size,
-                       'byte_size_fn: %s, field_number: %d, value: %r\n'
-                       'Expected: %d, Actual: %d'% (
-          byte_size_fn, field_number, value, expected_size, actual_size))
+    expected_size = expected_value_size + tag_bytes
+    actual_size = byte_size_fn(field_number, value)
+    self.assertEqual(expected_size, actual_size,
+                        'byte_size_fn: %s, field_number: %d, value: %r\n'
+                        'Expected: %d, Actual: %d'% (
+        byte_size_fn, field_number, value, expected_size, actual_size))
 
   def testByteSizeFunctions(self):
     # Test all numeric *ByteSize() functions.
@@ -181,16 +181,16 @@ class WireFormatTest(unittest.TestCase):
         [wire_format.EnumByteSize, wire_format.UINT32_MAX, 5],
         ]
     for args in NUMERIC_ARGS:
-      self.NumericByteSizeTestHelper(*args)
+    self.NumericByteSizeTestHelper(*args)
 
     # Test strings and bytes.
     for byte_size_fn in (wire_format.StringByteSize, wire_format.BytesByteSize):
-      # 1 byte for tag, 1 byte for length, 3 bytes for contents.
-      self.assertEqual(5, byte_size_fn(10, 'abc'))
-      # 2 bytes for tag, 1 byte for length, 3 bytes for contents.
-      self.assertEqual(6, byte_size_fn(16, 'abc'))
-      # 2 bytes for tag, 2 bytes for length, 128 bytes for contents.
-      self.assertEqual(132, byte_size_fn(16, 'a' * 128))
+    # 1 byte for tag, 1 byte for length, 3 bytes for contents.
+    self.assertEqual(5, byte_size_fn(10, 'abc'))
+    # 2 bytes for tag, 1 byte for length, 3 bytes for contents.
+    self.assertEqual(6, byte_size_fn(16, 'abc'))
+    # 2 bytes for tag, 2 bytes for length, 128 bytes for contents.
+    self.assertEqual(132, byte_size_fn(16, 'a' * 128))
 
     # Test UTF-8 string byte size calculation.
     # 1 byte for tag, 1 byte for length, 8 bytes for content.
@@ -198,9 +198,9 @@ class WireFormatTest(unittest.TestCase):
         5, unicode('\xd0\xa2\xd0\xb5\xd1\x81\xd1\x82', 'utf-8')))
 
     class MockMessage(object):
-      def __init__(self, byte_size):
+    def __init__(self, byte_size):
         self.byte_size = byte_size
-      def ByteSize(self):
+    def ByteSize(self):
         return self.byte_size
 
     message_byte_size = 10
@@ -208,22 +208,22 @@ class WireFormatTest(unittest.TestCase):
     # Test groups.
     # (2 * 1) bytes for begin and end tags, plus message_byte_size.
     self.assertEqual(2 + message_byte_size,
-                     wire_format.GroupByteSize(1, mock_message))
+                    wire_format.GroupByteSize(1, mock_message))
     # (2 * 2) bytes for begin and end tags, plus message_byte_size.
     self.assertEqual(4 + message_byte_size,
-                     wire_format.GroupByteSize(16, mock_message))
+                    wire_format.GroupByteSize(16, mock_message))
 
     # Test messages.
     # 1 byte for tag, plus 1 byte for length, plus contents.
     self.assertEqual(2 + mock_message.byte_size,
-                     wire_format.MessageByteSize(1, mock_message))
+                    wire_format.MessageByteSize(1, mock_message))
     # 2 bytes for tag, plus 1 byte for length, plus contents.
     self.assertEqual(3 + mock_message.byte_size,
-                     wire_format.MessageByteSize(16, mock_message))
+                    wire_format.MessageByteSize(16, mock_message))
     # 2 bytes for tag, plus 2 bytes for length, plus contents.
     mock_message.byte_size = 128
     self.assertEqual(4 + mock_message.byte_size,
-                     wire_format.MessageByteSize(16, mock_message))
+                    wire_format.MessageByteSize(16, mock_message))
 
 
     # Test message set item byte size.
@@ -231,22 +231,22 @@ class WireFormatTest(unittest.TestCase):
     # plus contents.
     mock_message.byte_size = 10
     self.assertEqual(mock_message.byte_size + 6,
-                     wire_format.MessageSetItemByteSize(1, mock_message))
+                    wire_format.MessageSetItemByteSize(1, mock_message))
 
     # 4 bytes for tags, plus 2 bytes for length, plus 1 byte for type_id,
     # plus contents.
     mock_message.byte_size = 128
     self.assertEqual(mock_message.byte_size + 7,
-                     wire_format.MessageSetItemByteSize(1, mock_message))
+                    wire_format.MessageSetItemByteSize(1, mock_message))
 
     # 4 bytes for tags, plus 2 bytes for length, plus 2 byte for type_id,
     # plus contents.
     self.assertEqual(mock_message.byte_size + 8,
-                     wire_format.MessageSetItemByteSize(128, mock_message))
+                    wire_format.MessageSetItemByteSize(128, mock_message))
 
     # Too-long varint.
     self.assertRaises(message.EncodeError,
-                      wire_format.UInt64ByteSize, 1, 1 << 128)
+                    wire_format.UInt64ByteSize, 1, 1 << 128)
 
 
 if __name__ == '__main__':

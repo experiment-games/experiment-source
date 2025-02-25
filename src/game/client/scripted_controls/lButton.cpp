@@ -149,8 +149,8 @@ LUA_BINDING_BEGIN( Button, IsMouseClickEnabled, "class", "Returns whether mouse 
 {
     lua_Button *button = LUA_BINDING_ARGUMENT( luaL_checkbutton, 1, "button" );
     lua_pushboolean( L,
-                     button->IsMouseClickEnabled(
-                         LUA_BINDING_ARGUMENT_ENUM( MouseCode, 2, "mouseCode" ) ) );
+                    button->IsMouseClickEnabled(
+                        LUA_BINDING_ARGUMENT_ENUM( MouseCode, 2, "mouseCode" ) ) );
     return 1;
 }
 LUA_BINDING_END( "boolean", "Returns whether mouse clicks are enabled" )
@@ -199,7 +199,7 @@ LUA_BINDING_BEGIN( Button, SetArmedColor, "class", "Sets the armed color" )
 {
     lua_Button *button = LUA_BINDING_ARGUMENT( luaL_checkbutton, 1, "button" );
     button->SetArmedColor( LUA_BINDING_ARGUMENT( luaL_checkcolor, 2, "armedForegroundColor" ),
-                           LUA_BINDING_ARGUMENT( luaL_checkcolor, 3, "armedBackgroundColor" ) );
+                            LUA_BINDING_ARGUMENT( luaL_checkcolor, 3, "armedBackgroundColor" ) );
     return 0;
 }
 LUA_BINDING_END()
@@ -265,7 +265,7 @@ LUA_BINDING_BEGIN( Button, SetDefaultColor, "class", "Sets the default color" )
 {
     lua_Button *button = LUA_BINDING_ARGUMENT( luaL_checkbutton, 1, "button" );
     button->SetDefaultColor( LUA_BINDING_ARGUMENT( luaL_checkcolor, 2, "defaultForegroundColor" ),
-                             LUA_BINDING_ARGUMENT( luaL_checkcolor, 3, "defaultBackgroundColor" ) );
+                            LUA_BINDING_ARGUMENT( luaL_checkcolor, 3, "defaultBackgroundColor" ) );
     return 0;
 }
 LUA_BINDING_END()
@@ -274,7 +274,7 @@ LUA_BINDING_BEGIN( Button, SetDepressedColor, "class", "Sets the depressed color
 {
     lua_Button *button = LUA_BINDING_ARGUMENT( luaL_checkbutton, 1, "button" );
     button->SetDepressedColor( LUA_BINDING_ARGUMENT( luaL_checkcolor, 2, "depressedForegroundColor" ),
-                               LUA_BINDING_ARGUMENT( luaL_checkcolor, 3, "depressedBackgroundColor" ) );
+                                LUA_BINDING_ARGUMENT( luaL_checkcolor, 3, "depressedBackgroundColor" ) );
     return 0;
 }
 LUA_BINDING_END()

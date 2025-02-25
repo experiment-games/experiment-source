@@ -64,14 +64,14 @@ void PrintFieldComment(io::Printer* printer, const FieldDescriptor* field) {
 
 struct FieldOrderingByNumber {
   inline bool operator()(const FieldDescriptor* a,
-                         const FieldDescriptor* b) const {
+                        const FieldDescriptor* b) const {
     return a->number() < b->number();
   }
 };
 
 struct ExtensionRangeOrdering {
   bool operator()(const Descriptor::ExtensionRange* a,
-                  const Descriptor::ExtensionRange* b) const {
+                const Descriptor::ExtensionRange* b) const {
     return a->start < b->start;
   }
 };
@@ -85,7 +85,7 @@ const FieldDescriptor** SortFieldsByNumber(const Descriptor* descriptor) {
     fields[i] = descriptor->field(i);
   }
   sort(fields, fields + descriptor->field_count(),
-       FieldOrderingByNumber());
+        FieldOrderingByNumber());
   return fields;
 }
 
@@ -125,12 +125,12 @@ static bool HasRequiredFields(
   for (int i = 0; i < type->field_count(); i++) {
     const FieldDescriptor* field = type->field(i);
     if (field->is_required()) {
-      return true;
+    return true;
     }
     if (GetJavaType(field) == JAVATYPE_MESSAGE) {
-      if (HasRequiredFields(field->message_type(), already_seen)) {
+    if (HasRequiredFields(field->message_type(), already_seen)) {
         return true;
-      }
+    }
     }
   }
 
@@ -167,34 +167,34 @@ void MessageGenerator::GenerateStaticVariables(io::Printer* printer) {
     vars["index"] = SimpleItoa(descriptor_->index());
     vars["classname"] = ClassName(descriptor_);
     if (descriptor_->containing_type() != NULL) {
-      vars["parent"] = UniqueFileScopeIdentifier(
-          descriptor_->containing_type());
+    vars["parent"] = UniqueFileScopeIdentifier(
+        descriptor_->containing_type());
     }
     if (descriptor_->file()->options().java_multiple_files()) {
-      // We can only make these package-private since the classes that use them
-      // are in separate files.
-      vars["private"] = "";
+    // We can only make these package-private since the classes that use them
+    // are in separate files.
+    vars["private"] = "";
     } else {
-      vars["private"] = "private ";
+    vars["private"] = "private ";
     }
 
     // The descriptor for this type.
     printer->Print(vars,
-      "$private$static com.google.protobuf.Descriptors.Descriptor\n"
-      "  internal_$identifier$_descriptor;\n");
+    "$private$static com.google.protobuf.Descriptors.Descriptor\n"
+    "  internal_$identifier$_descriptor;\n");
 
     // And the FieldAccessorTable.
     printer->Print(vars,
-      "$private$static\n"
-      "  com.google.protobuf.GeneratedMessage.FieldAccessorTable\n"
-      "    internal_$identifier$_fieldAccessorTable;\n");
+    "$private$static\n"
+    "  com.google.protobuf.GeneratedMessage.FieldAccessorTable\n"
+    "    internal_$identifier$_fieldAccessorTable;\n");
   }
 
   // Generate static members for all nested types.
   for (int i = 0; i < descriptor_->nested_type_count(); i++) {
     // TODO(kenton):  Reuse MessageGenerator objects?
     MessageGenerator(descriptor_->nested_type(i))
-      .GenerateStaticVariables(printer);
+    .GenerateStaticVariables(printer);
   }
 }
 
@@ -206,50 +206,50 @@ void MessageGenerator::GenerateStaticVariableInitializers(
     vars["index"] = SimpleItoa(descriptor_->index());
     vars["classname"] = ClassName(descriptor_);
     if (descriptor_->containing_type() != NULL) {
-      vars["parent"] = UniqueFileScopeIdentifier(
-          descriptor_->containing_type());
+    vars["parent"] = UniqueFileScopeIdentifier(
+        descriptor_->containing_type());
     }
 
     // The descriptor for this type.
     if (descriptor_->containing_type() == NULL) {
-      printer->Print(vars,
+    printer->Print(vars,
         "internal_$identifier$_descriptor =\n"
         "  getDescriptor().getMessageTypes().get($index$);\n");
     } else {
-      printer->Print(vars,
+    printer->Print(vars,
         "internal_$identifier$_descriptor =\n"
         "  internal_$parent$_descriptor.getNestedTypes().get($index$);\n");
     }
 
     // And the FieldAccessorTable.
     printer->Print(vars,
-      "internal_$identifier$_fieldAccessorTable = new\n"
-      "  com.google.protobuf.GeneratedMessage.FieldAccessorTable(\n"
-      "    internal_$identifier$_descriptor,\n"
-      "    new java.lang.String[] { ");
+    "internal_$identifier$_fieldAccessorTable = new\n"
+    "  com.google.protobuf.GeneratedMessage.FieldAccessorTable(\n"
+    "    internal_$identifier$_descriptor,\n"
+    "    new java.lang.String[] { ");
     for (int i = 0; i < descriptor_->field_count(); i++) {
-      printer->Print(
+    printer->Print(
         "\"$field_name$\", ",
         "field_name",
-          UnderscoresToCapitalizedCamelCase(descriptor_->field(i)));
+        UnderscoresToCapitalizedCamelCase(descriptor_->field(i)));
     }
     printer->Print("},\n"
-      "    $classname$.class,\n"
-      "    $classname$.Builder.class);\n",
-      "classname", ClassName(descriptor_));
+    "    $classname$.class,\n"
+    "    $classname$.Builder.class);\n",
+    "classname", ClassName(descriptor_));
   }
 
   // Generate static member initializers for all nested types.
   for (int i = 0; i < descriptor_->nested_type_count(); i++) {
     // TODO(kenton):  Reuse MessageGenerator objects?
     MessageGenerator(descriptor_->nested_type(i))
-      .GenerateStaticVariableInitializers(printer);
+    .GenerateStaticVariableInitializers(printer);
   }
 
   for (int i = 0; i < descriptor_->extension_count(); i++) {
     // TODO(kenton):  Reuse ExtensionGenerator objects?
     ExtensionGenerator(descriptor_->extension(i))
-      .GenerateInitializationCode(printer);
+    .GenerateInitializationCode(printer);
   }
 }
 
@@ -260,14 +260,14 @@ void MessageGenerator::Generate(io::Printer* printer) {
 
   if (descriptor_->extension_range_count() > 0) {
     if (HasDescriptorMethods(descriptor_)) {
-      printer->Print(
+    printer->Print(
         "public $static$ final class $classname$ extends\n"
         "    com.google.protobuf.GeneratedMessage.ExtendableMessage<\n"
         "      $classname$> {\n",
         "static", is_own_file ? "" : "static",
         "classname", descriptor_->name());
     } else {
-      printer->Print(
+    printer->Print(
         "public $static$ final class $classname$ extends\n"
         "    com.google.protobuf.GeneratedMessageLite.ExtendableMessage<\n"
         "      $classname$> {\n",
@@ -276,13 +276,13 @@ void MessageGenerator::Generate(io::Printer* printer) {
     }
   } else {
     if (HasDescriptorMethods(descriptor_)) {
-      printer->Print(
+    printer->Print(
         "public $static$ final class $classname$ extends\n"
         "    com.google.protobuf.GeneratedMessage {\n",
         "static", is_own_file ? "" : "static",
         "classname", descriptor_->name());
     } else {
-      printer->Print(
+    printer->Print(
         "public $static$ final class $classname$ extends\n"
         "    com.google.protobuf.GeneratedMessageLite {\n",
         "static", is_own_file ? "" : "static",
@@ -312,18 +312,18 @@ void MessageGenerator::Generate(io::Printer* printer) {
 
   if (HasDescriptorMethods(descriptor_)) {
     printer->Print(
-      "public static final com.google.protobuf.Descriptors.Descriptor\n"
-      "    getDescriptor() {\n"
-      "  return $fileclass$.internal_$identifier$_descriptor;\n"
-      "}\n"
-      "\n"
-      "protected com.google.protobuf.GeneratedMessage.FieldAccessorTable\n"
-      "    internalGetFieldAccessorTable() {\n"
-      "  return $fileclass$.internal_$identifier$_fieldAccessorTable;\n"
-      "}\n"
-      "\n",
-      "fileclass", ClassName(descriptor_->file()),
-      "identifier", UniqueFileScopeIdentifier(descriptor_));
+    "public static final com.google.protobuf.Descriptors.Descriptor\n"
+    "    getDescriptor() {\n"
+    "  return $fileclass$.internal_$identifier$_descriptor;\n"
+    "}\n"
+    "\n"
+    "protected com.google.protobuf.GeneratedMessage.FieldAccessorTable\n"
+    "    internalGetFieldAccessorTable() {\n"
+    "  return $fileclass$.internal_$identifier$_fieldAccessorTable;\n"
+    "}\n"
+    "\n",
+    "fileclass", ClassName(descriptor_->file()),
+    "identifier", UniqueFileScopeIdentifier(descriptor_));
   }
 
   // Nested types and extensions
@@ -343,8 +343,8 @@ void MessageGenerator::Generate(io::Printer* printer) {
   for (int i = 0; i < descriptor_->field_count(); i++) {
     PrintFieldComment(printer, descriptor_->field(i));
     printer->Print("public static final int $constant_name$ = $number$;\n",
-      "constant_name", FieldConstantName(descriptor_->field(i)),
-      "number", SimpleItoa(descriptor_->field(i)->number()));
+    "constant_name", FieldConstantName(descriptor_->field(i)),
+    "number", SimpleItoa(descriptor_->field(i)->number()));
     field_generators_.get(descriptor_->field(i)).GenerateMembers(printer);
     printer->Print("\n");
   }
@@ -355,7 +355,7 @@ void MessageGenerator::Generate(io::Printer* printer) {
   printer->Indent();
   for (int i = 0; i < descriptor_->field_count(); i++) {
     field_generators_.get(descriptor_->field(i))
-                     .GenerateInitializationCode(printer);
+                    .GenerateInitializationCode(printer);
   }
   printer->Outdent();
   printer->Print("}\n");
@@ -402,7 +402,7 @@ GenerateMessageSerializationMethods(io::Printer* printer) {
     sorted_extensions.push_back(descriptor_->extension_range(i));
   }
   sort(sorted_extensions.begin(), sorted_extensions.end(),
-       ExtensionRangeOrdering());
+        ExtensionRangeOrdering());
 
   printer->Print(
     "public void writeTo(com.google.protobuf.CodedOutputStream output)\n"
@@ -419,13 +419,13 @@ GenerateMessageSerializationMethods(io::Printer* printer) {
 
   if (descriptor_->extension_range_count() > 0) {
     if (descriptor_->options().message_set_wire_format()) {
-      printer->Print(
+    printer->Print(
         "com.google.protobuf.GeneratedMessage$lite$.ExtendableMessage\n"
         "  .ExtensionWriter extensionWriter =\n"
         "    newMessageSetExtensionWriter();\n",
         "lite", HasDescriptorMethods(descriptor_) ? "" : "Lite");
     } else {
-      printer->Print(
+    printer->Print(
         "com.google.protobuf.GeneratedMessage$lite$.ExtendableMessage\n"
         "  .ExtensionWriter extensionWriter = newExtensionWriter();\n",
         "lite", HasDescriptorMethods(descriptor_) ? "" : "Lite");
@@ -434,25 +434,25 @@ GenerateMessageSerializationMethods(io::Printer* printer) {
 
   // Merge the fields and the extension ranges, both sorted by field number.
   for (int i = 0, j = 0;
-       i < descriptor_->field_count() || j < sorted_extensions.size();
-       ) {
+        i < descriptor_->field_count() || j < sorted_extensions.size();
+        ) {
     if (i == descriptor_->field_count()) {
-      GenerateSerializeOneExtensionRange(printer, sorted_extensions[j++]);
+    GenerateSerializeOneExtensionRange(printer, sorted_extensions[j++]);
     } else if (j == sorted_extensions.size()) {
-      GenerateSerializeOneField(printer, sorted_fields[i++]);
+    GenerateSerializeOneField(printer, sorted_fields[i++]);
     } else if (sorted_fields[i]->number() < sorted_extensions[j]->start) {
-      GenerateSerializeOneField(printer, sorted_fields[i++]);
+    GenerateSerializeOneField(printer, sorted_fields[i++]);
     } else {
-      GenerateSerializeOneExtensionRange(printer, sorted_extensions[j++]);
+    GenerateSerializeOneExtensionRange(printer, sorted_extensions[j++]);
     }
   }
 
   if (HasUnknownFields(descriptor_)) {
     if (descriptor_->options().message_set_wire_format()) {
-      printer->Print(
+    printer->Print(
         "getUnknownFields().writeAsMessageSetTo(output);\n");
     } else {
-      printer->Print(
+    printer->Print(
         "getUnknownFields().writeTo(output);\n");
     }
   }
@@ -475,20 +475,20 @@ GenerateMessageSerializationMethods(io::Printer* printer) {
 
   if (descriptor_->extension_range_count() > 0) {
     if (descriptor_->options().message_set_wire_format()) {
-      printer->Print(
+    printer->Print(
         "size += extensionsSerializedSizeAsMessageSet();\n");
     } else {
-      printer->Print(
+    printer->Print(
         "size += extensionsSerializedSize();\n");
     }
   }
 
   if (HasUnknownFields(descriptor_)) {
     if (descriptor_->options().message_set_wire_format()) {
-      printer->Print(
+    printer->Print(
         "size += getUnknownFields().getSerializedSizeAsMessageSet();\n");
     } else {
-      printer->Print(
+    printer->Print(
         "size += getUnknownFields().getSerializedSize();\n");
     }
   }
@@ -604,13 +604,13 @@ void MessageGenerator::GenerateBuilder(io::Printer* printer) {
 
   if (descriptor_->extension_range_count() > 0) {
     if (HasDescriptorMethods(descriptor_)) {
-      printer->Print(
+    printer->Print(
         "public static final class Builder extends\n"
         "    com.google.protobuf.GeneratedMessage.ExtendableBuilder<\n"
         "      $classname$, Builder> {\n",
         "classname", ClassName(descriptor_));
     } else {
-      printer->Print(
+    printer->Print(
         "public static final class Builder extends\n"
         "    com.google.protobuf.GeneratedMessageLite.ExtendableBuilder<\n"
         "      $classname$, Builder> {\n",
@@ -618,12 +618,12 @@ void MessageGenerator::GenerateBuilder(io::Printer* printer) {
     }
   } else {
     if (HasDescriptorMethods(descriptor_)) {
-      printer->Print(
+    printer->Print(
         "public static final class Builder extends\n"
         "    com.google.protobuf.GeneratedMessage.Builder<Builder> {\n",
         "classname", ClassName(descriptor_));
     } else {
-      printer->Print(
+    printer->Print(
         "public static final class Builder extends\n"
         "    com.google.protobuf.GeneratedMessageLite.Builder<\n"
         "      $classname$, Builder> {\n",
@@ -642,7 +642,7 @@ void MessageGenerator::GenerateBuilder(io::Printer* printer) {
     printer->Print("\n");
     PrintFieldComment(printer, descriptor_->field(i));
     field_generators_.get(descriptor_->field(i))
-                     .GenerateBuilderMembers(printer);
+                    .GenerateBuilderMembers(printer);
   }
 
   printer->Print(
@@ -689,12 +689,12 @@ void MessageGenerator::GenerateCommonBuilderMethods(io::Printer* printer) {
     "classname", ClassName(descriptor_));
   if (HasDescriptorMethods(descriptor_)) {
     printer->Print(
-      "public com.google.protobuf.Descriptors.Descriptor\n"
-      "    getDescriptorForType() {\n"
-      "  return $classname$.getDescriptor();\n"
-      "}\n"
-      "\n",
-      "classname", ClassName(descriptor_));
+    "public com.google.protobuf.Descriptors.Descriptor\n"
+    "    getDescriptorForType() {\n"
+    "  return $classname$.getDescriptor();\n"
+    "}\n"
+    "\n",
+    "classname", ClassName(descriptor_));
   }
   printer->Print(
     "public $classname$ getDefaultInstanceForType() {\n"
@@ -753,7 +753,7 @@ void MessageGenerator::GenerateCommonBuilderMethods(io::Printer* printer) {
     // MergeFrom(Message other) requires the ability to distinguish the other
     // messages type by its descriptor.
     if (HasDescriptorMethods(descriptor_)) {
-      printer->Print(
+    printer->Print(
         "public Builder mergeFrom(com.google.protobuf.Message other) {\n"
         "  if (other instanceof $classname$) {\n"
         "    return mergeFrom(($classname$)other);\n"
@@ -767,34 +767,34 @@ void MessageGenerator::GenerateCommonBuilderMethods(io::Printer* printer) {
     }
 
     printer->Print(
-      "public Builder mergeFrom($classname$ other) {\n"
-      // Optimization:  If other is the default instance, we know none of its
-      //   fields are set so we can skip the merge.
-      "  if (other == $classname$.getDefaultInstance()) return this;\n",
-      "classname", ClassName(descriptor_));
+    "public Builder mergeFrom($classname$ other) {\n"
+    // Optimization:  If other is the default instance, we know none of its
+    //   fields are set so we can skip the merge.
+    "  if (other == $classname$.getDefaultInstance()) return this;\n",
+    "classname", ClassName(descriptor_));
     printer->Indent();
 
     for (int i = 0; i < descriptor_->field_count(); i++) {
-      field_generators_.get(descriptor_->field(i)).GenerateMergingCode(printer);
+    field_generators_.get(descriptor_->field(i)).GenerateMergingCode(printer);
     }
 
     printer->Outdent();
 
     // if message type has extensions
     if (descriptor_->extension_range_count() > 0) {
-      printer->Print(
+    printer->Print(
         "  this.mergeExtensionFields(other);\n");
     }
 
     if (HasUnknownFields(descriptor_)) {
-      printer->Print(
+    printer->Print(
         "  this.mergeUnknownFields(other.getUnknownFields());\n");
     }
 
     printer->Print(
-      "  return this;\n"
-      "}\n"
-      "\n");
+    "  return this;\n"
+    "}\n"
+    "\n");
   }
 }
 
@@ -813,9 +813,9 @@ void MessageGenerator::GenerateBuilderParsingMethods(io::Printer* printer) {
 
   if (HasUnknownFields(descriptor_)) {
     printer->Print(
-      "com.google.protobuf.UnknownFieldSet.Builder unknownFields =\n"
-      "  com.google.protobuf.UnknownFieldSet.newBuilder(\n"
-      "    this.getUnknownFields());\n");
+    "com.google.protobuf.UnknownFieldSet.Builder unknownFields =\n"
+    "  com.google.protobuf.UnknownFieldSet.newBuilder(\n"
+    "    this.getUnknownFields());\n");
   }
 
   printer->Print(
@@ -829,60 +829,60 @@ void MessageGenerator::GenerateBuilderParsingMethods(io::Printer* printer) {
 
   if (HasUnknownFields(descriptor_)) {
     printer->Print(
-      "case 0:\n"          // zero signals EOF / limit reached
-      "  this.setUnknownFields(unknownFields.build());\n"
-      "  return this;\n"
-      "default: {\n"
-      "  if (!parseUnknownField(input, unknownFields,\n"
-      "                         extensionRegistry, tag)) {\n"
-      "    this.setUnknownFields(unknownFields.build());\n"
-      "    return this;\n"   // it's an endgroup tag
-      "  }\n"
-      "  break;\n"
-      "}\n");
+    "case 0:\n"          // zero signals EOF / limit reached
+    "  this.setUnknownFields(unknownFields.build());\n"
+    "  return this;\n"
+    "default: {\n"
+    "  if (!parseUnknownField(input, unknownFields,\n"
+    "                         extensionRegistry, tag)) {\n"
+    "    this.setUnknownFields(unknownFields.build());\n"
+    "    return this;\n"   // it's an endgroup tag
+    "  }\n"
+    "  break;\n"
+    "}\n");
   } else {
     printer->Print(
-      "case 0:\n"          // zero signals EOF / limit reached
-      "  return this;\n"
-      "default: {\n"
-      "  if (!parseUnknownField(input, extensionRegistry, tag)) {\n"
-      "    return this;\n"   // it's an endgroup tag
-      "  }\n"
-      "  break;\n"
-      "}\n");
+    "case 0:\n"          // zero signals EOF / limit reached
+    "  return this;\n"
+    "default: {\n"
+    "  if (!parseUnknownField(input, extensionRegistry, tag)) {\n"
+    "    return this;\n"   // it's an endgroup tag
+    "  }\n"
+    "  break;\n"
+    "}\n");
   }
 
   for (int i = 0; i < descriptor_->field_count(); i++) {
     const FieldDescriptor* field = sorted_fields[i];
     uint32 tag = WireFormatLite::MakeTag(field->number(),
-      WireFormat::WireTypeForFieldType(field->type()));
+    WireFormat::WireTypeForFieldType(field->type()));
 
     printer->Print(
-      "case $tag$: {\n",
-      "tag", SimpleItoa(tag));
+    "case $tag$: {\n",
+    "tag", SimpleItoa(tag));
     printer->Indent();
 
     field_generators_.get(field).GenerateParsingCode(printer);
 
     printer->Outdent();
     printer->Print(
-      "  break;\n"
-      "}\n");
+    "  break;\n"
+    "}\n");
 
     if (field->is_packable()) {
-      // To make packed = true wire compatible, we generate parsing code from a
-      // packed version of this field regardless of field->options().packed().
-      uint32 packed_tag = WireFormatLite::MakeTag(field->number(),
+    // To make packed = true wire compatible, we generate parsing code from a
+    // packed version of this field regardless of field->options().packed().
+    uint32 packed_tag = WireFormatLite::MakeTag(field->number(),
         WireFormatLite::WIRETYPE_LENGTH_DELIMITED);
-      printer->Print(
+    printer->Print(
         "case $tag$: {\n",
         "tag", SimpleItoa(packed_tag));
-      printer->Indent();
+    printer->Indent();
 
-      field_generators_.get(field).GenerateParsingCodeFromPacked(printer);
+    field_generators_.get(field).GenerateParsingCodeFromPacked(printer);
 
-      printer->Outdent();
-      printer->Print(
+    printer->Outdent();
+    printer->Print(
         "  break;\n"
         "}\n");
     }
@@ -912,7 +912,7 @@ void MessageGenerator::GenerateIsInitialized(io::Printer* printer) {
     const FieldDescriptor* field = descriptor_->field(i);
 
     if (field->is_required()) {
-      printer->Print(
+    printer->Print(
         "if (!has$name$) return false;\n",
         "name", UnderscoresToCapitalizedCamelCase(field));
     }
@@ -923,36 +923,36 @@ void MessageGenerator::GenerateIsInitialized(io::Printer* printer) {
     const FieldDescriptor* field = descriptor_->field(i);
     if (GetJavaType(field) == JAVATYPE_MESSAGE &&
         HasRequiredFields(field->message_type())) {
-      switch (field->label()) {
+    switch (field->label()) {
         case FieldDescriptor::LABEL_REQUIRED:
-          printer->Print(
+        printer->Print(
             "if (!get$name$().isInitialized()) return false;\n",
             "type", ClassName(field->message_type()),
             "name", UnderscoresToCapitalizedCamelCase(field));
-          break;
+        break;
         case FieldDescriptor::LABEL_OPTIONAL:
-          printer->Print(
+        printer->Print(
             "if (has$name$()) {\n"
             "  if (!get$name$().isInitialized()) return false;\n"
             "}\n",
             "type", ClassName(field->message_type()),
             "name", UnderscoresToCapitalizedCamelCase(field));
-          break;
+        break;
         case FieldDescriptor::LABEL_REPEATED:
-          printer->Print(
+        printer->Print(
             "for ($type$ element : get$name$List()) {\n"
             "  if (!element.isInitialized()) return false;\n"
             "}\n",
             "type", ClassName(field->message_type()),
             "name", UnderscoresToCapitalizedCamelCase(field));
-          break;
-      }
+        break;
+    }
     }
   }
 
   if (descriptor_->extension_range_count() > 0) {
     printer->Print(
-      "if (!extensionsAreInitialized()) return false;\n");
+    "if (!extensionsAreInitialized()) return false;\n");
   }
 
   printer->Outdent();
@@ -967,12 +967,12 @@ void MessageGenerator::GenerateIsInitialized(io::Printer* printer) {
 void MessageGenerator::GenerateExtensionRegistrationCode(io::Printer* printer) {
   for (int i = 0; i < descriptor_->extension_count(); i++) {
     ExtensionGenerator(descriptor_->extension(i))
-      .GenerateRegistrationCode(printer);
+    .GenerateRegistrationCode(printer);
   }
 
   for (int i = 0; i < descriptor_->nested_type_count(); i++) {
     MessageGenerator(descriptor_->nested_type(i))
-      .GenerateExtensionRegistrationCode(printer);
+    .GenerateExtensionRegistrationCode(printer);
   }
 }
 

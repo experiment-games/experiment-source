@@ -32,17 +32,17 @@ There are several types of data:
   FIELD		: this is a variable which gets saved & loaded from disk
   KEY			: this variable can be read in from the map file
   GLOBAL		: a global field is actually local; it is saved/restored, but is actually
-          unique to the entity on each level.
+        unique to the entity on each level.
   CUSTOM		: the save/restore parsing functions are described by the user.
   ARRAY		: an array of values
   OUTPUT		: a variable or event that can be connected to other entities (see below)
   INPUTFUNC	: maps a string input to a function pointer. Outputs connected to this input
-          will call the notify function when fired.
+        will call the notify function when fired.
   INPUT		: maps a string input to a member variable. Outputs connected to this input
-          will update the input data value when fired.
+        will update the input data value when fired.
   INPUTNOTIFY	: maps a string input to a member variable/function pointer combo. Outputs
-          connected to this input will update the data value and call the notify
-          function when fired.
+        connected to this input will update the data value and call the notify
+        function when fired.
 
 some of these can overlap.  all the data descriptions usable are:
 
@@ -681,7 +681,7 @@ static short EVENTQUEUE_SAVE_RESTORE_VERSION = 1;
 
 class CEventQueue_SaveRestoreBlockHandler : public CDefSaveRestoreBlockHandler
 {
-   public:
+    public:
     const char *GetBlockName()
     {
         return "EventQueue";
@@ -721,7 +721,7 @@ class CEventQueue_SaveRestoreBlockHandler : public CDefSaveRestoreBlockHandler
         }
     }
 
-   private:
+    private:
     bool m_fDoLoad;
 };
 
@@ -762,9 +762,9 @@ void CEventQueue::Dump( void )
 
     Msg( "Dumping event queue. Current time is: %.2f\n",
 #ifdef TF_DLL
-         engine->GetServerTime()
+        engine->GetServerTime()
 #else
-         gpGlobals->curtime
+        gpGlobals->curtime
 #endif
     );
 
@@ -773,12 +773,12 @@ void CEventQueue::Dump( void )
         EventQueuePrioritizedEvent_t *next = pe->m_pNext;
 
         Msg( "   (%.2f) Target: '%s', Input: '%s', Parameter '%s'. Activator: '%s', Caller '%s'.  \n",
-             pe->m_flFireTime,
-             STRING( pe->m_iTarget ),
-             STRING( pe->m_iTargetInput ),
-             pe->m_VariantValue.String(),
-             pe->m_pActivator ? pe->m_pActivator->GetDebugName() : "None",
-             pe->m_pCaller ? pe->m_pCaller->GetDebugName() : "None" );
+            pe->m_flFireTime,
+            STRING( pe->m_iTarget ),
+            STRING( pe->m_iTargetInput ),
+            pe->m_VariantValue.String(),
+            pe->m_pActivator ? pe->m_pActivator->GetDebugName() : "None",
+            pe->m_pCaller ? pe->m_pCaller->GetDebugName() : "None" );
 
         pe = next;
     }
@@ -1013,7 +1013,7 @@ void CEventQueue::CancelEvents( CBaseEntity *pCaller )
         {
             // Pointers match; make sure everything else matches.
             if ( !stricmp( STRING( pCur->m_pCaller->GetEntityName() ), STRING( pCaller->GetEntityName() ) ) &&
-                 !stricmp( pCur->m_pCaller->GetClassname(), pCaller->GetClassname() ) )
+                !stricmp( pCur->m_pCaller->GetClassname(), pCaller->GetClassname() ) )
             {
                 // Found a matching event; delete it from the queue.
                 bDelete = true;
@@ -1172,30 +1172,30 @@ int CEventQueue::Restore( IRestore &restore )
         if ( tmpEvent.m_pEntTarget )
         {
             AddEvent( tmpEvent.m_pEntTarget,
-                      STRING( tmpEvent.m_iTargetInput ),
-                      tmpEvent.m_VariantValue,
+                    STRING( tmpEvent.m_iTargetInput ),
+                    tmpEvent.m_VariantValue,
 #ifdef TF_DLL
-                      tmpEvent.m_flFireTime - engine->GetServerTime(),
+                    tmpEvent.m_flFireTime - engine->GetServerTime(),
 #else
-                      tmpEvent.m_flFireTime - gpGlobals->curtime,
+                    tmpEvent.m_flFireTime - gpGlobals->curtime,
 #endif
-                      tmpEvent.m_pActivator,
-                      tmpEvent.m_pCaller,
-                      tmpEvent.m_iOutputID );
+                    tmpEvent.m_pActivator,
+                    tmpEvent.m_pCaller,
+                    tmpEvent.m_iOutputID );
         }
         else
         {
             AddEvent( STRING( tmpEvent.m_iTarget ),
-                      STRING( tmpEvent.m_iTargetInput ),
-                      tmpEvent.m_VariantValue,
+                    STRING( tmpEvent.m_iTargetInput ),
+                    tmpEvent.m_VariantValue,
 #ifdef TF_DLL
-                      tmpEvent.m_flFireTime - engine->GetServerTime(),
+                    tmpEvent.m_flFireTime - engine->GetServerTime(),
 #else
-                      tmpEvent.m_flFireTime - gpGlobals->curtime,
+                    tmpEvent.m_flFireTime - gpGlobals->curtime,
 #endif
-                      tmpEvent.m_pActivator,
-                      tmpEvent.m_pCaller,
-                      tmpEvent.m_iOutputID );
+                    tmpEvent.m_pActivator,
+                    tmpEvent.m_pCaller,
+                    tmpEvent.m_iOutputID );
         }
     }
 

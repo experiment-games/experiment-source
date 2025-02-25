@@ -27,12 +27,12 @@ class CHLPlayerMove : public CPlayerMove
 {
     DECLARE_CLASS( CHLPlayerMove, CPlayerMove );
 
-   public:
+    public:
     CHLPlayerMove()
         : m_bWasInVehicle( false ),
-          m_bVehicleFlipped( false ),
-          m_bInGodMode( false ),
-          m_bInNoClip( false )
+        m_bVehicleFlipped( false ),
+        m_bInGodMode( false ),
+        m_bInNoClip( false )
     {
         m_vecSaveOrigin.Init();
     }
@@ -40,7 +40,7 @@ class CHLPlayerMove : public CPlayerMove
     void SetupMove( CBasePlayer *player, CUserCmd *ucmd, IMoveHelper *pHelper, CMoveData *move );
     void FinishMove( CBasePlayer *player, CUserCmd *ucmd, CMoveData *move );
 
-   private:
+    private:
     Vector m_vecSaveOrigin;
     bool m_bWasInVehicle;
     bool m_bVehicleFlipped;

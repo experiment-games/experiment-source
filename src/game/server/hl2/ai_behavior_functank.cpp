@@ -609,8 +609,8 @@ CBaseEntity *CAI_FuncTankBehavior::BestEnemy( void )
 
         // UNDONE: Move relationship checks into IsValidEnemy?
         if ( ( pEnemy->GetFlags() & FL_NOTARGET ) ||
-             ( pNPC->IRelationType( pEnemy ) != D_HT && pNPC->IRelationType( pEnemy ) != D_FR ) ||
-             !IsValidEnemy( pEnemy ) )
+            ( pNPC->IRelationType( pEnemy ) != D_HT && pNPC->IRelationType( pEnemy ) != D_FR ) ||
+            !IsValidEnemy( pEnemy ) )
             continue;
 
         if ( pEMemory->timeLastSeen < pNPC->GetAcceptableTimeSeenEnemy() )

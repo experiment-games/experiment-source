@@ -219,15 +219,15 @@ struct png_struct_def
     png_uint_32 row_number; /* current row in interlace pass */
     png_uint_32 chunk_name; /* PNG_CHUNK() id of current chunk */
     png_bytep prev_row;     /* buffer to save previous (unfiltered) row.
-                             * While reading this is a pointer into
-                             * big_prev_row; while writing it is separately
-                             * allocated if needed.
-                             */
+                            * While reading this is a pointer into
+                            * big_prev_row; while writing it is separately
+                            * allocated if needed.
+                            */
     png_bytep row_buf;      /* buffer to save current (unfiltered) row.
-                             * While reading, this is a pointer into
-                             * big_row_buf; while writing it is separately
-                             * allocated.
-                             */
+                            * While reading, this is a pointer into
+                            * big_row_buf; while writing it is separately
+                            * allocated.
+                            */
 #ifdef PNG_WRITE_FILTER_SUPPORTED
     png_bytep try_row; /* buffer to save trial row when filtering */
     png_bytep tst_row; /* buffer to save best trial row when filtering */
@@ -367,7 +367,7 @@ struct png_struct_def
     int unknown_default;         /* As PNG_HANDLE_* */
     unsigned int num_chunk_list; /* Number of entries in the list */
     png_bytep chunk_list;        /* List of png_byte[5]; the textual chunk name
-                                  * followed by a PNG_HANDLE_* byte */
+                                * followed by a PNG_HANDLE_* byte */
 #endif
 
 /* New members added in libpng-1.0.3 */
@@ -414,7 +414,7 @@ struct png_struct_def
     /* The following three members were added at version 1.0.14 and 1.2.4 */
     png_bytep quantize_sort;    /* working sort array */
     png_bytep index_to_palette; /* where the original index currently is
-                                   in the palette */
+                                    in the palette */
     png_bytep palette_to_index; /* which original index points to this
                                     palette color */
 #endif
@@ -427,21 +427,21 @@ struct png_struct_def
     png_uint_32 user_height_max;
 
     /* Added in libpng-1.4.0: Total number of sPLT, text, and unknown
-     * chunks that can be stored (0 means unlimited).
-     */
+    * chunks that can be stored (0 means unlimited).
+    */
     png_uint_32 user_chunk_cache_max;
 
     /* Total memory that a zTXt, sPLT, iTXt, iCCP, or unknown chunk
-     * can occupy when decompressed.  0 means unlimited.
-     */
+    * can occupy when decompressed.  0 means unlimited.
+    */
     png_alloc_size_t user_chunk_malloc_max;
 #endif
 
 /* New member added in libpng-1.0.25 and 1.2.17 */
 #ifdef PNG_READ_UNKNOWN_CHUNKS_SUPPORTED
     /* Temporary storage for unknown chunk that the library doesn't recognize,
-     * used while reading the chunk.
-     */
+    * used while reading the chunk.
+    */
     png_unknown_chunk unknown_chunk;
 #endif
 
@@ -467,8 +467,8 @@ struct png_struct_def
 
     /* New member added in libpng-1.5.7 */
     void ( *read_filter[PNG_FILTER_VALUE_LAST - 1] )( png_row_infop row_info,
-                                                      png_bytep row,
-                                                      png_const_bytep prev_row );
+                                                    png_bytep row,
+                                                    png_const_bytep prev_row );
 
 #ifdef PNG_READ_SUPPORTED
 #if defined( PNG_COLORSPACE_SUPPORTED ) || defined( PNG_GAMMA_SUPPORTED )

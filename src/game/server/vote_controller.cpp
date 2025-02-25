@@ -58,7 +58,7 @@ static const int k_nKickWatchListMaxDuration = 300;
 //-----------------------------------------------------------------------------
 class CVoteControllerSystem : public CAutoGameSystemPerFrame
 {
-   public:
+    public:
     CVoteControllerSystem( char const *name )
         : CAutoGameSystemPerFrame( name )
     {
@@ -164,7 +164,7 @@ class CVoteControllerSystem : public CAutoGameSystemPerFrame
         }
     }
 
-   private:
+    private:
     CUtlMap< CSteamID, float > m_mapKickWatchList;
     CUtlMap< CSteamID, float > m_mapNameLockedList;
     float m_flNextKickCheckTime;

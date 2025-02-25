@@ -28,7 +28,7 @@ class Button : public Label
 {
     DECLARE_CLASS_SIMPLE( Button, Label );
 
-   public:
+    public:
     // You can optionally pass in the panel to send the click message to and the name of the command to send to that panel.
 #ifdef LUA_SDK
     Button( Panel *parent, const char *panelName, const char *text, Panel *pActionSignalTarget = NULL, const char *pCmd = NULL, lua_State *L = nullptr );
@@ -38,10 +38,10 @@ class Button : public Label
     Button( Panel *parent, const char *panelName, const wchar_t *text, Panel *pActionSignalTarget = NULL, const char *pCmd = NULL );
     ~Button();
 
-   private:
+    private:
     void Init();
 
-   public:
+    public:
     // Set armed state.
     virtual void SetArmed( bool state );
     // Check armed state
@@ -180,7 +180,7 @@ class Button : public Label
     void SetReleasedSound( const char *sound );
 
     /* CUSTOM MESSAGE HANDLING
-      "PressButton"	- makes the button act as if it had just been pressed by the user (just like DoClick())
+    "PressButton"	- makes the button act as if it had just been pressed by the user (just like DoClick())
         input: none
     */
 
@@ -206,7 +206,7 @@ class Button : public Label
     virtual void NavigateTo();
     virtual void NavigateFrom();
 
-   protected:
+    protected:
     virtual void DrawFocusBorder( int tx0, int ty0, int tx1, int ty1 );
 
     // Paint button on screen
@@ -230,7 +230,7 @@ class Button : public Label
     KeyValues *GetActionMessage();
     void PlayButtonReleasedSound();
 
-   protected:
+    protected:
     enum ButtonFlags_t
     {
         ARMED = 0x0001,

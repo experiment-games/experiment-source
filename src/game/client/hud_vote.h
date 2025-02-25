@@ -50,7 +50,7 @@ class VoteBarPanel : public vgui::Panel, public CGameEventListener
     virtual void Paint( void );
     virtual void FireGameEvent( IGameEvent *event );
 
-   private:
+    private:
     int m_nVoteOptionCount[MAX_VOTE_OPTIONS];  // Vote options counter
     int m_nPotentialVotes;                     // If set, draw a line at this point to show the required bar length
 
@@ -69,7 +69,7 @@ class CVoteSetupDialog : public vgui::Frame
 {
     DECLARE_CLASS_SIMPLE( CVoteSetupDialog, vgui::Frame );
 
-   public:
+    public:
     CVoteSetupDialog( vgui::Panel *parent );
     ~CVoteSetupDialog();
 
@@ -87,7 +87,7 @@ class CVoteSetupDialog : public vgui::Frame
     void AddVoteIssueParams_PopFiles( CUtlStringList &m_VoteSetupPopFiles );
 #endif
 
-   private:
+    private:
     // MESSAGE_FUNC( OnItemSelected, "ItemSelected" );
     MESSAGE_FUNC_PTR( OnItemSelected, "ItemSelected", panel );
 
@@ -156,7 +156,7 @@ class CHudVote : public vgui::EditablePanel, public CHudElement
         return m_bVoteSystemActive;
     }
 
-   private:
+    private:
     bool IsPlayingDemo() const;
 
     EditablePanel *m_pVoteActive;

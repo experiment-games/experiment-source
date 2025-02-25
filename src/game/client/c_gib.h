@@ -18,7 +18,7 @@ class C_Gib : public C_BaseAnimating
 {
     typedef C_BaseAnimating BaseClass;
 
-   public:
+    public:
     ~C_Gib( void );
 
     static C_Gib *CreateClientsideGib( const char *pszModelName, Vector vecOrigin, Vector vecForceDir, AngularImpulse vecAngularImp, float flLifetime = DEFAULT_GIB_LIFETIME );
@@ -29,14 +29,14 @@ class C_Gib : public C_BaseAnimating
 
     virtual void HitSurface( C_BaseEntity *pOther );
 
-   protected:
+    protected:
     float m_flTouchDelta;  // Amount of time that must pass before another touch function can be called
 };
 
 #ifdef HL2_CLIENT_DLL
 class CAntlionGibManager : public CAutoGameSystemPerFrame
 {
-   public:
+    public:
     CAntlionGibManager( char const *name )
         : CAutoGameSystemPerFrame( name )
     {
@@ -49,7 +49,7 @@ class CAntlionGibManager : public CAutoGameSystemPerFrame
     void AddGib( C_BaseEntity *pEntity );
     void RemoveGib( C_BaseEntity *pEntity );
 
-   private:
+    private:
     typedef CHandle< C_BaseEntity > CGibHandle;
     CUtlLinkedList< CGibHandle > m_LRU;
 };

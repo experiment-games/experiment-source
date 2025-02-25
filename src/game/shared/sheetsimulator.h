@@ -30,7 +30,7 @@ typedef void ( *TraceHullFunc_t )( const Vector& vecStart, const Vector& vecEnd,
 
 class CSheetSimulator
 {
-   public:
+    public:
     CSheetSimulator( TraceLineFunc_t traceline, TraceHullFunc_t traceHull );
     ~CSheetSimulator();
 
@@ -87,7 +87,7 @@ class CSheetSimulator
     void SetGravityConstant( float g );
     void AddGravityForce( int particle );
 
-   protected:
+    protected:
     struct Particle_t
     {
         float m_Mass;
@@ -177,7 +177,7 @@ class CSheetSimulator
 
 class CIterativeSheetSimulator : public CSheetSimulator
 {
-   public:
+    public:
     CIterativeSheetSimulator( TraceLineFunc_t traceline, TraceHullFunc_t traceHull );
 
     void BeginSimulation( float dt, int steps, int substeps, int collisionCount );
@@ -194,7 +194,7 @@ class CIterativeSheetSimulator : public CSheetSimulator
         return m_SimulationSteps;
     }
 
-   private:
+    private:
     CIterativeSheetSimulator( const CIterativeSheetSimulator& );  // not defined, not accessible
 
     // Iterative collision detection

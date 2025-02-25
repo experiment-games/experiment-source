@@ -23,7 +23,7 @@ ConVar *sv_alltalk = NULL;
 //=============================================================================
 class CHudVoiceSelfStatus : public CHudElement, public vgui::Panel
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CHudVoiceSelfStatus, vgui::Panel );
 
     CHudVoiceSelfStatus( const char *name );
@@ -33,7 +33,7 @@ class CHudVoiceSelfStatus : public CHudElement, public vgui::Panel
     virtual void VidInit();
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
 
-   private:
+    private:
     CHudTexture *m_pVoiceIcon;
 
     Color m_clrIcon;
@@ -88,7 +88,7 @@ void CHudVoiceSelfStatus::Paint()
 //=============================================================================
 class CHudVoiceStatus : public CHudElement, public vgui::Panel
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CHudVoiceStatus, vgui::Panel );
 
     CHudVoiceStatus( const char *name );
@@ -101,11 +101,11 @@ class CHudVoiceStatus : public CHudElement, public vgui::Panel
     virtual void OnThink();
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
 
-   protected:
+    protected:
     void ClearActiveList();
     int FindActiveSpeaker( int playerId );
 
-   private:
+    private:
     CHudTexture *m_pVoiceIcon;
     int m_iDeadImageID;
 

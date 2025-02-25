@@ -1,4 +1,4 @@
-//======= Copyright © 1996-2006, Valve Corporation, All rights reserved. ======
+//======= Copyright ï¿½ 1996-2006, Valve Corporation, All rights reserved. ======
 //
 // Purpose:
 //
@@ -138,12 +138,12 @@ bool IsPathVisible( MDagPath mDagPath, bool bTemplateAsInvisible = true );
 
 class CMSyntaxHelp
 {
-   public:
+    public:
     CMSyntaxHelp()
         : m_groupedHelp( false )  // Make case sensitive
-          ,
-          m_helpCount( 0 ),
-          m_shortNameLength( 0 )
+        ,
+        m_helpCount( 0 ),
+        m_shortNameLength( 0 )
     {
     }
 
@@ -175,9 +175,9 @@ class CMSyntaxHelp
         PrintHelp( i_cmdName.asChar(), i_cmdDesc.asChar(), i_lineLength );
     }
 
-   protected:
-   public:
-   protected:
+    protected:
+    public:
+    protected:
     CCountedStringPool m_stringPool;
 
     struct HelpData_t
@@ -428,7 +428,7 @@ namespace vm = ValveMaya;
 //-----------------------------------------------------------------------------
 class CMayaStream
 {
-   public:
+    public:
     enum StreamType
     {
         kInfo,
@@ -455,7 +455,7 @@ class CMayaStream
         return outputString();
     }
 
-   protected:
+    protected:
     CMayaStream &outputString()
     {
         // Always ensure it's terminated with a newline
@@ -525,7 +525,7 @@ class CMayaStream
 //-----------------------------------------------------------------------------
 class CMayaWarnStream : public CMayaStream
 {
-   public:
+    public:
     CMayaWarnStream()
         : CMayaStream( CMayaStream::kWarning )
     {
@@ -537,7 +537,7 @@ class CMayaWarnStream : public CMayaStream
 //-----------------------------------------------------------------------------
 class CMayaErrStream : public CMayaStream
 {
-   public:
+    public:
     CMayaErrStream()
         : CMayaStream( CMayaStream::kError )
     {

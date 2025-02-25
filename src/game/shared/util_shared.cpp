@@ -329,7 +329,7 @@ bool CTraceFilterSimple::ShouldHitEntity( IHandleEntity *pHandleEntity, int cont
     // Experiment;  added this where if there's a filtered player and the entity is also a player,
     //              we don't collide if we're in the same team
     if ( m_pPassEnt && ( m_collisionGroup == COLLISION_GROUP_PLAYER || m_collisionGroup == COLLISION_GROUP_PLAYER_MOVEMENT ) &&
-         pEntity->IsPlayer() )
+        pEntity->IsPlayer() )
     {
         CBaseEntity *pPlayer = const_cast< CBaseEntity * >( EntityFromEntityHandle( m_pPassEnt ) );
 
@@ -341,7 +341,7 @@ bool CTraceFilterSimple::ShouldHitEntity( IHandleEntity *pHandleEntity, int cont
         return false;
 
     if ( m_pExtraShouldHitCheckFunction &&
-         ( !( m_pExtraShouldHitCheckFunction( pHandleEntity, contentsMask ) ) ) )
+        ( !( m_pExtraShouldHitCheckFunction( pHandleEntity, contentsMask ) ) ) )
         return false;
 
     return true;
@@ -583,7 +583,7 @@ class CTraceFilterEntity : public CTraceFilterSimple
 {
     DECLARE_CLASS( CTraceFilterEntity, CTraceFilterSimple );
 
-   public:
+    public:
     CTraceFilterEntity( CBaseEntity *pEntity, int nCollisionGroup )
         : CTraceFilterSimple( pEntity, nCollisionGroup )
     {
@@ -620,7 +620,7 @@ class CTraceFilterEntity : public CTraceFilterSimple
         return BaseClass::ShouldHitEntity( pHandleEntity, contentsMask );
     }
 
-   private:
+    private:
     CBaseEntity *m_pRootParent;
     CBaseEntity *m_pEntity;
     bool m_checkHash;
@@ -630,7 +630,7 @@ class CTraceFilterEntityIgnoreOther : public CTraceFilterEntity
 {
     DECLARE_CLASS( CTraceFilterEntityIgnoreOther, CTraceFilterEntity );
 
-   public:
+    public:
     CTraceFilterEntityIgnoreOther( CBaseEntity *pEntity, const IHandleEntity *pIgnore, int nCollisionGroup )
         : CTraceFilterEntity( pEntity, nCollisionGroup ), m_pIgnoreOther( pIgnore )
     {
@@ -644,7 +644,7 @@ class CTraceFilterEntityIgnoreOther : public CTraceFilterEntity
         return BaseClass::ShouldHitEntity( pHandleEntity, contentsMask );
     }
 
-   private:
+    private:
     const IHandleEntity *m_pIgnoreOther;
 };
 

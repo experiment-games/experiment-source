@@ -17,7 +17,7 @@
 
 class CSmokeStackLightInfo
 {
-   public:
+    public:
     DECLARE_CLASS_NOBASE( CSmokeStackLightInfo );
     DECLARE_SIMPLE_DATADESC();
     DECLARE_NETWORKVAR_CHAIN();
@@ -29,7 +29,7 @@ class CSmokeStackLightInfo
 
 class CSmokeStack : public CBaseParticleEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CSmokeStack, CBaseParticleEntity );
     DECLARE_DATADESC();
     DECLARE_SERVERCLASS();
@@ -42,7 +42,7 @@ class CSmokeStack : public CBaseParticleEntity
     virtual bool KeyValue( const char *szKeyName, const char *szValue );
     virtual void Precache();
 
-   protected:
+    protected:
     // Input handlers.
     void InputTurnOn( inputdata_t &data );
     void InputTurnOff( inputdata_t &data );
@@ -51,7 +51,7 @@ class CSmokeStack : public CBaseParticleEntity
     void RecalcWindVector();
 
     // Stuff from the datatable.
-   public:
+    public:
     CNetworkVar( float, m_SpreadSpeed );
     CNetworkVar( float, m_Speed );
     CNetworkVar( float, m_StartSize );

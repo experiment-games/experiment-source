@@ -660,7 +660,7 @@ void CAI_Motor::MoveFacing( const AILocalMoveGoal_t &move )
         /*
         if ((GetOuter()->m_debugOverlays & OVERLAY_NPC_SELECTED_BIT))
         {
-          DevMsg( "move %.1f : diff %.1f  : ideal %.1f\n", flMoveYaw, flDiff, m_IdealYaw );
+        DevMsg( "move %.1f : diff %.1f  : ideal %.1f\n", flMoveYaw, flDiff, m_IdealYaw );
         }
         */
     }

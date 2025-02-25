@@ -24,7 +24,7 @@ class CPlayerAndObjectEnumerator : public IPartitionEnumerator
 {
     DECLARE_CLASS_NOBASE( CPlayerAndObjectEnumerator );
 
-   public:
+    public:
     // Forced constructor
     CPlayerAndObjectEnumerator( float radius );
 
@@ -34,7 +34,7 @@ class CPlayerAndObjectEnumerator : public IPartitionEnumerator
     int GetObjectCount();
     C_BaseEntity *GetObject( int index );
 
-   public:
+    public:
     // Data members
     float m_flRadiusSquared;
 

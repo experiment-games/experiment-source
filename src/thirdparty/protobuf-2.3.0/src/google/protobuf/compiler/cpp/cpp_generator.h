@@ -55,17 +55,17 @@ namespace cpp
 // CodeGenerator with the CommandLineInterface in your main() function.
 class LIBPROTOC_EXPORT CppGenerator : public CodeGenerator
 {
-   public:
+    public:
     CppGenerator();
     ~CppGenerator();
 
     // implements CodeGenerator ----------------------------------------
     bool Generate( const FileDescriptor* file,
-                   const string& parameter,
-                   OutputDirectory* output_directory,
-                   string* error ) const;
+                    const string& parameter,
+                    OutputDirectory* output_directory,
+                    string* error ) const;
 
-   private:
+    private:
     GOOGLE_DISALLOW_EVIL_CONSTRUCTORS( CppGenerator );
 };
 

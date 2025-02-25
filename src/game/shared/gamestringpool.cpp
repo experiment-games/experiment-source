@@ -37,8 +37,8 @@ class CGameStringPool : public CBaseGameSystem
     void FreeAll()
     {
 #if 0 && _DEBUG
-		m_Strings.DbgCheckIntegrity();
-		m_KeyLookupCache.DbgCheckIntegrity();
+        m_Strings.DbgCheckIntegrity();
+        m_KeyLookupCache.DbgCheckIntegrity();
 #endif
         m_Strings.Purge();
         m_KeyLookupCache.Purge();
@@ -47,7 +47,7 @@ class CGameStringPool : public CBaseGameSystem
     CUtlHashtable< CUtlConstString > m_Strings;
     CUtlHashtable< const void *, const char * > m_KeyLookupCache;
 
-   public:
+    public:
     CGameStringPool()
         : m_Strings( 256 ) {}
 

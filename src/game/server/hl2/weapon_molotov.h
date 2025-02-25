@@ -20,19 +20,19 @@ class CGrenade_Molotov;
 
 class CWeaponMolotov : public CBaseHLCombatWeapon
 {
-   public:
+    public:
     DECLARE_CLASS( CWeaponMolotov, CBaseHLCombatWeapon );
 
     DECLARE_SERVERCLASS();
 
-   private:
+    private:
     int m_nNumAmmoTypes;
     bool m_bNeedDraw;
     int m_iThrowBits;         // Save the current throw bits state
     float m_fNextThrowCheck;  // When to check throw ability next
     Vector m_vecTossVelocity;
 
-   public:
+    public:
     void Precache( void );
     void Spawn( void );
 

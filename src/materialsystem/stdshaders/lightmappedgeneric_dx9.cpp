@@ -13,7 +13,7 @@
 static LightmappedGeneric_DX9_Vars_t s_info;
 
 BEGIN_VS_SHADER( LightmappedGeneric,
-                 "Help for LightmappedGeneric" )
+                "Help for LightmappedGeneric" )
 
 BEGIN_SHADER_PARAMS
 SHADER_PARAM( ALBEDO, SHADER_PARAM_TYPE_TEXTURE, "shadertest/BaseTexture", "albedo (Base texture with no baked lighting)" )
@@ -51,8 +51,8 @@ SHADER_PARAM( FRAME2, SHADER_PARAM_TYPE_INTEGER, "0", "frame number for $basetex
 SHADER_PARAM( BASETEXTURENOENVMAP, SHADER_PARAM_TYPE_BOOL, "0", "" )
 SHADER_PARAM( BASETEXTURE2NOENVMAP, SHADER_PARAM_TYPE_BOOL, "0", "" )
 SHADER_PARAM( DETAIL_ALPHA_MASK_BASE_TEXTURE, SHADER_PARAM_TYPE_BOOL, "0",
-              "If this is 1, then when detail alpha=0, no base texture is blended and when "
-              "detail alpha=1, you get detail*base*lightmap" )
+            "If this is 1, then when detail alpha=0, no base texture is blended and when "
+            "detail alpha=1, you get detail*base*lightmap" )
 SHADER_PARAM( LIGHTWARPTEXTURE, SHADER_PARAM_TYPE_TEXTURE, "", "light munging lookup texture" )
 SHADER_PARAM( BLENDMODULATETEXTURE, SHADER_PARAM_TYPE_TEXTURE, "", "texture to use r/g channels for blend range for" )
 SHADER_PARAM( MASKEDBLENDING, SHADER_PARAM_TYPE_INTEGER, "0", "blend using texture with no vertex alpha. For using texture blending on non-displacements" )

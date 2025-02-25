@@ -39,7 +39,7 @@ void UTIL_RemoveHierarchy( CBaseEntity *pDead )
 
 class CFuncTankTrain : public CFuncTrackTrain
 {
-   public:
+    public:
     DECLARE_CLASS( CFuncTankTrain, CFuncTrackTrain );
 
     void Spawn( void );
@@ -53,7 +53,7 @@ class CFuncTankTrain : public CFuncTrackTrain
     }
     DECLARE_DATADESC();
 
-   private:
+    private:
     COutputEvent m_OnDeath;
 };
 
@@ -101,7 +101,7 @@ void CFuncTankTrain::Event_Killed( const CTakeDamageInfo &info )
 //-----------------------------------------------------------------------------
 class CTankTargetChange : public CPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTankTargetChange, CPointEntity );
 
     void Precache( void );
@@ -109,7 +109,7 @@ class CTankTargetChange : public CPointEntity
 
     DECLARE_DATADESC();
 
-   private:
+    private:
     variant_t m_newTarget;
     string_t m_newTargetName;
 };
@@ -147,7 +147,7 @@ void CTankTargetChange::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_
 // UNDONE: Should be just a logical entity, but we act as another static sound channel for the train
 class CTankTrainAI : public CPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTankTrainAI, CPointEntity );
 
     virtual ~CTankTrainAI( void );
@@ -169,7 +169,7 @@ class CTankTrainAI : public CPointEntity
     // INPUTS
     void InputTargetEntity( inputdata_t &inputdata );
 
-   private:
+    private:
     CHandle< CFuncTrackTrain > m_hTrain;
     EHANDLE m_hTargetEntity;
     int m_soundPlaying;

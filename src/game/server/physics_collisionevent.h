@@ -58,7 +58,7 @@ struct penetrateevent_t
 
 class CCollisionEvent : public IPhysicsCollisionEvent, public IPhysicsCollisionSolver, public IPhysicsObjectEvent
 {
-   public:
+    public:
     CCollisionEvent();
     friction_t *FindFriction( CBaseEntity *pObject );
     void ShutdownFriction( friction_t &friction );
@@ -125,7 +125,7 @@ class CCollisionEvent : public IPhysicsCollisionEvent, public IPhysicsCollisionS
         return m_inCallback > 0 ? true : false;
     }
 
-   private:
+    private:
 #if _DEBUG
     int ShouldCollide_2( IPhysicsObject *pObj0, IPhysicsObject *pObj1, void *pGameData0, void *pGameData1 );
 #endif
@@ -151,7 +151,7 @@ class CCollisionEvent : public IPhysicsCollisionEvent, public IPhysicsCollisionS
 
     class CallbackContext
     {
-       public:
+        public:
         CallbackContext( CCollisionEvent *pOuter )
         {
             m_pOuter = pOuter;
@@ -162,7 +162,7 @@ class CCollisionEvent : public IPhysicsCollisionEvent, public IPhysicsCollisionS
             m_pOuter->m_inCallback--;
         }
 
-       private:
+        private:
         CCollisionEvent *m_pOuter;
     };
     friend class CallbackContext;

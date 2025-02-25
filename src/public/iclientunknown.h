@@ -25,7 +25,7 @@ class IClientThinkable;
 // mechanism if this gets big.
 abstract_class IClientUnknown : public IHandleEntity
 {
-   public:
+    public:
     virtual ICollideable* GetCollideable() = 0;
     virtual IClientNetworkable* GetClientNetworkable() = 0;
     virtual IClientRenderable* GetClientRenderable() = 0;

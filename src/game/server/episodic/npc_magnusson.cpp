@@ -28,7 +28,7 @@
 //-----------------------------------------------------------------------------
 class CNPC_Magnusson : public CAI_BaseActor
 {
-   public:
+    public:
     DECLARE_CLASS( CNPC_Magnusson, CAI_BaseActor );
 
     void Spawn( void );

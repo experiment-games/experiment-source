@@ -24,7 +24,7 @@ enum AudioPlayback_Status
 //-----------------------------------------------------------------------------
 class ISteamMusic
 {
-   public:
+    public:
     virtual bool BIsEnabled() = 0;
     virtual bool BIsPlaying() = 0;
 

@@ -46,7 +46,7 @@ EnsurePythonVersion(2, 3)
 sconstruct_helper = SConscript('SConstruct.common')
 
 sconstruct_helper.Initialize(build_root_path='..',
-                             support_multiple_win_builds=False)
+                            support_multiple_win_builds=False)
 
 win_base = sconstruct_helper.MakeWinBaseEnvironment()
 

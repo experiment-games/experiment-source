@@ -13,7 +13,7 @@
 
 class C_TEExperimentFireBullets : public C_BaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_TEExperimentFireBullets, C_BaseTempEntity );
     DECLARE_CLIENTCLASS();
 
@@ -21,7 +21,7 @@ class C_TEExperimentFireBullets : public C_BaseTempEntity
 
     void CreateEffects( void );
 
-   public:
+    public:
     int m_iPlayer;
     Vector m_vecOrigin;
     Vector m_vecDir;
@@ -36,13 +36,13 @@ class C_TEExperimentFireBullets : public C_BaseTempEntity
 
 class CTraceFilterSkipPlayerAndViewModelOnly : public CTraceFilter
 {
-   public:
+    public:
     virtual bool ShouldHitEntity( IHandleEntity *pServerEntity, int contentsMask )
     {
         C_BaseEntity *pEntity = EntityFromEntityHandle( pServerEntity );
         if ( pEntity &&
-             ( ( dynamic_cast< C_BaseViewModel * >( pEntity ) != NULL ) ||
-               ( dynamic_cast< C_BasePlayer * >( pEntity ) != NULL ) ) )
+            ( ( dynamic_cast< C_BaseViewModel * >( pEntity ) != NULL ) ||
+                ( dynamic_cast< C_BasePlayer * >( pEntity ) != NULL ) ) )
         {
             return false;
         }

@@ -140,14 +140,14 @@ void CViewAngleAnimation::Spawn( void )
     /*
     if ( m_iFlags & VIEWANIM_RELATIVE )
     {
-      AddKeyFrame( new CViewAngleKeyFrame( vec3_angle, 0.0, 0 ) );
+    AddKeyFrame( new CViewAngleKeyFrame( vec3_angle, 0.0, 0 ) );
 
-      // seed this so we can add keyframes and have them calc the delta properly
-      m_vecBaseAngles = angles;
+    // seed this so we can add keyframes and have them calc the delta properly
+    m_vecBaseAngles = angles;
     }
     else
     {
-      AddKeyFrame( new CViewAngleKeyFrame( angles, 0.0, 0 ) );
+    AddKeyFrame( new CViewAngleKeyFrame( angles, 0.0, 0 ) );
     }
     */
 

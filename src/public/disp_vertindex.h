@@ -19,7 +19,7 @@
 
 class CVertIndex
 {
-   public:
+    public:
     CVertIndex();
     CVertIndex( short ix, short iy );
 
@@ -36,7 +36,7 @@ class CVertIndex
     bool operator==( CVertIndex const &other ) const;
     bool operator!=( CVertIndex const &other ) const;
 
-   public:
+    public:
     short x, y;
 };
 

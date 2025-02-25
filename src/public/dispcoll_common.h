@@ -73,7 +73,7 @@ class CDispCollTri
 
     index_t m_TriData[3];
 
-   public:
+    public:
     unsigned short m_ucSignBits : 3;   // Plane test.
     unsigned short m_ucPlaneType : 3;  // Axial test?
     unsigned short m_uiFlags : 5;      // Uses 5-bits - maybe look into merging it with something?
@@ -127,7 +127,7 @@ class CDispCollTri
 //	Helper
 class CDispCollHelper
 {
-   public:
+    public:
     float m_flStartFrac;
     float m_flEndFrac;
     Vector m_vecImpactNormal;
@@ -139,7 +139,7 @@ class CDispCollHelper
 #pragma pack( 1 )
 class CDispCollTriCache
 {
-   public:
+    public:
     unsigned short m_iCrossX[3];
     unsigned short m_iCrossY[3];
     unsigned short m_iCrossZ[3];
@@ -149,14 +149,14 @@ class CDispCollTriCache
 
 class CDispCollNode
 {
-   public:
+    public:
     FourVectors m_mins;
     FourVectors m_maxs;
 };
 
 class CDispCollLeaf
 {
-   public:
+    public:
     short m_tris[2];
 };
 
@@ -179,7 +179,7 @@ struct rayleaflist_t
 //
 class CDispCollTree
 {
-   public:
+    public:
     // Creation/Destruction.
     CDispCollTree();
     ~CDispCollTree();
@@ -285,7 +285,7 @@ class CDispCollTree
     void GetVirtualMeshList( struct virtualmeshlist_t *pList );
     int AABBTree_GetTrisInSphere( const Vector &center, float radius, unsigned short *pIndexOut, int indexMax );
 
-   public:
+    public:
     inline int Nodes_GetChild( int iNode, int nDirection );
     inline int Nodes_CalcCount( int nPower );
     inline int Nodes_GetParent( int iNode );
@@ -331,7 +331,7 @@ class CDispCollTree
     }
 #endif
 
-   protected:
+    protected:
     bool AABBTree_Create( CCoreDispInfo *pDisp );
     void AABBTree_CopyDispData( CCoreDispInfo *pDisp );
     void AABBTree_CreateLeafs( void );
@@ -355,7 +355,7 @@ class CDispCollTree
         CBaseTrace *pTrace;
     };
 
-   protected:
+    protected:
     void SweepAABBTriIntersect( const Ray_t &ray, const Vector &rayDir, int iTri, CDispCollTri *pTri, CBaseTrace *pTrace );
 
     void Cache_Create( CDispCollTri *pTri, int iTri );  // Testing!
@@ -383,11 +383,11 @@ class CDispCollTree
     int AddPlane( const Vector &vecNormal );
     bool FORCEINLINE IsLeafNode( int iNode );
 
-   public:
+    public:
     Vector m_mins;  // Bounding box of the displacement surface and base face
     int m_iCounter;
     Vector m_maxs;  // Bounding box of the displacement surface and base face
-   protected:
+    protected:
     int m_nContents;  // The displacement surface "contents" (solid, etc...)
 
 #ifdef ENGINE_DLL
@@ -402,7 +402,7 @@ class CDispCollTree
     Vector m_vecStabDir;       // Direction to stab for this displacement surface (is the base face normal)
     short m_nSurfaceProps[2];  // Surface properties (save off from texdata for impact responses)
 
-   protected:
+    protected:
     CDispVector< Vector > m_aVerts;         // Displacement verts.
     CDispVector< CDispCollTri > m_aTris;    // Displacement triangles.
     CDispVector< CDispCollNode > m_nodes;   // Nodes.

@@ -296,7 +296,7 @@ struct constraint_lengthparams_t
 
 class IPhysicsConstraint
 {
-   public:
+    public:
     virtual ~IPhysicsConstraint( void ) {}
 
     // NOTE: Constraints are active when created.  You can temporarily enable/disable them with these functions
@@ -327,7 +327,7 @@ class IPhysicsConstraint
 
 class IPhysicsConstraintGroup
 {
-   public:
+    public:
     virtual ~IPhysicsConstraintGroup( void ) {}
     virtual void Activate() = 0;
     virtual bool IsInErrorState() = 0;

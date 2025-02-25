@@ -42,7 +42,7 @@ class CUtlVector
 {
     typedef A CAllocator;
 
-   public:
+    public:
     typedef T ElemType_t;
     typedef T* iterator;
     typedef const T* const_iterator;
@@ -189,7 +189,7 @@ class CUtlVector
     void Validate( CValidator& validator, char* pchName );  // Validate our internal structures
 #endif                                                      // DBGFLAG_VALIDATE
 
-   protected:
+    protected:
     // Grows the vector
     void GrowVector( int num = 1 );
 
@@ -213,7 +213,7 @@ class CUtlVector
     inline void ResetDbgInfo() {}
 #endif
 
-   private:
+    private:
     // Can't copy this unless we explicitly do it!
     // Use CCopyableUtlVector<T> to get this functionality
     CUtlVector( CUtlVector const& vec );
@@ -223,11 +223,11 @@ class CUtlVector
 template < class T >
 class CUtlBlockVector : public CUtlVector< T, CUtlBlockMemory< T, int > >
 {
-   public:
+    public:
     explicit CUtlBlockVector( int growSize = 0, int initSize = 0 )
         : CUtlVector< T, CUtlBlockMemory< T, int > >( growSize, initSize ) {}
 
-   private:
+    private:
     // Private and unimplemented because iterator semantics are not currently supported
     // on CUtlBlockVector, due to its non-contiguous allocations.
     // typename is require to disambiguate iterator as a type versus other possibilities.
@@ -248,7 +248,7 @@ class CUtlVectorMT : public BASE_UTLVECTOR, public MUTEX_TYPE
 {
     typedef BASE_UTLVECTOR BaseClass;
 
-   public:
+    public:
     MUTEX_TYPE Mutex_t;
 
     // constructor, destructor
@@ -267,7 +267,7 @@ class CUtlVectorFixed : public CUtlVector< T, CUtlMemoryFixed< T, MAX_SIZE > >
 {
     typedef CUtlVector< T, CUtlMemoryFixed< T, MAX_SIZE > > BaseClass;
 
-   public:
+    public:
     // constructor, destructor
     explicit CUtlVectorFixed( int growSize = 0, int initSize = 0 )
         : BaseClass( growSize, initSize ) {}
@@ -284,7 +284,7 @@ class CUtlVectorFixedGrowable : public CUtlVector< T, CUtlMemoryFixedGrowable< T
 {
     typedef CUtlVector< T, CUtlMemoryFixedGrowable< T, MAX_SIZE > > BaseClass;
 
-   public:
+    public:
     // constructor, destructor
     explicit CUtlVectorFixedGrowable( int growSize = 0 )
         : BaseClass( growSize, MAX_SIZE ) {}
@@ -299,7 +299,7 @@ class CUtlVectorConservative : public CUtlVector< T, CUtlMemoryConservative< T >
 {
     typedef CUtlVector< T, CUtlMemoryConservative< T > > BaseClass;
 
-   public:
+    public:
     // constructor, destructor
     explicit CUtlVectorConservative( int growSize = 0, int initSize = 0 )
         : BaseClass( growSize, initSize ) {}
@@ -319,7 +319,7 @@ class CUtlVectorConservative : public CUtlVector< T, CUtlMemoryConservative< T >
 
 class CUtlVectorUltraConservativeAllocator
 {
-   public:
+    public:
     static void* Alloc( size_t nSize )
     {
         return malloc( nSize );
@@ -344,7 +344,7 @@ class CUtlVectorUltraConservativeAllocator
 template < typename T, typename A = CUtlVectorUltraConservativeAllocator >
 class CUtlVectorUltraConservative : private A
 {
-   public:
+    public:
     CUtlVectorUltraConservative()
     {
         m_pData = StaticData();
@@ -525,7 +525,7 @@ class CUtlVectorUltraConservative : private A
 
     Data_t* m_pData;
 
-   private:
+    private:
     void ShiftElementsLeft( int elem, int num = 1 )
     {
         int Size = Count();
@@ -562,7 +562,7 @@ class CCopyableUtlVector : public CUtlVector< T, A >
 {
     typedef CUtlVector< T, A > BaseClass;
 
-   public:
+    public:
     explicit CCopyableUtlVector( int growSize = 0, int initSize = 0 )
         : BaseClass( growSize, initSize ) {}
     explicit CCopyableUtlVector( T* pMemory, int numElements )
@@ -1221,7 +1221,7 @@ void CUtlVector< T, A >::Validate( CValidator& validator, char* pchName )
 template < class T >
 class CUtlVectorAutoPurge : public CUtlVector< T, CUtlMemory< T, int > >
 {
-   public:
+    public:
     ~CUtlVectorAutoPurge( void )
     {
         this->PurgeAndDeleteElements();
@@ -1232,7 +1232,7 @@ class CUtlVectorAutoPurge : public CUtlVector< T, CUtlMemory< T, int > >
 // Frees the dynamic strings in destructor.
 class CUtlStringList : public CUtlVectorAutoPurge< char* >
 {
-   public:
+    public:
     void CopyAndAddToTail( char const* pString )  // clone the string and add to the end
     {
         char* pNewStr = new char[1 + strlen( pString )];
@@ -1263,18 +1263,18 @@ class CUtlStringList : public CUtlVectorAutoPurge< char* >
 // <Sergiy> placing it here a few days before Cert to minimize disruption to the rest of codebase
 class CSplitString : public CUtlVector< char*, CUtlMemory< char*, int > >
 {
-   public:
+    public:
     CSplitString( const char* pString, const char* pSeparator );
     CSplitString( const char* pString, const char** pSeparators, int nSeparators );
     ~CSplitString();
     //
     // NOTE: If you want to make Construct() public and implement Purge() here, you'll have to free m_szBuffer there
     //
-   private:
+    private:
     void Construct( const char* pString, const char** pSeparators, int nSeparators );
     void PurgeAndDeleteElements();
 
-   private:
+    private:
     char* m_szBuffer;  // a copy of original string, with '\0' instead of separators
 };
 

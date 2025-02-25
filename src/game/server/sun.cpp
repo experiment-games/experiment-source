@@ -16,7 +16,7 @@
 
 class CSun : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CSun, CBaseEntity );
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
@@ -32,7 +32,7 @@ class CSun : public CBaseEntity
 
     virtual int UpdateTransmitState();
 
-   public:
+    public:
     CNetworkVector( m_vDirection );
 
     string_t m_strMaterial;

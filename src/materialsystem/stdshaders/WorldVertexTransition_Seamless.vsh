@@ -24,7 +24,7 @@ dp4 $worldPos.z, $vPos, $cModel2
 dp3 $worldNormal.x, $vNormal, $cModel0
 dp3 $worldNormal.y, $vNormal, $cModel1
 dp3 $worldNormal.z, $vNormal, $cModel2
- 
+
 &CalcFog( $worldPos, $projPos );
 
 free $projPos

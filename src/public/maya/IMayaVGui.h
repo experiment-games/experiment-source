@@ -1,4 +1,4 @@
-//===== Copyright © 1996-2005, Valve Corporation, All rights reserved. ======//
+//===== Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ======//
 //
 // Purpose: Interface for dealing with vgui focus issues across all plugins
 //
@@ -31,7 +31,7 @@ class CVsVGuiWindowBase;
 //-----------------------------------------------------------------------------
 abstract_class IMayaVguiWindowFactory
 {
-   public:
+    public:
     virtual void CreateVguiWindow( const char *pPanelName ) = 0;
     virtual void DestroyVguiWindow( const char *pPanelName ) = 0;
     virtual vgui::Frame *GetVGuiPanel( const char *pPanelName = NULL ) = 0;
@@ -44,7 +44,7 @@ abstract_class IMayaVguiWindowFactory
 #define MAYA_VGUI_INTERFACE_VERSION "VMayaVGui001"
 abstract_class IMayaVGui : public IAppSystem
 {
-   public:
+    public:
     virtual void InstallVguiWindowFactory( const char *pWindowTypeName, IMayaVguiWindowFactory *pFactory ) = 0;
     virtual void RemoveVguiWindowFactory( const char *pWindowTypeName, IMayaVguiWindowFactory *pFactory ) = 0;
     virtual void SetFocus( void *hWnd, int hVGuiContext ) = 0;

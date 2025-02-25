@@ -16,7 +16,7 @@
 //-----------------------------------------------------------------------------
 class C_TELargeFunnel : public C_TEParticleSystem
 {
-   public:
+    public:
     DECLARE_CLASS( C_TELargeFunnel, C_TEParticleSystem );
     DECLARE_CLIENTCLASS();
 
@@ -25,7 +25,7 @@ class C_TELargeFunnel : public C_TEParticleSystem
 
     virtual void PostDataUpdate( DataUpdateType_t updateType );
 
-   public:
+    public:
     void CreateFunnel( void );
 
     int m_nModelIndex;

@@ -21,7 +21,7 @@
 template < class UTLVECTOR, int FIELD_TYPE >
 class CUtlVectorDataOps : public CDefSaveRestoreOps
 {
-   public:
+    public:
     CUtlVectorDataOps()
     {
         UTLCLASS_SAVERESTORE_VALIDATE_TYPE( FIELD_TYPE );
@@ -152,7 +152,7 @@ class CUtlVectorDataOps : public CDefSaveRestoreOps
 template < int FIELD_TYPE >
 class CUtlVectorDataopsInstantiator
 {
-   public:
+    public:
     template < class UTLVECTOR >
     static ISaveRestoreOps *GetDataOps( UTLVECTOR * )
     {

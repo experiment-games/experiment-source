@@ -22,7 +22,7 @@ class ITexture;
 
 #define MAKE_MATERIALVAR_FOURCC( ch0, ch1, ch2, ch3 )                \
     ( ( unsigned long )( ch0 ) | ( ( unsigned long )( ch1 ) << 8 ) | \
-      ( ( unsigned long )( ch2 ) << 16 ) | ( ( unsigned long )( ch3 ) << 24 ) )
+    ( ( unsigned long )( ch2 ) << 16 ) | ( ( unsigned long )( ch3 ) << 24 ) )
 
 // This fourcc is reserved.
 #define FOURCC_UNKNOWN MAKE_MATERIALVAR_FOURCC( 'U', 'N', 'K', 'N' )
@@ -47,10 +47,10 @@ typedef unsigned short MaterialVarSym_t;
 
 class IMaterialVar
 {
-   public:
+    public:
     typedef unsigned long FourCC;
 
-   protected:
+    protected:
     // base data and accessors
     char* m_pStringVal;
     int m_intVal;
@@ -63,7 +63,7 @@ class IMaterialVar
     uint8 m_nTempIndex;
     CUtlSymbol m_Name;
 
-   public:
+    public:
     // class factory methods
     static IMaterialVar* Create( IMaterial* pMaterial, char const* pKey, VMatrix const& matrix );
     static IMaterialVar* Create( IMaterial* pMaterial, char const* pKey, char const* pVal );
@@ -126,14 +126,14 @@ class IMaterialVar
     // set just 1 component
     virtual void SetVecComponentValue( float fVal, int nComponent ) = 0;
 
-   protected:
+    protected:
     virtual int GetIntValueInternal( void ) const = 0;
     virtual float GetFloatValueInternal( void ) const = 0;
     virtual float const* GetVecValueInternal() const = 0;
     virtual void GetVecValueInternal( float* val, int numcomps ) const = 0;
     virtual int VectorSizeInternal() const = 0;
 
-   public:
+    public:
     FORCEINLINE MaterialVarType_t GetType( void ) const
     {
         return ( MaterialVarType_t )m_Type;
@@ -232,7 +232,7 @@ class IMaterialVar
     }
 #endif
 
-   private:
+    private:
     FORCEINLINE void SetTempIndex( int nIndex )
     {
         m_nTempIndex = nIndex;

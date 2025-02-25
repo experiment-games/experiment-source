@@ -181,20 +181,20 @@ S_API void S_CALLTYPE SteamAPI_SetBreakpadAppID( uint32 unAppID );
     // Check for dispatching API call results
     if ( callback.m_iCallback == SteamAPICallCompleted_t::k_iCallback )
     {
-      SteamAPICallCompleted_t *pCallCompleted = (SteamAPICallCompleted_t *)callback.
-      void *pTmpCallResult = malloc( pCallback->m_cubParam );
-      bool bFailed;
-      if ( SteamAPI_ManualDispatch_GetAPICallResult( hSteamPipe, pCallCompleted->m_hAsyncCall, pTmpCallResult, pCallback->m_cubParam, pCallback->m_iCallback, &bFailed ) )
-      {
+    SteamAPICallCompleted_t *pCallCompleted = (SteamAPICallCompleted_t *)callback.
+    void *pTmpCallResult = malloc( pCallback->m_cubParam );
+    bool bFailed;
+    if ( SteamAPI_ManualDispatch_GetAPICallResult( hSteamPipe, pCallCompleted->m_hAsyncCall, pTmpCallResult, pCallback->m_cubParam, pCallback->m_iCallback, &bFailed ) )
+    {
         // Dispatch the call result to the registered handler(s) for the
         // call identified by pCallCompleted->m_hAsyncCall
-      }
-      free( pTmpCallResult );
+    }
+    free( pTmpCallResult );
     }
     else
     {
-      // Look at callback.m_iCallback to see what kind of callback it is,
-      // and dispatch to appropriate handler(s)
+    // Look at callback.m_iCallback to see what kind of callback it is,
+    // and dispatch to appropriate handler(s)
     }
     SteamAPI_ManualDispatch_FreeLastCallback( hSteamPipe );
   }
@@ -337,9 +337,9 @@ inline ESteamAPIInitResult SteamAPI_InitEx( SteamErrMsg *pOutErrMsg )
 {
     const char *pszInternalCheckInterfaceVersions =
         STEAMUTILS_INTERFACE_VERSION "\0" STEAMNETWORKINGUTILS_INTERFACE_VERSION "\0" STEAMAPPS_INTERFACE_VERSION "\0" STEAMCONTROLLER_INTERFACE_VERSION "\0" STEAMFRIENDS_INTERFACE_VERSION "\0" STEAMGAMESEARCH_INTERFACE_VERSION "\0" STEAMHTMLSURFACE_INTERFACE_VERSION "\0" STEAMHTTP_INTERFACE_VERSION "\0" STEAMINPUT_INTERFACE_VERSION "\0" STEAMINVENTORY_INTERFACE_VERSION "\0" STEAMMATCHMAKINGSERVERS_INTERFACE_VERSION "\0" STEAMMATCHMAKING_INTERFACE_VERSION "\0" STEAMMUSICREMOTE_INTERFACE_VERSION "\0" STEAMMUSIC_INTERFACE_VERSION "\0" STEAMNETWORKINGMESSAGES_INTERFACE_VERSION "\0" STEAMNETWORKINGSOCKETS_INTERFACE_VERSION "\0" STEAMNETWORKING_INTERFACE_VERSION "\0" STEAMPARENTALSETTINGS_INTERFACE_VERSION "\0" STEAMPARTIES_INTERFACE_VERSION "\0" STEAMREMOTEPLAY_INTERFACE_VERSION "\0" STEAMREMOTESTORAGE_INTERFACE_VERSION "\0" STEAMSCREENSHOTS_INTERFACE_VERSION "\0" STEAMUGC_INTERFACE_VERSION "\0" STEAMUSERSTATS_INTERFACE_VERSION "\0" STEAMUSER_INTERFACE_VERSION "\0" STEAMVIDEO_INTERFACE_VERSION
-                                     "\0"
+                                    "\0"
 
-                                     "\0";
+                                    "\0";
 
     return SteamInternal_SteamAPI_Init( pszInternalCheckInterfaceVersions, pOutErrMsg );
 }

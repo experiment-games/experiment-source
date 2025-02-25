@@ -112,7 +112,7 @@ inline int CheckDeclareClass_Access( T *, const char *pShouldBe )
 class CBaseEntity;
 class CAutoInitEntPtr
 {
-   public:
+    public:
     CAutoInitEntPtr()
     {
         m_pEnt = NULL;
@@ -174,7 +174,7 @@ static inline void DispatchNetworkStateChanged( T *pObj, void *pVar )
             return *this;                                                                                           \
         }                                                                                                           \
                                                                                                                     \
-       public:                                                                                                      \
+        public:                                                                                                      \
         void CopyFrom( const type &src )                                                                            \
         {                                                                                                           \
             *( ( type * )this ) = src;                                                                              \
@@ -204,7 +204,7 @@ FORCEINLINE void NetworkVarConstruct( color32_s &x )
 template < class Type, class Changer >
 class CNetworkVarBase
 {
-   public:
+    public:
     inline CNetworkVarBase()
     {
         NetworkVarConstruct( m_Value );
@@ -324,7 +324,7 @@ class CNetworkVarBase
 
     Type m_Value;
 
-   protected:
+    protected:
     inline void NetworkStateChanged()
     {
         Changer::NetworkStateChanged( this );
@@ -334,7 +334,7 @@ class CNetworkVarBase
 template < class Type, class Changer >
 class CNetworkColor32Base : public CNetworkVarBase< Type, Changer >
 {
-   public:
+    public:
     inline void Init( byte rVal, byte gVal, byte bVal )
     {
         SetR( rVal );
@@ -392,7 +392,7 @@ class CNetworkColor32Base : public CNetworkVarBase< Type, Changer >
         SetVal( CNetworkColor32Base< Type, Changer >::m_Value.a, val );
     }
 
-   protected:
+    protected:
     inline void SetVal( byte &out, const byte &in )
     {
         if ( out != in )
@@ -407,7 +407,7 @@ class CNetworkColor32Base : public CNetworkVarBase< Type, Changer >
 template < class Type, class Changer >
 class CNetworkVectorBase : public CNetworkVarBase< Type, Changer >
 {
-   public:
+    public:
     inline void Init( float ix = 0, float iy = 0, float iz = 0 )
     {
         SetX( ix );
@@ -499,7 +499,7 @@ class CNetworkVectorBase : public CNetworkVarBase< Type, Changer >
         return CNetworkVectorBase< Type, Changer >::m_Value / val;
     }
 
-   private:
+    private:
     inline void DetectChange( float &out, float in )
     {
         if ( out != in )
@@ -514,7 +514,7 @@ class CNetworkVectorBase : public CNetworkVarBase< Type, Changer >
 template < class Type, class Changer >
 class CNetworkQuaternionBase : public CNetworkVarBase< Type, Changer >
 {
-   public:
+    public:
     inline void Init( float ix = 0, float iy = 0, float iz = 0, float iw = 0 )
     {
         SetX( ix );
@@ -615,7 +615,7 @@ class CNetworkQuaternionBase : public CNetworkVarBase< Type, Changer >
         return CNetworkQuaternionBase< Type, Changer >::m_Value / val;
     }
 
-   private:
+    private:
     inline void DetectChange( float &out, float in )
     {
         if ( out != in )
@@ -633,7 +633,7 @@ inline void NetworkVarConstruct( CBaseHandle &x ) {}
 template < class Type, class Changer >
 class CNetworkHandleBase : public CNetworkVarBase< CBaseHandle, Changer >
 {
-   public:
+    public:
     const Type *operator=( const Type *val )
     {
         return Set( val );
@@ -775,7 +775,7 @@ class CNetworkHandleBase : public CNetworkVarBase< CBaseHandle, Changer >
     typedef ThisClass MakeANetworkVar_##name;                                                                                     \
     class NetworkVar_##name                                                                                                       \
     {                                                                                                                             \
-       public:                                                                                                                    \
+        public:                                                                                                                    \
         NetworkVar_##name()                                                                                                       \
         {                                                                                                                         \
             m_Value[0] = '\0';                                                                                                    \
@@ -793,14 +793,14 @@ class CNetworkHandleBase : public CNetworkVarBase< CBaseHandle, Changer >
             NetworkStateChanged();                                                                                                \
             return m_Value;                                                                                                       \
         }                                                                                                                         \
-                                                                                                                                  \
-       protected:                                                                                                                 \
+                                                                                                                                \
+        protected:                                                                                                                 \
         inline void NetworkStateChanged()                                                                                         \
         {                                                                                                                         \
             CHECK_USENETWORKVARS( ( ThisClass * )( ( ( char * )this ) - MyOffsetOf( ThisClass, name ) ) )->NetworkStateChanged(); \
         }                                                                                                                         \
-                                                                                                                                  \
-       private:                                                                                                                   \
+                                                                                                                                \
+        private:                                                                                                                   \
         char m_Value[length];                                                                                                     \
     };                                                                                                                            \
     NetworkVar_##name name;
@@ -813,7 +813,7 @@ class CNetworkHandleBase : public CNetworkVarBase< CBaseHandle, Changer >
     typedef ThisClass MakeANetworkVar_##name;                                                                                                 \
     class NetworkVar_##name                                                                                                                   \
     {                                                                                                                                         \
-       public:                                                                                                                                \
+        public:                                                                                                                                \
         inline NetworkVar_##name()                                                                                                            \
         {                                                                                                                                     \
             for ( int i = 0; i < count; ++i )                                                                                                 \
@@ -825,20 +825,20 @@ class CNetworkHandleBase : public CNetworkVarBase< CBaseHandle, Changer >
         {                                                                                                                                     \
             return Get( i );                                                                                                                  \
         }                                                                                                                                     \
-                                                                                                                                              \
+                                                                                                                                            \
         const type &Get( int i ) const                                                                                                        \
         {                                                                                                                                     \
             Assert( i >= 0 && i < count );                                                                                                    \
             return m_Value[i];                                                                                                                \
         }                                                                                                                                     \
-                                                                                                                                              \
+                                                                                                                                            \
         type &GetForModify( int i )                                                                                                           \
         {                                                                                                                                     \
             Assert( i >= 0 && i < count );                                                                                                    \
             NetworkStateChanged( i );                                                                                                         \
             return m_Value[i];                                                                                                                \
         }                                                                                                                                     \
-                                                                                                                                              \
+                                                                                                                                            \
         void Set( int i, const type &val )                                                                                                    \
         {                                                                                                                                     \
             Assert( i >= 0 && i < count );                                                                                                    \
@@ -856,8 +856,8 @@ class CNetworkHandleBase : public CNetworkVarBase< CBaseHandle, Changer >
         {                                                                                                                                     \
             return count;                                                                                                                     \
         }                                                                                                                                     \
-                                                                                                                                              \
-       protected:                                                                                                                             \
+                                                                                                                                            \
+        protected:                                                                                                                             \
         inline void NetworkStateChanged( int index )                                                                                          \
         {                                                                                                                                     \
             CHECK_USENETWORKVARS( ( ThisClass * )( ( ( char * )this ) - MyOffsetOf( ThisClass, name ) ) )->stateChangedFn( &m_Value[index] ); \
@@ -875,12 +875,12 @@ class CNetworkHandleBase : public CNetworkVarBase< CBaseHandle, Changer >
     typedef ThisClass MakeANetworkVar_##name; \
     class NetworkVar_##name                   \
     {                                         \
-       public:                                \
+        public:                                \
         template < typename T >               \
         friend int ServerClassInit( T * );
 
 #define NETWORK_VAR_END( type, name, base, stateChangedFn )                                                                  \
-   public:                                                                                                                   \
+    public:                                                                                                                   \
     static inline void NetworkStateChanged( void *ptr )                                                                      \
     {                                                                                                                        \
         CHECK_USENETWORKVARS( ( ThisClass * )( ( ( char * )ptr ) - MyOffsetOf( ThisClass, name ) ) )->stateChangedFn( ptr ); \

@@ -34,7 +34,7 @@ MY_STDAPI LzmaCompress(unsigned char *dest, size_t  *destLen, const unsigned cha
   props.numThreads = numThreads;
 
   return LzmaEncode(dest, destLen, src, srcLen, &props, outProps, outPropsSize, 0,
-      NULL, &g_Alloc, &g_Alloc);
+    NULL, &g_Alloc, &g_Alloc);
 }
 
 

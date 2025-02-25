@@ -58,7 +58,7 @@ namespace java
 
 class FieldGenerator
 {
-   public:
+    public:
     FieldGenerator() {}
     virtual ~FieldGenerator();
 
@@ -74,21 +74,21 @@ class FieldGenerator
 
     virtual string GetBoxedType() const = 0;
 
-   private:
+    private:
     GOOGLE_DISALLOW_EVIL_CONSTRUCTORS( FieldGenerator );
 };
 
 // Convenience class which constructs FieldGenerators for a Descriptor.
 class FieldGeneratorMap
 {
-   public:
+    public:
     explicit FieldGeneratorMap( const Descriptor* descriptor );
     ~FieldGeneratorMap();
 
     const FieldGenerator& get( const FieldDescriptor* field ) const;
     const FieldGenerator& get_extension( int index ) const;
 
-   private:
+    private:
     const Descriptor* descriptor_;
     scoped_array< scoped_ptr< FieldGenerator > > field_generators_;
     scoped_array< scoped_ptr< FieldGenerator > > extension_generators_;

@@ -18,11 +18,11 @@ class CFuncMonitor : public CFuncBrush
     DECLARE_CLASS( CFuncMonitor, CFuncBrush );
     DECLARE_SERVERCLASS();
 
-   public:
+    public:
     virtual void Activate();
     virtual void UpdateOnRemove();
 
-   private:
+    private:
     void InputSetCamera( inputdata_t &inputdata );
     void SetCameraByName( const char *szName );
     void ReleaseCameraLink();

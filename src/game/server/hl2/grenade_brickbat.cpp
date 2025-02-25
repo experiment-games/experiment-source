@@ -207,7 +207,7 @@ void CGrenade_Brickbat::BrickbatThink( void )
 //=====================================================================
 class CGrenadeRockBB : public CGrenade_Brickbat
 {
-   public:
+    public:
     DECLARE_CLASS( CGrenadeRockBB, CGrenade_Brickbat );
 
     void Spawn( void )
@@ -230,7 +230,7 @@ PRECACHE_REGISTER( grenade_rockbb );
 //=====================================================================
 class CGrenadeBottle : public CGrenade_Brickbat
 {
-   public:
+    public:
     DECLARE_CLASS( CGrenadeBottle, CGrenade_Brickbat );
 
     void Spawn( void )

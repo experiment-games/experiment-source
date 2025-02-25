@@ -28,7 +28,7 @@ typedef unsigned long HScheme;
 //-----------------------------------------------------------------------------
 class ClientModeHLNormal : public ClientModeShared
 {
-   public:
+    public:
     DECLARE_CLASS( ClientModeHLNormal, ClientModeShared );
 
     ClientModeHLNormal();

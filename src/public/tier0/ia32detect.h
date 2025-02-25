@@ -27,7 +27,7 @@ enum CPUVendor
 };
 class ia32detect
 {
-   public:
+    public:
     enum type_t
     {
         type_OEM,
@@ -135,15 +135,15 @@ class ia32detect
 
             __asm
             {
-				mov	eax, i;
-				mov esi, t;
+                mov	eax, i;
+                mov esi, t;
 
-				cpuid;
+                cpuid;
 
-				mov dword ptr [esi + 0x0], eax;
-				mov dword ptr [esi + 0x4], ebx;
-				mov dword ptr [esi + 0x8], ecx;
-				mov dword ptr [esi + 0xC], edx;
+                mov dword ptr [esi + 0x0], eax;
+                mov dword ptr [esi + 0x4], ebx;
+                mov dword ptr [esi + 0x8], ecx;
+                mov dword ptr [esi + 0xC], edx;
             }
 #endif
         }
@@ -184,7 +184,7 @@ class ia32detect
         return tstring( b );
     }
 
-   protected:
+    protected:
     const tchar *type_text() const
     {
         static const tchar *text[] =
@@ -223,7 +223,7 @@ class ia32detect
         }
     }
 
-   private:
+    private:
     uint32 init0()
     {
         uint32 m;
@@ -278,13 +278,13 @@ class ia32detect
 #else
             __asm
             {
-				mov	eax, 2;
-				lea esi, d;
-				cpuid;
-				mov [esi + 0x0], eax;
-				mov [esi + 0x4], ebx;
-				mov [esi + 0x8], ecx;
-				mov [esi + 0xC], edx;
+                mov	eax, 2;
+                lea esi, d;
+                cpuid;
+                mov [esi + 0x0], eax;
+                mov [esi + 0x4], ebx;
+                mov [esi + 0x8], ecx;
+                mov [esi + 0xC], edx;
             }
 #endif
 
@@ -325,9 +325,9 @@ class ia32detect
 #else
         __asm
         {
-			mov	eax, 0x80000000;
-			cpuid;
-			mov m, eax
+            mov	eax, 0x80000000;
+            cpuid;
+            mov m, eax
         }
 #endif
 
@@ -344,13 +344,13 @@ class ia32detect
 #else
                 __asm
                 {
-					mov	eax, i;
-					mov	esi, t;
-					cpuid;
-					mov dword ptr [esi + 0x0], eax;
-					mov dword ptr [esi + 0x4], ebx;
-					mov dword ptr [esi + 0x8], ecx;
-					mov dword ptr [esi + 0xC], edx;
+                    mov	eax, i;
+                    mov	esi, t;
+                    cpuid;
+                    mov dword ptr [esi + 0x0], eax;
+                    mov dword ptr [esi + 0x4], ebx;
+                    mov dword ptr [esi + 0x8], ecx;
+                    mov dword ptr [esi + 0xC], edx;
                 }
 #endif
             }

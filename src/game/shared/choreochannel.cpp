@@ -271,10 +271,10 @@ void CChoreoChannel::ReconcileGestureTimes()
             /*
             else if ( pEntryTag && !Q_stricmp( previous->GetName(), "NULL" ) )
             {
-              // If the previous was a null event, then do a bit of fixup
-              event->SetStartTime( previous->GetEndTime() );
+            // If the previous was a null event, then do a bit of fixup
+            event->SetStartTime( previous->GetEndTime() );
 
-              event->PreventTagOverlap( );
+            event->PreventTagOverlap( );
             }
             */
 
@@ -301,16 +301,16 @@ void CChoreoChannel::ReconcileGestureTimes()
     c = 0;
     for ( i = sortedGestures.FirstInorder(); i != sortedGestures.InvalidIndex(); i = sortedGestures.NextInorder( i ) )
     {
-      CChoreoEvent *event = sortedGestures[ i ];
+    CChoreoEvent *event = sortedGestures[ i ];
 
-      Msg( "event %i start %f disp %f dispend %f end %f\n",
+    Msg( "event %i start %f disp %f dispend %f end %f\n",
         c + 1,
         event->GetStartTime( CChoreoEvent::SIMULATION ),
         event->GetStartTime( CChoreoEvent::DISPLAY ),
         event->GetEndTime( CChoreoEvent::DISPLAY ),
         event->GetEndTime( CChoreoEvent::SIMULATION )
-      );
-      c++;
+    );
+    c++;
     }
     */
 }
@@ -504,7 +504,7 @@ bool CChoreoChannel::GetSortedCombinedEventList( char const *cctoken, CUtlRBTree
 
         // A master with no slaves is not a combined event
         if ( e->GetCloseCaptionType() == CChoreoEvent::CC_MASTER &&
-             e->GetNumSlaves() == 0 )
+            e->GetNumSlaves() == 0 )
             continue;
 
         char const *token = e->GetCloseCaptionToken();

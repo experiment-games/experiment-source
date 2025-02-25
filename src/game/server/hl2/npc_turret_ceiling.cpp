@@ -91,7 +91,7 @@ class CNPC_CeilingTurret : public CAI_BaseNPC
 {
     DECLARE_CLASS( CNPC_CeilingTurret, CAI_BaseNPC );
 
-   public:
+    public:
     CNPC_CeilingTurret( void );
     ~CNPC_CeilingTurret( void );
 
@@ -146,7 +146,7 @@ class CNPC_CeilingTurret : public CAI_BaseNPC
         return VECTOR_CONE_5DEGREES * ( ( CBaseHLCombatWeapon::GetDefaultProficiencyValues() )[WEAPON_PROFICIENCY_PERFECT].spreadscale );
     }
 
-   protected:
+    protected:
     bool PreThink( turretState_e state );
     void Shoot( const Vector &vecSrc, const Vector &vecDirToEnemy );
     void SetEyeState( eyeState_t state );

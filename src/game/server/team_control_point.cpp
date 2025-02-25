@@ -1077,8 +1077,8 @@ void CTeamControlPoint::InputSetUnlockTime( inputdata_t &inputdata )
 void CTeamControlPoint::UnlockThink( void )
 {
     if ( m_flUnlockTime > 0 &&
-         m_flUnlockTime < gpGlobals->curtime &&
-         ( TeamplayRoundBasedRules() && TeamplayRoundBasedRules()->State_Get() == GR_STATE_RND_RUNNING ) )
+        m_flUnlockTime < gpGlobals->curtime &&
+        ( TeamplayRoundBasedRules() && TeamplayRoundBasedRules()->State_Get() == GR_STATE_RND_RUNNING ) )
     {
         InternalSetLocked( false );
         return;

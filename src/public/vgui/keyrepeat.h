@@ -25,7 +25,7 @@ enum KEYREPEAT_ALIASES
 
 class CKeyRepeatHandler
 {
-   public:
+    public:
     CKeyRepeatHandler();
 
     void Reset();
@@ -34,7 +34,7 @@ class CKeyRepeatHandler
     vgui::KeyCode KeyRepeated();
     void SetKeyRepeatTime( vgui::KeyCode code, float flRepeat );
 
-   private:
+    private:
     bool m_bAliasDown[MAX_JOYSTICKS][FM_NUM_KEYREPEAT_ALIASES];
     float m_flRepeatTimes[FM_NUM_KEYREPEAT_ALIASES];
     float m_flNextKeyRepeat[MAX_JOYSTICKS];

@@ -37,10 +37,10 @@ static bool s_bPanelVisible = false;
 //-----------------------------------------------------------------------------
 class CReplayInputPanel : public EditablePanel
 {
-   private:
+    private:
     DECLARE_CLASS_SIMPLE( CReplayInputPanel, EditablePanel );
 
-   public:
+    public:
     CReplayInputPanel( Panel *pParent, const char *pName, ReplayHandle_t hReplay );
     ~CReplayInputPanel();
 
@@ -52,7 +52,7 @@ class CReplayInputPanel : public EditablePanel
 
     MESSAGE_FUNC( OnSetFocus, "SetFocus" );
 
-   private:
+    private:
     Panel *m_pDlg;
     TextEntry *m_pTitleEntry;
     ReplayHandle_t m_hReplay;
@@ -63,9 +63,9 @@ class CReplayInputPanel : public EditablePanel
 //-----------------------------------------------------------------------------
 CReplayInputPanel::CReplayInputPanel( Panel *pParent, const char *pName, ReplayHandle_t hReplay )
     : BaseClass( pParent, pName ),
-      m_hReplay( hReplay ),
-      m_pDlg( NULL ),
-      m_pTitleEntry( NULL )
+    m_hReplay( hReplay ),
+    m_pDlg( NULL ),
+    m_pTitleEntry( NULL )
 {
     SetScheme( "ClientScheme" );
     SetProportional( true );

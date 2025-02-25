@@ -44,7 +44,7 @@ enum shaderthreadevent_t
 
 abstract_class IShaderUtil : public IAppSystem
 {
-   public:
+    public:
     // Method to allow clients access to the MaterialSystem_Config
     virtual MaterialSystem_Config_t &GetConfig() = 0;
 

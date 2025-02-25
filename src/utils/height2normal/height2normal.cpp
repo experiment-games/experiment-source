@@ -162,9 +162,9 @@ static void Usage()
 }
 
 void ProcessFiles( const char *pNormalFileNameWithoutExtension,
-                   int startFrame,
-                   int endFrame,
-                   float bumpScale )
+                    int startFrame,
+                    int endFrame,
+                    float bumpScale )
 {
     static char heightTGAFileName[1024];
     static char normalTGAFileName[1024];
@@ -322,7 +322,7 @@ int main( int argc, char **argv )
             continue;
         }
         if ( ( startFrame == -1 && endFrame != -1 ) ||
-             ( startFrame != -1 && endFrame == -1 ) )
+            ( startFrame != -1 && endFrame == -1 ) )
         {
             fprintf( stderr, "ERROR: If you use startframe, you must use endframe, and vice versa.\n" );
             Pause();
@@ -335,9 +335,9 @@ int main( int argc, char **argv )
 
         Q_StripExtension( pFileName, normalFileNameWithoutExtension, sizeof( normalFileNameWithoutExtension ) );
         ProcessFiles( normalFileNameWithoutExtension,
-                      startFrame,
-                      endFrame,
-                      bumpScale );
+                    startFrame,
+                    endFrame,
+                    bumpScale );
     }
     return 0;
 }

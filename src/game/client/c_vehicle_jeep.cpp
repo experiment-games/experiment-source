@@ -158,9 +158,9 @@ void C_PropJeep::DampenEyePosition( Vector &vecVehicleEyePos, QAngle &vecVehicle
 // speed += ( pCoefficientsOut[0] * ( targetPos - currentPos ) + pCoefficientsOut[1] * ( targetSpeed - currentSpeed ) ) * flDeltaTime;
 //-----------------------------------------------------------------------------
 void C_PropJeep::ComputePDControllerCoefficients( float *pCoefficientsOut,
-                                                  float flFrequency,
-                                                  float flDampening,
-                                                  float flDeltaTime )
+                                                float flFrequency,
+                                                float flDampening,
+                                                float flDeltaTime )
 {
     float flKs = 9.0f * flFrequency * flFrequency;
     float flKd = 4.5f * flFrequency * flDampening;

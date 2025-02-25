@@ -22,11 +22,11 @@ namespace vgui
 //-----------------------------------------------------------------------------
 class DirectoryTreeView : public TreeView
 {
-   public:
+    public:
     DirectoryTreeView( DirectorySelectDialog *parent, const char *name );
     virtual void GenerateChildrenOfNode( int itemIndex );
 
-   private:
+    private:
     DirectorySelectDialog *m_pParent;
 };
 
@@ -37,7 +37,7 @@ class DirectorySelectDialog : public Frame
 {
     DECLARE_CLASS_SIMPLE( DirectorySelectDialog, Frame );
 
-   public:
+    public:
     DirectorySelectDialog( vgui::Panel *parent, const char *title );
 
     // sets where it should start searching
@@ -51,7 +51,7 @@ class DirectorySelectDialog : public Frame
 
     /* action signals
 
-      "DirectorySelected"
+    "DirectorySelected"
         "dir"	- the directory that was selected
 
     */
@@ -59,7 +59,7 @@ class DirectorySelectDialog : public Frame
     // Expand the tree nodes to match a supplied path, optionally selecting the final directory
     void ExpandTreeToPath( const char *lpszPath, bool bSelectFinalDirectory = true );
 
-   protected:
+    protected:
     virtual void PerformLayout();
     virtual void ApplySchemeSettings( IScheme *pScheme );
     virtual void OnClose();
@@ -67,7 +67,7 @@ class DirectorySelectDialog : public Frame
     // command buttons
     virtual void OnCommand( const char *command );
 
-   private:
+    private:
     MESSAGE_FUNC( OnTextChanged, "TextChanged" );
     MESSAGE_FUNC( OnTreeViewItemSelected, "TreeViewItemSelected" );
     MESSAGE_FUNC_CHARPTR( OnCreateDirectory, "CreateDirectory", dir );

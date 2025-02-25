@@ -195,9 +195,9 @@ void CModelSoundsCache::BuildAnimationEventSoundList( CStudioHdr *hdr, CUtlVecto
                     else
                     {
                         Warning( "-- Error --:  empty soundname, .qc error on AE_CL_PLAYSOUND in model %s, sequence %s, animevent # %i\n",
-                                 hdr->pszName(),
-                                 pSeq->pszLabel(),
-                                 iEvent + 1 );
+                                hdr->pszName(),
+                                pSeq->pszLabel(),
+                                iEvent + 1 );
                     }
                 }
                 break;

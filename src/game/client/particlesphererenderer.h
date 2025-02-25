@@ -16,7 +16,7 @@
 
 class CParticleSphereRenderer
 {
-   public:
+    public:
     CParticleSphereRenderer();
 
     // Initialize and tell it the material you'll be using.
@@ -53,7 +53,7 @@ class CParticleSphereRenderer
     const CParticleLightInfo &GetDirectionalLight() const;
     void SetDirectionalLight( const CParticleLightInfo &info );
 
-   private:
+    private:
     void AddLightColor(
         Vector const *pPos,
         Vector const *pLightPos,
@@ -63,7 +63,7 @@ class CParticleSphereRenderer
 
     inline void ClampColor( Vector &vColor );
 
-   private:
+    private:
     int m_iLastTickStartRenderCalled;  // Used for debugging.
 
     CParticleMgr *m_pParticleMgr;

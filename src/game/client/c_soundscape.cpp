@@ -76,7 +76,7 @@ struct subsoundscapeparams_t
 
 class C_SoundscapeSystem : public CBaseGameSystemPerFrame
 {
-   public:
+    public:
     virtual char const *Name()
     {
         return "C_SoundScapeSystem";
@@ -210,7 +210,7 @@ class C_SoundscapeSystem : public CBaseGameSystemPerFrame
     // "dsp_volume"
     void ProcessDSPVolume( KeyValues *pKey, subsoundscapeparams_t &params );
 
-   private:
+    private:
     bool IsBeingRestored() const
     {
         return gpGlobals->framecount == m_nRestoreFrame ? true : false;
@@ -324,8 +324,8 @@ bool C_SoundscapeSystem::Init()
             }
 
             Warning( "C_SoundscapeSystem::Init:  Manifest '%s' with bogus file type '%s', expecting 'file'\n",
-                     SOUNDSCAPE_MANIFEST_FILE,
-                     sub->GetName() );
+                    SOUNDSCAPE_MANIFEST_FILE,
+                    sub->GetName() );
         }
 
         if ( mapSoundscapeFilename && filesystem->FileExists( mapSoundscapeFilename ) )
@@ -561,7 +561,7 @@ void C_SoundscapeSystem::UpdateAudioParams( audioparams_t &audio )
     {
         // bad index (and the soundscape file actually existed...)
         if ( audio.ent.Get() != 0 &&
-             audio.soundscapeIndex != -1 )
+            audio.soundscapeIndex != -1 )
         {
             DevMsg( 1, "Error: Bad soundscape!\n" );
         }
@@ -1099,12 +1099,12 @@ int C_SoundscapeSystem::AddLoopingSound( const char *pSoundName, bool isAmbient,
 
         // NOTE: Will always restart/crossfade positional sounds
         if ( sound.id != m_loopingSoundId &&
-             sound.pitch == pitch &&
-             !Q_strcasecmp( pSoundName, sound.pWaveName ) )
+            sound.pitch == pitch &&
+            !Q_strcasecmp( pSoundName, sound.pWaveName ) )
         {
             // Ambient sounds can reuse the slots.
             if ( isAmbient == true &&
-                 sound.isAmbient == true )
+                sound.isAmbient == true )
             {
                 // reuse this sound
                 pSoundSlot = &sound;

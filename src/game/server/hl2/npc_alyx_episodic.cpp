@@ -659,7 +659,7 @@ void CNPC_Alyx::PrescheduleThink( void )
         {
             CBasePlayer *pPlayer = UTIL_PlayerByIndex( 1 );
             if ( pPlayer && ( !CanBeBlindedByFlashlight( true ) || !pPlayer->IsIlluminatedByFlashlight( this, NULL ) || !PlayerFlashlightOnMyEyes( pPlayer ) ) &&
-                 !BlindedByFlare() )
+                !BlindedByFlare() )
             {
                 // Remove the actor from the flashlight scene
                 ADD_DEBUG_HISTORY( HISTORY_ALYX_BLIND, UTIL_VarArgs( "(%0.2f) Alyx: end blind scene '%s'\n", gpGlobals->curtime, STRING( m_iszCurrentBlindScene ) ) );
@@ -1253,18 +1253,18 @@ void CNPC_Alyx::DoCustomSpeechAI( void )
         if ( !HasCondition( COND_SEE_ENEMY ) && m_bHadCondSeeEnemy && !HasCondition( COND_TALKER_PLAYER_DEAD ) )
         {
             if ( m_bDarknessSpeechAllowed && HasCondition( COND_ALYX_PLAYER_TURNED_OFF_FLASHLIGHT ) &&
-                 GetEnemy() && ( GetEnemy()->Classify() != CLASS_BULLSEYE ) )
+                GetEnemy() && ( GetEnemy()->Classify() != CLASS_BULLSEYE ) )
             {
                 SpeakIfAllowed( "TLK_DARKNESS_LOSTENEMY_BY_FLASHLIGHT" );
             }
             else if ( m_bDarknessSpeechAllowed && HasCondition( COND_ALYX_PLAYER_FLASHLIGHT_EXPIRED ) &&
-                      GetEnemy() && ( GetEnemy()->Classify() != CLASS_BULLSEYE ) )
+                    GetEnemy() && ( GetEnemy()->Classify() != CLASS_BULLSEYE ) )
             {
                 SpeakIfAllowed( "TLK_DARKNESS_LOSTENEMY_BY_FLASHLIGHT_EXPIRED" );
             }
             else if ( m_bDarknessSpeechAllowed && GetEnemy() && ( GetEnemy()->Classify() != CLASS_BULLSEYE ) &&
-                      pPlayer && pPlayer->FlashlightIsOn() && !pPlayer->IsIlluminatedByFlashlight( GetEnemy(), NULL ) &&
-                      FVisible( GetEnemy() ) )
+                    pPlayer && pPlayer->FlashlightIsOn() && !pPlayer->IsIlluminatedByFlashlight( GetEnemy(), NULL ) &&
+                    FVisible( GetEnemy() ) )
             {
                 SpeakIfAllowed( TLK_DARKNESS_ENEMY_IN_DARKNESS );
             }
@@ -1298,7 +1298,7 @@ void CNPC_Alyx::DoCustomSpeechAI( void )
             if ( gpGlobals->curtime - GetEnemies()->FirstTimeSeen( GetEnemy() ) < 0.5 )
             {
                 if ( pPlayer && pPlayer->IsIlluminatedByFlashlight( GetEnemy(), NULL ) && m_bDarknessSpeechAllowed &&
-                     !LookerCouldSeeTargetInDarkness( this, GetEnemy() ) )
+                    !LookerCouldSeeTargetInDarkness( this, GetEnemy() ) )
                 {
                     SpeakIfAllowed( "TLK_DARKNESS_FOUNDENEMY_BY_FLASHLIGHT" );
                 }
@@ -1318,7 +1318,7 @@ void CNPC_Alyx::DoCustomSpeechAI( void )
             {
                 // Can't see the player?
                 if ( !HasCondition( COND_SEE_PLAYER ) && !HasCondition( COND_TALKER_PLAYER_DEAD ) && !HasCondition( COND_SEE_ENEMY ) &&
-                     ( !pPlayer || pPlayer->GetAbsOrigin().DistToSqr( GetAbsOrigin() ) > ALYX_DARKNESS_LOST_PLAYER_DIST ) )
+                    ( !pPlayer || pPlayer->GetAbsOrigin().DistToSqr( GetAbsOrigin() ) > ALYX_DARKNESS_LOST_PLAYER_DIST ) )
                 {
                     // only speak if player hasn't moved.
                     if ( m_MoveMonitor.TargetMoved( AI_GetSinglePlayer() ) )
@@ -1567,9 +1567,9 @@ bool CNPC_Alyx::CanSeeEntityInDarkness( CBaseEntity *pEntity )
     /*
     // Alyx can see enemies that are right next to her
     // Robin: Disabled, made her too effective, you could safely leave her alone.
-      if ( pEntity->IsNPC() )
+    if ( pEntity->IsNPC() )
     {
-      if ( (pEntity->WorldSpaceCenter() - EyePosition()).LengthSqr() < (80*80) )
+    if ( (pEntity->WorldSpaceCenter() - EyePosition()).LengthSqr() < (80*80) )
         return true;
     }
     */
@@ -1650,10 +1650,10 @@ void CNPC_Alyx::BuildScheduleTestBits()
     bool bIsInteracting = false;
 
     bIsInteracting = ( IsCurSchedule( SCHED_ALYX_PREPARE_TO_INTERACT_WITH_TARGET, false ) ||
-                       IsCurSchedule( SCHED_ALYX_WAIT_TO_INTERACT_WITH_TARGET, false ) ||
-                       IsCurSchedule( SCHED_ALYX_INTERACT_WITH_TARGET, false ) ||
-                       IsCurSchedule( SCHED_ALYX_INTERACTION_INTERRUPTED, false ) ||
-                       IsCurSchedule( SCHED_ALYX_FINISH_INTERACTING_WITH_TARGET, false ) );
+                        IsCurSchedule( SCHED_ALYX_WAIT_TO_INTERACT_WITH_TARGET, false ) ||
+                        IsCurSchedule( SCHED_ALYX_INTERACT_WITH_TARGET, false ) ||
+                        IsCurSchedule( SCHED_ALYX_INTERACTION_INTERRUPTED, false ) ||
+                        IsCurSchedule( SCHED_ALYX_FINISH_INTERACTING_WITH_TARGET, false ) );
 
     if ( !bIsInteracting && IsAllowedToInteract() )
     {
@@ -2646,7 +2646,7 @@ bool CNPC_Alyx::CanBeBlindedByFlashlight( bool bCheckLightSources )
     // Can't be blinded if we're not in alyx darkness mode
     /*
     if ( !HL2GameRules()->IsAlyxInDarknessMode() )
-      return false;
+    return false;
     */
 
     // Can't be blinded if I'm in a script, or in combat

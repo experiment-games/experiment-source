@@ -20,7 +20,7 @@ class CReplay;
 
 abstract_class IReplayFactory : public IBaseInterface
 {
-   public:
+    public:
     virtual CReplay *Create() = 0;
 };
 

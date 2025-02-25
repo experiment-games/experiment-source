@@ -14,7 +14,7 @@ extern const char *s_ClientElementNames[MAX_ARRAY_ELEMENTS];
 
 class CRecvPropExtra_UtlVector
 {
-   public:
+    public:
     DataTableRecvVarProxyFn m_DataTableProxyFn;  // If it's a datatable, then this is the proxy they specified.
     RecvVarProxyFn m_ProxyFn;                    // If it's a non-datatable, then this is the proxy they specified.
     ResizeUtlVectorFn m_ResizeFn;                // The function used to resize the CUtlVector.
@@ -126,7 +126,7 @@ RecvProp RecvPropUtlVector(
         pProps[i].m_pVarName = s_ClientElementNames[i - 1];  // give unique name
         pProps[i].SetExtraData( pExtraData );
         pProps[i].SetElementStride( i - 1 );  // Kind of lame overloading element stride to hold the element index,
-                                              // but we can easily move it into its SetExtraData stuff if we need to.
+                                            // but we can easily move it into its SetExtraData stuff if we need to.
 
         // We provide our own proxy here.
         if ( pArrayProp.m_RecvType == DPT_DataTable )

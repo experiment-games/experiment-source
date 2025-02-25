@@ -562,7 +562,7 @@ DBG_INTERFACE void COM_TimestampedLog( PRINTF_FORMAT_STRING char const *fmt, ...
 #ifndef _RETAIL
 class CScopeMsg
 {
-   public:
+    public:
     CScopeMsg( const char *pszScope )
     {
         m_pszScope = pszScope;
@@ -658,7 +658,7 @@ FORCEINLINE void AssertValidReadWritePtr( const void *ptr, int count = 1 ) {}
 #ifdef _DEBUG
 class CReentryGuard
 {
-   public:
+    public:
     CReentryGuard( int *pSemaphore )
         : m_pSemaphore( pSemaphore )
     {
@@ -670,7 +670,7 @@ class CReentryGuard
         --( *m_pSemaphore );
     }
 
-   private:
+    private:
     int *m_pSemaphore;
 };
 
@@ -690,7 +690,7 @@ class CReentryGuard
 #include "tier0/valve_off.h"
 class CDbgFmtMsg
 {
-   public:
+    public:
     CDbgFmtMsg( PRINTF_FORMAT_STRING const tchar *pszFormat, ... ) FMTFUNCTION( 2, 3 )
     {
         va_list arg_ptr;
@@ -707,7 +707,7 @@ class CDbgFmtMsg
         return m_szBuf;
     }
 
-   private:
+    private:
     tchar m_szBuf[256];
 };
 #include "tier0/valve_on.h"
@@ -734,7 +734,7 @@ class CDbgFmtMsg
 template < class Type >
 class CDataWatcher
 {
-   public:
+    public:
     const Type &operator=( const Type &val )
     {
         return Set( val );
@@ -843,7 +843,7 @@ class CDataWatcher
 template < class Type >
 class CDataWatcher
 {
-   private:
+    private:
     CDataWatcher();  // refuse to compile in non-debug builds
 };
 

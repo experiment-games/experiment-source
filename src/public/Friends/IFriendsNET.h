@@ -16,7 +16,7 @@ class CServerSession;
 
 class IFriendsNET : public IBaseInterface
 {
-   public:
+    public:
     // check if we have network information for this user
     virtual bool CheckUserRegistered( unsigned int userID ) = 0;
 

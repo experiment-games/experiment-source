@@ -8,7 +8,7 @@
 
 class FFParams
 {
-   public:
+    public:
     FORCEFEEDBACK_t m_nEffectType;
     FFBaseParams_t m_BaseParams;
 };
@@ -73,7 +73,7 @@ FORCEFEEDBACK_t ForceFeedbackEffectForName( const char *name )
 //-----------------------------------------------------------------------------
 class CForceFeedback : public IForceFeedback, public CAutoGameSystem
 {
-   public:
+    public:
     virtual bool Init();
     virtual void Shutdown();
 
@@ -87,7 +87,7 @@ class CForceFeedback : public IForceFeedback, public CAutoGameSystem
 
     void MsgFunc_ForceFeedback( bf_read &msg );
 
-   private:
+    private:
     void Internal_StopAllEffects();
     void Internal_StopEffect( FORCEFEEDBACK_t effect );
     void Internal_StartEffect( FORCEFEEDBACK_t, const FFBaseParams_t &params );

@@ -35,19 +35,19 @@ def generate_proto(source):
     sys.exit(-1)
 
   if (not os.path.exists(output) or
-      (os.path.exists(source) and
-       os.path.getmtime(source) > os.path.getmtime(output))):
+    (os.path.exists(source) and
+        os.path.getmtime(source) > os.path.getmtime(output))):
     print "Generating %s..." % output
 
     if protoc == None:
-      sys.stderr.write(
-          "protoc is not installed nor found in ../src.  Please compile it "
-          "or install the binary package.\n")
-      sys.exit(-1)
+    sys.stderr.write(
+        "protoc is not installed nor found in ../src.  Please compile it "
+        "or install the binary package.\n")
+    sys.exit(-1)
 
     protoc_command = [ protoc, "-I../src", "-I.", "--python_out=.", source ]
     if subprocess.call(protoc_command) != 0:
-      sys.exit(-1)
+    sys.exit(-1)
 
 def MakeTestSuite():
   # This is apparently needed on some systems to make sure that the tests
@@ -88,10 +88,10 @@ if __name__ == '__main__':
   if len(sys.argv) >= 2 and sys.argv[1] == "clean":
     # Delete generated _pb2.py files and .pyc files in the code tree.
     for (dirpath, dirnames, filenames) in os.walk("."):
-      for filename in filenames:
+    for filename in filenames:
         filepath = os.path.join(dirpath, filename)
         if filepath.endswith("_pb2.py") or filepath.endswith(".pyc"):
-          os.remove(filepath)
+        os.remove(filepath)
   else:
     # Generate necessary .proto file if it doesn't exist.
     # TODO(kenton):  Maybe we should hook this into a distutils command?
@@ -104,24 +104,24 @@ if __name__ == '__main__':
         test_suite = 'setup.MakeTestSuite',
         # Must list modules explicitly so that we don't install tests.
         py_modules = [
-          'google.protobuf.internal.containers',
-          'google.protobuf.internal.decoder',
-          'google.protobuf.internal.encoder',
-          'google.protobuf.internal.message_listener',
-          'google.protobuf.internal.type_checkers',
-          'google.protobuf.internal.wire_format',
-          'google.protobuf.descriptor',
-          'google.protobuf.descriptor_pb2',
-          'google.protobuf.message',
-          'google.protobuf.reflection',
-          'google.protobuf.service',
-          'google.protobuf.service_reflection',
-          'google.protobuf.text_format' ],
+        'google.protobuf.internal.containers',
+        'google.protobuf.internal.decoder',
+        'google.protobuf.internal.encoder',
+        'google.protobuf.internal.message_listener',
+        'google.protobuf.internal.type_checkers',
+        'google.protobuf.internal.wire_format',
+        'google.protobuf.descriptor',
+        'google.protobuf.descriptor_pb2',
+        'google.protobuf.message',
+        'google.protobuf.reflection',
+        'google.protobuf.service',
+        'google.protobuf.service_reflection',
+        'google.protobuf.text_format' ],
         url = 'http://code.google.com/p/protobuf/',
         maintainer = maintainer_email,
         maintainer_email = 'protobuf@googlegroups.com',
         license = 'New BSD License',
         description = 'Protocol Buffers',
         long_description =
-          "Protocol Buffers are Google's data interchange format.",
+        "Protocol Buffers are Google's data interchange format.",
         )

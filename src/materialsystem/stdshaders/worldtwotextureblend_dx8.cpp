@@ -16,7 +16,7 @@
 DEFINE_FALLBACK_SHADER( WorldTwoTextureBlend, WorldTwoTextureBlend_DX8 )
 
 BEGIN_VS_SHADER( WorldTwoTextureBlend_DX8,
-                 "Help for WorldTwoTextureBlend_DX8" )
+                "Help for WorldTwoTextureBlend_DX8" )
 
 BEGIN_SHADER_PARAMS
 SHADER_PARAM_OVERRIDE( BASETEXTURE, SHADER_PARAM_TYPE_TEXTURE, "shadertest/WorldTwoTextureBlend", "iris texture", 0 )
@@ -24,8 +24,8 @@ SHADER_PARAM( SELFILLUMTINT, SHADER_PARAM_TYPE_COLOR, "[1 1 1]", "Self-illuminat
 SHADER_PARAM( DETAIL, SHADER_PARAM_TYPE_TEXTURE, "shadertest/WorldTwoTextureBlend_detail", "detail texture" )
 SHADER_PARAM( DETAILSCALE, SHADER_PARAM_TYPE_FLOAT, "1.0", "scale of the detail texture" )
 SHADER_PARAM( DETAIL_ALPHA_MASK_BASE_TEXTURE, SHADER_PARAM_TYPE_BOOL, "0",
-              "If this is 1, then when detail alpha=0, no base texture is blended and when "
-              "detail alpha=1, you get detail*base*lightmap" )
+            "If this is 1, then when detail alpha=0, no base texture is blended and when "
+            "detail alpha=1, you get detail*base*lightmap" )
 END_SHADER_PARAMS
 
 SHADER_FALLBACK

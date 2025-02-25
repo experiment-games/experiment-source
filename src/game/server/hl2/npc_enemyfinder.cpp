@@ -27,7 +27,7 @@ ConVar ai_debug_enemyfinders( "ai_debug_enemyfinders", "0" );
 
 class CNPC_EnemyFinder : public CAI_BaseNPC
 {
-   public:
+    public:
     DECLARE_CLASS( CNPC_EnemyFinder, CAI_BaseNPC );
 
     CNPC_EnemyFinder()
@@ -68,7 +68,7 @@ class CNPC_EnemyFinder : public CAI_BaseNPC
 
     virtual void Wake( bool bFireOutput = true );
 
-   private:
+    private:
     int m_nStartOn;
     float m_flMinSearchDist;
     float m_flMaxSearchDist;
@@ -342,7 +342,7 @@ bool CNPC_EnemyFinder::IsValidEnemy( CBaseEntity *pTarget )
 void CNPC_EnemyFinder::StartNPC( void )
 {
     AddSpawnFlags( SF_NPC_FALL_TO_GROUND );  // this prevents CAI_BaseNPC from slamming the finder to
-                                             // the ground just because it's not MOVETYPE_FLY
+                                            // the ground just because it's not MOVETYPE_FLY
     BaseClass::StartNPC();
 
     if ( AI_IsSinglePlayer() && m_PlayerFreePass.GetParams().duration > 0.1 )
@@ -503,7 +503,7 @@ static CUtlVector< CBaseEntity * > s_ListEnemyfinders;
 
 class CNPC_EnemyFinderCombineCannon : public CNPC_EnemyFinder
 {
-   public:
+    public:
     DECLARE_CLASS( CNPC_EnemyFinderCombineCannon, CNPC_EnemyFinder );
     DECLARE_DATADESC();
 
@@ -513,7 +513,7 @@ class CNPC_EnemyFinderCombineCannon : public CNPC_EnemyFinder
         m_flTimeStopHateNPC = EF_COMBINE_CANNON_HATE_TIME_INVALID;
     };
 
-   public:
+    public:
     void Spawn();
     void Activate();
     void UpdateOnRemove();
@@ -523,7 +523,7 @@ class CNPC_EnemyFinderCombineCannon : public CNPC_EnemyFinder
 
     void InputSetWideFOVForSeconds( inputdata_t &inputdata );
 
-   public:
+    public:
     float m_flTimeNextHateNPC;
     float m_flTimeStopHateNPC;
     float m_flOriginalFOV;
@@ -679,49 +679,49 @@ bool CNPC_EnemyFinderCombineCannon::IsValidEnemy( CBaseEntity *pTarget )
 
     if( pPlayer != NULL )
     {
-      iPlayerRelationPriority = IRelationPriority(pPlayer);
+    iPlayerRelationPriority = IRelationPriority(pPlayer);
     }
 
     if( bResult == true && pTarget->IsNPC() && pPlayer != NULL && FInViewCone( pPlayer ) )
     {
-      if( HasCondition(COND_SEE_PLAYER) )
-      {
+    if( HasCondition(COND_SEE_PLAYER) )
+    {
         // The player is visible! Immediately ignore all NPCs as enemies.
         return false;
-      }
+    }
 
-      // The base class wants to call this a valid enemy. We may choose to interfere
-      // If the player is in my viewcone. That means that my func_tank could potentially
-      // harass the player. This means I should meter the time I spend shooting at npcs
-      // NPCs so that I can focus on the player.
-      if( m_flTimeStopHateNPC != EF_COMBINE_CANNON_HATE_TIME_INVALID )
-      {
+    // The base class wants to call this a valid enemy. We may choose to interfere
+    // If the player is in my viewcone. That means that my func_tank could potentially
+    // harass the player. This means I should meter the time I spend shooting at npcs
+    // NPCs so that I can focus on the player.
+    if( m_flTimeStopHateNPC != EF_COMBINE_CANNON_HATE_TIME_INVALID )
+    {
         // We currently hate NPC's. But is it time to stop?
         if( gpGlobals->curtime > m_flTimeStopHateNPC )
         {
-          // Don't interfere with the result
-          m_flTimeStopHateNPC = EF_COMBINE_CANNON_HATE_TIME_INVALID;
-          m_flTimeNextHateNPC = gpGlobals->curtime + ai_ef_hate_npc_frequency.GetFloat();
-          return bResult;
+        // Don't interfere with the result
+        m_flTimeStopHateNPC = EF_COMBINE_CANNON_HATE_TIME_INVALID;
+        m_flTimeNextHateNPC = gpGlobals->curtime + ai_ef_hate_npc_frequency.GetFloat();
+        return bResult;
         }
-      }
-      else
-      {
+    }
+    else
+    {
         // We do not hate NPCs at the moment. Is it time to turn it on?
         if( gpGlobals->curtime > m_flTimeNextHateNPC )
         {
-          m_flTimeStopHateNPC = gpGlobals->curtime + ai_ef_hate_npc_duration.GetFloat();
+        m_flTimeStopHateNPC = gpGlobals->curtime + ai_ef_hate_npc_duration.GetFloat();
         }
         else
         {
-          // Stop harassing player to attack something else higher priority.
-          if( IRelationPriority(pTarget) > iPlayerRelationPriority )
+        // Stop harassing player to attack something else higher priority.
+        if( IRelationPriority(pTarget) > iPlayerRelationPriority )
             return bResult;
         }
 
         // Make this enemy invalid.
         return false;
-      }
+    }
     }
     */
 

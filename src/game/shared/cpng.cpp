@@ -76,12 +76,12 @@ unsigned char *PNG_ReadFromBuffer( CUtlBuffer &buffer, const char *pFilePath, in
 
     // These color types don't have an alpha channel then fill it with 0xff.
     if ( colorType == PNG_COLOR_TYPE_RGB ||
-         colorType == PNG_COLOR_TYPE_GRAY ||
-         colorType == PNG_COLOR_TYPE_PALETTE )
+        colorType == PNG_COLOR_TYPE_GRAY ||
+        colorType == PNG_COLOR_TYPE_PALETTE )
         png_set_filler( readPointer, 0xFF, PNG_FILLER_AFTER );
 
     if ( colorType == PNG_COLOR_TYPE_GRAY ||
-         colorType == PNG_COLOR_TYPE_GRAY_ALPHA )
+        colorType == PNG_COLOR_TYPE_GRAY_ALPHA )
         png_set_gray_to_rgb( readPointer );
 
     png_read_update_info( readPointer, infoPointer );

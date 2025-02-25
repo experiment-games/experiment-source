@@ -17,7 +17,7 @@
 //=========================================================
 class CInfoIntermission : public CPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CInfoIntermission, CPointEntity );
 
     void Spawn( void );

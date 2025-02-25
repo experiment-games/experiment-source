@@ -17,7 +17,7 @@ class CPlayerResource : public CBaseEntity
 {
     DECLARE_CLASS( CPlayerResource, CBaseEntity );
 
-   public:
+    public:
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
 
@@ -35,7 +35,7 @@ class CPlayerResource : public CBaseEntity
 
     virtual int GetPing( int index );
 
-   protected:
+    protected:
     // Data for each player that's propagated to all clients
     // Stored in individual arrays so they can be sent down via datatables
     CNetworkArray( int, m_iPing, MAX_PLAYERS + 1 );

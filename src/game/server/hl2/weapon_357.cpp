@@ -31,7 +31,7 @@ class CWeapon357 : public CBaseHLCombatWeapon
 {
     DECLARE_CLASS( CWeapon357, CBaseHLCombatWeapon );
 
-   public:
+    public:
     CWeapon357( void );
 
     void PrimaryAttack( void );

@@ -33,21 +33,21 @@ ConVar gamerules_survival( "gamerules_survival", "0", FCVAR_REPLICATED );
 
 class CHalfLife2SurvivalProxy : public CGameRulesProxy
 {
-   public:
+    public:
     DECLARE_CLASS( CHalfLife2SurvivalProxy, CGameRulesProxy );
     DECLARE_NETWORKCLASS();
 };
 
 class CSurvivalAmmo
 {
-   public:
+    public:
     char m_szAmmoName[256];
     int m_iAmount;
 };
 
 class CSurvivalSettings
 {
-   public:
+    public:
     CSurvivalSettings();
 
     CUtlVector< char *, CUtlMemory< char * > > m_Loadout;
@@ -63,18 +63,18 @@ CSurvivalSettings::CSurvivalSettings()
 
 class CHalfLife2Survival : public CHalfLife2
 {
-   public:
+    public:
     DECLARE_CLASS( CHalfLife2Survival, CHalfLife2 );
 
 #ifdef CLIENT_DLL
 
     DECLARE_CLIENTCLASS_NOBASE();  // This makes datatables able to access our
-                                   // private vars.
+                                    // private vars.
 
 #else
 
     DECLARE_SERVERCLASS_NOBASE();  // This makes datatables able to access our
-                                   // private vars.
+                                    // private vars.
 
     CHalfLife2Survival();
     virtual ~CHalfLife2Survival()
@@ -95,7 +95,7 @@ class CHalfLife2Survival : public CHalfLife2
     void ParseSurvivalSettings( KeyValues *pSubKey );
     void ParseSurvivalAmmo( KeyValues *pSubKey );
 
-   private:
+    private:
     bool m_bActive;
     CSurvivalSettings m_SurvivalSettings;
 #endif
@@ -130,10 +130,10 @@ BEGIN_RECV_TABLE( CHalfLife2SurvivalProxy, DT_HalfLife2SurvivalProxy )
 RecvPropDataTable( "hl2_survival_gamerules_data", 0, 0, &REFERENCE_RECV_TABLE( DT_HL2SurvivalGameRules ), RecvProxy_HL2SurvivalGameRules ) END_RECV_TABLE()
 #else
 void *SendProxy_HL2SurvivalGameRules( const SendProp *pProp,
-                                      const void *pStructBase,
-                                      const void *pData,
-                                      CSendProxyRecipients *pRecipients,
-                                      int objectID )
+                                    const void *pStructBase,
+                                    const void *pData,
+                                    CSendProxyRecipients *pRecipients,
+                                    int objectID )
 {
     CHalfLife2Survival *pRules = HL2SurvivalGameRules();
     Assert( pRules );
@@ -172,7 +172,7 @@ bool CHalfLife2Survival::IsAllowedToSpawn( CBaseEntity *pEntity )
         return true;
 
     if ( Q_stristr( pPickups, pEntity->GetClassname() ) ||
-         Q_stristr( pPickups, STRING( pEntity->GetEntityName() ) ) )
+        Q_stristr( pPickups, STRING( pEntity->GetEntityName() ) ) )
         return true;
 
     return false;

@@ -64,7 +64,7 @@ CLIENTEFFECT_REGISTER_END()
 
 class CPrecipitationParticle
 {
-   public:
+    public:
     Vector m_Pos;
     Vector m_Velocity;
     float m_SpawnTime;  // Note: Tweak with this to change lifetime
@@ -88,7 +88,7 @@ void SnowFallManagerDestroy( void );
 
 class AshDebrisEffect : public CSimpleEmitter
 {
-   public:
+    public:
     AshDebrisEffect( const char *pDebugName )
         : CSimpleEmitter( pDebugName ) {}
 
@@ -97,7 +97,7 @@ class AshDebrisEffect : public CSimpleEmitter
     virtual float UpdateAlpha( const SimpleParticle *pParticle );
     virtual float UpdateRoll( SimpleParticle *pParticle, float timeDelta );
 
-   private:
+    private:
     AshDebrisEffect( const AshDebrisEffect & );
 };
 
@@ -110,7 +110,7 @@ class CClient_Precipitation : public C_BaseEntity
     class CPrecipitationEffect;
     friend class CClient_Precipitation::CPrecipitationEffect;
 
-   public:
+    public:
     DECLARE_CLASS( CClient_Precipitation, C_BaseEntity );
     DECLARE_CLIENTCLASS();
 
@@ -122,7 +122,7 @@ class CClient_Precipitation : public C_BaseEntity
 
     void Render();
 
-   private:
+    private:
     // Creates a single particle
     CPrecipitationParticle *CreateParticle();
 
@@ -194,7 +194,7 @@ class CClient_Precipitation : public C_BaseEntity
 
     int m_iAshCount;
 
-   private:
+    private:
     CClient_Precipitation( const CClient_Precipitation & );  // not defined, not accessible
 };
 
@@ -756,7 +756,7 @@ bool CClient_Precipitation::ComputeEmissionArea( Vector &origin, Vector2D &size 
 
     // Cull non-intersecting.
     if ( ( vMaxs[0] < lobound[0] ) || ( vMaxs[1] < lobound[1] ) ||
-         ( vMins[0] > hibound[0] ) || ( vMins[1] > hibound[1] ) )
+        ( vMins[0] > hibound[0] ) || ( vMins[1] > hibound[1] ) )
         return false;
 
     origin[0] = MAX( vMins[0], lobound[0] );
@@ -1090,7 +1090,7 @@ CHandle< CClient_Precipitation > g_pPrecipHackEnt;
 
 class CPrecipHack : public CAutoGameSystemPerFrame
 {
-   public:
+    public:
     CPrecipHack( char const *name )
         : CAutoGameSystemPerFrame( name )
     {
@@ -1146,7 +1146,7 @@ void DrawPrecipitation()
 //-----------------------------------------------------------------------------
 class C_EnvWind : public C_BaseEntity
 {
-   public:
+    public:
     C_EnvWind();
 
     DECLARE_CLIENTCLASS();
@@ -1160,7 +1160,7 @@ class C_EnvWind : public C_BaseEntity
 
     virtual void ClientThink();
 
-   private:
+    private:
     C_EnvWind( const C_EnvWind & );
 
     CEnvWindShared m_EnvWindShared;
@@ -1219,13 +1219,13 @@ void C_EnvWind::ClientThink()
 
 class CEmberEmitter : public CSimpleEmitter
 {
-   public:
+    public:
     CEmberEmitter( const char *pDebugName );
     static CSmartPtr< CEmberEmitter > Create( const char *pDebugName );
     virtual void UpdateVelocity( SimpleParticle *pParticle, float timeDelta );
     virtual Vector UpdateColor( const SimpleParticle *pParticle );
 
-   private:
+    private:
     CEmberEmitter( const CEmberEmitter & );
 };
 
@@ -1283,7 +1283,7 @@ Vector CEmberEmitter::UpdateColor( const SimpleParticle *pParticle )
 
 class C_Embers : public C_BaseEntity
 {
-   public:
+    public:
     DECLARE_CLIENTCLASS();
     DECLARE_CLASS( C_Embers, C_BaseEntity );
 
@@ -1302,7 +1302,7 @@ class C_Embers : public C_BaseEntity
     int m_nSpeed;
     bool m_bEmit;
 
-   protected:
+    protected:
     void SpawnEmber( void );
 
     PMaterialHandle m_hMaterial;
@@ -1436,7 +1436,7 @@ void C_Embers::SpawnEmber( void )
 
 class C_QuadraticBeam : public C_BaseEntity
 {
-   public:
+    public:
     DECLARE_CLIENTCLASS();
     DECLARE_CLASS( C_QuadraticBeam, C_BaseEntity );
 
@@ -1457,7 +1457,7 @@ class C_QuadraticBeam : public C_BaseEntity
         maxs -= GetRenderOrigin();
     }
 
-   protected:
+    protected:
     Vector m_targetPosition;
     Vector m_controlPosition;
     float m_scrollRate;
@@ -1489,7 +1489,7 @@ int C_QuadraticBeam::DrawModel( int )
 //-----------------------------------------------------------------------------
 class SnowFallEffect : public CSimpleEmitter
 {
-   public:
+    public:
     SnowFallEffect( const char *pDebugName )
         : CSimpleEmitter( pDebugName ) {}
     static SnowFallEffect *Create( const char *pDebugName )
@@ -1556,7 +1556,7 @@ class SnowFallEffect : public CSimpleEmitter
         return false;
     }
 
-   private:
+    private:
     SnowFallEffect( const SnowFallEffect & );
 };
 
@@ -1564,7 +1564,7 @@ class SnowFallEffect : public CSimpleEmitter
 //-----------------------------------------------------------------------------
 class CSnowFallManager : public C_BaseEntity
 {
-   public:
+    public:
     CSnowFallManager();
     ~CSnowFallManager();
 
@@ -1588,7 +1588,7 @@ class CSnowFallManager : public C_BaseEntity
         return false;
     }
 
-   private:
+    private:
     bool CreateSnowFallEmitter( void );
     void CreateSnowFall( void );
     void CreateSnowFallParticles( float flCurrentTime, float flRadius, const Vector &vecEyePos, const Vector &vecForward, float flZoomScale );
@@ -1603,7 +1603,7 @@ class CSnowFallManager : public C_BaseEntity
 
     void UpdateBounds( const Vector &vecSnowMin, const Vector &vecSnowMax );
 
-   private:
+    private:
     enum
     {
         MAX_SNOW_PARTICLES = 500

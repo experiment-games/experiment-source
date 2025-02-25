@@ -51,15 +51,15 @@ ConVar bot_crouch( "plugin_bot_crouch", "0", 0, "Bot crouches" );
 // This is our bot class.
 class CPluginBot
 {
-   public:
+    public:
     CPluginBot()
         : m_bBackwards( 0 ),
-          m_flNextTurnTime( 0 ),
-          m_bLastTurnToRight( 0 ),
-          m_flNextStrafeTime( 0 ),
-          m_flSideMove( 0 ),
-          m_ForwardAngle(),
-          m_LastAngles()
+        m_flNextTurnTime( 0 ),
+        m_bLastTurnToRight( 0 ),
+        m_flNextStrafeTime( 0 ),
+        m_flSideMove( 0 ),
+        m_ForwardAngle(),
+        m_LastAngles()
     {
     }
 

@@ -17,7 +17,7 @@
 // This is the DLL interface to ShaderCompile
 abstract_class IShaderCompileDLL
 {
-   public:
+    public:
     // All vrad.exe does is load the VRAD DLL and run this.
     virtual int main( int argc, char **argv ) = 0;
 };

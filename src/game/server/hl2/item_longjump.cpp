@@ -20,7 +20,7 @@
 
 class CItemLongJump : public CItem
 {
-   public:
+    public:
     DECLARE_CLASS( CItemLongJump, CItem );
 
     void Spawn( void )

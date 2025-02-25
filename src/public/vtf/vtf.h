@@ -166,7 +166,7 @@ enum LookDir_t
 //-----------------------------------------------------------------------------
 class IVTFTexture
 {
-   public:
+    public:
     virtual ~IVTFTexture() {}
 
     // Initializes the texture and allocates space for the bits

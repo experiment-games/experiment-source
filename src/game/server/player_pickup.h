@@ -58,7 +58,7 @@ CBaseEntity *Pickup_OnFailedPhysGunPickup( CBaseEntity *pPickedUpObject, Vector 
 
 abstract_class IPlayerPickupVPhysics
 {
-   public:
+    public:
     // Callbacks for the physgun/cannon picking up an entity
     virtual bool OnAttemptPhysGunPickup( CBasePlayer * pPhysGunUser, PhysGunPickup_t reason = PICKED_UP_BY_CANNON ) = 0;
     virtual CBaseEntity *OnFailedPhysGunPickup( Vector vPhysgunPos ) = 0;
@@ -74,7 +74,7 @@ abstract_class IPlayerPickupVPhysics
 
 class CDefaultPlayerPickupVPhysics : public IPlayerPickupVPhysics
 {
-   public:
+    public:
     virtual bool OnAttemptPhysGunPickup( CBasePlayer *pPhysGunUser, PhysGunPickup_t reason = PICKED_UP_BY_CANNON )
     {
         return true;

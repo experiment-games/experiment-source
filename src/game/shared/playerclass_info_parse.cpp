@@ -231,8 +231,8 @@ void FilePlayerClassInfo_t::Parse( KeyValues *pKeyValuesData, const char *szPlay
     // make sure two weapons aren't in the same slot & position
     if (g_bUsedPlayerClassSlots[iSlot])
     {
-      Msg( "Weapon slot info: %s (%d, %d)\n", szPrintName, iSlot, iPosition );
-      Warning( "Duplicately assigned weapon to slots in selection hud\n" );
+    Msg( "Weapon slot info: %s (%d, %d)\n", szPrintName, iSlot, iPosition );
+    Warning( "Duplicately assigned weapon to slots in selection hud\n" );
     }
     g_bUsedPlayerClassSlots[iSlot][iPosition] = true;
     */

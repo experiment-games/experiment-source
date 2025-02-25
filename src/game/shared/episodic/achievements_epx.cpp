@@ -17,7 +17,7 @@ CAchievementMgr g_AchievementMgrEpisodic;  // global achievement mgr for episodi
 
 class CAchievementEpXGetZombineGrenade : public CBaseAchievement
 {
-   protected:
+    protected:
     void Init()
     {
         SetFlags( ACH_SAVE_GLOBAL );
@@ -62,7 +62,7 @@ DECLARE_ACHIEVEMENT( CAchievementEpXGetZombineGrenade, ACHIEVEMENT_EPX_GET_ZOMBI
 
 class CAchievementEpXKillZombiesWithFlares : public CBaseAchievement
 {
-   protected:
+    protected:
     void Init()
     {
         SetFlags( ACH_SAVE_WITH_GAME );
@@ -87,8 +87,8 @@ class CAchievementEpXKillZombiesWithFlares : public CBaseAchievement
             CBaseEntity *pEntityIgnited = UTIL_EntityByIndex( event->GetInt( "entindex" ) );
             // was it a zombie that got set on fire?
             if ( pEntityIgnited &&
-                 ( ( pEntityIgnited->ClassMatches( "npc_zombie" ) ) || ( pEntityIgnited->ClassMatches( "npc_zombine" ) ) ||
-                   ( pEntityIgnited->ClassMatches( "npc_fastzombie" ) ) || ( pEntityIgnited->ClassMatches( "npc_poisonzombie" ) ) ) )
+                ( ( pEntityIgnited->ClassMatches( "npc_zombie" ) ) || ( pEntityIgnited->ClassMatches( "npc_zombine" ) ) ||
+                    ( pEntityIgnited->ClassMatches( "npc_fastzombie" ) ) || ( pEntityIgnited->ClassMatches( "npc_poisonzombie" ) ) ) )
             {
                 IncrementCount();
             }

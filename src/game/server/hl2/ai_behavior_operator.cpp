@@ -197,11 +197,11 @@ void CAI_OperatorBehavior::StartTask( const Task_t *pTask )
                 AI_NavGoal_t nearGoal( GOALTYPE_LOCATION_NEAREST_NODE, m_hTargetObject->GetAbsOrigin(), AIN_DEF_ACTIVITY, 256 );
                 if ( GetNavigator()->SetGoal( nearGoal, AIN_CLEAR_PREVIOUS_STATE ) )
                 {
-                  //FIXME: HACK! The internal pathfinding is setting this without our consent, so override it!
-                  ClearCondition( COND_TASK_FAILED );
-                  GetNavigator()->SetArrivalDirection( m_hTargetObject->GetAbsAngles() );
-                  TaskComplete();
-                  return;
+                //FIXME: HACK! The internal pathfinding is setting this without our consent, so override it!
+                ClearCondition( COND_TASK_FAILED );
+                GetNavigator()->SetArrivalDirection( m_hTargetObject->GetAbsAngles() );
+                TaskComplete();
+                return;
                 }
                 */
             }
@@ -223,12 +223,12 @@ void CAI_OperatorBehavior::StartTask( const Task_t *pTask )
 void CAI_OperatorBehavior::RunTask( const Task_t *pTask )
 {
     /*
-      switch( pTask->iTask )
-      {
-      default:
+    switch( pTask->iTask )
+    {
+    default:
         BaseClass::RunTask( pTask );
         break;
-      }
+    }
     */
     BaseClass::RunTask( pTask );
 }

@@ -14,7 +14,7 @@
 
 class ISteamMusicRemote
 {
-   public:
+    public:
     // Service Definition
     virtual bool RegisterSteamMusicRemote( const char *pchName ) = 0;
     virtual bool DeregisterSteamMusicRemote() = 0;

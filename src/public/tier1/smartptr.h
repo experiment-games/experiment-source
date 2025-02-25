@@ -13,7 +13,7 @@
 
 class CRefCountAccessor
 {
-   public:
+    public:
     template < class T >
     static void AddRef( T *pObj )
     {
@@ -30,7 +30,7 @@ class CRefCountAccessor
 // This can be used if your objects use AddReference/ReleaseReference function names.
 class CRefCountAccessorLongName
 {
-   public:
+    public:
     template < class T >
     static void AddRef( T *pObj )
     {
@@ -62,7 +62,7 @@ class CRefCountAccessorLongName
 template < typename T >
 class CPlainAutoPtr
 {
-   public:
+    public:
     explicit CPlainAutoPtr( T *p = NULL )
         : m_p( p ) {}
     ~CPlainAutoPtr( void )
@@ -70,17 +70,17 @@ class CPlainAutoPtr
         Delete();
     }
 
-   public:
+    public:
     void Delete( void )
     {
         delete Detach();
     }
 
-   private:  // Disallow copying, use Detach() instead to avoid ambiguity
+    private:  // Disallow copying, use Detach() instead to avoid ambiguity
     CPlainAutoPtr( CPlainAutoPtr const &x );
     CPlainAutoPtr &operator=( CPlainAutoPtr const &x );
 
-   public:
+    public:
     void Attach( T *p )
     {
         m_p = p;
@@ -92,7 +92,7 @@ class CPlainAutoPtr
         return p;
     }
 
-   public:
+    public:
     bool IsValid( void ) const
     {
         return m_p != NULL;
@@ -110,7 +110,7 @@ class CPlainAutoPtr
         return *Get();
     }
 
-   private:
+    private:
     T *m_p;
 };
 
@@ -131,7 +131,7 @@ class CPlainAutoPtr
 template < typename T >
 class CArrayAutoPtr : public CPlainAutoPtr< T >  // Warning: no polymorphic destructor (delete on base class will be a mistake)
 {
-   public:
+    public:
     explicit CArrayAutoPtr( T *p = NULL )
     {
         this->Attach( p );
@@ -141,13 +141,13 @@ class CArrayAutoPtr : public CPlainAutoPtr< T >  // Warning: no polymorphic dest
         this->Delete();
     }
 
-   public:
+    public:
     void Delete( void )
     {
         delete[] CPlainAutoPtr< T >::Detach();
     }
 
-   public:
+    public:
     T &operator[]( int k ) const
     {
         return CPlainAutoPtr< T >::Get()[k];
@@ -161,7 +161,7 @@ class CArrayAutoPtr : public CPlainAutoPtr< T >  // Warning: no polymorphic dest
 template < class T, class RefCountAccessor = CRefCountAccessor >
 class CSmartPtr
 {
-   public:
+    public:
     CSmartPtr();
     CSmartPtr( T *pObj );
     CSmartPtr( const CSmartPtr< T, RefCountAccessor > &other );
@@ -177,7 +177,7 @@ class CSmartPtr
     T *GetObject() const;  // Get temporary object pointer, don't store it for later reuse!
     void MarkDeleted();
 
-   private:
+    private:
     T *m_pObj;
 };
 
@@ -290,7 +290,7 @@ inline T *CSmartPtr< T, RefCountAccessor >::GetObject() const
 template < typename T >
 class CAutoPushPop
 {
-   public:
+    public:
     explicit CAutoPushPop( T &var )
         : m_rVar( var ), m_valPop( var ) {}
     CAutoPushPop( T &var, T const &valPush )
@@ -309,17 +309,17 @@ class CAutoPushPop
         m_rVar = m_valPop;
     }
 
-   private:  // forbid copying
+    private:  // forbid copying
     CAutoPushPop( CAutoPushPop const &x );
     CAutoPushPop &operator=( CAutoPushPop const &x );
 
-   public:
+    public:
     T &Get()
     {
         return m_rVar;
     }
 
-   private:
+    private:
     T &m_rVar;
     T m_valPop;
 };

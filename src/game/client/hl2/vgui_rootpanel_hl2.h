@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ============//
 //
 // Purpose:
 //
@@ -27,7 +27,7 @@ class C_ScriptedBaseGameUIPanel : public vgui::Panel
 {
     typedef vgui::Panel BaseClass;
 
-   public:
+    public:
     C_ScriptedBaseGameUIPanel( vgui::VPANEL parent );
     virtual ~C_ScriptedBaseGameUIPanel( void );
 
@@ -41,7 +41,7 @@ class C_ScriptedBaseGameUIPanel : public vgui::Panel
     // Run effects and let them decide whether to remove themselves
     void OnTick( void );
 
-   private:
+    private:
     // Render all panel effects
     void RenderPanelEffects( void );
 

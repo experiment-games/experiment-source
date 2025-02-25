@@ -21,7 +21,7 @@
 //-----------------------------------------------------------------------------
 class C_TEMetalSparks : public C_BaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLIENTCLASS();
 
     C_TEMetalSparks( void );
@@ -31,7 +31,7 @@ class C_TEMetalSparks : public C_BaseTempEntity
 
     virtual void Precache( void );
 
-   public:
+    public:
     Vector m_vecPos;
     Vector m_vecDir;
 
@@ -112,7 +112,7 @@ class C_TEArmorRicochet : public C_TEMetalSparks
 {
     DECLARE_CLASS( C_TEArmorRicochet, C_TEMetalSparks );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
     virtual void PostDataUpdate( DataUpdateType_t updateType );
 };

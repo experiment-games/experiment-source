@@ -554,7 +554,7 @@ class RepeatedFieldIteratorTest : public testing::Test {
  protected:
   virtual void SetUp() {
     for (int i = 0; i < 3; ++i) {
-      proto_array_.Add(i);
+    proto_array_.Add(i);
     }
   }
 
@@ -685,7 +685,7 @@ TEST_F(RepeatedPtrFieldIteratorTest, STLAlgorithms_lower_bound) {
 
   string v = "f";
   RepeatedPtrField<string>::const_iterator it =
-      lower_bound(proto_array_.begin(), proto_array_.end(), v);
+    lower_bound(proto_array_.begin(), proto_array_.end(), v);
 
   EXPECT_EQ(*it, "n");
   EXPECT_TRUE(it == proto_array_.begin() + 3);
@@ -712,12 +712,12 @@ class RepeatedPtrFieldPtrsIteratorTest : public testing::Test {
 
 TEST_F(RepeatedPtrFieldPtrsIteratorTest, ConvertiblePtr) {
   RepeatedPtrField<string>::pointer_iterator iter =
-      proto_array_.pointer_begin();
+    proto_array_.pointer_begin();
 }
 
 TEST_F(RepeatedPtrFieldPtrsIteratorTest, MutablePtrIteration) {
   RepeatedPtrField<string>::pointer_iterator iter =
-      proto_array_.pointer_begin();
+    proto_array_.pointer_begin();
   EXPECT_EQ("foo", **iter);
   ++iter;
   EXPECT_EQ("bar", **(iter++));
@@ -729,7 +729,7 @@ TEST_F(RepeatedPtrFieldPtrsIteratorTest, MutablePtrIteration) {
 
 TEST_F(RepeatedPtrFieldPtrsIteratorTest, RandomPtrAccess) {
   RepeatedPtrField<string>::pointer_iterator iter =
-      proto_array_.pointer_begin();
+    proto_array_.pointer_begin();
   RepeatedPtrField<string>::pointer_iterator iter2 = iter;
   ++iter2;
   ++iter2;
@@ -742,7 +742,7 @@ TEST_F(RepeatedPtrFieldPtrsIteratorTest, RandomPtrAccess) {
 
 TEST_F(RepeatedPtrFieldPtrsIteratorTest, ComparablePtr) {
   RepeatedPtrField<string>::pointer_iterator iter =
-      proto_array_.pointer_begin();
+    proto_array_.pointer_begin();
   RepeatedPtrField<string>::pointer_iterator iter2 = iter + 1;
   EXPECT_TRUE(iter == iter);
   EXPECT_TRUE(iter != iter2);
@@ -790,11 +790,11 @@ TEST_F(RepeatedPtrFieldPtrsIteratorTest, PtrSTLAlgorithms_lower_bound) {
   proto_array_.Add()->assign("y");
 
   RepeatedPtrField<string>::pointer_iterator iter =
-      proto_array_.pointer_begin();
+    proto_array_.pointer_begin();
   string v = "f";
   RepeatedPtrField<string>::pointer_iterator it =
-      lower_bound(proto_array_.pointer_begin(), proto_array_.pointer_end(),
-                  &v, StringLessThan());
+    lower_bound(proto_array_.pointer_begin(), proto_array_.pointer_end(),
+                &v, StringLessThan());
 
   GOOGLE_CHECK(*it != NULL);
 
@@ -804,7 +804,7 @@ TEST_F(RepeatedPtrFieldPtrsIteratorTest, PtrSTLAlgorithms_lower_bound) {
 
 TEST_F(RepeatedPtrFieldPtrsIteratorTest, PtrMutation) {
   RepeatedPtrField<string>::pointer_iterator iter =
-      proto_array_.pointer_begin();
+    proto_array_.pointer_begin();
   **iter = "qux";
   EXPECT_EQ("qux", proto_array_.Get(0));
 
@@ -832,8 +832,8 @@ TEST_F(RepeatedPtrFieldPtrsIteratorTest, Sort) {
   EXPECT_EQ("n", proto_array_.Get(5));
   EXPECT_EQ("x", proto_array_.Get(9));
   sort(proto_array_.pointer_begin(),
-       proto_array_.pointer_end(),
-       StringLessThan());
+        proto_array_.pointer_end(),
+        StringLessThan());
   EXPECT_EQ("a", proto_array_.Get(0));
   EXPECT_EQ("baz", proto_array_.Get(2));
   EXPECT_EQ("y", proto_array_.Get(9));
@@ -864,7 +864,7 @@ class RepeatedFieldInsertionIteratorsTest : public testing::Test {
     fibonacci.push_back(5);
     fibonacci.push_back(8);
     std::copy(fibonacci.begin(), fibonacci.end(),
-              RepeatedFieldBackInserter(protobuffer.mutable_repeated_int32()));
+            RepeatedFieldBackInserter(protobuffer.mutable_repeated_int32()));
 
     halves.push_back(1.0);
     halves.push_back(0.5);
@@ -872,7 +872,7 @@ class RepeatedFieldInsertionIteratorsTest : public testing::Test {
     halves.push_back(0.125);
     halves.push_back(0.0625);
     std::copy(halves.begin(), halves.end(),
-              RepeatedFieldBackInserter(protobuffer.mutable_repeated_double()));
+            RepeatedFieldBackInserter(protobuffer.mutable_repeated_double()));
 
     words.push_back("Able");
     words.push_back("was");
@@ -882,21 +882,21 @@ class RepeatedFieldInsertionIteratorsTest : public testing::Test {
     words.push_back("saw");
     words.push_back("Elba");
     std::copy(words.begin(), words.end(),
-              RepeatedFieldBackInserter(protobuffer.mutable_repeated_string()));
+            RepeatedFieldBackInserter(protobuffer.mutable_repeated_string()));
 
     nesteds[0].set_bb(17);
     nesteds[1].set_bb(4711);
     std::copy(&nesteds[0], &nesteds[2],
-              RepeatedFieldBackInserter(
-                  protobuffer.mutable_repeated_nested_message()));
+            RepeatedFieldBackInserter(
+                protobuffer.mutable_repeated_nested_message()));
 
     nested_ptrs.push_back(new Nested);
     nested_ptrs.back()->set_bb(170);
     nested_ptrs.push_back(new Nested);
     nested_ptrs.back()->set_bb(47110);
     std::copy(nested_ptrs.begin(), nested_ptrs.end(),
-              RepeatedFieldBackInserter(
-                  protobuffer.mutable_repeated_nested_message()));
+            RepeatedFieldBackInserter(
+                protobuffer.mutable_repeated_nested_message()));
 
   }
 
@@ -907,20 +907,20 @@ class RepeatedFieldInsertionIteratorsTest : public testing::Test {
 
 TEST_F(RepeatedFieldInsertionIteratorsTest, Fibonacci) {
   EXPECT_TRUE(std::equal(fibonacci.begin(),
-                         fibonacci.end(),
-                         protobuffer.repeated_int32().begin()));
+                        fibonacci.end(),
+                        protobuffer.repeated_int32().begin()));
   EXPECT_TRUE(std::equal(protobuffer.repeated_int32().begin(),
-                         protobuffer.repeated_int32().end(),
-                         fibonacci.begin()));
+                        protobuffer.repeated_int32().end(),
+                        fibonacci.begin()));
 }
 
 TEST_F(RepeatedFieldInsertionIteratorsTest, Halves) {
   EXPECT_TRUE(std::equal(halves.begin(),
-                         halves.end(),
-                         protobuffer.repeated_double().begin()));
+                        halves.end(),
+                        protobuffer.repeated_double().begin()));
   EXPECT_TRUE(std::equal(protobuffer.repeated_double().begin(),
-                         protobuffer.repeated_double().end(),
-                         halves.begin()));
+                        protobuffer.repeated_double().end(),
+                        halves.begin()));
 }
 
 TEST_F(RepeatedFieldInsertionIteratorsTest, Words) {
@@ -943,7 +943,7 @@ TEST_F(RepeatedFieldInsertionIteratorsTest, Nesteds) {
 }
 
 TEST_F(RepeatedFieldInsertionIteratorsTest,
-       AllocatedRepeatedPtrFieldWithStringIntData) {
+        AllocatedRepeatedPtrFieldWithStringIntData) {
   vector<Nested*> data;
   TestAllTypes goldenproto;
   for (int i = 0; i < 10; ++i) {
@@ -956,13 +956,13 @@ TEST_F(RepeatedFieldInsertionIteratorsTest,
   }
   TestAllTypes testproto;
   copy(data.begin(), data.end(),
-       AllocatedRepeatedPtrFieldBackInserter(
-           testproto.mutable_repeated_nested_message()));
+        AllocatedRepeatedPtrFieldBackInserter(
+            testproto.mutable_repeated_nested_message()));
   EXPECT_EQ(testproto.DebugString(), goldenproto.DebugString());
 }
 
 TEST_F(RepeatedFieldInsertionIteratorsTest,
-       AllocatedRepeatedPtrFieldWithString) {
+        AllocatedRepeatedPtrFieldWithString) {
   vector<string*> data;
   TestAllTypes goldenproto;
   for (int i = 0; i < 10; ++i) {
@@ -975,8 +975,8 @@ TEST_F(RepeatedFieldInsertionIteratorsTest,
   }
   TestAllTypes testproto;
   copy(data.begin(), data.end(),
-       AllocatedRepeatedPtrFieldBackInserter(
-           testproto.mutable_repeated_string()));
+        AllocatedRepeatedPtrFieldBackInserter(
+            testproto.mutable_repeated_string()));
   EXPECT_EQ(testproto.DebugString(), goldenproto.DebugString());
 }
 

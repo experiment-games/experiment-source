@@ -273,9 +273,9 @@ void SendProxy_LuaVariableElement_String( const SendProp *pProp, const void *pSt
     CBaseEntity *entity = ( CBaseEntity * )pStruct;
     Assert( entity );
 #endif
-    
-	string_t *pString = (string_t*)pVarData;
-	pOut->m_pString = (char*)STRING( *pString );
+
+    string_t *pString = (string_t*)pVarData;
+    pOut->m_pString = (char*)STRING( *pString );
 }
 
 BEGIN_SEND_TABLE_NOBASE( CBaseEntity, DT_BaseEntityLuaVariables )
@@ -340,7 +340,7 @@ IMPLEMENT_SERVERCLASS_ST_NOBASE( CBaseEntity, DT_BaseEntity )
 #ifdef TF_DLL
     SendPropArray3( SENDINFO_ARRAY3( m_nModelIndexOverrides ), SendPropInt( SENDINFO_ARRAY( m_nModelIndexOverrides ), SP_MODEL_INDEX_BITS, 0 ) ),
 #endif
-    
+
 #ifdef LUA_SDK // NetworkVariables
     SendPropDataTable( "BaseEntityLuaVariables", 0, &REFERENCE_SEND_TABLE( DT_BaseEntityLuaVariables ) ),
 #endif // LUA_SDK NetworkVariables
@@ -352,10 +352,10 @@ static bool WORKAROUND_NASTY_FORMATTING_BUG2;  // clang-format on
 // dynamic models
 class CBaseEntityModelLoadProxy
 {
-   protected:
+    protected:
     class Handler : public IModelLoadCallback
     {
-       public:
+        public:
         explicit Handler( CBaseEntity *pEntity )
             : m_pEntity( pEntity ) {}
         virtual void OnModelLoadComplete( const model_t *pModel );
@@ -363,7 +363,7 @@ class CBaseEntityModelLoadProxy
     };
     Handler *m_pHandler;
 
-   public:
+    public:
     explicit CBaseEntityModelLoadProxy( CBaseEntity *pEntity )
         : m_pHandler( new Handler( pEntity ) ) {}
     ~CBaseEntityModelLoadProxy()
@@ -379,7 +379,7 @@ class CBaseEntityModelLoadProxy
         return m_pHandler->m_pEntity;
     }
 
-   private:
+    private:
     CBaseEntityModelLoadProxy( const CBaseEntityModelLoadProxy & );
     CBaseEntityModelLoadProxy &operator=( const CBaseEntityModelLoadProxy & );
 };
@@ -925,7 +925,7 @@ void CBaseEntity::DrawTimedOverlays( void )
 
         // Remove old messages unless messages are paused
         if ( ( !CBaseEntity::Debug_IsPaused() && gpGlobals->curtime > pTO->msgEndTime ) ||
-             ( nCount > 10 ) )
+            ( nCount > 10 ) )
         {
             if ( pLastTO )
             {
@@ -1330,23 +1330,23 @@ void CBaseEntity::ValidateEntityConnections()
         return;
 
     if ( ClassMatches( "scripted_*" ) ||
-         ClassMatches( "trigger_relay" ) ||
-         ClassMatches( "trigger_auto" ) ||
-         ClassMatches( "path_*" ) ||
-         ClassMatches( "monster_*" ) ||
-         ClassMatches( "trigger_teleport" ) ||
-         ClassMatches( "func_train" ) ||
-         ClassMatches( "func_tracktrain" ) ||
-         ClassMatches( "func_plat*" ) ||
-         ClassMatches( "npc_*" ) ||
-         ClassMatches( "info_big*" ) ||
-         ClassMatches( "env_texturetoggle" ) ||
-         ClassMatches( "env_render" ) ||
-         ClassMatches( "func_areaportalwindow" ) ||
-         ClassMatches( "point_view*" ) ||
-         ClassMatches( "func_traincontrols" ) ||
-         ClassMatches( "multisource" ) ||
-         ClassMatches( "xen_plant*" ) )
+        ClassMatches( "trigger_relay" ) ||
+        ClassMatches( "trigger_auto" ) ||
+        ClassMatches( "path_*" ) ||
+        ClassMatches( "monster_*" ) ||
+        ClassMatches( "trigger_teleport" ) ||
+        ClassMatches( "func_train" ) ||
+        ClassMatches( "func_tracktrain" ) ||
+        ClassMatches( "func_plat*" ) ||
+        ClassMatches( "npc_*" ) ||
+        ClassMatches( "info_big*" ) ||
+        ClassMatches( "env_texturetoggle" ) ||
+        ClassMatches( "env_render" ) ||
+        ClassMatches( "func_areaportalwindow" ) ||
+        ClassMatches( "point_view*" ) ||
+        ClassMatches( "func_traincontrols" ) ||
+        ClassMatches( "multisource" ) ||
+        ClassMatches( "xen_plant*" ) )
         return;
 
     datamap_t *dmap = GetDataDescMap();
@@ -1502,7 +1502,7 @@ int CBaseEntity::OnTakeDamage( const CTakeDamageInfo &info )
         else
         {
             if ( info.GetInflictor() && ( GetMoveType() == MOVETYPE_WALK || GetMoveType() == MOVETYPE_STEP ) &&
-                 !info.GetAttacker()->IsSolidFlagSet( FSOLID_TRIGGER ) )
+                !info.GetAttacker()->IsSolidFlagSet( FSOLID_TRIGGER ) )
             {
                 Vector vecDir, vecInflictorCentroid;
                 vecDir = WorldSpaceCenter();
@@ -2123,11 +2123,11 @@ void CBaseEntity::UpdateOnRemove( void )
             // the graph since we are removing it from the world.
             for ( int i = 0 ; i < WorldGraph.m_cLinks ; i++ )
             {
-              if ( WorldGraph.m_pLinkPool [ i ].m_pLinkEnt == pev )
-              {
+            if ( WorldGraph.m_pLinkPool [ i ].m_pLinkEnt == pev )
+            {
                 // if this link has a link ent which is the same ent that is removing itself, remove it!
                 WorldGraph.m_pLinkPool [ i ].m_pLinkEnt = NULL;
-              }
+            }
             }
             */
         }
@@ -2742,7 +2742,7 @@ void CBaseEntity::PhysicsTouchTriggers( const Vector *pPrevAbsOrigin )
         Assert( CollisionProp() );
         bool isTriggerCheckSolids = IsSolidFlagSet( FSOLID_TRIGGER );
         bool isSolidCheckTriggers = IsSolid() && !isTriggerCheckSolids;  // NOTE: Moving triggers (items, ammo etc) are not
-                                                                         // checked against other triggers to reduce the number of touchlinks created
+                                                                        // checked against other triggers to reduce the number of touchlinks created
         if ( !( isSolidCheckTriggers || isTriggerCheckSolids ) )
             return;
 
@@ -3661,7 +3661,7 @@ int CBaseEntity::UpdateTransmitState()
     // If an object is the moveparent of something else, don't skip it just because it's marked EF_NODRAW or else
     //  the client won't have a proper origin for the child since the hierarchy won't be correctly transmitted down
     if ( IsEffectActive( EF_NODRAW ) &&
-         !m_hMoveChild.Get() )
+        !m_hMoveChild.Get() )
     {
         return SetTransmitState( FL_EDICT_DONTSEND );
     }
@@ -3762,9 +3762,9 @@ int CBaseEntity::ShouldTransmit( const CCheckTransmitInfo *pInfo )
     }
 
     /*#ifdef INVASION_DLL
-      // Check test network vis distance stuff. Eventually network LOD will do this.
-      float flTestDistSqr = pRecipientEntity->GetAbsOrigin().DistToSqr( WorldSpaceCenter() );
-      if ( flTestDistSqr > sv_netvisdist.GetFloat() * sv_netvisdist.GetFloat() )
+    // Check test network vis distance stuff. Eventually network LOD will do this.
+    float flTestDistSqr = pRecipientEntity->GetAbsOrigin().DistToSqr( WorldSpaceCenter() );
+    if ( flTestDistSqr > sv_netvisdist.GetFloat() * sv_netvisdist.GetFloat() )
         return TRANSMIT_NO;	// TODO doesn't work with HLTV
     #endif*/
 
@@ -4101,11 +4101,11 @@ bool CBaseEntity::AcceptInput( const char *szInputName, CBaseEntity *pActivator,
                             {
                                 // bad conversion
                                 Warning( "!! ERROR: bad input/output link:\n!! %s(%s,%s) doesn't match type from %s(%s)\n",
-                                         STRING( m_iClassname ),
-                                         GetDebugName(),
-                                         szInputName,
-                                         ( pCaller != NULL ) ? STRING( pCaller->m_iClassname ) : "<null>",
-                                         ( pCaller != NULL ) ? STRING( pCaller->m_iName ) : "<null>" );
+                                        STRING( m_iClassname ),
+                                        GetDebugName(),
+                                        szInputName,
+                                        ( pCaller != NULL ) ? STRING( pCaller->m_iClassname ) : "<null>",
+                                        ( pCaller != NULL ) ? STRING( pCaller->m_iName ) : "<null>" );
                                 return false;
                             }
                         }
@@ -4792,7 +4792,7 @@ void ModelSoundsCacheShutdown()
 static CUtlSymbolTable g_ModelSoundsSymbolHelper( 0, 32, true );
 class CModelSoundsCacheSaver : public CAutoGameSystem
 {
-   public:
+    public:
     CModelSoundsCacheSaver( const char *name )
         : CAutoGameSystem( name )
     {
@@ -4847,7 +4847,7 @@ void ModelLogFunc( const char *fileName, const char *accessType )
 
 class CWatchForModelAccess : public CAutoGameSystem
 {
-   public:
+    public:
     virtual bool Init()
     {
         filesystem->AddLoggingFunc( &ModelLogFunc );
@@ -5045,9 +5045,9 @@ void CBaseEntity::PrecacheModelComponents( int nModelIndex )
                                 else
                                 {
                                     Warning( "-- Error --:  empty soundname, .qc error on AE_CL_PLAYSOUND in model %s, sequence %s, animevent # %i\n",
-                                             studioHdr.GetRenderHdr()->pszName(),
-                                             seq.pszLabel(),
-                                             j + 1 );
+                                            studioHdr.GetRenderHdr()->pszName(),
+                                            seq.pszLabel(),
+                                            j + 1 );
                                 }
                             }
                             break;
@@ -5222,8 +5222,8 @@ void CC_Ent_Remove( const CCommand &args )
             while ( ( ent = gEntList.NextEnt( ent ) ) != NULL )
             {
                 if ( ( ent->GetEntityName() != NULL_STRING && FStrEq( args[1], STRING( ent->GetEntityName() ) ) ) ||
-                     ( ent->m_iClassname != NULL_STRING && FStrEq( args[1], STRING( ent->m_iClassname ) ) ) ||
-                     ( ent->GetClassname() != NULL && FStrEq( args[1], ent->GetClassname() ) ) )
+                    ( ent->m_iClassname != NULL_STRING && FStrEq( args[1], STRING( ent->m_iClassname ) ) ) ||
+                    ( ent->GetClassname() != NULL && FStrEq( args[1], ent->GetClassname() ) ) )
                 {
                     pEntity = ent;
                     break;
@@ -5257,8 +5257,8 @@ void CC_Ent_RemoveAll( const CCommand &args )
         while ( ( ent = gEntList.NextEnt( ent ) ) != NULL )
         {
             if ( ( ent->GetEntityName() != NULL_STRING && FStrEq( args[1], STRING( ent->GetEntityName() ) ) ) ||
-                 ( ent->m_iClassname != NULL_STRING && FStrEq( args[1], STRING( ent->m_iClassname ) ) ) ||
-                 ( ent->GetClassname() != NULL && FStrEq( args[1], ent->GetClassname() ) ) )
+                ( ent->m_iClassname != NULL_STRING && FStrEq( args[1], STRING( ent->m_iClassname ) ) ) ||
+                ( ent->GetClassname() != NULL && FStrEq( args[1], ent->GetClassname() ) ) )
             {
                 UTIL_Remove( ent );
                 iCount++;
@@ -5304,8 +5304,8 @@ void CC_Ent_SetName( const CCommand &args )
             while ( ( ent = gEntList.NextEnt( ent ) ) != NULL )
             {
                 if ( ( ent->GetEntityName() != NULL_STRING && FStrEq( args[1], STRING( ent->GetEntityName() ) ) ) ||
-                     ( ent->m_iClassname != NULL_STRING && FStrEq( args[1], STRING( ent->m_iClassname ) ) ) ||
-                     ( ent->GetClassname() != NULL && FStrEq( args[1], ent->GetClassname() ) ) )
+                    ( ent->m_iClassname != NULL_STRING && FStrEq( args[1], STRING( ent->m_iClassname ) ) ) ||
+                    ( ent->GetClassname() != NULL && FStrEq( args[1], ent->GetClassname() ) ) )
                 {
                     pEntity = ent;
                     break;
@@ -5484,7 +5484,7 @@ static ConCommand firetarget( "firetarget", CC_Ent_FireTarget, 0, FCVAR_CHEAT );
 
 class CEntFireAutoCompletionFunctor : public ICommandCallback, public ICommandCompletionCallback
 {
-   public:
+    public:
     virtual void CommandCallback( const CCommand &command )
     {
         CBasePlayer *pPlayer = ToBasePlayer( UTIL_GetCommandClient() );
@@ -5615,7 +5615,7 @@ class CEntFireAutoCompletionFunctor : public ICommandCallback, public ICommandCo
         return symbols.Count();
     }
 
-   private:
+    private:
     int EntFire_AutoCompleteInput( const char *partial, CUtlVector< CUtlString > &commands )
     {
         const char *cmdname = "ent_fire";
@@ -7046,8 +7046,8 @@ bool CBaseEntity::UseStepSimulationNetworkOrigin( const Vector **out_v )
     Assert( out_v );
 
     if ( g_bTestMoveTypeStepSimulation &&
-         GetMoveType() == MOVETYPE_STEP &&
-         HasDataObjectType( STEPSIMULATION ) )
+        GetMoveType() == MOVETYPE_STEP &&
+        HasDataObjectType( STEPSIMULATION ) )
     {
         StepSimulationData *step = ( StepSimulationData * )GetDataObject( STEPSIMULATION );
         ComputeStepSimulationNetwork( step );
@@ -7065,8 +7065,8 @@ bool CBaseEntity::UseStepSimulationNetworkAngles( const QAngle **out_a )
     Assert( out_a );
 
     if ( g_bTestMoveTypeStepSimulation &&
-         GetMoveType() == MOVETYPE_STEP &&
-         HasDataObjectType( STEPSIMULATION ) )
+        GetMoveType() == MOVETYPE_STEP &&
+        HasDataObjectType( STEPSIMULATION ) )
     {
         StepSimulationData *step = ( StepSimulationData * )GetDataObject( STEPSIMULATION );
         ComputeStepSimulationNetwork( step );

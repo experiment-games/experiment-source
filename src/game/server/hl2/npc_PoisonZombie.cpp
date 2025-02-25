@@ -148,7 +148,7 @@ class CNPC_PoisonZombie : public CAI_BlendingHost< CNPC_BaseZombie >
 {
     DECLARE_CLASS( CNPC_PoisonZombie, CAI_BlendingHost< CNPC_BaseZombie > );
 
-   public:
+    public:
     //
     // CBaseZombie implemenation.
     //
@@ -210,7 +210,7 @@ class CNPC_PoisonZombie : public CAI_BlendingHost< CNPC_BaseZombie >
 
     virtual void StopLoopingSounds( void );
 
-   protected:
+    protected:
     virtual void MoanSound( envelopePoint_t *pEnvelope, int iEnvelopeSize );
     virtual bool MustCloseToAttack( void );
 
@@ -220,7 +220,7 @@ class CNPC_PoisonZombie : public CAI_BlendingHost< CNPC_BaseZombie >
     virtual const char *GetHeadcrabClassname( void );
     virtual const char *GetHeadcrabModel( void );
 
-   private:
+    private:
     void BreatheOffShort( void );
 
     void EnableCrab( int nCrab, bool bEnable );

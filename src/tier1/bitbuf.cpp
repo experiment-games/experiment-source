@@ -91,7 +91,7 @@ unsigned long g_ExtraMasks[33];
 
 class CBitWriteMasksInit
 {
-   public:
+    public:
     CBitWriteMasksInit()
     {
         for ( unsigned int startbit = 0; startbit < 32; startbit++ )

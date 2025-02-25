@@ -15,13 +15,13 @@
 //-----------------------------------------------------------------------------
 class C_FuncRotating : public C_BaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_FuncRotating, C_BaseEntity );
     DECLARE_CLIENTCLASS();
 
     C_FuncRotating();
 
-   private:
+    private:
 };
 
 extern void RecvProxy_SimulationTime( const CRecvProxyData *pData, void *pStruct, void *pOut );

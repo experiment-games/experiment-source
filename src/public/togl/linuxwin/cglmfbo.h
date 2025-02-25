@@ -84,11 +84,11 @@ class CGLMFBO
     friend struct IDirect3D9;
     friend struct IDirect3DDevice9;
 
-   public:
+    public:
     CGLMFBO( GLMContext *ctx );
     ~CGLMFBO();
 
-   protected:
+    protected:
     void TexAttach( GLMFBOTexAttachParams *params, EGLMFBOAttachment attachIndex, GLenum fboBindPoint = GL_FRAMEBUFFER_EXT );
     void TexDetach( EGLMFBOAttachment attachIndex, GLenum fboBindPoint = GL_FRAMEBUFFER_EXT );
     // you can also pass GL_READ_FRAMEBUFFER_EXT or GL_DRAW_FRAMEBUFFER_EXT to selectively bind the receiving FBO to one or the other.

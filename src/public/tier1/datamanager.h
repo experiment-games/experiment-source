@@ -20,7 +20,7 @@ FORWARD_DECLARE_HANDLE( memhandle_t );
 
 class CDataManagerBase
 {
-   public:
+    public:
     // public API
     // -----------------------------------------------------------------------------
     // memhandle_t			CreateResource( params ) // implemented by derived class
@@ -71,7 +71,7 @@ class CDataManagerBase
     void GetLRUHandleList( CUtlVector< memhandle_t > &list );
     void GetLockHandleList( CUtlVector< memhandle_t > &list );
 
-   protected:
+    protected:
     // derived class must call these to implement public API
     unsigned short CreateHandle( bool bCreateLocked );
     memhandle_t StoreResourceInHandle( unsigned short memoryIndex, void *pStore, unsigned int realSize );
@@ -144,7 +144,7 @@ class CDataManager : public CDataManagerBase
 {
     typedef CDataManagerBase BaseClass;
 
-   public:
+    public:
     CDataManager< STORAGE_TYPE, CREATE_PARAMS, LOCK_TYPE, MUTEX_TYPE >( unsigned int size = ( unsigned )-1 )
         : BaseClass( size ) {}
 
@@ -252,7 +252,7 @@ class CDataManager : public CDataManagerBase
         m_mutex.Unlock();
     }
 
-   private:
+    private:
     STORAGE_TYPE *StoragePointer( void *pMem )
     {
         return static_cast< STORAGE_TYPE * >( pMem );

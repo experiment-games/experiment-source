@@ -19,7 +19,7 @@
 //-----------------------------------------------------------------------------
 class CServerTools : public IServerTools
 {
-   public:
+    public:
     // Inherited from IServerTools
     virtual IServerEntity *GetIServerEntity( IClientEntity *pClientEntity );
     virtual bool GetPlayerPosition( Vector &org, QAngle &ang, IClientEntity *pClientPlayer = NULL );
@@ -98,18 +98,18 @@ IServerEntity *CServerTools::GetIServerEntity( IClientEntity *pClientEntity )
         return NULL;  // the first MAX_EDICTS entities are networked, the rest are client or server only
 
 #if 0
-	// this fails, since the server entities have extra bits in their serial numbers,
-	// since 20 bits are reserved for serial numbers, except for networked entities, which are restricted to 10
+    // this fails, since the server entities have extra bits in their serial numbers,
+    // since 20 bits are reserved for serial numbers, except for networked entities, which are restricted to 10
 
-	// Brian believes that everything should just restrict itself to 10 to make things simpler,
-	// so if/when he changes NUM_SERIAL_NUM_BITS to 10, we can switch back to this simpler code
+    // Brian believes that everything should just restrict itself to 10 to make things simpler,
+    // so if/when he changes NUM_SERIAL_NUM_BITS to 10, we can switch back to this simpler code
 
-	IServerNetworkable *pNet = gEntList.GetServerNetworkable( ehandle );
-	if ( pNet == NULL )
-		return NULL;
+    IServerNetworkable *pNet = gEntList.GetServerNetworkable( ehandle );
+    if ( pNet == NULL )
+        return NULL;
 
-	CBaseEntity *pServerEnt = pNet->GetBaseEntity();
-	return pServerEnt;
+    CBaseEntity *pServerEnt = pNet->GetBaseEntity();
+    return pServerEnt;
 #else
     IHandleEntity *pEnt = gEntList.LookupEntityByNetworkIndex( ehandle.GetEntryIndex() );
     if ( pEnt == NULL )
@@ -458,7 +458,7 @@ CBaseEntity *CServerTools::FindEntityProcedural( const char *szName, CBaseEntity
 // Interface from engine to tools for manipulating entities
 class CServerChoreoTools : public IServerChoreoTools
 {
-   public:
+    public:
     // Iterates through ALL entities (separate list for client vs. server)
     virtual EntitySearchResult NextChoreoEntity( EntitySearchResult currentEnt )
     {

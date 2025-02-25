@@ -51,7 +51,7 @@ typedef CBaseHandle EntityHandle_t;
 
 abstract_class IMoveHelper
 {
-   public:
+    public:
     // Call this to set the singleton
     static IMoveHelper* GetSingleton()
     {
@@ -84,7 +84,7 @@ abstract_class IMoveHelper
 
     virtual bool IsWorldEntity( const CBaseHandle& handle ) = 0;
 
-   protected:
+    protected:
     // Inherited classes can call this to set the singleton
     static void SetSingleton( IMoveHelper * pMoveHelper )
     {

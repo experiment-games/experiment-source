@@ -44,13 +44,13 @@ enum AIReadinessUse_t
 
 class CCompanionActivityRemap : public CActivityRemap
 {
-   public:
+    public:
     CCompanionActivityRemap( void )
         : m_fUsageBits( 0 ),
-          m_readiness( AIRL_RELAXED ),
-          m_bAiming( false ),
-          m_bWeaponRequired( false ),
-          m_bInVehicle( false ) {}
+        m_readiness( AIRL_RELAXED ),
+        m_bAiming( false ),
+        m_bWeaponRequired( false ),
+        m_bInVehicle( false ) {}
 
     // This bitfield maps which bits of data are being utilized by this data structure, since not all criteria
     // in the parsed file are essential.  You must add corresponding bits to the definitions below and maintain
@@ -94,7 +94,7 @@ class CNPC_PlayerCompanion : public CAI_PlayerAlly
 {
     DECLARE_CLASS( CNPC_PlayerCompanion, CAI_PlayerAlly );
 
-   public:
+    public:
     //---------------------------------
     bool CreateBehaviors();
     void Precache();
@@ -169,7 +169,7 @@ class CNPC_PlayerCompanion : public CAI_PlayerAlly
     // Readiness
     //---------------------------------
 
-   protected:
+    protected:
     virtual bool IsReadinessCapable();
     bool IsReadinessLocked()
     {
@@ -191,7 +191,7 @@ class CNPC_PlayerCompanion : public CAI_PlayerAlly
 
     CUtlVector< CCompanionActivityRemap > m_activityMappings;
 
-   public:
+    public:
     float GetReadinessValue()
     {
         return m_flReadiness;
@@ -228,7 +228,7 @@ class CNPC_PlayerCompanion : public CAI_PlayerAlly
 
 #endif  // HL2_EPISODIC
 
-   public:
+    public:
     virtual void OnPlayerKilledOther( CBaseEntity *pVictim, const CTakeDamageInfo &info );
 
     //---------------------------------
@@ -327,7 +327,7 @@ class CNPC_PlayerCompanion : public CAI_PlayerAlly
 
     bool AllowReadinessValueChange( void );
 
-   protected:
+    protected:
     //-----------------------------------------------------
     // Conditions, Schedules, Tasks
     //-----------------------------------------------------
@@ -352,7 +352,7 @@ class CNPC_PlayerCompanion : public CAI_PlayerAlly
         NEXT_TASK,
     };
 
-   private:
+    private:
     void SetupCoverSearch( CBaseEntity *pEntity );
     void CleanupCoverSearch();
 
@@ -379,7 +379,7 @@ class CNPC_PlayerCompanion : public CAI_PlayerAlly
         return BaseClass::GetExpresser();
     }
 
-   protected:
+    protected:
     //-----------------------------------------------------
 
     virtual CAI_FollowBehavior &GetFollowBehavior( void )

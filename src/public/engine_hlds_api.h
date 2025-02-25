@@ -32,7 +32,7 @@ struct ModInfo_t
 class IDedicatedServerAPI : public IAppSystem
 {
     // Functions
-   public:
+    public:
     // Initialize the engine with the specified base directory and interface factories
     virtual bool ModInit( ModInfo_t &info ) = 0;
     // Shutdown the engine

@@ -18,7 +18,7 @@
 //-----------------------------------------------------------------------------
 class IFriendsUser : public IBaseInterface
 {
-   public:
+    public:
     // returns true if the interface is ready for use
     virtual bool IsValid() = 0;
 

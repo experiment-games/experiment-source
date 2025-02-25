@@ -18,7 +18,7 @@ abstract_class CBaseHeadcrab : public CAI_BaseNPC
 {
     DECLARE_CLASS( CBaseHeadcrab, CAI_BaseNPC );
 
-   public:
+    public:
     void Spawn( void );
     void Precache( void );
     void RunTask( const Task_t *pTask );
@@ -101,7 +101,7 @@ abstract_class CBaseHeadcrab : public CAI_BaseNPC
     DEFINE_CUSTOM_AI;
     DECLARE_DATADESC();
 
-   protected:
+    protected:
     void HeadcrabInit();
 
     void Leap( const Vector &vecVel );
@@ -134,7 +134,7 @@ abstract_class CBaseHeadcrab : public CAI_BaseNPC
     float InnateRange1MinRange( void );
     float InnateRange1MaxRange( void );
 
-   protected:
+    protected:
     int m_nGibCount;
     float m_flTimeDrown;
     Vector m_vecCommittedJumpPos;  // The position of our enemy when we locked in our jump attack.
@@ -167,7 +167,7 @@ class CHeadcrab : public CBaseHeadcrab
 {
     DECLARE_CLASS( CHeadcrab, CBaseHeadcrab );
 
-   public:
+    public:
     void Precache( void );
     void Spawn( void );
 
@@ -192,7 +192,7 @@ class CFastHeadcrab : public CBaseHeadcrab
 {
     DECLARE_DATADESC();
 
-   public:
+    public:
     DECLARE_CLASS( CFastHeadcrab, CBaseHeadcrab );
 
     void Precache( void );
@@ -241,7 +241,7 @@ class CBlackHeadcrab : public CBaseHeadcrab
 {
     DECLARE_CLASS( CBlackHeadcrab, CBaseHeadcrab );
 
-   public:
+    public:
     void Eject( const QAngle &vecAngles, float flVelocityScale, CBaseEntity *pEnemy );
     void EjectTouch( CBaseEntity *pOther );
 
@@ -290,7 +290,7 @@ class CBlackHeadcrab : public CBaseHeadcrab
     DEFINE_CUSTOM_AI;
     DECLARE_DATADESC();
 
-   private:
+    private:
     void JumpFlinch( const Vector *pvecAwayFromPos );
     void Panic( float flDuration );
 

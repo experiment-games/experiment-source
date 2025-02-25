@@ -29,7 +29,7 @@ class GListIterator;
 template < class T >
 class GListNode
 {
-   private:
+    private:
     T data;
     GListNode< T > *next;
     GListNode< T > *prev;
@@ -58,7 +58,7 @@ GListNode< T >::GListNode( T item )
 template < class T >
 class GList
 {
-   public:
+    public:
     // Contructors/destructors
     GList();
 
@@ -76,7 +76,7 @@ class GList
     Position GetPositionAtIndex( int index );
     T GetItemAtIndex( int index );
 
-   protected:
+    protected:
     GListNode< T > *head;
     GListNode< T > *tail;
     int numItems;
@@ -244,7 +244,7 @@ T GList< T >::GetItemAtIndex( int index )
 template < class T >
 class GListIterator
 {
-   public:
+    public:
     GListIterator( GList< T > *GList );
     void GotoHead( void );
     void GotoTail( void );
@@ -277,7 +277,7 @@ class GListIterator
     bool AtEnd( void );
     bool AtBeginning( void );
 
-   protected:
+    protected:
     GList< T > *list;
     GListNode< T > *currentNode;
 };

@@ -64,7 +64,7 @@ enum MDLCacheDataType_t
 
 abstract_class IMDLCacheNotify
 {
-   public:
+    public:
     // Called right after the data is loaded
     virtual void OnDataLoaded( MDLCacheDataType_t type, MDLHandle_t handle ) = 0;
 
@@ -165,7 +165,7 @@ public:
 
 abstract_class IMDLCache : public IAppSystem
 {
-   public:
+    public:
     // Used to install callbacks for when data is loaded + unloaded
     // Returns the prior notify
     virtual void SetCacheNotify( IMDLCacheNotify * pNotify ) = 0;
@@ -259,7 +259,7 @@ abstract_class IMDLCache : public IAppSystem
 //-----------------------------------------------------------------------------
 class CMDLCacheCriticalSection
 {
-   public:
+    public:
     CMDLCacheCriticalSection( IMDLCache *pCache )
         : m_pCache( pCache )
     {
@@ -271,7 +271,7 @@ class CMDLCacheCriticalSection
         m_pCache->EndLock();
     }
 
-   private:
+    private:
     IMDLCache *m_pCache;
 };
 

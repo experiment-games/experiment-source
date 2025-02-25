@@ -49,13 +49,13 @@ public class DynamicMessageTest extends TestCase {
 
   TestUtil.ReflectionTester extensionsReflectionTester =
     new TestUtil.ReflectionTester(TestAllExtensions.getDescriptor(),
-                                  TestUtil.getExtensionRegistry());
+                                TestUtil.getExtensionRegistry());
   TestUtil.ReflectionTester packedReflectionTester =
     new TestUtil.ReflectionTester(TestPackedTypes.getDescriptor(), null);
 
   public void testDynamicMessageAccessors() throws Exception {
     Message.Builder builder =
-      DynamicMessage.newBuilder(TestAllTypes.getDescriptor());
+    DynamicMessage.newBuilder(TestAllTypes.getDescriptor());
     reflectionTester.setAllFieldsViaReflection(builder);
     Message message = builder.build();
     reflectionTester.assertAllFieldsSetViaReflection(message);
@@ -63,31 +63,31 @@ public class DynamicMessageTest extends TestCase {
 
   public void testDoubleBuildError() throws Exception {
     Message.Builder builder =
-      DynamicMessage.newBuilder(TestAllTypes.getDescriptor());
+    DynamicMessage.newBuilder(TestAllTypes.getDescriptor());
     builder.build();
     try {
-      builder.build();
-      fail("Should have thrown exception.");
+    builder.build();
+    fail("Should have thrown exception.");
     } catch (IllegalStateException e) {
-      // Success.
+    // Success.
     }
   }
 
   public void testClearAfterBuildError() throws Exception {
     Message.Builder builder =
-      DynamicMessage.newBuilder(TestAllTypes.getDescriptor());
+    DynamicMessage.newBuilder(TestAllTypes.getDescriptor());
     builder.build();
     try {
-      builder.clear();
-      fail("Should have thrown exception.");
+    builder.clear();
+    fail("Should have thrown exception.");
     } catch (IllegalStateException e) {
-      // Success.
+    // Success.
     }
   }
 
   public void testDynamicMessageSettersRejectNull() throws Exception {
     Message.Builder builder =
-      DynamicMessage.newBuilder(TestAllTypes.getDescriptor());
+    DynamicMessage.newBuilder(TestAllTypes.getDescriptor());
     reflectionTester.assertReflectionSettersRejectNull(builder);
   }
 
@@ -96,7 +96,7 @@ public class DynamicMessageTest extends TestCase {
     // extensions because, frankly, it doesn't do anything special with them.
     // It treats them just like any other fields.
     Message.Builder builder =
-      DynamicMessage.newBuilder(TestAllExtensions.getDescriptor());
+    DynamicMessage.newBuilder(TestAllExtensions.getDescriptor());
     extensionsReflectionTester.setAllFieldsViaReflection(builder);
     Message message = builder.build();
     extensionsReflectionTester.assertAllFieldsSetViaReflection(message);
@@ -104,13 +104,13 @@ public class DynamicMessageTest extends TestCase {
 
   public void testDynamicMessageExtensionSettersRejectNull() throws Exception {
     Message.Builder builder =
-      DynamicMessage.newBuilder(TestAllExtensions.getDescriptor());
+    DynamicMessage.newBuilder(TestAllExtensions.getDescriptor());
     extensionsReflectionTester.assertReflectionSettersRejectNull(builder);
   }
 
   public void testDynamicMessageRepeatedSetters() throws Exception {
     Message.Builder builder =
-      DynamicMessage.newBuilder(TestAllTypes.getDescriptor());
+    DynamicMessage.newBuilder(TestAllTypes.getDescriptor());
     reflectionTester.setAllFieldsViaReflection(builder);
     reflectionTester.modifyRepeatedFieldsViaReflection(builder);
     Message message = builder.build();
@@ -119,32 +119,32 @@ public class DynamicMessageTest extends TestCase {
 
   public void testDynamicMessageRepeatedSettersRejectNull() throws Exception {
     Message.Builder builder =
-      DynamicMessage.newBuilder(TestAllTypes.getDescriptor());
+    DynamicMessage.newBuilder(TestAllTypes.getDescriptor());
     reflectionTester.assertReflectionRepeatedSettersRejectNull(builder);
   }
 
   public void testDynamicMessageDefaults() throws Exception {
     reflectionTester.assertClearViaReflection(
-      DynamicMessage.getDefaultInstance(TestAllTypes.getDescriptor()));
+    DynamicMessage.getDefaultInstance(TestAllTypes.getDescriptor()));
     reflectionTester.assertClearViaReflection(
-      DynamicMessage.newBuilder(TestAllTypes.getDescriptor()).build());
+    DynamicMessage.newBuilder(TestAllTypes.getDescriptor()).build());
   }
 
   public void testDynamicMessageSerializedSize() throws Exception {
     TestAllTypes message = TestUtil.getAllSet();
 
     Message.Builder dynamicBuilder =
-      DynamicMessage.newBuilder(TestAllTypes.getDescriptor());
+    DynamicMessage.newBuilder(TestAllTypes.getDescriptor());
     reflectionTester.setAllFieldsViaReflection(dynamicBuilder);
     Message dynamicMessage = dynamicBuilder.build();
 
     assertEquals(message.getSerializedSize(),
-                 dynamicMessage.getSerializedSize());
+                dynamicMessage.getSerializedSize());
   }
 
   public void testDynamicMessageSerialization() throws Exception {
     Message.Builder builder =
-      DynamicMessage.newBuilder(TestAllTypes.getDescriptor());
+    DynamicMessage.newBuilder(TestAllTypes.getDescriptor());
     reflectionTester.setAllFieldsViaReflection(builder);
     Message message = builder.build();
 
@@ -165,7 +165,7 @@ public class DynamicMessageTest extends TestCase {
     ByteString rawBytes = message.toByteString();
 
     Message message2 =
-      DynamicMessage.parseFrom(TestAllTypes.getDescriptor(), rawBytes);
+    DynamicMessage.parseFrom(TestAllTypes.getDescriptor(), rawBytes);
     reflectionTester.assertAllFieldsSetViaReflection(message2);
   }
 
@@ -192,7 +192,7 @@ public class DynamicMessageTest extends TestCase {
     ByteString rawBytes = message.toByteString();
 
     Message message2 =
-      DynamicMessage.parseFrom(TestPackedTypes.getDescriptor(), rawBytes);
+    DynamicMessage.parseFrom(TestPackedTypes.getDescriptor(), rawBytes);
     packedReflectionTester.assertPackedFieldsSetViaReflection(message2);
   }
 

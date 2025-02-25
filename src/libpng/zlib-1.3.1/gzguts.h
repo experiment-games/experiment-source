@@ -74,7 +74,7 @@
 #ifndef HAVE_VSNPRINTF
 #ifdef MSDOS
 /* vsnprintf may exist on some MS-DOS compilers (DJGPP?),
-   but for now we just assume it doesn't. */
+    but for now we just assume it doesn't. */
 #define NO_vsnprintf
 #endif
 #ifdef __TURBOC__
@@ -103,8 +103,8 @@
 #endif
 
 /* unlike snprintf (which is required in C99), _snprintf does not guarantee
-   null termination of the result -- however this is only used in gzlib.c where
-   the result is assured to fit in the space provided */
+    null termination of the result -- however this is only used in gzlib.c where
+    the result is assured to fit in the space provided */
 #if defined( _MSC_VER ) && _MSC_VER < 1900
 #define snprintf _snprintf
 #endif
@@ -113,8 +113,8 @@
 #define local static
 #endif
 /* since "static" is used to mean two completely different things in C, we
-   define "local" for the non-static meaning of "static", for readability
-   (compile with -Dlocal if your debugger can't find static symbols) */
+    define "local" for the non-static meaning of "static", for readability
+    (compile with -Dlocal if your debugger can't find static symbols) */
 
 /* gz* functions always use library allocation functions */
 #ifndef STDC
@@ -151,7 +151,7 @@ ZEXTERN z_off64_t ZEXPORT gzoffset64( gzFile );
 #endif
 
 /* default i/o buffer size -- double this for output when reading (this and
-   twice this must be able to fit in an unsigned type) */
+    twice this must be able to fit in an unsigned type) */
 #define GZBUFSIZE 8192
 
 /* gzip modes, also provide a little integrity check on the passed structure */
@@ -170,9 +170,9 @@ typedef struct
 {
     /* exposed contents for gzgetc() macro */
     struct gzFile_s x; /* "x" for exposed */
-                       /* x.have: number of bytes available at x.next */
-                       /* x.next: next output data to deliver or write */
-                       /* x.pos: current position in uncompressed data */
+                        /* x.have: number of bytes available at x.next */
+                        /* x.next: next output data to deliver or write */
+                        /* x.pos: current position in uncompressed data */
     /* used for both reading and writing */
     int mode;           /* see gzip modes above */
     int fd;             /* file descriptor */
@@ -209,7 +209,7 @@ char ZLIB_INTERNAL *gz_strwinerror( DWORD error );
 #endif
 
 /* GT_OFF(x), where x is an unsigned value, is true if x > maximum z_off64_t
-   value -- needed when comparing unsigned to z_off64_t, which is signed
-   (possible z_off64_t types off_t, off64_t, and long are all signed) */
+    value -- needed when comparing unsigned to z_off64_t, which is signed
+    (possible z_off64_t types off_t, off64_t, and long are all signed) */
 unsigned ZLIB_INTERNAL gz_intmax( void );
 #define GT_OFF( x ) ( sizeof( int ) == sizeof( z_off64_t ) && ( x ) > gz_intmax() )

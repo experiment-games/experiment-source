@@ -310,7 +310,7 @@ CAI_BaseNPC *CAI_Squad::NearestSquadMember( CAI_BaseNPC *pMember )
         {
             float fDist = ( fStartLoc - m_SquadMembers[i]->GetAbsOrigin() ).Length();
             if ( m_SquadMembers[i] != pMember &&
-                 fDist < fBestDist )
+                fDist < fBestDist )
             {
                 fBestDist = fDist;
                 fNearestEnt = m_SquadMembers[i];
@@ -494,9 +494,9 @@ void CAI_Squad::SquadNewEnemy( CBaseEntity *pEnemy )
         {
             // reset members who aren't activly engaged in fighting (only do this if the NPC's using the squad memory, or it'll fail)
             if ( !pMember->GetEnemy() ||
-                 ( pMember->GetEnemy() != pEnemy &&
-                   !pMember->HasCondition( COND_SEE_ENEMY ) &&
-                   gpGlobals->curtime - pMember->GetEnemyLastTimeSeen() > 3.0 ) )
+                ( pMember->GetEnemy() != pEnemy &&
+                    !pMember->HasCondition( COND_SEE_ENEMY ) &&
+                    gpGlobals->curtime - pMember->GetEnemyLastTimeSeen() > 3.0 ) )
             {
                 // give them a new enemy
                 if ( !hl2_episodic.GetBool() || pMember->IsValidEnemy( pEnemy ) )

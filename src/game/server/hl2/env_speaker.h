@@ -17,7 +17,7 @@
 
 class CSpeaker : public CPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CSpeaker, CPointEntity );
 
     void Spawn( void );
@@ -38,7 +38,7 @@ class CSpeaker : public CPointEntity
     virtual int Save( ISave &save );
     virtual int Restore( IRestore &restore );
 
-   protected:
+    protected:
     void SpeakerThink( void );
 
     void InputToggle( inputdata_t &inputdata );
@@ -50,7 +50,7 @@ class CSpeaker : public CPointEntity
     string_t m_iszConcept;
     IResponseSystem *m_pInstancedResponseSystem;
 
-   public:
+    public:
     void InputTurnOff( inputdata_t &inputdata );
     void InputTurnOn( inputdata_t &inputdata );
 };

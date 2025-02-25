@@ -12,7 +12,7 @@
 
 class C_Corpse : public C_BaseAnimating
 {
-   public:
+    public:
     DECLARE_CLASS( C_Corpse, C_BaseAnimating );
     DECLARE_CLIENTCLASS();
 
@@ -20,11 +20,11 @@ class C_Corpse : public C_BaseAnimating
 
     virtual int DrawModel( int flags );
 
-   public:
+    public:
     // The player whom we are copying our data from
     int m_nReferencePlayer;
 
-   private:
+    private:
     C_Corpse( const C_Corpse& );
 };
 

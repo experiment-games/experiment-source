@@ -289,7 +289,7 @@ struct TOGL_CLASS IDirect3DPixelShader9 : public IDirect3DResource9  // was IUnk
     CGLMProgram* m_pixProgram;
     uint m_pixHighWater;     // count of active constant slots referenced by shader.
     uint m_pixSamplerMask;   // (1<<n) mask of samplers referemnced by this pixel shader
-                             // this can help FlushSamplers avoid SRGB flipping on textures not being referenced...
+                            // this can help FlushSamplers avoid SRGB flipping on textures not being referenced...
     uint m_pixSamplerTypes;  // SAMPLER_TYPE_2D, etc.
     uint m_pixFragDataMask;  // (1<<n) mask of gl_FragData[n] referenced by this pixel shader
 
@@ -576,7 +576,7 @@ struct TOGL_CLASS IDirect3DDevice9 : public IUnknown
     void DumpTextures( const CCommand* pArgs );
 #endif
 
-   private:
+    private:
     IDirect3DDevice9( const IDirect3DDevice9& );
     IDirect3DDevice9& operator=( const IDirect3DDevice9& );
     // Flushing changes to GL
@@ -602,9 +602,9 @@ struct TOGL_CLASS IDirect3DDevice9 : public IUnknown
 
     DWORD m_nValidMarker;
 
-   public:
+    public:
     IDirect3DDevice9Params m_params;  // mirror of the creation inputs
-   private:
+    private:
     // D3D flavor stuff
     IDirect3DSurface9* m_pRenderTargets[4];
     IDirect3DSurface9* m_pDepthStencil;
@@ -909,15 +909,15 @@ FORCEINLINE GLenum D3DBlendFactorToGL( DWORD equation )
             return GL_SRC_ALPHA_SATURATE;  // Blend factor is (f, f, f, 1); where f = min(As, 1 - Ad).
 
         /*
-          // these are weird.... break if we hit them
-          case	D3DBLEND_BOTHSRCALPHA	: Assert(0); return GL_ZERO;		// Obsolete. Starting with DirectX 6, you can achieve the same effect by setting the source and destination blend factors to D3DBLEND_SRCALPHA and D3DBLEND_INVSRCALPHA in separate calls.
-          case	D3DBLEND_BOTHINVSRCALPHA: Assert(0); return GL_ZERO;		// Source blend factor is (1 - As, 1 - As, 1 - As, 1 - As), and destination blend factor is (As, As, As, As); the destination blend selection is overridden. This blend mode is supported only for the D3DRS_SRCBLEND render state.
-          case	D3DBLEND_BLENDFACTOR	: Assert(0); return GL_ZERO;		// Constant color blending factor used by the frame-buffer blender. This blend mode is supported only if D3DPBLENDCAPS_BLENDFACTOR is set in the SrcBlendCaps or DestBlendCaps members of D3DCAPS9.
+        // these are weird.... break if we hit them
+        case	D3DBLEND_BOTHSRCALPHA	: Assert(0); return GL_ZERO;		// Obsolete. Starting with DirectX 6, you can achieve the same effect by setting the source and destination blend factors to D3DBLEND_SRCALPHA and D3DBLEND_INVSRCALPHA in separate calls.
+        case	D3DBLEND_BOTHINVSRCALPHA: Assert(0); return GL_ZERO;		// Source blend factor is (1 - As, 1 - As, 1 - As, 1 - As), and destination blend factor is (As, As, As, As); the destination blend selection is overridden. This blend mode is supported only for the D3DRS_SRCBLEND render state.
+        case	D3DBLEND_BLENDFACTOR	: Assert(0); return GL_ZERO;		// Constant color blending factor used by the frame-buffer blender. This blend mode is supported only if D3DPBLENDCAPS_BLENDFACTOR is set in the SrcBlendCaps or DestBlendCaps members of D3DCAPS9.
 
         dxabstract.h has not heard of these, so let them hit the debugger if they come through
-          case	D3DBLEND_INVBLENDFACTOR:	//Inverted constant color-blending factor used by the frame-buffer blender. This blend mode is supported only if the D3DPBLENDCAPS_BLENDFACTOR bit is set in the SrcBlendCaps or DestBlendCaps members of D3DCAPS9.
-          case	D3DBLEND_SRCCOLOR2:		// Blend factor is (PSOutColor[1]r, PSOutColor[1]g, PSOutColor[1]b, not used).	This flag is available in Direct3D 9Ex only.
-          case	D3DBLEND_INVSRCCOLOR2:	// Blend factor is (1 - PSOutColor[1]r, 1 - PSOutColor[1]g, 1 - PSOutColor[1]b, not used)). This flag is available in Direct3D 9Ex only.
+        case	D3DBLEND_INVBLENDFACTOR:	//Inverted constant color-blending factor used by the frame-buffer blender. This blend mode is supported only if the D3DPBLENDCAPS_BLENDFACTOR bit is set in the SrcBlendCaps or DestBlendCaps members of D3DCAPS9.
+        case	D3DBLEND_SRCCOLOR2:		// Blend factor is (PSOutColor[1]r, PSOutColor[1]g, PSOutColor[1]b, not used).	This flag is available in Direct3D 9Ex only.
+        case	D3DBLEND_INVSRCCOLOR2:	// Blend factor is (1 - PSOutColor[1]r, 1 - PSOutColor[1]g, 1 - PSOutColor[1]b, not used)). This flag is available in Direct3D 9Ex only.
         */
         default:
             DXABSTRACT_BREAK_ON_ERROR();

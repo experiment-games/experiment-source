@@ -32,7 +32,7 @@ class CTeamControlPointMaster : public CBaseEntity
     DECLARE_CLASS( CTeamControlPointMaster, CBaseEntity );
 
     // Derived, game-specific control point masters must override these functions
-   public:
+    public:
     CTeamControlPointMaster();
 
     // Used to find game specific entities
@@ -45,7 +45,7 @@ class CTeamControlPointMaster : public CBaseEntity
         return "team_control_point_round";
     }
 
-   public:
+    public:
     virtual void Spawn( void );
     virtual void UpdateOnRemove( void );
     virtual bool KeyValue( const char *szKeyName, const char *szValue );
@@ -167,7 +167,7 @@ class CTeamControlPointMaster : public CBaseEntity
         return m_bSwitchTeamsOnWin;
     }
 
-   private:
+    private:
     void EXPORT CPMThink( void );
 
     void SetBaseControlPoints( void );

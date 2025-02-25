@@ -14,10 +14,10 @@
 
 class CHL2EventLog : public CEventLog
 {
-   private:
+    private:
     typedef CEventLog BaseClass;
 
-   public:
+    public:
     virtual char const* Name()
     {
         return "CHL2EventLog";
@@ -25,7 +25,7 @@ class CHL2EventLog : public CEventLog
 
     virtual ~CHL2EventLog(){};
 
-   public:
+    public:
     bool PrintEvent( IGameEvent* event )  // override virtual function
     {
         if ( BaseClass::PrintEvent( event ) )
@@ -41,7 +41,7 @@ class CHL2EventLog : public CEventLog
         return false;
     }
 
-   protected:
+    protected:
     bool PrintHL2Event( IGameEvent* event )  // print Mod specific logs
     {
         //	const char * name = event->GetName() + Q_strlen("hl2_"); // remove prefix

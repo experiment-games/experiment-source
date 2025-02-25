@@ -61,8 +61,8 @@ void MatchFinder_ReadIfRequired( CMatchFinder *p );
 void MatchFinder_Construct( CMatchFinder *p );
 
 /* Conditions:
-     historySize <= 3 GB
-     keepAddBufferBefore + matchMaxLen + keepAddBufferAfter < 511MB
+    historySize <= 3 GB
+    keepAddBufferBefore + matchMaxLen + keepAddBufferAfter < 511MB
 */
 int MatchFinder_Create( CMatchFinder *p, UInt32 historySize, UInt32 keepAddBufferBefore, UInt32 matchMaxLen, UInt32 keepAddBufferAfter, ISzAlloc *alloc );
 void MatchFinder_Free( CMatchFinder *p, ISzAlloc *alloc );

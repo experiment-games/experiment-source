@@ -39,8 +39,8 @@
 /* Check whether 'mode' matches '[rwa]%+?[L_MODEEXT]*' */
 static int l_checkmode (const char *mode) {
   return (*mode != '\0' && strchr("rwa", *(mode++)) != NULL &&
-         (*mode != '+' || ((void)(++mode), 1)) &&  /* skip if char is '+' */
-         (strspn(mode, L_MODEEXT) == strlen(mode)));  /* check extensions */
+        (*mode != '+' || ((void)(++mode), 1)) &&  /* skip if char is '+' */
+        (strspn(mode, L_MODEEXT) == strlen(mode)));  /* check extensions */
 }
 
 #endif
@@ -74,9 +74,9 @@ static int l_checkmode (const char *mode) {
 
 /* ISO C definitions */
 #define l_popen(L,c,m)  \
-	  ((void)c, (void)m, \
-	  luaL_error(L, "'popen' not supported"), \
-	  (FILE*)0)
+    ((void)c, (void)m, \
+    luaL_error(L, "'popen' not supported"), \
+    (FILE*)0)
 #define l_pclose(L,file)		((void)L, (void)file, -1)
 
 #endif				/* } */
@@ -124,7 +124,7 @@ static int l_checkmode (const char *mode) {
 #define l_seeknum		off_t
 
 #elif defined(LUA_USE_WINDOWS) && !defined(_CRTIMP_TYPEINFO) \
-   && defined(_MSC_VER) && (_MSC_VER >= 1400)	/* }{ */
+    && defined(_MSC_VER) && (_MSC_VER >= 1400)	/* }{ */
 
 /* Windows (but not DDK) and Visual C++ 2005 or higher */
 #define l_fseek(f,o,w)		_fseeki64(f,o,w)
@@ -319,10 +319,10 @@ static int g_iofile (lua_State *L, const char *f, const char *mode) {
   if (!lua_isnoneornil(L, 1)) {
     const char *filename = lua_tostring(L, 1);
     if (filename)
-      opencheck(L, filename, mode);
+    opencheck(L, filename, mode);
     else {
-      tofile(L);  /* check that it's a valid file handle */
-      lua_pushvalue(L, 1);
+    tofile(L);  /* check that it's a valid file handle */
+    lua_pushvalue(L, 1);
     }
     lua_setfield(L, LUA_REGISTRYINDEX, f);
   }
@@ -502,8 +502,8 @@ static int read_number (lua_State *L, FILE *f) {
   if (l_likely(lua_stringtonumber(L, rn.buff)))
     return 1;  /* ok, it is a valid number */
   else {  /* invalid format */
-   lua_pushnil(L);  /* "result" to be removed */
-   return 0;  /* read fails */
+    lua_pushnil(L);  /* "result" to be removed */
+    return 0;  /* read fails */
   }
 }
 
@@ -525,7 +525,7 @@ static int read_line (lua_State *L, FILE *f, int chop) {
     int i = 0;
     l_lockfile(f);  /* no memory errors can happen inside the lock */
     while (i < LUAL_BUFFERSIZE && (c = l_getc(f)) != EOF && c != '\n')
-      buff[i++] = c;  /* read up to end of line or buffer limit */
+    buff[i++] = c;  /* read up to end of line or buffer limit */
     l_unlockfile(f);
     luaL_addsize(&b, i);
   } while (c != EOF && c != '\n');  /* repeat until end of line */
@@ -576,31 +576,31 @@ static int g_read (lua_State *L, FILE *f, int first) {
     luaL_checkstack(L, nargs+LUA_MINSTACK, "too many arguments");
     success = 1;
     for (n = first; nargs-- && success; n++) {
-      if (lua_type(L, n) == LUA_TNUMBER) {
+    if (lua_type(L, n) == LUA_TNUMBER) {
         size_t l = (size_t)luaL_checkinteger(L, n);
         success = (l == 0) ? test_eof(L, f) : read_chars(L, f, l);
-      }
-      else {
+    }
+    else {
         const char *p = luaL_checkstring(L, n);
         if (*p == '*') p++;  /* skip optional '*' (for compatibility) */
         switch (*p) {
-          case 'n':  /* number */
+        case 'n':  /* number */
             success = read_number(L, f);
             break;
-          case 'l':  /* line */
+        case 'l':  /* line */
             success = read_line(L, f, 1);
             break;
-          case 'L':  /* line with end-of-line */
+        case 'L':  /* line with end-of-line */
             success = read_line(L, f, 0);
             break;
-          case 'a':  /* file */
+        case 'a':  /* file */
             read_all(L, f);  /* read entire file */
             success = 1; /* always success */
             break;
-          default:
+        default:
             return luaL_argerror(L, n, "invalid format");
         }
-      }
+    }
     }
   }
   if (ferror(f))
@@ -642,13 +642,13 @@ static int io_readline (lua_State *L) {
     return n;  /* return them */
   else {  /* first result is false: EOF or error */
     if (n > 1) {  /* is there error information? */
-      /* 2nd result is error message */
-      return luaL_error(L, "%s", lua_tostring(L, -n + 1));
+    /* 2nd result is error message */
+    return luaL_error(L, "%s", lua_tostring(L, -n + 1));
     }
     if (lua_toboolean(L, lua_upvalueindex(3))) {  /* generator created file? */
-      lua_settop(L, 0);  /* clear stack */
-      lua_pushvalue(L, lua_upvalueindex(1));  /* push file at index 1 */
-      aux_close(L);  /* close it */
+    lua_settop(L, 0);  /* clear stack */
+    lua_pushvalue(L, lua_upvalueindex(1));  /* push file at index 1 */
+    aux_close(L);  /* close it */
     }
     return 0;
   }
@@ -662,18 +662,18 @@ static int g_write (lua_State *L, FILE *f, int arg) {
   int status = 1;
   for (; nargs--; arg++) {
     if (lua_type(L, arg) == LUA_TNUMBER) {
-      /* optimization: could be done exactly as for strings */
-      int len = lua_isinteger(L, arg)
+    /* optimization: could be done exactly as for strings */
+    int len = lua_isinteger(L, arg)
                 ? fprintf(f, LUA_INTEGER_FMT,
-                             (LUAI_UACINT)lua_tointeger(L, arg))
+                            (LUAI_UACINT)lua_tointeger(L, arg))
                 : fprintf(f, LUA_NUMBER_FMT,
-                             (LUAI_UACNUMBER)lua_tonumber(L, arg));
-      status = status && (len > 0);
+                            (LUAI_UACNUMBER)lua_tonumber(L, arg));
+    status = status && (len > 0);
     }
     else {
-      size_t l;
-      const char *s = luaL_checklstring(L, arg, &l);
-      status = status && (fwrite(s, sizeof(char), l, f) == l);
+    size_t l;
+    const char *s = luaL_checklstring(L, arg, &l);
+    status = status && (fwrite(s, sizeof(char), l, f) == l);
     }
   }
   if (l_likely(status))
@@ -702,7 +702,7 @@ static int f_seek (lua_State *L) {
   lua_Integer p3 = luaL_optinteger(L, 3, 0);
   l_seeknum offset = (l_seeknum)p3;
   luaL_argcheck(L, (lua_Integer)offset == p3, 3,
-                  "not an integer in proper range");
+                "not an integer in proper range");
   op = l_fseek(f, offset, mode[op]);
   if (l_unlikely(op))
     return luaL_fileresult(L, 0, NULL);  /* error */
@@ -804,7 +804,7 @@ static int io_noclose (lua_State *L) {
 
 
 static void createstdfile (lua_State *L, FILE *f, const char *k,
-                           const char *fname) {
+                            const char *fname) {
   LStream *p = newprefile(L);
   p->f = f;
   p->closef = &io_noclose;
@@ -825,4 +825,3 @@ LUAMOD_API int luaopen_io (lua_State *L) {
   createstdfile(L, stderr, NULL, "stderr");
   return 1;
 }
-

@@ -31,7 +31,7 @@ RAPIDJSON_NAMESPACE_BEGIN
 */
 class FileWriteStream
 {
-   public:
+    public:
     typedef char Ch;  //!< Character type. Only support char.
 
     FileWriteStream( std::FILE* fp, char* buffer, size_t bufferSize )
@@ -108,7 +108,7 @@ class FileWriteStream
         return 0;
     }
 
-   private:
+    private:
     // Prohibit copy constructor & assignment operator.
     FileWriteStream( const FileWriteStream& );
     FileWriteStream& operator=( const FileWriteStream& );

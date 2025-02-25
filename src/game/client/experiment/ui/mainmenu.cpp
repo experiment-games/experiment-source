@@ -173,13 +173,13 @@ class MainMenuHTML : public HTML
 {
     DECLARE_CLASS_SIMPLE( MainMenuHTML, HTML );
 
-   public:
+    public:
     MainMenuHTML( Panel *parent, const char *name, bool allowJavaScript = true )
         : HTML( parent, name, allowJavaScript )
     {
     }
 
-   protected:
+    protected:
     virtual void OnInstallJavaScriptInterop() OVERRIDE
     {
         AddJavascriptObject( "GameUI" );

@@ -71,34 +71,34 @@ class OnceInitTest : public testing::Test {
   void UnblockInit() { init_blocker_.Unlock(); }
 
   class TestThread {
-   public:
+    public:
     TestThread(Closure* callback)
         : done_(false), joined_(false), callback_(callback) {
 #ifdef _WIN32
-      thread_ = CreateThread(NULL, 0, &Start, this, 0, NULL);
+    thread_ = CreateThread(NULL, 0, &Start, this, 0, NULL);
 #else
-      pthread_create(&thread_, NULL, &Start, this);
+    pthread_create(&thread_, NULL, &Start, this);
 #endif
     }
     ~TestThread() {
-      if (!joined_) Join();
+    if (!joined_) Join();
     }
 
     bool IsDone() {
-      MutexLock lock(&done_mutex_);
-      return done_;
+    MutexLock lock(&done_mutex_);
+    return done_;
     }
     void Join() {
-      joined_ = true;
+    joined_ = true;
 #ifdef _WIN32
-      WaitForSingleObject(thread_, INFINITE);
-      CloseHandle(thread_);
+    WaitForSingleObject(thread_, INFINITE);
+    CloseHandle(thread_);
 #else
-      pthread_join(thread_, NULL);
+    pthread_join(thread_, NULL);
 #endif
     }
 
-   private:
+    private:
 #ifdef _WIN32
     HANDLE thread_;
 #else
@@ -115,14 +115,14 @@ class OnceInitTest : public testing::Test {
 #else
     static void* Start(void* arg) {
 #endif
-      reinterpret_cast<TestThread*>(arg)->Run();
-      return 0;
+    reinterpret_cast<TestThread*>(arg)->Run();
+    return 0;
     }
 
     void Run() {
-      callback_->Run();
-      MutexLock lock(&done_mutex_);
-      done_ = true;
+    callback_->Run();
+    MutexLock lock(&done_mutex_);
+    done_ = true;
     }
   };
 

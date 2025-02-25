@@ -129,8 +129,8 @@ void CAI_MoveProbe::TraceLine( const Vector &vecStart, const Vector &vecEnd, uns
 
 CAI_MoveProbe::CAI_MoveProbe( CAI_BaseNPC *pOuter )
     : CAI_Component( pOuter ),
-      m_bIgnoreTransientEntities( false ),
-      m_pTraceListData( NULL )
+    m_bIgnoreTransientEntities( false ),
+    m_pTraceListData( NULL )
 {
 }
 
@@ -164,11 +164,11 @@ void CAI_MoveProbe::TraceHull(
     {
         enginetrace->TraceRayAgainstLeafAndEntityList( ray, *( const_cast< CAI_MoveProbe * >( this )->m_pTraceListData ), mask, &traceFilter, pResult );
 #if 0
-		trace_t verificationTrace;
-		enginetrace->TraceRay( ray, mask, &traceFilter, &verificationTrace );
-		Assert( fabsf(verificationTrace.fraction - pResult->fraction) < 0.01 &&
-				VectorsAreEqual( verificationTrace.endpos, pResult->endpos, 0.01 ) &&
-				verificationTrace.m_pEnt == pResult->m_pEnt );
+        trace_t verificationTrace;
+        enginetrace->TraceRay( ray, mask, &traceFilter, &verificationTrace );
+        Assert( fabsf(verificationTrace.fraction - pResult->fraction) < 0.01 &&
+                VectorsAreEqual( verificationTrace.endpos, pResult->endpos, 0.01 ) &&
+                verificationTrace.m_pEnt == pResult->m_pEnt );
 
 #endif
     }
@@ -411,8 +411,8 @@ bool CAI_MoveProbe::CheckStep( const CheckStepArgs_t &args, CheckStepResult_t *p
 
     // Don't step up onto an odd slope
     if ( trace.endpos.z - args.vecStart.z > args.stepHeight * 0.5 &&
-         ( ( pFloor->IsWorld() && trace.hitbox > 0 ) ||
-           dynamic_cast< CPhysicsProp * >( pFloor ) ) )
+        ( ( pFloor->IsWorld() && trace.hitbox > 0 ) ||
+            dynamic_cast< CPhysicsProp * >( pFloor ) ) )
     {
         if ( fabsf( trace.plane.normal.Dot( Vector( 1, 0, 0 ) ) ) > .4 )
         {
@@ -653,8 +653,8 @@ bool CAI_MoveProbe::TestGroundMove( const Vector &vecActualStart, const Vector &
         if ( fabs( pMoveTrace->vEndPosition.z - vecDesiredEnd.z ) > threshold )
         {
 #if 0
-			NDebugOverlay::Cross3D( vecDesiredEnd, 8, 0, 255, 0, false, 0.1 );
-			NDebugOverlay::Cross3D( pMoveTrace->vEndPosition, 8, 255, 0, 0, false, 0.1 );
+            NDebugOverlay::Cross3D( vecDesiredEnd, 8, 0, 255, 0, false, 0.1 );
+            NDebugOverlay::Cross3D( pMoveTrace->vEndPosition, 8, 255, 0, 0, false, 0.1 );
 #endif
             // Ok, we ended up on a ledge above or below the desired destination
             pMoveTrace->pObstruction = GetContainingEntity( INDEXENT( 0 ) );
@@ -1313,8 +1313,8 @@ bool CAI_MoveProbe::FloorPoint( const Vector &vecStart, unsigned int collisionMa
     if ( trace.startsolid )
     {
         if ( trace.m_pEnt &&
-             ( trace.m_pEnt->GetMoveType() == MOVETYPE_VPHYSICS || trace.m_pEnt->IsNPC() ) &&
-             ( vecStart - GetLocalOrigin() ).Length() < 0.1 )
+            ( trace.m_pEnt->GetMoveType() == MOVETYPE_VPHYSICS || trace.m_pEnt->IsNPC() ) &&
+            ( vecStart - GetLocalOrigin() ).Length() < 0.1 )
         {
             fStartedInObject = true;
         }

@@ -68,10 +68,10 @@ class CCannonServerVehicle : public CBaseServerVehicle
 {
     typedef CBaseServerVehicle BaseClass;
     // IServerVehicle
-   public:
+    public:
     void GetVehicleViewPosition( int nRole, Vector *pAbsOrigin, QAngle *pAbsAngles, float *pFOV = NULL );
 
-   protected:
+    protected:
     CPropCannon *GetCannon( void );
 };
 
@@ -82,7 +82,7 @@ class CPropCannon : public CBaseProp, public IDrivableVehicle
 {
     DECLARE_CLASS( CPropCannon, CBaseProp );
 
-   public:
+    public:
     DECLARE_DATADESC();
     DECLARE_SERVERCLASS();
 
@@ -159,7 +159,7 @@ class CPropCannon : public CBaseProp, public IDrivableVehicle
     void LaunchProjectile( void );
     void ProjectileExplosion( void );
 
-   private:
+    private:
     string_t m_vehicleScript;
 
     // Entering / Exiting
@@ -195,7 +195,7 @@ class CPropCannon : public CBaseProp, public IDrivableVehicle
 
     float m_flNextAttackTime;
 
-   protected:
+    protected:
     // Contained IServerVehicle
     CCannonServerVehicle m_ServerVehicle;
 

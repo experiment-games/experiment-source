@@ -137,9 +137,9 @@ message TestAllTypesLite {
 
   optional NestedEnum default_nested_enum = 81 [default = BAR];
   optional ForeignEnumLite default_foreign_enum = 82
-      [default = FOREIGN_LITE_BAR];
+    [default = FOREIGN_LITE_BAR];
   optional protobuf_unittest_import.ImportEnumLite
-      default_import_enum = 83 [default = IMPORT_LITE_BAR];
+    default_import_enum = 83 [default = IMPORT_LITE_BAR];
 
   optional string default_string_piece = 84 [ctype=STRING_PIECE,default="abc"];
   optional string default_cord = 85 [ctype=CORD,default="123"];
@@ -199,7 +199,7 @@ extend TestAllExtensionsLite {
   }
 
   optional TestAllTypesLite.NestedMessage optional_nested_message_extension_lite
-      = 18;
+    = 18;
   optional ForeignMessageLite optional_foreign_message_extension_lite = 19;
   optional protobuf_unittest_import.ImportMessageLite
     optional_import_message_extension_lite = 20;
@@ -210,7 +210,7 @@ extend TestAllExtensionsLite {
     optional_import_enum_extension_lite = 23;
 
   optional string optional_string_piece_extension_lite = 24
-      [ctype=STRING_PIECE];
+    [ctype=STRING_PIECE];
   optional string optional_cord_extension_lite = 25 [ctype=CORD];
 
   // Repeated
@@ -235,7 +235,7 @@ extend TestAllExtensionsLite {
   }
 
   repeated TestAllTypesLite.NestedMessage repeated_nested_message_extension_lite
-      = 48;
+    = 48;
   repeated ForeignMessageLite repeated_foreign_message_extension_lite = 49;
   repeated protobuf_unittest_import.ImportMessageLite
     repeated_import_message_extension_lite = 50;
@@ -246,7 +246,7 @@ extend TestAllExtensionsLite {
     repeated_import_enum_extension_lite = 53;
 
   repeated string repeated_string_piece_extension_lite = 54
-      [ctype=STRING_PIECE];
+    [ctype=STRING_PIECE];
   repeated string repeated_cord_extension_lite = 55 [ctype=CORD];
 
   // Singular with defaults

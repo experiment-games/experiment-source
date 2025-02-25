@@ -51,9 +51,9 @@ struct DataCacheLimits_t
 {
     DataCacheLimits_t( unsigned nMaxBytes = ( unsigned )-1, unsigned nMaxItems = ( unsigned )-1, unsigned nMinBytes = 0, unsigned nMinItems = 0 )
         : nMaxBytes( nMaxBytes ),
-          nMaxItems( nMaxItems ),
-          nMinBytes( nMinBytes ),
-          nMinItems( nMinItems )
+        nMaxItems( nMaxItems ),
+        nMinBytes( nMinBytes ),
+        nMinItems( nMinItems )
     {
     }
 
@@ -174,7 +174,7 @@ enum DataCacheAddFlags_t
 //-----------------------------------------------------------------------------
 abstract_class IDataCacheSection
 {
-   public:
+    public:
     //--------------------------------------------------------
 
     virtual IDataCache *GetSharedCache() = 0;
@@ -309,7 +309,7 @@ abstract_class IDataCacheSection
 //-----------------------------------------------------------------------------
 abstract_class IDataCacheClient
 {
-   public:
+    public:
     //--------------------------------------------------------
     //
     //--------------------------------------------------------
@@ -325,7 +325,7 @@ abstract_class IDataCacheClient
 
 class CDefaultDataCacheClient : public IDataCacheClient
 {
-   public:
+    public:
     virtual bool HandleCacheNotification( const DataCacheNotification_t &notification )
     {
         switch ( notification.type )
@@ -353,7 +353,7 @@ class CDefaultDataCacheClient : public IDataCacheClient
 //-----------------------------------------------------------------------------
 abstract_class IDataCache : public IAppSystem
 {
-   public:
+    public:
     //--------------------------------------------------------
     // Purpose: Controls cache size.
     //--------------------------------------------------------
@@ -411,7 +411,7 @@ abstract_class IDataCache : public IAppSystem
 template < class STORAGE_TYPE, class CREATE_PARAMS, class LOCK_TYPE = STORAGE_TYPE * >
 class CManagedDataCacheClient : public CDefaultDataCacheClient
 {
-   public:
+    public:
     typedef CManagedDataCacheClient< STORAGE_TYPE, CREATE_PARAMS, LOCK_TYPE > CCacheClientBaseClass;
 
     CManagedDataCacheClient()
@@ -522,7 +522,7 @@ class CManagedDataCacheClient : public CDefaultDataCacheClient
         return CDefaultDataCacheClient::HandleCacheNotification( notification );
     }
 
-   protected:
+    protected:
     ~CManagedDataCacheClient()
     {
         Shutdown();
@@ -533,7 +533,7 @@ class CManagedDataCacheClient : public CDefaultDataCacheClient
         return m_pCache;
     }
 
-   private:
+    private:
     IDataCacheSection *m_pCache;
 };
 

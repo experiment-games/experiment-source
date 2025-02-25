@@ -39,7 +39,7 @@ typedef unsigned long HPanel;
 //-----------------------------------------------------------------------------
 class IVGui : public IAppSystem
 {
-   public:
+    public:
     // activates vgui message pump
     virtual void Start() = 0;
 

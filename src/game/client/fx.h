@@ -80,7 +80,7 @@ bool EffectOccluded( const Vector &pos, pixelvis_handle_t *queryHandle = 0 );
 
 class CTeslaInfo
 {
-   public:
+    public:
     Vector m_vPos;
     QAngle m_vAngles;
     int m_nEntIndex;

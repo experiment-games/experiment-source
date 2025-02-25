@@ -13,7 +13,7 @@
 
 class CBaseGrenadeTimed : public CBaseGrenade
 {
-   public:
+    public:
     DECLARE_CLASS( CBaseGrenadeTimed, CBaseGrenade );
 
     void Spawn( void );

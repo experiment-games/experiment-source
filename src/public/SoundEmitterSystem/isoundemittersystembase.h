@@ -255,7 +255,7 @@ struct CSoundParametersInternal
         return ( m_nConvertedNames == 1 ) ? ( SoundFile * )&m_pConvertedNames : m_pConvertedNames;
     }
 
-   private:
+    private:
     void operator=( const CSoundParametersInternal &src );  // disallow implicit copies
     CSoundParametersInternal( const CSoundParametersInternal &src );
 
@@ -287,7 +287,7 @@ struct CSoundParametersInternal
 //-----------------------------------------------------------------------------
 abstract_class ISoundEmitterSystemBase : public IAppSystem
 {
-   public:
+    public:
     // Init, shutdown called after we know what mod is running
     virtual bool ModInit() = 0;
     virtual void ModShutdown() = 0;

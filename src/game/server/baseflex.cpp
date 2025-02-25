@@ -925,7 +925,7 @@ void CBaseFlex::ProcessSceneEvents( void )
 
 class CFlexSceneFileManager : CAutoGameSystem
 {
-   public:
+    public:
     CFlexSceneFileManager( char const *name )
         : CAutoGameSystem( name )
     {
@@ -1045,7 +1045,7 @@ class CFlexSceneFileManager : CAutoGameSystem
         return pfile->buffer;
     }
 
-   private:
+    private:
     void DeleteSceneFiles()
     {
         while ( m_FileList.Size() > 0 )
@@ -1799,7 +1799,7 @@ bool CBaseFlex::ProcessGestureSceneEvent( CSceneEventInfo *info, CChoreoScene *s
         /*
         if (stricmp( event->GetParameters(), "m_g_arms_crossed" ) == 0)
         {
-          Msg("%.2f (%.2f) : %s : %.3f (%.3f) %.2f\n", scene->GetTime(), scene->GetTime() - event->GetStartTime(), event->GetParameters(), flCycle, flEventCycle, flWeight );
+        Msg("%.2f (%.2f) : %s : %.3f (%.3f) %.2f\n", scene->GetTime(), scene->GetTime() - event->GetStartTime(), event->GetParameters(), flCycle, flEventCycle, flWeight );
         }
         */
 
@@ -1828,12 +1828,12 @@ bool CBaseFlex::ProcessGestureSceneEvent( CSceneEventInfo *info, CChoreoScene *s
 
         /*
         Msg( "%d : %.2f (%.2f) : %.3f %.3f : %.3f\n",
-          info->m_iLayer,
-          scene->GetTime(),
-          (scene->GetTime() - event->GetStartTime()) / duration,
-          flCycle,
-          flNextCycle,
-          rate );
+        info->m_iLayer,
+        scene->GetTime(),
+        (scene->GetTime() - event->GetStartTime()) / duration,
+        flCycle,
+        flNextCycle,
+        rate );
         */
     }
 
@@ -2126,8 +2126,8 @@ void CBaseFlex::DoBodyLean( void )
 
         /*
         DevMsg( "%.2f %.2f %.2f  (%.2f %.2f %.2f)\n",
-          m_vecLean.Get().x, m_vecLean.Get().y, m_vecLean.Get().z,
-          vecDelta.x, vecDelta.y, vecDelta.z );
+        m_vecLean.Get().x, m_vecLean.Get().y, m_vecLean.Get().z,
+        vecDelta.x, vecDelta.y, vecDelta.z );
         */
     }
 #endif
@@ -2173,10 +2173,10 @@ float CSceneEventInfo::UpdateWeight( CBaseFlex *pActor )
 
 class CFlexCycler : public CBaseFlex
 {
-   private:
+    private:
     DECLARE_CLASS( CFlexCycler, CBaseFlex );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     CFlexCycler()
@@ -2239,7 +2239,7 @@ DEFINE_FIELD( m_flextime, FIELD_TIME ),
     //
     class CGenericFlexCycler : public CFlexCycler
 {
-   public:
+    public:
     DECLARE_CLASS( CGenericFlexCycler, CFlexCycler );
 
     void Spawn( void )
@@ -2287,11 +2287,11 @@ void CFlexCycler::Spawn()
     /*
     if ( m_spawnflags & FCYCLER_NOTSOLID )
     {
-      SetSolid( SOLID_NOT );
+    SetSolid( SOLID_NOT );
     }
     else
     {
-      SetSolid( SOLID_SLIDEBOX );
+    SetSolid( SOLID_SLIDEBOX );
     }
     */
 
@@ -2550,23 +2550,23 @@ void CFlexCycler::Think( void )
             }
 
 #if 0
-			char szWhat[256];
-			szWhat[0] = '\0';
-			for (int i = 0; i < GetNumFlexControllers(); i++)
-			{
-				if (m_flextarget[i] == 1.0)
-				{
-					if (stricmp( GetFlexFacs( i ), "upper") != 0 && stricmp( GetFlexFacs( i ), "lower") != 0)
-					{
-						if (szWhat[0] == '\0')
-							Q_strncat( szWhat, "-", sizeof( szWhat ), COPY_ALL_CHARACTERS );
-						else
-							Q_strncat( szWhat, "+", sizeof( szWhat ), COPY_ALL_CHARACTERS );
-						Q_strncat( szWhat, GetFlexFacs( i ), sizeof( szWhat ), COPY_ALL_CHARACTERS );
-					}
-				}
-			}
-			Msg( "%s\n", szWhat );
+            char szWhat[256];
+            szWhat[0] = '\0';
+            for (int i = 0; i < GetNumFlexControllers(); i++)
+            {
+                if (m_flextarget[i] == 1.0)
+                {
+                    if (stricmp( GetFlexFacs( i ), "upper") != 0 && stricmp( GetFlexFacs( i ), "lower") != 0)
+                    {
+                        if (szWhat[0] == '\0')
+                            Q_strncat( szWhat, "-", sizeof( szWhat ), COPY_ALL_CHARACTERS );
+                        else
+                            Q_strncat( szWhat, "+", sizeof( szWhat ), COPY_ALL_CHARACTERS );
+                        Q_strncat( szWhat, GetFlexFacs( i ), sizeof( szWhat ), COPY_ALL_CHARACTERS );
+                    }
+                }
+            }
+            Msg( "%s\n", szWhat );
 #endif
         }
 
@@ -2699,13 +2699,13 @@ void CFlexCycler::Think( void )
         }
 
 #if 0
-		float dt = acos( DotProduct( (m_lookTarget - EyePosition()).Normalize(), (m_viewtarget - EyePosition()).Normalize() ) );
+        float dt = acos( DotProduct( (m_lookTarget - EyePosition()).Normalize(), (m_viewtarget - EyePosition()).Normalize() ) );
 
-		if (dt > M_PI / 4)
-		{
-			dt = (M_PI / 4) * dt;
-			m_viewtarget = ((1 - dt) * m_viewtarget + dt * m_lookTarget);
-		}
+        if (dt > M_PI / 4)
+        {
+            dt = (M_PI / 4) * dt;
+            m_viewtarget = ((1 - dt) * m_viewtarget + dt * m_lookTarget);
+        }
 #endif
 
         SetViewtarget( m_lookTarget );

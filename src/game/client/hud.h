@@ -36,7 +36,7 @@ typedef struct wrect_s
 //-----------------------------------------------------------------------------
 class CHudTexture
 {
-   public:
+    public:
     CHudTexture();
     CHudTexture &operator=( const CHudTexture &src );
     virtual ~CHudTexture();
@@ -91,13 +91,13 @@ class CHudRenderGroup;
 //-----------------------------------------------------------------------------
 class CHud
 {
-   public:
+    public:
     // For progress bar orientations
     static const int HUDPB_HORIZONTAL;
     static const int HUDPB_VERTICAL;
     static const int HUDPB_HORIZONTAL_INV;
 
-   public:
+    public:
     CHud();
     ~CHud();
 
@@ -164,7 +164,7 @@ class CHud
         m_flScreenShotTime = flTime;
     }
 
-   public:
+    public:
     int m_iKeyBits;
 #ifndef _XBOX
     float m_flMouseSensitivity;
@@ -178,7 +178,7 @@ class CHud
 
     CUtlVector< CHudElement * > m_HudList;
 
-   private:
+    private:
     void InitFonts();
 
     void SetupNewHudTexture( CHudTexture *t );

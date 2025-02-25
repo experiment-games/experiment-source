@@ -46,7 +46,7 @@ inline static char *CopyString( const char *in )
 #pragma pack( 1 )
 class Matcher
 {
-   public:
+    public:
     Matcher()
     {
         valid = false;
@@ -144,7 +144,7 @@ class Matcher
         return "";
     }
 
-   private:
+    private:
     CUtlSymbol token;
     CUtlSymbol rawtoken;
 };
@@ -595,7 +595,7 @@ struct Rule
 //-----------------------------------------------------------------------------
 abstract_class CResponseSystem : public IResponseSystem
 {
-   public:
+    public:
     CResponseSystem();
     ~CResponseSystem();
 
@@ -627,7 +627,7 @@ abstract_class CResponseSystem : public IResponseSystem
 
     void DumpDictionary( const char *pszName );
 
-   protected:
+    protected:
     virtual const char *GetScriptFile( void ) = 0;
     void LoadRuleSet( const char *setname );
 
@@ -636,7 +636,7 @@ abstract_class CResponseSystem : public IResponseSystem
     float LookForCriteria( const AI_CriteriaSet &criteriaSet, int iCriteria );
     float RecursiveLookForCriteria( const AI_CriteriaSet &criteriaSet, Criteria *pParent );
 
-   public:
+    public:
     void CopyRuleFrom( Rule * pSrcRule, int iRule, CResponseSystem *pCustomSystem );
     void CopyCriteriaFrom( Rule * pSrcRule, Rule * pDstRule, CResponseSystem * pCustomSystem );
     void CopyResponsesFrom( Rule * pSrcRule, Rule * pDstRule, CResponseSystem * pCustomSystem );
@@ -1438,7 +1438,7 @@ int CResponseSystem::SelectWeightedResponseFromResponseGroup( ResponseGroup *g, 
             {
                 Response *r = &g->group[i];
                 if ( checkrepeats &&
-                     ( r->depletioncount == depletioncount ) )
+                    ( r->depletioncount == depletioncount ) )
                 {
                     continue;
                 }
@@ -1467,7 +1467,7 @@ int CResponseSystem::SelectWeightedResponseFromResponseGroup( ResponseGroup *g, 
         {
             Response *r = &g->group[i];
             if ( checkrepeats &&
-                 ( r->depletioncount == depletioncount ) )
+                ( r->depletioncount == depletioncount ) )
             {
                 continue;
             }
@@ -1828,8 +1828,8 @@ bool CResponseSystem::FindBestResponse( const AI_CriteriaSet &set, AI_Response &
         // clipped -- chet doesn't really want this info
         if ( valid )
         {
-          // Rescore the winner and dump to console
-          ScoreCriteriaAgainstRule( set, bestRule, true );
+        // Rescore the winner and dump to console
+        ScoreCriteriaAgainstRule( set, bestRule, true );
         }
         */
 
@@ -1990,7 +1990,7 @@ void CResponseSystem::LoadFromBuffer( const char *scriptfile, const char *buffer
             ParseResponse();
         }
         else if ( !Q_stricmp( token, "criterion" ) ||
-                  !Q_stricmp( token, "criteria" ) )
+                !Q_stricmp( token, "criteria" ) )
         {
             ParseCriterion();
         }
@@ -2007,9 +2007,9 @@ void CResponseSystem::LoadFromBuffer( const char *scriptfile, const char *buffer
             int byteoffset = m_ScriptStack[0].currenttoken - ( const char * )m_ScriptStack[0].buffer;
 
             Error( "CResponseSystem::LoadFromBuffer:  Unknown entry type '%s', expecting 'response', 'criterion', 'enumeration' or 'rules' in file %s(offset:%i)\n",
-                   token,
-                   scriptfile,
-                   byteoffset );
+                    token,
+                    scriptfile,
+                    byteoffset );
             break;
         }
     }
@@ -2522,7 +2522,7 @@ void CResponseSystem::ParseEnumeration( void )
         /*
         else
         {
-          ResponseWarning( "Ignoring duplication enumeration '%s'\n", sz );
+        ResponseWarning( "Ignoring duplication enumeration '%s'\n", sz );
         }
         */
     }
@@ -2616,7 +2616,7 @@ void CResponseSystem::ParseRule( void )
         }
 
         if ( !Q_stricmp( token, "criteria" ) ||
-             !Q_stricmp( token, "criterion" ) )
+            !Q_stricmp( token, "criterion" ) )
         {
             // Read them until we run out.
             while ( TokenWaiting() )
@@ -2856,7 +2856,7 @@ class CInstancedResponseSystem : public CResponseSystem
 {
     typedef CResponseSystem BaseClass;
 
-   public:
+    public:
     CInstancedResponseSystem( const char *scriptfile )
         : m_pszScriptFile( 0 )
     {
@@ -2897,7 +2897,7 @@ class CInstancedResponseSystem : public CResponseSystem
         delete this;
     }
 
-   private:
+    private:
     char *m_pszScriptFile;
 };
 
@@ -2908,7 +2908,7 @@ class CDefaultResponseSystem : public CResponseSystem, public CAutoGameSystem
 {
     typedef CAutoGameSystem BaseClass;
 
-   public:
+    public:
     CDefaultResponseSystem()
         : CAutoGameSystem( "CDefaultResponseSystem" )
     {
@@ -3008,7 +3008,7 @@ class CDefaultResponseSystem : public CResponseSystem, public CAutoGameSystem
         }
     }
 
-   private:
+    private:
     void ClearInstanced()
     {
         int c = m_InstancedSystems.Count();
@@ -3098,7 +3098,7 @@ static short RESPONSESYSTEM_SAVE_RESTORE_VERSION = 1;
 //
 class CDefaultResponseSystemSaveRestoreBlockHandler : public CDefSaveRestoreBlockHandler
 {
-   public:
+    public:
     const char *GetBlockName()
     {
         return "ResponseSystem";
@@ -3208,7 +3208,7 @@ class CDefaultResponseSystemSaveRestoreBlockHandler : public CDefSaveRestoreBloc
         }
     }
 
-   private:
+    private:
     bool m_fDoLoad;
 
 } g_DefaultResponseSystemSaveRestoreBlockHandler;
@@ -3230,7 +3230,7 @@ ISaveRestoreBlockHandler *GetDefaultResponseSystemSaveRestoreBlockHandler()
 
 class CResponseSystemSaveRestoreOps : public CDefSaveRestoreOps
 {
-   public:
+    public:
     virtual void Save( const SaveRestoreFieldInfo_t &fieldInfo, ISave *pSave )
     {
         CResponseSystem *pRS = *( CResponseSystem ** )fieldInfo.pField;
@@ -3334,10 +3334,10 @@ ISaveRestoreOps *responseSystemSaveRestoreOps = &g_ResponseSystemSaveRestoreOps;
 bool CDefaultResponseSystem::Init()
 {
     /*
-      Warning( "sizeof( Response ) == %d\n", sizeof( Response ) );
-      Warning( "sizeof( ResponseGroup ) == %d\n", sizeof( ResponseGroup ) );
-      Warning( "sizeof( Criteria ) == %d\n", sizeof( Criteria ) );
-      Warning( "sizeof( AI_ResponseParams ) == %d\n", sizeof( AI_ResponseParams ) );
+    Warning( "sizeof( Response ) == %d\n", sizeof( Response ) );
+    Warning( "sizeof( ResponseGroup ) == %d\n", sizeof( ResponseGroup ) );
+    Warning( "sizeof( Criteria ) == %d\n", sizeof( Criteria ) );
+    Warning( "sizeof( AI_ResponseParams ) == %d\n", sizeof( AI_ResponseParams ) );
     */
     const char *basescript = GetScriptFile();
 

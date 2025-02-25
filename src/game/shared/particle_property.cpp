@@ -679,9 +679,9 @@ void CParticleProperty::DebugPrintEffects( void )
             continue;
 
         Msg( "(%d)  EffectName \"%s\"  Dormant? %s  Emission Stopped? %s \n",
-             i,
-             pParticleEffect->GetEffectName(),
-             ( pParticleEffect->m_bDormant ) ? "yes" : "no",
-             ( pParticleEffect->m_bEmissionStopped ) ? "yes" : "no" );
+            i,
+            pParticleEffect->GetEffectName(),
+            ( pParticleEffect->m_bDormant ) ? "yes" : "no",
+            ( pParticleEffect->m_bEmissionStopped ) ? "yes" : "no" );
     }
 }

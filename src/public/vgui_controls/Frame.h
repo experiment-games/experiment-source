@@ -31,7 +31,7 @@ class Frame : public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( Frame, EditablePanel );
 
-   public:
+    public:
 #ifdef LUA_SDK
     Frame( Panel *parent, const char *panelName, bool showTaskbarIcon = true, bool bPopup = true, lua_State *L = nullptr );
 #else
@@ -116,7 +116,7 @@ class Frame : public EditablePanel
     virtual int GetCaptionHeight();
 
     /* CUSTOM MESSAGE HANDLING
-      "SetTitle"
+    "SetTitle"
         input:	"text"	- string to set the title to be
     */
 
@@ -142,7 +142,7 @@ class Frame : public EditablePanel
         return m_bHasFocus;
     }
 
-   protected:
+    protected:
     // Respond to mouse presses
     virtual void OnMousePressed( MouseCode code );
     // Respond to Key typing
@@ -199,7 +199,7 @@ class Frame : public EditablePanel
     // optimization, return true if this control has any user config settings
     virtual bool HasUserConfigSettings();
 
-   private:
+    private:
     MESSAGE_FUNC_CHARPTR( InternalSetTitle, "SetTitle", text );
     MESSAGE_FUNC( InternalFlashWindow, "FlashWindow" );
     MESSAGE_FUNC_PARAMS( OnDialogVariablesChanged, "DialogVariables", dialogVariables );

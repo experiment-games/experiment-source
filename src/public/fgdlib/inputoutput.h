@@ -29,7 +29,7 @@ enum InputOutputType_t
 //-----------------------------------------------------------------------------
 class CClassInputOutputBase
 {
-   public:
+    public:
     CClassInputOutputBase( void );
     CClassInputOutputBase( const char *pszName, InputOutputType_t eType );
     virtual ~CClassInputOutputBase( void );
@@ -61,7 +61,7 @@ class CClassInputOutputBase
 
     CClassInputOutputBase &operator=( CClassInputOutputBase & );
 
-   protected:
+    protected:
     static char *g_pszEmpty;
 
     char m_szName[MAX_IO_NAME_LEN];
@@ -87,7 +87,7 @@ const char *CClassInputOutputBase::GetDescription( void )
 //-----------------------------------------------------------------------------
 class CClassInput : public CClassInputOutputBase
 {
-   public:
+    public:
     CClassInput( void );
     CClassInput( const char *pszName, InputOutputType_t eType );
 };
@@ -97,7 +97,7 @@ class CClassInput : public CClassInputOutputBase
 //-----------------------------------------------------------------------------
 class CClassOutput : public CClassInputOutputBase
 {
-   public:
+    public:
     CClassOutput( void );
     CClassOutput( const char *pszName, InputOutputType_t eType );
 };

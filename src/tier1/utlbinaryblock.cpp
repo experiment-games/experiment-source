@@ -85,7 +85,7 @@ void CUtlBinaryBlock::Set( const void *pValue, int nLen )
     if ( m_nActualLength )
     {
         if ( ( ( const char * )m_Memory.Base() ) >= ( ( const char * )pValue ) + nLen ||
-             ( ( const char * )m_Memory.Base() ) + m_nActualLength <= ( ( const char * )pValue ) )
+            ( ( const char * )m_Memory.Base() ) + m_nActualLength <= ( ( const char * )pValue ) )
         {
             memcpy( m_Memory.Base(), pValue, m_nActualLength );
         }

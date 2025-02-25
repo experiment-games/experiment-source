@@ -19,11 +19,11 @@ class LFrame : public Frame
 
     LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( LFrame, "Frame" );
 
-   public:
+    public:
     LFrame( Panel *parent, const char *panelName, bool showTaskbarIcon = true, lua_State *L = NULL );
     virtual ~LFrame();
 
-   protected:
+    protected:
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme )
     {
         LUA_CALL_PANEL_METHOD_BEGIN( "ApplySchemeSettings" );

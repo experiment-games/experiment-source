@@ -16,7 +16,7 @@
 DEFINE_FALLBACK_SHADER( eyes, Eyes_dx8 )
 
 BEGIN_VS_SHADER( Eyes_dx8,
-                 "Help for Eyes" )
+                "Help for Eyes" )
 
 BEGIN_SHADER_PARAMS
 SHADER_PARAM_OVERRIDE( BASETEXTURE, SHADER_PARAM_TYPE_TEXTURE, "models/alyx/eyeball_l", "iris texture", 0 )

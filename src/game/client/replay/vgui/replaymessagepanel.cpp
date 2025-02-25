@@ -64,9 +64,9 @@ ConVar replay_msgduration_connectrecording( "replay_msgduration_connectrecording
 
 CReplayMessageDlg::CReplayMessageDlg( const char *pText )
     : BaseClass( NULL, "ReplayMessageDlg" ),
-      m_pOKButton( NULL ),
-      m_pDlg( NULL ),
-      m_pMsgLabel( NULL )
+    m_pOKButton( NULL ),
+    m_pDlg( NULL ),
+    m_pMsgLabel( NULL )
 {
     InvalidateLayout( true, true );
 
@@ -174,7 +174,7 @@ ReplayMessagePanelHandle_t GetReplayMessagePanelHandle( CReplayMessagePanel *pPa
 
 CReplayMessagePanel::CReplayMessagePanel( const char *pLocalizeName, float flDuration, bool bUrgent )
     : EditablePanel( g_pClientMode->GetViewport(), "ReplayMessagePanel" ),
-      m_bUrgent( bUrgent )
+    m_bUrgent( bUrgent )
 {
     m_flShowStartTime = 0;
     m_flShowDuration = flDuration;

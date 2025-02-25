@@ -28,7 +28,7 @@ class KeyValues;
 //
 class IServerReplay : public IBaseInterface
 {
-   public:
+    public:
     virtual void UploadOgsData( KeyValues *pData, bool bIncludeTimeField ) = 0;
 };
 

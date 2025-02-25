@@ -14,13 +14,13 @@ class CNPC_Puppet : public CAI_BaseNPC
 {
     DECLARE_CLASS( CNPC_Puppet, CAI_BaseNPC );
 
-   public:
+    public:
     virtual void Spawn( void );
     virtual void Precache( void );
 
     void InputSetAnimationTarget( inputdata_t &inputdata );
 
-   private:
+    private:
     string_t m_sAnimTargetname;
     string_t m_sAnimAttachmentName;
 

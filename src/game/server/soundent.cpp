@@ -702,7 +702,7 @@ CSound *CSoundEnt::GetLoudestSoundOfType( int iType, const Vector &vecEarPositio
 //-----------------------------------------------------------------------------
 class CAISound : public CPointEntity
 {
-   public:
+    public:
     CAISound()
     {
         // Initialize these new keyvalues appropriately

@@ -178,7 +178,7 @@ class CTraceFilterPushFinal : public CTraceFilterSimple
 {
     DECLARE_CLASS( CTraceFilterPushFinal, CTraceFilterSimple );
 
-   public:
+    public:
     CTraceFilterPushFinal( CBaseEntity *pEntity, int nCollisionGroup )
         : CTraceFilterSimple( pEntity, nCollisionGroup )
     {
@@ -191,7 +191,7 @@ class CTraceFilterPushFinal : public CTraceFilterSimple
 
         // UNDONE: This should really filter to just the pushing entities
         if ( pTestEntity->GetMoveType() == MOVETYPE_VPHYSICS &&
-             pTestEntity->VPhysicsGetObject() && pTestEntity->VPhysicsGetObject()->IsMoveable() )
+            pTestEntity->VPhysicsGetObject() && pTestEntity->VPhysicsGetObject()->IsMoveable() )
             return false;
 
         return BaseClass::ShouldHitEntity( pHandleEntity, contentsMask );
@@ -245,7 +245,7 @@ bool CPhysicsPushedEntities::SpeculativelyCheckPush( PhysicsPushedInfo_t &info, 
 
         // We're not blocked if the blocker is point-sized or non-solid
         if ( pBlocker->IsPointSized() || !pBlocker->IsSolid() ||
-             pBlocker->IsSolidFlagSet( FSOLID_VOLUME_CONTENTS ) )
+            pBlocker->IsSolidFlagSet( FSOLID_VOLUME_CONTENTS ) )
         {
             return true;
         }
@@ -256,8 +256,8 @@ bool CPhysicsPushedEntities::SpeculativelyCheckPush( PhysicsPushedInfo_t &info, 
             if ( !IsPushedPositionValid( pBlocker ) )
             {
                 Warning( "Interpenetrating entities! (%s and %s)\n",
-                         pBlocker->GetClassname(),
-                         m_rgPusher[0].m_pEntity->GetClassname() );
+                        pBlocker->GetClassname(),
+                        m_rgPusher[0].m_pEntity->GetClassname() );
             }
 
             return true;
@@ -487,7 +487,7 @@ void CPhysicsPushedEntities::RestoreEntities()
 //-----------------------------------------------------------------------------
 class CTraceFilterAgainstEntityList : public ITraceFilter
 {
-   public:
+    public:
     virtual bool ShouldHitEntity( IHandleEntity *pEntity, int contentsMask )
     {
         for ( int i = m_entityList.Count() - 1; i >= 0; --i )
@@ -517,7 +517,7 @@ class CTraceFilterAgainstEntityList : public ITraceFilter
 //-----------------------------------------------------------------------------
 class CPushBlockerEnum : public IPartitionEnumerator
 {
-   public:
+    public:
     CPushBlockerEnum( CPhysicsPushedEntities *pPushedEntities )
         : m_pPushedEntities( pPushedEntities )
     {
@@ -551,7 +551,7 @@ class CPushBlockerEnum : public IPartitionEnumerator
         return ITERATION_CONTINUE;
     }
 
-   private:
+    private:
     inline void AddCollisionGroup( int collisionGroup )
     {
         for ( int i = 0; i < m_collisionGroupCount; i++ )
@@ -606,9 +606,9 @@ class CPushBlockerEnum : public IPartitionEnumerator
             return NULL;
 
         if ( pCheck->GetMoveType() == MOVETYPE_PUSH ||
-             pCheck->GetMoveType() == MOVETYPE_NONE ||
-             pCheck->GetMoveType() == MOVETYPE_VPHYSICS ||
-             pCheck->GetMoveType() == MOVETYPE_NOCLIP )
+            pCheck->GetMoveType() == MOVETYPE_NONE ||
+            pCheck->GetMoveType() == MOVETYPE_VPHYSICS ||
+            pCheck->GetMoveType() == MOVETYPE_NOCLIP )
         {
             return NULL;
         }
@@ -645,7 +645,7 @@ class CPushBlockerEnum : public IPartitionEnumerator
         return pCheckHighestParent;
     }
 
-   private:
+    private:
     static int s_nEnumCount;
     CPhysicsPushedEntities *m_pPushedEntities;
     CBaseEntity *m_pRootHighestParent;
@@ -1803,7 +1803,7 @@ void CBaseEntity::PhysicsStepRunTimestep( float timestep )
     bool wasonground;
     bool inwater;
 #if 0
-	bool	hitsound = false;
+    bool	hitsound = false;
 #endif
     float speed, newspeed, control;
     float friction;
@@ -1826,10 +1826,10 @@ void CBaseEntity::PhysicsStepRunTimestep( float timestep )
             if ( !( ( GetFlags() & FL_SWIM ) && ( GetWaterLevel() > 0 ) ) )
             {
 #if 0
-				if ( GetAbsVelocity()[2] < ( GetCurrentGravity() * -0.1 ) )
-				{
-					hitsound = true;
-				}
+                if ( GetAbsVelocity()[2] < ( GetCurrentGravity() * -0.1 ) )
+                {
+                    hitsound = true;
+                }
 #endif
 
                 if ( !inwater )
@@ -1842,8 +1842,8 @@ void CBaseEntity::PhysicsStepRunTimestep( float timestep )
     }
 
     if ( !( GetFlags() & FL_STEPMOVEMENT ) &&
-         ( !VectorCompare( GetAbsVelocity(), vec3_origin ) ||
-           !VectorCompare( GetBaseVelocity(), vec3_origin ) ) )
+        ( !VectorCompare( GetAbsVelocity(), vec3_origin ) ||
+            !VectorCompare( GetBaseVelocity(), vec3_origin ) ) )
     {
         Vector vecAbsVelocity = GetAbsVelocity();
 
@@ -1918,7 +1918,7 @@ void Physics_SimulateEntity( CBaseEntity *pEntity )
             //  control to the game code.
             CBasePlayer *simulatingPlayer = pEntity->GetSimulatingPlayer();
             if ( simulatingPlayer &&
-                 ( simulatingPlayer->GetTimeBase() > gpGlobals->curtime - PLAYER_PACKETS_STOPPED_SO_RETURN_TO_PHYSICS_TIME ) )
+                ( simulatingPlayer->GetTimeBase() > gpGlobals->curtime - PLAYER_PACKETS_STOPPED_SO_RETURN_TO_PHYSICS_TIME ) )
             {
                 // Okay, the guy is still around
                 return;

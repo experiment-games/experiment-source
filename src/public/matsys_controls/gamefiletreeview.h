@@ -30,7 +30,7 @@ class CGameFileTreeView : public vgui::TreeView
 {
     DECLARE_CLASS_SIMPLE( CGameFileTreeView, vgui::TreeView );
 
-   public:
+    public:
     CGameFileTreeView( vgui::Panel *parent, const char *name, const char *pRootFolderName, const char *pRootDir, const char *pExtension = NULL );
 
     // Inherited from base classes
@@ -53,7 +53,7 @@ class CGameFileTreeView : public vgui::TreeView
     // Selects the root folder
     void SelectRoot();
 
-   private:
+    private:
     // Populate the root node (necessary since tree view can't have multiple roots)
     void PopulateRootNode( int itemIndex );
 

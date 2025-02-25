@@ -81,7 +81,7 @@ class DiskSourceTree;
 //   FindFileContainingExtension(); these will always return false.
 class LIBPROTOBUF_EXPORT SourceTreeDescriptorDatabase : public DescriptorDatabase
 {
-   public:
+    public:
     SourceTreeDescriptorDatabase( SourceTree* source_tree );
     ~SourceTreeDescriptorDatabase();
 
@@ -107,12 +107,12 @@ class LIBPROTOBUF_EXPORT SourceTreeDescriptorDatabase : public DescriptorDatabas
     // implements DescriptorDatabase -----------------------------------
     bool FindFileByName( const string& filename, FileDescriptorProto* output );
     bool FindFileContainingSymbol( const string& symbol_name,
-                                   FileDescriptorProto* output );
+                                    FileDescriptorProto* output );
     bool FindFileContainingExtension( const string& containing_type,
-                                      int field_number,
-                                      FileDescriptorProto* output );
+                                    int field_number,
+                                    FileDescriptorProto* output );
 
-   private:
+    private:
     class SingleFileErrorCollector;
 
     SourceTree* source_tree_;
@@ -120,18 +120,18 @@ class LIBPROTOBUF_EXPORT SourceTreeDescriptorDatabase : public DescriptorDatabas
 
     class LIBPROTOBUF_EXPORT ValidationErrorCollector : public DescriptorPool::ErrorCollector
     {
-       public:
+        public:
         ValidationErrorCollector( SourceTreeDescriptorDatabase* owner );
         ~ValidationErrorCollector();
 
         // implements ErrorCollector ---------------------------------------
         void AddError( const string& filename,
-                       const string& element_name,
-                       const Message* descriptor,
-                       ErrorLocation location,
-                       const string& message );
+                        const string& element_name,
+                        const Message* descriptor,
+                        ErrorLocation location,
+                        const string& message );
 
-       private:
+        private:
         SourceTreeDescriptorDatabase* owner_;
     };
     friend class ValidationErrorCollector;
@@ -151,9 +151,9 @@ class LIBPROTOBUF_EXPORT SourceTreeDescriptorDatabase : public DescriptorDatabas
 // TODO(kenton):  I feel like this class is not well-named.
 class LIBPROTOBUF_EXPORT Importer
 {
-   public:
+    public:
     Importer( SourceTree* source_tree,
-              MultiFileErrorCollector* error_collector );
+            MultiFileErrorCollector* error_collector );
     ~Importer();
 
     // Import the given file and build a FileDescriptor representing it.  If
@@ -178,7 +178,7 @@ class LIBPROTOBUF_EXPORT Importer
         return &pool_;
     }
 
-   private:
+    private:
     SourceTreeDescriptorDatabase database_;
     DescriptorPool pool_;
 
@@ -189,7 +189,7 @@ class LIBPROTOBUF_EXPORT Importer
 // it reports them to a MultiFileErrorCollector.
 class LIBPROTOBUF_EXPORT MultiFileErrorCollector
 {
-   public:
+    public:
     inline MultiFileErrorCollector() {}
     virtual ~MultiFileErrorCollector();
 
@@ -197,7 +197,7 @@ class LIBPROTOBUF_EXPORT MultiFileErrorCollector
     // an error with the entire file (e.g. "not found").
     virtual void AddError( const string& filename, int line, int column, const string& message ) = 0;
 
-   private:
+    private:
     GOOGLE_DISALLOW_EVIL_CONSTRUCTORS( MultiFileErrorCollector );
 };
 
@@ -207,7 +207,7 @@ class LIBPROTOBUF_EXPORT MultiFileErrorCollector
 // below.
 class LIBPROTOBUF_EXPORT SourceTree
 {
-   public:
+    public:
     inline SourceTree() {}
     virtual ~SourceTree();
 
@@ -217,7 +217,7 @@ class LIBPROTOBUF_EXPORT SourceTree
     // contain "." or ".." components.
     virtual io::ZeroCopyInputStream* Open( const string& filename ) = 0;
 
-   private:
+    private:
     GOOGLE_DISALLOW_EVIL_CONSTRUCTORS( SourceTree );
 };
 
@@ -226,7 +226,7 @@ class LIBPROTOBUF_EXPORT SourceTree
 // locations in the physical filesystem.
 class LIBPROTOBUF_EXPORT DiskSourceTree : public SourceTree
 {
-   public:
+    public:
     DiskSourceTree();
     ~DiskSourceTree();
 
@@ -279,8 +279,8 @@ class LIBPROTOBUF_EXPORT DiskSourceTree : public SourceTree
     //   file.
     DiskFileToVirtualFileResult
     DiskFileToVirtualFile( const string& disk_file,
-                           string* virtual_file,
-                           string* shadowing_disk_file );
+                            string* virtual_file,
+                            string* shadowing_disk_file );
 
     // Given a virtual path, find the path to the file on disk.
     // Return true and update disk_file with the on-disk path if the file exists.
@@ -290,7 +290,7 @@ class LIBPROTOBUF_EXPORT DiskSourceTree : public SourceTree
     // implements SourceTree -------------------------------------------
     io::ZeroCopyInputStream* Open( const string& filename );
 
-   private:
+    private:
     struct Mapping
     {
         string virtual_path;
@@ -304,7 +304,7 @@ class LIBPROTOBUF_EXPORT DiskSourceTree : public SourceTree
     // Like Open(), but returns the on-disk path in disk_file if disk_file is
     // non-NULL and the file could be successfully opened.
     io::ZeroCopyInputStream* OpenVirtualFile( const string& virtual_file,
-                                              string* disk_file );
+                                            string* disk_file );
 
     // Like Open() but given the actual on-disk path.
     io::ZeroCopyInputStream* OpenDiskFile( const string& filename );

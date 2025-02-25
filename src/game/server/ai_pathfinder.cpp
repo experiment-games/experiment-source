@@ -204,10 +204,10 @@ AI_Waypoint_t *CAI_Pathfinder::MakeRouteFromParents( int *parentArray, int endID
         Assert( waypointType != NAV_NONE );
 
         pNewWaypoint = new AI_Waypoint_t( pAInode[currentID]->GetPosition( GetHullType() ),
-                                          pAInode[currentID]->GetYaw(),
-                                          waypointType,
-                                          bits_WP_TO_NODE,
-                                          currentID );
+                                        pAInode[currentID]->GetYaw(),
+                                        waypointType,
+                                        bits_WP_TO_NODE,
+                                        currentID );
 
         // Link it up...
         pNewWaypoint->SetNext( pOldWaypoint );
@@ -246,8 +246,8 @@ bool CAI_Pathfinder::IsLinkStillStale( int moveType, CAI_Link *nodeLink )
 
     // Test movement, if suceeds, clear the stale bit
     if ( CheckStaleRoute( GetNetwork()->GetNode( nodeLink->m_iSrcID )->GetPosition( GetHullType() ),
-                          GetNetwork()->GetNode( nodeLink->m_iDestID )->GetPosition( GetHullType() ),
-                          moveType ) )
+                        GetNetwork()->GetNode( nodeLink->m_iDestID )->GetPosition( GetHullType() ),
+                        moveType ) )
     {
         nodeLink->m_LinkInfo &= ~bits_LINK_STALE_SUGGESTED;
         return false;
@@ -420,8 +420,8 @@ AI_Waypoint_t *CAI_Pathfinder::FindShortRandomPath( int startID, float minPathLe
 
         // If no neighbors try circling back to last node
         if ( neighborID != NO_NODE &&
-             numNeighbors == 0 &&
-             numStaleNeighbors == 0 )
+            numNeighbors == 0 &&
+            numStaleNeighbors == 0 )
         {
             // If we dead ended on a climb node we've failed as we
             // aren't allowed to stop on a climb node
@@ -512,7 +512,7 @@ AI_Waypoint_t *CAI_Pathfinder::FindShortRandomPath( int startID, float minPathLe
         // If path is long enough or we've hit a maximum number of search nodes,
         // we're done unless we've ended on a climb node
         if ( ( pathLength >= minPathLength || nSearchCount > 20 ) &&
-             pAInode[neighborID]->GetType() != NODE_CLIMB )
+            pAInode[neighborID]->GetType() != NODE_CLIMB )
         {
             return MakeRouteFromParents( &nodeParent[0], neighborID );
         }
@@ -641,8 +641,8 @@ bool CAI_Pathfinder::IsLinkUsable( CAI_Link *pLink, int startID )
         if ( pStartHint && pEndHint )
         {
             if ( pStartHint->HintType() == HINT_JUMP_OVERRIDE &&
-                 pEndHint->HintType() == HINT_JUMP_OVERRIDE &&
-                 ( ( ( pStartHint->GetSpawnFlags() | pEndHint->GetSpawnFlags() ) & SF_ALLOW_JUMP_UP ) || pStartHint->GetAbsOrigin().z > pEndHint->GetAbsOrigin().z ) )
+                pEndHint->HintType() == HINT_JUMP_OVERRIDE &&
+                ( ( ( pStartHint->GetSpawnFlags() | pEndHint->GetSpawnFlags() ) & SF_ALLOW_JUMP_UP ) || pStartHint->GetAbsOrigin().z > pEndHint->GetAbsOrigin().z ) )
             {
                 if ( !pStartNode->IsLocked() )
                 {
@@ -672,8 +672,8 @@ bool CAI_Pathfinder::IsLinkUsable( CAI_Link *pLink, int startID )
     if ( moveType == bits_CAP_MOVE_JUMP )
     {
         if ( !GetOuter()->IsJumpLegal( pStartNode->GetPosition( GetHullType() ),
-                                       pEndNode->GetPosition( GetHullType() ),
-                                       pEndNode->GetPosition( GetHullType() ) ) )
+                                        pEndNode->GetPosition( GetHullType() ),
+                                        pEndNode->GetPosition( GetHullType() ) ) )
         {
             return false;
         }
@@ -767,12 +767,12 @@ AI_Waypoint_t *CAI_Pathfinder::RouteToNode( const Vector &vecOrigin, int buildFl
 
     // Otherwise try to build a local route to the node
     AI_Waypoint_t *pResult = BuildLocalRoute( vecOrigin,
-                                              vecNodePosition,
-                                              NULL,
-                                              bits_WP_TO_NODE,
-                                              nodeID,
-                                              buildFlags,
-                                              goalTolerance );
+                                            vecNodePosition,
+                                            NULL,
+                                            bits_WP_TO_NODE,
+                                            nodeID,
+                                            buildFlags,
+                                            goalTolerance );
     if ( pResult )
         pResult->iNodeID = nodeID;
     return pResult;
@@ -802,18 +802,18 @@ AI_Waypoint_t *CAI_Pathfinder::RouteFromNode( const Vector &vecOrigin, int build
 
     // Otherwise try to build a local route from the node
     AI_Waypoint_t *pResult = BuildLocalRoute( vecNodePosition,
-                                              vecOrigin,
-                                              NULL,
-                                              bits_WP_TO_GOAL,
-                                              NO_NODE,
-                                              buildFlags,
-                                              goalTolerance );
+                                            vecOrigin,
+                                            NULL,
+                                            bits_WP_TO_GOAL,
+                                            NO_NODE,
+                                            buildFlags,
+                                            goalTolerance );
 
     // Handle case of target hanging over edge near climb dismount
     if ( !pResult &&
-         pNode->GetType() == NODE_CLIMB &&
-         ( vecOrigin - vecNodePosition ).Length2DSqr() < 32.0 * 32.0 &&
-         GetOuter()->GetMoveProbe()->CheckStandPosition( vecNodePosition, MASK_NPCSOLID_BRUSHONLY ) )
+        pNode->GetType() == NODE_CLIMB &&
+        ( vecOrigin - vecNodePosition ).Length2DSqr() < 32.0 * 32.0 &&
+        GetOuter()->GetMoveProbe()->CheckStandPosition( vecNodePosition, MASK_NPCSOLID_BRUSHONLY ) )
     {
         pResult = new AI_Waypoint_t( vecOrigin, 0, NAV_GROUND, bits_WP_TO_GOAL, nodeID );
     }
@@ -878,8 +878,8 @@ AI_Waypoint_t *CAI_Pathfinder::BuildComplexRoute( Navigation_t navType, const Ve
 
         // ...or the vEnd is thegoal and I'm within tolerance, just move to vEnd
         if ( ( buildFlags & bits_BUILD_GET_CLOSE ) &&
-             ( endFlags & bits_WP_TO_GOAL ) &&
-             moveTrace.flDistObstructed <= goalTolerance )
+            ( endFlags & bits_WP_TO_GOAL ) &&
+            moveTrace.flDistObstructed <= goalTolerance )
         {
             return new AI_Waypoint_t( vEnd, flYaw, navType, endFlags, nodeID );
         }
@@ -1012,7 +1012,7 @@ bool CAI_Pathfinder::CanGiveWay( const Vector &vStart, const Vector &vEnd, CBase
 
         if (pNPCBlocker->RequestGiveWay ( m_owner->GetLocalOrigin(), blockPos, moveDir, m_owner->m_eHull))
         {
-          return true;
+        return true;
         }
         */
     }
@@ -1247,9 +1247,9 @@ inline int ShortestDirectionThroughPoints( const Vector &vecStart, int nStartPoi
 // Output : Returns a route if successful or NULL if no local route was possible
 //-----------------------------------------------------------------------------
 AI_Waypoint_t *CAI_Pathfinder::BuildOBBAvoidanceRoute( const Vector &vStart, const Vector &vEnd,
-                                                       const CBaseEntity *pObstruction,  // obstruction to avoid
-                                                       const CBaseEntity *pTarget,       // target to ignore
-                                                       Navigation_t navType )
+                                                        const CBaseEntity *pObstruction,  // obstruction to avoid
+                                                        const CBaseEntity *pTarget,       // target to ignore
+                                                        Navigation_t navType )
 {
     AI_PROFILE_SCOPE( CAI_Pathfinder_BuildOBBAvoidanceRoute );
 
@@ -1660,15 +1660,15 @@ bool CAI_Pathfinder::CheckStaleRoute( const Vector &vStart, const Vector &vEnd, 
 
 class CPathfindNearestNodeFilter : public INearestNodeFilter
 {
-   public:
+    public:
     CPathfindNearestNodeFilter( CAI_Pathfinder *pPathfinder, const Vector &vGoal, bool bToNode, int buildFlags, float goalTolerance )
         : m_pPathfinder( pPathfinder ),
-          m_nTries( 0 ),
-          m_vGoal( vGoal ),
-          m_bToNode( bToNode ),
-          m_goalTolerance( goalTolerance ),
-          m_moveTypes( buildFlags & ( bits_BUILD_GROUND | bits_BUILD_FLY | bits_BUILD_JUMP | bits_BUILD_CLIMB ) ),
-          m_pRoute( NULL )
+        m_nTries( 0 ),
+        m_vGoal( vGoal ),
+        m_bToNode( bToNode ),
+        m_goalTolerance( goalTolerance ),
+        m_moveTypes( buildFlags & ( bits_BUILD_GROUND | bits_BUILD_FLY | bits_BUILD_JUMP | bits_BUILD_CLIMB ) ),
+        m_pRoute( NULL )
     {
         // Cast to int in order to indicate that we are intentionally comparing different
         // enum types, to suppress gcc warnings.
@@ -2002,12 +2002,12 @@ void CAI_Pathfinder::CTriDebugOverlay::Draw( int npcDebugOverlays )
                 if ( m_debugTriOverlayLine[i]->draw )
                 {
                     NDebugOverlay::Line( m_debugTriOverlayLine[i]->origin,
-                                         m_debugTriOverlayLine[i]->dest,
-                                         m_debugTriOverlayLine[i]->r,
-                                         m_debugTriOverlayLine[i]->g,
-                                         m_debugTriOverlayLine[i]->b,
-                                         m_debugTriOverlayLine[i]->noDepthTest,
-                                         0 );
+                                        m_debugTriOverlayLine[i]->dest,
+                                        m_debugTriOverlayLine[i]->r,
+                                        m_debugTriOverlayLine[i]->g,
+                                        m_debugTriOverlayLine[i]->b,
+                                        m_debugTriOverlayLine[i]->noDepthTest,
+                                        0 );
                 }
             }
         }

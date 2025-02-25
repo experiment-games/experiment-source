@@ -18,10 +18,10 @@
 
 VideoPlayerPanel::VideoPlayerPanel( vgui::Panel *parent, const char *panelName, int nXpos, int nYpos, int nWidth, int nHeight, const char *pVideoFile )
     : BaseClass( parent, panelName ),
-      m_VideoMaterial( NULL ),
-      m_VideoFileName( NULL ),
-      m_VideoLoaded( false ),
-      m_VideoPlaying( false )
+    m_VideoMaterial( NULL ),
+    m_VideoFileName( NULL ),
+    m_VideoLoaded( false ),
+    m_VideoPlaying( false )
 {
     Assert( g_pVideo != NULL );
 

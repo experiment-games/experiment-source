@@ -40,10 +40,10 @@ struct FFBaseParams_t
 {
     FFBaseParams_t()
         : m_flDirection( 0.0f ),
-          m_flDuration( 0.0f ),
-          m_flGain( 1.0f ),
-          m_nPriority( 0 ),
-          m_bSolo( false )
+        m_flDuration( 0.0f ),
+        m_flGain( 1.0f ),
+        m_nPriority( 0 ),
+        m_bSolo( false )
     {
     }
 
@@ -56,7 +56,7 @@ struct FFBaseParams_t
 
 abstract_class IForceFeedback
 {
-   public:
+    public:
     // API
     virtual void StopAllEffects( CBasePlayer * player ) = 0;
     virtual void StopEffect( CBasePlayer * player, FORCEFEEDBACK_t effect ) = 0;

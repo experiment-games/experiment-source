@@ -104,7 +104,7 @@ LUALIB_API int luaL_checkboolean( lua_State *L, int narg )
 {
     int d = lua_toboolean( L, narg );
     if ( d == 0 &&
-         !lua_isboolean( L, narg ) ) /* avoid extra test when d is not 0 */
+        !lua_isboolean( L, narg ) ) /* avoid extra test when d is not 0 */
         tag_error( L, narg, LUA_TBOOLEAN );
     return d;
 }
@@ -121,7 +121,7 @@ LUALIB_API int luaL_optboolean( lua_State *L, int narg, int def )
 /// </summary>
 class CLuaNetworkGroupHandler : public INetworkGroupHandler
 {
-   public:
+    public:
     CLuaNetworkGroupHandler( lua_State *L )
     {
         Assert( L );
@@ -130,7 +130,7 @@ class CLuaNetworkGroupHandler : public INetworkGroupHandler
 
     void HandleReadingMessage( unsigned int messageTypeId, bf_read &buffer, IConnectedClient *client );
 
-   private:
+    private:
     lua_State *m_L;
 };
 
@@ -1066,10 +1066,10 @@ void luasrc_setmodulepaths( lua_State *L )
     const char *currentPath = lua_tostring( L, -1 );
     lua_pop( L, 1 );  // Pop the path string
     lua_pushfstring( L,
-                     "%s\\%s\\?.lua;%s",
-                     gamePath,
-                     LUA_PATH_MODULES,
-                     currentPath );
+                    "%s\\%s\\?.lua;%s",
+                    gamePath,
+                    LUA_PATH_MODULES,
+                    currentPath );
     lua_setfield( L, -2, "path" );
 
     // Set the package.cpath the same way
@@ -1079,13 +1079,13 @@ void luasrc_setmodulepaths( lua_State *L )
     lua_pop( L, 1 );  // Pop the cpath string
     lua_pushfstring( L,
 #ifdef _WIN32
-                     "%s\\%s\\?.dll;%s",
+                    "%s\\%s\\?.dll;%s",
 #elif _LINUX
-                     "%s\\%s\\?.so;%s",
+                    "%s\\%s\\?.so;%s",
 #endif
-                     gamePath,
-                     LUA_PATH_BINARY_MODULES,
-                     currentCPath );
+                    gamePath,
+                    LUA_PATH_BINARY_MODULES,
+                    currentCPath );
     lua_setfield( L, -2, "cpath" );
 
     // TODO: Repeat the above for all mounted games (replacing gamePath)
@@ -1094,9 +1094,9 @@ void luasrc_setmodulepaths( lua_State *L )
     // for the 'include' function. These paths will be attempted to be prefixed
     // before X.lua when include("X.lua") is called.
     lua_pushfstring( L,
-                     ".\\;%s\\;%s",
-                     LUA_ROOT,
-                     LUA_PATH_GAMEMODES );
+                    ".\\;%s\\;%s",
+                    LUA_ROOT,
+                    LUA_PATH_GAMEMODES );
     lua_setfield( L, -2, "IncludePath" );
 
     // setup luasrc_CustomModuleLoader as a cpath loader for LUA_PATH_BINARY_MODULES
@@ -1487,7 +1487,7 @@ static int luasrc_traceback( lua_State *L )
     if ( msg == NULL )
     {                                               /* is error object not a string? */
         if ( luaL_callmeta( L, 1, "__tostring" ) && /* does it have a metamethod */
-             lua_type( L, -1 ) == LUA_TSTRING )     /* that produces a string? */
+            lua_type( L, -1 ) == LUA_TSTRING )     /* that produces a string? */
             return 1;                               /* that is the message */
         else
             msg = lua_pushfstring( L, "(error object is a %s value)", luaL_typename( L, 1 ) );
@@ -2121,8 +2121,8 @@ bool luasrc_LoadGamemode( const char *gamemodeName )
     // Make sure lua files can find lua files inside the gamemode folder
     CUtlString gamemodeSearchPath;
     gamemodeSearchPath.Format( "%s?.lua;%sgamemode\\?.lua",
-                               gamemodePath,
-                               gamemodePath );
+                                gamemodePath,
+                                gamemodePath );
     const char *gamemodeSearchPathC = gamemodeSearchPath.String();
     luasrc_add_to_package_path( L, gamemodeSearchPathC );
 
@@ -2222,7 +2222,7 @@ bool luasrc_SetGamemode( const char *gamemodeName )
     if ( !lua_isfunction( L, -1 ) )
     {
         lua_pop( L,
-                 2 );  // Remove gamemode table and InternalSetActiveName function
+                2 );  // Remove gamemode table and InternalSetActiveName function
         SHOW_LUA_ERROR( "Failed to set gamemode. gamemodes.InternalSetActiveName didn't exist!\n" );
         return false;
     }
@@ -2264,7 +2264,7 @@ static void CommandLuaRun( lua_State *L, const CCommand &args )
         lua_insert( L, 1 );
         if ( lua_pcall( L, lua_gettop( L ) - 1, 0, 0 ) != 0 )
             Warning( "%s",
-                     lua_pushfstring( L, "error calling " LUA_QL( "print" ) " (%s)", lua_tostring( L, -1 ) ) );
+                    lua_pushfstring( L, "error calling " LUA_QL( "print" ) " (%s)", lua_tostring( L, -1 ) ) );
     }
     lua_settop( L, 0 ); /* clear stack */
 }
@@ -2353,8 +2353,8 @@ static void ProcessLuaFile( lua_State *L, const char *arg )
 }
 
 static int DoFileCompletion( const char *partial,
-                             char commands[COMMAND_COMPLETION_MAXITEMS]
-                                          [COMMAND_COMPLETION_ITEM_LENGTH] )
+                            char commands[COMMAND_COMPLETION_MAXITEMS]
+                                        [COMMAND_COMPLETION_ITEM_LENGTH] )
 {
     int current = 0;
 

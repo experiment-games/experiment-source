@@ -23,7 +23,7 @@ enum areaportal_state
 
 class CAreaPortal : public CFuncAreaPortalBase
 {
-   public:
+    public:
     DECLARE_CLASS( CAreaPortal, CFuncAreaPortalBase );
 
     CAreaPortal();
@@ -43,7 +43,7 @@ class CAreaPortal : public CFuncAreaPortalBase
 
     DECLARE_DATADESC();
 
-   private:
+    private:
     bool UpdateState( void );
 
     int m_state;

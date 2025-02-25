@@ -86,7 +86,7 @@ struct ChunkHandlerInfoNode_t
 
 class CChunkHandlerMap
 {
-   public:
+    public:
     CChunkHandlerMap( void );
     ~CChunkHandlerMap( void );
 
@@ -96,7 +96,7 @@ class CChunkHandlerMap
     void SetErrorHandler( ChunkErrorHandler_t pfnHandler, void *pData );
     ChunkErrorHandler_t GetErrorHandler( void **pData );
 
-   protected:
+    protected:
     ChunkHandlerInfoNode_t *m_pHandlers;
     ChunkErrorHandler_t m_pfnErrorHandler;
     void *m_pErrorData;
@@ -104,7 +104,7 @@ class CChunkHandlerMap
 
 class CChunkFile
 {
-   public:
+    public:
     CChunkFile( void );
     ~CChunkFile( void );
 
@@ -160,7 +160,7 @@ class CChunkFile
     void PushHandlers( CChunkHandlerMap *pHandlerMap );
     void PopHandlers( void );
 
-   protected:
+    protected:
     void BuildIndentString( char *pszDest, int nDepth );
 
     TokenReader m_TokenReader;

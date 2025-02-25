@@ -80,7 +80,7 @@ namespace internal
 // is not virtual.  Therefore DO NOT INHERIT FROM String.
 class String
 {
-   public:
+    public:
     // Static utility methods
 
     // Returns the input enclosed in double quotes if it's not NULL;
@@ -159,7 +159,7 @@ class String
     // A NULL C string is considered different to any non-NULL C string,
     // including the empty string.
     static bool CaseInsensitiveCStringEquals( const char* lhs,
-                                              const char* rhs );
+                                            const char* rhs );
 
     // Compares two wide C strings, ignoring case.  Returns true iff they
     // have the same content.
@@ -174,7 +174,7 @@ class String
     // On MacOS X, it uses towlower, which also uses LC_CTYPE category of the
     // current locale.
     static bool CaseInsensitiveWideCStringEquals( const wchar_t* lhs,
-                                                  const wchar_t* rhs );
+                                                const wchar_t* rhs );
 
     // Formats a list of arguments to a String, using the same format
     // spec string as for printf.
@@ -342,7 +342,7 @@ class String
         return *this;
     }
 
-   private:
+    private:
     // Constructs a non-NULL String from the given content.  This
     // function can only be called when data_ has not been allocated.
     // ConstructNonNull(NULL, 0) results in an empty string ("").

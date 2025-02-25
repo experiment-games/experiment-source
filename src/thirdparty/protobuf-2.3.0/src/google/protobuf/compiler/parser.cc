@@ -161,9 +161,9 @@ bool Parser::ConsumeInteger(int* output, const char* error) {
   if (LookingAtType(io::Tokenizer::TYPE_INTEGER)) {
     uint64 value = 0;
     if (!io::Tokenizer::ParseInteger(input_->current().text,
-                                     kint32max, &value)) {
-      AddError("Integer out of range.");
-      // We still return true because we did, in fact, parse an integer.
+                                    kint32max, &value)) {
+    AddError("Integer out of range.");
+    // We still return true because we did, in fact, parse an integer.
     }
     *output = value;
     input_->Next();
@@ -175,13 +175,13 @@ bool Parser::ConsumeInteger(int* output, const char* error) {
 }
 
 bool Parser::ConsumeInteger64(uint64 max_value, uint64* output,
-                              const char* error) {
+                            const char* error) {
   if (LookingAtType(io::Tokenizer::TYPE_INTEGER)) {
     if (!io::Tokenizer::ParseInteger(input_->current().text, max_value,
-                                     output)) {
-      AddError("Integer out of range.");
-      // We still return true because we did, in fact, parse an integer.
-      *output = 0;
+                                    output)) {
+    AddError("Integer out of range.");
+    // We still return true because we did, in fact, parse an integer.
+    *output = 0;
     }
     input_->Next();
     return true;
@@ -200,9 +200,9 @@ bool Parser::ConsumeNumber(double* output, const char* error) {
     // Also accept integers.
     uint64 value = 0;
     if (!io::Tokenizer::ParseInteger(input_->current().text,
-                                     kuint64max, &value)) {
-      AddError("Integer out of range.");
-      // We still return true because we did, in fact, parse a number.
+                                    kuint64max, &value)) {
+    AddError("Integer out of range.");
+    // We still return true because we did, in fact, parse a number.
     }
     *output = value;
     input_->Next();
@@ -227,8 +227,8 @@ bool Parser::ConsumeString(string* output, const char* error) {
     input_->Next();
     // Allow C++ like concatenation of adjacent string tokens.
     while (LookingAtType(io::Tokenizer::TYPE_STRING)) {
-      io::Tokenizer::ParseStringAppend(input_->current().text, output);
-      input_->Next();
+    io::Tokenizer::ParseStringAppend(input_->current().text, output);
+    input_->Next();
     }
     return true;
   } else {
@@ -263,7 +263,7 @@ void Parser::RecordLocation(
     const Message* descriptor,
     DescriptorPool::ErrorCollector::ErrorLocation location) {
   RecordLocation(descriptor, location,
-                 input_->current().line, input_->current().column);
+                input_->current().line, input_->current().column);
 }
 
 // -------------------------------------------------------------------
@@ -271,16 +271,16 @@ void Parser::RecordLocation(
 void Parser::SkipStatement() {
   while (true) {
     if (AtEnd()) {
-      return;
+    return;
     } else if (LookingAtType(io::Tokenizer::TYPE_SYMBOL)) {
-      if (TryConsume(";")) {
+    if (TryConsume(";")) {
         return;
-      } else if (TryConsume("{")) {
+    } else if (TryConsume("{")) {
         SkipRestOfBlock();
         return;
-      } else if (LookingAt("}")) {
+    } else if (LookingAt("}")) {
         return;
-      }
+    }
     }
     input_->Next();
   }
@@ -289,13 +289,13 @@ void Parser::SkipStatement() {
 void Parser::SkipRestOfBlock() {
   while (true) {
     if (AtEnd()) {
-      return;
+    return;
     } else if (LookingAtType(io::Tokenizer::TYPE_SYMBOL)) {
-      if (TryConsume("}")) {
+    if (TryConsume("}")) {
         return;
-      } else if (TryConsume("{")) {
+    } else if (TryConsume("{")) {
         SkipRestOfBlock();
-      }
+    }
     }
     input_->Next();
   }
@@ -315,9 +315,9 @@ bool Parser::Parse(io::Tokenizer* input, FileDescriptorProto* file) {
 
   if (require_syntax_identifier_ || LookingAt("syntax")) {
     if (!ParseSyntaxIdentifier()) {
-      // Don't attempt to parse the file if we didn't recognize the syntax
-      // identifier.
-      return false;
+    // Don't attempt to parse the file if we didn't recognize the syntax
+    // identifier.
+    return false;
     }
   } else if (!stop_after_syntax_identifier_) {
     syntax_identifier_ = "proto2";
@@ -328,14 +328,14 @@ bool Parser::Parse(io::Tokenizer* input, FileDescriptorProto* file) {
   // Repeatedly parse statements until we reach the end of the file.
   while (!AtEnd()) {
     if (!ParseTopLevelStatement(file)) {
-      // This statement failed to parse.  Skip it, but keep looping to parse
-      // other statements.
-      SkipStatement();
+    // This statement failed to parse.  Skip it, but keep looping to parse
+    // other statements.
+    SkipStatement();
 
-      if (LookingAt("}")) {
+    if (LookingAt("}")) {
         AddError("Unmatched \"}\".");
         input_->Next();
-      }
+    }
     }
   }
 
@@ -355,8 +355,8 @@ bool Parser::ParseSyntaxIdentifier() {
 
   if (syntax != "proto2" && !stop_after_syntax_identifier_) {
     AddError(syntax_token.line, syntax_token.column,
-      "Unrecognized syntax identifier \"" + syntax + "\".  This parser "
-      "only recognizes \"proto2\".");
+    "Unrecognized syntax identifier \"" + syntax + "\".  This parser "
+    "only recognizes \"proto2\".");
     return false;
   }
 
@@ -375,7 +375,7 @@ bool Parser::ParseTopLevelStatement(FileDescriptorProto* file) {
     return ParseServiceDefinition(file->add_service());
   } else if (LookingAt("extend")) {
     return ParseExtend(file->mutable_extension(),
-                       file->mutable_message_type());
+                        file->mutable_message_type());
   } else if (LookingAt("import")) {
     return ParseImport(file->add_dependency());
   } else if (LookingAt("package")) {
@@ -404,14 +404,14 @@ bool Parser::ParseMessageBlock(DescriptorProto* message) {
 
   while (!TryConsume("}")) {
     if (AtEnd()) {
-      AddError("Reached end of input in message definition (missing '}').");
-      return false;
+    AddError("Reached end of input in message definition (missing '}').");
+    return false;
     }
 
     if (!ParseMessageStatement(message)) {
-      // This statement failed to parse.  Skip it, but keep looping to parse
-      // other statements.
-      SkipStatement();
+    // This statement failed to parse.  Skip it, but keep looping to parse
+    // other statements.
+    SkipStatement();
     }
   }
 
@@ -430,17 +430,17 @@ bool Parser::ParseMessageStatement(DescriptorProto* message) {
     return ParseExtensions(message);
   } else if (LookingAt("extend")) {
     return ParseExtend(message->mutable_extension(),
-                       message->mutable_nested_type());
+                        message->mutable_nested_type());
   } else if (LookingAt("option")) {
     return ParseOption(message->mutable_options());
   } else {
     return ParseMessageField(message->add_field(),
-                             message->mutable_nested_type());
+                            message->mutable_nested_type());
   }
 }
 
 bool Parser::ParseMessageField(FieldDescriptorProto* field,
-                               RepeatedPtrField<DescriptorProto>* messages) {
+                                RepeatedPtrField<DescriptorProto>* messages) {
   // Parse label and type.
   FieldDescriptorProto::Label label;
   DO(ParseLabel(&label));
@@ -477,23 +477,23 @@ bool Parser::ParseMessageField(FieldDescriptorProto* field,
     group->set_name(field->name());
     // Record name location to match the field name's location.
     RecordLocation(group, DescriptorPool::ErrorCollector::NAME,
-                   name_token.line, name_token.column);
+                    name_token.line, name_token.column);
 
     // As a hack for backwards-compatibility, we force the group name to start
     // with a capital letter and lower-case the field name.  New code should
     // not use groups; it should use nested messages.
     if (group->name()[0] < 'A' || 'Z' < group->name()[0]) {
-      AddError(name_token.line, name_token.column,
+    AddError(name_token.line, name_token.column,
         "Group names must start with a capital letter.");
     }
     LowerString(field->mutable_name());
 
     field->set_type_name(group->name());
     if (LookingAt("{")) {
-      DO(ParseMessageBlock(group));
+    DO(ParseMessageBlock(group));
     } else {
-      AddError("Missing group body.");
-      return false;
+    AddError("Missing group body.");
+    return false;
     }
   } else {
     DO(Consume(";"));
@@ -508,9 +508,9 @@ bool Parser::ParseFieldOptions(FieldDescriptorProto* field) {
   // Parse field options.
   do {
     if (LookingAt("default")) {
-      DO(ParseDefaultAssignment(field));
+    DO(ParseDefaultAssignment(field));
     } else {
-      DO(ParseOptionAssignment(field->mutable_options()));
+    DO(ParseOptionAssignment(field->mutable_options()));
     }
   } while (TryConsume(","));
 
@@ -544,91 +544,91 @@ bool Parser::ParseDefaultAssignment(FieldDescriptorProto* field) {
     case FieldDescriptorProto::TYPE_SINT64:
     case FieldDescriptorProto::TYPE_SFIXED32:
     case FieldDescriptorProto::TYPE_SFIXED64: {
-      uint64 max_value = kint64max;
-      if (field->type() == FieldDescriptorProto::TYPE_INT32 ||
-          field->type() == FieldDescriptorProto::TYPE_SINT32 ||
-          field->type() == FieldDescriptorProto::TYPE_SFIXED32) {
+    uint64 max_value = kint64max;
+    if (field->type() == FieldDescriptorProto::TYPE_INT32 ||
+        field->type() == FieldDescriptorProto::TYPE_SINT32 ||
+        field->type() == FieldDescriptorProto::TYPE_SFIXED32) {
         max_value = kint32max;
-      }
+    }
 
-      // These types can be negative.
-      if (TryConsume("-")) {
+    // These types can be negative.
+    if (TryConsume("-")) {
         default_value->append("-");
         // Two's complement always has one more negative value than positive.
         ++max_value;
-      }
-      // Parse the integer to verify that it is not out-of-range.
-      uint64 value;
-      DO(ConsumeInteger64(max_value, &value, "Expected integer."));
-      // And stringify it again.
-      default_value->append(SimpleItoa(value));
-      break;
+    }
+    // Parse the integer to verify that it is not out-of-range.
+    uint64 value;
+    DO(ConsumeInteger64(max_value, &value, "Expected integer."));
+    // And stringify it again.
+    default_value->append(SimpleItoa(value));
+    break;
     }
 
     case FieldDescriptorProto::TYPE_UINT32:
     case FieldDescriptorProto::TYPE_UINT64:
     case FieldDescriptorProto::TYPE_FIXED32:
     case FieldDescriptorProto::TYPE_FIXED64: {
-      uint64 max_value = kuint64max;
-      if (field->type() == FieldDescriptorProto::TYPE_UINT32 ||
-          field->type() == FieldDescriptorProto::TYPE_FIXED32) {
+    uint64 max_value = kuint64max;
+    if (field->type() == FieldDescriptorProto::TYPE_UINT32 ||
+        field->type() == FieldDescriptorProto::TYPE_FIXED32) {
         max_value = kuint32max;
-      }
+    }
 
-      // Numeric, not negative.
-      if (TryConsume("-")) {
+    // Numeric, not negative.
+    if (TryConsume("-")) {
         AddError("Unsigned field can't have negative default value.");
-      }
-      // Parse the integer to verify that it is not out-of-range.
-      uint64 value;
-      DO(ConsumeInteger64(max_value, &value, "Expected integer."));
-      // And stringify it again.
-      default_value->append(SimpleItoa(value));
-      break;
+    }
+    // Parse the integer to verify that it is not out-of-range.
+    uint64 value;
+    DO(ConsumeInteger64(max_value, &value, "Expected integer."));
+    // And stringify it again.
+    default_value->append(SimpleItoa(value));
+    break;
     }
 
     case FieldDescriptorProto::TYPE_FLOAT:
     case FieldDescriptorProto::TYPE_DOUBLE:
-      // These types can be negative.
-      if (TryConsume("-")) {
+    // These types can be negative.
+    if (TryConsume("-")) {
         default_value->append("-");
-      }
-      // Parse the integer because we have to convert hex integers to decimal
-      // floats.
-      double value;
-      DO(ConsumeNumber(&value, "Expected number."));
-      // And stringify it again.
-      default_value->append(SimpleDtoa(value));
-      break;
+    }
+    // Parse the integer because we have to convert hex integers to decimal
+    // floats.
+    double value;
+    DO(ConsumeNumber(&value, "Expected number."));
+    // And stringify it again.
+    default_value->append(SimpleDtoa(value));
+    break;
 
     case FieldDescriptorProto::TYPE_BOOL:
-      if (TryConsume("true")) {
+    if (TryConsume("true")) {
         default_value->assign("true");
-      } else if (TryConsume("false")) {
+    } else if (TryConsume("false")) {
         default_value->assign("false");
-      } else {
+    } else {
         AddError("Expected \"true\" or \"false\".");
         return false;
-      }
-      break;
+    }
+    break;
 
     case FieldDescriptorProto::TYPE_STRING:
-      DO(ConsumeString(default_value, "Expected string."));
-      break;
+    DO(ConsumeString(default_value, "Expected string."));
+    break;
 
     case FieldDescriptorProto::TYPE_BYTES:
-      DO(ConsumeString(default_value, "Expected string."));
-      *default_value = CEscape(*default_value);
-      break;
+    DO(ConsumeString(default_value, "Expected string."));
+    *default_value = CEscape(*default_value);
+    break;
 
     case FieldDescriptorProto::TYPE_ENUM:
-      DO(ConsumeIdentifier(default_value, "Expected identifier."));
-      break;
+    DO(ConsumeIdentifier(default_value, "Expected identifier."));
+    break;
 
     case FieldDescriptorProto::TYPE_MESSAGE:
     case FieldDescriptorProto::TYPE_GROUP:
-      AddError("Messages can't have default values.");
-      return false;
+    AddError("Messages can't have default values.");
+    return false;
   }
 
   return true;
@@ -642,14 +642,14 @@ bool Parser::ParseOptionNamePart(UninterpretedOption* uninterpreted_option) {
     // An extension name consists of dot-separated identifiers, and may begin
     // with a dot.
     if (LookingAtType(io::Tokenizer::TYPE_IDENTIFIER)) {
-      DO(ConsumeIdentifier(&identifier, "Expected identifier."));
-      name->mutable_name_part()->append(identifier);
+    DO(ConsumeIdentifier(&identifier, "Expected identifier."));
+    name->mutable_name_part()->append(identifier);
     }
     while (LookingAt(".")) {
-      DO(Consume("."));
-      name->mutable_name_part()->append(".");
-      DO(ConsumeIdentifier(&identifier, "Expected identifier."));
-      name->mutable_name_part()->append(identifier);
+    DO(Consume("."));
+    name->mutable_name_part()->append(".");
+    DO(ConsumeIdentifier(&identifier, "Expected identifier."));
+    name->mutable_name_part()->append(identifier);
     }
     DO(Consume(")"));
     name->set_is_extension(true);
@@ -666,17 +666,17 @@ bool Parser::ParseOptionNamePart(UninterpretedOption* uninterpreted_option) {
 bool Parser::ParseOptionAssignment(Message* options) {
   // Create an entry in the uninterpreted_option field.
   const FieldDescriptor* uninterpreted_option_field = options->GetDescriptor()->
-      FindFieldByName("uninterpreted_option");
+    FindFieldByName("uninterpreted_option");
   GOOGLE_CHECK(uninterpreted_option_field != NULL)
-      << "No field named \"uninterpreted_option\" in the Options proto.";
+    << "No field named \"uninterpreted_option\" in the Options proto.";
 
   UninterpretedOption* uninterpreted_option = down_cast<UninterpretedOption*>(
-      options->GetReflection()->AddMessage(options,
-                                           uninterpreted_option_field));
+    options->GetReflection()->AddMessage(options,
+                                            uninterpreted_option_field));
 
   // Parse dot-separated name.
   RecordLocation(uninterpreted_option,
-                 DescriptorPool::ErrorCollector::OPTION_NAME);
+                DescriptorPool::ErrorCollector::OPTION_NAME);
 
   DO(ParseOptionNamePart(uninterpreted_option));
 
@@ -688,7 +688,7 @@ bool Parser::ParseOptionAssignment(Message* options) {
   DO(Consume("="));
 
   RecordLocation(uninterpreted_option,
-                 DescriptorPool::ErrorCollector::OPTION_VALUE);
+                DescriptorPool::ErrorCollector::OPTION_VALUE);
 
   // All values are a single token, except for negative numbers, which consist
   // of a single '-' symbol, followed by a positive number.
@@ -696,58 +696,58 @@ bool Parser::ParseOptionAssignment(Message* options) {
 
   switch (input_->current().type) {
     case io::Tokenizer::TYPE_START:
-      GOOGLE_LOG(FATAL) << "Trying to read value before any tokens have been read.";
-      return false;
+    GOOGLE_LOG(FATAL) << "Trying to read value before any tokens have been read.";
+    return false;
 
     case io::Tokenizer::TYPE_END:
-      AddError("Unexpected end of stream while parsing option value.");
-      return false;
+    AddError("Unexpected end of stream while parsing option value.");
+    return false;
 
     case io::Tokenizer::TYPE_IDENTIFIER: {
-      if (is_negative) {
+    if (is_negative) {
         AddError("Invalid '-' symbol before identifier.");
         return false;
-      }
-      string value;
-      DO(ConsumeIdentifier(&value, "Expected identifier."));
-      uninterpreted_option->set_identifier_value(value);
-      break;
+    }
+    string value;
+    DO(ConsumeIdentifier(&value, "Expected identifier."));
+    uninterpreted_option->set_identifier_value(value);
+    break;
     }
 
     case io::Tokenizer::TYPE_INTEGER: {
-      uint64 value;
-      uint64 max_value =
-          is_negative ? static_cast<uint64>(kint64max) + 1 : kuint64max;
-      DO(ConsumeInteger64(max_value, &value, "Expected integer."));
-      if (is_negative) {
+    uint64 value;
+    uint64 max_value =
+        is_negative ? static_cast<uint64>(kint64max) + 1 : kuint64max;
+    DO(ConsumeInteger64(max_value, &value, "Expected integer."));
+    if (is_negative) {
         uninterpreted_option->set_negative_int_value(-value);
-      } else {
+    } else {
         uninterpreted_option->set_positive_int_value(value);
-      }
-      break;
+    }
+    break;
     }
 
     case io::Tokenizer::TYPE_FLOAT: {
-      double value;
-      DO(ConsumeNumber(&value, "Expected number."));
-      uninterpreted_option->set_double_value(is_negative ? -value : value);
-      break;
+    double value;
+    DO(ConsumeNumber(&value, "Expected number."));
+    uninterpreted_option->set_double_value(is_negative ? -value : value);
+    break;
     }
 
     case io::Tokenizer::TYPE_STRING: {
-      if (is_negative) {
+    if (is_negative) {
         AddError("Invalid '-' symbol before string.");
         return false;
-      }
-      string value;
-      DO(ConsumeString(&value, "Expected string."));
-      uninterpreted_option->set_string_value(value);
-      break;
+    }
+    string value;
+    DO(ConsumeString(&value, "Expected string."));
+    uninterpreted_option->set_string_value(value);
+    break;
     }
 
     case io::Tokenizer::TYPE_SYMBOL:
-      AddError("Expected option value.");
-      return false;
+    AddError("Expected option value.");
+    return false;
   }
 
   return true;
@@ -765,13 +765,13 @@ bool Parser::ParseExtensions(DescriptorProto* message) {
     DO(ConsumeInteger(&start, "Expected field number range."));
 
     if (TryConsume("to")) {
-      if (TryConsume("max")) {
+    if (TryConsume("max")) {
         end = FieldDescriptor::kMaxNumber;
-      } else {
-        DO(ConsumeInteger(&end, "Expected integer."));
-      }
     } else {
-      end = start;
+        DO(ConsumeInteger(&end, "Expected integer."));
+    }
+    } else {
+    end = start;
     }
 
     // Users like to specify inclusive ranges, but in code we like the end
@@ -787,7 +787,7 @@ bool Parser::ParseExtensions(DescriptorProto* message) {
 }
 
 bool Parser::ParseExtend(RepeatedPtrField<FieldDescriptorProto>* extensions,
-                         RepeatedPtrField<DescriptorProto>* messages) {
+                        RepeatedPtrField<DescriptorProto>* messages) {
   DO(Consume("extend"));
 
   // We expect to see at least one extension field defined in the extend block.
@@ -805,23 +805,23 @@ bool Parser::ParseExtend(RepeatedPtrField<FieldDescriptorProto>* extensions,
 
   do {
     if (AtEnd()) {
-      AddError("Reached end of input in extend definition (missing '}').");
-      return false;
+    AddError("Reached end of input in extend definition (missing '}').");
+    return false;
     }
 
     FieldDescriptorProto* field;
     if (is_first) {
-      field = first_field;
-      is_first = false;
+    field = first_field;
+    is_first = false;
     } else {
-      field = extensions->Add();
-      field->set_extendee(first_field->extendee());
+    field = extensions->Add();
+    field->set_extendee(first_field->extendee());
     }
 
     if (!ParseMessageField(field, messages)) {
-      // This statement failed to parse.  Skip it, but keep looping to parse
-      // other statements.
-      SkipStatement();
+    // This statement failed to parse.  Skip it, but keep looping to parse
+    // other statements.
+    SkipStatement();
     }
   } while(!TryConsume("}"));
 
@@ -844,14 +844,14 @@ bool Parser::ParseEnumBlock(EnumDescriptorProto* enum_type) {
 
   while (!TryConsume("}")) {
     if (AtEnd()) {
-      AddError("Reached end of input in enum definition (missing '}').");
-      return false;
+    AddError("Reached end of input in enum definition (missing '}').");
+    return false;
     }
 
     if (!ParseEnumStatement(enum_type)) {
-      // This statement failed to parse.  Skip it, but keep looping to parse
-      // other statements.
-      SkipStatement();
+    // This statement failed to parse.  Skip it, but keep looping to parse
+    // other statements.
+    SkipStatement();
     }
   }
 
@@ -872,7 +872,7 @@ bool Parser::ParseEnumStatement(EnumDescriptorProto* enum_type) {
 bool Parser::ParseEnumConstant(EnumValueDescriptorProto* enum_value) {
   RecordLocation(enum_value, DescriptorPool::ErrorCollector::NAME);
   DO(ConsumeIdentifier(enum_value->mutable_name(),
-                       "Expected enum constant name."));
+                        "Expected enum constant name."));
   DO(Consume("=", "Missing numeric value for enum constant."));
 
   bool is_negative = TryConsume("-");
@@ -915,14 +915,14 @@ bool Parser::ParseServiceBlock(ServiceDescriptorProto* service) {
 
   while (!TryConsume("}")) {
     if (AtEnd()) {
-      AddError("Reached end of input in service definition (missing '}').");
-      return false;
+    AddError("Reached end of input in service definition (missing '}').");
+    return false;
     }
 
     if (!ParseServiceStatement(service)) {
-      // This statement failed to parse.  Skip it, but keep looping to parse
-      // other statements.
-      SkipStatement();
+    // This statement failed to parse.  Skip it, but keep looping to parse
+    // other statements.
+    SkipStatement();
     }
   }
 
@@ -961,20 +961,20 @@ bool Parser::ParseServiceMethod(MethodDescriptorProto* method) {
   if (TryConsume("{")) {
     // Options!
     while (!TryConsume("}")) {
-      if (AtEnd()) {
+    if (AtEnd()) {
         AddError("Reached end of input in method options (missing '}').");
         return false;
-      }
+    }
 
-      if (TryConsume(";")) {
+    if (TryConsume(";")) {
         // empty statement; ignore
-      } else {
+    } else {
         if (!ParseOption(method->mutable_options())) {
-          // This statement failed to parse.  Skip it, but keep looping to
-          // parse other statements.
-          SkipStatement();
+        // This statement failed to parse.  Skip it, but keep looping to
+        // parse other statements.
+        SkipStatement();
         }
-      }
+    }
     }
   } else {
     DO(Consume(";"));
@@ -1005,7 +1005,7 @@ bool Parser::ParseLabel(FieldDescriptorProto::Label* label) {
 }
 
 bool Parser::ParseType(FieldDescriptorProto::Type* type,
-                       string* type_name) {
+                        string* type_name) {
   TypeNameMap::const_iterator iter = kTypeNames.find(input_->current().text);
   if (iter != kTypeNames.end()) {
     *type = iter->second;

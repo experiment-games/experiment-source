@@ -118,15 +118,15 @@ static int math_fmod (lua_State *L) {
   if (lua_isinteger(L, 1) && lua_isinteger(L, 2)) {
     lua_Integer d = lua_tointeger(L, 2);
     if ((lua_Unsigned)d + 1u <= 1u) {  /* special cases: -1 or 0 */
-      luaL_argcheck(L, d != 0, 2, "zero");
-      lua_pushinteger(L, 0);  /* avoid overflow with 0x80000... / -1 */
+    luaL_argcheck(L, d != 0, 2, "zero");
+    lua_pushinteger(L, 0);  /* avoid overflow with 0x80000... / -1 */
     }
     else
-      lua_pushinteger(L, lua_tointeger(L, 1) % d);
+    lua_pushinteger(L, lua_tointeger(L, 1) % d);
   }
   else
     lua_pushnumber(L, l_mathop(fmod)(luaL_checknumber(L, 1),
-                                     luaL_checknumber(L, 2)));
+                                    luaL_checknumber(L, 2)));
   return 1;
 }
 
@@ -175,13 +175,13 @@ static int math_log (lua_State *L) {
     lua_Number base = luaL_checknumber(L, 2);
 #if !defined(LUA_USE_C89)
     if (base == l_mathop(2.0))
-      res = l_mathop(log2)(x);
+    res = l_mathop(log2)(x);
     else
 #endif
     if (base == l_mathop(10.0))
-      res = l_mathop(log10)(x);
+    res = l_mathop(log10)(x);
     else
-      res = l_mathop(log)(x)/l_mathop(log)(base);
+    res = l_mathop(log)(x)/l_mathop(log)(base);
   }
   lua_pushnumber(L, res);
   return 1;
@@ -210,7 +210,7 @@ static int math_min (lua_State *L) {
   luaL_argcheck(L, n >= 1, 1, "value expected");
   for (i = 2; i <= n; i++) {
     if (lua_compare(L, i, imin, LUA_OPLT))
-      imin = i;
+    imin = i;
   }
   lua_pushvalue(L, imin);
   return 1;
@@ -224,7 +224,7 @@ static int math_max (lua_State *L) {
   luaL_argcheck(L, n >= 1, 1, "value expected");
   for (i = 2; i <= n; i++) {
     if (lua_compare(L, imax, i, LUA_OPLT))
-      imax = i;
+    imax = i;
   }
   lua_pushvalue(L, imax);
   return 1;
@@ -420,7 +420,7 @@ static Rand64 times9 (Rand64 i) {
 static Rand64 rotl (Rand64 i, int n) {
   lua_assert(n > 0 && n < 32);
   return packI((i.h << n) | (trim32(i.l) >> (32 - n)),
-               (trim32(i.h) >> (32 - n)) | (i.l << n));
+                (trim32(i.h) >> (32 - n)) | (i.l << n));
 }
 
 /* for offsets larger than 32, rotate right by 64 - offset */
@@ -428,7 +428,7 @@ static Rand64 rotl1 (Rand64 i, int n) {
   lua_assert(n > 32 && n < 64);
   n = 64 - n;
   return packI((trim32(i.h) >> n) | (i.l << (32 - n)),
-               (i.h << (32 - n)) | (trim32(i.l) >> n));
+                (i.h << (32 - n)) | (trim32(i.l) >> n));
 }
 
 /*
@@ -530,7 +530,7 @@ typedef struct {
 ** until we have a result inside the interval.
 */
 static lua_Unsigned project (lua_Unsigned ran, lua_Unsigned n,
-                             RanState *state) {
+                            RanState *state) {
   if ((n & (n + 1)) == 0)  /* is 'n + 1' a power of 2? */
     return ran & n;  /* no bias */
   else {
@@ -545,10 +545,10 @@ static lua_Unsigned project (lua_Unsigned ran, lua_Unsigned n,
     lim |= (lim >> 32);  /* integer type has more than 32 bits */
 #endif
     lua_assert((lim & (lim + 1)) == 0  /* 'lim + 1' is a power of 2, */
-      && lim >= n  /* not smaller than 'n', */
-      && (lim >> 1) < n);  /* and it is the smallest one */
+    && lim >= n  /* not smaller than 'n', */
+    && (lim >> 1) < n);  /* and it is the smallest one */
     while ((ran &= lim) > n)  /* project 'ran' into [0..lim] */
-      ran = I2UInt(nextrand(state->s));  /* not inside [0..n]? try again */
+    ran = I2UInt(nextrand(state->s));  /* not inside [0..n]? try again */
     return ran;
   }
 }
@@ -561,22 +561,22 @@ static int math_random (lua_State *L) {
   Rand64 rv = nextrand(state->s);  /* next pseudo-random value */
   switch (lua_gettop(L)) {  /* check number of arguments */
     case 0: {  /* no arguments */
-      lua_pushnumber(L, I2d(rv));  /* float between 0 and 1 */
-      return 1;
+    lua_pushnumber(L, I2d(rv));  /* float between 0 and 1 */
+    return 1;
     }
     case 1: {  /* only upper limit */
-      low = 1;
-      up = luaL_checkinteger(L, 1);
-      if (up == 0) {  /* single 0 as argument? */
+    low = 1;
+    up = luaL_checkinteger(L, 1);
+    if (up == 0) {  /* single 0 as argument? */
         lua_pushinteger(L, I2UInt(rv));  /* full random integer */
         return 1;
-      }
-      break;
+    }
+    break;
     }
     case 2: {  /* lower and upper limits */
-      low = luaL_checkinteger(L, 1);
-      up = luaL_checkinteger(L, 2);
-      break;
+    low = luaL_checkinteger(L, 1);
+    up = luaL_checkinteger(L, 2);
+    break;
     }
     default: return luaL_error(L, "wrong number of arguments");
   }
@@ -590,7 +590,7 @@ static int math_random (lua_State *L) {
 
 
 static void setseed (lua_State *L, Rand64 *state,
-                     lua_Unsigned n1, lua_Unsigned n2) {
+                    lua_Unsigned n1, lua_Unsigned n2) {
   int i;
   state[0] = Int2I(n1);
   state[1] = Int2I(0xff);  /* avoid a zero state */
@@ -761,4 +761,3 @@ LUAMOD_API int luaopen_math (lua_State *L) {
   setrandfunc(L);
   return 1;
 }
-

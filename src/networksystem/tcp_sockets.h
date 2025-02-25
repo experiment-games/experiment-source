@@ -15,7 +15,7 @@ class CNetPacket;
 
 class CTcpClientSocket : public ITcpSocket, public ISendData
 {
-   public:
+    public:
     CTcpClientSocket();
     ~CTcpClientSocket();
 
@@ -45,7 +45,7 @@ class CTcpClientSocket : public ITcpSocket, public ISendData
 
 class CTcpServerSocket : public ITcpSocket
 {
-   public:
+    public:
     CTcpServerSocket();
     ~CTcpServerSocket();
 
@@ -72,7 +72,7 @@ class CTcpServerSocket : public ITcpSocket
 
     unsigned int m_Socket;
 
-   protected:
+    protected:
     bool CreateSocket( void );
 
     unsigned short m_Port;

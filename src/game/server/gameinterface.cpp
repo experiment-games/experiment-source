@@ -352,7 +352,7 @@ bool UTIL_GetModDir( char *lpszTextOut, unsigned int nSize )
 
     Q_strncpy( lpszTextOut, pGameDir, nSize );
     if ( Q_strnchr( lpszTextOut, '/', nSize ) ||
-         Q_strnchr( lpszTextOut, '\\', nSize ) )
+        Q_strnchr( lpszTextOut, '\\', nSize ) )
     {
         // Strip the last directory off (which will be our game dir)
         Q_StripLastDir( lpszTextOut, nSize );
@@ -385,60 +385,60 @@ extern ConVar think_limit;
 //-----------------------------------------------------------------------------
 void DrawMeasuredSections(void)
 {
-	int		row = 1;
-	float	rowheight = 0.025;
+    int		row = 1;
+    float	rowheight = 0.025;
 
-	CMeasureSection *p = CMeasureSection::GetList();
-	while ( p )
-	{
-		char str[256];
-		Q_snprintf(str,sizeof(str),"%s",p->GetName());
-		NDebugOverlay::ScreenText( 0.01,0.51+(row*rowheight),str, 255,255,255,255, 0.0 );
+    CMeasureSection *p = CMeasureSection::GetList();
+    while ( p )
+    {
+        char str[256];
+        Q_snprintf(str,sizeof(str),"%s",p->GetName());
+        NDebugOverlay::ScreenText( 0.01,0.51+(row*rowheight),str, 255,255,255,255, 0.0 );
 
-		Q_snprintf(str,sizeof(str),"%5.2f\n",p->GetTime().GetMillisecondsF());
-		//Q_snprintf(str,sizeof(str),"%3.3f\n",p->GetTime().GetSeconds() * 100.0 / engine->Time());
-		NDebugOverlay::ScreenText( 0.28,0.51+(row*rowheight),str, 255,255,255,255, 0.0 );
+        Q_snprintf(str,sizeof(str),"%5.2f\n",p->GetTime().GetMillisecondsF());
+        //Q_snprintf(str,sizeof(str),"%3.3f\n",p->GetTime().GetSeconds() * 100.0 / engine->Time());
+        NDebugOverlay::ScreenText( 0.28,0.51+(row*rowheight),str, 255,255,255,255, 0.0 );
 
-		Q_snprintf(str,sizeof(str),"%5.2f\n",p->GetMaxTime().GetMillisecondsF());
-		//Q_snprintf(str,sizeof(str),"%3.3f\n",p->GetTime().GetSeconds() * 100.0 / engine->Time());
-		NDebugOverlay::ScreenText( 0.34,0.51+(row*rowheight),str, 255,255,255,255, 0.0 );
+        Q_snprintf(str,sizeof(str),"%5.2f\n",p->GetMaxTime().GetMillisecondsF());
+        //Q_snprintf(str,sizeof(str),"%3.3f\n",p->GetTime().GetSeconds() * 100.0 / engine->Time());
+        NDebugOverlay::ScreenText( 0.34,0.51+(row*rowheight),str, 255,255,255,255, 0.0 );
 
 
-		row++;
+        row++;
 
-		p = p->GetNext();
-	}
+        p = p->GetNext();
+    }
 
-	bool sort_reset = false;
+    bool sort_reset = false;
 
-	// Time to redo sort?
-	if ( measure_resort.GetFloat() > 0.0 &&
-		engine->Time() >= CMeasureSection::m_dNextResort )
-	{
-		// Redo it
-		CMeasureSection::SortSections();
-		// Set next time
-		CMeasureSection::m_dNextResort = engine->Time() + measure_resort.GetFloat();
-		// Flag to reset sort accumulator, too
-		sort_reset = true;
-	}
+    // Time to redo sort?
+    if ( measure_resort.GetFloat() > 0.0 &&
+        engine->Time() >= CMeasureSection::m_dNextResort )
+    {
+        // Redo it
+        CMeasureSection::SortSections();
+        // Set next time
+        CMeasureSection::m_dNextResort = engine->Time() + measure_resort.GetFloat();
+        // Flag to reset sort accumulator, too
+        sort_reset = true;
+    }
 
-	// Iterate through the sections now
-	p = CMeasureSection::GetList();
-	while ( p )
-	{
-		// Update max
-		p->UpdateMax();
+    // Iterate through the sections now
+    p = CMeasureSection::GetList();
+    while ( p )
+    {
+        // Update max
+        p->UpdateMax();
 
-		// Reset regular accum.
-		p->Reset();
-		// Reset sort accum less often
-		if ( sort_reset )
-		{
-			p->SortReset();
-		}
-		p = p->GetNext();
-	}
+        // Reset regular accum.
+        p->Reset();
+        // Reset sort accum less often
+        if ( sort_reset )
+        {
+            p->SortReset();
+        }
+        p = p->GetNext();
+    }
 
 }
 #endif
@@ -489,11 +489,11 @@ void DrawAllDebugOverlays( void )
                     Vector startPos =
                         g_pBigAINet->GetNode( pAILink->m_iSrcID )
                             ->GetPosition( g_pAINetworkManager->GetEditOps()
-                                               ->m_iHullDrawNum );
+                                                ->m_iHullDrawNum );
                     Vector endPos =
                         g_pBigAINet->GetNode( pAILink->m_iDestID )
                             ->GetPosition( g_pAINetworkManager->GetEditOps()
-                                               ->m_iHullDrawNum );
+                                                ->m_iHullDrawNum );
                     Vector linkDir = startPos - endPos;
                     float linkLen = VectorNormalize( linkDir );
 
@@ -534,9 +534,9 @@ void DrawAllDebugOverlays( void )
                         if ( pEnt->GetEntityName() != NULL_STRING )
                         {
                             NDebugOverlay::Text( vecPos + Vector( 0, 0, 6 ),
-                                                 STRING( pEnt->GetEntityName() ),
-                                                 false,
-                                                 0 );
+                                                STRING( pEnt->GetEntityName() ),
+                                                false,
+                                                0 );
                         }
                         NDebugOverlay::Text(
                             vecPos, GetHintTypeDescription( pAINode->GetHint() ), false, 0 );
@@ -615,9 +615,9 @@ EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CServerGameDLL, IServerGameDLL, INTERFACEVERS
 COMPILE_TIME_ASSERT( INTERFACEVERSION_SERVERGAMEDLL_INT == 10 );
 
 bool CServerGameDLL::DLLInit( CreateInterfaceFn appSystemFactory,
-                              CreateInterfaceFn physicsFactory,
-                              CreateInterfaceFn fileSystemFactory,
-                              CGlobalVars *pGlobals )
+                            CreateInterfaceFn physicsFactory,
+                            CreateInterfaceFn fileSystemFactory,
+                            CGlobalVars *pGlobals )
 {
     ConnectTier1Libraries( &appSystemFactory, 1 );
     ConnectTier2Libraries( &appSystemFactory, 1 );
@@ -635,62 +635,62 @@ bool CServerGameDLL::DLLInit( CreateInterfaceFn appSystemFactory,
 
     // init each (seperated for ease of debugging)
     if ( ( engine = ( IVEngineServer * )appSystemFactory(
-               INTERFACEVERSION_VENGINESERVER, NULL ) ) == NULL )
+                INTERFACEVERSION_VENGINESERVER, NULL ) ) == NULL )
         return false;
     if ( ( g_pVoiceServer = ( IVoiceServer * )appSystemFactory(
-               INTERFACEVERSION_VOICESERVER, NULL ) ) == NULL )
+                INTERFACEVERSION_VOICESERVER, NULL ) ) == NULL )
         return false;
     if ( ( networkstringtable = ( INetworkStringTableContainer * )appSystemFactory(
-               INTERFACENAME_NETWORKSTRINGTABLESERVER, NULL ) ) == NULL )
+                INTERFACENAME_NETWORKSTRINGTABLESERVER, NULL ) ) == NULL )
         return false;
     if ( ( staticpropmgr = ( IStaticPropMgrServer * )appSystemFactory(
-               INTERFACEVERSION_STATICPROPMGR_SERVER, NULL ) ) == NULL )
+                INTERFACEVERSION_STATICPROPMGR_SERVER, NULL ) ) == NULL )
         return false;
     if ( ( random = ( IUniformRandomStream * )appSystemFactory(
-               VENGINE_SERVER_RANDOM_INTERFACE_VERSION, NULL ) ) == NULL )
+                VENGINE_SERVER_RANDOM_INTERFACE_VERSION, NULL ) ) == NULL )
         return false;
     if ( ( enginesound = ( IEngineSound * )appSystemFactory(
-               IENGINESOUND_SERVER_INTERFACE_VERSION, NULL ) ) == NULL )
+                IENGINESOUND_SERVER_INTERFACE_VERSION, NULL ) ) == NULL )
         return false;
     if ( ( partition = ( ISpatialPartition * )appSystemFactory(
-               INTERFACEVERSION_SPATIALPARTITION, NULL ) ) == NULL )
+                INTERFACEVERSION_SPATIALPARTITION, NULL ) ) == NULL )
         return false;
     if ( ( modelinfo = ( IVModelInfo * )appSystemFactory(
-               VMODELINFO_SERVER_INTERFACE_VERSION, NULL ) ) == NULL )
+                VMODELINFO_SERVER_INTERFACE_VERSION, NULL ) ) == NULL )
         return false;
     if ( ( enginetrace = ( IEngineTrace * )appSystemFactory(
-               INTERFACEVERSION_ENGINETRACE_SERVER, NULL ) ) == NULL )
+                INTERFACEVERSION_ENGINETRACE_SERVER, NULL ) ) == NULL )
         return false;
     if ( ( filesystem = ( IFileSystem * )fileSystemFactory(
-               FILESYSTEM_INTERFACE_VERSION, NULL ) ) == NULL )
+                FILESYSTEM_INTERFACE_VERSION, NULL ) ) == NULL )
         return false;
     if ( ( gameeventmanager = ( IGameEventManager2 * )appSystemFactory(
-               INTERFACEVERSION_GAMEEVENTSMANAGER2, NULL ) ) == NULL )
+                INTERFACEVERSION_GAMEEVENTSMANAGER2, NULL ) ) == NULL )
         return false;
     if ( ( datacache = ( IDataCache * )appSystemFactory( DATACACHE_INTERFACE_VERSION,
-                                                         NULL ) ) == NULL )
+                                                        NULL ) ) == NULL )
         return false;
     if ( ( soundemitterbase = ( ISoundEmitterSystemBase * )appSystemFactory(
-               SOUNDEMITTERSYSTEM_INTERFACE_VERSION, NULL ) ) == NULL )
+                SOUNDEMITTERSYSTEM_INTERFACE_VERSION, NULL ) ) == NULL )
         return false;
 #ifndef _XBOX
     if ( ( gamestatsuploader = ( IUploadGameStats * )appSystemFactory(
-               INTERFACEVERSION_UPLOADGAMESTATS, NULL ) ) == NULL )
+                INTERFACEVERSION_UPLOADGAMESTATS, NULL ) ) == NULL )
         return false;
 #endif
     if ( !mdlcache )
         return false;
     if ( ( serverpluginhelpers = ( IServerPluginHelpers * )appSystemFactory(
-               INTERFACEVERSION_ISERVERPLUGINHELPERS, NULL ) ) == NULL )
+                INTERFACEVERSION_ISERVERPLUGINHELPERS, NULL ) ) == NULL )
         return false;
     if ( ( scenefilecache = ( ISceneFileCache * )appSystemFactory(
-               SCENE_FILE_CACHE_INTERFACE_VERSION, NULL ) ) == NULL )
+                SCENE_FILE_CACHE_INTERFACE_VERSION, NULL ) ) == NULL )
         return false;
     if ( IsX360() && ( xboxsystem = ( IXboxSystem * )appSystemFactory(
-                           XBOXSYSTEM_INTERFACE_VERSION, NULL ) ) == NULL )
+                            XBOXSYSTEM_INTERFACE_VERSION, NULL ) ) == NULL )
         return false;
     if ( IsX360() && ( matchmaking = ( IMatchmaking * )appSystemFactory(
-                           VENGINE_MATCHMAKING_VERSION, NULL ) ) == NULL )
+                            VENGINE_MATCHMAKING_VERSION, NULL ) ) == NULL )
         return false;
 
     // If not running dedicated, grab the engine vgui interface
@@ -810,7 +810,7 @@ bool CServerGameDLL::DLLInit( CreateInterfaceFn appSystemFactory,
 
 #if defined( REPLAY_ENABLED )
     if ( gameeventmanager->LoadEventsFromFile( "resource/replayevents.res" ) <=
-         0 )
+        0 )
     {
         Warning( "\n*\n* replayevents.res MISSING.\n*\n\n" );
         return false;
@@ -927,7 +927,7 @@ bool CServerGameDLL::ReplayInit( CreateInterfaceFn fnReplayFactory )
     if ( !IsPC() )
         return false;
     if ( ( g_pReplay = ( IReplaySystem * )fnReplayFactory( REPLAY_INTERFACE_VERSION,
-                                                           NULL ) ) == NULL )
+                                                            NULL ) ) == NULL )
         return false;
     if ( ( g_pReplayServerContext = g_pReplay->SV_GetContext() ) == NULL )
         return false;
@@ -1095,7 +1095,7 @@ bool CServerGameDLL::LevelInit( const char *pMapName, char const *pMapEntities, 
     UpdateChapterRestrictions( pMapName );
 
     if ( IsX360() && !background && ( gpGlobals->maxClients == 1 ) &&
-         ( g_nCurrentChapterIndex >= 0 ) )
+        ( g_nCurrentChapterIndex >= 0 ) )
     {
         // Single player games tell xbox live what game & chapter the user is
         // playing
@@ -1266,7 +1266,7 @@ void CServerGameDLL::ServerActivate( edict_t *pEdictList, int edictCount, int cl
     }
 
     for ( CBaseEntity *pClass = gEntList.FirstEnt(); pClass != NULL;
-          pClass = gEntList.NextEnt( pClass ) )
+        pClass = gEntList.NextEnt( pClass ) )
     {
         if ( pClass && !pClass->IsDormant() )
         {
@@ -1326,7 +1326,7 @@ void CServerGameDLL::GameServerSteamAPIActivated( void )
     steamgameserverapicontext->Clear();
     steamgameserverapicontext->Init();
     if ( steamgameserverapicontext->SteamGameServer() &&
-         engine->IsDedicatedServer() )
+        engine->IsDedicatedServer() )
     {
         steamgameserverapicontext->SteamGameServer()->GetGameplayStats();
     }
@@ -1523,15 +1523,15 @@ void CServerGameDLL::Think( bool finalTick )
 {
     // Experiment; TODO: Shouldn't we disable this since we dont use autosave?
     if ( m_fAutoSaveDangerousTime != 0.0f &&
-         m_fAutoSaveDangerousTime < gpGlobals->curtime )
+        m_fAutoSaveDangerousTime < gpGlobals->curtime )
     {
         // The safety timer for a dangerous auto save has expired
         CBasePlayer *pPlayer = UTIL_PlayerByIndex( 1 );
 
         if ( pPlayer &&
-             ( pPlayer->GetDeathTime() == 0.0f ||
-               pPlayer->GetDeathTime() > gpGlobals->curtime ) &&
-             !pPlayer->IsSinglePlayerGameEnding() )
+            ( pPlayer->GetDeathTime() == 0.0f ||
+                pPlayer->GetDeathTime() > gpGlobals->curtime ) &&
+            !pPlayer->IsSinglePlayerGameEnding() )
         {
             if ( pPlayer->GetHealth() >= m_fAutoSaveDangerousMinHealthToCommit )
             {
@@ -1546,10 +1546,10 @@ void CServerGameDLL::Think( bool finalTick )
 }
 
 void CServerGameDLL::OnQueryCvarValueFinished( QueryCvarCookie_t iCookie,
-                                               edict_t *pPlayerEntity,
-                                               EQueryCvarValueStatus eStatus,
-                                               const char *pCvarName,
-                                               const char *pCvarValue )
+                                                edict_t *pPlayerEntity,
+                                                EQueryCvarValueStatus eStatus,
+                                                const char *pCvarName,
+                                                const char *pCvarValue )
 {
 }
 
@@ -1642,7 +1642,7 @@ void CServerGameDLL::CreateNetworkStringTables( void )
         "InfoPanel", MAX_INFOPANEL_STRINGS );
     g_pStringTableClientSideChoreoScenes =
         networkstringtable->CreateStringTable( "Scenes",
-                                               MAX_CHOREO_SCENES_STRINGS );
+                                                MAX_CHOREO_SCENES_STRINGS );
     g_pStringTableServerMapCycle =
         networkstringtable->CreateStringTable( "ServerMapCycle", 128 );
 
@@ -1698,11 +1698,11 @@ CSaveRestoreData *CServerGameDLL::SaveInit( int size )
 // (number of field descriptions)
 //-----------------------------------------------------------------------------
 void CServerGameDLL::SaveWriteFields( CSaveRestoreData *pSaveData,
-                                      const char *pname,
-                                      void *pBaseData,
-                                      datamap_t *pMap,
-                                      typedescription_t *pFields,
-                                      int fieldCount )
+                                    const char *pname,
+                                    void *pBaseData,
+                                    datamap_t *pMap,
+                                    typedescription_t *pFields,
+                                    int fieldCount )
 {
     CSave saveHelper( pSaveData );
     saveHelper.WriteFields( pname, pBaseData, pMap, pFields, fieldCount );
@@ -1721,11 +1721,11 @@ void CServerGameDLL::SaveWriteFields( CSaveRestoreData *pSaveData,
 //-----------------------------------------------------------------------------
 
 void CServerGameDLL::SaveReadFields( CSaveRestoreData *pSaveData,
-                                     const char *pname,
-                                     void *pBaseData,
-                                     datamap_t *pMap,
-                                     typedescription_t *pFields,
-                                     int fieldCount )
+                                    const char *pname,
+                                    void *pBaseData,
+                                    datamap_t *pMap,
+                                    typedescription_t *pFields,
+                                    int fieldCount )
 {
     CRestore restoreHelper( pSaveData );
     restoreHelper.ReadFields( pname, pBaseData, pMap, pFields, fieldCount );
@@ -1828,8 +1828,8 @@ static TITLECOMMENT gTitleComments[] = {
     { "c2a2", "#HL1_Chapter8_Title" },
     { "c2a3", "#HL1_Chapter9_Title" },
     { "c2a4d",
-      "#HL1_Chapter11_Title" },  // These must appear before "C2A4" so all other
-                                 // map names starting with C2A4 get that title
+    "#HL1_Chapter11_Title" },  // These must appear before "C2A4" so all other
+                                // map names starting with C2A4 get that title
     { "c2a4e", "#HL1_Chapter11_Title" },
     { "c2a4f", "#HL1_Chapter11_Title" },
     { "c2a4g", "#HL1_Chapter11_Title" },
@@ -2092,7 +2092,7 @@ void CServerGameDLL::InvalidateMdlCache()
 {
     CBaseAnimating *pAnimating;
     for ( CBaseEntity *pEntity = gEntList.FirstEnt(); pEntity != NULL;
-          pEntity = gEntList.NextEnt( pEntity ) )
+        pEntity = gEntList.NextEnt( pEntity ) )
     {
         pAnimating = dynamic_cast< CBaseAnimating * >( pEntity );
         if ( pAnimating )
@@ -2118,7 +2118,7 @@ void CServerGameDLL::SetServerHibernation( bool bHibernating )
 
 #ifdef INFESTED_DLL
     if ( engine && engine->IsDedicatedServer() && m_bIsHibernating &&
-         ASWGameRules() )
+        ASWGameRules() )
     {
         ASWGameRules()->OnServerHibernating();
     }
@@ -2169,7 +2169,7 @@ const char *CServerGameDLL::GetServerBrowserGameData()
     {
         sResult.Append(
             CFmtStr( ",mannup:%d",
-                     ( pLobby && pLobby->GetPlayingForBraggingRights() ) ? 1 : 0 ) );
+                    ( pLobby && pLobby->GetPlayingForBraggingRights() ) ? 1 : 0 ) );
     }
 #endif
 
@@ -2265,8 +2265,8 @@ static bool IsValidPath( const char *pszFilename )
     }
 
     if ( Q_strlen( pszFilename ) <= 0 ||
-         Q_IsAbsolutePath( pszFilename ) ||  // to protect absolute paths
-         Q_strstr( pszFilename, ".." ) )     // to protect relative paths
+        Q_IsAbsolutePath( pszFilename ) ||  // to protect absolute paths
+        Q_strstr( pszFilename, ".." ) )     // to protect relative paths
     {
         return false;
     }
@@ -2297,7 +2297,7 @@ void CServerGameDLL::LoadMessageOfTheDay()
 }
 
 void CServerGameDLL::LoadSpecificMOTDMsg( const ConVar &convar,
-                                          const char *pszStringName )
+                                        const char *pszStringName )
 {
 #ifndef _XBOX
     CUtlBuffer buf;
@@ -2517,9 +2517,9 @@ void UpdateRichPresence( void )
     {
         // Set presence to show the user is playing developer commentary
         if ( !xboxsystem->UserSetContext( XBX_GetPrimaryUserId(),
-                                          X_CONTEXT_PRESENCE,
-                                          CONTEXT_PRESENCE_COMMENTARY,
-                                          true ) )
+                                        X_CONTEXT_PRESENCE,
+                                        CONTEXT_PRESENCE_COMMENTARY,
+                                        true ) )
         {
             Warning( "GameInterface: UserSetContext failed.\n" );
         }
@@ -2528,9 +2528,9 @@ void UpdateRichPresence( void )
     {
         // Set presence to show the user is in-game
         if ( !xboxsystem->UserSetContext( XBX_GetPrimaryUserId(),
-                                          X_CONTEXT_PRESENCE,
-                                          iGamePresenceID,
-                                          true ) )
+                                        X_CONTEXT_PRESENCE,
+                                        iGamePresenceID,
+                                        true ) )
         {
             Warning( "GameInterface: UserSetContext failed.\n" );
         }
@@ -2603,7 +2603,7 @@ void PrecacheParticleSystem( const char *pParticleSystemName )
 {
     Assert( pParticleSystemName && pParticleSystemName[0] );
     g_pStringTableParticleEffectNames->AddString( CBaseEntity::IsServer(),
-                                                  pParticleSystemName );
+                                                pParticleSystemName );
 }
 
 //-----------------------------------------------------------------------------
@@ -2651,7 +2651,7 @@ bool IsEngineThreaded()
 
 class CServerGameEnts : public IServerGameEnts
 {
-   public:
+    public:
     virtual void SetDebugEdictBase( edict_t *base );
     virtual void MarkEntitiesAsTouching( edict_t *e1, edict_t *e2 );
     virtual void FreeContainingEntity( edict_t * );
@@ -2728,8 +2728,8 @@ nShouldTransmit );
 } */
 
 void CServerGameEnts::CheckTransmit( CCheckTransmitInfo *pInfo,
-                                     const unsigned short *pEdictIndices,
-                                     int nEdicts )
+                                    const unsigned short *pEdictIndices,
+                                    int nEdicts )
 {
     // NOTE: for speed's sake, this assumes that all networkables are
     // CBaseEntities and that the edict list is consecutive in memory. If either
@@ -2767,7 +2767,7 @@ void CServerGameEnts::CheckTransmit( CCheckTransmitInfo *pInfo,
         Assert( pEdict == engine->PEntityOfEntIndex( iEdict ) );
         int nFlags =
             pEdict->m_fStateFlags & ( FL_EDICT_DONTSEND | FL_EDICT_ALWAYS |
-                                      FL_EDICT_PVSCHECK | FL_EDICT_FULLCHECK );
+                                    FL_EDICT_PVSCHECK | FL_EDICT_FULLCHECK );
 
         // entity needs no transmit
         if ( nFlags & FL_EDICT_DONTSEND )
@@ -2891,8 +2891,8 @@ void CServerGameEnts::CheckTransmit( CCheckTransmitInfo *pInfo,
 
             edict_t *checkEdict = check->edict();
             int checkFlags = checkEdict->m_fStateFlags &
-                             ( FL_EDICT_DONTSEND | FL_EDICT_ALWAYS |
-                               FL_EDICT_PVSCHECK | FL_EDICT_FULLCHECK );
+                            ( FL_EDICT_DONTSEND | FL_EDICT_ALWAYS |
+                                FL_EDICT_PVSCHECK | FL_EDICT_FULLCHECK );
             if ( checkFlags & FL_EDICT_DONTSEND )
                 break;
 
@@ -2992,7 +2992,7 @@ void CServerGameClients::ClientActive( edict_t *pEdict, bool bLoadGame )
     {
         // notify all entities that the player is now in the game
         for ( CBaseEntity *pEntity = gEntList.FirstEnt(); pEntity != NULL;
-              pEntity = gEntList.NextEnt( pEntity ) )
+            pEntity = gEntList.NextEnt( pEntity ) )
         {
             pEntity->PostClientActive();
         }
@@ -3007,7 +3007,7 @@ void CServerGameClients::ClientActive( edict_t *pEdict, bool bLoadGame )
 #if defined( TF_DLL )
     Assert( pPlayer );
     if ( pPlayer && !pPlayer->IsFakeClient() && !pPlayer->IsHLTV() &&
-         !pPlayer->IsReplay() )
+        !pPlayer->IsReplay() )
     {
         CSteamID steamID;
         if ( pPlayer->GetSteamID( &steamID ) )
@@ -3099,7 +3099,7 @@ void CServerGameClients::ClientDisconnect( edict_t *pEdict )
                 if ( !player->IsReplay() && !player->IsHLTV() )
                 {
                     Log( "WARNING: ClientDisconnected, but we don't know his "
-                         "SteamID?\n" );
+                        "SteamID?\n" );
                 }
             }
         }
@@ -3247,8 +3247,8 @@ int TestAreaPortalVisibilityThroughPortals( CFuncAreaPortalBase *pAreaPortal,
             // Make sure this portal's linked portal is in the PVS before we add
             // what it can see
             if ( pRemotePortal && pRemotePortal->m_bActivated &&
-                 pRemotePortal->NetworkProp() &&
-                 pRemotePortal->NetworkProp()->IsInPVS( pViewEntity, pvs, pvssize ) )
+                pRemotePortal->NetworkProp() &&
+                pRemotePortal->NetworkProp()->IsInPVS( pViewEntity, pvs, pvssize ) )
             {
                 bool bIsOpenOnClient = true;
                 float fovDistanceAdjustFactor = 1.0f;
@@ -3330,8 +3330,8 @@ void CServerGameClients::ClientSetupVisibility( edict_t *pViewEntity,
     int iOutPortal = 0;
 
     for ( unsigned short i = g_AreaPortals.Head();
-          i != g_AreaPortals.InvalidIndex();
-          i = g_AreaPortals.Next( i ) )
+        i != g_AreaPortals.InvalidIndex();
+        i = g_AreaPortals.Next( i ) )
     {
         CFuncAreaPortalBase *pCur = g_AreaPortals[i];
 
@@ -3370,7 +3370,7 @@ void CServerGameClients::ClientSetupVisibility( edict_t *pViewEntity,
                 continue;
             else if ( pCur->m_portalNumber >= sizeof( portalBits ) * 8 )
                 Error( "ClientSetupVisibility: portal number (%d) too large",
-                       pCur->m_portalNumber );
+                        pCur->m_portalNumber );
             else
                 portalBits[pCur->m_portalNumber >> 3] |=
                     ( 1 << ( pCur->m_portalNumber & 7 ) );
@@ -3440,9 +3440,9 @@ float CServerGameClients::ProcessUsercmds( edict_t *player, bf_read *buf, int nu
         }
 
         Msg( "CBasePlayer::ProcessUsercmds: too many cmds %i sent for player "
-             "%s\n",
-             totalcmds,
-             name );
+            "%s\n",
+            totalcmds,
+            name );
         // FIXME:  Need a way to drop the client from here
         // SV_DropClient ( host_client, false, "CMD_MAXBACKUP hit" );
         buf->SetOverflowFlag();
@@ -3573,7 +3573,7 @@ void CServerGameClients::GetBugReportInfo( char *buf, int buflen )
 // Purpose: A user has had their network id setup and validated
 //-----------------------------------------------------------------------------
 void CServerGameClients::NetworkIDValidated( const char *pszUserName,
-                                             const char *pszNetworkID )
+                                            const char *pszNetworkID )
 {
 #ifdef LUA_SDK
     LUA_CALL_HOOK_BEGIN( "NetworkIDValidated" );
@@ -3585,7 +3585,7 @@ void CServerGameClients::NetworkIDValidated( const char *pszUserName,
 
 // The client has submitted a keyvalues command
 void CServerGameClients::ClientCommandKeyValues( edict_t *pEntity,
-                                                 KeyValues *pKeyValues )
+                                                KeyValues *pKeyValues )
 {
     if ( !pKeyValues )
         return;
@@ -3752,7 +3752,7 @@ void MessageWriteEHandle( CBaseEntity *pEntity )
         EHANDLE hEnt = pEntity;
 
         int iSerialNum = hEnt.GetSerialNumber() &
-                         ( ( 1 << NUM_NETWORKED_EHANDLE_SERIAL_NUMBER_BITS ) - 1 );
+                        ( ( 1 << NUM_NETWORKED_EHANDLE_SERIAL_NUMBER_BITS ) - 1 );
         iEncodedEHandle = hEnt.GetEntryIndex() | ( iSerialNum << MAX_EDICT_BITS );
     }
     else
@@ -3798,13 +3798,13 @@ void MessageWriteBits( const void *pIn, int nBits )
 
 class CServerDLLSharedAppSystems : public IServerDLLSharedAppSystems
 {
-   public:
+    public:
     CServerDLLSharedAppSystems()
     {
         AddAppSystem( "soundemittersystem" DLL_EXT_STRING,
-                      SOUNDEMITTERSYSTEM_INTERFACE_VERSION );
+                    SOUNDEMITTERSYSTEM_INTERFACE_VERSION );
         AddAppSystem( "scenefilecache" DLL_EXT_STRING,
-                      SCENE_FILE_CACHE_INTERFACE_VERSION );
+                    SCENE_FILE_CACHE_INTERFACE_VERSION );
     }
 
     virtual int Count()
@@ -3820,7 +3820,7 @@ class CServerDLLSharedAppSystems : public IServerDLLSharedAppSystems
         return m_Systems[idx].m_pInterfaceName;
     }
 
-   private:
+    private:
     void AddAppSystem( char const *moduleName, char const *interfaceName )
     {
         AppSystemInfo_t sys;

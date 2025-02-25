@@ -446,7 +446,7 @@ float ChangeDistance( float flInterval, float flGoalDistance, float flGoalVeloci
 
 class CAI_Manager
 {
-   public:
+    public:
     CAI_Manager();
 
     CAI_BaseNPC **AccessAIs();
@@ -460,7 +460,7 @@ class CAI_Manager
         return ( m_AIs.Find( pAI ) != m_AIs.InvalidIndex() );
     }
 
-   private:
+    private:
     enum
     {
         MAX_AIS = 256
@@ -486,7 +486,7 @@ class CAI_BaseNPC : public CBaseCombatCharacter,
 {
     DECLARE_CLASS( CAI_BaseNPC, CBaseCombatCharacter );
 
-   public:
+    public:
     //-----------------------------------------------------
     //
     // Initialization, cleanup, serialization, identity
@@ -560,7 +560,7 @@ class CAI_BaseNPC : public CBaseCombatCharacter,
     void CascadePlayerPush( const Vector &push, const Vector &pushOrigin );
     void NotifyPushMove();
 
-   public:
+    public:
     //-----------------------------------------------------
     //
     // AI processing - thinking, schedule selection and task running
@@ -634,7 +634,7 @@ class CAI_BaseNPC : public CBaseCombatCharacter,
         NEXT_CONDITION = LAST_SHARED_CONDITION,
     };
 
-   protected:
+    protected:
     // Used by derived classes to chain a task to a task that might not be the
     // one they are currently handling:
     void ChainStartTask( int task, float taskData = 0 )
@@ -656,7 +656,7 @@ class CAI_BaseNPC : public CBaseCombatCharacter,
 
     bool CheckPVSCondition();
 
-   private:
+    private:
     bool CanThinkRebalance();
     void RebalanceThinks();
 
@@ -685,7 +685,7 @@ class CAI_BaseNPC : public CBaseCombatCharacter,
         return 0;
     }  // to ensure correct signature in derived classes
 
-   public:
+    public:
     //-----------------------------------------------------
     //
     // Schedules & tasks
@@ -769,7 +769,7 @@ class CAI_BaseNPC : public CBaseCombatCharacter,
         return "CAI_BaseNPC";
     }
 
-   protected:
+    protected:
     static bool LoadSchedules( void );
     virtual bool LoadedSchedules( void );
     virtual void BuildScheduleTestBits( void );
@@ -791,7 +791,7 @@ class CAI_BaseNPC : public CBaseCombatCharacter,
 
     bool IsInChoreo() const;
 
-   private:
+    private:
     // This function maps the type through TranslateSchedule() and then retrieves the pointer
     // to the actual CAI_Schedule from the database of schedules available to this class.
     CAI_Schedule *GetScheduleOfType( int scheduleType );
@@ -855,13 +855,13 @@ class CAI_BaseNPC : public CBaseCombatCharacter,
     static float gm_flTimeLastSpawn;
     static int gm_nSpawnedThisFrame;
 
-   protected:  // pose parameters
+    protected:  // pose parameters
     int m_poseAim_Pitch;
     int m_poseAim_Yaw;
     int m_poseMove_Yaw;
     virtual void PopulatePoseParameters( void );
 
-   public:
+    public:
     inline bool HasPoseMoveYaw()
     {
         return ( m_poseMove_Yaw >= 0 );
@@ -911,7 +911,7 @@ class CAI_BaseNPC : public CBaseCombatCharacter,
         return false;
     }
 
-   private:
+    private:
     virtual CAI_BehaviorBase **AccessBehaviors()
     {
         return NULL;
@@ -921,7 +921,7 @@ class CAI_BaseNPC : public CBaseCombatCharacter,
         return 0;
     }
 
-   public:
+    public:
     //-----------------------------------------------------
     //
     // Conditions
@@ -967,10 +967,10 @@ class CAI_BaseNPC : public CBaseCombatCharacter,
         return !m_bSkippedChooseEnemy;
     }
 
-   private:
+    private:
     CAI_ScheduleBits m_Conditions;
     CAI_ScheduleBits m_CustomInterruptConditions;  // Bit string assembled by the schedule running, then
-                                                   // modified by leaf classes to suit their needs
+                                                    // modified by leaf classes to suit their needs
     CAI_ScheduleBits m_ConditionsPreIgnore;
     CAI_ScheduleBits m_InverseIgnoreConditions;
 
@@ -978,7 +978,7 @@ class CAI_BaseNPC : public CBaseCombatCharacter,
     bool m_bConditionsGathered;
     bool m_bSkippedChooseEnemy;
 
-   public:
+    public:
     //-----------------------------------------------------
     //
     // NPC State
@@ -1059,7 +1059,7 @@ class CAI_BaseNPC : public CBaseCombatCharacter,
     NPC_STATE m_NPCState;  // npc's current state
     float m_flLastStateChangeTime;
 
-   private:
+    private:
     NPC_STATE m_IdealNPCState;  // npc should change to this state
     AI_Efficiency_t m_Efficiency;
     AI_MoveEfficiency_t m_MoveEfficiency;
@@ -1071,7 +1071,7 @@ class CAI_BaseNPC : public CBaseCombatCharacter,
     bool m_bWakeSquad;
     int m_nWakeTick;
 
-   public:
+    public:
     //-----------------------------------------------------
     //
     //	Activities
@@ -1109,7 +1109,7 @@ class CAI_BaseNPC : public CBaseCombatCharacter,
 
     void SetActivityAndSequence( Activity NewActivity, int iSequence, Activity translatedActivity, Activity weaponActivity );
 
-   private:
+    private:
     void AdvanceToIdealActivity( void );
     void ResolveActivityToSequence( Activity NewActivity, int &iSequence, Activity &translatedActivity, Activity &weaponActivity );
 
@@ -1124,7 +1124,7 @@ class CAI_BaseNPC : public CBaseCombatCharacter,
     CNetworkVar( int, m_iDeathPose );
     CNetworkVar( int, m_iDeathFrame );
 
-   public:
+    public:
     //-----------------------------------------------------
     //
     // Senses
@@ -1172,17 +1172,17 @@ class CAI_BaseNPC : public CBaseCombatCharacter,
     }
     bool SoundIsVisible( CSound *pSound );
 
-   protected:
+    protected:
     virtual void ClearSenseConditions( void );
 
-   private:
+    private:
     void LockBestSound();
     void UnlockBestSound();
 
     CAI_Senses *m_pSenses;
     CSound *m_pLockedBestSound;
 
-   public:
+    public:
     //-----------------------------------------------------
     //
     // Enemy and target
@@ -1269,10 +1269,10 @@ class CAI_BaseNPC : public CBaseCombatCharacter,
         return false;
     }
 
-   protected:
+    protected:
     virtual float GetGoalRepathTolerance( CBaseEntity *pGoalEnt, GoalType_t type, const Vector &curGoal, const Vector &curTargetPos );
 
-   private:
+    private:
     void *CheckEnemy( CBaseEntity *pEnemy )
     {
         return NULL;
@@ -1299,7 +1299,7 @@ class CAI_BaseNPC : public CBaseCombatCharacter,
     CSimpleSimTimer m_UpdateEnemyPosTimer;
     static CSimpleSimTimer m_AnyUpdateEnemyPosTimer;
 
-   public:
+    public:
     //-----------------------------------------------------
     //
     // Commander mode stuff.
@@ -1361,23 +1361,23 @@ class CAI_BaseNPC : public CBaseCombatCharacter,
     // Return true if you're willing to be idly talked to by other friends.
     virtual bool CanBeUsedAsAFriend( void );
 
-   private:
+    private:
     Vector m_vecCommandGoal;
     static string_t gm_iszPlayerSquad;
 
-   public:
+    public:
     CAI_MoveMonitor m_CommandMoveMonitor;
 
     //-----------------------------------------------------
     // Dynamic scripted NPC interactions
     //-----------------------------------------------------
-   public:
+    public:
     float GetInteractionYaw( void ) const
     {
         return m_flInteractionYaw;
     }
 
-   protected:
+    protected:
     void ParseScriptedNPCInteractions( void );
     void AddScriptedNPCInteraction( ScriptedNPCInteraction_t *pInteraction );
     const char *GetScriptedNPCInteractionSequence( ScriptedNPCInteraction_t *pInteraction, int iPhase );
@@ -1412,7 +1412,7 @@ class CAI_BaseNPC : public CBaseCombatCharacter,
     void CalculateForcedInteractionPosition( void );
     CAI_BaseNPC *GetInteractionPartner( void );
 
-   private:
+    private:
     // Forced interactions
     CHandle< CAI_BaseNPC > m_hForcedInteractionPartner;
     Vector m_vecForcedWorldPosition;
@@ -1427,7 +1427,7 @@ class CAI_BaseNPC : public CBaseCombatCharacter,
 
     float m_flInteractionYaw;
 
-   public:
+    public:
     //-----------------------------------------------------
     //
     //  Sounds
@@ -1513,13 +1513,13 @@ class CAI_BaseNPC : public CBaseCombatCharacter,
 
     virtual void ModifyOrAppendCriteria( AI_CriteriaSet &set );
 
-   protected:
+    protected:
     float SoundWaitTime() const
     {
         return m_flSoundWaitTime;
     }
 
-   public:
+    public:
     //-----------------------------------------------------
     //
     // Capabilities report (from CBaseCombatCharacter)
@@ -1532,10 +1532,10 @@ class CAI_BaseNPC : public CBaseCombatCharacter,
     int CapabilitiesRemove( int capabilities );
     void CapabilitiesClear( void );
 
-   private:
+    private:
     int m_afCapability;  // tells us what a npc can/can't do.
 
-   public:
+    public:
     //-----------------------------------------------------
     //
     // Pathfinding, navigation & movement
@@ -1686,8 +1686,8 @@ class CAI_BaseNPC : public CBaseCombatCharacter,
     virtual float CalcYawSpeed( void );
 
     virtual bool OnCalcBaseMove( AILocalMoveGoal_t *pMoveGoal,
-                                 float distClear,
-                                 AIMoveResult_t *pResult );
+                                float distClear,
+                                AIMoveResult_t *pResult );
 
     virtual bool OnObstructionPreSteer( AILocalMoveGoal_t *pMoveGoal,
                                         float distClear,
@@ -1700,9 +1700,9 @@ class CAI_BaseNPC : public CBaseCombatCharacter,
                                     AIMoveResult_t *pResult );
 
     virtual bool OnUpcomingPropDoor( AILocalMoveGoal_t *pMoveGoal,
-                                     CBasePropDoor *pDoor,
-                                     float distClear,
-                                     AIMoveResult_t *pResult );
+                                    CBasePropDoor *pDoor,
+                                    float distClear,
+                                    AIMoveResult_t *pResult );
 
     void OpenPropDoorBegin( CBasePropDoor *pDoor );
     void OpenPropDoorNow( CBasePropDoor *pDoor );
@@ -1723,7 +1723,7 @@ class CAI_BaseNPC : public CBaseCombatCharacter,
     void OnDoorBlocked( CBasePropDoor *pDoor );
     CHandle< CBasePropDoor > m_hOpeningDoor;  // The CBasePropDoor that we are in the midst of opening for navigation.
 
-   protected:
+    protected:
     // BRJ 4/11
     // Semi-obsolete-looking Lars code I moved out of the engine and into here
     int FlyMove( const Vector &vecPosition, unsigned int mask );
@@ -1732,7 +1732,7 @@ class CAI_BaseNPC : public CBaseCombatCharacter,
     //  Unreachable Entities
     CUtlVector< UnreachableEnt_t > m_UnreachableEnts;  // Array of unreachable entities
 
-   private:
+    private:
     CAI_Navigator *m_pNavigator;
     CAI_LocalNavigator *m_pLocalNavigator;
     CAI_Pathfinder *m_pPathfinder;
@@ -1745,7 +1745,7 @@ class CAI_BaseNPC : public CBaseCombatCharacter,
 
     CSimpleSimTimer m_CheckOnGroundTimer;
 
-   public:
+    public:
     //-----------------------------------------------------
     //
     // Eye position, view offset, head direction, eye direction
@@ -1795,22 +1795,22 @@ class CAI_BaseNPC : public CBaseCombatCharacter,
         return NULL;
     }
 
-   protected:
+    protected:
     Vector m_vDefaultEyeOffset;
     float m_flNextEyeLookTime;  // Next time a pick a new place to look
 
     float m_flEyeIntegRate;  // How fast does eye move to target
 
-   private:
+    private:
     Vector m_vEyeLookTarget;   // Where I want to be looking
     Vector m_vCurEyeTarget;    // Direction I'm looking at
     EHANDLE m_hEyeLookTarget;  // What I want to be looking at
     float m_flHeadYaw;         // Current head yaw
     float m_flHeadPitch;       // Current head pitch
-   protected:
+    protected:
     float m_flOriginalYaw;  // This is the direction facing when the level designer placed the NPC in the level.
 
-   public:
+    public:
     //-----------------------------------------------------
     // Mapmaker Scripting
     //
@@ -1853,10 +1853,10 @@ class CAI_BaseNPC : public CBaseCombatCharacter,
 
     virtual void SetScriptedScheduleIgnoreConditions( Interruptability_t interrupt );
 
-   private:
+    private:
     bool m_bInAScript;
 
-   public:
+    public:
     //-----------------------------------------------------
     //
     // Scripting
@@ -1920,7 +1920,7 @@ class CAI_BaseNPC : public CBaseCombatCharacter,
     float m_flSceneTime;
     string_t m_iszSceneCustomMoveSeq;
 
-   public:
+    public:
     //-----------------------------------------------------
     //
     // Memory
@@ -1998,11 +1998,11 @@ class CAI_BaseNPC : public CBaseCombatCharacter,
     }
     virtual void OnRangeAttack1();
 
-   protected:
+    protected:
     // Shot regulator code
     virtual void OnUpdateShotRegulator();
 
-   protected:
+    protected:
     CAI_Enemies *m_pEnemies;  // Holds information about enemies / danger positions / shared between sqaud members
     int m_afMemory;
     EHANDLE m_hEnemyOccluder;  // The entity my enemy is hiding behind.
@@ -2017,12 +2017,12 @@ class CAI_BaseNPC : public CBaseCombatCharacter,
     string_t m_iszPendingWeapon;     // THe NPC should create and equip this weapon.
     bool m_bIgnoreUnseenEnemies;
 
-   private:
+    private:
     CAI_ShotRegulator m_ShotRegulator;  // When should I shoot next?
 
     DesiredWeaponState_t m_iDesiredWeaponState;
 
-   public:
+    public:
     //-----------------------------------------------------
     //
     // Squads & tactics
@@ -2116,7 +2116,7 @@ class CAI_BaseNPC : public CBaseCombatCharacter,
         return MAXTACLAT_IGNORE;
     }
 
-   protected:
+    protected:
     virtual void OnChangeHintGroup( string_t oldGroup, string_t newGroup ) {}
 
     CAI_Squad *m_pSquad;  // The squad that I'm on
@@ -2124,12 +2124,12 @@ class CAI_BaseNPC : public CBaseCombatCharacter,
 
     int m_iMySquadSlot;  // this is the behaviour slot that the npc currently holds in the squad.
 
-   private:
+    private:
     string_t m_strHintGroup;
     bool m_bHintGroupNavLimiting;
     CAI_TacticalServices *m_pTacticalServices;
 
-   public:
+    public:
     //-----------------------------------------------------
     //
     // Base schedule & task support; Miscellaneous
@@ -2367,10 +2367,10 @@ class CAI_BaseNPC : public CBaseCombatCharacter,
     Vector m_vSavePosition;           // position stored by code that called this schedules
     Vector m_vInterruptSavePosition;  // position stored by a task that was interrupted
 
-   private:
+    private:
     CHandle< CAI_Hint > m_pHintNode;  // this is the hint that the npc is moving towards or performing active idle on.
 
-   public:
+    public:
     int m_cAmmoLoaded;     // how much ammo is in the weapon (used to trigger reload anim sequences)
     float m_flDistTooFar;  // if enemy farther away than this, bits_COND_ENEMY_TOOFAR set in GatherEnemyConditions
     string_t m_spawnEquipment;
@@ -2414,7 +2414,7 @@ class CAI_BaseNPC : public CBaseCombatCharacter,
     COutputEvent m_OnForcedInteractionAborted;
     COutputEvent m_OnForcedInteractionFinished;
 
-   public:
+    public:
     // use this to shrink the bbox temporarily
     void SetHullSizeNormal( bool force = false );
     bool SetHullSizeSmall( bool force = false );
@@ -2445,12 +2445,12 @@ class CAI_BaseNPC : public CBaseCombatCharacter,
     virtual void StartTouch( CBaseEntity *pOther );
     void CheckPhysicsContacts();
 
-   private:
+    private:
     void TryRestoreHull( void );
     bool m_fIsUsingSmallHull;
     bool m_bCheckContacts;
 
-   private:
+    private:
     // Task implementation helpers
     void StartTurn( float flDeltaYaw );
     bool FindCoverFromEnemy( bool bNodesOnly = false, float flMinDistance = 0, float flMaxDistance = FLT_MAX );
@@ -2460,7 +2460,7 @@ class CAI_BaseNPC : public CBaseCombatCharacter,
     void RunDieTask();
     void RunAttackTask( int task );
 
-   protected:
+    protected:
     virtual float CalcReasonableFacing( bool bIgnoreOriginalFacing = false );
     virtual bool IsValidReasonableFacing( const Vector &vecSightDir, float sightDist )
     {
@@ -2468,7 +2468,7 @@ class CAI_BaseNPC : public CBaseCombatCharacter,
     }
     virtual float GetReasonableFacingDist( void );
 
-   public:
+    public:
     inline int UsableNPCObjectCaps( int baseCaps )
     {
         if ( IsAlive() )
@@ -2518,7 +2518,7 @@ class CAI_BaseNPC : public CBaseCombatCharacter,
     static const char *GetEventName( int actID );
     static int GetEventID( const char *actName );
 
-   public:
+    public:
     //-----------------------------------------------------
     // Crouch handling
     //-----------------------------------------------------
@@ -2527,7 +2527,7 @@ class CAI_BaseNPC : public CBaseCombatCharacter,
     inline void ForceCrouch( void );
     inline void ClearForceCrouch( void );
 
-   protected:
+    protected:
     virtual bool Crouch( void );
     virtual bool Stand( void );
     virtual void DesireCrouch( void );
@@ -2535,7 +2535,7 @@ class CAI_BaseNPC : public CBaseCombatCharacter,
     bool CouldShootIfCrouching( CBaseEntity *pTarget );
     virtual bool IsCrouchedActivity( Activity activity );
 
-   protected:
+    protected:
     // Override these in your derived NPC class
     virtual Vector GetCrouchEyeOffset( void )
     {
@@ -2546,7 +2546,7 @@ class CAI_BaseNPC : public CBaseCombatCharacter,
         return Vector( 0, 0, 36 );
     }
 
-   private:
+    private:
     bool m_bCrouchDesired;
     bool m_bForceCrouch;
     bool m_bIsCrouching;
@@ -2556,10 +2556,10 @@ class CAI_BaseNPC : public CBaseCombatCharacter,
     // ai_post_frame_navigation
     //-----------------------------------------------------
 
-   private:
+    private:
     bool m_bDeferredNavigation;  // This NPCs has a navigation query that's being deferred until later in the frame
 
-   public:
+    public:
     void SetNavigationDeferred( bool bState )
     {
         m_bDeferredNavigation = bState;
@@ -2570,11 +2570,11 @@ class CAI_BaseNPC : public CBaseCombatCharacter,
     }
 
     //-----------------------------------------------------
-   protected:
+    protected:
     static CAI_GlobalNamespace gm_SquadSlotNamespace;
     static CAI_LocalIdSpace gm_SquadSlotIdSpace;
 
-   private:
+    private:
     // Checks to see that the nav hull is valid for the NPC
     bool IsNavHullValid() const;
 
@@ -2598,7 +2598,7 @@ class CAI_BaseNPC : public CBaseCombatCharacter,
     static CAI_GlobalScheduleNamespace gm_SchedulingSymbols;
     static CAI_ClassScheduleIdSpace gm_ClassScheduleIdSpace;
 
-   public:
+    public:
     //----------------------------------------------------
     // Debugging tools
     //
@@ -2648,7 +2648,7 @@ class CAI_BaseNPC : public CBaseCombatCharacter,
     CUtlVector< AIScheduleChoice_t > m_ScheduleHistory;
 #endif  // AI_MONITOR_FOR_OSCILLATION
 
-   private:
+    private:
     // Break into pieces!
     void Break( CBaseEntity *pBreaker );
     void InputBreak( inputdata_t &inputdata );
@@ -2657,7 +2657,7 @@ class CAI_BaseNPC : public CBaseCombatCharacter,
     friend void CC_NPC_GoRandom();
     friend void CC_NPC_Freeze( const CCommand &args );
 
-   public:
+    public:
     CNetworkVar( bool, m_bPerformAvoidance );
     CNetworkVar( bool, m_bIsMoving );
     CNetworkVar( bool, m_bFadeCorpse );
@@ -2729,39 +2729,39 @@ inline void CAI_BaseNPC::SetIdealState( NPC_STATE eIdealState )
     {
         /*switch (eIdealState)
         {
-          case NPC_STATE_NONE:
+        case NPC_STATE_NONE:
             Msg("%s.SetIdealState: NPC_STATE_NONE\n", GetDebugName());
             break;
 
-          case NPC_STATE_IDLE:
+        case NPC_STATE_IDLE:
             Msg("%s.SetIdealState: NPC_STATE_IDLE\n", GetDebugName());
             break;
 
-          case NPC_STATE_ALERT:
+        case NPC_STATE_ALERT:
             Msg("%s.SetIdealState: NPC_STATE_ALERT\n", GetDebugName());
             break;
 
-          case NPC_STATE_COMBAT:
+        case NPC_STATE_COMBAT:
             Msg("%s.SetIdealState: NPC_STATE_COMBAT\n", GetDebugName());
             break;
 
-          case NPC_STATE_SCRIPT:
+        case NPC_STATE_SCRIPT:
             Msg("%s.SetIdealState: NPC_STATE_SCRIPT\n", GetDebugName());
             break;
 
-          case NPC_STATE_PLAYDEAD:
+        case NPC_STATE_PLAYDEAD:
             Msg("%s.SetIdealState: NPC_STATE_PLAYDEAD\n", GetDebugName());
             break;
 
-          case NPC_STATE_PRONE:
+        case NPC_STATE_PRONE:
             Msg("%s.SetIdealState: NPC_STATE_PRONE\n", GetDebugName());
             break;
 
-          case NPC_STATE_DEAD:
+        case NPC_STATE_DEAD:
             Msg("%s.SetIdealState: NPC_STATE_DEAD\n", GetDebugName());
             break;
 
-          default:
+        default:
             Msg("%s.SetIdealState: <Unknown>\n", GetDebugName());
             break;
         }*/
@@ -2860,7 +2860,7 @@ typedef CHandle< CAI_BaseNPC > AIHANDLE;
     {                                                     \
         typedef derivedClass CNpc;                        \
         const char *pszClassName = #derivedClass;         \
-                                                          \
+                                                        \
         CUtlVector< const char * > schedulesToLoad;       \
         CUtlVector< AIScheduleLoadFunc_t > reqiredOthers; \
         CAI_NamespaceInfos scheduleIds;                   \
@@ -2875,7 +2875,7 @@ typedef CHandle< CAI_BaseNPC > AIHANDLE;
     {                                                     \
         typedef derivedClass CNpc;                        \
         const char *pszClassName = #derivedClass;         \
-                                                          \
+                                                        \
         CUtlVector< const char * > schedulesToLoad;       \
         CUtlVector< AIScheduleLoadFunc_t > reqiredOthers; \
         CAI_NamespaceInfos scheduleIds;                   \
@@ -2938,25 +2938,25 @@ typedef CHandle< CAI_BaseNPC > AIHANDLE;
 
 // IDs are stored and then added in order due to constraints in the namespace implementation
 #define AI_END_CUSTOM_SCHEDULE_PROVIDER()                                                                                                                             \
-                                                                                                                                                                      \
+                                                                                                                                                                    \
     int i;                                                                                                                                                            \
-                                                                                                                                                                      \
+                                                                                                                                                                    \
     CNpc::AccessClassScheduleIdSpaceDirect().Init( pszClassName, BaseClass::GetSchedulingSymbols(), &BaseClass::AccessClassScheduleIdSpaceDirect() );                 \
-                                                                                                                                                                      \
+                                                                                                                                                                    \
     scheduleIds.Sort();                                                                                                                                               \
     taskIds.Sort();                                                                                                                                                   \
     conditionIds.Sort();                                                                                                                                              \
-                                                                                                                                                                      \
+                                                                                                                                                                    \
     for ( i = 0; i < scheduleIds.Count(); i++ )                                                                                                                       \
     {                                                                                                                                                                 \
         ADD_CUSTOM_SCHEDULE_NAMED( CNpc, scheduleIds[i].pszName, scheduleIds[i].localId );                                                                            \
     }                                                                                                                                                                 \
-                                                                                                                                                                      \
+                                                                                                                                                                    \
     for ( i = 0; i < taskIds.Count(); i++ )                                                                                                                           \
     {                                                                                                                                                                 \
         ADD_CUSTOM_TASK_NAMED( CNpc, taskIds[i].pszName, taskIds[i].localId );                                                                                        \
     }                                                                                                                                                                 \
-                                                                                                                                                                      \
+                                                                                                                                                                    \
     for ( i = 0; i < conditionIds.Count(); i++ )                                                                                                                      \
     {                                                                                                                                                                 \
         if ( ValidateConditionLimits( conditionIds[i].pszName ) )                                                                                                     \
@@ -2964,12 +2964,12 @@ typedef CHandle< CAI_BaseNPC > AIHANDLE;
             ADD_CUSTOM_CONDITION_NAMED( CNpc, conditionIds[i].pszName, conditionIds[i].localId );                                                                     \
         }                                                                                                                                                             \
     }                                                                                                                                                                 \
-                                                                                                                                                                      \
+                                                                                                                                                                    \
     for ( i = 0; i < reqiredOthers.Count(); i++ )                                                                                                                     \
     {                                                                                                                                                                 \
         ( *reqiredOthers[i] )();                                                                                                                                      \
     }                                                                                                                                                                 \
-                                                                                                                                                                      \
+                                                                                                                                                                    \
     for ( i = 0; i < schedulesToLoad.Count(); i++ )                                                                                                                   \
     {                                                                                                                                                                 \
         if ( CNpc::gm_SchedLoadStatus.fValid )                                                                                                                        \
@@ -2997,27 +2997,27 @@ inline bool ValidateConditionLimits( const char *pszNewCondition )
 
 // IDs are stored and then added in order due to constraints in the namespace implementation
 #define AI_END_CUSTOM_NPC()                                                                                                                                           \
-                                                                                                                                                                      \
+                                                                                                                                                                    \
     int i;                                                                                                                                                            \
-                                                                                                                                                                      \
+                                                                                                                                                                    \
     CNpc::AccessClassScheduleIdSpaceDirect().Init( pszClassName, BaseClass::GetSchedulingSymbols(), &BaseClass::AccessClassScheduleIdSpaceDirect() );                 \
     CNpc::gm_SquadSlotIdSpace.Init( &BaseClass::gm_SquadSlotNamespace, &BaseClass::gm_SquadSlotIdSpace );                                                             \
-                                                                                                                                                                      \
+                                                                                                                                                                    \
     scheduleIds.Sort();                                                                                                                                               \
     taskIds.Sort();                                                                                                                                                   \
     conditionIds.Sort();                                                                                                                                              \
     squadSlotIds.Sort();                                                                                                                                              \
-                                                                                                                                                                      \
+                                                                                                                                                                    \
     for ( i = 0; i < scheduleIds.Count(); i++ )                                                                                                                       \
     {                                                                                                                                                                 \
         ADD_CUSTOM_SCHEDULE_NAMED( CNpc, scheduleIds[i].pszName, scheduleIds[i].localId );                                                                            \
     }                                                                                                                                                                 \
-                                                                                                                                                                      \
+                                                                                                                                                                    \
     for ( i = 0; i < taskIds.Count(); i++ )                                                                                                                           \
     {                                                                                                                                                                 \
         ADD_CUSTOM_TASK_NAMED( CNpc, taskIds[i].pszName, taskIds[i].localId );                                                                                        \
     }                                                                                                                                                                 \
-                                                                                                                                                                      \
+                                                                                                                                                                    \
     for ( i = 0; i < conditionIds.Count(); i++ )                                                                                                                      \
     {                                                                                                                                                                 \
         if ( ValidateConditionLimits( conditionIds[i].pszName ) )                                                                                                     \
@@ -3025,17 +3025,17 @@ inline bool ValidateConditionLimits( const char *pszNewCondition )
             ADD_CUSTOM_CONDITION_NAMED( CNpc, conditionIds[i].pszName, conditionIds[i].localId );                                                                     \
         }                                                                                                                                                             \
     }                                                                                                                                                                 \
-                                                                                                                                                                      \
+                                                                                                                                                                    \
     for ( i = 0; i < squadSlotIds.Count(); i++ )                                                                                                                      \
     {                                                                                                                                                                 \
         ADD_CUSTOM_SQUADSLOT_NAMED( CNpc, squadSlotIds[i].pszName, squadSlotIds[i].localId );                                                                         \
     }                                                                                                                                                                 \
-                                                                                                                                                                      \
+                                                                                                                                                                    \
     for ( i = 0; i < reqiredOthers.Count(); i++ )                                                                                                                     \
     {                                                                                                                                                                 \
         ( *reqiredOthers[i] )();                                                                                                                                      \
     }                                                                                                                                                                 \
-                                                                                                                                                                      \
+                                                                                                                                                                    \
     for ( i = 0; i < schedulesToLoad.Count(); i++ )                                                                                                                   \
     {                                                                                                                                                                 \
         if ( CNpc::gm_SchedLoadStatus.fValid )                                                                                                                        \
@@ -3053,7 +3053,7 @@ struct AI_NamespaceAddInfo_t
 {
     AI_NamespaceAddInfo_t( const char *pszName, int localId )
         : pszName( pszName ),
-          localId( localId )
+        localId( localId )
     {
     }
 
@@ -3063,7 +3063,7 @@ struct AI_NamespaceAddInfo_t
 
 class CAI_NamespaceInfos : public CUtlVector< AI_NamespaceAddInfo_t >
 {
-   public:
+    public:
     void PushBack( const char *pszName, int localId )
     {
         AddToTail( AI_NamespaceAddInfo_t( pszName, localId ) );
@@ -3074,7 +3074,7 @@ class CAI_NamespaceInfos : public CUtlVector< AI_NamespaceAddInfo_t >
         CUtlVector< AI_NamespaceAddInfo_t >::Sort( Compare );
     }
 
-   private:
+    private:
     static int __cdecl Compare( const AI_NamespaceAddInfo_t *pLeft, const AI_NamespaceAddInfo_t *pRight )
     {
         return pLeft->localId - pRight->localId;
@@ -3115,7 +3115,7 @@ typedef bool ( *AIScheduleLoadFunc_t )();
 // defined by bugs in MSVC 6.0
 class ScheduleLoadHelperImpl
 {
-   public:
+    public:
     template < typename T >
     static AIScheduleLoadFunc_t AccessScheduleLoadFunc( T * )
     {
@@ -3154,7 +3154,7 @@ class ScheduleLoadHelperImpl
                                                                         \
     class CScheduleLoader                                               \
     {                                                                   \
-       public:                                                          \
+        public:                                                          \
         CScheduleLoader();                                              \
     } m_ScheduleLoader;                                                 \
                                                                         \
@@ -3164,9 +3164,9 @@ class ScheduleLoadHelperImpl
 
 #define DEFINE_CUSTOM_AI                         \
     DEFINE_CUSTOM_SCHEDULE_PROVIDER              \
-                                                 \
+                                                \
     static CAI_LocalIdSpace gm_SquadSlotIdSpace; \
-                                                 \
+                                                \
     const char *SquadSlotName( int squadSlotID );
 
 //-------------------------------------
@@ -3175,22 +3175,22 @@ class ScheduleLoadHelperImpl
     AI_SchedLoadStatus_t derivedClass::gm_SchedLoadStatus = { true, -1 };  \
     CAI_ClassScheduleIdSpace derivedClass::gm_ClassScheduleIdSpace;        \
     const char *derivedClass::gm_pszErrorClassName = #derivedClass;        \
-                                                                           \
+                                                                            \
     derivedClass::CScheduleLoader::CScheduleLoader()                       \
     {                                                                      \
         derivedClass::LoadSchedules();                                     \
     }                                                                      \
-                                                                           \
+                                                                            \
     /* --------------------------------------------- */                    \
     /* Load schedules for this type of NPC           */                    \
     /* --------------------------------------------- */                    \
     bool derivedClass::LoadSchedules( void )                               \
     {                                                                      \
         return AI_DoLoadSchedules( derivedClass::BaseClass::LoadSchedules, \
-                                   derivedClass::InitCustomSchedules,      \
-                                   &derivedClass::gm_SchedLoadStatus );    \
+                                    derivedClass::InitCustomSchedules,      \
+                                    &derivedClass::gm_SchedLoadStatus );    \
     }                                                                      \
-                                                                           \
+                                                                            \
     bool derivedClass::LoadedSchedules( void )                             \
     {                                                                      \
         return derivedClass::gm_SchedLoadStatus.fValid;                    \
@@ -3201,9 +3201,9 @@ class ScheduleLoadHelperImpl
 // Initialize offsets and implement methods for loading and getting squad info for the subclass
 #define IMPLEMENT_CUSTOM_AI( className, derivedClass )                                                        \
     IMPLEMENT_CUSTOM_SCHEDULE_PROVIDER( derivedClass )                                                        \
-                                                                                                              \
+                                                                                                            \
     CAI_LocalIdSpace derivedClass::gm_SquadSlotIdSpace;                                                       \
-                                                                                                              \
+                                                                                                            \
     /* -------------------------------------------------- */                                                  \
     /* Given squadSlot enumeration return squadSlot name */                                                   \
     /* -------------------------------------------------- */                                                  \
@@ -3605,7 +3605,7 @@ inline float CAI_Component::GetLastThink( const char *szContext )
 // ============================================================================
 abstract_class INPCInteractive
 {
-   public:
+    public:
     virtual bool CanInteractWith( CAI_BaseNPC * pUser ) = 0;
     virtual bool HasBeenInteractedWith() = 0;
     virtual void NotifyInteraction( CAI_BaseNPC * pUser ) = 0;
@@ -3629,7 +3629,7 @@ class CNPCBaseInteractive : public NPC_CLASS, public INPCInteractive
 {
     DECLARE_CLASS( CNPCBaseInteractive, NPC_CLASS );
 
-   public:
+    public:
     virtual bool CanInteractWith( CAI_BaseNPC *pUser )
     {
         return false;
@@ -3657,7 +3657,7 @@ class CNPCBaseInteractive : public NPC_CLASS, public INPCInteractive
         m_OnAlyxFinishedInteraction.FireOutput( this, this );
     }
 
-   public:
+    public:
     // Outputs
     // Alyx specific interactions
     COutputEvent m_OnAlyxStartedInteraction;
@@ -3672,7 +3672,7 @@ extern ConVar ai_post_frame_navigation;
 
 class CPostFrameNavigationHook : public CBaseGameSystemPerFrame
 {
-   public:
+    public:
     virtual const char *Name( void )
     {
         return "CPostFrameNavigationHook";
@@ -3693,7 +3693,7 @@ class CPostFrameNavigationHook : public CBaseGameSystemPerFrame
 
     void EnqueueEntityNavigationQuery( CAI_BaseNPC *pNPC, CFunctor *functor );
 
-   private:
+    private:
     CUtlVector< CFunctor * > m_Functors;
     bool m_bGameFrameRunning;
 };

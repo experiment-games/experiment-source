@@ -552,9 +552,9 @@ def GoldenFile(filename):
   path = '.'
   while os.path.exists(path):
     if os.path.exists(os.path.join(path, 'src/google/protobuf')):
-      # Found it.  Load the golden file from the testdata directory.
-      full_path = os.path.join(path, 'src/google/protobuf/testdata', filename)
-      return open(full_path, 'rb')
+    # Found it.  Load the golden file from the testdata directory.
+    full_path = os.path.join(path, 'src/google/protobuf/testdata', filename)
+    return open(full_path, 'rb')
     path = os.path.join(path, '..')
 
   raise RuntimeError(
@@ -583,7 +583,7 @@ def SetAllPackedFields(message):
   message.packed_double.extend([612.0, 712.0])
   message.packed_bool.extend([True, False])
   message.packed_enum.extend([unittest_pb2.FOREIGN_BAR,
-                              unittest_pb2.FOREIGN_BAZ])
+                            unittest_pb2.FOREIGN_BAZ])
 
 
 def SetAllPackedExtensions(message):

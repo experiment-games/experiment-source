@@ -11,10 +11,10 @@
 
 class CLuaGameEventListener : public IGameEventListener2
 {
-   protected:
+    protected:
     lua_State *L;
 
-   public:
+    public:
     CLuaGameEventListener( lua_State *L )
     {
         this->L = L;
@@ -26,7 +26,7 @@ class CLuaGameEventListener : public IGameEventListener2
     }
 
     // IGameEventListener2 Interface:
-   public:
+    public:
     virtual void FireGameEvent( IGameEvent *event )
     {
         const char *eventName = event->GetName();

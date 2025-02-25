@@ -20,7 +20,7 @@ abstract_class IWatcherCallback{
 
 abstract_class IPositionWatcher : public IWatcherCallback
 {
-   public:
+    public:
     virtual void NotifyPositionChanged( CBaseEntity * pEntity ) = 0;
 };
 
@@ -32,7 +32,7 @@ void RemovePositionWatcher( CBaseEntity *pWatcher, CBaseEntity *pMovingEntity );
 // inherit from this interface to be able to call WatchPositionChanges
 abstract_class IVPhysicsWatcher : public IWatcherCallback
 {
-   public:
+    public:
     virtual void NotifyVPhysicsStateChanged( IPhysicsObject * pPhysics, CBaseEntity * pEntity, bool bAwake ) = 0;
 };
 

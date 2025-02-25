@@ -135,7 +135,7 @@ SHADER_DRAW
         SET_STATIC_VERTEX_SHADER( sky_vs20 );
 
         if ( ( params[HDRCOMPRESSEDTEXTURE]->IsDefined() ) &&
-             mat_use_compressed_hdr_textures.GetBool() )
+            mat_use_compressed_hdr_textures.GetBool() )
         {
             pShaderShadow->EnableSRGBRead( SHADER_SAMPLER0, false );
             if ( g_pHardwareConfig->SupportsPixelShaders_2_b() )
@@ -268,7 +268,7 @@ SHADER_DRAW
                 if (
                     ( fmt == IMAGE_FORMAT_RGBA16161616 ) ||
                     ( ( fmt == IMAGE_FORMAT_RGBA16161616F ) &&
-                      ( g_pHardwareConfig->GetHDRType() == HDR_TYPE_INTEGER ) ) )
+                    ( g_pHardwareConfig->GetHDRType() == HDR_TYPE_INTEGER ) ) )
                 {
                     c0[0] *= 16.0;
                     c0[1] *= 16.0;

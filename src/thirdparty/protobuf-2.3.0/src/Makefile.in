@@ -38,26 +38,26 @@ host_triplet = @host@
 target_triplet = @target@
 bin_PROGRAMS = protoc$(EXEEXT)
 check_PROGRAMS = protoc$(EXEEXT) protobuf-test$(EXEEXT) \
-	protobuf-lazy-descriptor-test$(EXEEXT) \
-	protobuf-lite-test$(EXEEXT) test_plugin$(EXEEXT) \
-	$(am__EXEEXT_1)
+    protobuf-lazy-descriptor-test$(EXEEXT) \
+    protobuf-lite-test$(EXEEXT) test_plugin$(EXEEXT) \
+    $(am__EXEEXT_1)
 TESTS = protobuf-test$(EXEEXT) protobuf-lazy-descriptor-test$(EXEEXT) \
-	protobuf-lite-test$(EXEEXT) \
-	google/protobuf/compiler/zip_output_unittest.sh \
-	$(am__EXEEXT_2)
+    protobuf-lite-test$(EXEEXT) \
+    google/protobuf/compiler/zip_output_unittest.sh \
+    $(am__EXEEXT_2)
 subdir = src
 DIST_COMMON = $(am__nobase_include_HEADERS_DIST) \
-	$(nobase_dist_proto_DATA) $(srcdir)/Makefile.am \
-	$(srcdir)/Makefile.in
+    $(nobase_dist_proto_DATA) $(srcdir)/Makefile.am \
+    $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/ac_system_extensions.m4 \
-	$(top_srcdir)/m4/acx_check_suncc.m4 \
-	$(top_srcdir)/m4/acx_pthread.m4 $(top_srcdir)/m4/libtool.m4 \
-	$(top_srcdir)/m4/ltoptions.m4 $(top_srcdir)/m4/ltsugar.m4 \
-	$(top_srcdir)/m4/ltversion.m4 $(top_srcdir)/m4/lt~obsolete.m4 \
-	$(top_srcdir)/m4/stl_hash.m4 $(top_srcdir)/configure.ac
+    $(top_srcdir)/m4/acx_check_suncc.m4 \
+    $(top_srcdir)/m4/acx_pthread.m4 $(top_srcdir)/m4/libtool.m4 \
+    $(top_srcdir)/m4/ltoptions.m4 $(top_srcdir)/m4/ltsugar.m4 \
+    $(top_srcdir)/m4/ltversion.m4 $(top_srcdir)/m4/lt~obsolete.m4 \
+    $(top_srcdir)/m4/stl_hash.m4 $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
-	$(ACLOCAL_M4)
+    $(ACLOCAL_M4)
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
@@ -68,159 +68,159 @@ am__vpath_adj = case $$p in \
   esac;
 am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
 am__installdirs = "$(DESTDIR)$(libdir)" "$(DESTDIR)$(bindir)" \
-	"$(DESTDIR)$(protodir)" "$(DESTDIR)$(includedir)"
+    "$(DESTDIR)$(protodir)" "$(DESTDIR)$(includedir)"
 libLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(lib_LTLIBRARIES)
 am__DEPENDENCIES_1 =
 libprotobuf_lite_la_DEPENDENCIES = $(am__DEPENDENCIES_1)
 am_libprotobuf_lite_la_OBJECTS = common.lo once.lo hash.lo \
-	extension_set.lo generated_message_util.lo message_lite.lo \
-	repeated_field.lo wire_format_lite.lo coded_stream.lo \
-	zero_copy_stream.lo zero_copy_stream_impl_lite.lo
+    extension_set.lo generated_message_util.lo message_lite.lo \
+    repeated_field.lo wire_format_lite.lo coded_stream.lo \
+    zero_copy_stream.lo zero_copy_stream_impl_lite.lo
 libprotobuf_lite_la_OBJECTS = $(am_libprotobuf_lite_la_OBJECTS)
 libprotobuf_lite_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
-	$(CXXFLAGS) $(libprotobuf_lite_la_LDFLAGS) $(LDFLAGS) -o $@
+    $(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
+    $(CXXFLAGS) $(libprotobuf_lite_la_LDFLAGS) $(LDFLAGS) -o $@
 libprotobuf_la_DEPENDENCIES = $(am__DEPENDENCIES_1)
 am__objects_1 = common.lo once.lo hash.lo extension_set.lo \
-	generated_message_util.lo message_lite.lo repeated_field.lo \
-	wire_format_lite.lo coded_stream.lo zero_copy_stream.lo \
-	zero_copy_stream_impl_lite.lo
+    generated_message_util.lo message_lite.lo repeated_field.lo \
+    wire_format_lite.lo coded_stream.lo zero_copy_stream.lo \
+    zero_copy_stream_impl_lite.lo
 am_libprotobuf_la_OBJECTS = $(am__objects_1) strutil.lo substitute.lo \
-	structurally_valid.lo descriptor.lo descriptor.pb.lo \
-	descriptor_database.lo dynamic_message.lo \
-	extension_set_heavy.lo generated_message_reflection.lo \
-	message.lo reflection_ops.lo service.lo text_format.lo \
-	unknown_field_set.lo wire_format.lo gzip_stream.lo printer.lo \
-	tokenizer.lo zero_copy_stream_impl.lo importer.lo parser.lo
+    structurally_valid.lo descriptor.lo descriptor.pb.lo \
+    descriptor_database.lo dynamic_message.lo \
+    extension_set_heavy.lo generated_message_reflection.lo \
+    message.lo reflection_ops.lo service.lo text_format.lo \
+    unknown_field_set.lo wire_format.lo gzip_stream.lo printer.lo \
+    tokenizer.lo zero_copy_stream_impl.lo importer.lo parser.lo
 libprotobuf_la_OBJECTS = $(am_libprotobuf_la_OBJECTS)
 libprotobuf_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
-	$(CXXFLAGS) $(libprotobuf_la_LDFLAGS) $(LDFLAGS) -o $@
+    $(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
+    $(CXXFLAGS) $(libprotobuf_la_LDFLAGS) $(LDFLAGS) -o $@
 libprotoc_la_DEPENDENCIES = $(am__DEPENDENCIES_1) libprotobuf.la
 am_libprotoc_la_OBJECTS = code_generator.lo command_line_interface.lo \
-	plugin.lo plugin.pb.lo subprocess.lo zip_writer.lo cpp_enum.lo \
-	cpp_enum_field.lo cpp_extension.lo cpp_field.lo cpp_file.lo \
-	cpp_generator.lo cpp_helpers.lo cpp_message.lo \
-	cpp_message_field.lo cpp_primitive_field.lo cpp_service.lo \
-	cpp_string_field.lo java_enum.lo java_enum_field.lo \
-	java_extension.lo java_field.lo java_file.lo java_generator.lo \
-	java_helpers.lo java_message.lo java_message_field.lo \
-	java_primitive_field.lo java_service.lo python_generator.lo
+    plugin.lo plugin.pb.lo subprocess.lo zip_writer.lo cpp_enum.lo \
+    cpp_enum_field.lo cpp_extension.lo cpp_field.lo cpp_file.lo \
+    cpp_generator.lo cpp_helpers.lo cpp_message.lo \
+    cpp_message_field.lo cpp_primitive_field.lo cpp_service.lo \
+    cpp_string_field.lo java_enum.lo java_enum_field.lo \
+    java_extension.lo java_field.lo java_file.lo java_generator.lo \
+    java_helpers.lo java_message.lo java_message_field.lo \
+    java_primitive_field.lo java_service.lo python_generator.lo
 libprotoc_la_OBJECTS = $(am_libprotoc_la_OBJECTS)
 libprotoc_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
-	$(CXXFLAGS) $(libprotoc_la_LDFLAGS) $(LDFLAGS) -o $@
+    $(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
+    $(CXXFLAGS) $(libprotoc_la_LDFLAGS) $(LDFLAGS) -o $@
 binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 @HAVE_ZLIB_TRUE@am__EXEEXT_1 = zcgzip$(EXEEXT) zcgunzip$(EXEEXT)
 PROGRAMS = $(bin_PROGRAMS)
 am__objects_2 = protobuf_lazy_descriptor_test-test_util.$(OBJEXT) \
-	protobuf_lazy_descriptor_test-googletest.$(OBJEXT) \
-	protobuf_lazy_descriptor_test-file.$(OBJEXT)
+    protobuf_lazy_descriptor_test-googletest.$(OBJEXT) \
+    protobuf_lazy_descriptor_test-file.$(OBJEXT)
 am_protobuf_lazy_descriptor_test_OBJECTS =  \
-	protobuf_lazy_descriptor_test-cpp_unittest.$(OBJEXT) \
-	$(am__objects_2)
+    protobuf_lazy_descriptor_test-cpp_unittest.$(OBJEXT) \
+    $(am__objects_2)
 am__objects_3 =  \
-	protobuf_lazy_descriptor_test-unittest_lite.pb.$(OBJEXT) \
-	protobuf_lazy_descriptor_test-unittest_import_lite.pb.$(OBJEXT)
+    protobuf_lazy_descriptor_test-unittest_lite.pb.$(OBJEXT) \
+    protobuf_lazy_descriptor_test-unittest_import_lite.pb.$(OBJEXT)
 am__objects_4 = $(am__objects_3) \
-	protobuf_lazy_descriptor_test-unittest.pb.$(OBJEXT) \
-	protobuf_lazy_descriptor_test-unittest_empty.pb.$(OBJEXT) \
-	protobuf_lazy_descriptor_test-unittest_import.pb.$(OBJEXT) \
-	protobuf_lazy_descriptor_test-unittest_mset.pb.$(OBJEXT) \
-	protobuf_lazy_descriptor_test-unittest_optimize_for.pb.$(OBJEXT) \
-	protobuf_lazy_descriptor_test-unittest_embed_optimize_for.pb.$(OBJEXT) \
-	protobuf_lazy_descriptor_test-unittest_custom_options.pb.$(OBJEXT) \
-	protobuf_lazy_descriptor_test-unittest_lite_imports_nonlite.pb.$(OBJEXT) \
-	protobuf_lazy_descriptor_test-unittest_no_generic_services.pb.$(OBJEXT) \
-	protobuf_lazy_descriptor_test-cpp_test_bad_identifiers.pb.$(OBJEXT)
+    protobuf_lazy_descriptor_test-unittest.pb.$(OBJEXT) \
+    protobuf_lazy_descriptor_test-unittest_empty.pb.$(OBJEXT) \
+    protobuf_lazy_descriptor_test-unittest_import.pb.$(OBJEXT) \
+    protobuf_lazy_descriptor_test-unittest_mset.pb.$(OBJEXT) \
+    protobuf_lazy_descriptor_test-unittest_optimize_for.pb.$(OBJEXT) \
+    protobuf_lazy_descriptor_test-unittest_embed_optimize_for.pb.$(OBJEXT) \
+    protobuf_lazy_descriptor_test-unittest_custom_options.pb.$(OBJEXT) \
+    protobuf_lazy_descriptor_test-unittest_lite_imports_nonlite.pb.$(OBJEXT) \
+    protobuf_lazy_descriptor_test-unittest_no_generic_services.pb.$(OBJEXT) \
+    protobuf_lazy_descriptor_test-cpp_test_bad_identifiers.pb.$(OBJEXT)
 nodist_protobuf_lazy_descriptor_test_OBJECTS = $(am__objects_4)
 protobuf_lazy_descriptor_test_OBJECTS =  \
-	$(am_protobuf_lazy_descriptor_test_OBJECTS) \
-	$(nodist_protobuf_lazy_descriptor_test_OBJECTS)
+    $(am_protobuf_lazy_descriptor_test_OBJECTS) \
+    $(nodist_protobuf_lazy_descriptor_test_OBJECTS)
 protobuf_lazy_descriptor_test_DEPENDENCIES = $(am__DEPENDENCIES_1) \
-	libprotobuf.la $(top_builddir)/gtest/lib/libgtest.la \
-	$(top_builddir)/gtest/lib/libgtest_main.la
+    libprotobuf.la $(top_builddir)/gtest/lib/libgtest.la \
+    $(top_builddir)/gtest/lib/libgtest_main.la
 protobuf_lazy_descriptor_test_LINK = $(LIBTOOL) --tag=CXX \
-	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
-	$(protobuf_lazy_descriptor_test_CXXFLAGS) $(CXXFLAGS) \
-	$(AM_LDFLAGS) $(LDFLAGS) -o $@
+    $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
+    $(protobuf_lazy_descriptor_test_CXXFLAGS) $(CXXFLAGS) \
+    $(AM_LDFLAGS) $(LDFLAGS) -o $@
 am_protobuf_lite_test_OBJECTS =  \
-	protobuf_lite_test-lite_unittest.$(OBJEXT) \
-	protobuf_lite_test-test_util_lite.$(OBJEXT)
+    protobuf_lite_test-lite_unittest.$(OBJEXT) \
+    protobuf_lite_test-test_util_lite.$(OBJEXT)
 am__objects_5 = protobuf_lite_test-unittest_lite.pb.$(OBJEXT) \
-	protobuf_lite_test-unittest_import_lite.pb.$(OBJEXT)
+    protobuf_lite_test-unittest_import_lite.pb.$(OBJEXT)
 nodist_protobuf_lite_test_OBJECTS = $(am__objects_5)
 protobuf_lite_test_OBJECTS = $(am_protobuf_lite_test_OBJECTS) \
-	$(nodist_protobuf_lite_test_OBJECTS)
+    $(nodist_protobuf_lite_test_OBJECTS)
 protobuf_lite_test_DEPENDENCIES = $(am__DEPENDENCIES_1) \
-	libprotobuf-lite.la
+    libprotobuf-lite.la
 protobuf_lite_test_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(CXXLD) \
-	$(protobuf_lite_test_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) \
-	$(LDFLAGS) -o $@
+    $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
+    $(protobuf_lite_test_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) \
+    $(LDFLAGS) -o $@
 am__objects_6 = protobuf_test-test_util.$(OBJEXT) \
-	protobuf_test-googletest.$(OBJEXT) \
-	protobuf_test-file.$(OBJEXT)
+    protobuf_test-googletest.$(OBJEXT) \
+    protobuf_test-file.$(OBJEXT)
 am_protobuf_test_OBJECTS = protobuf_test-common_unittest.$(OBJEXT) \
-	protobuf_test-once_unittest.$(OBJEXT) \
-	protobuf_test-strutil_unittest.$(OBJEXT) \
-	protobuf_test-structurally_valid_unittest.$(OBJEXT) \
-	protobuf_test-descriptor_database_unittest.$(OBJEXT) \
-	protobuf_test-descriptor_unittest.$(OBJEXT) \
-	protobuf_test-dynamic_message_unittest.$(OBJEXT) \
-	protobuf_test-extension_set_unittest.$(OBJEXT) \
-	protobuf_test-generated_message_reflection_unittest.$(OBJEXT) \
-	protobuf_test-message_unittest.$(OBJEXT) \
-	protobuf_test-reflection_ops_unittest.$(OBJEXT) \
-	protobuf_test-repeated_field_unittest.$(OBJEXT) \
-	protobuf_test-text_format_unittest.$(OBJEXT) \
-	protobuf_test-unknown_field_set_unittest.$(OBJEXT) \
-	protobuf_test-wire_format_unittest.$(OBJEXT) \
-	protobuf_test-coded_stream_unittest.$(OBJEXT) \
-	protobuf_test-printer_unittest.$(OBJEXT) \
-	protobuf_test-tokenizer_unittest.$(OBJEXT) \
-	protobuf_test-zero_copy_stream_unittest.$(OBJEXT) \
-	protobuf_test-command_line_interface_unittest.$(OBJEXT) \
-	protobuf_test-importer_unittest.$(OBJEXT) \
-	protobuf_test-mock_code_generator.$(OBJEXT) \
-	protobuf_test-parser_unittest.$(OBJEXT) \
-	protobuf_test-cpp_bootstrap_unittest.$(OBJEXT) \
-	protobuf_test-cpp_unittest.$(OBJEXT) \
-	protobuf_test-cpp_plugin_unittest.$(OBJEXT) \
-	protobuf_test-java_plugin_unittest.$(OBJEXT) \
-	protobuf_test-python_plugin_unittest.$(OBJEXT) \
-	$(am__objects_6)
+    protobuf_test-once_unittest.$(OBJEXT) \
+    protobuf_test-strutil_unittest.$(OBJEXT) \
+    protobuf_test-structurally_valid_unittest.$(OBJEXT) \
+    protobuf_test-descriptor_database_unittest.$(OBJEXT) \
+    protobuf_test-descriptor_unittest.$(OBJEXT) \
+    protobuf_test-dynamic_message_unittest.$(OBJEXT) \
+    protobuf_test-extension_set_unittest.$(OBJEXT) \
+    protobuf_test-generated_message_reflection_unittest.$(OBJEXT) \
+    protobuf_test-message_unittest.$(OBJEXT) \
+    protobuf_test-reflection_ops_unittest.$(OBJEXT) \
+    protobuf_test-repeated_field_unittest.$(OBJEXT) \
+    protobuf_test-text_format_unittest.$(OBJEXT) \
+    protobuf_test-unknown_field_set_unittest.$(OBJEXT) \
+    protobuf_test-wire_format_unittest.$(OBJEXT) \
+    protobuf_test-coded_stream_unittest.$(OBJEXT) \
+    protobuf_test-printer_unittest.$(OBJEXT) \
+    protobuf_test-tokenizer_unittest.$(OBJEXT) \
+    protobuf_test-zero_copy_stream_unittest.$(OBJEXT) \
+    protobuf_test-command_line_interface_unittest.$(OBJEXT) \
+    protobuf_test-importer_unittest.$(OBJEXT) \
+    protobuf_test-mock_code_generator.$(OBJEXT) \
+    protobuf_test-parser_unittest.$(OBJEXT) \
+    protobuf_test-cpp_bootstrap_unittest.$(OBJEXT) \
+    protobuf_test-cpp_unittest.$(OBJEXT) \
+    protobuf_test-cpp_plugin_unittest.$(OBJEXT) \
+    protobuf_test-java_plugin_unittest.$(OBJEXT) \
+    protobuf_test-python_plugin_unittest.$(OBJEXT) \
+    $(am__objects_6)
 am__objects_7 = protobuf_test-unittest_lite.pb.$(OBJEXT) \
-	protobuf_test-unittest_import_lite.pb.$(OBJEXT)
+    protobuf_test-unittest_import_lite.pb.$(OBJEXT)
 am__objects_8 = $(am__objects_7) protobuf_test-unittest.pb.$(OBJEXT) \
-	protobuf_test-unittest_empty.pb.$(OBJEXT) \
-	protobuf_test-unittest_import.pb.$(OBJEXT) \
-	protobuf_test-unittest_mset.pb.$(OBJEXT) \
-	protobuf_test-unittest_optimize_for.pb.$(OBJEXT) \
-	protobuf_test-unittest_embed_optimize_for.pb.$(OBJEXT) \
-	protobuf_test-unittest_custom_options.pb.$(OBJEXT) \
-	protobuf_test-unittest_lite_imports_nonlite.pb.$(OBJEXT) \
-	protobuf_test-unittest_no_generic_services.pb.$(OBJEXT) \
-	protobuf_test-cpp_test_bad_identifiers.pb.$(OBJEXT)
+    protobuf_test-unittest_empty.pb.$(OBJEXT) \
+    protobuf_test-unittest_import.pb.$(OBJEXT) \
+    protobuf_test-unittest_mset.pb.$(OBJEXT) \
+    protobuf_test-unittest_optimize_for.pb.$(OBJEXT) \
+    protobuf_test-unittest_embed_optimize_for.pb.$(OBJEXT) \
+    protobuf_test-unittest_custom_options.pb.$(OBJEXT) \
+    protobuf_test-unittest_lite_imports_nonlite.pb.$(OBJEXT) \
+    protobuf_test-unittest_no_generic_services.pb.$(OBJEXT) \
+    protobuf_test-cpp_test_bad_identifiers.pb.$(OBJEXT)
 nodist_protobuf_test_OBJECTS = $(am__objects_8)
 protobuf_test_OBJECTS = $(am_protobuf_test_OBJECTS) \
-	$(nodist_protobuf_test_OBJECTS)
+    $(nodist_protobuf_test_OBJECTS)
 protobuf_test_DEPENDENCIES = $(am__DEPENDENCIES_1) libprotobuf.la \
-	libprotoc.la $(top_builddir)/gtest/lib/libgtest.la \
-	$(top_builddir)/gtest/lib/libgtest_main.la
+    libprotoc.la $(top_builddir)/gtest/lib/libgtest.la \
+    $(top_builddir)/gtest/lib/libgtest_main.la
 protobuf_test_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(protobuf_test_CXXFLAGS) \
-	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
+    $(LIBTOOLFLAGS) --mode=link $(CXXLD) $(protobuf_test_CXXFLAGS) \
+    $(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 am_protoc_OBJECTS = main.$(OBJEXT)
 protoc_OBJECTS = $(am_protoc_OBJECTS)
 protoc_DEPENDENCIES = $(am__DEPENDENCIES_1) libprotobuf.la \
-	libprotoc.la
+    libprotoc.la
 am_test_plugin_OBJECTS = test_plugin-mock_code_generator.$(OBJEXT) \
-	test_plugin-file.$(OBJEXT) test_plugin-test_plugin.$(OBJEXT)
+    test_plugin-file.$(OBJEXT) test_plugin-test_plugin.$(OBJEXT)
 test_plugin_OBJECTS = $(am_test_plugin_OBJECTS)
 test_plugin_DEPENDENCIES = $(am__DEPENDENCIES_1) libprotobuf.la \
-	libprotoc.la $(top_builddir)/gtest/lib/libgtest.la
+    libprotoc.la $(top_builddir)/gtest/lib/libgtest.la
 am__zcgunzip_SOURCES_DIST = google/protobuf/testing/zcgunzip.cc
 @HAVE_ZLIB_TRUE@am_zcgunzip_OBJECTS = zcgunzip.$(OBJEXT)
 zcgunzip_OBJECTS = $(am_zcgunzip_OBJECTS)
@@ -235,70 +235,70 @@ DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
-	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
+    $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
 LTCXXCOMPILE = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
-	--mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
-	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
+    --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
+    $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
 CXXLD = $(CXX)
 CXXLINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
-	--mode=link $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) \
-	$(LDFLAGS) -o $@
+    --mode=link $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) \
+    $(LDFLAGS) -o $@
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
-	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+    $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 LTCOMPILE = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
-	--mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
-	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+    --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
+    $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
 LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
-	--mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
-	$(LDFLAGS) -o $@
+    --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
+    $(LDFLAGS) -o $@
 SOURCES = $(libprotobuf_lite_la_SOURCES) $(libprotobuf_la_SOURCES) \
-	$(libprotoc_la_SOURCES) \
-	$(protobuf_lazy_descriptor_test_SOURCES) \
-	$(nodist_protobuf_lazy_descriptor_test_SOURCES) \
-	$(protobuf_lite_test_SOURCES) \
-	$(nodist_protobuf_lite_test_SOURCES) $(protobuf_test_SOURCES) \
-	$(nodist_protobuf_test_SOURCES) $(protoc_SOURCES) \
-	$(test_plugin_SOURCES) $(zcgunzip_SOURCES) $(zcgzip_SOURCES)
+    $(libprotoc_la_SOURCES) \
+    $(protobuf_lazy_descriptor_test_SOURCES) \
+    $(nodist_protobuf_lazy_descriptor_test_SOURCES) \
+    $(protobuf_lite_test_SOURCES) \
+    $(nodist_protobuf_lite_test_SOURCES) $(protobuf_test_SOURCES) \
+    $(nodist_protobuf_test_SOURCES) $(protoc_SOURCES) \
+    $(test_plugin_SOURCES) $(zcgunzip_SOURCES) $(zcgzip_SOURCES)
 DIST_SOURCES = $(libprotobuf_lite_la_SOURCES) \
-	$(libprotobuf_la_SOURCES) $(libprotoc_la_SOURCES) \
-	$(protobuf_lazy_descriptor_test_SOURCES) \
-	$(protobuf_lite_test_SOURCES) $(protobuf_test_SOURCES) \
-	$(protoc_SOURCES) $(test_plugin_SOURCES) \
-	$(am__zcgunzip_SOURCES_DIST) $(am__zcgzip_SOURCES_DIST)
+    $(libprotobuf_la_SOURCES) $(libprotoc_la_SOURCES) \
+    $(protobuf_lazy_descriptor_test_SOURCES) \
+    $(protobuf_lite_test_SOURCES) $(protobuf_test_SOURCES) \
+    $(protoc_SOURCES) $(test_plugin_SOURCES) \
+    $(am__zcgunzip_SOURCES_DIST) $(am__zcgzip_SOURCES_DIST)
 nobase_dist_protoDATA_INSTALL = $(install_sh_DATA)
 DATA = $(nobase_dist_proto_DATA)
 am__nobase_include_HEADERS_DIST = google/protobuf/stubs/common.h \
-	google/protobuf/stubs/once.h google/protobuf/descriptor.h \
-	google/protobuf/descriptor.pb.h \
-	google/protobuf/descriptor_database.h \
-	google/protobuf/dynamic_message.h \
-	google/protobuf/extension_set.h \
-	google/protobuf/generated_message_util.h \
-	google/protobuf/generated_message_reflection.h \
-	google/protobuf/message.h google/protobuf/message_lite.h \
-	google/protobuf/reflection_ops.h \
-	google/protobuf/repeated_field.h google/protobuf/service.h \
-	google/protobuf/text_format.h \
-	google/protobuf/unknown_field_set.h \
-	google/protobuf/wire_format.h \
-	google/protobuf/wire_format_lite.h \
-	google/protobuf/wire_format_lite_inl.h \
-	google/protobuf/io/coded_stream.h \
-	google/protobuf/io/gzip_stream.h google/protobuf/io/printer.h \
-	google/protobuf/io/tokenizer.h \
-	google/protobuf/io/zero_copy_stream.h \
-	google/protobuf/io/zero_copy_stream_impl.h \
-	google/protobuf/io/zero_copy_stream_impl_lite.h \
-	google/protobuf/compiler/code_generator.h \
-	google/protobuf/compiler/command_line_interface.h \
-	google/protobuf/compiler/importer.h \
-	google/protobuf/compiler/parser.h \
-	google/protobuf/compiler/plugin.h \
-	google/protobuf/compiler/plugin.pb.h \
-	google/protobuf/compiler/cpp/cpp_generator.h \
-	google/protobuf/compiler/java/java_generator.h \
-	google/protobuf/compiler/python/python_generator.h
+    google/protobuf/stubs/once.h google/protobuf/descriptor.h \
+    google/protobuf/descriptor.pb.h \
+    google/protobuf/descriptor_database.h \
+    google/protobuf/dynamic_message.h \
+    google/protobuf/extension_set.h \
+    google/protobuf/generated_message_util.h \
+    google/protobuf/generated_message_reflection.h \
+    google/protobuf/message.h google/protobuf/message_lite.h \
+    google/protobuf/reflection_ops.h \
+    google/protobuf/repeated_field.h google/protobuf/service.h \
+    google/protobuf/text_format.h \
+    google/protobuf/unknown_field_set.h \
+    google/protobuf/wire_format.h \
+    google/protobuf/wire_format_lite.h \
+    google/protobuf/wire_format_lite_inl.h \
+    google/protobuf/io/coded_stream.h \
+    google/protobuf/io/gzip_stream.h google/protobuf/io/printer.h \
+    google/protobuf/io/tokenizer.h \
+    google/protobuf/io/zero_copy_stream.h \
+    google/protobuf/io/zero_copy_stream_impl.h \
+    google/protobuf/io/zero_copy_stream_impl_lite.h \
+    google/protobuf/compiler/code_generator.h \
+    google/protobuf/compiler/command_line_interface.h \
+    google/protobuf/compiler/importer.h \
+    google/protobuf/compiler/parser.h \
+    google/protobuf/compiler/plugin.h \
+    google/protobuf/compiler/plugin.pb.h \
+    google/protobuf/compiler/cpp/cpp_generator.h \
+    google/protobuf/compiler/java/java_generator.h \
+    google/protobuf/compiler/python/python_generator.h
 nobase_includeHEADERS_INSTALL = $(install_sh_DATA)
 HEADERS = $(nobase_include_HEADERS)
 ETAGS = etags
@@ -431,11 +431,11 @@ target_os = @target_os@
 target_vendor = @target_vendor@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-@HAVE_ZLIB_FALSE@GZCHECKPROGRAMS = 
+@HAVE_ZLIB_FALSE@GZCHECKPROGRAMS =
 @HAVE_ZLIB_TRUE@GZCHECKPROGRAMS = zcgzip zcgunzip
-@HAVE_ZLIB_FALSE@GZHEADERS = 
+@HAVE_ZLIB_FALSE@GZHEADERS =
 @HAVE_ZLIB_TRUE@GZHEADERS = google/protobuf/io/gzip_stream.h
-@HAVE_ZLIB_FALSE@GZTESTS = 
+@HAVE_ZLIB_FALSE@GZTESTS =
 @HAVE_ZLIB_TRUE@GZTESTS = google/protobuf/io/gzip_stream_unittest.sh
 @GCC_FALSE@NO_OPT_CXXFLAGS = $(PTHREAD_CFLAGS)
 
@@ -448,10 +448,10 @@ AM_LDFLAGS = $(PTHREAD_CFLAGS)
 # a "legitimate" directory for DATA.  Screw you, automake.
 protodir = $(includedir)
 nobase_dist_proto_DATA = google/protobuf/descriptor.proto \
-                         google/protobuf/compiler/plugin.proto
+                        google/protobuf/compiler/plugin.proto
 
 CLEANFILES = $(protoc_outputs) unittest_proto_middleman \
-             testzip.jar testzip.list testzip.proto testzip.zip
+            testzip.jar testzip.list testzip.proto testzip.zip
 
 MAINTAINERCLEANFILES = \
   Makefile.in
@@ -670,11 +670,11 @@ COMMON_TEST_SOURCES = \
   google/protobuf/testing/file.h
 
 protobuf_test_LDADD = $(PTHREAD_LIBS) libprotobuf.la libprotoc.la \
-                      $(top_builddir)/gtest/lib/libgtest.la       \
-                      $(top_builddir)/gtest/lib/libgtest_main.la
+                    $(top_builddir)/gtest/lib/libgtest.la       \
+                    $(top_builddir)/gtest/lib/libgtest_main.la
 
 protobuf_test_CPPFLAGS = -I$(top_srcdir)/gtest/include         \
-                         -I$(top_builddir)/gtest/include
+                        -I$(top_builddir)/gtest/include
 
 # Disable optimization for tests unless the user explicitly asked for it,
 # since test_util.cc takes forever to compile with optimization (with GCC).
@@ -716,12 +716,12 @@ nodist_protobuf_test_SOURCES = $(protoc_outputs)
 
 # Run cpp_unittest again with PROTOBUF_TEST_NO_DESCRIPTORS defined.
 protobuf_lazy_descriptor_test_LDADD = $(PTHREAD_LIBS) libprotobuf.la \
-                      $(top_builddir)/gtest/lib/libgtest.la       \
-                      $(top_builddir)/gtest/lib/libgtest_main.la
+                    $(top_builddir)/gtest/lib/libgtest.la       \
+                    $(top_builddir)/gtest/lib/libgtest_main.la
 
 protobuf_lazy_descriptor_test_CPPFLAGS = -I$(top_srcdir)/gtest/include    \
-                                         -I$(top_builddir)/gtest/include  \
-                                         -DPROTOBUF_TEST_NO_DESCRIPTORS
+                                        -I$(top_builddir)/gtest/include  \
+                                        -DPROTOBUF_TEST_NO_DESCRIPTORS
 
 protobuf_lazy_descriptor_test_CXXFLAGS = $(NO_OPT_CXXFLAGS)
 protobuf_lazy_descriptor_test_SOURCES = \
@@ -745,7 +745,7 @@ test_plugin_LDADD = $(PTHREAD_LIBS) libprotobuf.la libprotoc.la \
                     $(top_builddir)/gtest/lib/libgtest.la
 
 test_plugin_CPPFLAGS = -I$(top_srcdir)/gtest/include         \
-                       -I$(top_builddir)/gtest/include
+                        -I$(top_builddir)/gtest/include
 
 test_plugin_SOURCES = \
   google/protobuf/compiler/mock_code_generator.cc              \
@@ -758,134 +758,134 @@ test_plugin_SOURCES = \
 @HAVE_ZLIB_TRUE@zcgunzip_LDADD = $(PTHREAD_LIBS) libprotobuf.la
 @HAVE_ZLIB_TRUE@zcgunzip_SOURCES = google/protobuf/testing/zcgunzip.cc
 all: $(BUILT_SOURCES)
-	$(MAKE) $(AM_MAKEFLAGS) all-am
+    $(MAKE) $(AM_MAKEFLAGS) all-am
 
 .SUFFIXES:
 .SUFFIXES: .cc .lo .o .obj
 $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
-	@for dep in $?; do \
-	  case '$(am__configure_deps)' in \
-	    *$$dep*) \
-	      cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh \
-		&& exit 0; \
-	      exit 1;; \
-	  esac; \
-	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  src/Makefile'; \
-	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  src/Makefile
+    @for dep in $?; do \
+    case '$(am__configure_deps)' in \
+        *$$dep*) \
+        cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh \
+        && exit 0; \
+        exit 1;; \
+    esac; \
+    done; \
+    echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  src/Makefile'; \
+    cd $(top_srcdir) && \
+    $(AUTOMAKE) --gnu  src/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
-	@case '$?' in \
-	  *config.status*) \
-	    cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh;; \
-	  *) \
-	    echo ' cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe)'; \
-	    cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe);; \
-	esac;
+    @case '$?' in \
+    *config.status*) \
+        cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh;; \
+    *) \
+        echo ' cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe)'; \
+        cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe);; \
+    esac;
 
 $(top_builddir)/config.status: $(top_srcdir)/configure $(CONFIG_STATUS_DEPENDENCIES)
-	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
+    cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 
 $(top_srcdir)/configure:  $(am__configure_deps)
-	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
+    cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(ACLOCAL_M4):  $(am__aclocal_m4_deps)
-	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
+    cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 install-libLTLIBRARIES: $(lib_LTLIBRARIES)
-	@$(NORMAL_INSTALL)
-	test -z "$(libdir)" || $(MKDIR_P) "$(DESTDIR)$(libdir)"
-	@list='$(lib_LTLIBRARIES)'; for p in $$list; do \
-	  if test -f $$p; then \
-	    f=$(am__strip_dir) \
-	    echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(libLTLIBRARIES_INSTALL) $(INSTALL_STRIP_FLAG) '$$p' '$(DESTDIR)$(libdir)/$$f'"; \
-	    $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(libLTLIBRARIES_INSTALL) $(INSTALL_STRIP_FLAG) "$$p" "$(DESTDIR)$(libdir)/$$f"; \
-	  else :; fi; \
-	done
+    @$(NORMAL_INSTALL)
+    test -z "$(libdir)" || $(MKDIR_P) "$(DESTDIR)$(libdir)"
+    @list='$(lib_LTLIBRARIES)'; for p in $$list; do \
+    if test -f $$p; then \
+        f=$(am__strip_dir) \
+        echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(libLTLIBRARIES_INSTALL) $(INSTALL_STRIP_FLAG) '$$p' '$(DESTDIR)$(libdir)/$$f'"; \
+        $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(libLTLIBRARIES_INSTALL) $(INSTALL_STRIP_FLAG) "$$p" "$(DESTDIR)$(libdir)/$$f"; \
+    else :; fi; \
+    done
 
 uninstall-libLTLIBRARIES:
-	@$(NORMAL_UNINSTALL)
-	@list='$(lib_LTLIBRARIES)'; for p in $$list; do \
-	  p=$(am__strip_dir) \
-	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f '$(DESTDIR)$(libdir)/$$p'"; \
-	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f "$(DESTDIR)$(libdir)/$$p"; \
-	done
+    @$(NORMAL_UNINSTALL)
+    @list='$(lib_LTLIBRARIES)'; for p in $$list; do \
+    p=$(am__strip_dir) \
+    echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f '$(DESTDIR)$(libdir)/$$p'"; \
+    $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f "$(DESTDIR)$(libdir)/$$p"; \
+    done
 
 clean-libLTLIBRARIES:
-	-test -z "$(lib_LTLIBRARIES)" || rm -f $(lib_LTLIBRARIES)
-	@list='$(lib_LTLIBRARIES)'; for p in $$list; do \
-	  dir="`echo $$p | sed -e 's|/[^/]*$$||'`"; \
-	  test "$$dir" != "$$p" || dir=.; \
-	  echo "rm -f \"$${dir}/so_locations\""; \
-	  rm -f "$${dir}/so_locations"; \
-	done
-libprotobuf-lite.la: $(libprotobuf_lite_la_OBJECTS) $(libprotobuf_lite_la_DEPENDENCIES) 
-	$(libprotobuf_lite_la_LINK) -rpath $(libdir) $(libprotobuf_lite_la_OBJECTS) $(libprotobuf_lite_la_LIBADD) $(LIBS)
-libprotobuf.la: $(libprotobuf_la_OBJECTS) $(libprotobuf_la_DEPENDENCIES) 
-	$(libprotobuf_la_LINK) -rpath $(libdir) $(libprotobuf_la_OBJECTS) $(libprotobuf_la_LIBADD) $(LIBS)
-libprotoc.la: $(libprotoc_la_OBJECTS) $(libprotoc_la_DEPENDENCIES) 
-	$(libprotoc_la_LINK) -rpath $(libdir) $(libprotoc_la_OBJECTS) $(libprotoc_la_LIBADD) $(LIBS)
+    -test -z "$(lib_LTLIBRARIES)" || rm -f $(lib_LTLIBRARIES)
+    @list='$(lib_LTLIBRARIES)'; for p in $$list; do \
+    dir="`echo $$p | sed -e 's|/[^/]*$$||'`"; \
+    test "$$dir" != "$$p" || dir=.; \
+    echo "rm -f \"$${dir}/so_locations\""; \
+    rm -f "$${dir}/so_locations"; \
+    done
+libprotobuf-lite.la: $(libprotobuf_lite_la_OBJECTS) $(libprotobuf_lite_la_DEPENDENCIES)
+    $(libprotobuf_lite_la_LINK) -rpath $(libdir) $(libprotobuf_lite_la_OBJECTS) $(libprotobuf_lite_la_LIBADD) $(LIBS)
+libprotobuf.la: $(libprotobuf_la_OBJECTS) $(libprotobuf_la_DEPENDENCIES)
+    $(libprotobuf_la_LINK) -rpath $(libdir) $(libprotobuf_la_OBJECTS) $(libprotobuf_la_LIBADD) $(LIBS)
+libprotoc.la: $(libprotoc_la_OBJECTS) $(libprotoc_la_DEPENDENCIES)
+    $(libprotoc_la_LINK) -rpath $(libdir) $(libprotoc_la_OBJECTS) $(libprotoc_la_LIBADD) $(LIBS)
 install-binPROGRAMS: $(bin_PROGRAMS)
-	@$(NORMAL_INSTALL)
-	test -z "$(bindir)" || $(MKDIR_P) "$(DESTDIR)$(bindir)"
-	@list='$(bin_PROGRAMS)'; for p in $$list; do \
-	  p1=`echo $$p|sed 's/$(EXEEXT)$$//'`; \
-	  if test -f $$p \
-	     || test -f $$p1 \
-	  ; then \
-	    f=`echo "$$p1" | sed 's,^.*/,,;$(transform);s/$$/$(EXEEXT)/'`; \
-	   echo " $(INSTALL_PROGRAM_ENV) $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(binPROGRAMS_INSTALL) '$$p' '$(DESTDIR)$(bindir)/$$f'"; \
-	   $(INSTALL_PROGRAM_ENV) $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(binPROGRAMS_INSTALL) "$$p" "$(DESTDIR)$(bindir)/$$f" || exit 1; \
-	  else :; fi; \
-	done
+    @$(NORMAL_INSTALL)
+    test -z "$(bindir)" || $(MKDIR_P) "$(DESTDIR)$(bindir)"
+    @list='$(bin_PROGRAMS)'; for p in $$list; do \
+    p1=`echo $$p|sed 's/$(EXEEXT)$$//'`; \
+    if test -f $$p \
+        || test -f $$p1 \
+    ; then \
+        f=`echo "$$p1" | sed 's,^.*/,,;$(transform);s/$$/$(EXEEXT)/'`; \
+        echo " $(INSTALL_PROGRAM_ENV) $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(binPROGRAMS_INSTALL) '$$p' '$(DESTDIR)$(bindir)/$$f'"; \
+        $(INSTALL_PROGRAM_ENV) $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(binPROGRAMS_INSTALL) "$$p" "$(DESTDIR)$(bindir)/$$f" || exit 1; \
+    else :; fi; \
+    done
 
 uninstall-binPROGRAMS:
-	@$(NORMAL_UNINSTALL)
-	@list='$(bin_PROGRAMS)'; for p in $$list; do \
-	  f=`echo "$$p" | sed 's,^.*/,,;s/$(EXEEXT)$$//;$(transform);s/$$/$(EXEEXT)/'`; \
-	  echo " rm -f '$(DESTDIR)$(bindir)/$$f'"; \
-	  rm -f "$(DESTDIR)$(bindir)/$$f"; \
-	done
+    @$(NORMAL_UNINSTALL)
+    @list='$(bin_PROGRAMS)'; for p in $$list; do \
+    f=`echo "$$p" | sed 's,^.*/,,;s/$(EXEEXT)$$//;$(transform);s/$$/$(EXEEXT)/'`; \
+    echo " rm -f '$(DESTDIR)$(bindir)/$$f'"; \
+    rm -f "$(DESTDIR)$(bindir)/$$f"; \
+    done
 
 clean-binPROGRAMS:
-	@list='$(bin_PROGRAMS)'; for p in $$list; do \
-	  f=`echo $$p|sed 's/$(EXEEXT)$$//'`; \
-	  echo " rm -f $$p $$f"; \
-	  rm -f $$p $$f ; \
-	done
+    @list='$(bin_PROGRAMS)'; for p in $$list; do \
+    f=`echo $$p|sed 's/$(EXEEXT)$$//'`; \
+    echo " rm -f $$p $$f"; \
+    rm -f $$p $$f ; \
+    done
 
 clean-checkPROGRAMS:
-	@list='$(check_PROGRAMS)'; for p in $$list; do \
-	  f=`echo $$p|sed 's/$(EXEEXT)$$//'`; \
-	  echo " rm -f $$p $$f"; \
-	  rm -f $$p $$f ; \
-	done
-protobuf-lazy-descriptor-test$(EXEEXT): $(protobuf_lazy_descriptor_test_OBJECTS) $(protobuf_lazy_descriptor_test_DEPENDENCIES) 
-	@rm -f protobuf-lazy-descriptor-test$(EXEEXT)
-	$(protobuf_lazy_descriptor_test_LINK) $(protobuf_lazy_descriptor_test_OBJECTS) $(protobuf_lazy_descriptor_test_LDADD) $(LIBS)
-protobuf-lite-test$(EXEEXT): $(protobuf_lite_test_OBJECTS) $(protobuf_lite_test_DEPENDENCIES) 
-	@rm -f protobuf-lite-test$(EXEEXT)
-	$(protobuf_lite_test_LINK) $(protobuf_lite_test_OBJECTS) $(protobuf_lite_test_LDADD) $(LIBS)
-protobuf-test$(EXEEXT): $(protobuf_test_OBJECTS) $(protobuf_test_DEPENDENCIES) 
-	@rm -f protobuf-test$(EXEEXT)
-	$(protobuf_test_LINK) $(protobuf_test_OBJECTS) $(protobuf_test_LDADD) $(LIBS)
-protoc$(EXEEXT): $(protoc_OBJECTS) $(protoc_DEPENDENCIES) 
-	@rm -f protoc$(EXEEXT)
-	$(CXXLINK) $(protoc_OBJECTS) $(protoc_LDADD) $(LIBS)
-test_plugin$(EXEEXT): $(test_plugin_OBJECTS) $(test_plugin_DEPENDENCIES) 
-	@rm -f test_plugin$(EXEEXT)
-	$(CXXLINK) $(test_plugin_OBJECTS) $(test_plugin_LDADD) $(LIBS)
-zcgunzip$(EXEEXT): $(zcgunzip_OBJECTS) $(zcgunzip_DEPENDENCIES) 
-	@rm -f zcgunzip$(EXEEXT)
-	$(CXXLINK) $(zcgunzip_OBJECTS) $(zcgunzip_LDADD) $(LIBS)
-zcgzip$(EXEEXT): $(zcgzip_OBJECTS) $(zcgzip_DEPENDENCIES) 
-	@rm -f zcgzip$(EXEEXT)
-	$(CXXLINK) $(zcgzip_OBJECTS) $(zcgzip_LDADD) $(LIBS)
+    @list='$(check_PROGRAMS)'; for p in $$list; do \
+    f=`echo $$p|sed 's/$(EXEEXT)$$//'`; \
+    echo " rm -f $$p $$f"; \
+    rm -f $$p $$f ; \
+    done
+protobuf-lazy-descriptor-test$(EXEEXT): $(protobuf_lazy_descriptor_test_OBJECTS) $(protobuf_lazy_descriptor_test_DEPENDENCIES)
+    @rm -f protobuf-lazy-descriptor-test$(EXEEXT)
+    $(protobuf_lazy_descriptor_test_LINK) $(protobuf_lazy_descriptor_test_OBJECTS) $(protobuf_lazy_descriptor_test_LDADD) $(LIBS)
+protobuf-lite-test$(EXEEXT): $(protobuf_lite_test_OBJECTS) $(protobuf_lite_test_DEPENDENCIES)
+    @rm -f protobuf-lite-test$(EXEEXT)
+    $(protobuf_lite_test_LINK) $(protobuf_lite_test_OBJECTS) $(protobuf_lite_test_LDADD) $(LIBS)
+protobuf-test$(EXEEXT): $(protobuf_test_OBJECTS) $(protobuf_test_DEPENDENCIES)
+    @rm -f protobuf-test$(EXEEXT)
+    $(protobuf_test_LINK) $(protobuf_test_OBJECTS) $(protobuf_test_LDADD) $(LIBS)
+protoc$(EXEEXT): $(protoc_OBJECTS) $(protoc_DEPENDENCIES)
+    @rm -f protoc$(EXEEXT)
+    $(CXXLINK) $(protoc_OBJECTS) $(protoc_LDADD) $(LIBS)
+test_plugin$(EXEEXT): $(test_plugin_OBJECTS) $(test_plugin_DEPENDENCIES)
+    @rm -f test_plugin$(EXEEXT)
+    $(CXXLINK) $(test_plugin_OBJECTS) $(test_plugin_LDADD) $(LIBS)
+zcgunzip$(EXEEXT): $(zcgunzip_OBJECTS) $(zcgunzip_DEPENDENCIES)
+    @rm -f zcgunzip$(EXEEXT)
+    $(CXXLINK) $(zcgunzip_OBJECTS) $(zcgunzip_LDADD) $(LIBS)
+zcgzip$(EXEEXT): $(zcgzip_OBJECTS) $(zcgzip_DEPENDENCIES)
+    @rm -f zcgzip$(EXEEXT)
+    $(CXXLINK) $(zcgzip_OBJECTS) $(zcgzip_LDADD) $(LIBS)
 
 mostlyclean-compile:
-	-rm -f *.$(OBJEXT)
+    -rm -f *.$(OBJEXT)
 
 distclean-compile:
-	-rm -f *.tab.c
+    -rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/code_generator.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/coded_stream.Plo@am__quote@
@@ -2441,245 +2441,245 @@ zcgzip.obj: google/protobuf/testing/zcgzip.cc
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o zcgzip.obj `if test -f 'google/protobuf/testing/zcgzip.cc'; then $(CYGPATH_W) 'google/protobuf/testing/zcgzip.cc'; else $(CYGPATH_W) '$(srcdir)/google/protobuf/testing/zcgzip.cc'; fi`
 
 mostlyclean-libtool:
-	-rm -f *.lo
+    -rm -f *.lo
 
 clean-libtool:
-	-rm -rf .libs _libs
+    -rm -rf .libs _libs
 install-nobase_dist_protoDATA: $(nobase_dist_proto_DATA)
-	@$(NORMAL_INSTALL)
-	test -z "$(protodir)" || $(MKDIR_P) "$(DESTDIR)$(protodir)"
-	@$(am__vpath_adj_setup) \
-	list='$(nobase_dist_proto_DATA)'; for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  $(am__vpath_adj) \
-	  echo " $(nobase_dist_protoDATA_INSTALL) '$$d$$p' '$(DESTDIR)$(protodir)/$$f'"; \
-	  $(nobase_dist_protoDATA_INSTALL) "$$d$$p" "$(DESTDIR)$(protodir)/$$f"; \
-	done
+    @$(NORMAL_INSTALL)
+    test -z "$(protodir)" || $(MKDIR_P) "$(DESTDIR)$(protodir)"
+    @$(am__vpath_adj_setup) \
+    list='$(nobase_dist_proto_DATA)'; for p in $$list; do \
+    if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+    $(am__vpath_adj) \
+    echo " $(nobase_dist_protoDATA_INSTALL) '$$d$$p' '$(DESTDIR)$(protodir)/$$f'"; \
+    $(nobase_dist_protoDATA_INSTALL) "$$d$$p" "$(DESTDIR)$(protodir)/$$f"; \
+    done
 
 uninstall-nobase_dist_protoDATA:
-	@$(NORMAL_UNINSTALL)
-	@$(am__vpath_adj_setup) \
-	list='$(nobase_dist_proto_DATA)'; for p in $$list; do \
-	  $(am__vpath_adj) \
-	  echo " rm -f '$(DESTDIR)$(protodir)/$$f'"; \
-	  rm -f "$(DESTDIR)$(protodir)/$$f"; \
-	done
+    @$(NORMAL_UNINSTALL)
+    @$(am__vpath_adj_setup) \
+    list='$(nobase_dist_proto_DATA)'; for p in $$list; do \
+    $(am__vpath_adj) \
+    echo " rm -f '$(DESTDIR)$(protodir)/$$f'"; \
+    rm -f "$(DESTDIR)$(protodir)/$$f"; \
+    done
 install-nobase_includeHEADERS: $(nobase_include_HEADERS)
-	@$(NORMAL_INSTALL)
-	test -z "$(includedir)" || $(MKDIR_P) "$(DESTDIR)$(includedir)"
-	@$(am__vpath_adj_setup) \
-	list='$(nobase_include_HEADERS)'; for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  $(am__vpath_adj) \
-	  echo " $(nobase_includeHEADERS_INSTALL) '$$d$$p' '$(DESTDIR)$(includedir)/$$f'"; \
-	  $(nobase_includeHEADERS_INSTALL) "$$d$$p" "$(DESTDIR)$(includedir)/$$f"; \
-	done
+    @$(NORMAL_INSTALL)
+    test -z "$(includedir)" || $(MKDIR_P) "$(DESTDIR)$(includedir)"
+    @$(am__vpath_adj_setup) \
+    list='$(nobase_include_HEADERS)'; for p in $$list; do \
+    if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+    $(am__vpath_adj) \
+    echo " $(nobase_includeHEADERS_INSTALL) '$$d$$p' '$(DESTDIR)$(includedir)/$$f'"; \
+    $(nobase_includeHEADERS_INSTALL) "$$d$$p" "$(DESTDIR)$(includedir)/$$f"; \
+    done
 
 uninstall-nobase_includeHEADERS:
-	@$(NORMAL_UNINSTALL)
-	@$(am__vpath_adj_setup) \
-	list='$(nobase_include_HEADERS)'; for p in $$list; do \
-	  $(am__vpath_adj) \
-	  echo " rm -f '$(DESTDIR)$(includedir)/$$f'"; \
-	  rm -f "$(DESTDIR)$(includedir)/$$f"; \
-	done
+    @$(NORMAL_UNINSTALL)
+    @$(am__vpath_adj_setup) \
+    list='$(nobase_include_HEADERS)'; for p in $$list; do \
+    $(am__vpath_adj) \
+    echo " rm -f '$(DESTDIR)$(includedir)/$$f'"; \
+    rm -f "$(DESTDIR)$(includedir)/$$f"; \
+    done
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
-	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \
-	unique=`for i in $$list; do \
-	    if test -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
-	  done | \
-	  $(AWK) '{ files[$$0] = 1; nonemtpy = 1; } \
-	      END { if (nonempty) { for (i in files) print i; }; }'`; \
-	mkid -fID $$unique
+    list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \
+    unique=`for i in $$list; do \
+        if test -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
+    done | \
+    $(AWK) '{ files[$$0] = 1; nonemtpy = 1; } \
+        END { if (nonempty) { for (i in files) print i; }; }'`; \
+    mkid -fID $$unique
 tags: TAGS
 
 TAGS:  $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES) \
-		$(TAGS_FILES) $(LISP)
-	tags=; \
-	here=`pwd`; \
-	list='$(SOURCES) $(HEADERS)  $(LISP) $(TAGS_FILES)'; \
-	unique=`for i in $$list; do \
-	    if test -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
-	  done | \
-	  $(AWK) '{ files[$$0] = 1; nonempty = 1; } \
-	      END { if (nonempty) { for (i in files) print i; }; }'`; \
-	if test -z "$(ETAGS_ARGS)$$tags$$unique"; then :; else \
-	  test -n "$$unique" || unique=$$empty_fix; \
-	  $(ETAGS) $(ETAGSFLAGS) $(AM_ETAGSFLAGS) $(ETAGS_ARGS) \
-	    $$tags $$unique; \
-	fi
+        $(TAGS_FILES) $(LISP)
+    tags=; \
+    here=`pwd`; \
+    list='$(SOURCES) $(HEADERS)  $(LISP) $(TAGS_FILES)'; \
+    unique=`for i in $$list; do \
+        if test -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
+    done | \
+    $(AWK) '{ files[$$0] = 1; nonempty = 1; } \
+        END { if (nonempty) { for (i in files) print i; }; }'`; \
+    if test -z "$(ETAGS_ARGS)$$tags$$unique"; then :; else \
+    test -n "$$unique" || unique=$$empty_fix; \
+    $(ETAGS) $(ETAGSFLAGS) $(AM_ETAGSFLAGS) $(ETAGS_ARGS) \
+        $$tags $$unique; \
+    fi
 ctags: CTAGS
 CTAGS:  $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES) \
-		$(TAGS_FILES) $(LISP)
-	tags=; \
-	list='$(SOURCES) $(HEADERS)  $(LISP) $(TAGS_FILES)'; \
-	unique=`for i in $$list; do \
-	    if test -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
-	  done | \
-	  $(AWK) '{ files[$$0] = 1; nonempty = 1; } \
-	      END { if (nonempty) { for (i in files) print i; }; }'`; \
-	test -z "$(CTAGS_ARGS)$$tags$$unique" \
-	  || $(CTAGS) $(CTAGSFLAGS) $(AM_CTAGSFLAGS) $(CTAGS_ARGS) \
-	     $$tags $$unique
+        $(TAGS_FILES) $(LISP)
+    tags=; \
+    list='$(SOURCES) $(HEADERS)  $(LISP) $(TAGS_FILES)'; \
+    unique=`for i in $$list; do \
+        if test -f "$$i"; then echo $$i; else echo $(srcdir)/$$i; fi; \
+    done | \
+    $(AWK) '{ files[$$0] = 1; nonempty = 1; } \
+        END { if (nonempty) { for (i in files) print i; }; }'`; \
+    test -z "$(CTAGS_ARGS)$$tags$$unique" \
+    || $(CTAGS) $(CTAGSFLAGS) $(AM_CTAGSFLAGS) $(CTAGS_ARGS) \
+        $$tags $$unique
 
 GTAGS:
-	here=`$(am__cd) $(top_builddir) && pwd` \
-	  && cd $(top_srcdir) \
-	  && gtags -i $(GTAGS_ARGS) $$here
+    here=`$(am__cd) $(top_builddir) && pwd` \
+    && cd $(top_srcdir) \
+    && gtags -i $(GTAGS_ARGS) $$here
 
 distclean-tags:
-	-rm -f TAGS ID GTAGS GRTAGS GSYMS GPATH tags
+    -rm -f TAGS ID GTAGS GRTAGS GSYMS GPATH tags
 
 check-TESTS: $(TESTS)
-	@failed=0; all=0; xfail=0; xpass=0; skip=0; ws='[	 ]'; \
-	srcdir=$(srcdir); export srcdir; \
-	list=' $(TESTS) '; \
-	if test -n "$$list"; then \
-	  for tst in $$list; do \
-	    if test -f ./$$tst; then dir=./; \
-	    elif test -f $$tst; then dir=; \
-	    else dir="$(srcdir)/"; fi; \
-	    if $(TESTS_ENVIRONMENT) $${dir}$$tst; then \
-	      all=`expr $$all + 1`; \
-	      case " $(XFAIL_TESTS) " in \
-	      *$$ws$$tst$$ws*) \
-		xpass=`expr $$xpass + 1`; \
-		failed=`expr $$failed + 1`; \
-		echo "XPASS: $$tst"; \
-	      ;; \
-	      *) \
-		echo "PASS: $$tst"; \
-	      ;; \
-	      esac; \
-	    elif test $$? -ne 77; then \
-	      all=`expr $$all + 1`; \
-	      case " $(XFAIL_TESTS) " in \
-	      *$$ws$$tst$$ws*) \
-		xfail=`expr $$xfail + 1`; \
-		echo "XFAIL: $$tst"; \
-	      ;; \
-	      *) \
-		failed=`expr $$failed + 1`; \
-		echo "FAIL: $$tst"; \
-	      ;; \
-	      esac; \
-	    else \
-	      skip=`expr $$skip + 1`; \
-	      echo "SKIP: $$tst"; \
-	    fi; \
-	  done; \
-	  if test "$$failed" -eq 0; then \
-	    if test "$$xfail" -eq 0; then \
-	      banner="All $$all tests passed"; \
-	    else \
-	      banner="All $$all tests behaved as expected ($$xfail expected failures)"; \
-	    fi; \
-	  else \
-	    if test "$$xpass" -eq 0; then \
-	      banner="$$failed of $$all tests failed"; \
-	    else \
-	      banner="$$failed of $$all tests did not behave as expected ($$xpass unexpected passes)"; \
-	    fi; \
-	  fi; \
-	  dashes="$$banner"; \
-	  skipped=""; \
-	  if test "$$skip" -ne 0; then \
-	    skipped="($$skip tests were not run)"; \
-	    test `echo "$$skipped" | wc -c` -le `echo "$$banner" | wc -c` || \
-	      dashes="$$skipped"; \
-	  fi; \
-	  report=""; \
-	  if test "$$failed" -ne 0 && test -n "$(PACKAGE_BUGREPORT)"; then \
-	    report="Please report to $(PACKAGE_BUGREPORT)"; \
-	    test `echo "$$report" | wc -c` -le `echo "$$banner" | wc -c` || \
-	      dashes="$$report"; \
-	  fi; \
-	  dashes=`echo "$$dashes" | sed s/./=/g`; \
-	  echo "$$dashes"; \
-	  echo "$$banner"; \
-	  test -z "$$skipped" || echo "$$skipped"; \
-	  test -z "$$report" || echo "$$report"; \
-	  echo "$$dashes"; \
-	  test "$$failed" -eq 0; \
-	else :; fi
+    @failed=0; all=0; xfail=0; xpass=0; skip=0; ws='[	 ]'; \
+    srcdir=$(srcdir); export srcdir; \
+    list=' $(TESTS) '; \
+    if test -n "$$list"; then \
+    for tst in $$list; do \
+        if test -f ./$$tst; then dir=./; \
+        elif test -f $$tst; then dir=; \
+        else dir="$(srcdir)/"; fi; \
+        if $(TESTS_ENVIRONMENT) $${dir}$$tst; then \
+        all=`expr $$all + 1`; \
+        case " $(XFAIL_TESTS) " in \
+        *$$ws$$tst$$ws*) \
+        xpass=`expr $$xpass + 1`; \
+        failed=`expr $$failed + 1`; \
+        echo "XPASS: $$tst"; \
+        ;; \
+        *) \
+        echo "PASS: $$tst"; \
+        ;; \
+        esac; \
+        elif test $$? -ne 77; then \
+        all=`expr $$all + 1`; \
+        case " $(XFAIL_TESTS) " in \
+        *$$ws$$tst$$ws*) \
+        xfail=`expr $$xfail + 1`; \
+        echo "XFAIL: $$tst"; \
+        ;; \
+        *) \
+        failed=`expr $$failed + 1`; \
+        echo "FAIL: $$tst"; \
+        ;; \
+        esac; \
+        else \
+        skip=`expr $$skip + 1`; \
+        echo "SKIP: $$tst"; \
+        fi; \
+    done; \
+    if test "$$failed" -eq 0; then \
+        if test "$$xfail" -eq 0; then \
+        banner="All $$all tests passed"; \
+        else \
+        banner="All $$all tests behaved as expected ($$xfail expected failures)"; \
+        fi; \
+    else \
+        if test "$$xpass" -eq 0; then \
+        banner="$$failed of $$all tests failed"; \
+        else \
+        banner="$$failed of $$all tests did not behave as expected ($$xpass unexpected passes)"; \
+        fi; \
+    fi; \
+    dashes="$$banner"; \
+    skipped=""; \
+    if test "$$skip" -ne 0; then \
+        skipped="($$skip tests were not run)"; \
+        test `echo "$$skipped" | wc -c` -le `echo "$$banner" | wc -c` || \
+        dashes="$$skipped"; \
+    fi; \
+    report=""; \
+    if test "$$failed" -ne 0 && test -n "$(PACKAGE_BUGREPORT)"; then \
+        report="Please report to $(PACKAGE_BUGREPORT)"; \
+        test `echo "$$report" | wc -c` -le `echo "$$banner" | wc -c` || \
+        dashes="$$report"; \
+    fi; \
+    dashes=`echo "$$dashes" | sed s/./=/g`; \
+    echo "$$dashes"; \
+    echo "$$banner"; \
+    test -z "$$skipped" || echo "$$skipped"; \
+    test -z "$$report" || echo "$$report"; \
+    echo "$$dashes"; \
+    test "$$failed" -eq 0; \
+    else :; fi
 
 distdir: $(DISTFILES)
-	@srcdirstrip=`echo "$(srcdir)" | sed 's/[].[^$$\\*]/\\\\&/g'`; \
-	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's/[].[^$$\\*]/\\\\&/g'`; \
-	list='$(DISTFILES)'; \
-	  dist_files=`for file in $$list; do echo $$file; done | \
-	  sed -e "s|^$$srcdirstrip/||;t" \
-	      -e "s|^$$topsrcdirstrip/|$(top_builddir)/|;t"`; \
-	case $$dist_files in \
-	  */*) $(MKDIR_P) `echo "$$dist_files" | \
-			   sed '/\//!d;s|^|$(distdir)/|;s,/[^/]*$$,,' | \
-			   sort -u` ;; \
-	esac; \
-	for file in $$dist_files; do \
-	  if test -f $$file || test -d $$file; then d=.; else d=$(srcdir); fi; \
-	  if test -d $$d/$$file; then \
-	    dir=`echo "/$$file" | sed -e 's,/[^/]*$$,,'`; \
-	    if test -d $(srcdir)/$$file && test $$d != $(srcdir); then \
-	      cp -pR $(srcdir)/$$file $(distdir)$$dir || exit 1; \
-	    fi; \
-	    cp -pR $$d/$$file $(distdir)$$dir || exit 1; \
-	  else \
-	    test -f $(distdir)/$$file \
-	    || cp -p $$d/$$file $(distdir)/$$file \
-	    || exit 1; \
-	  fi; \
-	done
+    @srcdirstrip=`echo "$(srcdir)" | sed 's/[].[^$$\\*]/\\\\&/g'`; \
+    topsrcdirstrip=`echo "$(top_srcdir)" | sed 's/[].[^$$\\*]/\\\\&/g'`; \
+    list='$(DISTFILES)'; \
+    dist_files=`for file in $$list; do echo $$file; done | \
+    sed -e "s|^$$srcdirstrip/||;t" \
+        -e "s|^$$topsrcdirstrip/|$(top_builddir)/|;t"`; \
+    case $$dist_files in \
+    */*) $(MKDIR_P) `echo "$$dist_files" | \
+                sed '/\//!d;s|^|$(distdir)/|;s,/[^/]*$$,,' | \
+                sort -u` ;; \
+    esac; \
+    for file in $$dist_files; do \
+    if test -f $$file || test -d $$file; then d=.; else d=$(srcdir); fi; \
+    if test -d $$d/$$file; then \
+        dir=`echo "/$$file" | sed -e 's,/[^/]*$$,,'`; \
+        if test -d $(srcdir)/$$file && test $$d != $(srcdir); then \
+        cp -pR $(srcdir)/$$file $(distdir)$$dir || exit 1; \
+        fi; \
+        cp -pR $$d/$$file $(distdir)$$dir || exit 1; \
+    else \
+        test -f $(distdir)/$$file \
+        || cp -p $$d/$$file $(distdir)/$$file \
+        || exit 1; \
+    fi; \
+    done
 check-am: all-am
-	$(MAKE) $(AM_MAKEFLAGS) $(check_PROGRAMS)
-	$(MAKE) $(AM_MAKEFLAGS) check-TESTS
+    $(MAKE) $(AM_MAKEFLAGS) $(check_PROGRAMS)
+    $(MAKE) $(AM_MAKEFLAGS) check-TESTS
 check: $(BUILT_SOURCES)
-	$(MAKE) $(AM_MAKEFLAGS) check-am
+    $(MAKE) $(AM_MAKEFLAGS) check-am
 all-am: Makefile $(LTLIBRARIES) $(PROGRAMS) $(DATA) $(HEADERS)
 install-binPROGRAMS: install-libLTLIBRARIES
 
 installdirs:
-	for dir in "$(DESTDIR)$(libdir)" "$(DESTDIR)$(bindir)" "$(DESTDIR)$(protodir)" "$(DESTDIR)$(includedir)"; do \
-	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
-	done
+    for dir in "$(DESTDIR)$(libdir)" "$(DESTDIR)$(bindir)" "$(DESTDIR)$(protodir)" "$(DESTDIR)$(includedir)"; do \
+    test -z "$$dir" || $(MKDIR_P) "$$dir"; \
+    done
 install: $(BUILT_SOURCES)
-	$(MAKE) $(AM_MAKEFLAGS) install-am
+    $(MAKE) $(AM_MAKEFLAGS) install-am
 install-exec: install-exec-am
 install-data: install-data-am
 uninstall: uninstall-am
 
 install-am: all-am
-	@$(MAKE) $(AM_MAKEFLAGS) install-exec-am install-data-am
+    @$(MAKE) $(AM_MAKEFLAGS) install-exec-am install-data-am
 
 installcheck: installcheck-am
 install-strip:
-	$(MAKE) $(AM_MAKEFLAGS) INSTALL_PROGRAM="$(INSTALL_STRIP_PROGRAM)" \
-	  install_sh_PROGRAM="$(INSTALL_STRIP_PROGRAM)" INSTALL_STRIP_FLAG=-s \
-	  `test -z '$(STRIP)' || \
-	    echo "INSTALL_PROGRAM_ENV=STRIPPROG='$(STRIP)'"` install
+    $(MAKE) $(AM_MAKEFLAGS) INSTALL_PROGRAM="$(INSTALL_STRIP_PROGRAM)" \
+    install_sh_PROGRAM="$(INSTALL_STRIP_PROGRAM)" INSTALL_STRIP_FLAG=-s \
+    `test -z '$(STRIP)' || \
+        echo "INSTALL_PROGRAM_ENV=STRIPPROG='$(STRIP)'"` install
 mostlyclean-generic:
 
 clean-generic:
-	-test -z "$(CLEANFILES)" || rm -f $(CLEANFILES)
+    -test -z "$(CLEANFILES)" || rm -f $(CLEANFILES)
 
 distclean-generic:
-	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
+    -test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
 
 maintainer-clean-generic:
-	@echo "This command is intended for maintainers to use"
-	@echo "it deletes files that may require special tools to rebuild."
-	-test -z "$(BUILT_SOURCES)" || rm -f $(BUILT_SOURCES)
-	-test -z "$(MAINTAINERCLEANFILES)" || rm -f $(MAINTAINERCLEANFILES)
+    @echo "This command is intended for maintainers to use"
+    @echo "it deletes files that may require special tools to rebuild."
+    -test -z "$(BUILT_SOURCES)" || rm -f $(BUILT_SOURCES)
+    -test -z "$(MAINTAINERCLEANFILES)" || rm -f $(MAINTAINERCLEANFILES)
 clean: clean-am
 
 clean-am: clean-binPROGRAMS clean-checkPROGRAMS clean-generic \
-	clean-libLTLIBRARIES clean-libtool clean-local mostlyclean-am
+    clean-libLTLIBRARIES clean-libtool clean-local mostlyclean-am
 
 distclean: distclean-am
-	-rm -rf ./$(DEPDIR)
-	-rm -f Makefile
+    -rm -rf ./$(DEPDIR)
+    -rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
-	distclean-tags
+    distclean-tags
 
 dvi: dvi-am
 
@@ -2692,7 +2692,7 @@ info: info-am
 info-am:
 
 install-data-am: install-nobase_dist_protoDATA \
-	install-nobase_includeHEADERS
+    install-nobase_includeHEADERS
 
 install-dvi: install-dvi-am
 
@@ -2711,14 +2711,14 @@ install-ps: install-ps-am
 installcheck-am:
 
 maintainer-clean: maintainer-clean-am
-	-rm -rf ./$(DEPDIR)
-	-rm -f Makefile
+    -rm -rf ./$(DEPDIR)
+    -rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 
 mostlyclean: mostlyclean-am
 
 mostlyclean-am: mostlyclean-compile mostlyclean-generic \
-	mostlyclean-libtool
+    mostlyclean-libtool
 
 pdf: pdf-am
 
@@ -2729,34 +2729,34 @@ ps: ps-am
 ps-am:
 
 uninstall-am: uninstall-binPROGRAMS uninstall-libLTLIBRARIES \
-	uninstall-nobase_dist_protoDATA \
-	uninstall-nobase_includeHEADERS
+    uninstall-nobase_dist_protoDATA \
+    uninstall-nobase_includeHEADERS
 
 .MAKE: install-am install-strip
 
 .PHONY: CTAGS GTAGS all all-am check check-TESTS check-am clean \
-	clean-binPROGRAMS clean-checkPROGRAMS clean-generic \
-	clean-libLTLIBRARIES clean-libtool clean-local ctags distclean \
-	distclean-compile distclean-generic distclean-libtool \
-	distclean-tags distdir dvi dvi-am html html-am info info-am \
-	install install-am install-binPROGRAMS install-data \
-	install-data-am install-dvi install-dvi-am install-exec \
-	install-exec-am install-html install-html-am install-info \
-	install-info-am install-libLTLIBRARIES install-man \
-	install-nobase_dist_protoDATA install-nobase_includeHEADERS \
-	install-pdf install-pdf-am install-ps install-ps-am \
-	install-strip installcheck installcheck-am installdirs \
-	maintainer-clean maintainer-clean-generic mostlyclean \
-	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
-	pdf pdf-am ps ps-am tags uninstall uninstall-am \
-	uninstall-binPROGRAMS uninstall-libLTLIBRARIES \
-	uninstall-nobase_dist_protoDATA \
-	uninstall-nobase_includeHEADERS
+    clean-binPROGRAMS clean-checkPROGRAMS clean-generic \
+    clean-libLTLIBRARIES clean-libtool clean-local ctags distclean \
+    distclean-compile distclean-generic distclean-libtool \
+    distclean-tags distdir dvi dvi-am html html-am info info-am \
+    install install-am install-binPROGRAMS install-data \
+    install-data-am install-dvi install-dvi-am install-exec \
+    install-exec-am install-html install-html-am install-info \
+    install-info-am install-libLTLIBRARIES install-man \
+    install-nobase_dist_protoDATA install-nobase_includeHEADERS \
+    install-pdf install-pdf-am install-ps install-ps-am \
+    install-strip installcheck installcheck-am installdirs \
+    maintainer-clean maintainer-clean-generic mostlyclean \
+    mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
+    pdf pdf-am ps ps-am tags uninstall uninstall-am \
+    uninstall-binPROGRAMS uninstall-libLTLIBRARIES \
+    uninstall-nobase_dist_protoDATA \
+    uninstall-nobase_includeHEADERS
 
 
 # Not sure why these don't get cleaned automatically.
 clean-local:
-	rm -f *.loT
+    rm -f *.loT
 
 @USE_EXTERNAL_PROTOC_TRUE@unittest_proto_middleman: $(protoc_inputs)
 @USE_EXTERNAL_PROTOC_TRUE@	$(PROTOC) -I$(srcdir) --cpp_out=. $^

@@ -67,7 +67,7 @@ enum ResourcePreload_t
 
 abstract_class IResourcePreload
 {
-   public:
+    public:
     // Called during preload phase for ALL the resources expected by the level.
     // Caller should not do i/o but generate AddJob() requests. Resources that already exist
     // and are not referenced by this function would be candidates for purge.
@@ -96,7 +96,7 @@ class CResourcePreload : public IResourcePreload
 // UI can install progress notification
 abstract_class ILoaderProgress
 {
-   public:
+    public:
     // implementation must ignore UpdateProgress() if not scoped by Begin/End
     virtual void BeginProgress() = 0;
     virtual void EndProgress() = 0;
@@ -113,7 +113,7 @@ abstract_class ILoaderProgress
 #define QUEUEDLOADER_INTERFACE_VERSION "QueuedLoaderVersion004"
 abstract_class IQueuedLoader : public IAppSystem
 {
-   public:
+    public:
     virtual void InstallLoader( ResourcePreload_t type, IResourcePreload * pLoader ) = 0;
     virtual void InstallProgress( ILoaderProgress * pProgress ) = 0;
 

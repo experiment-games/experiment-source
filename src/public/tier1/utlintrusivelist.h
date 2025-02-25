@@ -518,7 +518,7 @@ template < class T >
 void AddSortedByName( T *&head, T *node )
 {
     if ( ( !head ) ||                                       // empty list?
-         ( stricmp( node->m_Name, head->m_Name ) == -1 ) )  // or we should be first?
+        ( stricmp( node->m_Name, head->m_Name ) == -1 ) )  // or we should be first?
     {
         node->m_pNext = head;  // make us head
         head = node;
@@ -698,7 +698,7 @@ T *ReversedList( T *head )
 template < class T >
 class CUtlIntrusiveList
 {
-   public:
+    public:
     T *m_pHead;
 
     FORCEINLINE T *Head( void ) const
@@ -793,7 +793,7 @@ class CUtlIntrusiveList
 template < class T >
 class CUtlIntrusiveDList : public CUtlIntrusiveList< T >
 {
-   public:
+    public:
     FORCEINLINE void AddToHead( T *node )
     {
         IntrusiveList::AddToDHead( CUtlIntrusiveList< T >::m_pHead, node );
@@ -831,7 +831,7 @@ class CUtlIntrusiveDList : public CUtlIntrusiveList< T >
 template < class T >
 class CUtlIntrusiveDListWithTailPtr : public CUtlIntrusiveDList< T >
 {
-   public:
+    public:
     T *m_pTailPtr;
 
     FORCEINLINE CUtlIntrusiveDListWithTailPtr( void )
@@ -891,7 +891,7 @@ class CUtlIntrusiveDListWithTailPtr : public CUtlIntrusiveDList< T >
 
 template < class T >
 void PrependDListWithTailToDList( CUtlIntrusiveDListWithTailPtr< T > &src,
-                                  CUtlIntrusiveDList< T > &dest )
+                                CUtlIntrusiveDList< T > &dest )
 {
     if ( src.m_pHead )
     {

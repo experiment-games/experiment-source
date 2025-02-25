@@ -11,7 +11,7 @@
 
 class CPropScalable : public CBaseAnimating
 {
-   public:
+    public:
     DECLARE_CLASS( CPropScalable, CBaseAnimating );
     DECLARE_DATADESC();
     DECLARE_SERVERCLASS();

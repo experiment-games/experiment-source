@@ -174,10 +174,10 @@ static int inet_global_getaddrinfo(lua_State *L)
         ret = getnameinfo(iterator->ai_addr, (socklen_t) iterator->ai_addrlen,
             hbuf, (socklen_t) sizeof(hbuf), NULL, 0, NI_NUMERICHOST);
         if (ret){
-          freeaddrinfo(resolved);
-          lua_pushnil(L);
-          lua_pushstring(L, socket_gaistrerror(ret));
-          return 2;
+        freeaddrinfo(resolved);
+        lua_pushnil(L);
+        lua_pushstring(L, socket_gaistrerror(ret));
+        return 2;
         }
         lua_pushnumber(L, i);
         lua_newtable(L);
@@ -248,7 +248,7 @@ int inet_meth_getpeername(lua_State *L, p_socket ps, int family)
         lua_pushstring(L, socket_strerror(errno));
         return 2;
     }
-	err = getnameinfo((struct sockaddr *) &peer, peer_len,
+    err = getnameinfo((struct sockaddr *) &peer, peer_len,
         name, INET6_ADDRSTRLEN,
         port, sizeof(port), NI_NUMERICHOST | NI_NUMERICSERV);
     if (err) {
@@ -282,8 +282,8 @@ int inet_meth_getsockname(lua_State *L, p_socket ps, int family)
         lua_pushstring(L, socket_strerror(errno));
         return 2;
     }
-	err=getnameinfo((struct sockaddr *)&peer, peer_len,
-		name, INET6_ADDRSTRLEN, port, 6, NI_NUMERICHOST | NI_NUMERICSERV);
+    err=getnameinfo((struct sockaddr *)&peer, peer_len,
+        name, INET6_ADDRSTRLEN, port, 6, NI_NUMERICHOST | NI_NUMERICSERV);
     if (err) {
         lua_pushnil(L);
         lua_pushstring(L, LUA_GAI_STRERROR(err));
@@ -401,10 +401,10 @@ const char *inet_tryconnect(p_socket ps, int *family, const char *address,
     for (iterator = resolved; iterator; iterator = iterator->ai_next) {
         timeout_markstart(tm);
         /* create new socket if necessary. if there was no
-         * bind, we need to create one for every new family
-         * that shows up while iterating. if there was a
-         * bind, all families will be the same and we will
-         * not enter this branch. */
+        * bind, we need to create one for every new family
+        * that shows up while iterating. if there was a
+        * bind, all families will be the same and we will
+        * not enter this branch. */
         if (current_family != iterator->ai_family || *ps == SOCKET_INVALID) {
             socket_destroy(ps);
             err = inet_trycreate(ps, iterator->ai_family,
@@ -433,14 +433,14 @@ const char *inet_tryconnect(p_socket ps, int *family, const char *address,
 \*-------------------------------------------------------------------------*/
 const char *inet_tryaccept(p_socket server, int family, p_socket client,
     p_timeout tm) {
-	socklen_t len;
-	t_sockaddr_storage addr;
+    socklen_t len;
+    t_sockaddr_storage addr;
     switch (family) {
         case AF_INET6: len = sizeof(struct sockaddr_in6); break;
         case AF_INET: len = sizeof(struct sockaddr_in); break;
         default: len = sizeof(addr); break;
     }
-	return socket_strerror(socket_accept(server, client, (SA *) &addr,
+    return socket_strerror(socket_accept(server, client, (SA *) &addr,
         &len, tm));
 }
 

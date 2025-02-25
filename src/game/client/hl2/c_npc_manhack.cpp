@@ -14,7 +14,7 @@
 
 class C_NPC_Manhack : public C_AI_BaseNPC
 {
-   public:
+    public:
     C_NPC_Manhack() {}
 
     DECLARE_CLASS( C_NPC_Manhack, C_AI_BaseNPC );
@@ -26,7 +26,7 @@ class C_NPC_Manhack : public C_AI_BaseNPC
     virtual void UpdateOnRemove( void );
     virtual void OnRestore();
 
-   private:
+    private:
     C_NPC_Manhack( const C_NPC_Manhack & );
 
     // Purpose: Start + stop the manhack's engine sound.

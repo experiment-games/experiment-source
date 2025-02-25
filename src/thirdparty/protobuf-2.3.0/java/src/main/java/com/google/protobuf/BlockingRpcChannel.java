@@ -39,13 +39,13 @@ package com.google.protobuf;
  */
 public interface BlockingRpcChannel {
   /**
-   * Call the given method of the remote service and blocks until it returns.
-   * {@code callBlockingMethod()} is the blocking equivalent to
-   * {@link RpcChannel#callMethod}.
-   */
+    * Call the given method of the remote service and blocks until it returns.
+    * {@code callBlockingMethod()} is the blocking equivalent to
+    * {@link RpcChannel#callMethod}.
+    */
   Message callBlockingMethod(
-      Descriptors.MethodDescriptor method,
-      RpcController controller,
-      Message request,
-      Message responsePrototype) throws ServiceException;
+    Descriptors.MethodDescriptor method,
+    RpcController controller,
+    Message request,
+    Message responsePrototype) throws ServiceException;
 }

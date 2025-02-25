@@ -17,7 +17,7 @@ enum EResult
     k_EResultOK = 1,                      // success
     k_EResultFail = 2,                    // generic failure
     k_EResultNoConnection = 3,            // no/failed network connection
-                                          //	k_EResultNoConnectionRetry = 4,				// OBSOLETE - removed
+                                        //	k_EResultNoConnectionRetry = 4,				// OBSOLETE - removed
     k_EResultInvalidPassword = 5,         // password/ticket is invalid
     k_EResultLoggedInElsewhere = 6,       // same user logged in elsewhere
     k_EResultInvalidProtocolVer = 7,      // protocol version is incorrect
@@ -456,7 +456,7 @@ enum EDurationControlOnlineState
 // Steam ID structure (64 bits total)
 class CSteamID
 {
-   public:
+    public:
     //-----------------------------------------------------------------------------
     // Purpose: Constructor
     //-----------------------------------------------------------------------------
@@ -867,7 +867,7 @@ class CSteamID
     // DEBUG function
     bool BValidExternalSteamID() const;
 
-   private:
+    private:
     // These are defined here to prevent accidental implicit conversion of a u32AccountID to a CSteamID.
     // If you get a compiler error about an ambiguous constructor/function then it may be because you're
     // passing a 32-bit int to a function that takes a CSteamID. You should explicitly create the SteamID
@@ -936,7 +936,7 @@ inline bool CSteamID::IsValid() const
 inline CSteamID SteamIDFromSteam2UserID( TSteamGlobalUserID *pTSteamGlobalUserID, EUniverse eUniverse )
 {
     uint32 unAccountID = pTSteamGlobalUserID->m_SteamLocalUserID.Split.Low32bits * 2 +
-                         pTSteamGlobalUserID->m_SteamLocalUserID.Split.High32bits;
+                        pTSteamGlobalUserID->m_SteamLocalUserID.Split.High32bits;
 
     return CSteamID( unAccountID, k_unSteamUserDefaultInstance, eUniverse, k_EAccountTypeIndividual );
 }
@@ -994,7 +994,7 @@ CSteamID ClanIDFromChatID( const CSteamID &steamIDChat );
 //-----------------------------------------------------------------------------
 class CGameID
 {
-   public:
+    public:
     enum EGameIDType
     {
         k_EGameIDTypeApp = 0,

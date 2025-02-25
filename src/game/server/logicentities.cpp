@@ -26,7 +26,7 @@ extern CServerGameDLL g_ServerGameDLL;
 //-----------------------------------------------------------------------------
 class CLogicCompareInteger : public CLogicalEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CLogicCompareInteger, CLogicalEntity );
 
     // outputs
@@ -127,7 +127,7 @@ const float LOGIC_TIMER_MIN_INTERVAL = 0.01;
 
 class CTimerEntity : public CLogicalEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTimerEntity, CLogicalEntity );
 
     void Spawn( void );
@@ -446,7 +446,7 @@ int CTimerEntity::DrawDebugTextOverlays( void )
 //-----------------------------------------------------------------------------
 class CLogicLineToEntity : public CLogicalEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CLogicLineToEntity, CLogicalEntity );
 
     void Activate( void );
@@ -458,7 +458,7 @@ class CLogicLineToEntity : public CLogicalEntity
 
     DECLARE_DATADESC();
 
-   private:
+    private:
     string_t m_SourceName;
     EHANDLE m_StartEntity;
     EHANDLE m_EndEntity;
@@ -561,7 +561,7 @@ const int SF_MATH_REMAP_CLAMP_OUTPUT_TO_RANGE = 2;
 
 class CMathRemap : public CLogicalEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CMathRemap, CLogicalEntity );
 
     void Spawn( void );
@@ -686,7 +686,7 @@ const int SF_COLOR_BLEND_IGNORE_OUT_OF_RANGE = 1;
 
 class CMathColorBlend : public CLogicalEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CMathColorBlend, CLogicalEntity );
 
     void Spawn( void );
@@ -810,7 +810,7 @@ const int SF_GLOBAL_SET = 1;  // Set global state to initial state on spawn
 
 class CEnvGlobal : public CLogicalEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CEnvGlobal, CLogicalEntity );
 
     void Spawn( void );
@@ -1052,7 +1052,7 @@ const int SF_MULTI_INIT = 1;
 
 class CMultiSource : public CLogicalEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CMultiSource, CLogicalEntity );
 
     void Spawn();
@@ -1104,11 +1104,11 @@ DEFINE_ARRAY( m_rgEntities, FIELD_EHANDLE, MS_MAX_TARGETS ),
 bool CMultiSource::KeyValue( const char *szKeyName, const char *szValue )
 {
     if ( FStrEq( szKeyName, "style" ) ||
-         FStrEq( szKeyName, "height" ) ||
-         FStrEq( szKeyName, "killtarget" ) ||
-         FStrEq( szKeyName, "value1" ) ||
-         FStrEq( szKeyName, "value2" ) ||
-         FStrEq( szKeyName, "value3" ) )
+        FStrEq( szKeyName, "height" ) ||
+        FStrEq( szKeyName, "killtarget" ) ||
+        FStrEq( szKeyName, "value1" ) ||
+        FStrEq( szKeyName, "value2" ) ||
+        FStrEq( szKeyName, "value3" ) )
     {
     }
     else
@@ -1240,7 +1240,7 @@ class CMathCounter : public CLogicalEntity
 {
     DECLARE_CLASS( CMathCounter, CLogicalEntity );
 
-   private:
+    private:
     float m_flMin;   // Minimum clamp value. If min and max are BOTH zero, no clamping is done.
     float m_flMax;   // Maximum clamp value.
     bool m_bHitMin;  // Set when we reach or go below our minimum value, cleared if we go above it again.
@@ -1604,7 +1604,7 @@ class CLogicCase : public CLogicalEntity
 {
     DECLARE_CLASS( CLogicCase, CLogicalEntity );
 
-   private:
+    private:
     string_t m_nCase[MAX_LOGIC_CASES];
 
     int m_nShuffleCases;
@@ -1833,10 +1833,10 @@ class CLogicCompare : public CLogicalEntity
 {
     DECLARE_CLASS( CLogicCompare, CLogicalEntity );
 
-   public:
+    public:
     int DrawDebugTextOverlays( void );
 
-   private:
+    private:
     // Inputs
     void InputSetValue( inputdata_t &inputdata );
     void InputSetValueCompare( inputdata_t &inputdata );
@@ -1971,14 +1971,14 @@ class CLogicBranch : public CLogicalEntity
 {
     DECLARE_CLASS( CLogicBranch, CLogicalEntity );
 
-   public:
+    public:
     void UpdateOnRemove();
 
     void AddLogicBranchListener( CBaseEntity *pEntity );
     inline bool GetLogicBranchState();
     virtual int DrawDebugTextOverlays( void );
 
-   private:
+    private:
     enum LogicBranchFire_t
     {
         LOGIC_BRANCH_FIRE,
@@ -2165,7 +2165,7 @@ class CLogicAutosave : public CLogicalEntity
 {
     DECLARE_CLASS( CLogicAutosave, CLogicalEntity );
 
-   protected:
+    protected:
     // Inputs
     void InputSave( inputdata_t &inputdata );
     void InputSaveDangerous( inputdata_t &inputdata );
@@ -2343,7 +2343,7 @@ class CLogicCollisionPair : public CLogicalEntity
 {
     DECLARE_CLASS( CLogicCollisionPair, CLogicalEntity );
 
-   public:
+    public:
     void EnableCollisions( bool bEnable )
     {
         IPhysicsObject *pPhysics0 = FindPhysicsObjectByNameOrWorld( m_nameAttach1, this );
@@ -2396,7 +2396,7 @@ class CLogicCollisionPair : public CLogicalEntity
 
     DECLARE_DATADESC();
 
-   private:
+    private:
     string_t m_nameAttach1;
     string_t m_nameAttach2;
     bool m_disabled;
@@ -2428,7 +2428,7 @@ class CLogicBranchList : public CLogicalEntity
     virtual void Activate();
     virtual int DrawDebugTextOverlays( void );
 
-   private:
+    private:
     enum LogicBranchListenerLastState_t
     {
         LOGIC_BRANCH_LISTENER_NOT_INIT = 0,

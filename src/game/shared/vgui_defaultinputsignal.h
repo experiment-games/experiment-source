@@ -18,7 +18,7 @@ namespace vgui
 // This class derives from vgui::InputSignal and implements empty defaults for all of its functions.
 class CDefaultInputSignal : public vgui::InputSignal
 {
-   public:
+    public:
     virtual void cursorMoved( int x, int y, Panel* panel ) {}
     virtual void cursorEntered( Panel* panel ) {}
     virtual void cursorExited( Panel* panel ) {}

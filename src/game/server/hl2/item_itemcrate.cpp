@@ -23,7 +23,7 @@ const char *pszItemCrateModelName[] =
 //-----------------------------------------------------------------------------
 class CItem_ItemCrate : public CPhysicsProp
 {
-   public:
+    public:
     DECLARE_CLASS( CItem_ItemCrate, CPhysicsProp );
     DECLARE_DATADESC();
 
@@ -42,10 +42,10 @@ class CItem_ItemCrate : public CPhysicsProp
     virtual void VPhysicsCollision( int index, gamevcollisionevent_t *pEvent );
     virtual void OnPhysGunPickup( CBasePlayer *pPhysGunUser, PhysGunPickup_t reason );
 
-   protected:
+    protected:
     virtual void OnBreak( const Vector &vecVelocity, const AngularImpulse &angVel, CBaseEntity *pBreaker );
 
-   private:
+    private:
     // Crate types. Add more!
     enum CrateType_t
     {
@@ -59,7 +59,7 @@ class CItem_ItemCrate : public CPhysicsProp
         CRATE_APPEARANCE_RADAR_BEACON,
     };
 
-   private:
+    private:
     CrateType_t m_CrateType;
     string_t m_strItemClass;
     int m_nItemCount;
@@ -164,7 +164,7 @@ void CItem_ItemCrate::VPhysicsCollision( int index, gamevcollisionevent_t *pEven
 {
     float flDamageScale = 1.0f;
     if ( FClassnameIs( pEvent->pEntities[!index], "prop_vehicle_airboat" ) ||
-         FClassnameIs( pEvent->pEntities[!index], "prop_vehicle_jeep" ) )
+        FClassnameIs( pEvent->pEntities[!index], "prop_vehicle_jeep" ) )
     {
         flDamageScale = 100.0f;
     }

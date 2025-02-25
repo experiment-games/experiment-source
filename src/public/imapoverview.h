@@ -29,7 +29,7 @@
 
 class IMapOverview  // : public IBaseInterface
 {
-   public:
+    public:
     virtual ~IMapOverview( void ){};
 
     virtual void SetVisible( bool state ) = 0;                                                      // set map panel visible

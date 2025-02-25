@@ -14,15 +14,15 @@
 DEFINE_FALLBACK_SHADER( WorldTwoTextureBlend, WorldTwoTextureBlend_DX6 )
 
 BEGIN_SHADER( WorldTwoTextureBlend_DX6,
-              "Help for WorldTwoTextureBlend" )
+            "Help for WorldTwoTextureBlend" )
 
 BEGIN_SHADER_PARAMS
 SHADER_PARAM_OVERRIDE( BASETEXTURE, SHADER_PARAM_TYPE_TEXTURE, "shadertest/WorldTwoTextureBlend", "iris texture", 0 )
 SHADER_PARAM( DETAIL, SHADER_PARAM_TYPE_TEXTURE, "shadertest/WorldTwoTextureBlend_detail", "detail texture" )
 SHADER_PARAM( DETAILSCALE, SHADER_PARAM_TYPE_FLOAT, "1.0", "scale of the detail texture" )
 SHADER_PARAM( DETAIL_ALPHA_MASK_BASE_TEXTURE, SHADER_PARAM_TYPE_BOOL, "0",
-              "If this is 1, then when detail alpha=0, no base texture is blended and when "
-              "detail alpha=1, you get detail*base*lightmap" )
+            "If this is 1, then when detail alpha=0, no base texture is blended and when "
+            "detail alpha=1, you get detail*base*lightmap" )
 END_SHADER_PARAMS
 
 SHADER_INIT
@@ -168,18 +168,18 @@ void DetailAlphaMaskPass1(
         // Note the 2x here.. we do 4x total in this shader and
         // the first 2x is here. The second is in SingleTextureLightmapBlendMode in the 2nd pass.
         pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
-                                               SHADER_TEXCHANNEL_COLOR,
-                                               SHADER_TEXOP_MODULATE2X,
-                                               SHADER_TEXARG_TEXTURE,
-                                               SHADER_TEXARG_CONSTANTCOLOR );
+                                                SHADER_TEXCHANNEL_COLOR,
+                                                SHADER_TEXOP_MODULATE2X,
+                                                SHADER_TEXARG_TEXTURE,
+                                                SHADER_TEXARG_CONSTANTCOLOR );
 
         // Stage 1 [where P = prev stage]
         // Color = B*Da + (1-Da)
         pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1,
-                                               SHADER_TEXCHANNEL_COLOR,
-                                               SHADER_TEXOP_MODULATEINVCOLOR_ADDALPHA,
-                                               SHADER_TEXARG_INVTEXTUREALPHA,
-                                               SHADER_TEXARG_PREVIOUSSTAGE );
+                                                SHADER_TEXCHANNEL_COLOR,
+                                                SHADER_TEXOP_MODULATEINVCOLOR_ADDALPHA,
+                                                SHADER_TEXARG_INVTEXTUREALPHA,
+                                                SHADER_TEXARG_PREVIOUSSTAGE );
 
         pShaderShadow->DrawFlags( SHADER_DRAW_POSITION | SHADER_DRAW_TEXCOORD0 | SHADER_DRAW_TEXCOORD1 );
         FogToFogColor();
@@ -221,17 +221,17 @@ void DetailAlphaMaskPass2( IShaderShadow *pShaderShadow, IShaderDynamicAPI *pSha
 
         // Stage 0, color = D
         pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
-                                               SHADER_TEXCHANNEL_COLOR,
-                                               SHADER_TEXOP_SELECTARG1,
-                                               SHADER_TEXARG_TEXTURE,
-                                               SHADER_TEXARG_CONSTANTCOLOR );
+                                                SHADER_TEXCHANNEL_COLOR,
+                                                SHADER_TEXOP_SELECTARG1,
+                                                SHADER_TEXARG_TEXTURE,
+                                                SHADER_TEXARG_CONSTANTCOLOR );
 
         // Stage 1, color = D*L
         pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1,
-                                               SHADER_TEXCHANNEL_COLOR,
-                                               SHADER_TEXOP_MODULATE,
-                                               SHADER_TEXARG_PREVIOUSSTAGE,
-                                               SHADER_TEXARG_TEXTURE );
+                                                SHADER_TEXCHANNEL_COLOR,
+                                                SHADER_TEXOP_MODULATE,
+                                                SHADER_TEXARG_PREVIOUSSTAGE,
+                                                SHADER_TEXARG_TEXTURE );
 
         // Use the lightmap coordinates in both stages.
         pShaderShadow->DrawFlags( SHADER_DRAW_POSITION | SHADER_DRAW_TEXCOORD0 | SHADER_DRAW_LIGHTMAP_TEXCOORD1 );

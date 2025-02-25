@@ -77,7 +77,7 @@ struct xwvHeader_t
     void SetSampleRate( int sampleRateIn )
     {
         byte rate = ( sampleRateIn == 11025 ) ? XWV_RATE_11025 : ( sampleRateIn == 22050 ) ? XWV_RATE_22050
-                                                                                           : XWV_RATE_44100;
+                                                                                            : XWV_RATE_44100;
         sampleRate = rate;
     }
 

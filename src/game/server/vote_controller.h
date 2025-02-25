@@ -19,7 +19,7 @@
 
 class CBaseIssue  // Base class concept for vote issues (i.e. Kick Player).  Created per level-load and destroyed by CVoteController's dtor.
 {
-   public:
+    public:
     CBaseIssue( const char *typeString );
     virtual ~CBaseIssue();
     const char *GetTypeString( void );  // Connection between console command and specific type of issue
@@ -59,7 +59,7 @@ class CBaseIssue  // Base class concept for vote issues (i.e. Kick Player).  Cre
 
     CHandle< CBasePlayer > m_hPlayerTarget;  // If the target of the issue is a player, we should store them here
 
-   protected:
+    protected:
     static void ListStandardNoArgCommand( CBasePlayer *forWhom, const char *issueString );  // List a Yes vote command
 
     struct FailedVote
@@ -81,7 +81,7 @@ class CVoteController : public CBaseEntity
 {
     DECLARE_CLASS( CVoteController, CBaseEntity );
 
-   public:
+    public:
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
 
@@ -127,7 +127,7 @@ class CVoteController : public CBaseEntity
     void AddPlayerToNameLockedList( CSteamID steamID, float flDuration, int nUserID );
     bool IsPlayerBeingKicked( CBasePlayer *pPlayer );
 
-   protected:
+    protected:
     void ResetData( void );
     void VoteControllerThink( void );
     void CheckForEarlyVoteClose( void );  // If everyone has voted (and changing votes is not allowed) then end early

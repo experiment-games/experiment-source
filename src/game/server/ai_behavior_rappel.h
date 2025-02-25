@@ -25,7 +25,7 @@ class CAI_RappelBehavior : public CAI_SimpleBehavior
 {
     DECLARE_CLASS( CAI_RappelBehavior, CAI_SimpleBehavior );
 
-   public:
+    public:
     CAI_RappelBehavior();
 
     void Precache( void );
@@ -79,8 +79,8 @@ class CAI_RappelBehavior : public CAI_SimpleBehavior
 
     DEFINE_CUSTOM_SCHEDULE_PROVIDER;
 
-   public:
-   private:
+    public:
+    private:
     virtual int SelectSchedule();
 
     //---------------------------------

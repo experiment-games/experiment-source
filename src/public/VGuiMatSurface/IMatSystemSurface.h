@@ -42,7 +42,7 @@ typedef void ( *PlaySoundFunc_t )( const char *pFileName );
 #define MAT_SYSTEM_SURFACE_INTERFACE_VERSION "MatSystemSurface008"
 class IMatSystemSurface : public vgui::ISurface
 {
-   public:
+    public:
     // Hook needed to get input to work.
     // If the app drives the input (like the engine needs to do for VCR mode),
     // it can set bLetAppDriveInput to true and call HandleInputEvent for the input events.

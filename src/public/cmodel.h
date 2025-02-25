@@ -118,7 +118,7 @@ struct Ray_t
         return vecInvDelta;
     }
 
-   private:
+    private:
 };
 
 #endif  // CMODEL_H

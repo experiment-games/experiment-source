@@ -27,7 +27,7 @@ class CBoneAccessor;
 
 abstract_class IRagdoll
 {
-   public:
+    public:
     virtual ~IRagdoll() {}
 
     virtual void RagdollBone( C_BaseEntity * ent, mstudiobone_t * pbones, int boneCount, bool *boneSimulated, CBoneAccessor &pBoneToWorld ) = 0;
@@ -42,7 +42,7 @@ abstract_class IRagdoll
 
 class CRagdoll : public IRagdoll
 {
-   public:
+    public:
     CRagdoll();
     ~CRagdoll( void );
 
@@ -99,7 +99,7 @@ class CRagdoll : public IRagdoll
         return m_lastUpdate;
     }
 
-   private:
+    private:
     void CheckSettleStationaryRagdoll();
     void PhysForceRagdollToSleep();
 
@@ -118,7 +118,7 @@ class CRagdoll : public IRagdoll
     matrix3x4_t m_savedBone3[MAXSTUDIOBONES];
 #endif
 
-   public:
+    public:
     ragdoll_t *GetRagdoll( void )
     {
         return &m_ragdoll;

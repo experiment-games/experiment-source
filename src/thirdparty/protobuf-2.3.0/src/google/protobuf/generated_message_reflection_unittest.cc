@@ -113,14 +113,14 @@ TEST(GeneratedMessageReflectionTest, GetStringReference) {
   string scratch;
 
   EXPECT_EQ(&message.optional_string(),
-      &reflection->GetStringReference(message, F("optional_string"), &scratch))
+    &reflection->GetStringReference(message, F("optional_string"), &scratch))
     << "For simple string fields, GetStringReference() should return a "
-       "reference to the underlying string.";
+        "reference to the underlying string.";
   EXPECT_EQ(&message.repeated_string(0),
-      &reflection->GetRepeatedStringReference(message, F("repeated_string"),
-                                              0, &scratch))
+    &reflection->GetRepeatedStringReference(message, F("repeated_string"),
+                                            0, &scratch))
     << "For simple string fields, GetRepeatedStringReference() should return "
-       "a reference to the underlying string.";
+        "a reference to the underlying string.";
 }
 
 
@@ -283,10 +283,10 @@ TEST(GeneratedMessageReflectionTest, FindExtensionTypeByNumber) {
 
   const FieldDescriptor* extension1 =
     unittest::TestAllExtensions::descriptor()->file()->FindExtensionByName(
-      "optional_int32_extension");
+    "optional_int32_extension");
   const FieldDescriptor* extension2 =
     unittest::TestAllExtensions::descriptor()->file()->FindExtensionByName(
-      "repeated_string_extension");
+    "repeated_string_extension");
 
   EXPECT_EQ(extension1,
             reflection->FindKnownExtensionByNumber(extension1->number()));
@@ -299,7 +299,7 @@ TEST(GeneratedMessageReflectionTest, FindExtensionTypeByNumber) {
   // Extensions of TestAllExtensions should not show up as extensions of
   // other types.
   EXPECT_TRUE(unittest::TestAllTypes::default_instance().GetReflection()->
-              FindKnownExtensionByNumber(extension1->number()) == NULL);
+            FindKnownExtensionByNumber(extension1->number()) == NULL);
 }
 
 TEST(GeneratedMessageReflectionTest, FindKnownExtensionByName) {
@@ -308,10 +308,10 @@ TEST(GeneratedMessageReflectionTest, FindKnownExtensionByName) {
 
   const FieldDescriptor* extension1 =
     unittest::TestAllExtensions::descriptor()->file()->FindExtensionByName(
-      "optional_int32_extension");
+    "optional_int32_extension");
   const FieldDescriptor* extension2 =
     unittest::TestAllExtensions::descriptor()->file()->FindExtensionByName(
-      "repeated_string_extension");
+    "repeated_string_extension");
 
   EXPECT_EQ(extension1,
             reflection->FindKnownExtensionByName(extension1->full_name()));
@@ -324,7 +324,7 @@ TEST(GeneratedMessageReflectionTest, FindKnownExtensionByName) {
   // Extensions of TestAllExtensions should not show up as extensions of
   // other types.
   EXPECT_TRUE(unittest::TestAllTypes::default_instance().GetReflection()->
-              FindKnownExtensionByName(extension1->full_name()) == NULL);
+            FindKnownExtensionByName(extension1->full_name()) == NULL);
 }
 
 #ifdef GTEST_HAS_DEATH_TEST
@@ -340,7 +340,7 @@ TEST(GeneratedMessageReflectionTest, UsageErrors) {
   // check a few.
   EXPECT_DEATH(
     reflection->GetInt32(
-      message, descriptor->FindFieldByName("optional_int64")),
+    message, descriptor->FindFieldByName("optional_int64")),
     "Protocol Buffer reflection usage error:\n"
     "  Method      : google::protobuf::Reflection::GetInt32\n"
     "  Message type: protobuf_unittest\\.TestAllTypes\n"
@@ -350,7 +350,7 @@ TEST(GeneratedMessageReflectionTest, UsageErrors) {
     "    Field type: CPPTYPE_INT64");
   EXPECT_DEATH(
     reflection->GetInt32(
-      message, descriptor->FindFieldByName("repeated_int32")),
+    message, descriptor->FindFieldByName("repeated_int32")),
     "Protocol Buffer reflection usage error:\n"
     "  Method      : google::protobuf::Reflection::GetInt32\n"
     "  Message type: protobuf_unittest.TestAllTypes\n"
@@ -358,7 +358,7 @@ TEST(GeneratedMessageReflectionTest, UsageErrors) {
     "  Problem     : Field is repeated; the method requires a singular field.");
   EXPECT_DEATH(
     reflection->GetInt32(
-      message, unittest::ForeignMessage::descriptor()->FindFieldByName("c")),
+    message, unittest::ForeignMessage::descriptor()->FindFieldByName("c")),
     "Protocol Buffer reflection usage error:\n"
     "  Method      : google::protobuf::Reflection::GetInt32\n"
     "  Message type: protobuf_unittest.TestAllTypes\n"
@@ -366,7 +366,7 @@ TEST(GeneratedMessageReflectionTest, UsageErrors) {
     "  Problem     : Field does not match message type.");
   EXPECT_DEATH(
     reflection->HasField(
-      message, unittest::ForeignMessage::descriptor()->FindFieldByName("c")),
+    message, unittest::ForeignMessage::descriptor()->FindFieldByName("c")),
     "Protocol Buffer reflection usage error:\n"
     "  Method      : google::protobuf::Reflection::HasField\n"
     "  Message type: protobuf_unittest.TestAllTypes\n"

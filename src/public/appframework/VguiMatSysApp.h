@@ -27,7 +27,7 @@ class CVguiMatSysApp : public CVguiSteamApp
 {
     typedef CVguiSteamApp BaseClass;
 
-   public:
+    public:
     CVguiMatSysApp();
 
     // Methods of IApplication
@@ -43,7 +43,7 @@ class CVguiMatSysApp : public CVguiSteamApp
     int GetWindowWidth() const;
     int GetWindowHeight() const;
 
-   protected:
+    protected:
     void AppPumpMessages();
 
     // Sets the video mode
@@ -52,7 +52,7 @@ class CVguiMatSysApp : public CVguiSteamApp
     // Sets up the game path
     bool SetupSearchPaths( const char *pStartingDir, bool bOnlyUseStartingDir, bool bIsTool );
 
-   private:
+    private:
     // Returns the app name
     virtual const char *GetAppName() = 0;
     virtual bool AppUsesReadPixels()

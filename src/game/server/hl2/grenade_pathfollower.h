@@ -20,7 +20,7 @@ class RocketTrail;
 
 class CGrenadePathfollower : public CBaseGrenade
 {
-   public:
+    public:
     DECLARE_CLASS( CGrenadePathfollower, CBaseGrenade );
 
     static CGrenadePathfollower *CreateGrenadePathfollower( string_t sModelName, string_t sFlySound, const Vector &vecOrigin, const QAngle &vecAngles, edict_t *pentOwner );

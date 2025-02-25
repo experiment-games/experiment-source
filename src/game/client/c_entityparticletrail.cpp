@@ -20,7 +20,7 @@
 //-----------------------------------------------------------------------------
 class C_EntityParticleTrail : public C_BaseParticleEntity
 {
-   public:
+    public:
     DECLARE_CLIENTCLASS();
     DECLARE_CLASS( C_EntityParticleTrail, C_BaseParticleEntity );
 
@@ -35,7 +35,7 @@ class C_EntityParticleTrail : public C_BaseParticleEntity
     virtual void RenderParticles( CParticleRenderIterator *pIterator );
     virtual void SimulateParticles( CParticleSimulateIterator *pIterator );
 
-   private:
+    private:
     C_EntityParticleTrail( const C_EntityParticleTrail & );  // not defined, not accessible
 
     void Start();

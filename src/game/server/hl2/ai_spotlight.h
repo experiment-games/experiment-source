@@ -31,7 +31,7 @@ class CAI_Spotlight : public CAI_Component
     DECLARE_SIMPLE_DATADESC();
     DECLARE_CLASS_NOBASE( CAI_Spotlight );
 
-   public:
+    public:
     CAI_Spotlight();
     ~CAI_Spotlight();
 
@@ -48,7 +48,7 @@ class CAI_Spotlight : public CAI_Component
     // Updates the spotlight. Call every frame!
     void Update( void );
 
-   private:
+    private:
     void Precache( void );
     void CreateSpotlightEntities( void );
     void UpdateSpotlightDirection( void );
@@ -60,7 +60,7 @@ class CAI_Spotlight : public CAI_Component
     // Computes the spotlight endpoint
     void ComputeEndpoint( const Vector &vecStartPoint, Vector *pEndPoint );
 
-   private:
+    private:
     CHandle< CBeam > m_hSpotlight;
     CHandle< CSpotlightEnd > m_hSpotlightTarget;
 

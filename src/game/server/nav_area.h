@@ -37,7 +37,7 @@ class CFuncNavCost;
 
 class CNavVectorNoEditAllocator
 {
-   public:
+    public:
     CNavVectorNoEditAllocator();
 
     static void Reset();
@@ -46,7 +46,7 @@ class CNavVectorNoEditAllocator
     static void Free( void *pMem );
     static size_t GetSize( void *pMem );
 
-   private:
+    private:
     static CMemoryStack m_memory;
     static void *m_pCurrent;
     static int m_nBytesCurrent;
@@ -64,7 +64,7 @@ typedef CNavVectorNoEditAllocator CNavVectorAllocator;
  */
 class IForEachNavArea
 {
-   public:
+    public:
     virtual bool Inspect( const CNavArea *area ) = 0;           // Invoked once on each area of the iterated set. Return false to stop iterating.
     virtual void PostIteration( bool wasCompleteIteration ) {}  // Invoked after the iteration has ended. 'wasCompleteIteration' will be true if the entire set was iterated (ie: Inspect() never returned false)
 };
@@ -119,7 +119,7 @@ typedef CUtlVectorUltraConservative< NavLadderConnect, CNavVectorAllocator > Nav
  */
 class HidingSpot
 {
-   public:
+    public:
     virtual ~HidingSpot() {}
 
     enum
@@ -182,7 +182,7 @@ class HidingSpot
         ++m_masterMarker;
     }
 
-   public:
+    public:
     void SetFlags( int flags )
     {
         m_flags |= flags;
@@ -192,7 +192,7 @@ class HidingSpot
         m_pos = pos;
     }  // FOR INTERNAL USE ONLY
 
-   private:
+    private:
     friend class CNavMesh;
     friend void ClassifySniperSpot( HidingSpot *spot );
 
@@ -250,7 +250,7 @@ typedef CUtlVectorUltraConservative< SpotEncounter * > SpotEncounterVector;
 
 class CNavAreaCriticalData
 {
-   protected:
+    protected:
     // --- Begin critical data, which is heavily hit during pathing operations and carefully arranged for cache performance [7/24/2008 tom] ---
 
     /* 0  */ Vector m_nwCorner;  // north-west corner position (2D mins)
@@ -295,7 +295,7 @@ class CNavAreaCriticalData
 
 class CNavArea : protected CNavAreaCriticalData
 {
-   public:
+    public:
     DECLARE_CLASS_NOBASE( CNavArea )
 
     CNavArea( void );
@@ -682,9 +682,9 @@ class CNavArea : protected CNavAreaCriticalData
 
     //-------------------------------------------------------------------------------------
     /**
-     * Apply the functor to all navigation areas that are potentially
-     * visible from this area.
-     */
+    * Apply the functor to all navigation areas that are potentially
+    * visible from this area.
+    */
     template < typename Functor >
     bool ForAllPotentiallyVisibleAreas( Functor &func )
     {
@@ -739,9 +739,9 @@ class CNavArea : protected CNavAreaCriticalData
 
     //-------------------------------------------------------------------------------------
     /**
-     * Apply the functor to all navigation areas that are
-     * completely visible from somewhere in this area.
-     */
+    * Apply the functor to all navigation areas that are
+    * completely visible from somewhere in this area.
+    */
     template < typename Functor >
     bool ForAllCompletelyVisibleAreas( Functor &func )
     {
@@ -794,7 +794,7 @@ class CNavArea : protected CNavAreaCriticalData
         return true;
     }
 
-   private:
+    private:
     friend class CNavMesh;
     friend class CNavLadder;
     friend class CCSNavArea;  // allow CS load code to complete replace our default load behavior
@@ -803,15 +803,15 @@ class CNavArea : protected CNavAreaCriticalData
 
     /*
     m_nwCorner
-      nw           ne
-       +-----------+
-       | +-->x     |
-       | |         |
-       | v         |
-       | y         |
-       |           |
-       +-----------+
-      sw           se
+    nw           ne
+        +-----------+
+        | +-->x     |
+        | |         |
+        | v         |
+        | y         |
+        |           |
+        +-----------+
+    sw           se
             m_seCorner
     */
 

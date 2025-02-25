@@ -12,7 +12,7 @@
 //=========================================================
 class CNPC_GroundTurret : public CAI_BaseNPC
 {
-   public:
+    public:
     DECLARE_CLASS( CNPC_GroundTurret, CAI_BaseNPC );
     DECLARE_DATADESC();
 
@@ -78,7 +78,7 @@ class CNPC_GroundTurret : public CAI_BaseNPC
 
     DEFINE_CUSTOM_AI;
 
-   protected:
+    protected:
     //-----------------------------------------------------
     // Conditions, Schedules, Tasks
     //-----------------------------------------------------

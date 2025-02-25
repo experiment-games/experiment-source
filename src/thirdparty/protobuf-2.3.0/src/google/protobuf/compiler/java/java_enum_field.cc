@@ -52,7 +52,7 @@ namespace {
 // TODO(kenton):  Factor out a "SetCommonFieldVariables()" to get rid of
 //   repeat code between this and the other field types.
 void SetEnumVariables(const FieldDescriptor* descriptor,
-                      map<string, string>* variables) {
+                    map<string, string>* variables) {
   (*variables)["name"] =
     UnderscoresToCamelCase(descriptor);
   (*variables)["capitalized_name"] =
@@ -62,7 +62,7 @@ void SetEnumVariables(const FieldDescriptor* descriptor,
   (*variables)["default"] = DefaultValue(descriptor);
   (*variables)["tag"] = SimpleItoa(internal::WireFormat::MakeTag(descriptor));
   (*variables)["tag_size"] = SimpleItoa(
-      internal::WireFormat::TagSize(descriptor->number(), GetType(descriptor)));
+    internal::WireFormat::TagSize(descriptor->number(), GetType(descriptor)));
 }
 
 }  // namespace
@@ -135,12 +135,12 @@ GenerateParsingCode(io::Printer* printer) const {
     "$type$ value = $type$.valueOf(rawValue);\n");
   if (HasUnknownFields(descriptor_->containing_type())) {
     printer->Print(variables_,
-      "if (value == null) {\n"
-      "  unknownFields.mergeVarintField($number$, rawValue);\n"
-      "} else {\n");
+    "if (value == null) {\n"
+    "  unknownFields.mergeVarintField($number$, rawValue);\n"
+    "} else {\n");
   } else {
     printer->Print(variables_,
-      "if (value != null) {\n");
+    "if (value != null) {\n");
   }
   printer->Print(variables_,
     "  set$capitalized_name$(value);\n"
@@ -192,9 +192,9 @@ GenerateMembers(io::Printer* printer) const {
     "}\n");
 
   if (descriptor_->options().packed() &&
-      HasGeneratedMethods(descriptor_->containing_type())) {
+    HasGeneratedMethods(descriptor_->containing_type())) {
     printer->Print(variables_,
-      "private int $name$MemoizedSerializedSize;\n");
+    "private int $name$MemoizedSerializedSize;\n");
   }
 }
 
@@ -278,12 +278,12 @@ GenerateParsingCode(io::Printer* printer) const {
     "$type$ value = $type$.valueOf(rawValue);\n");
   if (HasUnknownFields(descriptor_->containing_type())) {
     printer->Print(variables_,
-      "if (value == null) {\n"
-      "  unknownFields.mergeVarintField($number$, rawValue);\n"
-      "} else {\n");
+    "if (value == null) {\n"
+    "  unknownFields.mergeVarintField($number$, rawValue);\n"
+    "} else {\n");
   } else {
     printer->Print(variables_,
-      "if (value != null) {\n");
+    "if (value != null) {\n");
   }
   printer->Print(variables_,
     "  add$capitalized_name$(value);\n"
@@ -312,18 +312,18 @@ void RepeatedEnumFieldGenerator::
 GenerateSerializationCode(io::Printer* printer) const {
   if (descriptor_->options().packed()) {
     printer->Print(variables_,
-      "if (get$capitalized_name$List().size() > 0) {\n"
-      "  output.writeRawVarint32($tag$);\n"
-      "  output.writeRawVarint32($name$MemoizedSerializedSize);\n"
-      "}\n"
-      "for ($type$ element : get$capitalized_name$List()) {\n"
-      "  output.writeEnumNoTag(element.getNumber());\n"
-      "}\n");
+    "if (get$capitalized_name$List().size() > 0) {\n"
+    "  output.writeRawVarint32($tag$);\n"
+    "  output.writeRawVarint32($name$MemoizedSerializedSize);\n"
+    "}\n"
+    "for ($type$ element : get$capitalized_name$List()) {\n"
+    "  output.writeEnumNoTag(element.getNumber());\n"
+    "}\n");
   } else {
     printer->Print(variables_,
-      "for ($type$ element : get$capitalized_name$List()) {\n"
-      "  output.writeEnum($number$, element.getNumber());\n"
-      "}\n");
+    "for ($type$ element : get$capitalized_name$List()) {\n"
+    "  output.writeEnum($number$, element.getNumber());\n"
+    "}\n");
   }
 }
 
@@ -343,20 +343,20 @@ GenerateSerializedSizeCode(io::Printer* printer) const {
     "size += dataSize;\n");
   if (descriptor_->options().packed()) {
     printer->Print(variables_,
-      "if (!get$capitalized_name$List().isEmpty()) {"
-      "  size += $tag_size$;\n"
-      "  size += com.google.protobuf.CodedOutputStream\n"
-      "    .computeRawVarint32Size(dataSize);\n"
-      "}");
+    "if (!get$capitalized_name$List().isEmpty()) {"
+    "  size += $tag_size$;\n"
+    "  size += com.google.protobuf.CodedOutputStream\n"
+    "    .computeRawVarint32Size(dataSize);\n"
+    "}");
   } else {
     printer->Print(variables_,
-      "size += $tag_size$ * get$capitalized_name$List().size();\n");
+    "size += $tag_size$ * get$capitalized_name$List().size();\n");
   }
 
   // cache the data size for packed fields.
   if (descriptor_->options().packed()) {
     printer->Print(variables_,
-      "$name$MemoizedSerializedSize = dataSize;\n");
+    "$name$MemoizedSerializedSize = dataSize;\n");
   }
 
   printer->Outdent();

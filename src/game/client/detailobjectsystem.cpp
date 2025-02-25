@@ -104,7 +104,7 @@ class CDetailModel : public IClientUnknown, public IClientRenderable
 {
     DECLARE_CLASS_NOBASE( CDetailModel );
 
-   public:
+    public:
     CDetailModel();
     ~CDetailModel();
 
@@ -120,7 +120,7 @@ class CDetailModel : public IClientUnknown, public IClientRenderable
     }
 
     // IClientUnknown overrides.
-   public:
+    public:
     virtual IClientUnknown *GetIClientUnknown()
     {
         return this;
@@ -151,7 +151,7 @@ class CDetailModel : public IClientUnknown, public IClientRenderable
     }
 
     // IClientRenderable overrides.
-   public:
+    public:
     virtual int GetBody()
     {
         return 0;
@@ -285,7 +285,7 @@ class CDetailModel : public IClientUnknown, public IClientRenderable
     bool IsDetailModelTranslucent();
 
     // IHandleEntity stubs.
-   public:
+    public:
     virtual void SetRefEHandle( const CBaseHandle &handle )
     {
         Assert( false );
@@ -303,7 +303,7 @@ class CDetailModel : public IClientUnknown, public IClientRenderable
         unsigned int m_LightStyleCount : 8;
     };
 
-   protected:
+    protected:
     Vector m_Origin;
     QAngle m_Angles;
 
@@ -417,7 +417,7 @@ class CFastDetailLeafSpriteList : public CClientLeafSubSystemData
 //-----------------------------------------------------------------------------
 class CDetailObjectSystem : public IDetailObjectSystem, public ISpatialLeafEnumerator
 {
-   public:
+    public:
     char const *Name()
     {
         return "DetailObjectSystem";
@@ -483,7 +483,7 @@ class CDetailObjectSystem : public IDetailObjectSystem, public ISpatialLeafEnume
         return m_DetailSpriteDict[i];
     }
 
-   private:
+    private:
     struct DetailModelDict_t
     {
         model_t *m_pModel;
@@ -502,10 +502,10 @@ class CDetailObjectSystem : public IDetailObjectSystem, public ISpatialLeafEnume
     };
 
     int BuildOutSortedSprites( CFastDetailLeafSpriteList *pData,
-                               Vector const &viewOrigin,
-                               Vector const &viewForward,
-                               Vector const &viewRight,
-                               Vector const &viewUp );
+                                Vector const &viewOrigin,
+                                Vector const &viewForward,
+                                Vector const &viewRight,
+                                Vector const &viewUp );
 
     void RenderFastSprites( const Vector &viewOrigin, const Vector &viewForward, const Vector &viewRight, const Vector &viewUp, int nLeafCount, LeafIndex_t const *pLeafList );
 
@@ -932,9 +932,9 @@ void CDetailModel::InitShapeTri( void )
 void CDetailModel::InitShapeCross( void )
 {
     AngleVectors( m_Angles,
-                  &m_pAdvInfo->m_vecAnglesForward[0],
-                  &m_pAdvInfo->m_vecAnglesRight[0],
-                  &m_pAdvInfo->m_vecAnglesUp[0] );
+                &m_pAdvInfo->m_vecAnglesForward[0],
+                &m_pAdvInfo->m_vecAnglesRight[0],
+                &m_pAdvInfo->m_vecAnglesUp[0] );
 }
 #endif
 
@@ -1213,13 +1213,13 @@ void CDetailModel::DrawTypeShapeCross( CMeshBuilder &meshBuilder )
     // do dot products with the forward and right vectors to determine the quadrant the viewer is in
     // assume forward points North , right points East
     /*
-           N
-           |
+            N
+            |
         3  |  0
         W---------E
         2  |  1
-           |
-           S
+            |
+            S
     */
     // eg if they are in quadrant 0, set iBranch to 0, and the draw order will be
     // 0, 1, 2, 3, or South, west, north, east
@@ -1332,7 +1332,7 @@ void CDetailModel::DrawTypeShapeTri( CMeshBuilder &meshBuilder )
 
         // sway is calculated per side so they don't sway exactly the same
         Vector vecSway = ( m_pAdvInfo->m_vecCurrentAvoid * flWidth ) +
-                         vecSwayYaw * sin( gpGlobals->curtime + m_Origin.x + iBranch ) * flSwayAmplitude;
+                        vecSwayYaw * sin( gpGlobals->curtime + m_Origin.x + iBranch ) * flSwayAmplitude;
 
         DrawSwayingQuad( meshBuilder, vecOrigin, vecSway, texul, texlr, color, vecWidth, vecHeight );
 
@@ -1697,10 +1697,10 @@ static bool DetailObjectIsFastSprite( DetailObjectLump_t const &lump )
 }
 
 void CDetailObjectSystem::ScanForCounts( CUtlBuffer &buf,
-                                         int *pNumOldStyleObjects,
-                                         int *pNumFastSpritesToAllocate,
-                                         int *nMaxNumOldSpritesInLeaf,
-                                         int *nMaxNumFastSpritesInLeaf ) const
+                                        int *pNumOldStyleObjects,
+                                        int *pNumFastSpritesToAllocate,
+                                        int *nMaxNumOldSpritesInLeaf,
+                                        int *nMaxNumFastSpritesInLeaf ) const
 {
     int oldpos = buf.TellGet();  // we need to seek back
     int count = buf.GetInt();
@@ -2207,7 +2207,7 @@ int CDetailObjectSystem::BuildOutSortedSprites( CFastDetailLeafSpriteList *pData
             alpha = SubSIMD( Four_Ones, MinSIMD( MaxSIMD( alpha, Four_Zeros ), Four_Ones ) );
 
             pQuadBufferOut->m_Alpha = AddSIMD( Four_MagicNumbers,
-                                               MulSIMD( Four_255s, alpha ) );
+                                                MulSIMD( Four_255s, alpha ) );
 
             vecPos0 += vecDx;
             pQuadBufferOut->m_Coords[0] = vecPos0;
@@ -2321,7 +2321,7 @@ void CDetailObjectSystem::RenderFastSprites( const Vector &viewOrigin, const Vec
                 ( FastSpriteQuadBuildoutBufferNonSIMDView_t const * )m_pBuildoutBuffer;
 
             COMPILE_TIME_ASSERT( sizeof( FastSpriteQuadBuildoutBufferNonSIMDView_t ) ==
-                                 sizeof( FastSpriteQuadBuildoutBufferX4_t ) );
+                                sizeof( FastSpriteQuadBuildoutBufferX4_t ) );
 
             while ( nCount )
             {
@@ -2821,7 +2821,7 @@ void CDetailObjectSystem::BuildDetailObjectRenderLists( const Vector &vViewOrigi
 
     ISpatialQuery *pQuery = engine->GetBSPTreeQuery();
     pQuery->EnumerateLeavesInSphere( CurrentViewOrigin(),
-                                     cl_detaildist.GetFloat(),
-                                     this,
-                                     ( int )&ctx );
+                                    cl_detaildist.GetFloat(),
+                                    this,
+                                    ( int )&ctx );
 }

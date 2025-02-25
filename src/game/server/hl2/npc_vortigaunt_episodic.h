@@ -46,7 +46,7 @@ class CNPC_Vortigaunt : public CNPC_PlayerCompanion
 {
     DECLARE_CLASS( CNPC_Vortigaunt, CNPC_PlayerCompanion );
 
-   public:
+    public:
     CNPC_Vortigaunt( void );
 
     virtual void Spawn( void );
@@ -165,7 +165,7 @@ class CNPC_Vortigaunt : public CNPC_PlayerCompanion
     // used so a grub can notify me that I stepped on it. Says a line.
     void OnSquishedGrub( const CBaseEntity *pGrub );
 
-   private:
+    private:
     int NumAntlionsInRadius( float flRadius );
     void DispelAntlions( const Vector &vecOrigin, float flRadius, bool bDispel = true );
     bool HealGestureHasLOS( void );
@@ -178,7 +178,7 @@ class CNPC_Vortigaunt : public CNPC_PlayerCompanion
 
     void CreateBeamBlast( const Vector &vecOrigin );
 
-   private:
+    private:
     //=========================================================
     // Vortigaunt schedules
     //=========================================================
@@ -298,7 +298,7 @@ class CNPC_Vortigaunt : public CNPC_PlayerCompanion
     // used for fading to black
     CNetworkVar( bool, m_bIsBlack );
 
-   public:
+    public:
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
     DEFINE_CUSTOM_AI;
@@ -314,7 +314,7 @@ class CVortigauntChargeToken : public CBaseEntity
 {
     DECLARE_CLASS( CVortigauntChargeToken, CBaseEntity );
 
-   public:
+    public:
     static CVortigauntChargeToken *CreateChargeToken( const Vector &vecOrigin, CBaseEntity *pOwner, CBaseEntity *pTarget );
 
     CVortigauntChargeToken( void );
@@ -331,7 +331,7 @@ class CVortigauntChargeToken : public CBaseEntity
         m_hTarget = pTarget;
     }
 
-   private:
+    private:
     Vector GetSteerVector( const Vector &vecForward );
 
     float m_flLifetime;
@@ -353,7 +353,7 @@ class CVortigauntEffectDispel : public CBaseEntity
 {
     DECLARE_CLASS( CVortigauntEffectDispel, CBaseEntity );
 
-   public:
+    public:
     static CVortigauntEffectDispel *CreateEffectDispel( const Vector &vecOrigin, CBaseEntity *pOwner, CBaseEntity *pTarget );
 
     CVortigauntEffectDispel( void );
@@ -362,7 +362,7 @@ class CVortigauntEffectDispel : public CBaseEntity
 
     void FadeAndDie( void );
 
-   private:
+    private:
     CNetworkVar( bool, m_bFadeOut );
 
     DECLARE_SERVERCLASS();

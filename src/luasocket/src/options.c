@@ -171,23 +171,23 @@ int opt_get_broadcast(lua_State *L, p_socket ps)
 /*------------------------------------------------------*/
 int opt_set_recv_buf_size(lua_State *L, p_socket ps)
 {
-	return opt_setint(L, ps, SOL_SOCKET, SO_RCVBUF);
+    return opt_setint(L, ps, SOL_SOCKET, SO_RCVBUF);
 }
 
 int opt_get_recv_buf_size(lua_State *L, p_socket ps)
 {
-	return opt_getint(L, ps, SOL_SOCKET, SO_RCVBUF);
+    return opt_getint(L, ps, SOL_SOCKET, SO_RCVBUF);
 }
 
 /*------------------------------------------------------*/
 int opt_get_send_buf_size(lua_State *L, p_socket ps)
 {
-	return opt_getint(L, ps, SOL_SOCKET, SO_SNDBUF);
+    return opt_getint(L, ps, SOL_SOCKET, SO_SNDBUF);
 }
 
 int opt_set_send_buf_size(lua_State *L, p_socket ps)
 {
-	return opt_setint(L, ps, SOL_SOCKET, SO_SNDBUF);
+    return opt_setint(L, ps, SOL_SOCKET, SO_SNDBUF);
 }
 
 // /*------------------------------------------------------*/
@@ -408,14 +408,14 @@ static int opt_ip6_setmembership(lua_State *L, p_socket ps, int level, int name)
     lua_pushstring(L, "interface");
     lua_gettable(L, 3);
     /* By default we listen to interface on default route
-     * (sigh). However, interface= can override it. We should
-     * support either number, or name for it. Waiting for
-     * windows port of if_nametoindex */
+    * (sigh). However, interface= can override it. We should
+    * support either number, or name for it. Waiting for
+    * windows port of if_nametoindex */
     if (!lua_isnil(L, -1)) {
         if (lua_isnumber(L, -1)) {
             val.ipv6mr_interface = (unsigned int) lua_tonumber(L, -1);
         } else
-          luaL_argerror(L, -1, "number 'interface' field expected");
+        luaL_argerror(L, -1, "number 'interface' field expected");
     }
     return opt_set(L, ps, level, name, (char *) &val, sizeof(val));
 }

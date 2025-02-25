@@ -33,7 +33,7 @@ struct label_colorchange_t
 // Used to sort the color changes into sequential order.
 class CColorChangeListLess
 {
-   public:
+    public:
     bool Less( const label_colorchange_t &src1, const label_colorchange_t &src2, void *pCtx )
     {
         if ( src1.textStreamIndex < src2.textStreamIndex )
@@ -48,12 +48,12 @@ class CColorChangeListLess
 //-----------------------------------------------------------------------------
 class TextImage : public Image
 {
-   public:
+    public:
     TextImage( const char *text );
     TextImage( const wchar_t *wszText );
     ~TextImage();
 
-   public:
+    public:
     // takes the string and looks it up in the localization file to convert it to unicode
     virtual void SetText( const char *text );
     // sets unicode text directly
@@ -120,13 +120,13 @@ class TextImage : public Image
         return m_LineBreaks.Count() != 0;
     }
 
-   protected:
+    protected:
     // truncate the _text string to fit into the draw width
     void SizeText( wchar_t *tempText, int stringLength );
     // gets the size of a specified piece of text
     virtual void GetTextSize( int &wide, int &tall );
 
-   private:
+    private:
     void RecalculateEllipsesPosition();
 
     wchar_t *_utext;       // unicode version of the text
@@ -135,7 +135,7 @@ class TextImage : public Image
     vgui::HFont _font;     // font of the text string
     vgui::HFont _fallbackFont;
     int _drawWidth;  // this is the width of the window we are drawing into.
-                     // if there is not enough room truncate the txt	and add an elipsis
+                    // if there is not enough room truncate the txt	and add an elipsis
 
     StringIndex_t _unlocalizedTextSymbol;  // store off the unlocalized text index for build mode
     wchar_t *m_pwszEllipsesPosition;

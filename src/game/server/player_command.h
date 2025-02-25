@@ -21,7 +21,7 @@ class CBasePlayer;
 //-----------------------------------------------------------------------------
 class CPlayerMove
 {
-   public:
+    public:
     DECLARE_CLASS_NOBASE( CPlayerMove );
 
     // Construction/destruction
@@ -32,7 +32,7 @@ class CPlayerMove
     // Run a movement command from the player
     void RunCommand( CBasePlayer *player, CUserCmd *ucmd, IMoveHelper *moveHelper );
 
-   protected:
+    protected:
     // Prepare for running movement
     virtual void SetupMove( CBasePlayer *player, CUserCmd *ucmd, IMoveHelper *pHelper, CMoveData *move );
 

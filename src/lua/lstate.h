@@ -222,7 +222,7 @@ struct CallInfo
 #define getcistrecst( ci ) ( ( ( ci )->callstatus >> CIST_RECST ) & 7 )
 #define setcistrecst( ci, st )                                               \
     check_exp( ( ( st ) & 7 ) == ( st ), /* status must fit in three bits */ \
-               ( ( ci )->callstatus = ( ( ci )->callstatus & ~( 7 << CIST_RECST ) ) | ( ( st ) << CIST_RECST ) ) )
+                ( ( ci )->callstatus = ( ( ci )->callstatus & ~( 7 << CIST_RECST ) ) | ( ( st ) << CIST_RECST ) ) )
 
 /* active function is a Lua function */
 #define isLua( ci ) ( !( ( ci )->callstatus & CIST_C ) )

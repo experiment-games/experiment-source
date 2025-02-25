@@ -19,7 +19,7 @@
 class ParticleSphereProxy : public IMaterialProxy
 {
     // IMaterialProxy overrides.
-   public:
+    public:
     ParticleSphereProxy()
     {
     }
@@ -69,7 +69,7 @@ class ParticleSphereProxy : public IMaterialProxy
         return pVar->GetOwningMaterial();
     }
 
-   private:
+    private:
     IMaterialVar *m_pLightPosition;
     IMaterialVar *m_pLightColor;
 };

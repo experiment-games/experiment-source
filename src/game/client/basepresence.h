@@ -19,7 +19,7 @@
 //-----------------------------------------------------------------------------
 class CBasePresence : public IPresence, public CAutoGameSystemPerFrame
 {
-   public:
+    public:
     // CBaseGameSystemPerFrame overrides
     virtual bool Init( void );
     virtual void Shutdown( void );
@@ -42,7 +42,7 @@ class CBasePresence : public IPresence, public CAutoGameSystemPerFrame
     virtual void SetStat( uint iPropertyId, int iPropertyValue, int dataType );
     virtual void UploadStats();
 
-   protected:
+    protected:
     bool m_bArbitrated;
     bool m_bReportingStats;
     HANDLE m_hSession;

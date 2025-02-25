@@ -984,8 +984,8 @@ bool CDispCollTree::SweptAABBTriIntersect( Vector &rayStart, Vector &rayEnd, Vec
     // check for an early out
     //
     if ( ( pTri->m_Normal[0] > ONE_MINUS_COLLISION_EPSILON ) ||
-         ( pTri->m_Normal[1] > ONE_MINUS_COLLISION_EPSILON ) ||
-         ( pTri->m_Normal[2] > ONE_MINUS_COLLISION_EPSILON ) )
+        ( pTri->m_Normal[1] > ONE_MINUS_COLLISION_EPSILON ) ||
+        ( pTri->m_Normal[2] > ONE_MINUS_COLLISION_EPSILON ) )
     {
         if ( *fraction == 1.0f )
             return false;
@@ -1348,8 +1348,8 @@ bool CDispCollTree::SweptAABBTriIntersect( Vector &rayStart, Vector &rayEnd, Vec
     // test face plane
     //
     dist = ( pTri->m_Normal.x * ( boxPt.x - pTri->m_Points[0].x ) ) +
-           ( pTri->m_Normal.y * ( boxPt.y - pTri->m_Points[0].y ) ) +
-           ( pTri->m_Normal.z * ( boxPt.z - pTri->m_Points[0].z ) );
+            ( pTri->m_Normal.y * ( boxPt.y - pTri->m_Points[0].y ) ) +
+            ( pTri->m_Normal.z * ( boxPt.z - pTri->m_Points[0].z ) );
 
     distStart = pTri->m_Normal.Dot( rayStart ) - dist;
     distEnd = pTri->m_Normal.Dot( rayEnd ) - dist;
@@ -1461,8 +1461,8 @@ bool CDispCollTree::IntersectAABBTriTest( Vector &rayStart, Vector &extents, CDi
     // add a test here to see if triangle face normal is close to axial -- done if so!!!
     //
     if ( ( pTri->m_Normal[0] > ONE_MINUS_COLLISION_EPSILON ) ||
-         ( pTri->m_Normal[1] > ONE_MINUS_COLLISION_EPSILON ) ||
-         ( pTri->m_Normal[2] > ONE_MINUS_COLLISION_EPSILON ) )
+        ( pTri->m_Normal[1] > ONE_MINUS_COLLISION_EPSILON ) ||
+        ( pTri->m_Normal[2] > ONE_MINUS_COLLISION_EPSILON ) )
         return true;
 
     // find the closest point on the box (use negated tri face noraml)
@@ -1484,8 +1484,8 @@ bool CDispCollTree::IntersectAABBTriTest( Vector &rayStart, Vector &extents, CDi
     //
     // do the opposite because the ray has been negated
     if ( ( ( pTri->m_Normal.x * ( boxPt.x - pTri->m_Points[0].x ) ) +
-           ( pTri->m_Normal.y * ( boxPt.y - pTri->m_Points[0].y ) ) +
-           ( pTri->m_Normal.z * ( boxPt.z - pTri->m_Points[0].z ) ) ) > 0.0f )
+            ( pTri->m_Normal.y * ( boxPt.y - pTri->m_Points[0].y ) ) +
+            ( pTri->m_Normal.z * ( boxPt.z - pTri->m_Points[0].z ) ) ) > 0.0f )
         return false;
 
     //
@@ -1645,8 +1645,8 @@ bool CDispCollTree::SweptAABBTriTest( Vector &rayStart, Vector &rayEnd, Vector &
     // add a test here to see if triangle face normal is close to axial -- done if so!!!
     //
     if ( ( pTri->m_Normal[0] > ONE_MINUS_COLLISION_EPSILON ) ||
-         ( pTri->m_Normal[1] > ONE_MINUS_COLLISION_EPSILON ) ||
-         ( pTri->m_Normal[2] > ONE_MINUS_COLLISION_EPSILON ) )
+        ( pTri->m_Normal[1] > ONE_MINUS_COLLISION_EPSILON ) ||
+        ( pTri->m_Normal[2] > ONE_MINUS_COLLISION_EPSILON ) )
         return true;
 
     //
@@ -1752,8 +1752,8 @@ bool CDispCollTree::SweptAABBTriTest( Vector &rayStart, Vector &rayEnd, Vector &
     //
     // do the opposite because the ray has been negated
     if ( ( ( pTri->m_Normal.x * ( boxPt.x - points[0].x ) ) +
-           ( pTri->m_Normal.y * ( boxPt.y - points[0].y ) ) +
-           ( pTri->m_Normal.z * ( boxPt.z - points[0].z ) ) ) > 0.0f )
+            ( pTri->m_Normal.y * ( boxPt.y - points[0].y ) ) +
+            ( pTri->m_Normal.z * ( boxPt.z - points[0].z ) ) ) > 0.0f )
         return false;
 
     return true;

@@ -11,17 +11,17 @@
 
 class C_RagdollManager : public C_BaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_RagdollManager, C_BaseEntity );
     DECLARE_CLIENTCLASS();
 
     C_RagdollManager();
 
     // C_BaseEntity overrides.
-   public:
+    public:
     virtual void OnDataChanged( DataUpdateType_t updateType );
 
-   public:
+    public:
     int m_iCurrentMaxRagdollCount;
 };
 

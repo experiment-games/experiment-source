@@ -17,7 +17,7 @@
 //-----------------------------------------------------------------------------
 abstract_class ICommandLine
 {
-   public:
+    public:
     virtual void CreateCmdLine( const char *commandline ) = 0;
     virtual void CreateCmdLine( int argc, char **argv ) = 0;
     virtual const char *GetCmdLine( void ) const = 0;

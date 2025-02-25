@@ -42,7 +42,7 @@ class HTML : public Panel
     DECLARE_CLASS_SIMPLE( HTML, Panel );
     // TODO::STYLE
     // DECLARE_STYLE_BASE( "HTML" );
-   public:
+    public:
 #ifdef LUA_SDK
     HTML( Panel *parent, const char *name, bool allowJavaScript = false, bool bPopupWindow = false, lua_State *L = nullptr );
 #else
@@ -108,18 +108,18 @@ class HTML : public Panel
 
     /* message posting:
 
-      "HTMLSliderMoved"	- indicates the scrollbar has moved
+    "HTMLSliderMoved"	- indicates the scrollbar has moved
 
-      "OnURLChanged"		- indicates a new URL is being loaded
-          "url"
+    "OnURLChanged"		- indicates a new URL is being loaded
+        "url"
         "postdata"
 
-      "OnFinishRequest"		- indicates all url loaded has completed
+    "OnFinishRequest"		- indicates all url loaded has completed
 
-      "HTMLBackRequested"		- mouse4 has been pressed on the dialog
-      "HTMLForwardRequested"  - mouse5 has been pressed on the dialog
+    "HTMLBackRequested"		- mouse4 has been pressed on the dialog
+    "HTMLForwardRequested"  - mouse5 has been pressed on the dialog
 
-      "SecurityStatus"		- indicates the SSL status of the page (disabled,good,bad)
+    "SecurityStatus"		- indicates the SSL status of the page (disabled,good,bad)
         "url"
         "secure" - true if an ssl page
         "certerror" - true if there is a cert error loading the page
@@ -183,14 +183,14 @@ class HTML : public Panel
     virtual void CallJavascriptObjectCallback( int callbackId, KeyValues *args );
     // Override OnJavaScriptCallback in a subclass to customize how to react to the callback
 
-   protected:
+    protected:
     MESSAGE_FUNC_PARAMS( OnJavaScriptCallback, "JavaScriptCallback", pKV );
 
     virtual void ApplySchemeSettings( IScheme *pScheme );
 
     vgui::Menu *m_pContextMenu;
 
-   private:
+    private:
     STEAM_CALLBACK( HTML, BrowserNeedsPaint, HTML_NeedsPaint_t, m_NeedsPaint );
     STEAM_CALLBACK( HTML, BrowserStartRequest, HTML_StartRequest_t, m_StartRequest );
     STEAM_CALLBACK( HTML, BrowserURLChanged, HTML_URLChanged_t, m_URLChanged );
@@ -232,7 +232,7 @@ class HTML : public Panel
     {
         DECLARE_CLASS_SIMPLE( CHTMLFindBar, EditablePanel );
 
-       public:
+        public:
         CHTMLFindBar( HTML *parent );
         void SetText( const char *pchText )
         {
@@ -260,7 +260,7 @@ class HTML : public Panel
             return m_bHidden;
         }
 
-       private:
+        private:
         vgui::TextEntry *m_pFindBar;
         vgui::HTML *m_pParent;
         vgui::Label *m_pFindCountLabel;
@@ -329,8 +329,8 @@ class HTML : public Panel
         bool operator==( ScrollData_t const &src ) const
         {
             return m_bVisible == src.m_bVisible &&
-                   m_nMax == src.m_nMax &&
-                   m_nScroll == src.m_nScroll;
+                    m_nMax == src.m_nMax &&
+                    m_nScroll == src.m_nScroll;
         }
 
         bool operator!=( ScrollData_t const &src ) const

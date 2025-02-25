@@ -21,15 +21,15 @@
 
 class CBlockingUDPSocket::CImpl
 {
-   public:
+    public:
     struct sockaddr_in m_SocketIP;
     fd_set m_FDSet;
 };
 
 CBlockingUDPSocket::CBlockingUDPSocket()
     : m_cserIP(),
-      m_Socket( 0 ),
-      m_pImpl( new CImpl )
+    m_Socket( 0 ),
+    m_pImpl( new CImpl )
 {
     CreateSocket();
 }

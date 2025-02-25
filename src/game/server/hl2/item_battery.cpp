@@ -17,7 +17,7 @@
 
 class CItemBattery : public CItem
 {
-   public:
+    public:
     DECLARE_CLASS( CItemBattery, CItem );
 
     void Spawn( void )

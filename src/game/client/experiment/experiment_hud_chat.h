@@ -17,7 +17,7 @@ class CHudChatLine : public CBaseHudChatLine
 {
     DECLARE_CLASS_SIMPLE( CHudChatLine, CBaseHudChatLine );
 
-   public:
+    public:
     CHudChatLine( vgui::Panel *parent, const char *panelName )
         : CBaseHudChatLine( parent, panelName ) {}
 
@@ -25,7 +25,7 @@ class CHudChatLine : public CBaseHudChatLine
 
     void MsgFunc_SayText( bf_read &msg );
 
-   private:
+    private:
     CHudChatLine( const CHudChatLine & );  // not defined, not accessible
 };
 
@@ -36,7 +36,7 @@ class CHudChatInputLine : public CBaseHudChatInputLine
 {
     DECLARE_CLASS_SIMPLE( CHudChatInputLine, CBaseHudChatInputLine );
 
-   public:
+    public:
     CHudChatInputLine( CBaseHudChat *parent, char const *panelName )
         : CBaseHudChatInputLine( parent, panelName ) {}
 
@@ -47,7 +47,7 @@ class CHudChat : public CBaseHudChat
 {
     DECLARE_CLASS_SIMPLE( CHudChat, CBaseHudChat );
 
-   public:
+    public:
     CHudChat( const char *pElementName );
 
     virtual void CreateChatInputLine( void );

@@ -12,13 +12,13 @@
 
 class IPhysicsPlayerControllerEvent
 {
-   public:
+    public:
     virtual int ShouldMoveTo( IPhysicsObject *pObject, const Vector &position ) = 0;
 };
 
 class IPhysicsPlayerController
 {
-   public:
+    public:
     virtual ~IPhysicsPlayerController( void ) {}
 
     virtual void Update( const Vector &position, const Vector &velocity, float secondsToArrival, bool onground, IPhysicsObject *ground ) = 0;

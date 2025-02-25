@@ -16,14 +16,14 @@ class RecvTable;
 // Command-line args can be passed in to set state or options in the effects.
 class IPrototypeArgAccess
 {
-   public:
+    public:
     virtual const char *FindArg( const char *pName, const char *pDefault = 0 ) = 0;
 };
 
 // You must implement this interface for the prototype app to be able to run your effect.
 class IPrototypeAppEffect
 {
-   public:
+    public:
     virtual ~IPrototypeAppEffect() {}
 
     // Start the effect. You can get command-line args with pArgs.
@@ -40,7 +40,7 @@ class IPrototypeAppEffect
 typedef IPrototypeAppEffect *( *PrototypeEffectCreateFn )();
 class PrototypeEffectLink
 {
-   public:
+    public:
     PrototypeEffectLink( PrototypeEffectCreateFn fn, const char *pName );
 
     PrototypeEffectCreateFn m_CreateFn;

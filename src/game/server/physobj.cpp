@@ -45,7 +45,7 @@ class CPhysicsSpring : public CBaseEntity
 {
     DECLARE_CLASS( CPhysicsSpring, CBaseEntity );
 
-   public:
+    public:
     CPhysicsSpring();
     ~CPhysicsSpring();
 
@@ -74,7 +74,7 @@ class CPhysicsSpring : public CBaseEntity
 
     DECLARE_DATADESC();
 
-   private:
+    private:
     IPhysicsSpring *m_pSpring;
     bool m_isLocal;
 
@@ -1221,7 +1221,7 @@ class CSimplePhysicsBrush : public CBaseEntity
 {
     DECLARE_CLASS( CSimplePhysicsBrush, CBaseEntity );
 
-   public:
+    public:
     void Spawn()
     {
         SetModel( STRING( GetModelName() ) );
@@ -1237,7 +1237,7 @@ class CSimplePhysicsProp : public CBaseProp
 {
     DECLARE_CLASS( CSimplePhysicsProp, CBaseProp );
 
-   public:
+    public:
     void Spawn()
     {
         BaseClass::Spawn();
@@ -1336,7 +1336,7 @@ class CPhysConvert : public CLogicalEntity
 {
     DECLARE_CLASS( CPhysConvert, CLogicalEntity );
 
-   public:
+    public:
     CPhysConvert( void )
         : m_flMassOverride( 0.0f ){};
     COutputEvent m_OnConvert;
@@ -1346,7 +1346,7 @@ class CPhysConvert : public CLogicalEntity
 
     DECLARE_DATADESC();
 
-   private:
+    private:
     string_t m_swapModel;
     float m_flMassOverride;
 };
@@ -1639,8 +1639,8 @@ void CPhysMagnet::VPhysicsCollision( int index, gamevcollisionevent_t *pEvent )
             else
             {
                 Warning( "CPhysMagnet %s:%d blocking magnet\n",
-                         pOther->GetClassname(),
-                         pOther->entindex() );
+                        pOther->GetClassname(),
+                        pOther->entindex() );
             }
             return;
         }
@@ -1894,7 +1894,7 @@ class CInfoMassCenter : public CPointEntity
 {
     DECLARE_CLASS( CInfoMassCenter, CPointEntity );
 
-   public:
+    public:
     void Spawn( void )
     {
         if ( m_target != NULL_STRING )
@@ -1914,7 +1914,7 @@ LINK_ENTITY_TO_CLASS( info_mass_center, CInfoMassCenter );
 
 class CPointPush : public CPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CPointPush, CPointEntity );
 
     virtual void Activate( void );
@@ -1925,7 +1925,7 @@ class CPointPush : public CPointEntity
 
     DECLARE_DATADESC();
 
-   private:
+    private:
     inline void PushEntity( CBaseEntity *pTarget );
 
     bool m_bEnabled;
@@ -2061,8 +2061,8 @@ void CPointPush::PushThink( void )
 
         // Must be moveable
         if ( pEnts[i]->GetMoveType() != MOVETYPE_VPHYSICS &&
-             pEnts[i]->GetMoveType() != MOVETYPE_WALK &&
-             pEnts[i]->GetMoveType() != MOVETYPE_STEP )
+            pEnts[i]->GetMoveType() != MOVETYPE_WALK &&
+            pEnts[i]->GetMoveType() != MOVETYPE_STEP )
             continue;
 
         // If we don't want to push players, don't

@@ -102,9 +102,9 @@ void CWeaponIFMBase::FallInit( void )
   {
     if ( !VPhysicsInitNormal( SOLID_BBOX, GetSolidFlags() | FSOLID_TRIGGER, false ) )
     {
-      SetMoveType( MOVETYPE_NONE );
-      SetSolid( SOLID_BBOX );
-      AddSolidFlags( FSOLID_TRIGGER );
+    SetMoveType( MOVETYPE_NONE );
+    SetSolid( SOLID_BBOX );
+    AddSolidFlags( FSOLID_TRIGGER );
     }
   }
 

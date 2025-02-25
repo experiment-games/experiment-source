@@ -15,14 +15,14 @@ extern const char *s_ElementNames[MAX_ARRAY_ELEMENTS];
 // This gets associated with SendProps inside a utlvector and stores extra data needed to make it work.
 class CSendPropExtra_UtlVector
 {
-   public:
+    public:
     CSendPropExtra_UtlVector()
         : m_DataTableProxyFn( NULL ),
-          m_ProxyFn( NULL ),
-          m_EnsureCapacityFn( NULL ),
-          m_ElementStride( 0 ),
-          m_Offset( 0 ),
-          m_nMaxElements( 0 )
+        m_ProxyFn( NULL ),
+        m_EnsureCapacityFn( NULL ),
+        m_ElementStride( 0 ),
+        m_Offset( 0 ),
+        m_nMaxElements( 0 )
     {
     }
 

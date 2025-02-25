@@ -21,7 +21,7 @@
 
 class IMapOverviewPanel
 {
-   public:
+    public:
     virtual void SetMode( int mode ) = 0;
     virtual int GetMode( void ) = 0;
     virtual void FlashEntity( int entityID ) = 0;
@@ -47,7 +47,7 @@ class CMapOverview : public CHudElement, public vgui::Panel, public IMapOverview
 {
     DECLARE_CLASS_SIMPLE( CMapOverview, vgui::Panel );
 
-   public:
+    public:
     enum
     {
         MAP_MODE_OFF = 0,  // Totally off
@@ -71,7 +71,7 @@ class CMapOverview : public CHudElement, public vgui::Panel, public IMapOverview
     virtual void SetPlayerPreferredMode( int mode ) {}
     virtual void SetPlayerPreferredViewSize( float viewSize ){};
 
-   protected:                    // private structures & types
+    protected:                    // private structures & types
     float GetViewAngle( void );  // The angle that determines the viewport twist from map texture to panel drawing.
 
     // list of game events the hLTV takes care of
@@ -115,7 +115,7 @@ class CMapOverview : public CHudElement, public vgui::Panel, public IMapOverview
 
 #define MAP_OBJECT_ALIGN_TO_MAP ( 1 << 0 )
 
-   public:  // IViewPortPanel interface:
+    public:  // IViewPortPanel interface:
     virtual const char *GetName( void )
     {
         return PANEL_OVERVIEW;
@@ -150,10 +150,10 @@ class CMapOverview : public CHudElement, public vgui::Panel, public IMapOverview
         BaseClass::SetParent( parent );
     }
 
-   public:  // IGameEventListener
+    public:  // IGameEventListener
     virtual void FireGameEvent( IGameEvent *event );
 
-   public:  // VGUI overrides
+    public:  // VGUI overrides
     virtual void Paint();
     virtual void OnMousePressed( vgui::MouseCode code );
     virtual void ApplySchemeSettings( vgui::IScheme *scheme );
@@ -162,7 +162,7 @@ class CMapOverview : public CHudElement, public vgui::Panel, public IMapOverview
         BaseClass::SetVisible( state );
     }
 
-   public:
+    public:
     virtual float GetZoom( void );
     virtual int GetMode( void );
     virtual float GetFullZoom( void )
@@ -217,7 +217,7 @@ class CMapOverview : public CHudElement, public vgui::Panel, public IMapOverview
         return teamNumber;
     }
 
-   protected:
+    protected:
     virtual void DrawCamera();
     virtual void DrawObjects();
     virtual void DrawMapTexture();
@@ -249,16 +249,16 @@ class CMapOverview : public CHudElement, public vgui::Panel, public IMapOverview
     virtual bool DrawIcon( MapObject_t *obj );
 
     /*virtual bool	DrawIcon(	int textureID,
-                  int offscreenTextureID,
-                  Vector pos,
-                  float scale,
-                  float angle,
-                  int alpha = 255,
-                  const char *text = NULL,
-                  Color *textColor = NULL,
-                  float status = -1,
-                  Color *statusColor = NULL,
-                  int objectType = OBJECT_TYPE_NORMAL );*/
+                int offscreenTextureID,
+                Vector pos,
+                float scale,
+                float angle,
+                int alpha = 255,
+                const char *text = NULL,
+                Color *textColor = NULL,
+                float status = -1,
+                Color *statusColor = NULL,
+                int objectType = OBJECT_TYPE_NORMAL );*/
 
     int m_nMode;
     Vector2D m_vPosition;

@@ -17,7 +17,7 @@
 template < class UTLMAP, int KEY_TYPE, int FIELD_TYPE >
 class CUtlMapDataOps : public CDefSaveRestoreOps
 {
-   public:
+    public:
     CUtlMapDataOps()
     {
         UTLCLASS_SAVERESTORE_VALIDATE_TYPE( KEY_TYPE );
@@ -169,7 +169,7 @@ class CUtlMapDataOps : public CDefSaveRestoreOps
 template < int KEYTYPE, int FIELD_TYPE >
 class CUtlMapDataopsInstantiator
 {
-   public:
+    public:
     template < class UTLMAP >
     static ISaveRestoreOps *GetDataOps( UTLMAP * )
     {

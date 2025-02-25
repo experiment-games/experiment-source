@@ -62,7 +62,7 @@ namespace java
 // since extensions are just simple identifiers with interesting types.
 class ExtensionGenerator
 {
-   public:
+    public:
     explicit ExtensionGenerator( const FieldDescriptor* descriptor );
     ~ExtensionGenerator();
 
@@ -70,7 +70,7 @@ class ExtensionGenerator
     void GenerateInitializationCode( io::Printer* printer );
     void GenerateRegistrationCode( io::Printer* printer );
 
-   private:
+    private:
     const FieldDescriptor* descriptor_;
     string scope_;
     GOOGLE_DISALLOW_EVIL_CONSTRUCTORS( ExtensionGenerator );

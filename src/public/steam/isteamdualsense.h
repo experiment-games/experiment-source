@@ -87,10 +87,10 @@ typedef struct ScePadTriggerEffectVibrationParam
 typedef struct ScePadTriggerEffectMultiplePositionFeedbackParam
 {
     uint8_t strength[SCE_PAD_TRIGGER_EFFECT_CONTROL_POINT_NUM]; /*E strength that the motor arm pushes back target trigger at position(0~8 (0: Same as Off mode)).
-                                                                 *  strength[0] means strength of motor arm at position0.
-                                                                 *  strength[1] means strength of motor arm at position1.
-                                                                 *  ...
-                                                                 * */
+                                                                *  strength[0] means strength of motor arm at position0.
+                                                                *  strength[1] means strength of motor arm at position1.
+                                                                *  ...
+                                                                * */
     uint8_t padding[38];
 } ScePadTriggerEffectMultiplePositionFeedbackParam;
 
@@ -119,10 +119,10 @@ typedef struct ScePadTriggerEffectMultiplePositionVibrationParam
 {
     uint8_t frequency;                                           /*E vibration frequency(0~255 (0: Same as Off mode)) */
     uint8_t amplitude[SCE_PAD_TRIGGER_EFFECT_CONTROL_POINT_NUM]; /*E vibration amplitude at position(0~8 (0: Same as Off mode)).
-                                                                  *  amplitude[0] means amplitude of vibration at position0.
-                                                                  *  amplitude[1] means amplitude of vibration at position1.
-                                                                  *  ...
-                                                                  * */
+                                                                *  amplitude[0] means amplitude of vibration at position0.
+                                                                *  amplitude[1] means amplitude of vibration at position1.
+                                                                *  ...
+                                                                * */
     uint8_t padding[37];
 } ScePadTriggerEffectMultiplePositionVibrationParam;
 
@@ -159,14 +159,14 @@ typedef struct ScePadTriggerEffectCommand
 typedef struct ScePadTriggerEffectParam
 {
     uint8_t triggerMask; /*E Set trigger mask to activate trigger effect commands.
-                          *  SCE_PAD_TRIGGER_EFFECT_TRIGGER_MASK_L2 : 0x01
-                          *  SCE_PAD_TRIGGER_EFFECT_TRIGGER_MASK_R2 : 0x02
-                          * */
+                        *  SCE_PAD_TRIGGER_EFFECT_TRIGGER_MASK_L2 : 0x01
+                        *  SCE_PAD_TRIGGER_EFFECT_TRIGGER_MASK_R2 : 0x02
+                        * */
     uint8_t padding[7];
 
     ScePadTriggerEffectCommand command[SCE_PAD_TRIGGER_EFFECT_TRIGGER_NUM]; /*E command[SCE_PAD_TRIGGER_EFFECT_PARAM_INDEX_FOR_L2] is for L2 trigger setting
-                                                                             *  and param[SCE_PAD_TRIGGER_EFFECT_PARAM_INDEX_FOR_R2] is for R2 trgger setting.
-                                                                             * */
+                                                                            *  and param[SCE_PAD_TRIGGER_EFFECT_PARAM_INDEX_FOR_R2] is for R2 trgger setting.
+                                                                            * */
 } ScePadTriggerEffectParam;
 
 #if defined( __cplusplus ) && __cplusplus >= 201103L

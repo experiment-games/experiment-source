@@ -12,17 +12,17 @@
 
 class C_FuncOccluder : public C_BaseEntity
 {
-   public:
+    public:
     DECLARE_CLIENTCLASS();
     DECLARE_CLASS( C_FuncOccluder, C_BaseEntity );
 
     // Overrides.
-   public:
+    public:
     virtual bool ShouldDraw();
     virtual int DrawModel( int flags );
     virtual void OnDataChanged( DataUpdateType_t updateType );
 
-   private:
+    private:
     int m_nOccluderIndex;
     bool m_bActive;
 };

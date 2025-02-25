@@ -47,7 +47,7 @@ RAPIDJSON_NAMESPACE_BEGIN
 template < typename StreamType >
 class BasicIStreamWrapper
 {
-   public:
+    public:
     typedef typename StreamType::char_type Ch;
     BasicIStreamWrapper( StreamType& stream )
         : stream_( stream ), count_(), peekBuffer_() {}
@@ -117,7 +117,7 @@ class BasicIStreamWrapper
         return !hasError ? peekBuffer_ : 0;
     }
 
-   private:
+    private:
     BasicIStreamWrapper( const BasicIStreamWrapper& );
     BasicIStreamWrapper& operator=( const BasicIStreamWrapper& );
 

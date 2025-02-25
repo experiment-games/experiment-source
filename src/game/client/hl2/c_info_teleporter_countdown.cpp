@@ -21,11 +21,11 @@
 //-----------------------------------------------------------------------------
 class C_InfoTeleporterCountdown : public C_BaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_InfoTeleporterCountdown, C_BaseEntity );
     DECLARE_CLIENTCLASS();
 
-   public:
+    public:
     C_InfoTeleporterCountdown();
     ~C_InfoTeleporterCountdown();
 
@@ -34,7 +34,7 @@ class C_InfoTeleporterCountdown : public C_BaseEntity
         return false;
     }
 
-   private:
+    private:
     bool m_bCountdownStarted;
     bool m_bDisabled;
     float m_flStartTime;
@@ -80,13 +80,13 @@ class CTeleportCountdownScreen : public CVGuiScreenPanel
 {
     DECLARE_CLASS( CTeleportCountdownScreen, CVGuiScreenPanel );
 
-   public:
+    public:
     CTeleportCountdownScreen( vgui::Panel *parent, const char *panelName );
 
     virtual bool Init( KeyValues *pKeyValues, VGuiScreenInitData_t *pInitData );
     virtual void OnTick();
 
-   private:
+    private:
     vgui::Label *m_pTimeRemainingTitleLabel;
     vgui::Label *m_pTimeRemainingLabel;
     vgui::Label *m_pMalfunctionLabel;
@@ -136,7 +136,7 @@ void CTeleportCountdownScreen::OnTick()
     // Find the active info teleporter countdown
     C_InfoTeleporterCountdown *pActiveCountdown = NULL;
     for ( int i = g_InfoTeleporterCountdownList.Head(); i != g_InfoTeleporterCountdownList.InvalidIndex();
-          i = g_InfoTeleporterCountdownList.Next( i ) )
+        i = g_InfoTeleporterCountdownList.Next( i ) )
     {
         if ( g_InfoTeleporterCountdownList[i]->m_bCountdownStarted )
         {

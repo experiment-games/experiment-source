@@ -33,8 +33,8 @@ struct KVFile_t
 {
     KVFile_t()
         : filename( 0 ),
-          firstElement( 0 ),
-          numElements( 0 )
+        firstElement( 0 ),
+        numElements( 0 )
     {
     }
     short filename;
@@ -46,9 +46,9 @@ struct KVInfo_t
 {
     KVInfo_t()
         : key( 0 ),
-          value( 0 ),
-          parentIndex( -1 ),
-          issubtree( false )
+        value( 0 ),
+        parentIndex( -1 ),
+        issubtree( false )
     {
     }
 
@@ -76,7 +76,7 @@ struct KVInfo_t
     short key;
     short value;
 
-   private:
+    private:
     short parentIndex;
     bool issubtree;
 };
@@ -87,7 +87,7 @@ struct KVInfo_t
 //-----------------------------------------------------------------------------
 class CCompiledKeyValuesWriter
 {
-   public:
+    public:
     CCompiledKeyValuesWriter()
     {
         m_StringTable.AddString( "" );
@@ -96,7 +96,7 @@ class CCompiledKeyValuesWriter
     void AppendKeyValuesFile( char const *filename );
     void WriteFile( char const *outfile );
 
-   private:
+    private:
     void Describe( const KVFile_t &file );
 
     void BuildKVData_R( KeyValues *kv, int parent );
@@ -113,7 +113,7 @@ class CCompiledKeyValuesWriter
 
 class CRunTimeKeyValuesStringTable
 {
-   public:
+    public:
     bool ReadStringTable( int numStrings, CUtlBuffer &buf );
 
     inline int Count() const
@@ -126,13 +126,13 @@ class CRunTimeKeyValuesStringTable
         return m_Strings[index];
     }
 
-   private:
+    private:
     CUtlVector< const char * > m_Strings;
 };
 
 class CCompiledKeyValuesReader
 {
-   public:
+    public:
     CCompiledKeyValuesReader();
 
     bool LoadFile( char const *filename );
@@ -147,13 +147,13 @@ class CCompiledKeyValuesReader
 
     void GetFileName( int index, char *buf, size_t bufsize );
 
-   private:
+    private:
     struct FileInfo_t
     {
         FileInfo_t()
             : hFile( 0 ),
-              nFirstIndex( 0 ),
-              nCount( 0 )
+            nFirstIndex( 0 ),
+            nCount( 0 )
         {
         }
         FileNameHandle_t hFile;

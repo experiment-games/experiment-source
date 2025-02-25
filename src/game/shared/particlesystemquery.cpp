@@ -30,7 +30,7 @@
 //-----------------------------------------------------------------------------
 class CParticleSystemQuery : public CBaseAppSystem< IParticleSystemQuery >
 {
-   public:
+    public:
     // Inherited from IParticleSystemQuery
     virtual void GetLightingAtPoint( const Vector &vecOrigin, Color &cTint );
     virtual void TraceLine( const Vector &vecAbsStart,
@@ -41,8 +41,8 @@ class CParticleSystemQuery : public CBaseAppSystem< IParticleSystemQuery >
                             CBaseTrace *ptr );
 
     virtual bool MovePointInsideControllingObject( CParticleCollection *pParticles,
-                                                   void *pObject,
-                                                   Vector *pPnt );
+                                                    void *pObject,
+                                                    Vector *pPnt );
     virtual void GetRandomPointsOnControllingObjectHitBox(
         CParticleCollection *pParticles,
         int nControlPointNumber,
@@ -132,11 +132,11 @@ void CParticleSystemQuery::SetUpLightingEnvironment( const Vector &pos )
 }
 
 void CParticleSystemQuery::TraceLine( const Vector &vecAbsStart,
-                                      const Vector &vecAbsEnd,
-                                      unsigned int mask,
-                                      const IHandleEntity *ignore,
-                                      int collisionGroup,
-                                      CBaseTrace *ptr )
+                                    const Vector &vecAbsEnd,
+                                    unsigned int mask,
+                                    const IHandleEntity *ignore,
+                                    int collisionGroup,
+                                    CBaseTrace *ptr )
 {
     bool bDoTrace = false;
 #ifndef GAME_DLL
@@ -256,7 +256,7 @@ void CParticleSystemQuery::GetRandomPointsOnControllingObjectHitBox(
                                 VectorTransform( vecLocalPosition, *hitboxbones[pBox->bone], vecTryWorldPosition );
 
                                 float flPointGoodness = pParticles->RandomFloat( 0, 72 ) + DotProduct( vecTryWorldPosition - vecBasePos,
-                                                                                                       vecDirectionalBias );
+                                                                                                        vecDirectionalBias );
 
                                 if ( nNumTrysToGetAPointInsideTheModel )
                                 {
@@ -325,7 +325,7 @@ void CParticleSystemQuery::GetRandomPointsOnControllingObjectHitBox(
                     VectorTransform( vecLocalPosition, matOrientation, vecTryWorldPosition );
 
                     float flPointGoodness = pParticles->RandomFloat( 0, 72 ) + DotProduct( vecTryWorldPosition - vecBasePos,
-                                                                                           vecDirectionalBias );
+                                                                                            vecDirectionalBias );
 
                     if ( nNumTrysToGetAPointInsideTheModel )
                     {

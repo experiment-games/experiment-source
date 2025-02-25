@@ -33,7 +33,7 @@ class IImage;
 //-----------------------------------------------------------------------------
 class IScheme : public IBaseInterface
 {
-   public:
+    public:
     // gets a string from the default settings section
     virtual const char *GetResourceString( const char *stringName ) = 0;
 
@@ -67,7 +67,7 @@ class IScheme : public IBaseInterface
 
 class ISchemeManager : public IBaseInterface
 {
-   public:
+    public:
     // loads a scheme from a file
     // first scheme loaded becomes the default scheme, and all subsequent loaded scheme are derivitives of that
     virtual HScheme LoadSchemeFromFile( const char *fileName, const char *tag ) = 0;

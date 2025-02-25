@@ -52,7 +52,7 @@ class BaseContainer(object):
   def __init__(self, message_listener):
     """
     Args:
-      message_listener: A MessageListener implementation.
+    message_listener: A MessageListener implementation.
         The RepeatedScalarFieldContainer will call this object's
         Modified() method when it is modified.
     """
@@ -86,10 +86,10 @@ class RepeatedScalarFieldContainer(BaseContainer):
   def __init__(self, message_listener, type_checker):
     """
     Args:
-      message_listener: A MessageListener implementation.
+    message_listener: A MessageListener implementation.
         The RepeatedScalarFieldContainer will call this object's
         Modified() method when it is modified.
-      type_checker: A type_checkers.ValueChecker instance to run on elements
+    type_checker: A type_checkers.ValueChecker instance to run on elements
         inserted into this container.
     """
     super(RepeatedScalarFieldContainer, self).__init__(message_listener)
@@ -100,24 +100,24 @@ class RepeatedScalarFieldContainer(BaseContainer):
     self._type_checker.CheckValue(value)
     self._values.append(value)
     if not self._message_listener.dirty:
-      self._message_listener.Modified()
+    self._message_listener.Modified()
 
   def insert(self, key, value):
     """Inserts the item at the specified position. Similar to list.insert()."""
     self._type_checker.CheckValue(value)
     self._values.insert(key, value)
     if not self._message_listener.dirty:
-      self._message_listener.Modified()
+    self._message_listener.Modified()
 
   def extend(self, elem_seq):
     """Extends by appending the given sequence. Similar to list.extend()."""
     if not elem_seq:
-      return
+    return
 
     new_values = []
     for elem in elem_seq:
-      self._type_checker.CheckValue(elem)
-      new_values.append(elem)
+    self._type_checker.CheckValue(elem)
+    new_values.append(elem)
     self._values.extend(new_values)
     self._message_listener.Modified()
 
@@ -147,8 +147,8 @@ class RepeatedScalarFieldContainer(BaseContainer):
     """Sets the subset of items from between the specified indices."""
     new_values = []
     for value in values:
-      self._type_checker.CheckValue(value)
-      new_values.append(value)
+    self._type_checker.CheckValue(value)
+    new_values.append(value)
     self._values[start:stop] = new_values
     self._message_listener.Modified()
 
@@ -165,10 +165,10 @@ class RepeatedScalarFieldContainer(BaseContainer):
   def __eq__(self, other):
     """Compares the current instance with another one."""
     if self is other:
-      return True
+    return True
     # Special case for the same type which should be common and fast.
     if isinstance(other, self.__class__):
-      return other._values == self._values
+    return other._values == self._values
     # We are presumably comparing against some other sequence type.
     return other == self._values
 
@@ -188,10 +188,10 @@ class RepeatedCompositeFieldContainer(BaseContainer):
     container.
 
     Args:
-      message_listener: A MessageListener implementation.
+    message_listener: A MessageListener implementation.
         The RepeatedCompositeFieldContainer will call this object's
         Modified() method when it is modified.
-      message_descriptor: A Descriptor instance describing the protocol type
+    message_descriptor: A Descriptor instance describing the protocol type
         that should be present in this container.  We'll use the
         _concrete_class field of this descriptor when the client calls add().
     """
@@ -203,7 +203,7 @@ class RepeatedCompositeFieldContainer(BaseContainer):
     new_element._SetListener(self._message_listener)
     self._values.append(new_element)
     if not self._message_listener.dirty:
-      self._message_listener.Modified()
+    self._message_listener.Modified()
     return new_element
 
   def MergeFrom(self, other):
@@ -214,10 +214,10 @@ class RepeatedCompositeFieldContainer(BaseContainer):
     listener = self._message_listener
     values = self._values
     for message in other._values:
-      new_element = message_class()
-      new_element._SetListener(listener)
-      new_element.MergeFrom(message)
-      values.append(new_element)
+    new_element = message_class()
+    new_element._SetListener(listener)
+    new_element.MergeFrom(message)
+    values.append(new_element)
     listener.Modified()
 
   def __getslice__(self, start, stop):
@@ -237,8 +237,8 @@ class RepeatedCompositeFieldContainer(BaseContainer):
   def __eq__(self, other):
     """Compares the current instance with another one."""
     if self is other:
-      return True
+    return True
     if not isinstance(other, self.__class__):
-      raise TypeError('Can only compare repeated composite fields against '
-                      'other repeated composite fields.')
+    raise TypeError('Can only compare repeated composite fields against '
+                    'other repeated composite fields.')
     return self._values == other._values

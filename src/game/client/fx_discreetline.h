@@ -24,7 +24,7 @@ class IMaterial;
 
 class CFXDiscreetLine : public CClientSideEffect
 {
-   public:
+    public:
     CFXDiscreetLine( const char *name, const Vector &start, const Vector &direction, float velocity, float length, float clipLength, float scale, float life, const char *shader );
     ~CFXDiscreetLine( void );
 
@@ -33,7 +33,7 @@ class CFXDiscreetLine : public CClientSideEffect
     virtual void Destroy( void );
     virtual void Update( double frametime );
 
-   protected:
+    protected:
     IMaterial *m_pMaterial;
     float m_fLife;
     Vector m_vecOrigin, m_vecDirection;

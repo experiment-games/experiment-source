@@ -36,7 +36,7 @@ class IControllerManager;
 
 class SixenseInput : public CGameEventListener
 {
-   public:
+    public:
     bool LoadModules();
     bool UnloadModules();
 
@@ -145,7 +145,7 @@ class SixenseInput : public CGameEventListener
     void UpdateValuesFromConvars();
     void ConvarChanged();
 
-   private:
+    private:
     bool m_bIsEnabled;  // sixense.dll loaded
     bool m_bIsActive;   // controllers not docked
 
@@ -247,7 +247,7 @@ class SixenseGUIFrame : public vgui::Frame
 {
     DECLARE_CLASS_SIMPLE( SixenseGUIFrame, vgui::Frame );
 
-   public:
+    public:
     // Construction
     SixenseGUIFrame( vgui::VPANEL parent, char const *pPanelName );
     virtual ~SixenseGUIFrame();
@@ -256,7 +256,7 @@ class SixenseGUIFrame : public vgui::Frame
 
     virtual void SetVisible( bool bState );
 
-   private:
+    private:
     vgui::ImagePanel *m_ImagePanel;
 };
 
@@ -265,10 +265,10 @@ class SixenseBaseWarning : public vgui::Frame
 {
     DECLARE_CLASS_SIMPLE( SixenseBaseWarning, vgui::Frame );
 
-   public:
+    public:
     SixenseBaseWarning( vgui::Panel *parent, char const *name );
     // virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
-   protected:
+    protected:
     // virtual void PaintBackground();
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
     vgui::Label *_label;

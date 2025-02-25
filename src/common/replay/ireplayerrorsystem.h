@@ -23,7 +23,7 @@ class KeyValues;
 //
 class IReplayErrorSystem : public IBaseInterface
 {
-   public:
+    public:
     virtual void AddErrorFromTokenName( const char *pToken ) = 0;
     virtual void AddFormattedErrorFromTokenName( const char *pFormatToken, KeyValues *pFormatArgs ) = 0;
 };

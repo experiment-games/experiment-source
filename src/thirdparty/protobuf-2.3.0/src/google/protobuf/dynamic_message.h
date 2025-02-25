@@ -69,7 +69,7 @@ class DescriptorPool;  // descriptor.h
 // used with a particular factory must outlive the factory.
 class LIBPROTOBUF_EXPORT DynamicMessageFactory : public MessageFactory
 {
-   public:
+    public:
     // Construct a DynamicMessageFactory that will search for extensions in
     // the DescriptorPool in which the exendee is defined.
     DynamicMessageFactory();
@@ -115,7 +115,7 @@ class LIBPROTOBUF_EXPORT DynamicMessageFactory : public MessageFactory
     // The method is thread-safe.
     const Message* GetPrototype( const Descriptor* type );
 
-   private:
+    private:
     const DescriptorPool* pool_;
     bool delegate_to_generated_factory_;
 

@@ -19,7 +19,7 @@
 template < class BITSTRING >
 class CVarBitVecSaveRestoreOps : public CDefSaveRestoreOps
 {
-   public:
+    public:
     CVarBitVecSaveRestoreOps()
     {
     }

@@ -18,19 +18,19 @@ class CAI_AllyManager : public CBaseEntity
 {
     DECLARE_CLASS( CAI_AllyManager, CBaseEntity );
 
-   public:
+    public:
     void Spawn();
 
     void CountAllies( int *pTotal, int *pMedics );
 
-   private:
+    private:
     int m_iMaxAllies;
     int m_iMaxMedics;
 
     int m_iAlliesLast;
     int m_iMedicsLast;
 
-   public:
+    public:
     void WatchCounts();
 
     // Input functions
@@ -151,9 +151,9 @@ void CAI_AllyManager::CountAllies( int *pTotal, int *pMedics )
 
             // Skip distant NPCs
             if ( !ppAIs[i]->IsInPlayerSquad() &&
-                 !UTIL_FindClientInPVS( ppAIs[i]->edict() ) &&
-                 ( ( ppAIs[i]->GetAbsOrigin() - vPlayerPos ).LengthSqr() > 150 * 12 ||
-                   fabsf( ppAIs[i]->GetAbsOrigin().z - vPlayerPos.z ) > 192 ) )
+                !UTIL_FindClientInPVS( ppAIs[i]->edict() ) &&
+                ( ( ppAIs[i]->GetAbsOrigin() - vPlayerPos ).LengthSqr() > 150 * 12 ||
+                    fabsf( ppAIs[i]->GetAbsOrigin().z - vPlayerPos.z ) > 192 ) )
                 continue;
 
             if ( FClassnameIs( ppAIs[i], "npc_citizen" ) )

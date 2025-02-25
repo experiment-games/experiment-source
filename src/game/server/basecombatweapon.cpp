@@ -117,12 +117,12 @@ void CBaseCombatWeapon::Operator_FrameUpdate( CBaseCombatCharacter *pOperator )
             }
         }
 #if 0
-		else
-		{
-			// animation that just ended doesn't loop! That means we just finished a fidget
-			// and should return to our heaviest weighted idle (the subtle one)
-			SelectHeaviestSequence( GetActivity() );
-		}
+        else
+        {
+            // animation that just ended doesn't loop! That means we just finished a fidget
+            // and should return to our heaviest weighted idle (the subtle one)
+            SelectHeaviestSequence( GetActivity() );
+        }
 #endif
     }
 
@@ -221,7 +221,7 @@ class CWeaponLOSFilter : public CTraceFilterSkipTwoEntities
 {
     DECLARE_CLASS( CWeaponLOSFilter, CTraceFilterSkipTwoEntities );
 
-   public:
+    public:
     CWeaponLOSFilter( IHandleEntity *pHandleEntity, IHandleEntity *pHandleEntity2, int collisionGroup )
         : CTraceFilterSkipTwoEntities( pHandleEntity, pHandleEntity2, collisionGroup ), m_pVehicle( NULL )
     {
@@ -258,7 +258,7 @@ class CWeaponLOSFilter : public CTraceFilterSkipTwoEntities
         return BaseClass::ShouldHitEntity( pServerEntity, contentsMask );
     }
 
-   private:
+    private:
     CBaseEntity *m_pVehicle;
 };
 
@@ -622,7 +622,7 @@ void CBaseCombatWeapon::CheckRespawn( void )
 
 class CWeaponList : public CAutoGameSystem
 {
-   public:
+    public:
     CWeaponList( char const *name )
         : CAutoGameSystem( name )
     {

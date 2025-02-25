@@ -21,7 +21,7 @@ class CAudioSource;
 #pragma pack( push, 4 )
 class CVoiceData
 {
-   public:
+    public:
     CVoiceData( void )
     {
         m_flElapsed = 0.0f;
@@ -55,7 +55,7 @@ class CVoiceData
         return m_pAudioSource;
     }
 
-   private:
+    private:
     float m_flElapsed;
     CAudioSource *m_pAudioSource;
     bool m_bIgnorePhonemes;
@@ -68,7 +68,7 @@ class CVoiceData
 //-----------------------------------------------------------------------------
 class CMouthInfo
 {
-   public:
+    public:
     // 0 = mouth closed, 255 = mouth agape
     byte mouthopen;
     // counter for running average
@@ -76,7 +76,7 @@ class CMouthInfo
     // running average
     int sndavg;
 
-   public:
+    public:
     CMouthInfo( void )
     {
         m_nVoiceSources = 0;
@@ -109,7 +109,7 @@ class CMouthInfo
         m_needsEnvelope = true;
     }
 
-   private:
+    private:
     enum
     {
         MAX_VOICE_DATA = 4

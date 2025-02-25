@@ -15,14 +15,14 @@
 //-----------------------------------------------------------------------------
 class C_Barney : public C_AI_BaseNPC
 {
-   public:
+    public:
     DECLARE_CLASS( C_Barney, C_AI_BaseNPC );
     DECLARE_CLIENTCLASS();
 
     C_Barney();
     virtual ~C_Barney();
 
-   private:
+    private:
     C_Barney( const C_Barney& );  // not defined, not accessible
 };
 

@@ -53,7 +53,7 @@ DEFINE_AUTO_ARRAY( m_szMaterialName, FIELD_CHARACTER ),
 //-----------------------------------------------------------------------------
 class CEnvAR2Explosion : public CPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CEnvAR2Explosion, CPointEntity );
 
     void Spawn( void );
@@ -63,7 +63,7 @@ class CEnvAR2Explosion : public CPointEntity
 
     DECLARE_DATADESC();
 
-   private:
+    private:
     string_t m_iszMaterialName;
 };
 

@@ -19,7 +19,7 @@
 
 class TimedEvent
 {
-   public:
+    public:
     TimedEvent()
     {
         m_TimeBetweenEvents = -1;
@@ -57,7 +57,7 @@ class TimedEvent
         }
     }
 
-   private:
+    private:
     float m_TimeBetweenEvents;
     float m_fNextEvent;  // When the next event should be triggered.
 };

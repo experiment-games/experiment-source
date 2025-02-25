@@ -300,9 +300,9 @@ SHADER_DRAW
             numTexCoords = 8;
         }
         pShaderShadow->VertexShaderVertexFormat( flags,
-                                                 numTexCoords,
-                                                 nSplineType ? s_TexCoordSizeSpline : s_TexCoordSize,
-                                                 0 );
+                                                numTexCoords,
+                                                nSplineType ? s_TexCoordSizeSpline : s_TexCoordSize,
+                                                0 );
 
         if ( bDX8 )
         {

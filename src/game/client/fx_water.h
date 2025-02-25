@@ -17,7 +17,7 @@
 
 class CSplashParticle : public CSimpleEmitter
 {
-   public:
+    public:
     CSplashParticle( const char *pDebugName )
         : CSimpleEmitter( pDebugName ), m_bUseClipHeight( false ) {}
 
@@ -41,7 +41,7 @@ class CSplashParticle : public CSimpleEmitter
     // Simulation
     void SimulateParticles( CParticleSimulateIterator *pIterator );
 
-   private:
+    private:
     CSplashParticle( const CSplashParticle & );
 
     float m_flClipHeight;
@@ -50,7 +50,7 @@ class CSplashParticle : public CSimpleEmitter
 
 class WaterDebrisEffect : public CSimpleEmitter
 {
-   public:
+    public:
     WaterDebrisEffect( const char *pDebugName )
         : CSimpleEmitter( pDebugName ) {}
 
@@ -58,7 +58,7 @@ class WaterDebrisEffect : public CSimpleEmitter
 
     virtual float UpdateAlpha( const SimpleParticle *pParticle );
 
-   private:
+    private:
     WaterDebrisEffect( const WaterDebrisEffect & );
 };
 

@@ -65,7 +65,7 @@
 ** sizeof(long) == 32.)
 */
 #if ((((LUA_MAXINTEGER >> (NBM / 4)) >> (NBM / 4)) >> (NBM / 4)) \
-	>> (NBM - (3 * (NBM / 4))))  >  0
+    >> (NBM - (3 * (NBM / 4))))  >  0
 
 /* limit for integers that fit in a float */
 #define MAXINTFITSF	((lua_Unsigned)1 << NBM)
@@ -123,7 +123,7 @@ int luaV_flttointeger (lua_Number n, lua_Integer *p, F2Imod mode) {
   if (n != f) {  /* not an integral value? */
     if (mode == F2Ieq) return 0;  /* fails if mode demands integral value */
     else if (mode == F2Iceil)  /* needs ceil? */
-      f += 1;  /* convert floor to ceil (remember: n != f) */
+    f += 1;  /* convert floor to ceil (remember: n != f) */
   }
   return lua_numbertointeger(f, p);
 }
@@ -174,20 +174,20 @@ int luaV_tointeger (const TValue *obj, lua_Integer *p, F2Imod mode) {
 ** an initial value equal to LUA_MININTEGER.)
 */
 static int forlimit (lua_State *L, lua_Integer init, const TValue *lim,
-                                   lua_Integer *p, lua_Integer step) {
+                                    lua_Integer *p, lua_Integer step) {
   if (!luaV_tointeger(lim, p, (step < 0 ? F2Iceil : F2Ifloor))) {
     /* not coercible to in integer */
     lua_Number flim;  /* try to convert to float */
     if (!tonumber(lim, &flim)) /* cannot convert to float? */
-      luaG_forerror(L, lim, "limit");
+    luaG_forerror(L, lim, "limit");
     /* else 'flim' is a float out of integer bounds */
     if (luai_numlt(0, flim)) {  /* if it is positive, it is too large */
-      if (step < 0) return 1;  /* initial value must be less than it */
-      *p = LUA_MAXINTEGER;  /* truncate */
+    if (step < 0) return 1;  /* initial value must be less than it */
+    *p = LUA_MAXINTEGER;  /* truncate */
     }
     else {  /* it is less than min integer */
-      if (step > 0) return 1;  /* initial value must be greater than it */
-      *p = LUA_MININTEGER;  /* truncate */
+    if (step > 0) return 1;  /* initial value must be greater than it */
+    *p = LUA_MININTEGER;  /* truncate */
     }
   }
   return (step > 0 ? init > *p : init < *p);  /* not to run? */
@@ -212,46 +212,46 @@ static int forprep (lua_State *L, StkId ra) {
     lua_Integer step = ivalue(pstep);
     lua_Integer limit;
     if (step == 0)
-      luaG_runerror(L, "'for' step is zero");
+    luaG_runerror(L, "'for' step is zero");
     setivalue(s2v(ra + 3), init);  /* control variable */
     if (forlimit(L, init, plimit, &limit, step))
-      return 1;  /* skip the loop */
+    return 1;  /* skip the loop */
     else {  /* prepare loop counter */
-      lua_Unsigned count;
-      if (step > 0) {  /* ascending loop? */
+    lua_Unsigned count;
+    if (step > 0) {  /* ascending loop? */
         count = l_castS2U(limit) - l_castS2U(init);
         if (step != 1)  /* avoid division in the too common case */
-          count /= l_castS2U(step);
-      }
-      else {  /* step < 0; descending loop */
+        count /= l_castS2U(step);
+    }
+    else {  /* step < 0; descending loop */
         count = l_castS2U(init) - l_castS2U(limit);
         /* 'step+1' avoids negating 'mininteger' */
         count /= l_castS2U(-(step + 1)) + 1u;
-      }
-      /* store the counter in place of the limit (which won't be
-         needed anymore) */
-      setivalue(plimit, l_castU2S(count));
+    }
+    /* store the counter in place of the limit (which won't be
+        needed anymore) */
+    setivalue(plimit, l_castU2S(count));
     }
   }
   else {  /* try making all values floats */
     lua_Number init; lua_Number limit; lua_Number step;
     if (l_unlikely(!tonumber(plimit, &limit)))
-      luaG_forerror(L, plimit, "limit");
+    luaG_forerror(L, plimit, "limit");
     if (l_unlikely(!tonumber(pstep, &step)))
-      luaG_forerror(L, pstep, "step");
+    luaG_forerror(L, pstep, "step");
     if (l_unlikely(!tonumber(pinit, &init)))
-      luaG_forerror(L, pinit, "initial value");
+    luaG_forerror(L, pinit, "initial value");
     if (step == 0)
-      luaG_runerror(L, "'for' step is zero");
+    luaG_runerror(L, "'for' step is zero");
     if (luai_numlt(0, step) ? luai_numlt(limit, init)
                             : luai_numlt(init, limit))
-      return 1;  /* skip the loop */
+    return 1;  /* skip the loop */
     else {
-      /* make sure internal values are all floats */
-      setfltvalue(plimit, limit);
-      setfltvalue(pstep, step);
-      setfltvalue(s2v(ra), init);  /* internal index */
-      setfltvalue(s2v(ra + 3), init);  /* control variable */
+    /* make sure internal values are all floats */
+    setfltvalue(plimit, limit);
+    setfltvalue(pstep, step);
+    setfltvalue(s2v(ra), init);  /* internal index */
+    setfltvalue(s2v(ra + 3), init);  /* control variable */
     }
   }
   return 0;
@@ -269,7 +269,7 @@ static int floatforloop (StkId ra) {
   lua_Number idx = fltvalue(s2v(ra));  /* internal index */
   idx = luai_numadd(L, idx, step);  /* increment index */
   if (luai_numlt(0, step) ? luai_numle(idx, limit)
-                          : luai_numle(limit, idx)) {
+                        : luai_numle(limit, idx)) {
     chgfltvalue(s2v(ra), idx);  /* update internal index */
     setfltvalue(s2v(ra + 3), idx);  /* and control variable */
     return 1;  /* jump back */
@@ -285,34 +285,34 @@ static int floatforloop (StkId ra) {
 ** t[k] entry (which must be empty).
 */
 void luaV_finishget (lua_State *L, const TValue *t, TValue *key, StkId val,
-                      const TValue *slot) {
+                    const TValue *slot) {
   int loop;  /* counter to avoid infinite loops */
   const TValue *tm;  /* metamethod */
   for (loop = 0; loop < MAXTAGLOOP; loop++) {
     if (slot == NULL) {  /* 't' is not a table? */
-      lua_assert(!ttistable(t));
-      tm = luaT_gettmbyobj(L, t, TM_INDEX);
-      if (l_unlikely(notm(tm)))
+    lua_assert(!ttistable(t));
+    tm = luaT_gettmbyobj(L, t, TM_INDEX);
+    if (l_unlikely(notm(tm)))
         luaG_typeerror(L, t, "index");  /* no metamethod */
-      /* else will try the metamethod */
+    /* else will try the metamethod */
     }
     else {  /* 't' is a table */
-      lua_assert(isempty(slot));
-      tm = fasttm(L, hvalue(t)->metatable, TM_INDEX);  /* table's metamethod */
-      if (tm == NULL) {  /* no metamethod? */
+    lua_assert(isempty(slot));
+    tm = fasttm(L, hvalue(t)->metatable, TM_INDEX);  /* table's metamethod */
+    if (tm == NULL) {  /* no metamethod? */
         setnilvalue(s2v(val));  /* result is nil */
         return;
-      }
-      /* else will try the metamethod */
+    }
+    /* else will try the metamethod */
     }
     if (ttisfunction(tm)) {  /* is metamethod a function? */
-      luaT_callTMres(L, tm, t, key, val);  /* call it */
-      return;
+    luaT_callTMres(L, tm, t, key, val);  /* call it */
+    return;
     }
     t = tm;  /* else try to access 'tm[key]' */
     if (luaV_fastget(L, t, key, slot, luaH_get)) {  /* fast track? */
-      setobj2s(L, val, slot);  /* done */
-      return;
+    setobj2s(L, val, slot);  /* done */
+    return;
     }
     /* else repeat (tail call 'luaV_finishget') */
   }
@@ -328,36 +328,36 @@ void luaV_finishget (lua_State *L, const TValue *t, TValue *key, StkId val,
 ** 'luaV_fastget' would have done the job.)
 */
 void luaV_finishset (lua_State *L, const TValue *t, TValue *key,
-                     TValue *val, const TValue *slot) {
+                    TValue *val, const TValue *slot) {
   int loop;  /* counter to avoid infinite loops */
   for (loop = 0; loop < MAXTAGLOOP; loop++) {
     const TValue *tm;  /* '__newindex' metamethod */
     if (slot != NULL) {  /* is 't' a table? */
-      Table *h = hvalue(t);  /* save 't' table */
-      lua_assert(isempty(slot));  /* slot must be empty */
-      tm = fasttm(L, h->metatable, TM_NEWINDEX);  /* get metamethod */
-      if (tm == NULL) {  /* no metamethod? */
+    Table *h = hvalue(t);  /* save 't' table */
+    lua_assert(isempty(slot));  /* slot must be empty */
+    tm = fasttm(L, h->metatable, TM_NEWINDEX);  /* get metamethod */
+    if (tm == NULL) {  /* no metamethod? */
         luaH_finishset(L, h, key, slot, val);  /* set new value */
         invalidateTMcache(h);
         luaC_barrierback(L, obj2gco(h), val);
         return;
-      }
-      /* else will try the metamethod */
+    }
+    /* else will try the metamethod */
     }
     else {  /* not a table; check metamethod */
-      tm = luaT_gettmbyobj(L, t, TM_NEWINDEX);
-      if (l_unlikely(notm(tm)))
+    tm = luaT_gettmbyobj(L, t, TM_NEWINDEX);
+    if (l_unlikely(notm(tm)))
         luaG_typeerror(L, t, "index");
     }
     /* try the metamethod */
     if (ttisfunction(tm)) {
-      luaT_callTM(L, tm, t, key, val);
-      return;
+    luaT_callTM(L, tm, t, key, val);
+    return;
     }
     t = tm;  /* else repeat assignment over 'tm' */
     if (luaV_fastget(L, t, key, slot, luaH_get)) {
-      luaV_finishfastset(L, t, slot, val);
-      return;  /* done */
+    luaV_finishfastset(L, t, slot, val);
+    return;  /* done */
     }
     /* else 'return luaV_finishset(L, t, key, val, slot)' (loop) */
   }
@@ -380,16 +380,16 @@ static int l_strcmp (const TString *ls, const TString *rs) {
   for (;;) {  /* for each segment */
     int temp = strcoll(l, r);
     if (temp != 0)  /* not equal? */
-      return temp;  /* done */
+    return temp;  /* done */
     else {  /* strings are equal up to a '\0' */
-      size_t len = strlen(l);  /* index of first '\0' in both strings */
-      if (len == lr)  /* 'rs' is finished? */
+    size_t len = strlen(l);  /* index of first '\0' in both strings */
+    if (len == lr)  /* 'rs' is finished? */
         return (len == ll) ? 0 : 1;  /* check 'ls' */
-      else if (len == ll)  /* 'ls' is finished? */
+    else if (len == ll)  /* 'ls' is finished? */
         return -1;  /* 'ls' is less than 'rs' ('rs' is not finished) */
-      /* both strings longer than 'len'; go on comparing after the '\0' */
-      len++;
-      l += len; ll -= len; r += len; lr -= len;
+    /* both strings longer than 'len'; go on comparing after the '\0' */
+    len++;
+    l += len; ll -= len; r += len; lr -= len;
     }
   }
 }
@@ -412,9 +412,9 @@ l_sinline int LTintfloat (lua_Integer i, lua_Number f) {
   else {  /* i < f <=> i < ceil(f) */
     lua_Integer fi;
     if (luaV_flttointeger(f, &fi, F2Iceil))  /* fi = ceil(f) */
-      return i < fi;   /* compare them as integers */
+    return i < fi;   /* compare them as integers */
     else  /* 'f' is either greater or less than all integers */
-      return f > 0;  /* greater? */
+    return f > 0;  /* greater? */
   }
 }
 
@@ -429,9 +429,9 @@ l_sinline int LEintfloat (lua_Integer i, lua_Number f) {
   else {  /* i <= f <=> i <= floor(f) */
     lua_Integer fi;
     if (luaV_flttointeger(f, &fi, F2Ifloor))  /* fi = floor(f) */
-      return i <= fi;   /* compare them as integers */
+    return i <= fi;   /* compare them as integers */
     else  /* 'f' is either greater or less than all integers */
-      return f > 0;  /* greater? */
+    return f > 0;  /* greater? */
   }
 }
 
@@ -446,9 +446,9 @@ l_sinline int LTfloatint (lua_Number f, lua_Integer i) {
   else {  /* f < i <=> floor(f) < i */
     lua_Integer fi;
     if (luaV_flttointeger(f, &fi, F2Ifloor))  /* fi = floor(f) */
-      return fi < i;   /* compare them as integers */
+    return fi < i;   /* compare them as integers */
     else  /* 'f' is either greater or less than all integers */
-      return f < 0;  /* less? */
+    return f < 0;  /* less? */
   }
 }
 
@@ -463,9 +463,9 @@ l_sinline int LEfloatint (lua_Number f, lua_Integer i) {
   else {  /* f <= i <=> ceil(f) <= i */
     lua_Integer fi;
     if (luaV_flttointeger(f, &fi, F2Iceil))  /* fi = ceil(f) */
-      return fi <= i;   /* compare them as integers */
+    return fi <= i;   /* compare them as integers */
     else  /* 'f' is either greater or less than all integers */
-      return f < 0;  /* less? */
+    return f < 0;  /* less? */
   }
 }
 
@@ -478,16 +478,16 @@ l_sinline int LTnum (const TValue *l, const TValue *r) {
   if (ttisinteger(l)) {
     lua_Integer li = ivalue(l);
     if (ttisinteger(r))
-      return li < ivalue(r);  /* both are integers */
+    return li < ivalue(r);  /* both are integers */
     else  /* 'l' is int and 'r' is float */
-      return LTintfloat(li, fltvalue(r));  /* l < r ? */
+    return LTintfloat(li, fltvalue(r));  /* l < r ? */
   }
   else {
     lua_Number lf = fltvalue(l);  /* 'l' must be float */
     if (ttisfloat(r))
-      return luai_numlt(lf, fltvalue(r));  /* both are float */
+    return luai_numlt(lf, fltvalue(r));  /* both are float */
     else  /* 'l' is float and 'r' is int */
-      return LTfloatint(lf, ivalue(r));
+    return LTfloatint(lf, ivalue(r));
   }
 }
 
@@ -500,16 +500,16 @@ l_sinline int LEnum (const TValue *l, const TValue *r) {
   if (ttisinteger(l)) {
     lua_Integer li = ivalue(l);
     if (ttisinteger(r))
-      return li <= ivalue(r);  /* both are integers */
+    return li <= ivalue(r);  /* both are integers */
     else  /* 'l' is int and 'r' is float */
-      return LEintfloat(li, fltvalue(r));  /* l <= r ? */
+    return LEintfloat(li, fltvalue(r));  /* l <= r ? */
   }
   else {
     lua_Number lf = fltvalue(l);  /* 'l' must be float */
     if (ttisfloat(r))
-      return luai_numle(lf, fltvalue(r));  /* both are float */
+    return luai_numle(lf, fltvalue(r));  /* both are float */
     else  /* 'l' is float and 'r' is int */
-      return LEfloatint(lf, ivalue(r));
+    return LEfloatint(lf, ivalue(r));
   }
 }
 
@@ -566,15 +566,15 @@ int luaV_equalobj (lua_State *L, const TValue *t1, const TValue *t2) {
   const TValue *tm;
   if (ttypetag(t1) != ttypetag(t2)) {  /* not the same variant? */
     if (ttype(t1) != ttype(t2) || ttype(t1) != LUA_TNUMBER)
-      return 0;  /* only numbers can be equal with different variants */
+    return 0;  /* only numbers can be equal with different variants */
     else {  /* two numbers with different variants */
-      /* One of them is an integer. If the other does not have an
-         integer value, they cannot be equal; otherwise, compare their
-         integer values. */
-      lua_Integer i1, i2;
-      return (luaV_tointegerns(t1, &i1, F2Ieq) &&
-              luaV_tointegerns(t2, &i2, F2Ieq) &&
-              i1 == i2);
+    /* One of them is an integer. If the other does not have an
+        integer value, they cannot be equal; otherwise, compare their
+        integer values. */
+    lua_Integer i1, i2;
+    return (luaV_tointegerns(t1, &i1, F2Ieq) &&
+            luaV_tointegerns(t2, &i2, F2Ieq) &&
+            i1 == i2);
     }
   }
   /* values have same type and same variant */
@@ -587,23 +587,23 @@ int luaV_equalobj (lua_State *L, const TValue *t1, const TValue *t2) {
     case LUA_VSHRSTR: return eqshrstr(tsvalue(t1), tsvalue(t2));
     case LUA_VLNGSTR: return luaS_eqlngstr(tsvalue(t1), tsvalue(t2));
     case LUA_VUSERDATA: {
-      if (uvalue(t1) == uvalue(t2)) return 1;
-      else if (L == NULL) return 0;
-      tm = fasttm(L, uvalue(t1)->metatable, TM_EQ);
-      if (tm == NULL)
+    if (uvalue(t1) == uvalue(t2)) return 1;
+    else if (L == NULL) return 0;
+    tm = fasttm(L, uvalue(t1)->metatable, TM_EQ);
+    if (tm == NULL)
         tm = fasttm(L, uvalue(t2)->metatable, TM_EQ);
-      break;  /* will try TM */
+    break;  /* will try TM */
     }
     case LUA_VTABLE: {
-      if (hvalue(t1) == hvalue(t2)) return 1;
-      else if (L == NULL) return 0;
-      tm = fasttm(L, hvalue(t1)->metatable, TM_EQ);
-      if (tm == NULL)
+    if (hvalue(t1) == hvalue(t2)) return 1;
+    else if (L == NULL) return 0;
+    tm = fasttm(L, hvalue(t1)->metatable, TM_EQ);
+    if (tm == NULL)
         tm = fasttm(L, hvalue(t2)->metatable, TM_EQ);
-      break;  /* will try TM */
+    break;  /* will try TM */
     }
     default:
-      return gcvalue(t1) == gcvalue(t2);
+    return gcvalue(t1) == gcvalue(t2);
   }
   if (tm == NULL)  /* no TM? */
     return 0;  /* objects are different */
@@ -616,7 +616,7 @@ int luaV_equalobj (lua_State *L, const TValue *t1, const TValue *t2) {
 
 /* macro used by 'luaV_concat' to ensure that element at 'o' is a string */
 #define tostring(L,o)  \
-	(ttisstring(o) || (cvt2str(o) && (luaO_tostring(L, o), 1)))
+    (ttisstring(o) || (cvt2str(o) && (luaO_tostring(L, o), 1)))
 
 #define isemptystr(o)	(ttisshrstring(o) && tsvalue(o)->shrlen == 0)
 
@@ -643,35 +643,35 @@ void luaV_concat (lua_State *L, int total) {
     int n = 2;  /* number of elements handled in this pass (at least 2) */
     if (!(ttisstring(s2v(top - 2)) || cvt2str(s2v(top - 2))) ||
         !tostring(L, s2v(top - 1)))
-      luaT_tryconcatTM(L);  /* may invalidate 'top' */
+    luaT_tryconcatTM(L);  /* may invalidate 'top' */
     else if (isemptystr(s2v(top - 1)))  /* second operand is empty? */
-      cast_void(tostring(L, s2v(top - 2)));  /* result is first operand */
+    cast_void(tostring(L, s2v(top - 2)));  /* result is first operand */
     else if (isemptystr(s2v(top - 2))) {  /* first operand is empty string? */
-      setobjs2s(L, top - 2, top - 1);  /* result is second op. */
+    setobjs2s(L, top - 2, top - 1);  /* result is second op. */
     }
     else {
-      /* at least two non-empty string values; get as many as possible */
-      size_t tl = vslen(s2v(top - 1));
-      TString *ts;
-      /* collect total length and number of strings */
-      for (n = 1; n < total && tostring(L, s2v(top - n - 1)); n++) {
+    /* at least two non-empty string values; get as many as possible */
+    size_t tl = vslen(s2v(top - 1));
+    TString *ts;
+    /* collect total length and number of strings */
+    for (n = 1; n < total && tostring(L, s2v(top - n - 1)); n++) {
         size_t l = vslen(s2v(top - n - 1));
         if (l_unlikely(l >= (MAX_SIZE/sizeof(char)) - tl)) {
-          L->top.p = top - total;  /* pop strings to avoid wasting stack */
-          luaG_runerror(L, "string length overflow");
+        L->top.p = top - total;  /* pop strings to avoid wasting stack */
+        luaG_runerror(L, "string length overflow");
         }
         tl += l;
-      }
-      if (tl <= LUAI_MAXSHORTLEN) {  /* is result a short string? */
+    }
+    if (tl <= LUAI_MAXSHORTLEN) {  /* is result a short string? */
         char buff[LUAI_MAXSHORTLEN];
         copy2buff(top, n, buff);  /* copy strings to buffer */
         ts = luaS_newlstr(L, buff, tl);
-      }
-      else {  /* long string; copy strings directly to final result */
+    }
+    else {  /* long string; copy strings directly to final result */
         ts = luaS_createlngstrobj(L, tl);
         copy2buff(top, n, getstr(ts));
-      }
-      setsvalue2s(L, top - n, ts);  /* create result */
+    }
+    setsvalue2s(L, top - n, ts);  /* create result */
     }
     total -= n - 1;  /* got 'n' strings to create one new */
     L->top.p -= n - 1;  /* popped 'n' strings and pushed one */
@@ -686,25 +686,25 @@ void luaV_objlen (lua_State *L, StkId ra, const TValue *rb) {
   const TValue *tm;
   switch (ttypetag(rb)) {
     case LUA_VTABLE: {
-      Table *h = hvalue(rb);
-      tm = fasttm(L, h->metatable, TM_LEN);
-      if (tm) break;  /* metamethod? break switch to call it */
-      setivalue(s2v(ra), luaH_getn(h));  /* else primitive len */
-      return;
+    Table *h = hvalue(rb);
+    tm = fasttm(L, h->metatable, TM_LEN);
+    if (tm) break;  /* metamethod? break switch to call it */
+    setivalue(s2v(ra), luaH_getn(h));  /* else primitive len */
+    return;
     }
     case LUA_VSHRSTR: {
-      setivalue(s2v(ra), tsvalue(rb)->shrlen);
-      return;
+    setivalue(s2v(ra), tsvalue(rb)->shrlen);
+    return;
     }
     case LUA_VLNGSTR: {
-      setivalue(s2v(ra), tsvalue(rb)->u.lnglen);
-      return;
+    setivalue(s2v(ra), tsvalue(rb)->u.lnglen);
+    return;
     }
     default: {  /* try metamethod */
-      tm = luaT_gettmbyobj(L, rb, TM_LEN);
-      if (l_unlikely(notm(tm)))  /* no metamethod? */
+    tm = luaT_gettmbyobj(L, rb, TM_LEN);
+    if (l_unlikely(notm(tm)))  /* no metamethod? */
         luaG_typeerror(L, rb, "get length of");
-      break;
+    break;
     }
   }
   luaT_callTMres(L, tm, rb, rb, ra);
@@ -720,13 +720,13 @@ void luaV_objlen (lua_State *L, StkId ra, const TValue *rb) {
 lua_Integer luaV_idiv (lua_State *L, lua_Integer m, lua_Integer n) {
   if (l_unlikely(l_castS2U(n) + 1u <= 1u)) {  /* special cases: -1 or 0 */
     if (n == 0)
-      luaG_runerror(L, "attempt to divide by zero");
+    luaG_runerror(L, "attempt to divide by zero");
     return intop(-, 0, m);   /* n==-1; avoid overflow with 0x80000...//-1 */
   }
   else {
     lua_Integer q = m / n;  /* perform C division */
     if ((m ^ n) < 0 && m % n != 0)  /* 'm/n' would be negative non-integer? */
-      q -= 1;  /* correct result for different rounding */
+    q -= 1;  /* correct result for different rounding */
     return q;
   }
 }
@@ -740,13 +740,13 @@ lua_Integer luaV_idiv (lua_State *L, lua_Integer m, lua_Integer n) {
 lua_Integer luaV_mod (lua_State *L, lua_Integer m, lua_Integer n) {
   if (l_unlikely(l_castS2U(n) + 1u <= 1u)) {  /* special cases: -1 or 0 */
     if (n == 0)
-      luaG_runerror(L, "attempt to perform 'n%%0'");
+    luaG_runerror(L, "attempt to perform 'n%%0'");
     return 0;   /* m % -1 == 0; avoid overflow with 0x80000...%-1 */
   }
   else {
     lua_Integer r = m % n;
     if (r != 0 && (r ^ n) < 0)  /* 'm/n' would be non-integer negative? */
-      r += n;  /* correct result for different rounding */
+    r += n;  /* correct result for different rounding */
     return r;
   }
 }
@@ -786,7 +786,7 @@ lua_Integer luaV_shiftl (lua_Integer x, lua_Integer y) {
 ** its upvalues.
 */
 static void pushclosure (lua_State *L, Proto *p, UpVal **encup, StkId base,
-                         StkId ra) {
+                        StkId ra) {
   int nup = p->sizeupvalues;
   Upvaldesc *uv = p->upvalues;
   int i;
@@ -795,9 +795,9 @@ static void pushclosure (lua_State *L, Proto *p, UpVal **encup, StkId base,
   setclLvalue2s(L, ra, ncl);  /* anchor new closure in stack */
   for (i = 0; i < nup; i++) {  /* fill in its upvalues */
     if (uv[i].instack)  /* upvalue refers to local variable? */
-      ncl->upvals[i] = luaF_findupval(L, base + uv[i].idx);
+    ncl->upvals[i] = luaF_findupval(L, base + uv[i].idx);
     else  /* get upvalue from enclosing function */
-      ncl->upvals[i] = encup[uv[i].idx];
+    ncl->upvals[i] = encup[uv[i].idx];
     luaC_objbarrier(L, ncl, ncl->upvals[i]);
   }
 }
@@ -813,60 +813,60 @@ void luaV_finishOp (lua_State *L) {
   OpCode op = GET_OPCODE(inst);
   switch (op) {  /* finish its execution */
     case OP_MMBIN: case OP_MMBINI: case OP_MMBINK: {
-      setobjs2s(L, base + GETARG_A(*(ci->u.l.savedpc - 2)), --L->top.p);
-      break;
+    setobjs2s(L, base + GETARG_A(*(ci->u.l.savedpc - 2)), --L->top.p);
+    break;
     }
     case OP_UNM: case OP_BNOT: case OP_LEN:
     case OP_GETTABUP: case OP_GETTABLE: case OP_GETI:
     case OP_GETFIELD: case OP_SELF: {
-      setobjs2s(L, base + GETARG_A(inst), --L->top.p);
-      break;
+    setobjs2s(L, base + GETARG_A(inst), --L->top.p);
+    break;
     }
     case OP_LT: case OP_LE:
     case OP_LTI: case OP_LEI:
     case OP_GTI: case OP_GEI:
     case OP_EQ: {  /* note that 'OP_EQI'/'OP_EQK' cannot yield */
-      int res = !l_isfalse(s2v(L->top.p - 1));
-      L->top.p--;
+    int res = !l_isfalse(s2v(L->top.p - 1));
+    L->top.p--;
 #if defined(LUA_COMPAT_LT_LE)
-      if (ci->callstatus & CIST_LEQ) {  /* "<=" using "<" instead? */
+    if (ci->callstatus & CIST_LEQ) {  /* "<=" using "<" instead? */
         ci->callstatus ^= CIST_LEQ;  /* clear mark */
         res = !res;  /* negate result */
-      }
+    }
 #endif
-      lua_assert(GET_OPCODE(*ci->u.l.savedpc) == OP_JMP);
-      if (res != GETARG_k(inst))  /* condition failed? */
+    lua_assert(GET_OPCODE(*ci->u.l.savedpc) == OP_JMP);
+    if (res != GETARG_k(inst))  /* condition failed? */
         ci->u.l.savedpc++;  /* skip jump instruction */
-      break;
+    break;
     }
     case OP_CONCAT: {
-      StkId top = L->top.p - 1;  /* top when 'luaT_tryconcatTM' was called */
-      int a = GETARG_A(inst);      /* first element to concatenate */
-      int total = cast_int(top - 1 - (base + a));  /* yet to concatenate */
-      setobjs2s(L, top - 2, top);  /* put TM result in proper position */
-      L->top.p = top - 1;  /* top is one after last element (at top-2) */
-      luaV_concat(L, total);  /* concat them (may yield again) */
-      break;
+    StkId top = L->top.p - 1;  /* top when 'luaT_tryconcatTM' was called */
+    int a = GETARG_A(inst);      /* first element to concatenate */
+    int total = cast_int(top - 1 - (base + a));  /* yet to concatenate */
+    setobjs2s(L, top - 2, top);  /* put TM result in proper position */
+    L->top.p = top - 1;  /* top is one after last element (at top-2) */
+    luaV_concat(L, total);  /* concat them (may yield again) */
+    break;
     }
     case OP_CLOSE: {  /* yielded closing variables */
-      ci->u.l.savedpc--;  /* repeat instruction to close other vars. */
-      break;
+    ci->u.l.savedpc--;  /* repeat instruction to close other vars. */
+    break;
     }
     case OP_RETURN: {  /* yielded closing variables */
-      StkId ra = base + GETARG_A(inst);
-      /* adjust top to signal correct number of returns, in case the
-         return is "up to top" ('isIT') */
-      L->top.p = ra + ci->u2.nres;
-      /* repeat instruction to close other vars. and complete the return */
-      ci->u.l.savedpc--;
-      break;
+    StkId ra = base + GETARG_A(inst);
+    /* adjust top to signal correct number of returns, in case the
+        return is "up to top" ('isIT') */
+    L->top.p = ra + ci->u2.nres;
+    /* repeat instruction to close other vars. and complete the return */
+    ci->u.l.savedpc--;
+    break;
     }
     default: {
-      /* only these other opcodes can yield */
-      lua_assert(op == OP_TFORCALL || op == OP_CALL ||
-           op == OP_TAILCALL || op == OP_SETTABUP || op == OP_SETTABLE ||
-           op == OP_SETI || op == OP_SETFIELD);
-      break;
+    /* only these other opcodes can yield */
+    lua_assert(op == OP_TFORCALL || op == OP_CALL ||
+            op == OP_TAILCALL || op == OP_SETTABUP || op == OP_SETTABLE ||
+            op == OP_SETI || op == OP_SETFIELD);
+    break;
     }
   }
 }
@@ -1073,7 +1073,7 @@ void luaV_finishOp (lua_State *L) {
 
 
 #define updatestack(ci)  \
-	{ if (l_unlikely(trap)) { updatebase(ci); ra = RA(i); } }
+    { if (l_unlikely(trap)) { updatebase(ci); ra = RA(i); } }
 
 
 /*
@@ -1124,9 +1124,9 @@ void luaV_finishOp (lua_State *L) {
 
 /* 'c' is the limit of live values in the stack */
 #define checkGC(L,c)  \
-	{ luaC_condGC(L, (savepc(L), L->top.p = (c)), \
-                         updatetrap(ci)); \
-           luai_threadyield(L); }
+    { luaC_condGC(L, (savepc(L), L->top.p = (c)), \
+                        updatetrap(ci)); \
+            luai_threadyield(L); }
 
 
 /* fetch an instruction and prepare its execution */
@@ -1160,9 +1160,9 @@ void luaV_execute (lua_State *L, CallInfo *ci) {
   pc = ci->u.l.savedpc;
   if (l_unlikely(trap)) {
     if (pc == cl->p->code) {  /* first instruction (not resuming)? */
-      if (cl->p->is_vararg)
+    if (cl->p->is_vararg)
         trap = 0;  /* hooks will start after VARARGPREP instruction */
-      else  /* check 'call' hook */
+    else  /* check 'call' hook */
         luaD_hookcall(L, ci);
     }
     ci->u.l.trap = 1;  /* assume trap is on, for now */
@@ -1173,95 +1173,95 @@ void luaV_execute (lua_State *L, CallInfo *ci) {
     Instruction i;  /* instruction being executed */
     vmfetch();
     #if 0
-      /* low-level line tracing for debugging Lua */
-      printf("line: %d\n", luaG_getfuncline(cl->p, pcRel(pc, cl->p)));
+    /* low-level line tracing for debugging Lua */
+    printf("line: %d\n", luaG_getfuncline(cl->p, pcRel(pc, cl->p)));
     #endif
     lua_assert(base == ci->func.p + 1);
     lua_assert(base <= L->top.p && L->top.p <= L->stack_last.p);
     /* invalidate top for instructions not expecting it */
     lua_assert(isIT(i) || (cast_void(L->top.p = base), 1));
     vmdispatch (GET_OPCODE(i)) {
-      vmcase(OP_MOVE) {
+    vmcase(OP_MOVE) {
         StkId ra = RA(i);
         setobjs2s(L, ra, RB(i));
         vmbreak;
-      }
-      vmcase(OP_LOADI) {
+    }
+    vmcase(OP_LOADI) {
         StkId ra = RA(i);
         lua_Integer b = GETARG_sBx(i);
         setivalue(s2v(ra), b);
         vmbreak;
-      }
-      vmcase(OP_LOADF) {
+    }
+    vmcase(OP_LOADF) {
         StkId ra = RA(i);
         int b = GETARG_sBx(i);
         setfltvalue(s2v(ra), cast_num(b));
         vmbreak;
-      }
-      vmcase(OP_LOADK) {
+    }
+    vmcase(OP_LOADK) {
         StkId ra = RA(i);
         TValue *rb = k + GETARG_Bx(i);
         setobj2s(L, ra, rb);
         vmbreak;
-      }
-      vmcase(OP_LOADKX) {
+    }
+    vmcase(OP_LOADKX) {
         StkId ra = RA(i);
         TValue *rb;
         rb = k + GETARG_Ax(*pc); pc++;
         setobj2s(L, ra, rb);
         vmbreak;
-      }
-      vmcase(OP_LOADFALSE) {
+    }
+    vmcase(OP_LOADFALSE) {
         StkId ra = RA(i);
         setbfvalue(s2v(ra));
         vmbreak;
-      }
-      vmcase(OP_LFALSESKIP) {
+    }
+    vmcase(OP_LFALSESKIP) {
         StkId ra = RA(i);
         setbfvalue(s2v(ra));
         pc++;  /* skip next instruction */
         vmbreak;
-      }
-      vmcase(OP_LOADTRUE) {
+    }
+    vmcase(OP_LOADTRUE) {
         StkId ra = RA(i);
         setbtvalue(s2v(ra));
         vmbreak;
-      }
-      vmcase(OP_LOADNIL) {
+    }
+    vmcase(OP_LOADNIL) {
         StkId ra = RA(i);
         int b = GETARG_B(i);
         do {
-          setnilvalue(s2v(ra++));
+        setnilvalue(s2v(ra++));
         } while (b--);
         vmbreak;
-      }
-      vmcase(OP_GETUPVAL) {
+    }
+    vmcase(OP_GETUPVAL) {
         StkId ra = RA(i);
         int b = GETARG_B(i);
         setobj2s(L, ra, cl->upvals[b]->v.p);
         vmbreak;
-      }
-      vmcase(OP_SETUPVAL) {
+    }
+    vmcase(OP_SETUPVAL) {
         StkId ra = RA(i);
         UpVal *uv = cl->upvals[GETARG_B(i)];
         setobj(L, uv->v.p, s2v(ra));
         luaC_barrier(L, uv, s2v(ra));
         vmbreak;
-      }
-      vmcase(OP_GETTABUP) {
+    }
+    vmcase(OP_GETTABUP) {
         StkId ra = RA(i);
         const TValue *slot;
         TValue *upval = cl->upvals[GETARG_B(i)]->v.p;
         TValue *rc = KC(i);
         TString *key = tsvalue(rc);  /* key must be a string */
         if (luaV_fastget(L, upval, key, slot, luaH_getshortstr)) {
-          setobj2s(L, ra, slot);
+        setobj2s(L, ra, slot);
         }
         else
-          Protect(luaV_finishget(L, upval, rc, ra, slot));
+        Protect(luaV_finishget(L, upval, rc, ra, slot));
         vmbreak;
-      }
-      vmcase(OP_GETTABLE) {
+    }
+    vmcase(OP_GETTABLE) {
         StkId ra = RA(i);
         const TValue *slot;
         TValue *rb = vRB(i);
@@ -1270,54 +1270,54 @@ void luaV_execute (lua_State *L, CallInfo *ci) {
         if (ttisinteger(rc)  /* fast track for integers? */
             ? (cast_void(n = ivalue(rc)), luaV_fastgeti(L, rb, n, slot))
             : luaV_fastget(L, rb, rc, slot, luaH_get)) {
-          setobj2s(L, ra, slot);
+        setobj2s(L, ra, slot);
         }
         else
-          Protect(luaV_finishget(L, rb, rc, ra, slot));
+        Protect(luaV_finishget(L, rb, rc, ra, slot));
         vmbreak;
-      }
-      vmcase(OP_GETI) {
+    }
+    vmcase(OP_GETI) {
         StkId ra = RA(i);
         const TValue *slot;
         TValue *rb = vRB(i);
         int c = GETARG_C(i);
         if (luaV_fastgeti(L, rb, c, slot)) {
-          setobj2s(L, ra, slot);
+        setobj2s(L, ra, slot);
         }
         else {
-          TValue key;
-          setivalue(&key, c);
-          Protect(luaV_finishget(L, rb, &key, ra, slot));
+        TValue key;
+        setivalue(&key, c);
+        Protect(luaV_finishget(L, rb, &key, ra, slot));
         }
         vmbreak;
-      }
-      vmcase(OP_GETFIELD) {
+    }
+    vmcase(OP_GETFIELD) {
         StkId ra = RA(i);
         const TValue *slot;
         TValue *rb = vRB(i);
         TValue *rc = KC(i);
         TString *key = tsvalue(rc);  /* key must be a string */
         if (luaV_fastget(L, rb, key, slot, luaH_getshortstr)) {
-          setobj2s(L, ra, slot);
+        setobj2s(L, ra, slot);
         }
         else
-          Protect(luaV_finishget(L, rb, rc, ra, slot));
+        Protect(luaV_finishget(L, rb, rc, ra, slot));
         vmbreak;
-      }
-      vmcase(OP_SETTABUP) {
+    }
+    vmcase(OP_SETTABUP) {
         const TValue *slot;
         TValue *upval = cl->upvals[GETARG_A(i)]->v.p;
         TValue *rb = KB(i);
         TValue *rc = RKC(i);
         TString *key = tsvalue(rb);  /* key must be a string */
         if (luaV_fastget(L, upval, key, slot, luaH_getshortstr)) {
-          luaV_finishfastset(L, upval, slot, rc);
+        luaV_finishfastset(L, upval, slot, rc);
         }
         else
-          Protect(luaV_finishset(L, upval, rb, rc, slot));
+        Protect(luaV_finishset(L, upval, rb, rc, slot));
         vmbreak;
-      }
-      vmcase(OP_SETTABLE) {
+    }
+    vmcase(OP_SETTABLE) {
         StkId ra = RA(i);
         const TValue *slot;
         TValue *rb = vRB(i);  /* key (table is in 'ra') */
@@ -1326,60 +1326,60 @@ void luaV_execute (lua_State *L, CallInfo *ci) {
         if (ttisinteger(rb)  /* fast track for integers? */
             ? (cast_void(n = ivalue(rb)), luaV_fastgeti(L, s2v(ra), n, slot))
             : luaV_fastget(L, s2v(ra), rb, slot, luaH_get)) {
-          luaV_finishfastset(L, s2v(ra), slot, rc);
+        luaV_finishfastset(L, s2v(ra), slot, rc);
         }
         else
-          Protect(luaV_finishset(L, s2v(ra), rb, rc, slot));
+        Protect(luaV_finishset(L, s2v(ra), rb, rc, slot));
         vmbreak;
-      }
-      vmcase(OP_SETI) {
+    }
+    vmcase(OP_SETI) {
         StkId ra = RA(i);
         const TValue *slot;
         int c = GETARG_B(i);
         TValue *rc = RKC(i);
         if (luaV_fastgeti(L, s2v(ra), c, slot)) {
-          luaV_finishfastset(L, s2v(ra), slot, rc);
+        luaV_finishfastset(L, s2v(ra), slot, rc);
         }
         else {
-          TValue key;
-          setivalue(&key, c);
-          Protect(luaV_finishset(L, s2v(ra), &key, rc, slot));
+        TValue key;
+        setivalue(&key, c);
+        Protect(luaV_finishset(L, s2v(ra), &key, rc, slot));
         }
         vmbreak;
-      }
-      vmcase(OP_SETFIELD) {
+    }
+    vmcase(OP_SETFIELD) {
         StkId ra = RA(i);
         const TValue *slot;
         TValue *rb = KB(i);
         TValue *rc = RKC(i);
         TString *key = tsvalue(rb);  /* key must be a string */
         if (luaV_fastget(L, s2v(ra), key, slot, luaH_getshortstr)) {
-          luaV_finishfastset(L, s2v(ra), slot, rc);
+        luaV_finishfastset(L, s2v(ra), slot, rc);
         }
         else
-          Protect(luaV_finishset(L, s2v(ra), rb, rc, slot));
+        Protect(luaV_finishset(L, s2v(ra), rb, rc, slot));
         vmbreak;
-      }
-      vmcase(OP_NEWTABLE) {
+    }
+    vmcase(OP_NEWTABLE) {
         StkId ra = RA(i);
         int b = GETARG_B(i);  /* log2(hash size) + 1 */
         int c = GETARG_C(i);  /* array size */
         Table *t;
         if (b > 0)
-          b = 1 << (b - 1);  /* size is 2^(b - 1) */
+        b = 1 << (b - 1);  /* size is 2^(b - 1) */
         lua_assert((!TESTARG_k(i)) == (GETARG_Ax(*pc) == 0));
         if (TESTARG_k(i))  /* non-zero extra argument? */
-          c += GETARG_Ax(*pc) * (MAXARG_C + 1);  /* add it to size */
+        c += GETARG_Ax(*pc) * (MAXARG_C + 1);  /* add it to size */
         pc++;  /* skip extra argument */
         L->top.p = ra + 1;  /* correct top in case of emergency GC */
         t = luaH_new(L);  /* memory allocation */
         sethvalue2s(L, ra, t);
         if (b != 0 || c != 0)
-          luaH_resize(L, t, c, b);  /* idem */
+        luaH_resize(L, t, c, b);  /* idem */
         checkGC(L, ra + 1);
         vmbreak;
-      }
-      vmcase(OP_SELF) {
+    }
+    vmcase(OP_SELF) {
         StkId ra = RA(i);
         const TValue *slot;
         TValue *rb = vRB(i);
@@ -1387,129 +1387,129 @@ void luaV_execute (lua_State *L, CallInfo *ci) {
         TString *key = tsvalue(rc);  /* key must be a string */
         setobj2s(L, ra + 1, rb);
         if (luaV_fastget(L, rb, key, slot, luaH_getstr)) {
-          setobj2s(L, ra, slot);
+        setobj2s(L, ra, slot);
         }
         else
-          Protect(luaV_finishget(L, rb, rc, ra, slot));
+        Protect(luaV_finishget(L, rb, rc, ra, slot));
         vmbreak;
-      }
-      vmcase(OP_ADDI) {
+    }
+    vmcase(OP_ADDI) {
         op_arithI(L, l_addi, luai_numadd);
         vmbreak;
-      }
-      vmcase(OP_ADDK) {
+    }
+    vmcase(OP_ADDK) {
         op_arithK(L, l_addi, luai_numadd);
         vmbreak;
-      }
-      vmcase(OP_SUBK) {
+    }
+    vmcase(OP_SUBK) {
         op_arithK(L, l_subi, luai_numsub);
         vmbreak;
-      }
-      vmcase(OP_MULK) {
+    }
+    vmcase(OP_MULK) {
         op_arithK(L, l_muli, luai_nummul);
         vmbreak;
-      }
-      vmcase(OP_MODK) {
+    }
+    vmcase(OP_MODK) {
         savestate(L, ci);  /* in case of division by 0 */
         op_arithK(L, luaV_mod, luaV_modf);
         vmbreak;
-      }
-      vmcase(OP_POWK) {
+    }
+    vmcase(OP_POWK) {
         op_arithfK(L, luai_numpow);
         vmbreak;
-      }
-      vmcase(OP_DIVK) {
+    }
+    vmcase(OP_DIVK) {
         op_arithfK(L, luai_numdiv);
         vmbreak;
-      }
-      vmcase(OP_IDIVK) {
+    }
+    vmcase(OP_IDIVK) {
         savestate(L, ci);  /* in case of division by 0 */
         op_arithK(L, luaV_idiv, luai_numidiv);
         vmbreak;
-      }
-      vmcase(OP_BANDK) {
+    }
+    vmcase(OP_BANDK) {
         op_bitwiseK(L, l_band);
         vmbreak;
-      }
-      vmcase(OP_BORK) {
+    }
+    vmcase(OP_BORK) {
         op_bitwiseK(L, l_bor);
         vmbreak;
-      }
-      vmcase(OP_BXORK) {
+    }
+    vmcase(OP_BXORK) {
         op_bitwiseK(L, l_bxor);
         vmbreak;
-      }
-      vmcase(OP_SHRI) {
+    }
+    vmcase(OP_SHRI) {
         StkId ra = RA(i);
         TValue *rb = vRB(i);
         int ic = GETARG_sC(i);
         lua_Integer ib;
         if (tointegerns(rb, &ib)) {
-          pc++; setivalue(s2v(ra), luaV_shiftl(ib, -ic));
+        pc++; setivalue(s2v(ra), luaV_shiftl(ib, -ic));
         }
         vmbreak;
-      }
-      vmcase(OP_SHLI) {
+    }
+    vmcase(OP_SHLI) {
         StkId ra = RA(i);
         TValue *rb = vRB(i);
         int ic = GETARG_sC(i);
         lua_Integer ib;
         if (tointegerns(rb, &ib)) {
-          pc++; setivalue(s2v(ra), luaV_shiftl(ic, ib));
+        pc++; setivalue(s2v(ra), luaV_shiftl(ic, ib));
         }
         vmbreak;
-      }
-      vmcase(OP_ADD) {
+    }
+    vmcase(OP_ADD) {
         op_arith(L, l_addi, luai_numadd);
         vmbreak;
-      }
-      vmcase(OP_SUB) {
+    }
+    vmcase(OP_SUB) {
         op_arith(L, l_subi, luai_numsub);
         vmbreak;
-      }
-      vmcase(OP_MUL) {
+    }
+    vmcase(OP_MUL) {
         op_arith(L, l_muli, luai_nummul);
         vmbreak;
-      }
-      vmcase(OP_MOD) {
+    }
+    vmcase(OP_MOD) {
         savestate(L, ci);  /* in case of division by 0 */
         op_arith(L, luaV_mod, luaV_modf);
         vmbreak;
-      }
-      vmcase(OP_POW) {
+    }
+    vmcase(OP_POW) {
         op_arithf(L, luai_numpow);
         vmbreak;
-      }
-      vmcase(OP_DIV) {  /* float division (always with floats) */
+    }
+    vmcase(OP_DIV) {  /* float division (always with floats) */
         op_arithf(L, luai_numdiv);
         vmbreak;
-      }
-      vmcase(OP_IDIV) {  /* floor division */
+    }
+    vmcase(OP_IDIV) {  /* floor division */
         savestate(L, ci);  /* in case of division by 0 */
         op_arith(L, luaV_idiv, luai_numidiv);
         vmbreak;
-      }
-      vmcase(OP_BAND) {
+    }
+    vmcase(OP_BAND) {
         op_bitwise(L, l_band);
         vmbreak;
-      }
-      vmcase(OP_BOR) {
+    }
+    vmcase(OP_BOR) {
         op_bitwise(L, l_bor);
         vmbreak;
-      }
-      vmcase(OP_BXOR) {
+    }
+    vmcase(OP_BXOR) {
         op_bitwise(L, l_bxor);
         vmbreak;
-      }
-      vmcase(OP_SHR) {
+    }
+    vmcase(OP_SHR) {
         op_bitwise(L, luaV_shiftr);
         vmbreak;
-      }
-      vmcase(OP_SHL) {
+    }
+    vmcase(OP_SHL) {
         op_bitwise(L, luaV_shiftl);
         vmbreak;
-      }
-      vmcase(OP_MMBIN) {
+    }
+    vmcase(OP_MMBIN) {
         StkId ra = RA(i);
         Instruction pi = *(pc - 2);  /* original arith. expression */
         TValue *rb = vRB(i);
@@ -1518,8 +1518,8 @@ void luaV_execute (lua_State *L, CallInfo *ci) {
         lua_assert(OP_ADD <= GET_OPCODE(pi) && GET_OPCODE(pi) <= OP_SHR);
         Protect(luaT_trybinTM(L, s2v(ra), rb, result, tm));
         vmbreak;
-      }
-      vmcase(OP_MMBINI) {
+    }
+    vmcase(OP_MMBINI) {
         StkId ra = RA(i);
         Instruction pi = *(pc - 2);  /* original arith. expression */
         int imm = GETARG_sB(i);
@@ -1528,8 +1528,8 @@ void luaV_execute (lua_State *L, CallInfo *ci) {
         StkId result = RA(pi);
         Protect(luaT_trybiniTM(L, s2v(ra), imm, flip, result, tm));
         vmbreak;
-      }
-      vmcase(OP_MMBINK) {
+    }
+    vmcase(OP_MMBINK) {
         StkId ra = RA(i);
         Instruction pi = *(pc - 2);  /* original arith. expression */
         TValue *imm = KB(i);
@@ -1538,158 +1538,158 @@ void luaV_execute (lua_State *L, CallInfo *ci) {
         StkId result = RA(pi);
         Protect(luaT_trybinassocTM(L, s2v(ra), imm, flip, result, tm));
         vmbreak;
-      }
-      vmcase(OP_UNM) {
+    }
+    vmcase(OP_UNM) {
         StkId ra = RA(i);
         TValue *rb = vRB(i);
         lua_Number nb;
         if (ttisinteger(rb)) {
-          lua_Integer ib = ivalue(rb);
-          setivalue(s2v(ra), intop(-, 0, ib));
+        lua_Integer ib = ivalue(rb);
+        setivalue(s2v(ra), intop(-, 0, ib));
         }
         else if (tonumberns(rb, nb)) {
-          setfltvalue(s2v(ra), luai_numunm(L, nb));
+        setfltvalue(s2v(ra), luai_numunm(L, nb));
         }
         else
-          Protect(luaT_trybinTM(L, rb, rb, ra, TM_UNM));
+        Protect(luaT_trybinTM(L, rb, rb, ra, TM_UNM));
         vmbreak;
-      }
-      vmcase(OP_BNOT) {
+    }
+    vmcase(OP_BNOT) {
         StkId ra = RA(i);
         TValue *rb = vRB(i);
         lua_Integer ib;
         if (tointegerns(rb, &ib)) {
-          setivalue(s2v(ra), intop(^, ~l_castS2U(0), ib));
+        setivalue(s2v(ra), intop(^, ~l_castS2U(0), ib));
         }
         else
-          Protect(luaT_trybinTM(L, rb, rb, ra, TM_BNOT));
+        Protect(luaT_trybinTM(L, rb, rb, ra, TM_BNOT));
         vmbreak;
-      }
-      vmcase(OP_NOT) {
+    }
+    vmcase(OP_NOT) {
         StkId ra = RA(i);
         TValue *rb = vRB(i);
         if (l_isfalse(rb))
-          setbtvalue(s2v(ra));
+        setbtvalue(s2v(ra));
         else
-          setbfvalue(s2v(ra));
+        setbfvalue(s2v(ra));
         vmbreak;
-      }
-      vmcase(OP_LEN) {
+    }
+    vmcase(OP_LEN) {
         StkId ra = RA(i);
         Protect(luaV_objlen(L, ra, vRB(i)));
         vmbreak;
-      }
-      vmcase(OP_CONCAT) {
+    }
+    vmcase(OP_CONCAT) {
         StkId ra = RA(i);
         int n = GETARG_B(i);  /* number of elements to concatenate */
         L->top.p = ra + n;  /* mark the end of concat operands */
         ProtectNT(luaV_concat(L, n));
         checkGC(L, L->top.p); /* 'luaV_concat' ensures correct top */
         vmbreak;
-      }
-      vmcase(OP_CLOSE) {
+    }
+    vmcase(OP_CLOSE) {
         StkId ra = RA(i);
         Protect(luaF_close(L, ra, LUA_OK, 1));
         vmbreak;
-      }
-      vmcase(OP_TBC) {
+    }
+    vmcase(OP_TBC) {
         StkId ra = RA(i);
         /* create new to-be-closed upvalue */
         halfProtect(luaF_newtbcupval(L, ra));
         vmbreak;
-      }
-      vmcase(OP_JMP) {
+    }
+    vmcase(OP_JMP) {
         dojump(ci, i, 0);
         vmbreak;
-      }
-      vmcase(OP_EQ) {
+    }
+    vmcase(OP_EQ) {
         StkId ra = RA(i);
         int cond;
         TValue *rb = vRB(i);
         Protect(cond = luaV_equalobj(L, s2v(ra), rb));
         docondjump();
         vmbreak;
-      }
-      vmcase(OP_LT) {
+    }
+    vmcase(OP_LT) {
         op_order(L, l_lti, LTnum, lessthanothers);
         vmbreak;
-      }
-      vmcase(OP_LE) {
+    }
+    vmcase(OP_LE) {
         op_order(L, l_lei, LEnum, lessequalothers);
         vmbreak;
-      }
-      vmcase(OP_EQK) {
+    }
+    vmcase(OP_EQK) {
         StkId ra = RA(i);
         TValue *rb = KB(i);
         /* basic types do not use '__eq'; we can use raw equality */
         int cond = luaV_rawequalobj(s2v(ra), rb);
         docondjump();
         vmbreak;
-      }
-      vmcase(OP_EQI) {
+    }
+    vmcase(OP_EQI) {
         StkId ra = RA(i);
         int cond;
         int im = GETARG_sB(i);
         if (ttisinteger(s2v(ra)))
-          cond = (ivalue(s2v(ra)) == im);
+        cond = (ivalue(s2v(ra)) == im);
         else if (ttisfloat(s2v(ra)))
-          cond = luai_numeq(fltvalue(s2v(ra)), cast_num(im));
+        cond = luai_numeq(fltvalue(s2v(ra)), cast_num(im));
         else
-          cond = 0;  /* other types cannot be equal to a number */
+        cond = 0;  /* other types cannot be equal to a number */
         docondjump();
         vmbreak;
-      }
-      vmcase(OP_LTI) {
+    }
+    vmcase(OP_LTI) {
         op_orderI(L, l_lti, luai_numlt, 0, TM_LT);
         vmbreak;
-      }
-      vmcase(OP_LEI) {
+    }
+    vmcase(OP_LEI) {
         op_orderI(L, l_lei, luai_numle, 0, TM_LE);
         vmbreak;
-      }
-      vmcase(OP_GTI) {
+    }
+    vmcase(OP_GTI) {
         op_orderI(L, l_gti, luai_numgt, 1, TM_LT);
         vmbreak;
-      }
-      vmcase(OP_GEI) {
+    }
+    vmcase(OP_GEI) {
         op_orderI(L, l_gei, luai_numge, 1, TM_LE);
         vmbreak;
-      }
-      vmcase(OP_TEST) {
+    }
+    vmcase(OP_TEST) {
         StkId ra = RA(i);
         int cond = !l_isfalse(s2v(ra));
         docondjump();
         vmbreak;
-      }
-      vmcase(OP_TESTSET) {
+    }
+    vmcase(OP_TESTSET) {
         StkId ra = RA(i);
         TValue *rb = vRB(i);
         if (l_isfalse(rb) == GETARG_k(i))
-          pc++;
+        pc++;
         else {
-          setobj2s(L, ra, rb);
-          donextjump(ci);
+        setobj2s(L, ra, rb);
+        donextjump(ci);
         }
         vmbreak;
-      }
-      vmcase(OP_CALL) {
+    }
+    vmcase(OP_CALL) {
         StkId ra = RA(i);
         CallInfo *newci;
         int b = GETARG_B(i);
         int nresults = GETARG_C(i) - 1;
         if (b != 0)  /* fixed number of arguments? */
-          L->top.p = ra + b;  /* top signals number of arguments */
+        L->top.p = ra + b;  /* top signals number of arguments */
         /* else previous instruction set top */
         savepc(L);  /* in case of errors */
         if ((newci = luaD_precall(L, ra, nresults)) == NULL)
-          updatetrap(ci);  /* C call; nothing else to be done */
+        updatetrap(ci);  /* C call; nothing else to be done */
         else {  /* Lua call: run function in this same C frame */
-          ci = newci;
-          goto startfunc;
+        ci = newci;
+        goto startfunc;
         }
         vmbreak;
-      }
-      vmcase(OP_TAILCALL) {
+    }
+    vmcase(OP_TAILCALL) {
         StkId ra = RA(i);
         int b = GETARG_B(i);  /* number of arguments + 1 (function) */
         int n;  /* number of results when calling a C function */
@@ -1697,97 +1697,97 @@ void luaV_execute (lua_State *L, CallInfo *ci) {
         /* delta is virtual 'func' - real 'func' (vararg functions) */
         int delta = (nparams1) ? ci->u.l.nextraargs + nparams1 : 0;
         if (b != 0)
-          L->top.p = ra + b;
+        L->top.p = ra + b;
         else  /* previous instruction set top */
-          b = cast_int(L->top.p - ra);
+        b = cast_int(L->top.p - ra);
         savepc(ci);  /* several calls here can raise errors */
         if (TESTARG_k(i)) {
-          luaF_closeupval(L, base);  /* close upvalues from current call */
-          lua_assert(L->tbclist.p < base);  /* no pending tbc variables */
-          lua_assert(base == ci->func.p + 1);
+        luaF_closeupval(L, base);  /* close upvalues from current call */
+        lua_assert(L->tbclist.p < base);  /* no pending tbc variables */
+        lua_assert(base == ci->func.p + 1);
         }
         if ((n = luaD_pretailcall(L, ci, ra, b, delta)) < 0)  /* Lua function? */
-          goto startfunc;  /* execute the callee */
+        goto startfunc;  /* execute the callee */
         else {  /* C function? */
-          ci->func.p -= delta;  /* restore 'func' (if vararg) */
-          luaD_poscall(L, ci, n);  /* finish caller */
-          updatetrap(ci);  /* 'luaD_poscall' can change hooks */
-          goto ret;  /* caller returns after the tail call */
+        ci->func.p -= delta;  /* restore 'func' (if vararg) */
+        luaD_poscall(L, ci, n);  /* finish caller */
+        updatetrap(ci);  /* 'luaD_poscall' can change hooks */
+        goto ret;  /* caller returns after the tail call */
         }
-      }
-      vmcase(OP_RETURN) {
+    }
+    vmcase(OP_RETURN) {
         StkId ra = RA(i);
         int n = GETARG_B(i) - 1;  /* number of results */
         int nparams1 = GETARG_C(i);
         if (n < 0)  /* not fixed? */
-          n = cast_int(L->top.p - ra);  /* get what is available */
+        n = cast_int(L->top.p - ra);  /* get what is available */
         savepc(ci);
         if (TESTARG_k(i)) {  /* may there be open upvalues? */
-          ci->u2.nres = n;  /* save number of returns */
-          if (L->top.p < ci->top.p)
+        ci->u2.nres = n;  /* save number of returns */
+        if (L->top.p < ci->top.p)
             L->top.p = ci->top.p;
-          luaF_close(L, base, CLOSEKTOP, 1);
-          updatetrap(ci);
-          updatestack(ci);
+        luaF_close(L, base, CLOSEKTOP, 1);
+        updatetrap(ci);
+        updatestack(ci);
         }
         if (nparams1)  /* vararg function? */
-          ci->func.p -= ci->u.l.nextraargs + nparams1;
+        ci->func.p -= ci->u.l.nextraargs + nparams1;
         L->top.p = ra + n;  /* set call for 'luaD_poscall' */
         luaD_poscall(L, ci, n);
         updatetrap(ci);  /* 'luaD_poscall' can change hooks */
         goto ret;
-      }
-      vmcase(OP_RETURN0) {
+    }
+    vmcase(OP_RETURN0) {
         if (l_unlikely(L->hookmask)) {
-          StkId ra = RA(i);
-          L->top.p = ra;
-          savepc(ci);
-          luaD_poscall(L, ci, 0);  /* no hurry... */
-          trap = 1;
+        StkId ra = RA(i);
+        L->top.p = ra;
+        savepc(ci);
+        luaD_poscall(L, ci, 0);  /* no hurry... */
+        trap = 1;
         }
         else {  /* do the 'poscall' here */
-          int nres;
-          L->ci = ci->previous;  /* back to caller */
-          L->top.p = base - 1;
-          for (nres = ci->nresults; l_unlikely(nres > 0); nres--)
+        int nres;
+        L->ci = ci->previous;  /* back to caller */
+        L->top.p = base - 1;
+        for (nres = ci->nresults; l_unlikely(nres > 0); nres--)
             setnilvalue(s2v(L->top.p++));  /* all results are nil */
         }
         goto ret;
-      }
-      vmcase(OP_RETURN1) {
+    }
+    vmcase(OP_RETURN1) {
         if (l_unlikely(L->hookmask)) {
-          StkId ra = RA(i);
-          L->top.p = ra + 1;
-          savepc(ci);
-          luaD_poscall(L, ci, 1);  /* no hurry... */
-          trap = 1;
+        StkId ra = RA(i);
+        L->top.p = ra + 1;
+        savepc(ci);
+        luaD_poscall(L, ci, 1);  /* no hurry... */
+        trap = 1;
         }
         else {  /* do the 'poscall' here */
-          int nres = ci->nresults;
-          L->ci = ci->previous;  /* back to caller */
-          if (nres == 0)
+        int nres = ci->nresults;
+        L->ci = ci->previous;  /* back to caller */
+        if (nres == 0)
             L->top.p = base - 1;  /* asked for no results */
-          else {
+        else {
             StkId ra = RA(i);
             setobjs2s(L, base - 1, ra);  /* at least this result */
             L->top.p = base;
             for (; l_unlikely(nres > 1); nres--)
-              setnilvalue(s2v(L->top.p++));  /* complete missing results */
-          }
+            setnilvalue(s2v(L->top.p++));  /* complete missing results */
         }
-       ret:  /* return from a Lua function */
+        }
+        ret:  /* return from a Lua function */
         if (ci->callstatus & CIST_FRESH)
-          return;  /* end this frame */
+        return;  /* end this frame */
         else {
-          ci = ci->previous;
-          goto returning;  /* continue running caller in this frame */
+        ci = ci->previous;
+        goto returning;  /* continue running caller in this frame */
         }
-      }
-      vmcase(OP_FORLOOP) {
+    }
+    vmcase(OP_FORLOOP) {
         StkId ra = RA(i);
         if (ttisinteger(s2v(ra + 2))) {  /* integer loop? */
-          lua_Unsigned count = l_castS2U(ivalue(s2v(ra + 1)));
-          if (count > 0) {  /* still more iterations? */
+        lua_Unsigned count = l_castS2U(ivalue(s2v(ra + 1)));
+        if (count > 0) {  /* still more iterations? */
             lua_Integer step = ivalue(s2v(ra + 2));
             lua_Integer idx = ivalue(s2v(ra));  /* internal index */
             chgivalue(s2v(ra + 1), count - 1);  /* update counter */
@@ -1795,36 +1795,36 @@ void luaV_execute (lua_State *L, CallInfo *ci) {
             chgivalue(s2v(ra), idx);  /* update internal index */
             setivalue(s2v(ra + 3), idx);  /* and control variable */
             pc -= GETARG_Bx(i);  /* jump back */
-          }
+        }
         }
         else if (floatforloop(ra))  /* float loop */
-          pc -= GETARG_Bx(i);  /* jump back */
+        pc -= GETARG_Bx(i);  /* jump back */
         updatetrap(ci);  /* allows a signal to break the loop */
         vmbreak;
-      }
-      vmcase(OP_FORPREP) {
+    }
+    vmcase(OP_FORPREP) {
         StkId ra = RA(i);
         savestate(L, ci);  /* in case of errors */
         if (forprep(L, ra))
-          pc += GETARG_Bx(i) + 1;  /* skip the loop */
+        pc += GETARG_Bx(i) + 1;  /* skip the loop */
         vmbreak;
-      }
-      vmcase(OP_TFORPREP) {
-       StkId ra = RA(i);
+    }
+    vmcase(OP_TFORPREP) {
+        StkId ra = RA(i);
         /* create to-be-closed upvalue (if needed) */
         halfProtect(luaF_newtbcupval(L, ra + 3));
         pc += GETARG_Bx(i);
         i = *(pc++);  /* go to next instruction */
         lua_assert(GET_OPCODE(i) == OP_TFORCALL && ra == RA(i));
         goto l_tforcall;
-      }
-      vmcase(OP_TFORCALL) {
-       l_tforcall: {
+    }
+    vmcase(OP_TFORCALL) {
+        l_tforcall: {
         StkId ra = RA(i);
         /* 'ra' has the iterator function, 'ra + 1' has the state,
-           'ra + 2' has the control variable, and 'ra + 3' has the
-           to-be-closed variable. The call will use the stack after
-           these values (starting at 'ra + 4')
+            'ra + 2' has the control variable, and 'ra + 3' has the
+            to-be-closed variable. The call will use the stack after
+            these values (starting at 'ra + 4')
         */
         /* push function, state, and control variable */
         memcpy(ra + 4, ra, 3 * sizeof(*ra));
@@ -1834,66 +1834,66 @@ void luaV_execute (lua_State *L, CallInfo *ci) {
         i = *(pc++);  /* go to next instruction */
         lua_assert(GET_OPCODE(i) == OP_TFORLOOP && ra == RA(i));
         goto l_tforloop;
-      }}
-      vmcase(OP_TFORLOOP) {
-       l_tforloop: {
+    }}
+    vmcase(OP_TFORLOOP) {
+        l_tforloop: {
         StkId ra = RA(i);
         if (!ttisnil(s2v(ra + 4))) {  /* continue loop? */
-          setobjs2s(L, ra + 2, ra + 4);  /* save control variable */
-          pc -= GETARG_Bx(i);  /* jump back */
+        setobjs2s(L, ra + 2, ra + 4);  /* save control variable */
+        pc -= GETARG_Bx(i);  /* jump back */
         }
         vmbreak;
-      }}
-      vmcase(OP_SETLIST) {
+    }}
+    vmcase(OP_SETLIST) {
         StkId ra = RA(i);
         int n = GETARG_B(i);
         unsigned int last = GETARG_C(i);
         Table *h = hvalue(s2v(ra));
         if (n == 0)
-          n = cast_int(L->top.p - ra) - 1;  /* get up to the top */
+        n = cast_int(L->top.p - ra) - 1;  /* get up to the top */
         else
-          L->top.p = ci->top.p;  /* correct top in case of emergency GC */
+        L->top.p = ci->top.p;  /* correct top in case of emergency GC */
         last += n;
         if (TESTARG_k(i)) {
-          last += GETARG_Ax(*pc) * (MAXARG_C + 1);
-          pc++;
+        last += GETARG_Ax(*pc) * (MAXARG_C + 1);
+        pc++;
         }
         if (last > luaH_realasize(h))  /* needs more space? */
-          luaH_resizearray(L, h, last);  /* preallocate it at once */
+        luaH_resizearray(L, h, last);  /* preallocate it at once */
         for (; n > 0; n--) {
-          TValue *val = s2v(ra + n);
-          setobj2t(L, &h->array[last - 1], val);
-          last--;
-          luaC_barrierback(L, obj2gco(h), val);
+        TValue *val = s2v(ra + n);
+        setobj2t(L, &h->array[last - 1], val);
+        last--;
+        luaC_barrierback(L, obj2gco(h), val);
         }
         vmbreak;
-      }
-      vmcase(OP_CLOSURE) {
+    }
+    vmcase(OP_CLOSURE) {
         StkId ra = RA(i);
         Proto *p = cl->p->p[GETARG_Bx(i)];
         halfProtect(pushclosure(L, p, cl->upvals, base, ra));
         checkGC(L, ra + 1);
         vmbreak;
-      }
-      vmcase(OP_VARARG) {
+    }
+    vmcase(OP_VARARG) {
         StkId ra = RA(i);
         int n = GETARG_C(i) - 1;  /* required results */
         Protect(luaT_getvarargs(L, ci, ra, n));
         vmbreak;
-      }
-      vmcase(OP_VARARGPREP) {
+    }
+    vmcase(OP_VARARGPREP) {
         ProtectNT(luaT_adjustvarargs(L, GETARG_A(i), ci, cl->p));
         if (l_unlikely(trap)) {  /* previous "Protect" updated trap */
-          luaD_hookcall(L, ci);
-          L->oldpc = 1;  /* next opcode will be seen as a "new" line */
+        luaD_hookcall(L, ci);
+        L->oldpc = 1;  /* next opcode will be seen as a "new" line */
         }
         updatebase(ci);  /* function has new base after adjustment */
         vmbreak;
-      }
-      vmcase(OP_EXTRAARG) {
+    }
+    vmcase(OP_EXTRAARG) {
         lua_assert(0);
         vmbreak;
-      }
+    }
     }
   }
 }

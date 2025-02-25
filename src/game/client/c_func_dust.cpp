@@ -298,26 +298,26 @@ void FX_Dust( const Vector &vecOrigin, const Vector &vecDirection, float flSize,
 
 class C_TEDust : public C_TEParticleSystem
 {
-   public:
+    public:
     DECLARE_CLASS( C_TEDust, C_TEParticleSystem );
     DECLARE_CLIENTCLASS();
 
     C_TEDust();
     virtual ~C_TEDust();
 
-   public:
+    public:
     virtual void PostDataUpdate( DataUpdateType_t updateType );
     virtual bool ShouldDraw()
     {
         return true;
     }
 
-   public:
+    public:
     float m_flSize;
     float m_flSpeed;
     Vector m_vecDirection;
 
-   protected:
+    protected:
     void GetDustColor( Vector &color );
 };
 

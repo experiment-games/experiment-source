@@ -41,11 +41,11 @@ ConVar cl_draw_airboat_wake( "cl_draw_airboat_wake", "1", FCVAR_CHEAT );
 // NOTE: Must restart (or create a new airboat) after changing these cvars!
 ConVar r_AirboatRollCurveZero( "r_AirboatRollCurveZero", "90.0", FCVAR_CHEAT );       // Roll less than this is clamped to zero.
 ConVar r_AirboatRollCurveLinear( "r_AirboatRollCurveLinear", "120.0", FCVAR_CHEAT );  // Roll greater than this is mapped directly.
-                                                                                      // Spline in between.
+                                                                                    // Spline in between.
 
 ConVar r_AirboatPitchCurveZero( "r_AirboatPitchCurveZero", "25.0", FCVAR_CHEAT );      // Pitch less than this is clamped to zero.
 ConVar r_AirboatPitchCurveLinear( "r_AirboatPitchCurveLinear", "60.0", FCVAR_CHEAT );  // Pitch greater than this is mapped directly.
-                                                                                       // Spline in between.
+                                                                                        // Spline in between.
 
 ConVar airboat_joy_response_move( "airboat_joy_response_move", "1" );  // Quadratic steering response
 
@@ -67,7 +67,7 @@ class C_PropAirboat : public C_PropVehicleDriveable
 {
     DECLARE_CLASS( C_PropAirboat, C_PropVehicleDriveable );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
     DECLARE_INTERPOLATION();
     DECLARE_DATADESC();
@@ -75,7 +75,7 @@ class C_PropAirboat : public C_PropVehicleDriveable
     C_PropAirboat();
     ~C_PropAirboat();
 
-   public:
+    public:
     // C_BaseEntity
     virtual void Simulate();
 
@@ -93,7 +93,7 @@ class C_PropAirboat : public C_PropVehicleDriveable
     // Draws crosshair in the forward direction of the boat
     void DrawHudElements();
 
-   private:
+    private:
     void DrawPropWake( Vector origin, float speed );
     void DrawPontoonSplash( Vector position, Vector direction, float speed );
     void DrawPontoonWake( Vector startPos, Vector wakeDir, float wakeLength, float speed );
@@ -114,7 +114,7 @@ class C_PropAirboat : public C_PropVehicleDriveable
         return &m_vecSteps[nIndex];
     }
 
-   private:
+    private:
     Vector m_vecLastEyePos;
     Vector m_vecLastEyeTarget;
     Vector m_vecEyeSpeed;
@@ -361,9 +361,9 @@ void C_PropAirboat::DampenEyePosition( Vector &vecVehicleEyePos, QAngle &vecVehi
 // speed += ( pCoefficientsOut[0] * ( targetPos - currentPos ) + pCoefficientsOut[1] * ( targetSpeed - currentSpeed ) ) * flDeltaTime;
 //-----------------------------------------------------------------------------
 void C_PropAirboat::ComputePDControllerCoefficients( float *pCoefficientsOut,
-                                                     float flFrequency,
-                                                     float flDampening,
-                                                     float flDeltaTime )
+                                                    float flFrequency,
+                                                    float flDampening,
+                                                    float flDeltaTime )
 {
     float flKs = 9.0f * flFrequency * flFrequency;
     float flKd = 4.5f * flFrequency * flDampening;

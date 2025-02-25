@@ -23,7 +23,7 @@ class CEntityParticleTrail : public CBaseParticleEntity
     DECLARE_CLASS( CEntityParticleTrail, CBaseParticleEntity );
     DECLARE_SERVERCLASS();
 
-   public:
+    public:
     static CEntityParticleTrail *Create( CBaseEntity *pTarget, const EntityParticleTrailInfo_t &info, CBaseEntity *pConstraint );
     static void Destroy( CBaseEntity *pTarget, const EntityParticleTrailInfo_t &info );
 
@@ -36,7 +36,7 @@ class CEntityParticleTrail : public CBaseParticleEntity
     // Clean up when the entity goes away.
     virtual void NotifySystemEvent( CBaseEntity *pNotify, notify_system_event_t eventType, const notify_system_event_params_t &params );
 
-   private:
+    private:
     void AttachToEntity( CBaseEntity *pTarget );
     void IncrementRefCount();
     void DecrementRefCount();

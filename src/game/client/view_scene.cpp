@@ -29,7 +29,7 @@ bool g_bAllowMultipleRefractUpdatesPerScenePerFrame = false;
 #if defined( _X360 )
 class CAllowMultipleRefractsLogic : public CAutoGameSystem
 {
-   public:
+    public:
     void LevelInitPreEntity()
     {
         // EP1 core room needs many refract updates per frame to avoid looking broken (ep1_citadel_03)

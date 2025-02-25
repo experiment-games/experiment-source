@@ -221,19 +221,19 @@ def ImplementationForArity(n):
 template <typename Pred""" % DEFS
 
   impl += Iter(n, """,
-          typename T%s""")
+        typename T%s""")
 
   impl += """>
 AssertionResult AssertPred%(n)sHelper(const char* pred_text""" % DEFS
 
   impl += Iter(n, """,
-                                  const char* e%s""")
+                                const char* e%s""")
 
   impl += """,
-                                  Pred pred"""
+                                Pred pred"""
 
   impl += Iter(n, """,
-                                  const T%s& v%s""")
+                                const T%s& v%s""")
 
   impl += """) {
   if (pred(%(vs)s)) return AssertionSuccess();
@@ -244,12 +244,12 @@ AssertionResult AssertPred%(n)sHelper(const char* pred_text""" % DEFS
   impl += '  msg << pred_text << "("'
 
   impl += Iter(n, """
-      << e%s""", sep=' << ", "')
+    << e%s""", sep=' << ", "')
 
   impl += ' << ") evaluates to false, where"'
 
   impl += Iter(n, """
-      << "\\n" << e%s << " evaluates to " << v%s""")
+    << "\\n" << e%s << " evaluates to " << v%s""")
 
   impl += """;
   return AssertionFailure(msg);
@@ -267,13 +267,13 @@ AssertionResult AssertPred%(n)sHelper(const char* pred_text""" % DEFS
   GTEST_ASSERT_(::testing::AssertPred%(n)sHelper(#pred""" % DEFS
 
   impl += Iter(n, """, \\
-                                             #v%s""")
+                                            #v%s""")
 
   impl += """, \\
-                                             pred"""
+                                            pred"""
 
   impl += Iter(n, """, \\
-                                             v%s""")
+                                            v%s""")
 
   impl += """), on_failure)
 
@@ -319,9 +319,9 @@ def GenerateHeader(n):
   the predicate assertions."""
 
   GenerateFile(HEADER,
-               HeaderPreamble(n)
-               + ''.join([ImplementationForArity(i) for i in OneTo(n)])
-               + HeaderPostamble())
+                HeaderPreamble(n)
+                + ''.join([ImplementationForArity(i) for i in OneTo(n)])
+                + HeaderPostamble())
 
 
 def UnitTestPreamble():
@@ -455,7 +455,7 @@ struct PredFunctor%(n)s {
   bool operator()(""" % DEFS
 
   tests += Iter(n, 'const T%s& v%s', sep=""",
-                  """)
+                """)
 
   tests += """) {
     return %(v_sum)s > 0;
@@ -469,10 +469,10 @@ template <%(types)s>
 testing::AssertionResult PredFormatFunction%(n)s(""" % DEFS
 
   tests += Iter(n, 'const char* e%s', sep=""",
-                                             """)
+                                            """)
 
   tests += Iter(n, """,
-                                             const T%s& v%s""")
+                                            const T%s& v%s""")
 
   tests += """) {
   if (PredFunction%(n)s(%(vs)s))
@@ -484,8 +484,8 @@ testing::AssertionResult PredFormatFunction%(n)s(""" % DEFS
   tests += Iter(n, 'e%s', sep=' << " + " << ')
 
   tests += """
-      << " is expected to be positive, but evaluates to "
-      << %(v_sum)s << ".";
+    << " is expected to be positive, but evaluates to "
+    << %(v_sum)s << ".";
   return testing::AssertionFailure(msg);
 }
 """ % DEFS
@@ -497,10 +497,10 @@ struct PredFormatFunctor%(n)s {
   testing::AssertionResult operator()(""" % DEFS
 
   tests += Iter(n, 'const char* e%s', sep=""",
-                                      """)
+                                    """)
 
   tests += Iter(n, """,
-                                      const T%s& v%s""")
+                                    const T%s& v%s""")
 
   tests += """) const {
     return PredFormatFunction%(n)s(%(es)s, %(vs)s);
@@ -536,9 +536,9 @@ class Predicate%(n)sTest : public testing::Test {
 
     // Verifies that the control flow in the test function is expected.
     if (expected_to_finish_ && !finished_) {
-      FAIL() << "The predicate assertion unexpactedly aborted the test.";
+    FAIL() << "The predicate assertion unexpactedly aborted the test.";
     } else if (!expected_to_finish_ && finished_) {
-      FAIL() << "The failed predicate assertion didn't abort the test "
+    FAIL() << "The failed predicate assertion didn't abort the test "
                 "as expected.";
     }
   }
@@ -571,91 +571,91 @@ typedef Predicate%(n)sTest ASSERT_PRED%(n)sTest;
 """ % DEFS
 
   def GenTest(use_format, use_assert, expect_failure,
-              use_functor, use_user_type):
+            use_functor, use_user_type):
     """Returns the test for a predicate assertion macro.
 
     Args:
-      use_format:     true iff the assertion is a *_PRED_FORMAT*.
-      use_assert:     true iff the assertion is a ASSERT_*.
-      expect_failure: true iff the assertion is expected to fail.
-      use_functor:    true iff the first argument of the assertion is
-                      a functor (as opposed to a function)
-      use_user_type:  true iff the predicate functor/function takes
-                      argument(s) of a user-defined type.
+    use_format:     true iff the assertion is a *_PRED_FORMAT*.
+    use_assert:     true iff the assertion is a ASSERT_*.
+    expect_failure: true iff the assertion is expected to fail.
+    use_functor:    true iff the first argument of the assertion is
+                    a functor (as opposed to a function)
+    use_user_type:  true iff the predicate functor/function takes
+                    argument(s) of a user-defined type.
 
     Example:
 
-      GenTest(1, 0, 0, 1, 0) returns a test that tests the behavior
-      of a successful EXPECT_PRED_FORMATn() that takes a functor
-      whose arguments have built-in types."""
+    GenTest(1, 0, 0, 1, 0) returns a test that tests the behavior
+    of a successful EXPECT_PRED_FORMATn() that takes a functor
+    whose arguments have built-in types."""
 
     if use_assert:
-      assrt = 'ASSERT'  # 'assert' is reserved, so we cannot use
+    assrt = 'ASSERT'  # 'assert' is reserved, so we cannot use
                         # that identifier here.
     else:
-      assrt = 'EXPECT'
+    assrt = 'EXPECT'
 
     assertion = assrt + '_PRED'
 
     if use_format:
-      pred_format = 'PredFormat'
-      assertion += '_FORMAT'
+    pred_format = 'PredFormat'
+    assertion += '_FORMAT'
     else:
-      pred_format = 'Pred'
+    pred_format = 'Pred'
 
     assertion += '%(n)s' % DEFS
 
     if use_functor:
-      pred_format_type = 'functor'
-      pred_format += 'Functor%(n)s()'
+    pred_format_type = 'functor'
+    pred_format += 'Functor%(n)s()'
     else:
-      pred_format_type = 'function'
-      pred_format += 'Function%(n)s'
-      if not use_format:
+    pred_format_type = 'function'
+    pred_format += 'Function%(n)s'
+    if not use_format:
         if use_user_type:
-          pred_format += 'Bool'
+        pred_format += 'Bool'
         else:
-          pred_format += 'Int'
+        pred_format += 'Int'
 
     test_name = pred_format_type.title()
 
     if use_user_type:
-      arg_type = 'user-defined type (Bool)'
-      test_name += 'OnUserType'
-      if expect_failure:
+    arg_type = 'user-defined type (Bool)'
+    test_name += 'OnUserType'
+    if expect_failure:
         arg = 'Bool(n%s_++)'
-      else:
+    else:
         arg = 'Bool(++n%s_)'
     else:
-      arg_type = 'built-in type (int)'
-      test_name += 'OnBuiltInType'
-      if expect_failure:
+    arg_type = 'built-in type (int)'
+    test_name += 'OnBuiltInType'
+    if expect_failure:
         arg = 'n%s_++'
-      else:
+    else:
         arg = '++n%s_'
 
     if expect_failure:
-      successful_or_failed = 'failed'
-      expected_or_not = 'expected.'
-      test_name +=  'Failure'
+    successful_or_failed = 'failed'
+    expected_or_not = 'expected.'
+    test_name +=  'Failure'
     else:
-      successful_or_failed = 'successful'
-      expected_or_not = 'UNEXPECTED!'
-      test_name +=  'Success'
+    successful_or_failed = 'successful'
+    expected_or_not = 'UNEXPECTED!'
+    test_name +=  'Success'
 
     # A map that defines the values used in the test template.
     defs = DEFS.copy()
     defs.update({
-      'assert' : assrt,
-      'assertion' : assertion,
-      'test_name' : test_name,
-      'pf_type' : pred_format_type,
-      'pf' : pred_format,
-      'arg_type' : arg_type,
-      'arg' : arg,
-      'successful' : successful_or_failed,
-      'expected' : expected_or_not,
-      })
+    'assert' : assrt,
+    'assertion' : assertion,
+    'test_name' : test_name,
+    'pf_type' : pred_format_type,
+    'pf' : pred_format,
+    'arg_type' : arg_type,
+    'arg' : arg,
+    'successful' : successful_or_failed,
+    'expected' : expected_or_not,
+    })
 
     test = """
 // Tests a %(successful)s %(assertion)s where the
@@ -666,12 +666,12 @@ TEST_F(%(assertion)sTest, %(test_name)s) {""" % defs
     extra_indent = ''
 
     if expect_failure:
-      extra_indent = '  '
-      if use_assert:
+    extra_indent = '  '
+    if use_assert:
         test += """
   expected_to_finish_ = false;
   EXPECT_FATAL_FAILURE({  // NOLINT"""
-      else:
+    else:
         test += """
   EXPECT_NONFATAL_FAILURE({  // NOLINT"""
 
@@ -682,7 +682,7 @@ TEST_F(%(assertion)sTest, %(test_name)s) {""" % defs
     test += ');\n' + extra_indent + '  finished_ = true;\n'
 
     if expect_failure:
-      test += '  }, "");\n'
+    test += '  }, "");\n'
 
     test += '}\n'
     return test
@@ -710,9 +710,9 @@ def GenerateUnitTest(n):
   """Returns the tests for up-to n-ary predicate assertions."""
 
   GenerateFile(UNIT_TEST,
-               UnitTestPreamble()
-               + ''.join([TestsForArity(i) for i in OneTo(n)])
-               + UnitTestPostamble())
+                UnitTestPreamble()
+                + ''.join([TestsForArity(i) for i in OneTo(n)])
+                + UnitTestPostamble())
 
 
 def _Main():

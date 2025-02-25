@@ -19,15 +19,15 @@ seek(SHADER,$refsize,1);
 $nskipped_combos=0;
 for(1..$ntotal)
   {
-	read(SHADER,$combodata,8);
-	($ofs,$combosize)=unpack("LL",$combodata);
-	if ( $ofs == 0xffffffff)
-	  {
-		$nskipped_combos++;
-	  }
-	else
-	  {
-	  }
+    read(SHADER,$combodata,8);
+    ($ofs,$combosize)=unpack("LL",$combodata);
+    if ( $ofs == 0xffffffff)
+    {
+        $nskipped_combos++;
+    }
+    else
+    {
+    }
   }
 #print "$nskipped_combos skipped, for an actual total of ",$ntotal-$nskipped_combos,"\n";
 #print "Real to skipped ratio = ",($ntotal-$nskipped_combos)/$ntotal,"\n";

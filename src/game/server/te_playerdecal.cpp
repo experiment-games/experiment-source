@@ -21,7 +21,7 @@
 //-----------------------------------------------------------------------------
 class CTEPlayerDecal : public CBaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTEPlayerDecal, CBaseTempEntity );
 
     CTEPlayerDecal( const char* name );
@@ -31,7 +31,7 @@ class CTEPlayerDecal : public CBaseTempEntity
 
     DECLARE_SERVERCLASS();
 
-   public:
+    public:
     CNetworkVar( int, m_nPlayer );
     CNetworkVector( m_vecOrigin );
     CNetworkVar( int, m_nEntity );

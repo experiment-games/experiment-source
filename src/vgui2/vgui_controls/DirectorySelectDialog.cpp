@@ -50,7 +50,7 @@ class CreateDirectoryDialog : public Frame
 {
     DECLARE_CLASS_SIMPLE( CreateDirectoryDialog, Frame );
 
-   public:
+    public:
     CreateDirectoryDialog( Panel *parent, const char *defaultCreateDirName )
         : BaseClass( parent, NULL )
     {
@@ -109,7 +109,7 @@ class CreateDirectoryDialog : public Frame
         MarkForDeletion();
     }
 
-   private:
+    private:
     vgui::Button *m_pOKButton;
     vgui::Button *m_pCancelButton;
     vgui::TextEntry *m_pNameEntry;

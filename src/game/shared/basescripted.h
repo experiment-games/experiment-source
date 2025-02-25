@@ -11,7 +11,7 @@
 
 class CBaseScripted : /* public CBaseEntity */ public CBaseAnimating
 {
-   public:
+    public:
     // DECLARE_CLASS( CBaseScripted, CBaseEntity );
     DECLARE_CLASS( CBaseScripted, CBaseAnimating );
     DECLARE_PREDICTABLE();
@@ -26,7 +26,7 @@ class CBaseScripted : /* public CBaseEntity */ public CBaseAnimating
     }
 
     // CBaseEntity overrides.
-   public:
+    public:
     void Think();
 
     void Spawn( void );
@@ -52,7 +52,7 @@ class CBaseScripted : /* public CBaseEntity */ public CBaseAnimating
 
 #ifdef CLIENT_DLL
     // IClientThinkable.
-   public:
+    public:
     // Called whenever you registered for a think message (with SetNextClientThink).
     virtual void ClientThink();
 
@@ -60,7 +60,7 @@ class CBaseScripted : /* public CBaseEntity */ public CBaseAnimating
     virtual const char *GetScriptedClassname( void );
 #endif
 
-   private:
+    private:
     CBaseScripted( const CBaseScripted & );  // not defined, not accessible
 
     CNetworkString( m_iScriptedClassname, 255 );

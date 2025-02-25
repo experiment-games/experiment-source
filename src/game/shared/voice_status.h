@@ -28,20 +28,20 @@ class BitmapImage;
 // Voice Panel
 class CVoicePanel : public vgui::Panel
 {
-   public:
+    public:
     CVoicePanel();
     ~CVoicePanel();
 
     virtual void Paint( void );
     virtual void setImage( BitmapImage *pImage );
 
-   private:
+    private:
     BitmapImage *m_pImage;
 };
 
 class CVoiceLabel
 {
-   public:
+    public:
     vgui::Label *m_pLabel;
     vgui::Label *m_pBackground;
     CVoicePanel *m_pIcon;  // Voice icon next to player name.
@@ -51,7 +51,7 @@ class CVoiceLabel
 // This is provided by each mod to access data that may not be the same across mods.
 abstract_class IVoiceStatusHelper
 {
-   public:
+    public:
     virtual ~IVoiceStatusHelper() {}
 
     // Get RGB color for voice status text about this player.
@@ -67,12 +67,12 @@ abstract_class IVoiceStatusHelper
 
 class CVoiceStatus /*: public vgui::CDefaultInputSignal*/
 {
-   public:
+    public:
     CVoiceStatus();
     virtual ~CVoiceStatus();
 
     // CHudBase overrides.
-   public:
+    public:
     // Initialize the cl_dll's voice manager.
     virtual int Init(
         IVoiceStatusHelper *m_pHelper,
@@ -81,7 +81,7 @@ class CVoiceStatus /*: public vgui::CDefaultInputSignal*/
     // ackPosition is the bottom position of where CVoiceStatus will draw the voice acknowledgement labels.
     virtual void VidInit();
 
-   public:
+    public:
     // Call from HUD_Frame each frame.
     void Frame( double frametime );
 
@@ -107,7 +107,7 @@ class CVoiceStatus /*: public vgui::CDefaultInputSignal*/
     void HandleReqStateMsg( bf_read &msg );
 
     // Squelch mode functions.
-   public:
+    public:
     // When you enter squelch mode, pass in
     void StartSquelchMode();
     void StopSquelchMode();
@@ -136,13 +136,13 @@ class CVoiceStatus /*: public vgui::CDefaultInputSignal*/
         return m_pHeadLabelMaterial;
     }
 
-   private:
+    private:
     void UpdateServerState( bool bForce );
 
     // Update the button artwork to reflect the client's current state.
     void UpdateBanButton( int iClient );
 
-   private:
+    private:
     float m_LastUpdateServerState;  // Last time we called this function.
     int m_bServerModEnable;         // What we've sent to the server about our "voice_modenable" cvar.
 
@@ -168,10 +168,10 @@ class CVoiceStatus /*: public vgui::CDefaultInputSignal*/
     bool m_bTalking;      // Set to true when the client thinks it's talking.
     bool m_bServerAcked;  // Set to true when the server knows the client is talking.
 
-   public:
+    public:
     CVoiceBanMgr m_BanMgr;  // Tracks which users we have squelched and don't want to hear.
 
-   private:
+    private:
     IMaterial *m_pHeadLabelMaterial;  // For labels above players' heads.
 
     bool m_bBanMgrInitialized;

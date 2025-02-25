@@ -26,10 +26,10 @@ class Panel;
 class CCenterStringLabel;
 class CCenterPrint : public ICenterPrint
 {
-   private:
+    private:
     CCenterStringLabel *vguiCenterString;
 
-   public:
+    public:
     CCenterPrint( void );
 
     virtual void Create( vgui::VPANEL parent );

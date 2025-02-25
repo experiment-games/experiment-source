@@ -33,7 +33,7 @@ struct characterset_t;
 //-----------------------------------------------------------------------------
 class CUtlCharConversion
 {
-   public:
+    public:
     struct ConversionArray_t
     {
         char m_nActualChar;
@@ -52,7 +52,7 @@ class CUtlCharConversion
     // Finds a conversion for the passed-in string, returns length
     virtual char FindConversion( const char *pString, int *pLength );
 
-   protected:
+    protected:
     struct ConversionInfo_t
     {
         int m_nLength;
@@ -103,7 +103,7 @@ CUtlCharConversion *GetNoEscCharConversion();
 //-----------------------------------------------------------------------------
 class CUtlBuffer
 {
-   public:
+    public:
     enum SeekType_t
     {
         SEEK_HEAD = 0,
@@ -343,7 +343,7 @@ class CUtlBuffer
     // Temporarily disables pretty print
     void EnableTabs( bool bEnable );
 
-   protected:
+    protected:
     // error flags
     enum
     {
@@ -357,7 +357,7 @@ class CUtlBuffer
     bool OnPutOverflow( int nSize );
     bool OnGetOverflow( int nSize );
 
-   protected:
+    protected:
     // Checks if a get/put is ok
     bool CheckPut( int size );
     bool CheckGet( int size );
@@ -497,13 +497,13 @@ inline CUtlBuffer &operator<<( CUtlBuffer &b, const Vector2D &v )
 
 class CUtlInplaceBuffer : public CUtlBuffer
 {
-   public:
+    public:
     CUtlInplaceBuffer( int growSize = 0, int initSize = 0, int nFlags = 0 );
 
     //
     // Routines returning buffer-inplace-pointers
     //
-   public:
+    public:
     //
     // Upon success, determines the line length, fills out the pointer to the
     // beginning of the line and the line length, advances the "get" pointer

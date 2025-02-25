@@ -34,7 +34,7 @@ class HTMLInterior : public Panel
 {
     DECLARE_CLASS_SIMPLE( HTMLInterior, Panel );
 
-   public:
+    public:
     HTMLInterior( HTML *parent )
         : BaseClass( parent, "HTMLInterior" )
     {
@@ -44,7 +44,7 @@ class HTMLInterior : public Panel
         SetMouseInputEnabled( false );
     }
 
-   private:
+    private:
     HTML *m_pHTML;
 };
 
@@ -58,7 +58,7 @@ class HTMLPopup : public vgui::Frame
     {
         DECLARE_CLASS_SIMPLE( PopupHTML, vgui::HTML );
 
-       public:
+        public:
         PopupHTML( Frame *parent, const char *pchName, bool allowJavaScript, bool bPopupWindow )
             : HTML( parent, pchName, allowJavaScript, bPopupWindow )
         {
@@ -71,11 +71,11 @@ class HTMLPopup : public vgui::Frame
             m_pParent->SetTitle( pchTitle, true );
         }
 
-       private:
+        private:
         Frame *m_pParent;
     };
 
-   public:
+    public:
     HTMLPopup( Panel *parent, const char *pchURL, const char *pchTitle )
         : Frame( NULL, "HtmlPopup", true )
     {
@@ -113,7 +113,7 @@ class HTMLPopup : public vgui::Frame
         Close();
     }
 
-   private:
+    private:
     PopupHTML *m_pHTML;
 };
 
@@ -128,27 +128,27 @@ HTML::HTML( Panel *parent, const char *name, bool allowJavaScript, bool bPopupWi
 HTML::HTML( Panel *parent, const char *name, bool allowJavaScript, bool bPopupWindow )
     : Panel( parent, name ),
 #endif
-      m_NeedsPaint( this, &HTML::BrowserNeedsPaint ),
-      m_StartRequest( this, &HTML::BrowserStartRequest ),
-      m_URLChanged( this, &HTML::BrowserURLChanged ),
-      m_FinishedRequest( this, &HTML::BrowserFinishedRequest ),
-      m_LinkInNewTab( this, &HTML::BrowserOpenNewTab ),
-      m_ChangeTitle( this, &HTML::BrowserSetHTMLTitle ),
-      m_NewWindow( this, &HTML::BrowserPopupHTMLWindow ),
-      m_FileLoadDialog( this, &HTML::BrowserFileLoadDialog ),
-      m_SearchResults( this, &HTML::BrowserSearchResults ),
-      m_CloseBrowser( this, &HTML::BrowserClose ),
-      m_HorizScroll( this, &HTML::BrowserHorizontalScrollBarSizeResponse ),
-      m_VertScroll( this, &HTML::BrowserVerticalScrollBarSizeResponse ),
-      m_LinkAtPosResp( this, &HTML::BrowserLinkAtPositionResponse ),
-      m_JSAlert( this, &HTML::BrowserJSAlert ),
-      m_JSConfirm( this, &HTML::BrowserJSConfirm ),
-      m_CanGoBackForward( this, &HTML::BrowserCanGoBackandForward ),
-      m_SetCursor( this, &HTML::BrowserSetCursor ),
-      m_StatusText( this, &HTML::BrowserStatusText ),
-      m_ShowTooltip( this, &HTML::BrowserShowToolTip ),
-      m_UpdateTooltip( this, &HTML::BrowserUpdateToolTip ),
-      m_HideTooltip( this, &HTML::BrowserHideToolTip )
+    m_NeedsPaint( this, &HTML::BrowserNeedsPaint ),
+    m_StartRequest( this, &HTML::BrowserStartRequest ),
+    m_URLChanged( this, &HTML::BrowserURLChanged ),
+    m_FinishedRequest( this, &HTML::BrowserFinishedRequest ),
+    m_LinkInNewTab( this, &HTML::BrowserOpenNewTab ),
+    m_ChangeTitle( this, &HTML::BrowserSetHTMLTitle ),
+    m_NewWindow( this, &HTML::BrowserPopupHTMLWindow ),
+    m_FileLoadDialog( this, &HTML::BrowserFileLoadDialog ),
+    m_SearchResults( this, &HTML::BrowserSearchResults ),
+    m_CloseBrowser( this, &HTML::BrowserClose ),
+    m_HorizScroll( this, &HTML::BrowserHorizontalScrollBarSizeResponse ),
+    m_VertScroll( this, &HTML::BrowserVerticalScrollBarSizeResponse ),
+    m_LinkAtPosResp( this, &HTML::BrowserLinkAtPositionResponse ),
+    m_JSAlert( this, &HTML::BrowserJSAlert ),
+    m_JSConfirm( this, &HTML::BrowserJSConfirm ),
+    m_CanGoBackForward( this, &HTML::BrowserCanGoBackandForward ),
+    m_SetCursor( this, &HTML::BrowserSetCursor ),
+    m_StatusText( this, &HTML::BrowserStatusText ),
+    m_ShowTooltip( this, &HTML::BrowserShowToolTip ),
+    m_UpdateTooltip( this, &HTML::BrowserUpdateToolTip ),
+    m_HideTooltip( this, &HTML::BrowserHideToolTip )
 {
     m_iHTMLTextureID = 0;
     m_bCanGoBack = false;
@@ -1043,7 +1043,7 @@ void HTML::BrowserResize()
     int left = 0, top = 0;
     if ( pAppearance )
     {
-      pAppearance->GetInset( left, top, right, bottom );
+    pAppearance->GetInset( left, top, right, bottom );
     }
     */
 
@@ -1628,29 +1628,29 @@ void HTML::BrowserSetCursor( HTML_SetCursor_t *pCmd )
             cursor = dc_up;
             break;
         /*case ISteamHTMLSurface::dc_sizenw:
-          cursor = dc_sizenw;
-          break;
+        cursor = dc_sizenw;
+        break;
         case ISteamHTMLSurface::dc_sizese:
-          cursor = dc_sizese;
-          break;
+        cursor = dc_sizese;
+        break;
         case ISteamHTMLSurface::dc_sizene:
-          cursor = dc_sizene;
-          break;
+        cursor = dc_sizene;
+        break;
         case ISteamHTMLSurface::dc_sizesw:
-          cursor = dc_sizesw;
-          break;
+        cursor = dc_sizesw;
+        break;
         case ISteamHTMLSurface::dc_sizew:
-          cursor = dc_sizew;
-          break;
+        cursor = dc_sizew;
+        break;
         case ISteamHTMLSurface::dc_sizee:
-          cursor = dc_sizee;
-          break;
+        cursor = dc_sizee;
+        break;
         case ISteamHTMLSurface::dc_sizen:
-          cursor = dc_sizen;
-          break;
+        cursor = dc_sizen;
+        break;
         case ISteamHTMLSurface::dc_sizes:
-          cursor = dc_sizes;
-          break;*/
+        cursor = dc_sizes;
+        break;*/
         case ISteamHTMLSurface::dc_sizewe:
             cursor = dc_sizewe;
             break;
@@ -1672,58 +1672,58 @@ void HTML::BrowserSetCursor( HTML_SetCursor_t *pCmd )
             /*	case ISteamHTMLSurface::dc_middle_pan:
                 cursor = dc_middle_pan;
                 break;
-              case ISteamHTMLSurface::dc_north_pan:
+            case ISteamHTMLSurface::dc_north_pan:
                 cursor = dc_north_pan;
                 break;
-              case ISteamHTMLSurface::dc_north_east_pan:
+            case ISteamHTMLSurface::dc_north_east_pan:
                 cursor = dc_north_east_pan;
                 break;
-              case ISteamHTMLSurface::dc_east_pan:
+            case ISteamHTMLSurface::dc_east_pan:
                 cursor = dc_east_pan;
                 break;
-              case ISteamHTMLSurface::dc_south_east_pan:
+            case ISteamHTMLSurface::dc_south_east_pan:
                 cursor = dc_south_east_pan;
                 break;
-              case ISteamHTMLSurface::dc_south_pan:
+            case ISteamHTMLSurface::dc_south_pan:
                 cursor = dc_south_pan;
                 break;
-              case ISteamHTMLSurface::dc_south_west_pan:
+            case ISteamHTMLSurface::dc_south_west_pan:
                 cursor = dc_south_west_pan;
                 break;
-              case ISteamHTMLSurface::dc_west_pan:
+            case ISteamHTMLSurface::dc_west_pan:
                 cursor = dc_west_pan;
                 break;
-              case ISteamHTMLSurface::dc_north_west_pan:
+            case ISteamHTMLSurface::dc_north_west_pan:
                 cursor = dc_north_west_pan;
                 break;
-              case ISteamHTMLSurface::dc_alias:
+            case ISteamHTMLSurface::dc_alias:
                 cursor = dc_alias;
                 break;
-              case ISteamHTMLSurface::dc_cell:
+            case ISteamHTMLSurface::dc_cell:
                 cursor = dc_cell;
                 break;
-              case ISteamHTMLSurface::dc_colresize:
+            case ISteamHTMLSurface::dc_colresize:
                 cursor = dc_colresize;
                 break;
-              case ISteamHTMLSurface::dc_copycur:
+            case ISteamHTMLSurface::dc_copycur:
                 cursor = dc_copycur;
                 break;
-              case ISteamHTMLSurface::dc_verticaltext:
+            case ISteamHTMLSurface::dc_verticaltext:
                 cursor = dc_verticaltext;
                 break;
-              case ISteamHTMLSurface::dc_rowresize:
+            case ISteamHTMLSurface::dc_rowresize:
                 cursor = dc_rowresize;
                 break;
-              case ISteamHTMLSurface::dc_zoomin:
+            case ISteamHTMLSurface::dc_zoomin:
                 cursor = dc_zoomin;
                 break;
-              case ISteamHTMLSurface::dc_zoomout:
+            case ISteamHTMLSurface::dc_zoomout:
                 cursor = dc_zoomout;
                 break;
-              case ISteamHTMLSurface::dc_custom:
+            case ISteamHTMLSurface::dc_custom:
                 cursor = dc_custom;
                 break;
-              case ISteamHTMLSurface::dc_help:
+            case ISteamHTMLSurface::dc_help:
                 cursor = dc_help;
                 break;*/
     }
@@ -1768,14 +1768,14 @@ void HTML::BrowserShowToolTip( HTML_ShowToolTip_t *pCmd )
         return;
 
     /*
-      BR FIXME
-      Tooltip *tip = GetTooltip();
-      tip->SetText( pCmd->text().c_str() );
-      tip->SetTooltipFormatToMultiLine();
-      tip->SetTooltipDelayMS( 250 );
-      tip->SetMaxToolTipWidth( MAX( 200, GetWide()/2 ) );
-      tip->ShowTooltip( this );
-      */
+    BR FIXME
+    Tooltip *tip = GetTooltip();
+    tip->SetText( pCmd->text().c_str() );
+    tip->SetTooltipFormatToMultiLine();
+    tip->SetTooltipDelayMS( 250 );
+    tip->SetMaxToolTipWidth( MAX( 200, GetWide()/2 ) );
+    tip->ShowTooltip( this );
+    */
 }
 
 //-----------------------------------------------------------------------------

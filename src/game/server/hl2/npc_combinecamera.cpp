@@ -106,7 +106,7 @@ class CNPC_CombineCamera : public CAI_BaseNPC
 {
     DECLARE_CLASS( CNPC_CombineCamera, CAI_BaseNPC );
 
-   public:
+    public:
     CNPC_CombineCamera();
     ~CNPC_CombineCamera();
 
@@ -153,7 +153,7 @@ class CNPC_CombineCamera : public CAI_BaseNPC
         return GetAbsOrigin() + EyeOffset( GetActivity() );
     }
 
-   protected:
+    protected:
     CBaseEntity *GetTarget();
     bool UpdateFacing();
     void TrackTarget( CBaseEntity *pTarget );
@@ -170,7 +170,7 @@ class CNPC_CombineCamera : public CAI_BaseNPC
     CBaseEntity *MaintainEnemy();
     void SetAngry( bool bAngry );
 
-   protected:
+    protected:
     int m_iAmmoType;
     int m_iMinHealthDmg;
 

@@ -16,7 +16,7 @@
 // and some of the launchers (like texturecompile) use this.
 class ILaunchableDLL
 {
-   public:
+    public:
     // All vrad.exe does is load the VRAD DLL and run this.
     virtual int main( int argc, char **argv ) = 0;
 };

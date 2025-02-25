@@ -18,7 +18,7 @@ class CBaseRecordingSessionBlock;
 
 class IRecordingSession : public IBaseInterface
 {
-   public:
+    public:
     virtual void AddBlock( CBaseRecordingSessionBlock *pBlock ) = 0;
 };
 

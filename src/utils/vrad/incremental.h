@@ -23,13 +23,13 @@ class CIncLight;
 
 class CLightValue
 {
-   public:
+    public:
     float m_Dot;
 };
 
 class CLightFace
 {
-   public:
+    public:
     unsigned short m_FaceIndex;        // global face index
     unsigned short m_LightFacesIndex;  // index into CIncLight::m_LightFaces.
 
@@ -43,13 +43,13 @@ class CLightFace
 
 class CIncLight
 {
-   public:
+    public:
     CIncLight();
     ~CIncLight();
 
     CLightFace *FindOrCreateLightFace( int iFace, int lmSize, bool *bNew = NULL );
 
-   public:
+    public:
     CRITICAL_SECTION m_CS;
 
     // This is the light for which m_LightFaces was built.
@@ -67,10 +67,10 @@ class CIncLight
 
 class CIncrementalHeader
 {
-   public:
+    public:
     class CLMSize
     {
-       public:
+        public:
         unsigned char m_Width;
         unsigned char m_Height;
     };
@@ -80,12 +80,12 @@ class CIncrementalHeader
 
 class CIncremental : public IIncremental
 {
-   public:
+    public:
     CIncremental();
     ~CIncremental();
 
     // IIncremental overrides.
-   public:
+    public:
     virtual bool Init( char const *pBSPFilename, char const *pIncrementalFilename );
 
     // Load the light definitions out of the incremental file.
@@ -114,7 +114,7 @@ class CIncremental : public IIncremental
 
     virtual bool Serialize();
 
-   private:
+    private:
     // Read/write the header from the file.
     bool ReadIncrementalHeader( long fp, CIncrementalHeader *pHeader );
     bool WriteIncrementalHeader( long fp );
@@ -134,7 +134,7 @@ class CIncremental : public IIncremental
     typedef CUtlVector< CLightFace * > CFaceLightList;
     void LinkLightsToFaces( CUtlVector< CFaceLightList > &faceLights );
 
-   private:
+    private:
     char const *m_pIncrementalFilename;
     char const *m_pBSPFilename;
 

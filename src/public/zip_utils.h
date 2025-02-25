@@ -17,7 +17,7 @@ class CUtlBuffer;
 
 abstract_class IZip
 {
-   public:
+    public:
     enum eCompressionType
     {
         // Type of compression used for this file in the zip
@@ -29,7 +29,7 @@ abstract_class IZip
 
     // Add a single file to a zip - maintains the zip's previous alignment state
     virtual void AddFileToZip( const char *relativename,
-                               const char *fullpath ) = 0;
+                                const char *fullpath ) = 0;
 
     // Whether a file is contained in a zip - maintains alignment
     virtual bool FileExistsInZip( const char *pRelativeName ) = 0;

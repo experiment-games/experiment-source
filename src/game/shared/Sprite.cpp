@@ -550,7 +550,7 @@ void CSprite::TurnOn( void )
     RemoveEffects( EF_NODRAW );
     if ( ( m_flSpriteFramerate && m_flMaxFrame > 1.0 )
 #if !defined( CLIENT_DLL )
-         || ( m_spawnflags & SF_SPRITE_ONCE )
+        || ( m_spawnflags & SF_SPRITE_ONCE )
 #endif
     )
     {
@@ -670,8 +670,8 @@ void CSprite::GetRenderBounds( Vector &vecMins, Vector &vecMaxs )
     vecMaxs.Init( flScale, flScale, flScale );
 
 #if 0
-	// Visualize the bounds
-	debugoverlay->AddBoxOverlay( GetRenderOrigin(), vecMins, vecMaxs, GetRenderAngles(), 255, 255, 255, 0, 0.01f );
+    // Visualize the bounds
+    debugoverlay->AddBoxOverlay( GetRenderOrigin(), vecMins, vecMaxs, GetRenderAngles(), 255, 255, 255, 0, 0.01f );
 #endif
 }
 
@@ -750,7 +750,7 @@ int CSprite::DrawModel( int flags )
 
 #ifdef PORTAL
     if ( ( !g_pPortalRender->IsRenderingPortal() && !m_bDrawInMainRender ) ||
-         ( g_pPortalRender->IsRenderingPortal() && !m_bDrawInPortalRender ) )
+        ( g_pPortalRender->IsRenderingPortal() && !m_bDrawInPortalRender ) )
     {
         return 0;
     }

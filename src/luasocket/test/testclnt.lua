@@ -141,7 +141,7 @@ end
 
 ------------------------------------------------------------------------
 if not math.mod then
-	math.mod = math.fmod
+    math.mod = math.fmod
 end
 function test_asciiline(len)
     reconnect()
@@ -452,9 +452,9 @@ end
 
 ------------------------------------------------------------------------
 function rebind_test()
-   local c ,c1 = socket.bind("127.0.0.1", 0)
+    local c ,c1 = socket.bind("127.0.0.1", 0)
     if not c then pass ("failed to bind! " .. tostring(c) .. ' ' .. tostring(c1))  return end
-	assert(c,c1)
+    assert(c,c1)
     local i, p = c:getsockname()
     local s, e = socket.tcp()
     assert(s, e)

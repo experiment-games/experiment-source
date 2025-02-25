@@ -71,9 +71,9 @@ SHADER_DRAW
 
         float cPsConst0[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
         if ( ( pTexture->GetImageFormat() == IMAGE_FORMAT_RGBA16161616F ) ||
-             ( pTexture->GetImageFormat() == IMAGE_FORMAT_RGBA16161616 ) ||
-             ( pTexture->GetImageFormat() == IMAGE_FORMAT_RGB323232F ) ||
-             ( pTexture->GetImageFormat() == IMAGE_FORMAT_RGBA32323232F ) )
+            ( pTexture->GetImageFormat() == IMAGE_FORMAT_RGBA16161616 ) ||
+            ( pTexture->GetImageFormat() == IMAGE_FORMAT_RGB323232F ) ||
+            ( pTexture->GetImageFormat() == IMAGE_FORMAT_RGBA32323232F ) )
         {
             if ( pTexture->IsCubeMap() )
                 cPsConst0[0] = 1.0f;

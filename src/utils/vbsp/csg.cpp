@@ -31,7 +31,7 @@ for all sides
   for all sides
     get
     if side splits side and splitside is on same child
-      cost++;
+    cost++;
 }
 
 
@@ -41,10 +41,10 @@ void SplitBrush2( bspbrush_t *brush, int planenum, bspbrush_t **front, bspbrush_
 {
     SplitBrush( brush, planenum, front, back );
 #if 0
-	if (*front && (*front)->sides[(*front)->numsides-1].texinfo == -1)
-		(*front)->sides[(*front)->numsides-1].texinfo = (*front)->sides[0].texinfo;	// not -1
-	if (*back && (*back)->sides[(*back)->numsides-1].texinfo == -1)
-		(*back)->sides[(*back)->numsides-1].texinfo = (*back)->sides[0].texinfo;	// not -1
+    if (*front && (*front)->sides[(*front)->numsides-1].texinfo == -1)
+        (*front)->sides[(*front)->numsides-1].texinfo = (*front)->sides[0].texinfo;	// not -1
+    if (*back && (*back)->sides[(*back)->numsides-1].texinfo == -1)
+        (*back)->sides[(*back)->numsides-1].texinfo = (*back)->sides[0].texinfo;	// not -1
 #endif
 }
 
@@ -145,7 +145,7 @@ qboolean BrushesDisjoint( bspbrush_t *a, bspbrush_t *b )
         for ( j = 0; j < b->numsides; j++ )
         {
             if ( a->sides[i].planenum ==
-                 ( b->sides[j].planenum ^ 1 ) )
+                ( b->sides[j].planenum ^ 1 ) )
                 return true;  // opposite planes, so not touching
         }
     }
@@ -518,49 +518,49 @@ void WriteBrushMap( char *name, bspbrush_t *list )
 #if 0
 void WriteBrushVMF(char *name, bspbrush_t *list)
 {
-	FILE	*f;
-	side_t	*s;
-	int		i;
-	winding_t	*w;
-	Vector	u, v;
+    FILE	*f;
+    side_t	*s;
+    int		i;
+    winding_t	*w;
+    Vector	u, v;
 
-	Msg("writing %s\n", name);
-	f = fopen (name, "w");
-	if (!f)
-		Error ("Can't write %s\b", name);
+    Msg("writing %s\n", name);
+    f = fopen (name, "w");
+    if (!f)
+        Error ("Can't write %s\b", name);
 
-	fprintf (f, "world\n{\n\"classname\" \"worldspawn\"\n");
+    fprintf (f, "world\n{\n\"classname\" \"worldspawn\"\n");
 
-	for ( ; list ; list=list->next )
-	{
-		fprintf (f, "\tsolid\n\t{\n");
-		for (i=0,s=list->sides ; i<list->numsides ; i++,s++)
-		{
-			fprintf( f, "\t\tside\n\t\t{\n" );
-			fprintf( f, "\t\t\t\"plane\" \"" );
-			w = BaseWindingForPlane (mapplanes[s->planenum].normal, mapplanes[s->planenum].dist);
+    for ( ; list ; list=list->next )
+    {
+        fprintf (f, "\tsolid\n\t{\n");
+        for (i=0,s=list->sides ; i<list->numsides ; i++,s++)
+        {
+            fprintf( f, "\t\tside\n\t\t{\n" );
+            fprintf( f, "\t\t\t\"plane\" \"" );
+            w = BaseWindingForPlane (mapplanes[s->planenum].normal, mapplanes[s->planenum].dist);
 
-			fprintf (f,"(%i %i %i) ", (int)w->p[0][0], (int)w->p[0][1], (int)w->p[0][2]);
-			fprintf (f,"(%i %i %i) ", (int)w->p[1][0], (int)w->p[1][1], (int)w->p[1][2]);
-			fprintf (f,"(%i %i %i)", (int)w->p[2][0], (int)w->p[2][1], (int)w->p[2][2]);
-			fprintf( f, "\"\n" );
-			fprintf( f, "\t\t\t\"material\" \"%s\"\n", GetTexData( texinfo[s->texinfo].texdata )->name );
-			// UNDONE: recreate correct texture axes
-			BasisForPlane( mapplanes[s->planenum].normal, u, v );
-			fprintf( f, "\t\t\t\"uaxis\" \"[%.3f %.3f %.3f 0] 1.0\"\n", u[0], u[1], u[2] );
-			fprintf( f, "\t\t\t\"vaxis\" \"[%.3f %.3f %.3f 0] 1.0\"\n", v[0], v[1], v[2] );
-			
-			fprintf( f, "\t\t\t\"rotation\" \"0.0\"\n" );
-			fprintf( f, "\t\t\t\"lightmapscale\" \"16.0\"\n" );
+            fprintf (f,"(%i %i %i) ", (int)w->p[0][0], (int)w->p[0][1], (int)w->p[0][2]);
+            fprintf (f,"(%i %i %i) ", (int)w->p[1][0], (int)w->p[1][1], (int)w->p[1][2]);
+            fprintf (f,"(%i %i %i)", (int)w->p[2][0], (int)w->p[2][1], (int)w->p[2][2]);
+            fprintf( f, "\"\n" );
+            fprintf( f, "\t\t\t\"material\" \"%s\"\n", GetTexData( texinfo[s->texinfo].texdata )->name );
+            // UNDONE: recreate correct texture axes
+            BasisForPlane( mapplanes[s->planenum].normal, u, v );
+            fprintf( f, "\t\t\t\"uaxis\" \"[%.3f %.3f %.3f 0] 1.0\"\n", u[0], u[1], u[2] );
+            fprintf( f, "\t\t\t\"vaxis\" \"[%.3f %.3f %.3f 0] 1.0\"\n", v[0], v[1], v[2] );
 
-			FreeWinding (w);
-			fprintf (f, "\t\t}\n");
-		}
-		fprintf (f, "\t}\n");
-	}
-	fprintf (f, "}\n");
+            fprintf( f, "\t\t\t\"rotation\" \"0.0\"\n" );
+            fprintf( f, "\t\t\t\"lightmapscale\" \"16.0\"\n" );
 
-	fclose (f);
+            FreeWinding (w);
+            fprintf (f, "\t\t}\n");
+        }
+        fprintf (f, "\t}\n");
+    }
+    fprintf (f, "}\n");
+
+    fclose (f);
 
 }
 #endif
@@ -621,7 +621,7 @@ qboolean BrushGE( bspbrush_t *b1, bspbrush_t *b2 )
     // NOTE: This brush combo should have been fixed up
     // in a first pass (FixupAreaportalWaterBrushes)
     if ( ( b2->original->contents & MASK_SPLITAREAPORTAL ) &&
-         ( b1->original->contents & CONTENTS_AREAPORTAL ) )
+        ( b1->original->contents & CONTENTS_AREAPORTAL ) )
     {
         return true;
     }

@@ -24,7 +24,7 @@ class C_CrossbowBolt : public C_BaseCombatCharacter
     DECLARE_CLASS( C_CrossbowBolt, C_BaseCombatCharacter );
     DECLARE_CLIENTCLASS();
 
-   public:
+    public:
     C_CrossbowBolt( void );
 
     virtual RenderGroup_t GetRenderGroup( void )
@@ -38,7 +38,7 @@ class C_CrossbowBolt : public C_BaseCombatCharacter
     virtual void OnDataChanged( DataUpdateType_t updateType );
     virtual int DrawModel( int flags );
 
-   private:
+    private:
     C_CrossbowBolt( const C_CrossbowBolt & );  // not defined, not accessible
 
     Vector m_vecLastOrigin;

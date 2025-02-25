@@ -23,7 +23,7 @@ enum Hull_t
     HULL_LARGE,           // Antlion Guard
     HULL_LARGE_CENTERED,  // Mortar Synth
     HULL_MEDIUM_TALL,     // Hunter
-                          //--------------------------------------------
+                        //--------------------------------------------
     NUM_HULLS,
     HULL_NONE  // No Hull (appears after num hulls as we don't want to count it)
 };

@@ -16,7 +16,7 @@ struct SteamLoggedOnChange_t
 
 class CClientSteamContext : public CSteamAPIContext
 {
-   public:
+    public:
     CClientSteamContext();
     ~CClientSteamContext();
 
@@ -50,7 +50,7 @@ class CClientSteamContext : public CSteamAPIContext
     void InstallCallback( CUtlDelegate< void( const SteamLoggedOnChange_t & ) > delegate );
     void RemoveCallback( CUtlDelegate< void( const SteamLoggedOnChange_t & ) > delegate );
 
-   private:
+    private:
     void UpdateLoggedOnState();
     void InvokeCallbacks( const SteamLoggedOnChange_t &loggedOnStatus );
 

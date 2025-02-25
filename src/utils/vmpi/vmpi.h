@@ -36,7 +36,7 @@ typedef void ( *VMPI_Disconnect_Handler )( int procID, const char *pReason );
 // Instantiate one of these to register a dispatch.
 class CDispatchReg
 {
-   public:
+    public:
     CDispatchReg( int iPacketID, VMPIDispatchFn fn );
 };
 

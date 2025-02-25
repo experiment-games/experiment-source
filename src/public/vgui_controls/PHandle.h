@@ -24,7 +24,7 @@ class Panel;
 //-----------------------------------------------------------------------------
 class PHandle
 {
-   public:
+    public:
     PHandle()
         : m_iPanelID( INVALID_PANEL ) {}  // m_iSerialNumber(0), m_pListEntry(0) {}
 
@@ -55,7 +55,7 @@ class PHandle
     }
 
 #ifndef LUA_SDK
-   private:
+    private:
 #endif
     HPanel m_iPanelID;
 };
@@ -65,7 +65,7 @@ class PHandle
 //-----------------------------------------------------------------------------
 class VPanelHandle
 {
-   public:
+    public:
     VPanelHandle()
         : m_iPanelID( INVALID_PANEL ) {}
 
@@ -90,7 +90,7 @@ class VPanelHandle
         return Get() != 0;
     }
 
-   private:
+    private:
     HPanel m_iPanelID;
 };
 
@@ -100,7 +100,7 @@ class VPanelHandle
 template < class PanelType >
 class DHANDLE : public PHandle
 {
-   public:
+    public:
     PanelType *Get()
     {
         return ( PanelType * )PHandle::Get();

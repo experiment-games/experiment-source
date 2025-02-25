@@ -74,7 +74,7 @@ LIBPROTOBUF_EXPORT int StringSpaceUsedExcludingSelf( const string& str );
 template < typename Element >
 class RepeatedField
 {
-   public:
+    public:
     RepeatedField();
     ~RepeatedField();
 
@@ -130,7 +130,7 @@ class RepeatedField
     // sizeof(*this)
     int SpaceUsedExcludingSelf() const;
 
-   private:
+    private:
     GOOGLE_DISALLOW_EVIL_CONSTRUCTORS( RepeatedField );
 
     static const int kInitialSize = 4;
@@ -179,7 +179,7 @@ namespace internal
 //   };
 class LIBPROTOBUF_EXPORT RepeatedPtrFieldBase
 {
-   protected:
+    protected:
     // The reflection implementation needs to call protected methods directly,
     // reinterpreting pointers as being to Message instead of a specific Message
     // subclass.
@@ -250,7 +250,7 @@ class LIBPROTOBUF_EXPORT RepeatedPtrFieldBase
     template < typename TypeHandler >
     typename TypeHandler::Type* ReleaseCleared();
 
-   private:
+    private:
     GOOGLE_DISALLOW_EVIL_CONSTRUCTORS( RepeatedPtrFieldBase );
 
     static const int kInitialSize = 4;
@@ -277,7 +277,7 @@ class LIBPROTOBUF_EXPORT RepeatedPtrFieldBase
 template < typename GenericType >
 class GenericTypeHandler
 {
-   public:
+    public:
     typedef GenericType Type;
     static GenericType* New()
     {
@@ -319,7 +319,7 @@ inline void GenericTypeHandler< MessageLite >::Merge(
 // TODO(kenton):  There has to be a better way.
 class LIBPROTOBUF_EXPORT StringTypeHandlerBase
 {
-   public:
+    public:
     typedef string Type;
     static string* New();
     static void Delete( string* value );
@@ -335,7 +335,7 @@ class LIBPROTOBUF_EXPORT StringTypeHandlerBase
 
 class StringTypeHandler : public StringTypeHandlerBase
 {
-   public:
+    public:
     static int SpaceUsed( const string& value )
     {
         return sizeof( value ) + StringSpaceUsedExcludingSelf( value );
@@ -349,7 +349,7 @@ class StringTypeHandler : public StringTypeHandlerBase
 template < typename Element >
 class RepeatedPtrField : public internal::RepeatedPtrFieldBase
 {
-   public:
+    public:
     RepeatedPtrField();
 
     ~RepeatedPtrField();
@@ -438,14 +438,14 @@ class RepeatedPtrField : public internal::RepeatedPtrFieldBase
     // Requires:  ClearedCount() > 0
     Element* ReleaseCleared();
 
-   protected:
+    protected:
     // Note:  RepeatedPtrField SHOULD NOT be subclassed by users.  We only
     //   subclass it in one place as a hack for compatibility with proto1.  The
     //   subclass needs to know about TypeHandler in order to call protected
     //   methods on RepeatedPtrFieldBase.
     class TypeHandler;
 
-   private:
+    private:
     GOOGLE_DISALLOW_EVIL_CONSTRUCTORS( RepeatedPtrField );
 };
 
@@ -454,8 +454,8 @@ class RepeatedPtrField : public internal::RepeatedPtrFieldBase
 template < typename Element >
 inline RepeatedField< Element >::RepeatedField()
     : elements_( initial_space_ ),
-      current_size_( 0 ),
-      total_size_( kInitialSize )
+    current_size_( 0 ),
+    total_size_( kInitialSize )
 {
 }
 
@@ -681,9 +681,9 @@ namespace internal
 
 inline RepeatedPtrFieldBase::RepeatedPtrFieldBase()
     : elements_( initial_space_ ),
-      current_size_( 0 ),
-      allocated_size_( 0 ),
-      total_size_( kInitialSize )
+    current_size_( 0 ),
+    allocated_size_( 0 ),
+    total_size_( kInitialSize )
 {
 }
 
@@ -1056,10 +1056,10 @@ namespace internal
 template < typename Element >
 class RepeatedPtrIterator
     : public std::iterator<
-          std::random_access_iterator_tag,
-          Element >
+        std::random_access_iterator_tag,
+        Element >
 {
-   public:
+    public:
     typedef RepeatedPtrIterator< Element > iterator;
     typedef std::iterator<
         std::random_access_iterator_tag,
@@ -1187,7 +1187,7 @@ class RepeatedPtrIterator
         return it_ - x.it_;
     }
 
-   private:
+    private:
     template < typename OtherElement >
     friend class RepeatedPtrIterator;
 
@@ -1203,7 +1203,7 @@ template < typename Element >
 class RepeatedPtrOverPtrsIterator
     : public std::iterator< std::random_access_iterator_tag, Element* >
 {
-   public:
+    public:
     typedef RepeatedPtrOverPtrsIterator< Element > iterator;
     typedef std::iterator<
         std::random_access_iterator_tag,
@@ -1318,7 +1318,7 @@ class RepeatedPtrOverPtrsIterator
         return it_ - x.it_;
     }
 
-   private:
+    private:
     template < typename OtherElement >
     friend class RepeatedPtrIterator;
 
@@ -1382,7 +1382,7 @@ template < typename T >
 class RepeatedFieldBackInsertIterator
     : public std::iterator< std::output_iterator_tag, T >
 {
-   public:
+    public:
     explicit RepeatedFieldBackInsertIterator(
         RepeatedField< T >* const mutable_field )
         : field_( mutable_field )
@@ -1406,7 +1406,7 @@ class RepeatedFieldBackInsertIterator
         return *this;
     }
 
-   private:
+    private:
     RepeatedField< T >* const field_;
 };
 
@@ -1415,7 +1415,7 @@ template < typename T >
 class RepeatedPtrFieldBackInsertIterator
     : public std::iterator< std::output_iterator_tag, T >
 {
-   public:
+    public:
     RepeatedPtrFieldBackInsertIterator(
         RepeatedPtrField< T >* const mutable_field )
         : field_( mutable_field )
@@ -1445,7 +1445,7 @@ class RepeatedPtrFieldBackInsertIterator
         return *this;
     }
 
-   private:
+    private:
     RepeatedPtrField< T >* const field_;
 };
 
@@ -1455,7 +1455,7 @@ template < typename T >
 class AllocatedRepeatedPtrFieldBackInsertIterator
     : public std::iterator< std::output_iterator_tag, T >
 {
-   public:
+    public:
     explicit AllocatedRepeatedPtrFieldBackInsertIterator(
         RepeatedPtrField< T >* const mutable_field )
         : field_( mutable_field )
@@ -1481,7 +1481,7 @@ class AllocatedRepeatedPtrFieldBackInsertIterator
         return *this;
     }
 
-   private:
+    private:
     RepeatedPtrField< T >* const field_;
 };
 }  // namespace internal

@@ -158,8 +158,8 @@ int main( int argc, char **argv )
     }
 
     if ( pTexture1->Width() != pTexture2->Width() ||
-         pTexture1->Height() != pTexture2->Height() ||
-         pTexture1->Depth() != pTexture2->Depth() )
+        pTexture1->Height() != pTexture2->Height() ||
+        pTexture1->Depth() != pTexture2->Depth() )
     {
         printf( "%s dimensions differ: %dx%dx%d != %dx%dx%d\n",
                 argv[1],
@@ -173,7 +173,7 @@ int main( int argc, char **argv )
     }
 
     if ( pTexture1->LowResWidth() != pTexture2->LowResWidth() ||
-         pTexture1->LowResHeight() != pTexture2->LowResHeight() )
+        pTexture1->LowResHeight() != pTexture2->LowResHeight() )
     {
         printf( "%s lowres dimensions differ: %dx%d != %dx%d\n",
                 argv[1],
@@ -286,8 +286,8 @@ int main( int argc, char **argv )
             printf( "%s image data different\n", argv[1] );
 
             if ( ( pTexture1->Format() == IMAGE_FORMAT_DXT1 ) || ( pTexture1->Format() == IMAGE_FORMAT_DXT3 ) ||
-                 ( pTexture1->Format() == IMAGE_FORMAT_DXT5 ) || ( pTexture1->Format() == IMAGE_FORMAT_ATI2N ) ||
-                 ( pTexture1->Format() == IMAGE_FORMAT_ATI1N ) )
+                ( pTexture1->Format() == IMAGE_FORMAT_DXT5 ) || ( pTexture1->Format() == IMAGE_FORMAT_ATI2N ) ||
+                ( pTexture1->Format() == IMAGE_FORMAT_ATI1N ) )
             {
                 int i, numOffsetsComplained = 0;
                 for ( i = 0; i < iSize; i++ )

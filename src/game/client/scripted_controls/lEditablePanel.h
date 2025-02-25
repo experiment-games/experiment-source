@@ -16,7 +16,7 @@ class LEditablePanel : public EditablePanel
 
     LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( LEditablePanel, "EditablePanel" );
 
-   public:
+    public:
     LEditablePanel( Panel *parent, const char *panelName, lua_State *L );
     ~LEditablePanel();
     void SetFocusTopLevel( bool state );
@@ -30,11 +30,11 @@ class LEditablePanel : public EditablePanel
     MESSAGE_FUNC( Close, "Close" );
     MESSAGE_FUNC( CloseModal, "CloseModal" );
 
-   private:
+    private:
     void FinishClose();
     VPANEL m_hPreviousModal;
 
-   protected:
+    protected:
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme )
     {
         LUA_CALL_PANEL_METHOD_BEGIN( "ApplySchemeSettings" );

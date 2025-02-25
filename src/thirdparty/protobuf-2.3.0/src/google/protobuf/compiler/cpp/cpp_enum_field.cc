@@ -46,7 +46,7 @@ namespace cpp {
 namespace {
 
 void SetEnumVariables(const FieldDescriptor* descriptor,
-                      map<string, string>* variables) {
+                    map<string, string>* variables) {
   SetCommonFieldVariables(descriptor, variables);
   const EnumValueDescriptor* default_value = descriptor->default_value_enum();
   (*variables)["type"] = ClassName(descriptor->enum_type(), true);
@@ -121,8 +121,8 @@ GenerateMergeFromCodedStream(io::Printer* printer) const {
     "  set_$name$(static_cast< $type$ >(value));\n");
   if (HasUnknownFields(descriptor_->file())) {
     printer->Print(variables_,
-      "} else {\n"
-      "  mutable_unknown_fields()->AddVarint($number$, value);\n");
+    "} else {\n"
+    "  mutable_unknown_fields()->AddVarint($number$, value);\n");
   }
   printer->Print(variables_,
     "}\n");
@@ -165,7 +165,7 @@ GeneratePrivateMembers(io::Printer* printer) const {
     "::google::protobuf::RepeatedField<int> $name$_;\n");
   if (descriptor_->options().packed() && HasGeneratedMethods(descriptor_->file())) {
     printer->Print(variables_,
-      "mutable int _$name$_cached_byte_size_;\n");
+    "mutable int _$name$_cached_byte_size_;\n");
   }
 }
 
@@ -237,8 +237,8 @@ GenerateMergeFromCodedStream(io::Printer* printer) const {
     "  add_$name$(static_cast< $type$ >(value));\n");
   if (HasUnknownFields(descriptor_->file())) {
     printer->Print(variables_,
-      "} else {\n"
-      "  mutable_unknown_fields()->AddVarint($number$, value);\n");
+    "} else {\n"
+    "  mutable_unknown_fields()->AddVarint($number$, value);\n");
   }
   printer->Print("}\n");
 }
@@ -249,26 +249,26 @@ GenerateMergeFromCodedStreamWithPacking(io::Printer* printer) const {
     // We use a non-inlined implementation in this case, since this path will
     // rarely be executed.
     printer->Print(variables_,
-      "DO_((::google::protobuf::internal::WireFormatLite::ReadPackedEnumNoInline(\n"
-      "       input,\n"
-      "       &$type$_IsValid,\n"
-      "       this->mutable_$name$())));\n");
+    "DO_((::google::protobuf::internal::WireFormatLite::ReadPackedEnumNoInline(\n"
+    "       input,\n"
+    "       &$type$_IsValid,\n"
+    "       this->mutable_$name$())));\n");
   } else {
     printer->Print(variables_,
-      "::google::protobuf::uint32 length;\n"
-      "DO_(input->ReadVarint32(&length));\n"
-      "::google::protobuf::io::CodedInputStream::Limit limit = "
-          "input->PushLimit(length);\n"
-      "while (input->BytesUntilLimit() > 0) {\n"
-      "  int value;\n"
-      "  DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<\n"
-      "         int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(\n"
-      "       input, &value)));\n"
-      "  if ($type$_IsValid(value)) {\n"
-      "    add_$name$(static_cast< $type$ >(value));\n"
-      "  }\n"
-      "}\n"
-      "input->PopLimit(limit);\n");
+    "::google::protobuf::uint32 length;\n"
+    "DO_(input->ReadVarint32(&length));\n"
+    "::google::protobuf::io::CodedInputStream::Limit limit = "
+        "input->PushLimit(length);\n"
+    "while (input->BytesUntilLimit() > 0) {\n"
+    "  int value;\n"
+    "  DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<\n"
+    "         int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(\n"
+    "       input, &value)));\n"
+    "  if ($type$_IsValid(value)) {\n"
+    "    add_$name$(static_cast< $type$ >(value));\n"
+    "  }\n"
+    "}\n"
+    "input->PopLimit(limit);\n");
   }
 }
 
@@ -277,24 +277,24 @@ GenerateSerializeWithCachedSizes(io::Printer* printer) const {
   if (descriptor_->options().packed()) {
     // Write the tag and the size.
     printer->Print(variables_,
-      "if (this->$name$_size() > 0) {\n"
-      "  ::google::protobuf::internal::WireFormatLite::WriteTag(\n"
-      "    $number$,\n"
-      "    ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED,\n"
-      "    output);\n"
-      "  output->WriteVarint32(_$name$_cached_byte_size_);\n"
-      "}\n");
+    "if (this->$name$_size() > 0) {\n"
+    "  ::google::protobuf::internal::WireFormatLite::WriteTag(\n"
+    "    $number$,\n"
+    "    ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED,\n"
+    "    output);\n"
+    "  output->WriteVarint32(_$name$_cached_byte_size_);\n"
+    "}\n");
   }
   printer->Print(variables_,
-      "for (int i = 0; i < this->$name$_size(); i++) {\n");
+    "for (int i = 0; i < this->$name$_size(); i++) {\n");
   if (descriptor_->options().packed()) {
     printer->Print(variables_,
-      "  ::google::protobuf::internal::WireFormatLite::WriteEnumNoTag(\n"
-      "    this->$name$(i), output);\n");
+    "  ::google::protobuf::internal::WireFormatLite::WriteEnumNoTag(\n"
+    "    this->$name$(i), output);\n");
   } else {
     printer->Print(variables_,
-      "  ::google::protobuf::internal::WireFormatLite::WriteEnum(\n"
-      "    $number$, this->$name$(i), output);\n");
+    "  ::google::protobuf::internal::WireFormatLite::WriteEnum(\n"
+    "    $number$, this->$name$(i), output);\n");
   }
   printer->Print("}\n");
 }
@@ -304,25 +304,25 @@ GenerateSerializeWithCachedSizesToArray(io::Printer* printer) const {
   if (descriptor_->options().packed()) {
     // Write the tag and the size.
     printer->Print(variables_,
-      "if (this->$name$_size() > 0) {\n"
-      "  target = ::google::protobuf::internal::WireFormatLite::WriteTagToArray(\n"
-      "    $number$,\n"
-      "    ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED,\n"
-      "    target);\n"
-      "  target = ::google::protobuf::io::CodedOutputStream::WriteVarint32ToArray("
-      "    _$name$_cached_byte_size_, target);\n"
-      "}\n");
+    "if (this->$name$_size() > 0) {\n"
+    "  target = ::google::protobuf::internal::WireFormatLite::WriteTagToArray(\n"
+    "    $number$,\n"
+    "    ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED,\n"
+    "    target);\n"
+    "  target = ::google::protobuf::io::CodedOutputStream::WriteVarint32ToArray("
+    "    _$name$_cached_byte_size_, target);\n"
+    "}\n");
   }
   printer->Print(variables_,
-      "for (int i = 0; i < this->$name$_size(); i++) {\n");
+    "for (int i = 0; i < this->$name$_size(); i++) {\n");
   if (descriptor_->options().packed()) {
     printer->Print(variables_,
-      "  target = ::google::protobuf::internal::WireFormatLite::WriteEnumNoTagToArray(\n"
-      "    this->$name$(i), target);\n");
+    "  target = ::google::protobuf::internal::WireFormatLite::WriteEnumNoTagToArray(\n"
+    "    this->$name$(i), target);\n");
   } else {
     printer->Print(variables_,
-      "  target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(\n"
-      "    $number$, this->$name$(i), target);\n");
+    "  target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(\n"
+    "    $number$, this->$name$(i), target);\n");
   }
   printer->Print("}\n");
 }
@@ -334,22 +334,22 @@ GenerateByteSize(io::Printer* printer) const {
     "  int data_size = 0;\n");
   printer->Indent();
   printer->Print(variables_,
-      "for (int i = 0; i < this->$name$_size(); i++) {\n"
-      "  data_size += ::google::protobuf::internal::WireFormatLite::EnumSize(\n"
-      "    this->$name$(i));\n"
-      "}\n");
+    "for (int i = 0; i < this->$name$_size(); i++) {\n"
+    "  data_size += ::google::protobuf::internal::WireFormatLite::EnumSize(\n"
+    "    this->$name$(i));\n"
+    "}\n");
 
   if (descriptor_->options().packed()) {
     printer->Print(variables_,
-      "if (data_size > 0) {\n"
-      "  total_size += $tag_size$ +\n"
-      "    ::google::protobuf::internal::WireFormatLite::Int32Size(data_size);\n"
-      "}\n"
-      "_$name$_cached_byte_size_ = data_size;\n"
-      "total_size += data_size;\n");
+    "if (data_size > 0) {\n"
+    "  total_size += $tag_size$ +\n"
+    "    ::google::protobuf::internal::WireFormatLite::Int32Size(data_size);\n"
+    "}\n"
+    "_$name$_cached_byte_size_ = data_size;\n"
+    "total_size += data_size;\n");
   } else {
     printer->Print(variables_,
-      "total_size += $tag_size$ * this->$name$_size() + data_size;\n");
+    "total_size += $tag_size$ * this->$name$_size() + data_size;\n");
   }
   printer->Outdent();
   printer->Print("}\n");

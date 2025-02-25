@@ -65,7 +65,7 @@ class CAI_Schedule;
 
 class CAI_SchedulesManager
 {
-   public:
+    public:
     CAI_SchedulesManager()
     {
         allSchedules = NULL;
@@ -84,7 +84,7 @@ class CAI_SchedulesManager
     bool LoadSchedules( const char *prefix, CAI_ClassScheduleIdSpace *pIdSpace );
     bool LoadSchedulesFromBuffer( const char *prefix, const char *pfile, CAI_ClassScheduleIdSpace *pIdSpace );
 
-   private:
+    private:
     friend class CAI_SystemHook;
 
     int m_CurLoadSig;            // Note when schedules reset
@@ -115,7 +115,7 @@ class CAI_Schedule
     //	Static
     // ---------
     // ---------
-   public:
+    public:
     int GetId() const
     {
         return m_iScheduleID;
@@ -146,7 +146,7 @@ class CAI_Schedule
         return m_pName;
     }
 
-   private:
+    private:
     friend class CAI_SchedulesManager;
 
     int m_iScheduleID;  // The id number of this schedule

@@ -16,7 +16,7 @@ class CHL2GameStats : public CBaseGameStats
 {
     typedef CBaseGameStats BaseClass;
 
-   public:
+    public:
     CHL2GameStats( void );
 };
 

@@ -26,7 +26,7 @@ class CNPC_Stalker : public CAI_BaseStalker
 {
     DECLARE_CLASS( CNPC_Stalker, CAI_BaseStalker );
 
-   public:
+    public:
     float m_flNextAttackSoundTime;
     float m_flNextBreatheSoundTime;
     float m_flNextScrambleSoundTime;
@@ -63,7 +63,7 @@ class CNPC_Stalker : public CAI_BaseStalker
     CAI_Schedule *WakeUp( void );
     void GoDormant( void );
 
-   public:
+    public:
     void Spawn( void );
     void Precache( void );
     bool CreateBehaviors();
@@ -108,7 +108,7 @@ class CNPC_Stalker : public CAI_BaseStalker
     DECLARE_DATADESC();
     DEFINE_CUSTOM_AI;
 
-   private:
+    private:
     CAI_ActBusyBehavior m_ActBusyBehavior;
 };
 

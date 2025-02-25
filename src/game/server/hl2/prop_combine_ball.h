@@ -26,7 +26,7 @@ class CSpriteTrail;
 //-----------------------------------------------------------------------------
 class CPropCombineBall : public CBaseAnimating, public CDefaultPlayerPickupVPhysics
 {
-   public:
+    public:
     DECLARE_CLASS( CPropCombineBall, CBaseAnimating );
     DECLARE_DATADESC();
     DECLARE_SERVERCLASS();
@@ -150,7 +150,7 @@ class CPropCombineBall : public CBaseAnimating, public CDefaultPlayerPickupVPhys
         return m_hOriginalOwner;
     }
 
-   private:
+    private:
     void SetPlayerLaunched( CBasePlayer *pOwner );
 
     float GetBallHoldDissolveTime();
@@ -194,7 +194,7 @@ class CPropCombineBall : public CBaseAnimating, public CDefaultPlayerPickupVPhys
         return ( m_nState == STATE_LAUNCHED && m_nMaxBounces != 0 && m_nBounceCount >= m_nMaxBounces );
     }
 
-   private:
+    private:
     int m_nBounceCount;
     int m_nMaxBounces;
     bool m_bBounceDie;
@@ -232,7 +232,7 @@ class CFuncCombineBallSpawner : public CBaseEntity
     DECLARE_CLASS( CFuncCombineBallSpawner, CBaseEntity );
     DECLARE_DATADESC();
 
-   public:
+    public:
     CFuncCombineBallSpawner();
 
     virtual void Spawn();
@@ -257,7 +257,7 @@ class CFuncCombineBallSpawner : public CBaseEntity
     // Spawn a ball
     virtual void SpawnBall();
 
-   private:
+    private:
     // Choose a random point inside the cylinder
     void ChoosePointInCylinder( Vector *pVecPoint );
 
@@ -274,14 +274,14 @@ class CFuncCombineBallSpawner : public CBaseEntity
     // Fire ball grabbed output
     void GrabBallTouch( CBaseEntity *pOther );
 
-   public:
+    public:
     bool m_bShooter;
     float m_flBallRadius;
     float m_flBallRespawnTime;
     float m_flMinSpeed;
     float m_flMaxSpeed;
 
-   private:
+    private:
     CUtlVector< float > m_BallRespawnTime;
     int m_nBallCount;
     int m_nBallsRemainingInField;
@@ -303,14 +303,14 @@ class CPointCombineBallLauncher : public CFuncCombineBallSpawner
 
     DECLARE_DATADESC();
 
-   public:
+    public:
     virtual void Spawn( void );
     virtual void SpawnBall( void );
     void InputLaunchBall( inputdata_t &inputdata );
 
     CPointCombineBallLauncher();
 
-   private:
+    private:
     int m_iBounces;
     float m_flConeDegrees;
     string_t m_iszBullseyeName;

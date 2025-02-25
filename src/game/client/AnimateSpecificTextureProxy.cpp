@@ -21,10 +21,10 @@
 
 class CAnimateSpecificTexture : public CBaseAnimatedTextureProxy
 {
-   private:
+    private:
     CUtlString m_OnlyAnimateOnTexture;
 
-   public:
+    public:
     virtual float GetAnimationStartTime( void *pBaseEntity )
     {
         return 0;

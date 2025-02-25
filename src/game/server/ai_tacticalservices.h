@@ -25,10 +25,10 @@ enum FlankType_t
 
 class CAI_TacticalServices : public CAI_Component
 {
-   public:
+    public:
     CAI_TacticalServices( CAI_BaseNPC *pOuter )
         : CAI_Component( pOuter ),
-          m_pNetwork( NULL )
+        m_pNetwork( NULL )
     {
         m_bAllowFindLateralLos = true;
     }
@@ -50,7 +50,7 @@ class CAI_TacticalServices : public CAI_Component
         m_bAllowFindLateralLos = bAllow;
     }
 
-   private:
+    private:
     // Checks lateral cover
     bool TestLateralCover( const Vector &vecCheckStart, const Vector &vecCheckEnd, float flMinDist );
     bool TestLateralLos( const Vector &vecCheckStart, const Vector &vecCheckEnd );

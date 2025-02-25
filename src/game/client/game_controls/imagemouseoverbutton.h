@@ -19,10 +19,10 @@
 template < class T >
 class CImageMouseOverButton : public MouseOverButton< T >
 {
-   private:
+    private:
     // DECLARE_CLASS_SIMPLE( CImageMouseOverButton, MouseOverButton );
 
-   public:
+    public:
     CImageMouseOverButton( vgui::Panel *parent, const char *panelName, T *templatePanel );
 
     virtual void ApplySettings( KeyValues *inResourceData );
@@ -35,12 +35,12 @@ class CImageMouseOverButton : public MouseOverButton< T >
     void SetActiveImage( vgui::IImage *image );
     void SetInactiveImage( vgui::IImage *image );
 
-   public:
+    public:
     virtual void Paint();
     virtual void ShowPage( void );
     virtual void HidePage( void );
 
-   private:
+    private:
     vgui::IImage *m_pActiveImage;
     char *m_pszActiveImageName;
 

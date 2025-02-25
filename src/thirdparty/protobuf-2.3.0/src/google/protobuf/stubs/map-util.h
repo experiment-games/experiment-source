@@ -47,8 +47,8 @@ namespace protobuf
 template < class Collection >
 const typename Collection::value_type::second_type&
 FindWithDefault( const Collection& collection,
-                 const typename Collection::value_type::first_type& key,
-                 const typename Collection::value_type::second_type& value )
+                const typename Collection::value_type::first_type& key,
+                const typename Collection::value_type::second_type& value )
 {
     typename Collection::const_iterator it = collection.find( key );
     if ( it == collection.end() )
@@ -82,7 +82,7 @@ FindOrNull( const Collection& collection,
 template < class Collection >
 const typename Collection::value_type::second_type
 FindPtrOrNull( const Collection& collection,
-               const typename Collection::value_type::first_type& key )
+                const typename Collection::value_type::first_type& key )
 {
     typename Collection::const_iterator it = collection.find( key );
     if ( it == collection.end() )
@@ -98,8 +98,8 @@ FindPtrOrNull( const Collection& collection,
 // True indicates that an insert took place, false indicates an update.
 template < class Collection, class Key, class Value >
 bool InsertOrUpdate( Collection* const collection,
-                     const Key& key,
-                     const Value& value )
+                    const Key& key,
+                    const Value& value )
 {
     pair< typename Collection::iterator, bool > ret =
         collection->insert( typename Collection::value_type( key, value ) );
@@ -118,8 +118,8 @@ bool InsertOrUpdate( Collection* const collection,
 // took place, false indicates the key was already present.
 template < class Collection, class Key, class Value >
 bool InsertIfNotPresent( Collection* const collection,
-                         const Key& key,
-                         const Value& value )
+                        const Key& key,
+                        const Value& value )
 {
     pair< typename Collection::iterator, bool > ret =
         collection->insert( typename Collection::value_type( key, value ) );

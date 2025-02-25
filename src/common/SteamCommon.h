@@ -432,7 +432,7 @@ typedef unsigned long long SteamUnsigned64_t;
         char szTypeOfProofOfPurchase[STEAM_TYPE_OF_PROOF_OF_PURCHASE_SIZE + 1];
 
         /* A ProofOfPurchase token is not necessarily a nul-terminated string; it may be binary data
-           (perhaps encrypted). Hence we need a length and an array of bytes.							*/
+            (perhaps encrypted). Hence we need a length and an array of bytes.							*/
         unsigned int uLengthOfBinaryProofOfPurchaseToken;
         char cBinaryProofOfPurchaseToken[STEAM_PROOF_OF_PURCHASE_TOKEN_SIZE + 1];
     } TSteamPrepurchaseInfo;
@@ -551,7 +551,7 @@ typedef unsigned long long SteamUnsigned64_t;
         eSteamUserAdministrator = 0x00000001, /* May subscribe, unsubscribe, etc */
         eSteamUserDeveloper = 0x00000002,     /* Steam or App developer */
         eSteamUserCyberCafe = 0x00000004      /* CyberCafe, school, etc -- UI should ask for password */
-                                              /* before allowing logout, unsubscribe, etc             */
+                                            /* before allowing logout, unsubscribe, etc             */
     } ESteamUserTypeFlags;
 
     typedef enum

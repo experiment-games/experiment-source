@@ -33,7 +33,7 @@ const unsigned long INVALID_LOCALIZE_STRING_INDEX = ( StringIndex_t )-1;
 //-----------------------------------------------------------------------------
 abstract_class ILocalize
 {
-   public:
+    public:
     // adds the contents of a file to the localization table
     virtual bool AddFile( const char *fileName, const char *pPathID = NULL, bool bIncludeFallbackSearchPaths = false ) = 0;
 
@@ -120,7 +120,7 @@ abstract_class ILocalize
         ConstructStringKeyValuesInternal( unicodeOutput, unicodeBufferSizeInBytes, formatString, localizationVariables );
     }
 
-   private:
+    private:
     // internal "interface"
     static void ConstructStringVArgsInternal( OUT_Z_BYTECAP( unicodeBufferSizeInBytes ) char *unicodeOutput, int unicodeBufferSizeInBytes, const char *formatString, int numFormatParameters, va_list argList );
     static void ConstructStringVArgsInternal( OUT_Z_BYTECAP( unicodeBufferSizeInBytes ) wchar_t * unicodeOutput, int unicodeBufferSizeInBytes, const wchar_t *formatString, int numFormatParameters, va_list argList );
@@ -164,7 +164,7 @@ typedef wchar_t locchar_t;
 template < typename T >
 class TypedKeyValuesStringHelper
 {
-   public:
+    public:
     static const T *Read( KeyValues *pKeyValues, const char *pKeyName, const T *pDefaultValue );
     static void Write( KeyValues *pKeyValues, const char *pKeyName, const T *pValue );
 };
@@ -174,7 +174,7 @@ class TypedKeyValuesStringHelper
 template <>
 class TypedKeyValuesStringHelper< char >
 {
-   public:
+    public:
     static const char *Read( KeyValues *pKeyValues, const char *pKeyName, const char *pDefaultValue )
     {
         return pKeyValues->GetString( pKeyName, pDefaultValue );
@@ -190,7 +190,7 @@ class TypedKeyValuesStringHelper< char >
 template <>
 class TypedKeyValuesStringHelper< wchar_t >
 {
-   public:
+    public:
     static const wchar_t *Read( KeyValues *pKeyValues, const char *pKeyName, const wchar_t *pDefaultValue )
     {
         return pKeyValues->GetWString( pKeyName, pDefaultValue );
@@ -228,7 +228,7 @@ class CLocalizedStringArg;
 template < typename T >
 class CLocalizedStringArgStringImpl
 {
-   public:
+    public:
     enum
     {
         kIsValid = true
@@ -243,7 +243,7 @@ class CLocalizedStringArgStringImpl
         return m_pStr;
     }
 
-   private:
+    private:
     const locchar_t *m_pStr;
 };
 
@@ -252,7 +252,7 @@ class CLocalizedStringArgStringImpl
 template < typename T >
 class CLocalizedStringArg< T * > : public CLocalizedStringArgStringImpl< T >
 {
-   public:
+    public:
     CLocalizedStringArg( const locchar_t *pStr )
         : CLocalizedStringArgStringImpl< T >( pStr ) {}
 };
@@ -262,7 +262,7 @@ class CLocalizedStringArg< T * > : public CLocalizedStringArgStringImpl< T >
 template < typename T >
 class CLocalizedStringArgPrintfImpl
 {
-   public:
+    public:
     enum
     {
         kIsValid = true
@@ -278,7 +278,7 @@ class CLocalizedStringArgPrintfImpl
         return m_cBuffer;
     }
 
-   private:
+    private:
     enum
     {
         kBufferSize = 128,
@@ -291,7 +291,7 @@ class CLocalizedStringArgPrintfImpl
 template <>
 class CLocalizedStringArg< uint16 > : public CLocalizedStringArgPrintfImpl< uint16 >
 {
-   public:
+    public:
     CLocalizedStringArg( uint16 unValue )
         : CLocalizedStringArgPrintfImpl< uint16 >( unValue, LOCCHAR( "%u" ) ) {}
 };
@@ -301,7 +301,7 @@ class CLocalizedStringArg< uint16 > : public CLocalizedStringArgPrintfImpl< uint
 template <>
 class CLocalizedStringArg< uint32 > : public CLocalizedStringArgPrintfImpl< uint32 >
 {
-   public:
+    public:
     CLocalizedStringArg( uint32 unValue )
         : CLocalizedStringArgPrintfImpl< uint32 >( unValue, LOCCHAR( "%u" ) ) {}
 };
@@ -311,7 +311,7 @@ class CLocalizedStringArg< uint32 > : public CLocalizedStringArgPrintfImpl< uint
 template <>
 class CLocalizedStringArg< uint64 > : public CLocalizedStringArgPrintfImpl< uint64 >
 {
-   public:
+    public:
     CLocalizedStringArg( uint64 unValue )
         : CLocalizedStringArgPrintfImpl< uint64 >( unValue, LOCCHAR( "%llu" ) ) {}
 };
@@ -321,12 +321,12 @@ class CLocalizedStringArg< uint64 > : public CLocalizedStringArgPrintfImpl< uint
 template <>
 class CLocalizedStringArg< float > : public CLocalizedStringArgPrintfImpl< float >
 {
-   public:
+    public:
     // Display one decimal point if we've got a value less than one, and no point
     // if we're greater than one or are effectively zero.
     CLocalizedStringArg( float fValue )
         : CLocalizedStringArgPrintfImpl< float >( fValue,
-                                                  fabsf( fValue ) <= FLT_EPSILON || fabsf( fValue ) >= 1.0f ? LOCCHAR( "%.0f" ) : LOCCHAR( "%.1f" ) )
+                                                fabsf( fValue ) <= FLT_EPSILON || fabsf( fValue ) >= 1.0f ? LOCCHAR( "%.0f" ) : LOCCHAR( "%.1f" ) )
     {
         //
     }
@@ -337,7 +337,7 @@ class CLocalizedStringArg< float > : public CLocalizedStringArgPrintfImpl< float
 // --------------------------------------------------------------------------
 class CConstructLocalizedString
 {
-   public:
+    public:
     template < typename T >
     CConstructLocalizedString( const locchar_t *loc_Format, T arg0 )
     {
@@ -377,12 +377,12 @@ class CConstructLocalizedString
         if ( loc_Format )
         {
             ::ILocalize::ConstructString( m_loc_Buffer,
-                                          sizeof( m_loc_Buffer ),
-                                          loc_Format,
-                                          3,
-                                          CLocalizedStringArg< T >( arg0 ).GetLocArg(),
-                                          CLocalizedStringArg< U >( arg1 ).GetLocArg(),
-                                          CLocalizedStringArg< V >( arg2 ).GetLocArg() );
+                                        sizeof( m_loc_Buffer ),
+                                        loc_Format,
+                                        3,
+                                        CLocalizedStringArg< T >( arg0 ).GetLocArg(),
+                                        CLocalizedStringArg< U >( arg1 ).GetLocArg(),
+                                        CLocalizedStringArg< V >( arg2 ).GetLocArg() );
         }
     }
 
@@ -399,13 +399,13 @@ class CConstructLocalizedString
         if ( loc_Format )
         {
             ::ILocalize::ConstructString( m_loc_Buffer,
-                                          sizeof( m_loc_Buffer ),
-                                          loc_Format,
-                                          4,
-                                          CLocalizedStringArg< T >( arg0 ).GetLocArg(),
-                                          CLocalizedStringArg< U >( arg1 ).GetLocArg(),
-                                          CLocalizedStringArg< V >( arg2 ).GetLocArg(),
-                                          CLocalizedStringArg< W >( arg3 ).GetLocArg() );
+                                        sizeof( m_loc_Buffer ),
+                                        loc_Format,
+                                        4,
+                                        CLocalizedStringArg< T >( arg0 ).GetLocArg(),
+                                        CLocalizedStringArg< U >( arg1 ).GetLocArg(),
+                                        CLocalizedStringArg< V >( arg2 ).GetLocArg(),
+                                        CLocalizedStringArg< W >( arg3 ).GetLocArg() );
         }
     }
 
@@ -424,15 +424,15 @@ class CConstructLocalizedString
         if ( loc_Format )
         {
             ::ILocalize::ConstructString( m_loc_Buffer,
-                                          sizeof( m_loc_Buffer ),
-                                          loc_Format,
-                                          6,
-                                          CLocalizedStringArg< T >( arg0 ).GetLocArg(),
-                                          CLocalizedStringArg< U >( arg1 ).GetLocArg(),
-                                          CLocalizedStringArg< V >( arg2 ).GetLocArg(),
-                                          CLocalizedStringArg< W >( arg3 ).GetLocArg(),
-                                          CLocalizedStringArg< X >( arg4 ).GetLocArg(),
-                                          CLocalizedStringArg< Y >( arg5 ).GetLocArg() );
+                                        sizeof( m_loc_Buffer ),
+                                        loc_Format,
+                                        6,
+                                        CLocalizedStringArg< T >( arg0 ).GetLocArg(),
+                                        CLocalizedStringArg< U >( arg1 ).GetLocArg(),
+                                        CLocalizedStringArg< V >( arg2 ).GetLocArg(),
+                                        CLocalizedStringArg< W >( arg3 ).GetLocArg(),
+                                        CLocalizedStringArg< X >( arg4 ).GetLocArg(),
+                                        CLocalizedStringArg< Y >( arg5 ).GetLocArg() );
         }
     }
 
@@ -452,16 +452,16 @@ class CConstructLocalizedString
         if ( loc_Format )
         {
             ::ILocalize::ConstructString( m_loc_Buffer,
-                                          sizeof( m_loc_Buffer ),
-                                          loc_Format,
-                                          7,
-                                          CLocalizedStringArg< T >( arg0 ).GetLocArg(),
-                                          CLocalizedStringArg< U >( arg1 ).GetLocArg(),
-                                          CLocalizedStringArg< V >( arg2 ).GetLocArg(),
-                                          CLocalizedStringArg< W >( arg3 ).GetLocArg(),
-                                          CLocalizedStringArg< X >( arg4 ).GetLocArg(),
-                                          CLocalizedStringArg< Y >( arg5 ).GetLocArg(),
-                                          CLocalizedStringArg< Z >( arg6 ).GetLocArg() );
+                                        sizeof( m_loc_Buffer ),
+                                        loc_Format,
+                                        7,
+                                        CLocalizedStringArg< T >( arg0 ).GetLocArg(),
+                                        CLocalizedStringArg< U >( arg1 ).GetLocArg(),
+                                        CLocalizedStringArg< V >( arg2 ).GetLocArg(),
+                                        CLocalizedStringArg< W >( arg3 ).GetLocArg(),
+                                        CLocalizedStringArg< X >( arg4 ).GetLocArg(),
+                                        CLocalizedStringArg< Y >( arg5 ).GetLocArg(),
+                                        CLocalizedStringArg< Z >( arg6 ).GetLocArg() );
         }
     }
 
@@ -480,7 +480,7 @@ class CConstructLocalizedString
         return m_loc_Buffer;
     }
 
-   private:
+    private:
     enum
     {
         kBufferSize = 512,

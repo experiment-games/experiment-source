@@ -217,14 +217,14 @@ bool CTeamTrainWatcherMaster::FindTrainWatchers( void )
   {
     if ( pTrainWatcher->IsDisabled() == false )
     {
-      if ( pTrainWatcher->GetTeamNumber() == TF_TEAM_BLUE )
-      {
+    if ( pTrainWatcher->GetTeamNumber() == TF_TEAM_BLUE )
+    {
         m_pBlueWatcher = pTrainWatcher;
-      }
-      else if ( pTrainWatcher->GetTeamNumber() == TF_TEAM_RED )
-      {
+    }
+    else if ( pTrainWatcher->GetTeamNumber() == TF_TEAM_RED )
+    {
         m_pRedWatcher = pTrainWatcher;
-      }
+    }
     }
 
     pTrainWatcher = (CTeamTrainWatcher *)gEntList.FindEntityByClassname( pTrainWatcher, "team_train_watcher" );
@@ -256,34 +256,34 @@ void CTeamTrainWatcherMaster::FireGameEvent( IGameEvent *event )
   {
     if ( TeamplayRoundBasedRules() && TeamplayRoundBasedRules()->HasMultipleTrains() )
     {
-      if ( FindTrainWatchers() )
-      {
+    if ( FindTrainWatchers() )
+    {
         // we found train watchers so start thinking
         SetContextThink( &CTeamTrainWatcherMaster::TWMThink, gpGlobals->curtime + 0.2, TWMASTER_THINK );
-      }
+    }
     }
   }
   else if ( FStrEq( "teamplay_round_win", eventname ) )
   {
     if ( TeamplayRoundBasedRules() )
     {
-      int iWinningTeam = event->GetInt( "team" );
-      int iLosingTeam = ( iWinningTeam == TF_TEAM_RED ) ? TF_TEAM_BLUE : TF_TEAM_RED;
-      bool bFullRound = event->GetBool( "full_round" );
+    int iWinningTeam = event->GetInt( "team" );
+    int iLosingTeam = ( iWinningTeam == TF_TEAM_RED ) ? TF_TEAM_BLUE : TF_TEAM_RED;
+    bool bFullRound = event->GetBool( "full_round" );
 
-      CTeamRecipientFilter filterWinner( iWinningTeam, true );
-      CTeamRecipientFilter filterLoser( iLosingTeam, true );
+    CTeamRecipientFilter filterWinner( iWinningTeam, true );
+    CTeamRecipientFilter filterLoser( iLosingTeam, true );
 
-      if ( bFullRound )
-      {
+    if ( bFullRound )
+    {
         EmitSound( filterWinner, entindex(), TWM_FINALSTAGEOUTCOME01 );
         EmitSound( filterLoser, entindex(), TWM_FINALSTAGEOUTCOME02 );
-      }
-      else
-      {
+    }
+    else
+    {
         EmitSound( filterWinner, entindex(), TWM_FIRSTSTAGEOUTCOME01 );
         EmitSound( filterLoser, entindex(), TWM_FIRSTSTAGEOUTCOME02 );
-      }
+    }
     }
   }
 }
@@ -323,11 +323,11 @@ CTeamTrainWatcher::CTeamTrainWatcher()
     ChangeTeam( TEAM_UNASSIGNED );
 #endif
     /*
-      // create a CTeamTrainWatcherMaster entity
-      if ( g_hTeamTrainWatcherMaster.Get() == NULL )
-      {
+    // create a CTeamTrainWatcherMaster entity
+    if ( g_hTeamTrainWatcherMaster.Get() == NULL )
+    {
         g_hTeamTrainWatcherMaster = CreateEntityByName( "team_train_watcher_master" );
-      }
+    }
     */
     ListenForGameEvent( "path_track_passed" );
 }
@@ -1242,7 +1242,7 @@ void CTeamTrainWatcher::WatcherThink( void )
                 {
                     // back up twice the alert distance before resetting our flag to play the warning again
                     if ( ( m_flTrainDistanceFromStart < m_CPLinks[iCount].flDistanceFromStart - ( TEAM_TRAIN_ALERT_DISTANCE * 2 ) ) ||  // has receded back twice the alert distance or...
-                         ( !m_bTrainCanRecede ) )                                                                                       // used to catch the case where the train doesn't normally recede but has rolled back down a hill away from the CP
+                        ( !m_bTrainCanRecede ) )                                                                                       // used to catch the case where the train doesn't normally recede but has rolled back down a hill away from the CP
                     {
                         // reset our alert flag
                         m_CPLinks[iCount].bAlertPlayed = false;
@@ -1487,7 +1487,7 @@ bool CTeamTrainWatcher::IsTrainNearCheckpoint( void ) const
     for ( int i = 0; i < m_iNumCPLinks; ++i )
     {
         if ( m_flTrainDistanceFromStart > m_CPLinks[i].flDistanceFromStart - TEAM_TRAIN_ALERT_DISTANCE &&
-             m_flTrainDistanceFromStart < m_CPLinks[i].flDistanceFromStart )
+            m_flTrainDistanceFromStart < m_CPLinks[i].flDistanceFromStart )
         {
             return true;
         }

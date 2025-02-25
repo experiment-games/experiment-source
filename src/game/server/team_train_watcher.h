@@ -40,7 +40,7 @@ class CTeamTrainWatcher : public CBaseEntity, public CGameEventListener, public 
 {
     DECLARE_CLASS( CTeamTrainWatcher, CBaseEntity );
 
-   public:
+    public:
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
 
@@ -104,7 +104,7 @@ class CTeamTrainWatcher : public CBaseEntity, public CGameEventListener, public 
         return m_flTotalProgress;
     }
 
-   private:
+    private:
     void StartCaptureAlarm( CTeamControlPoint *pPoint );
     void PlayCaptureAlert( CTeamControlPoint *pPoint, bool bFinalPointInMap );
     void InternalSetNumTrainCappers( int iNumCappers, CBaseEntity *pTrigger );
@@ -115,7 +115,7 @@ class CTeamTrainWatcher : public CBaseEntity, public CGameEventListener, public 
     void HandleTrainMovement( bool bStartReceding = false );
     void HandleSparks( bool bSparks );
 
-   private:
+    private:
     bool m_bDisabled;
     bool m_bTrainCanRecede;
     // === Data ===

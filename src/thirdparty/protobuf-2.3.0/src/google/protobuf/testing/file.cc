@@ -85,12 +85,12 @@ void File::ReadFileToStringOrDie(const string& name, string* output) {
 void File::WriteStringToFileOrDie(const string& contents, const string& name) {
   FILE* file = fopen(name.c_str(), "wb");
   GOOGLE_CHECK(file != NULL)
-      << "fopen(" << name << ", \"wb\"): " << strerror(errno);
+    << "fopen(" << name << ", \"wb\"): " << strerror(errno);
   GOOGLE_CHECK_EQ(fwrite(contents.data(), 1, contents.size(), file),
-                  contents.size())
-      << "fwrite(" << name << "): " << strerror(errno);
+                contents.size())
+    << "fwrite(" << name << "): " << strerror(errno);
   GOOGLE_CHECK(fclose(file) == 0)
-      << "fclose(" << name << "): " << strerror(errno);
+    << "fclose(" << name << "): " << strerror(errno);
 }
 
 bool File::CreateDir(const string& name, int mode) {
@@ -110,11 +110,11 @@ bool File::RecursivelyCreateDir(const string& path, int mode) {
   }
 
   return RecursivelyCreateDir(path.substr(0, slashpos), mode) &&
-         CreateDir(path, mode);
+        CreateDir(path, mode);
 }
 
 void File::DeleteRecursively(const string& name,
-                             void* dummy1, void* dummy2) {
+                            void* dummy1, void* dummy2) {
   // We don't care too much about error checking here since this is only used
   // in tests to delete temporary directories that are under /tmp anyway.
 
@@ -132,13 +132,13 @@ void File::DeleteRecursively(const string& name,
   do {
     string entry_name = find_data.cFileName;
     if (entry_name != "." && entry_name != "..") {
-      string path = name + "/" + entry_name;
-      if (find_data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
+    string path = name + "/" + entry_name;
+    if (find_data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
         DeleteRecursively(path, NULL, NULL);
         RemoveDirectory(path.c_str());
-      } else {
+    } else {
         DeleteFile(path.c_str());
-      }
+    }
     }
   } while(FindNextFile(find_handle, &find_data));
   FindClose(find_handle);
@@ -153,14 +153,14 @@ void File::DeleteRecursively(const string& name,
   if (S_ISDIR(stats.st_mode)) {
     DIR* dir = opendir(name.c_str());
     if (dir != NULL) {
-      while (true) {
+    while (true) {
         struct dirent* entry = readdir(dir);
         if (entry == NULL) break;
         string entry_name = entry->d_name;
         if (entry_name != "." && entry_name != "..") {
-          DeleteRecursively(name + "/" + entry_name, NULL, NULL);
+        DeleteRecursively(name + "/" + entry_name, NULL, NULL);
         }
-      }
+    }
     }
 
     closedir(dir);

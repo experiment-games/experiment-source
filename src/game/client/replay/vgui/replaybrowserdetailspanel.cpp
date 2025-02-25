@@ -65,7 +65,7 @@ class CConfirmDisconnectFromServerDialog : public CConfirmDialog
 {
     DECLARE_CLASS_SIMPLE( CConfirmDisconnectFromServerDialog, CConfirmDialog );
 
-   public:
+    public:
     CConfirmDisconnectFromServerDialog( Panel *pParent )
         : BaseClass( pParent )
     {
@@ -156,8 +156,8 @@ void CKeyValueLabelPanel::SetValue( const wchar_t *pValue )
 
 CBaseDetailsPanel::CBaseDetailsPanel( Panel *pParent, const char *pName, ReplayHandle_t hReplay )
     : EditablePanel( pParent, pName ),
-      m_hReplay( hReplay ),
-      m_bShouldShow( true )
+    m_hReplay( hReplay ),
+    m_bShouldShow( true )
 {
     SetScheme( "ClientScheme" );
 
@@ -384,8 +384,8 @@ CKillsPanel::CKillsPanel( Panel *pParent, ReplayHandle_t hReplay )
             const CGenericClassBasedReplay::KillData_t *pKill = pReplay->GetKill( i );
 
             char const *pClass = pKill->m_nPlayerClass == TF_CLASS_DEMOMAN
-                                     ? "demo"
-                                     : g_aPlayerClassNames_NonLocalized[pKill->m_nPlayerClass];
+                                    ? "demo"
+                                    : g_aPlayerClassNames_NonLocalized[pKill->m_nPlayerClass];
 
             V_snprintf( szImgPath, sizeof( szImgPath ), "../hud/leaderboard_class_%s", pClass );
 #elif defined( CSTRIKE_DLL )
@@ -493,7 +493,7 @@ void CBasicLifeInfoPanel::PerformLayout()
 
 CYouTubeInfoPanel::CYouTubeInfoPanel( Panel *pParent )
     : CBaseDetailsPanel( pParent, "YouTubeInfo", NULL ),
-      m_pLabels( NULL )
+    m_pLabels( NULL )
 {
     m_pLabels = new CKeyValueLabelPanel( GetInset(), "#Replay_YouTube", g_pVGuiLocalize->Find( "YouTube_NoStats" ) );
 }
@@ -517,13 +517,13 @@ void CYouTubeInfoPanel::SetInfo( const wchar_t *pInfo )
 
 CTitleEditPanel::CTitleEditPanel( Panel *pParent, QueryableReplayItemHandle_t hReplayItem, IReplayItemManager *pItemManager )
     : EditablePanel( pParent, "TitleEditPanel" ),
-      m_hReplayItem( hReplayItem ),
-      m_pItemManager( pItemManager ),
-      m_bMouseOver( false ),
-      m_pTitleEntry( NULL ),
-      m_pHeaderLine( NULL ),
-      m_pClickToEditLabel( NULL ),
-      m_pCaratLabel( NULL )
+    m_hReplayItem( hReplayItem ),
+    m_pItemManager( pItemManager ),
+    m_bMouseOver( false ),
+    m_pTitleEntry( NULL ),
+    m_pHeaderLine( NULL ),
+    m_pClickToEditLabel( NULL ),
+    m_pCaratLabel( NULL )
 {
     ivgui()->AddTickSignal( GetVPanel(), 10 );
 }
@@ -724,7 +724,7 @@ void CPlaybackPanel::PerformLayout()
 
 CPlaybackPanelSlideshow::CPlaybackPanelSlideshow( Panel *pParent, ReplayHandle_t hReplay )
     : CPlaybackPanel( pParent ),
-      m_hReplay( hReplay )
+    m_hReplay( hReplay )
 {
     m_pScreenshotImage = new CReplayScreenshotSlideshowPanel( this, "Screenshot", hReplay );
 }
@@ -810,7 +810,7 @@ void CPlaybackPanelMovie::FreeMovieMaterial()
 
 CCutImagePanel::CCutImagePanel( Panel *pParent, const char *pName )
     : BaseClass( pParent, pName, "" ),
-      m_pSelectedBorder( NULL )
+    m_pSelectedBorder( NULL )
 {
 }
 
@@ -840,12 +840,12 @@ void CCutImagePanel::ApplySchemeSettings( vgui::IScheme *pScheme )
 
 CCutsPanel::CCutsPanel( Panel *pParent, ReplayHandle_t hReplay, int iSelectedPerformance )
     : BaseClass( pParent, "CutsPanel", hReplay ),
-      m_iPage( 0 ),
-      m_nVisibleButtons( 0 ),
-      m_pVerticalLine( NULL ),
-      m_pNoCutsLabel( NULL ),
-      m_pOriginalLabel( NULL ),
-      m_pCutsLabel( NULL )
+    m_iPage( 0 ),
+    m_nVisibleButtons( 0 ),
+    m_pVerticalLine( NULL ),
+    m_pNoCutsLabel( NULL ),
+    m_pOriginalLabel( NULL ),
+    m_pCutsLabel( NULL )
 {
     m_hDetailsPanel = dynamic_cast< CReplayDetailsPanel * >( pParent->GetParent() );
 
@@ -1248,7 +1248,7 @@ static void ConfirmUploadMovie( bool bConfirmed, void *pContext )
 
 class CYouTubeGetStatsHandler : public CYouTubeResponseHandler
 {
-   public:
+    public:
     CYouTubeGetStatsHandler( CReplayDetailsPanel *pPanel )
         : m_pPanel( pPanel ), m_handle( NULL )
     {
@@ -1380,12 +1380,12 @@ class CYouTubeGetStatsHandler : public CYouTubeResponseHandler
 
 CReplayDetailsPanel::CReplayDetailsPanel( Panel *pParent, QueryableReplayItemHandle_t hReplayItem, int iPerformance, IReplayItemManager *pItemManager )
     : EditablePanel( pParent, "DetailsPanel" ),
-      m_hReplayItem( hReplayItem ),
-      m_pItemManager( pItemManager ),
-      m_pCutsPanel( NULL ),
-      m_iSelectedPerformance( iPerformance ),
-      m_pYouTubeResponseHandler( NULL ),
-      m_hExportMovieDialog( NULL )
+    m_hReplayItem( hReplayItem ),
+    m_pItemManager( pItemManager ),
+    m_pCutsPanel( NULL ),
+    m_iSelectedPerformance( iPerformance ),
+    m_pYouTubeResponseHandler( NULL ),
+    m_hExportMovieDialog( NULL )
 {
     m_hReplay = pItemManager->GetItem( hReplayItem )->GetItemReplayHandle();
 

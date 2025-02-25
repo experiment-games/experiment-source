@@ -16,30 +16,30 @@ class C_Hairball : public C_BaseEntity
 {
     DECLARE_CLASS( C_Hairball, C_BaseEntity );
 
-   private:
+    private:
     class CHairballDelegate : public CSimplePhysics::IHelper
     {
-       public:
+        public:
         virtual void GetNodeForces( CSimplePhysics::CNode *pNodes, int iNode, Vector *pAccel );
         virtual void ApplyConstraints( CSimplePhysics::CNode *pNodes, int nNodes );
 
         C_Hairball *m_pParent;
     };
 
-   public:
+    public:
     C_Hairball();
 
     void Init();
 
     // IClientThinkable.
-   public:
+    public:
     virtual void ClientThink();
 
     // IClientRenderable.
-   public:
+    public:
     virtual int DrawModel( int flags );
 
-   public:
+    public:
     float m_flSphereRadius;
 
     int m_nHairs;

@@ -104,10 +104,10 @@ SHADER_DRAW
     if ( hasFlashlight )
     {
         DrawFlashlight_dx80( params, pShaderAPI, pShaderShadow, false, -1, -1, -1, FLASHLIGHTTEXTURE, FLASHLIGHTTEXTUREFRAME, false, false, 0, -1, -1,
-                             // Optional parameters, specific to teeth:
-                             true,
-                             FORWARD,
-                             ILLUMFACTOR );
+                            // Optional parameters, specific to teeth:
+                            true,
+                            FORWARD,
+                            ILLUMFACTOR );
     }
     else
     {

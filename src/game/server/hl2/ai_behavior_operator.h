@@ -40,7 +40,7 @@ class CAI_OperatorGoal : public CAI_GoalEntity
 {
     DECLARE_CLASS( CAI_OperatorGoal, CAI_GoalEntity );
 
-   public:
+    public:
     CAI_OperatorGoal()
     {
     }
@@ -70,7 +70,7 @@ class CAI_OperatorGoal : public CAI_GoalEntity
 
     DECLARE_DATADESC();
 
-   protected:
+    protected:
     int m_iState;
     int m_iMoveTo;
     string_t m_iszContextTarget;
@@ -82,7 +82,7 @@ class CAI_OperatorBehavior : public CAI_SimpleBehavior
 {
     DECLARE_CLASS( CAI_OperatorBehavior, CAI_SimpleBehavior );
 
-   public:
+    public:
     CAI_OperatorBehavior();
 
     virtual const char *GetName()
@@ -134,13 +134,13 @@ class CAI_OperatorBehavior : public CAI_SimpleBehavior
 
     DEFINE_CUSTOM_SCHEDULE_PROVIDER;
 
-   public:
+    public:
     EHANDLE m_hGoalEntity;
     EHANDLE m_hPositionEnt;
     EHANDLE m_hContextTarget;
     CRandStopwatch m_WatchSeeEntity;
 
-   private:
+    private:
     virtual int SelectSchedule();
 
     //---------------------------------

@@ -39,7 +39,7 @@ struct watcher_t
 static CUtlMultiList< watcher_t, unsigned short > g_WatcherList;
 class CWatcherList
 {
-   public:
+    public:
     // CWatcherList(); NOTE: Dataobj doesn't support constructors - it zeros the memory
     ~CWatcherList();  // frees the positionwatcher_t's to the pool
     void Init();
@@ -50,7 +50,7 @@ class CWatcherList
     void AddToList( CBaseEntity *pWatcher );
     void RemoveWatcher( CBaseEntity *pWatcher );
 
-   private:
+    private:
     int GetCallbackObjects( IWatcherCallback **pList, int listMax );
 
     unsigned short Find( CBaseEntity *pEntity );
@@ -80,11 +80,11 @@ ConVar debug_touchlinks( "debug_touchlinks", "0", 0, "Spew touch link activity" 
 //-----------------------------------------------------------------------------
 class CPortalTouchScope
 {
-   public:
+    public:
     CPortalTouchScope();
     ~CPortalTouchScope();
 
-   public:
+    public:
     static int m_nDepth;
     static CCallQueue m_CallQueue;
 };
@@ -117,7 +117,7 @@ CPortalTouchScope::~CPortalTouchScope()
 //-----------------------------------------------------------------------------
 class CDataObjectAccessSystem : public CAutoGameSystem
 {
-   public:
+    public:
     enum
     {
         MAX_ACCESSORS = 32,
@@ -186,7 +186,7 @@ class CDataObjectAccessSystem : public CAutoGameSystem
         m_Accessors[type]->DestroyDataObject( instance );
     }
 
-   private:
+    private:
     bool IsValidType( int type ) const
     {
         if ( type < 0 || type >= MAX_ACCESSORS )
@@ -654,7 +654,7 @@ void CBaseEntity::PhysicsCheckForEntityUntouch( void )
 
         // Nothing left in list, destroy root
         if ( root->nextLink == root &&
-             root->prevLink == root )
+            root->prevLink == root )
         {
             DestroyDataObject( TOUCHLINK );
         }
@@ -688,8 +688,8 @@ void CBaseEntity::PhysicsNotifyOtherOfUntouch( CBaseEntity *ent, CBaseEntity *ot
 
                 // Check for complete removal
                 if ( g_bCleanupDatObject &&
-                     root->nextLink == root &&
-                     root->prevLink == root )
+                    root->nextLink == root &&
+                    root->prevLink == root )
                 {
                     other->DestroyDataObject( TOUCHLINK );
                 }
@@ -709,8 +709,8 @@ void CBaseEntity::PhysicsRemoveToucher( CBaseEntity *otherEntity, touchlink_t *l
 {
     // Every start Touch gets a corresponding end touch
     if ( ( link->flags & FTOUCHLINK_START_TOUCH ) &&
-         link->entityTouched != NULL &&
-         otherEntity != NULL )
+        link->entityTouched != NULL &&
+        otherEntity != NULL )
     {
         otherEntity->EndTouch( link->entityTouched );
     }
@@ -849,7 +849,7 @@ void CBaseEntity::PhysicsNotifyOtherOfGroundRemoval( CBaseEntity *ent, CBaseEnti
                 PhysicsRemoveGround( other, link );
 
                 if ( root->nextLink == root &&
-                     root->prevLink == root )
+                    root->prevLink == root )
                 {
                     other->DestroyDataObject( GROUNDLINK );
                 }
@@ -1953,7 +1953,7 @@ static ConVar sv_thinktimecheck( "sv_thinktimecheck", "0", 0, "Check for thinkti
 //-----------------------------------------------------------------------------
 class CThinkSyncTester
 {
-   public:
+    public:
     CThinkSyncTester()
         : m_Thinkers( 0, 0, ThinkLessFunc )
     {
@@ -1994,7 +1994,7 @@ class CThinkSyncTester
 #endif
     }
 
-   private:
+    private:
     static bool ThinkLessFunc( const ThinkSync &item1, const ThinkSync &item2 )
     {
         return item1.thinktime < item2.thinktime;
@@ -2022,8 +2022,8 @@ class CThinkSyncTester
         Msg( "-----------------\nThink report frame %i\n", gpGlobals->tickcount );
 
         for ( int i = m_Thinkers.FirstInorder();
-              i != m_Thinkers.InvalidIndex();
-              i = m_Thinkers.NextInorder( i ) )
+            i != m_Thinkers.InvalidIndex();
+            i = m_Thinkers.NextInorder( i ) )
         {
             ThinkSync *p = &m_Thinkers[i];
             Assert( p );

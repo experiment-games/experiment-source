@@ -29,7 +29,7 @@
 DEFINE_FALLBACK_SHADER( Sprite, Sprite_DX9 )
 
 BEGIN_VS_SHADER( Sprite_DX9,
-                 "Help for Sprite_DX9" )
+                "Help for Sprite_DX9" )
 
 BEGIN_SHADER_PARAMS
 SHADER_PARAM( SPRITEORIGIN, SHADER_PARAM_TYPE_VEC3, "[0 0 0]", "sprite origin" )

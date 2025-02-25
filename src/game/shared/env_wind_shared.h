@@ -25,7 +25,7 @@ class CSoundPatch;
 template < class T, class I >
 class CTimedEventQueue
 {
-   public:
+    public:
     // The time passed in here represents the amount of time the queue stores
     CTimedEventQueue( float flMaxTime );
 
@@ -40,7 +40,7 @@ class CTimedEventQueue
     float GetEventTime( I i ) const;
     const T &GetEventData( I i ) const;
 
-   private:
+    private:
     struct QueueEntry_t
     {
         float m_flTime;
@@ -131,7 +131,7 @@ inline const T &CTimedEventQueue< T, I >::GetEventData( I i ) const
 //-----------------------------------------------------------------------------
 class CEnvWindShared
 {
-   public:
+    public:
     DECLARE_CLASS_NOBASE( CEnvWindShared );
     DECLARE_EMBEDDED_NETWORKVAR();
 
@@ -173,7 +173,7 @@ class CEnvWindShared
     COutputEvent m_OnGustEnd;
 #endif
 
-   private:
+    private:
     struct WindAveEvent_t
     {
         float m_flStartWindSpeed;  // the wind speed at the time of the event
@@ -218,7 +218,7 @@ class CEnvWindShared
     CTimedEventQueue< WindAveEvent_t, unsigned short > m_WindAveQueue;
     CTimedEventQueue< WindVariationEvent_t, unsigned short > m_WindVariationQueue;
 
-   private:
+    private:
     CEnvWindShared( const CEnvWindShared & );  // not defined, not accessible
 };
 

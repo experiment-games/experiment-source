@@ -108,8 +108,8 @@ void ResetWeaponFactoryDatabase( void )
 #endif
 #else
     for ( int i = m_WeaponFactoryDatabase.First();
-          i != m_WeaponFactoryDatabase.InvalidIndex();
-          i = m_WeaponFactoryDatabase.Next( i ) )
+        i != m_WeaponFactoryDatabase.InvalidIndex();
+        i = m_WeaponFactoryDatabase.Next( i ) )
     {
         delete m_WeaponFactoryDatabase[i];
     }
@@ -684,8 +684,8 @@ void CExperimentScriptedWeapon::Precache( void )
         if ( m_iPrimaryAmmoType == -1 )
         {
             Msg( "ERROR: Weapon (%s) using undefined primary ammo type (%s)\n",
-                 GetClassname(),
-                 GetWpnData().szAmmo1 );
+                GetClassname(),
+                GetWpnData().szAmmo1 );
         }
     }
     if ( GetWpnData().szAmmo2[0] )
@@ -694,8 +694,8 @@ void CExperimentScriptedWeapon::Precache( void )
         if ( m_iSecondaryAmmoType == -1 )
         {
             Msg( "ERROR: Weapon (%s) using undefined secondary ammo type (%s)\n",
-                 GetClassname(),
-                 GetWpnData().szAmmo2 );
+                GetClassname(),
+                GetWpnData().szAmmo2 );
         }
     }
 

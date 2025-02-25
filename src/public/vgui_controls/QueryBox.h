@@ -26,7 +26,7 @@ class QueryBox : public MessageBox
 {
     DECLARE_CLASS_SIMPLE( QueryBox, MessageBox );
 
-   public:
+    public:
     QueryBox( const char *title, const char *queryText, vgui::Panel *parent = NULL );
     QueryBox( const wchar_t *wszTitle, const wchar_t *wszQueryText, vgui::Panel *parent = NULL );
     ~QueryBox();
@@ -47,13 +47,13 @@ class QueryBox : public MessageBox
     // Set a value of the ok command
     void SetOKCommandValue( const char *keyName, int value );
 
-   protected:
+    protected:
     virtual void OnKeyCodeTyped( KeyCode code );
     virtual void OnKeyCodePressed( KeyCode code );
     virtual void OnCommand( const char *command );
     Button *m_pCancelButton;
 
-   private:
+    private:
     KeyValues *m_pCancelCommand;
     KeyValues *m_pOkCommand;
 };

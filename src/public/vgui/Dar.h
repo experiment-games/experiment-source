@@ -30,7 +30,7 @@ class Dar : public CUtlVector< ELEMTYPE >
 {
     typedef CUtlVector< ELEMTYPE > BaseClass;
 
-   public:
+    public:
     Dar()
     {
     }
@@ -39,7 +39,7 @@ class Dar : public CUtlVector< ELEMTYPE >
     {
     }
 
-   public:
+    public:
     void SetCount( int count )
     {
         this->EnsureCount( count );

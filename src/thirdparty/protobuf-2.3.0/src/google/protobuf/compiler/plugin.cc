@@ -62,7 +62,7 @@ namespace compiler {
 class GeneratorResponseOutputDirectory : public OutputDirectory {
  public:
   GeneratorResponseOutputDirectory(CodeGeneratorResponse* response)
-      : response_(response) {}
+    : response_(response) {}
   virtual ~GeneratorResponseOutputDirectory() {}
 
   // implements OutputDirectory --------------------------------------
@@ -74,7 +74,7 @@ class GeneratorResponseOutputDirectory : public OutputDirectory {
   }
 
   virtual io::ZeroCopyOutputStream* OpenForInsert(
-      const string& filename, const string& insertion_point) {
+    const string& filename, const string& insertion_point) {
     CodeGeneratorResponse::File* file = response_->add_file();
     file->set_name(filename);
     file->set_insertion_point(insertion_point);
@@ -107,8 +107,8 @@ int PluginMain(int argc, char* argv[], const CodeGenerator* generator) {
   for (int i = 0; i < request.proto_file_size(); i++) {
     const FileDescriptor* file = pool.BuildFile(request.proto_file(i));
     if (file == NULL) {
-      // BuildFile() already wrote an error message.
-      return 1;
+    // BuildFile() already wrote an error message.
+    return 1;
     }
   }
 
@@ -119,10 +119,10 @@ int PluginMain(int argc, char* argv[], const CodeGenerator* generator) {
     const FileDescriptor* file =
         pool.FindFileByName(request.file_to_generate(i));
     if (file == NULL) {
-      cerr << argv[0] << ": protoc asked plugin to generate a file but "
-              "did not provide a descriptor for the file: "
-           << request.file_to_generate(i) << endl;
-      return 1;
+    cerr << argv[0] << ": protoc asked plugin to generate a file but "
+            "did not provide a descriptor for the file: "
+            << request.file_to_generate(i) << endl;
+    return 1;
     }
 
     string error;
@@ -130,12 +130,12 @@ int PluginMain(int argc, char* argv[], const CodeGenerator* generator) {
         file, request.parameter(), &output_directory, &error);
 
     if (!succeeded && error.empty()) {
-      error = "Code generator returned false but provided no error "
-              "description.";
+    error = "Code generator returned false but provided no error "
+            "description.";
     }
     if (!error.empty()) {
-      response.set_error(file->name() + ": " + error);
-      break;
+    response.set_error(file->name() + ": " + error);
+    break;
     }
   }
 

@@ -362,7 +362,7 @@ void ScreenToWorld( int mousex,
 }
 
 Vector ScreenToWorld( int mousex,
-                      int mousey )
+                    int mousey )
 {
     CBasePlayer *pPlayer = CBasePlayer::GetLocalPlayer();
     float fov = pPlayer->GetFOV();
@@ -645,13 +645,13 @@ class CVGuiScreenEnumerator : public IPartitionEnumerator
 {
     DECLARE_CLASS_GAMEROOT( CVGuiScreenEnumerator, IPartitionEnumerator );
 
-   public:
+    public:
     virtual IterationRetval_t EnumElement( IHandleEntity *pHandleEntity );
 
     int GetScreenCount();
     C_VGuiScreen *GetVGuiScreen( int index );
 
-   private:
+    private:
     CUtlVector< CHandle< C_VGuiScreen > > m_VguiScreens;
 };
 

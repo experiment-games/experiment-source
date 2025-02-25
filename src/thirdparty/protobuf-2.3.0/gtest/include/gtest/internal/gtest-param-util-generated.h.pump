@@ -116,7 +116,7 @@ class CartesianProductGenerator$i
   typedef ::std::tr1::tuple<$for j, [[T$j]]> ParamType;
 
   CartesianProductGenerator$i($for j, [[const ParamGenerator<T$j>& g$j]])
-      : $for j, [[g$(j)_(g$j)]] {}
+    : $for j, [[g$(j)_(g$j)]] {}
   virtual ~CartesianProductGenerator$i() {}
 
   virtual ParamIteratorInterface<ParamType>* Begin() const {
@@ -128,61 +128,61 @@ class CartesianProductGenerator$i
 
  private:
   class Iterator : public ParamIteratorInterface<ParamType> {
-   public:
+    public:
     Iterator(const ParamGeneratorInterface<ParamType>* base, $for j, [[
 
-      const ParamGenerator<T$j>& g$j,
-      const typename ParamGenerator<T$j>::iterator& current$(j)]])
+    const ParamGenerator<T$j>& g$j,
+    const typename ParamGenerator<T$j>::iterator& current$(j)]])
         : base_(base),
 $for j, [[
 
-          begin$(j)_(g$j.begin()), end$(j)_(g$j.end()), current$(j)_(current$j)
+        begin$(j)_(g$j.begin()), end$(j)_(g$j.end()), current$(j)_(current$j)
 ]]    {
-      ComputeCurrentValue();
+    ComputeCurrentValue();
     }
     virtual ~Iterator() {}
 
     virtual const ParamGeneratorInterface<ParamType>* BaseGenerator() const {
-      return base_;
+    return base_;
     }
     // Advance should not be called on beyond-of-range iterators
     // so no component iterators must be beyond end of range, either.
     virtual void Advance() {
-      assert(!AtEnd());
-      ++current$(i)_;
+    assert(!AtEnd());
+    ++current$(i)_;
 
 $for k [[
-      if (current$(i+2-k)_ == end$(i+2-k)_) {
+    if (current$(i+2-k)_ == end$(i+2-k)_) {
         current$(i+2-k)_ = begin$(i+2-k)_;
         ++current$(i+2-k-1)_;
-      }
+    }
 
 ]]
-      ComputeCurrentValue();
+    ComputeCurrentValue();
     }
     virtual ParamIteratorInterface<ParamType>* Clone() const {
-      return new Iterator(*this);
+    return new Iterator(*this);
     }
     virtual const ParamType* Current() const { return &current_value_; }
     virtual bool Equals(const ParamIteratorInterface<ParamType>& other) const {
-      // Having the same base generator guarantees that the other
-      // iterator is of the same type and we can downcast.
-      GTEST_CHECK_(BaseGenerator() == other.BaseGenerator())
-          << "The program attempted to compare iterators "
-          << "from different generators." << std::endl;
-      const Iterator* typed_other =
-          CheckedDowncastToActualType<const Iterator>(&other);
-      // We must report iterators equal if they both point beyond their
-      // respective ranges. That can happen in a variety of fashions,
-      // so we have to consult AtEnd().
-      return (AtEnd() && typed_other->AtEnd()) ||
-         ($for j  && [[
+    // Having the same base generator guarantees that the other
+    // iterator is of the same type and we can downcast.
+    GTEST_CHECK_(BaseGenerator() == other.BaseGenerator())
+        << "The program attempted to compare iterators "
+        << "from different generators." << std::endl;
+    const Iterator* typed_other =
+        CheckedDowncastToActualType<const Iterator>(&other);
+    // We must report iterators equal if they both point beyond their
+    // respective ranges. That can happen in a variety of fashions,
+    // so we have to consult AtEnd().
+    return (AtEnd() && typed_other->AtEnd()) ||
+        ($for j  && [[
 
-          current$(j)_ == typed_other->current$(j)_
+        current$(j)_ == typed_other->current$(j)_
 ]]);
     }
 
-   private:
+    private:
     Iterator(const Iterator& other)
         : base_(other.base_), $for j, [[
 
@@ -190,20 +190,20 @@ $for k [[
         end$(j)_(other.end$(j)_),
         current$(j)_(other.current$(j)_)
 ]] {
-      ComputeCurrentValue();
+    ComputeCurrentValue();
     }
 
     void ComputeCurrentValue() {
-      if (!AtEnd())
+    if (!AtEnd())
         current_value_ = ParamType($for j, [[*current$(j)_]]);
     }
     bool AtEnd() const {
-      // We must report iterator past the end of the range when either of the
-      // component iterators has reached the end of its range.
-      return
+    // We must report iterator past the end of the range when either of the
+    // component iterators has reached the end of its range.
+    return
 $for j  || [[
 
-          current$(j)_ == end$(j)_
+        current$(j)_ == end$(j)_
 ]];
     }
 
@@ -250,7 +250,7 @@ template <$for j, [[class Generator$j]]>
 class CartesianProductHolder$i {
  public:
 CartesianProductHolder$i($for j, [[const Generator$j& g$j]])
-      : $for j, [[g$(j)_(g$j)]] {}
+    : $for j, [[g$(j)_(g$j)]] {}
   template <$for j, [[typename T$j]]>
   operator ParamGenerator< ::std::tr1::tuple<$for j, [[T$j]]> >() const {
     return ParamGenerator< ::std::tr1::tuple<$for j, [[T$j]]> >(

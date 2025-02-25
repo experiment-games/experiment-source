@@ -57,7 +57,7 @@ namespace compiler
 // Utility class for launching sub-processes.
 class Subprocess
 {
-   public:
+    public:
     Subprocess();
     ~Subprocess();
 
@@ -84,7 +84,7 @@ class Subprocess
     static string Subprocess::Win32ErrorMessage( DWORD error_code );
 #endif
 
-   private:
+    private:
 #ifdef _WIN32
     DWORD process_start_error_;
     HANDLE child_handle_;

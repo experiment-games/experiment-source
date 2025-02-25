@@ -77,8 +77,8 @@ S_API void S_CALLTYPE SteamAPI_UnregisterCallResult( class CCallbackBase *pCallb
         {                                                                                                                                                              \
             return *this;                                                                                                                                              \
         }                                                                                                                                                              \
-                                                                                                                                                                       \
-       private:                                                                                                                                                        \
+                                                                                                                                                                        \
+        private:                                                                                                                                                        \
         virtual void Run( void *pvParam ) S_OVERRIDE                                                                                                                   \
         {                                                                                                                                                              \
             _STEAM_CALLBACK_AUTO_HOOK( thisclass, func, param )                                                                                                        \
@@ -455,7 +455,7 @@ enum
 // This will be removed in a future iteration of the SDK
 class CSteamAPIContext
 {
-   public:
+    public:
     CSteamAPIContext()
     {
         Clear();
@@ -554,7 +554,7 @@ class CSteamAPIContext
         return m_pSteamInput;
     }
 
-   private:
+    private:
     ISteamClient *m_pSteamClient;
     ISteamUser *m_pSteamUser;
     ISteamFriends *m_pSteamFriends;
@@ -581,7 +581,7 @@ class CSteamAPIContext
 
 class CSteamGameServerAPIContext
 {
-   public:
+    public:
     CSteamGameServerAPIContext()
     {
         Clear();
@@ -625,7 +625,7 @@ class CSteamGameServerAPIContext
         return m_pSteamUGC;
     }
 
-   private:
+    private:
     ISteamClient *m_pSteamClient;
     ISteamGameServer *m_pSteamGameServer;
     ISteamUtils *m_pSteamGameServerUtils;

@@ -30,10 +30,10 @@ particle effects that are not entities.
 To make a particle effect, you need two things:
 
 1. An implementation of the IParticleEffect interface. This is how CParticleMgr
-   talks to you for things like rendering and updating your effect.
+    talks to you for things like rendering and updating your effect.
 
 2. A (member) variable of type CParticleEffectBinding. This allows CParticleMgr to
-   store its internal data associated with your effect.
+    store its internal data associated with your effect.
 
 Once you have those two things, you call CParticleMgr::AddEffect and pass them
 both in. You will then get updates through IParticleEffect::Update, and you will
@@ -50,7 +50,7 @@ Example class:
     // Call this to start the effect by adding it to the particle manager.
     void			Start()
     {
-      ParticleMgr()->AddEffect( &m_ParticleEffect, this );
+    ParticleMgr()->AddEffect( &m_ParticleEffect, this );
     }
 
     // implementation of IParticleEffect functions go here...
@@ -68,36 +68,36 @@ There are two helper classes that you can use to create particles for your
 entities. Each one is useful under different conditions.
 
 1. CSimpleEmitter is a class that does some of the dirty work of using particles.
-   If you want, you can just instantiate one of these with CSimpleEmitter::Create
-   and call its AddParticle functions to add particles. When you are done and
-   want to 'free' it, call its Release function rather than deleting it, and it
-   will wait until all of its particles have gone away before removing itself
-   (so you don't have to write code to wait for all of the particles to go away).
+    If you want, you can just instantiate one of these with CSimpleEmitter::Create
+    and call its AddParticle functions to add particles. When you are done and
+    want to 'free' it, call its Release function rather than deleting it, and it
+    will wait until all of its particles have gone away before removing itself
+    (so you don't have to write code to wait for all of the particles to go away).
 
-   In most cases, it is the easiest and most clear to use CSimpleEmitter or
-   derive a class from it, then use that class from inside an entity that wants
-   to make particles.
+    In most cases, it is the easiest and most clear to use CSimpleEmitter or
+    derive a class from it, then use that class from inside an entity that wants
+    to make particles.
 
-   CSimpleEmitter and derived classes handle adding themselves to the particle
-   manager, tracking how many particles in the effect are active, and
-   rendering the particles.
+    CSimpleEmitter and derived classes handle adding themselves to the particle
+    manager, tracking how many particles in the effect are active, and
+    rendering the particles.
 
-   CSimpleEmitter has code to simulate and render particles in a generic fashion,
-   but if you derive a class from it, you can override some of its behavior
-   with virtuals like UpdateAlpha, UpdateScale, UpdateColor, etc..
+    CSimpleEmitter has code to simulate and render particles in a generic fashion,
+    but if you derive a class from it, you can override some of its behavior
+    with virtuals like UpdateAlpha, UpdateScale, UpdateColor, etc..
 
-   Example code:
+    Example code:
     CSimpleEmitter *pEmitter = CSimpleEmitter::Create();
 
     CEffectMaterialHandle hMaterial = pEmitter->GetCEffectMaterial( "mymaterial" );
 
     for( int i=0; i < 100; i++ )
-      pEmitter->AddParticle( hMaterial, RandomVector(0,10), 4 );
+    pEmitter->AddParticle( hMaterial, RandomVector(0,10), 4 );
 
     pEmitter->Release();
 
 2. Some older effects derive from C_BaseParticleEffect and implement an entity
-   and a particle system at the same time. This gets nasty and is not encouraged anymore.
+    and a particle system at the same time. This gets nasty and is not encouraged anymore.
 
 */
 
@@ -181,10 +181,10 @@ typedef CParticleSubTexture *PMaterialHandle;
 // hashed on the IMaterial pointer.
 class CEffectMaterial
 {
-   public:
+    public:
     CEffectMaterial();
 
-   public:
+    public:
     // This provides the material that gets bound for this material in this effect.
     // There can be multiple subtextures all within the same CEffectMaterial.
     CParticleSubTextureGroup *m_pGroup;
@@ -195,7 +195,7 @@ class CEffectMaterial
 
 class CParticleSubTextureGroup
 {
-   public:
+    public:
     CParticleSubTextureGroup();
     ~CParticleSubTextureGroup();
 
@@ -211,7 +211,7 @@ class CParticleSubTextureGroup
 // This allows us to put multiple subtextures into one VTF and sort them against each other.
 class CParticleSubTexture
 {
-   public:
+    public:
     CParticleSubTexture();
 
     float m_tCoordMins[2];  // bbox in texel space that this particle material uses.
@@ -220,7 +220,7 @@ class CParticleSubTexture
     // Which group does this subtexture belong to?
     CParticleSubTextureGroup *m_pGroup;
     CParticleSubTextureGroup m_DefaultGroup;  // This is used as the group if a particle's material
-                                              // isn't using a group.
+                                            // isn't using a group.
 
 #ifdef _DEBUG
     char *m_szDebugName;
@@ -247,7 +247,7 @@ struct ParticleSimListEntry_t
 abstract_class IParticleEffect
 {
     // Overridables.
-   public:
+    public:
     virtual ~IParticleEffect() {}
 
     // Called at the beginning of a frame to precalculate data for rendering
@@ -339,12 +339,12 @@ class CParticleEffectBinding : public CDefaultClientRenderable
     friend class CParticleSimulateIterator;
     friend class CNewParticleEffect;
 
-   public:
+    public:
     CParticleEffectBinding();
     ~CParticleEffectBinding();
 
     // Helper functions to setup, add particles, etc..
-   public:
+    public:
     // Simulate all the particles.
     void SimulateParticles( float flTimeDelta );
 
@@ -491,7 +491,7 @@ class CParticleEffectBinding : public CDefaultClientRenderable
     // detect origin/bbox changes and update leaf system if necessary
     void DetectChanges();
 
-   private:
+    private:
     // Change flags..
     void SetFlag( int flag, int bOn )
     {
@@ -584,7 +584,7 @@ class CParticleEffectBinding : public CDefaultClientRenderable
     CEffectMaterial *GetEffectMaterial( CParticleSubTexture *pSubTexture );
 
     // IClientRenderable overrides.
-   public:
+    public:
     virtual const Vector &GetRenderOrigin( void );
     virtual const QAngle &GetRenderAngles( void );
     virtual const matrix3x4_t &RenderableToWorldTransform();
@@ -593,22 +593,22 @@ class CParticleEffectBinding : public CDefaultClientRenderable
     virtual bool IsTransparent( void );
     virtual int DrawModel( int flags );
 
-   private:
+    private:
     enum
     {
         FLAGS_REMOVE = ( 1 << 0 ),                    // Set in SetRemoveFlag
         FLAGS_REMOVALINPROGRESS = ( 1 << 1 ),         // Set while the effect is being removed to prevent
-                                                      // infinite recursion.
+                                                    // infinite recursion.
         FLAGS_NEEDS_BBOX_UPDATE = ( 1 << 2 ),         // This is set until the effect's bbox has been updated once.
         FLAGS_AUTOUPDATEBBOX = ( 1 << 3 ),            // Update bbox automatically? Cleared in SetBBox.
         FLAGS_ALWAYSSIMULATE = ( 1 << 4 ),            // See SetAlwaysSimulate.
         FLAGS_DRAWN = ( 1 << 5 ),                     // Set if the effect is drawn through the leaf system.
         FLAGS_DRAWN_PREVFRAME = ( 1 << 6 ),           // Set if the effect was drawn the previous frame.
-                                                      // This can be used by particle effect classes
-                                                      // to decide whether or not they want to spawn
-                                                      // new particles - if they weren't drawn, then
-                                                      // they can 'freeze' the particle system to avoid
-                                                      // overhead.
+                                                    // This can be used by particle effect classes
+                                                    // to decide whether or not they want to spawn
+                                                    // new particles - if they weren't drawn, then
+                                                    // they can 'freeze' the particle system to avoid
+                                                    // overhead.
         FLAGS_CAMERASPACE = ( 1 << 7 ),               // See SetEffectCameraSpace.
         FLAGS_DRAW_THRU_LEAF_SYSTEM = ( 1 << 8 ),     // This is the default - do the effect's visibility through the leaf system.
         FLAGS_DRAW_BEFORE_VIEW_MODEL = ( 1 << 9 ),    // Draw before the view model? If this is set, it assumes FLAGS_DRAW_THRU_LEAF_SYSTEM goes off.
@@ -662,7 +662,7 @@ class CParticleEffectBinding : public CDefaultClientRenderable
 
 class CParticleLightInfo
 {
-   public:
+    public:
     Vector m_vPos;
     Vector m_vColor;  // 0-1
     float m_flIntensity;
@@ -680,7 +680,7 @@ class CParticleMgr
     friend class CParticleEffectBinding;
     friend class CParticleCollection;
 
-   public:
+    public:
     CParticleMgr();
     virtual ~CParticleMgr();
 
@@ -764,7 +764,7 @@ class CParticleMgr
     void StatsNewParticleEffectDrawn( CNewParticleEffect *pParticles );
     void StatsOldParticleEffectDrawn( CParticleEffectBinding *pParticles );
 
-   private:
+    private:
     struct RetireInfo_t
     {
         CParticleCollection *m_pCollection;
@@ -787,7 +787,7 @@ class CParticleMgr
     bool EarlyRetireParticleSystems( int nCount, ParticleSimListEntry_t *ppEffects );
     static int RetireSort( const void *p1, const void *p2 );
 
-   private:
+    private:
     int m_nCurrentParticlesAllocated;
 
     // Directional lighting info.
@@ -833,7 +833,7 @@ inline int CParticleMgr::AllocateToolParticleEffectId()
 // Implement this class and register with CParticleMgr to receive particle effect add/remove notification
 class IClientParticleListener
 {
-   public:
+    public:
     virtual void OnParticleEffectAdded( IParticleEffect *pEffect ) = 0;
     virtual void OnParticleEffectRemoved( IParticleEffect *pEffect ) = 0;
 };
@@ -886,7 +886,7 @@ struct StandardParticle_t : public Particle
     float m_Lifetime;
 
     unsigned char m_EffectData;  // Data specific to the IParticleEffect. This can be used to distinguish between
-                                 // different types of particles the effect is simulating.
+                                // different types of particles the effect is simulating.
     unsigned short m_EffectDataWord;
 
     unsigned char m_Color[4];  // RGBA - not all effects need to use this.

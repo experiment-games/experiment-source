@@ -17,7 +17,7 @@
 //-----------------------------------------------------------------------------
 class CPredictableIdHelper
 {
-   public:
+    public:
     CPredictableIdHelper()
     {
         Reset( -1 );
@@ -45,7 +45,7 @@ class CPredictableIdHelper
         return e->count - 1;
     }
 
-   private:
+    private:
     enum
     {
         MAX_ENTRIES = 256,

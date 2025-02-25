@@ -55,7 +55,7 @@ TEST(VersionTest, VersionMatchesConfig) {
   string version = PACKAGE_VERSION;
   int pos = 0;
   while (pos < version.size() &&
-         (ascii_isdigit(version[pos]) || version[pos] == '.')) {
+        (ascii_isdigit(version[pos]) || version[pos] == '.')) {
     ++pos;
   }
   version.erase(pos);
@@ -82,7 +82,7 @@ void CaptureLog(LogLevel level, const char* filename, int line,
                 const string& message) {
   captured_messages_.push_back(
     strings::Substitute("$0 $1:$2: $3",
-      implicit_cast<int>(level), filename, line, message));
+    implicit_cast<int>(level), filename, line, message));
 }
 
 TEST(LoggingTest, DefaultLogging) {
@@ -202,7 +202,7 @@ TEST_F(ClosureTest, TestClosureFunction0) {
 
 TEST_F(ClosureTest, TestClosureMethod0) {
   Closure* closure = NewCallback(current_instance_,
-                                 &ClosureTest::SetA123Method);
+                                &ClosureTest::SetA123Method);
   EXPECT_NE(123, a_);
   closure->Run();
   EXPECT_EQ(123, a_);
@@ -217,7 +217,7 @@ TEST_F(ClosureTest, TestClosureFunction1) {
 
 TEST_F(ClosureTest, TestClosureMethod1) {
   Closure* closure = NewCallback(current_instance_,
-                                 &ClosureTest::SetAMethod, 456);
+                                &ClosureTest::SetAMethod, 456);
   EXPECT_NE(456, a_);
   closure->Run();
   EXPECT_EQ(456, a_);
@@ -232,7 +232,7 @@ TEST_F(ClosureTest, TestClosureFunction1String) {
 
 TEST_F(ClosureTest, TestClosureMethod1String) {
   Closure* closure = NewCallback(current_instance_,
-                                 &ClosureTest::SetCMethod, string("test"));
+                                &ClosureTest::SetCMethod, string("test"));
   EXPECT_NE("test", c_);
   closure->Run();
   EXPECT_EQ("test", c_);
@@ -251,7 +251,7 @@ TEST_F(ClosureTest, TestClosureFunction2) {
 TEST_F(ClosureTest, TestClosureMethod2) {
   const char* cstr = "hello";
   Closure* closure = NewCallback(current_instance_,
-                                 &ClosureTest::SetABMethod, 789, cstr);
+                                &ClosureTest::SetABMethod, 789, cstr);
   EXPECT_NE(789, a_);
   EXPECT_NE(cstr, b_);
   closure->Run();
@@ -274,7 +274,7 @@ TEST_F(ClosureTest, TestPermanentClosureFunction0) {
 
 TEST_F(ClosureTest, TestPermanentClosureMethod0) {
   Closure* closure = NewPermanentCallback(current_instance_,
-                                          &ClosureTest::SetA123Method);
+                                        &ClosureTest::SetA123Method);
   EXPECT_NE(123, a_);
   closure->Run();
   EXPECT_EQ(123, a_);
@@ -297,7 +297,7 @@ TEST_F(ClosureTest, TestPermanentClosureFunction1) {
 
 TEST_F(ClosureTest, TestPermanentClosureMethod1) {
   Closure* closure = NewPermanentCallback(current_instance_,
-                                          &ClosureTest::SetAMethod, 456);
+                                        &ClosureTest::SetAMethod, 456);
   EXPECT_NE(456, a_);
   closure->Run();
   EXPECT_EQ(456, a_);
@@ -326,7 +326,7 @@ TEST_F(ClosureTest, TestPermanentClosureFunction2) {
 TEST_F(ClosureTest, TestPermanentClosureMethod2) {
   const char* cstr = "hello";
   Closure* closure = NewPermanentCallback(current_instance_,
-                                          &ClosureTest::SetABMethod, 789, cstr);
+                                        &ClosureTest::SetABMethod, 789, cstr);
   EXPECT_NE(789, a_);
   EXPECT_NE(cstr, b_);
   closure->Run();

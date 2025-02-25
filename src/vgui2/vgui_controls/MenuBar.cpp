@@ -35,7 +35,7 @@ DECLARE_BUILD_FACTORY( MenuBar );
 //-----------------------------------------------------------------------------
 MenuBar::MenuBar( Panel *parent, const char *panelName )
     : Panel( parent, panelName ),
-      m_nRightEdge( 0 )
+    m_nRightEdge( 0 )
 {
 }
 

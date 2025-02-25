@@ -26,7 +26,7 @@ class TextImage;
 //-----------------------------------------------------------------------------
 class CheckImage : public TextImage
 {
-   public:
+    public:
     CheckImage( CheckButton *CheckButton )
         : TextImage( "g" )
     {
@@ -50,7 +50,7 @@ class CheckImage : public TextImage
 
     Color _bgColor;
 
-   private:
+    private:
     CheckButton *_CheckButton;
 };
 
@@ -61,7 +61,7 @@ class CheckButton : public ToggleButton
 {
     DECLARE_CLASS_SIMPLE( CheckButton, ToggleButton );
 
-   public:
+    public:
 #ifdef LUA_SDK
     CheckButton( Panel *parent, const char *panelName, const char *text, lua_State *L = nullptr );
 #else
@@ -96,7 +96,7 @@ class CheckButton : public ToggleButton
 
     virtual void SetHighlightColor( Color fgColor );
 
-   protected:
+    protected:
     virtual void ApplySchemeSettings( IScheme *pScheme );
     MESSAGE_FUNC_PTR( OnCheckButtonChecked, "CheckButtonChecked", panel );
     virtual Color GetButtonFgColor();
@@ -104,11 +104,11 @@ class CheckButton : public ToggleButton
     virtual IBorder *GetBorder( bool depressed, bool armed, bool selected, bool keyfocus );
 
     /* MESSAGES SENT
-      "CheckButtonChecked" - sent when the check button state is changed
+    "CheckButtonChecked" - sent when the check button state is changed
         "state"	- button state: 1 is checked, 0 is unchecked
     */
 
-   private:
+    private:
     enum
     {
         CHECK_INSET = 6

@@ -26,14 +26,14 @@ class CCoreDispInfo;
 abstract_class CDispUtilsHelper
 {
     // Derived classes must implement these.
-   public:
+    public:
     virtual const CPowerInfo *GetPowerInfo() const = 0;
     virtual CDispNeighbor *GetEdgeNeighbor( int index ) = 0;
     virtual CDispCornerNeighbors *GetCornerNeighbors( int index ) = 0;
     virtual CDispUtilsHelper *GetDispUtilsByIndex( int index ) = 0;
 
     // Helper functions.
-   public:
+    public:
     int GetPower() const;
     int GetSideLength() const;
     const CVertIndex &GetCornerPointIndex( int iCorner ) const;
@@ -45,7 +45,7 @@ abstract_class CDispUtilsHelper
 // common vertices.
 class CDispSubEdgeIterator
 {
-   public:
+    public:
     CDispSubEdgeIterator();
 
     // Normally, this will iterate all shared verts along the edge except the corners.
@@ -69,7 +69,7 @@ class CDispSubEdgeIterator
     // Returns true if you're on the last vert (ie: the next Next() call will return false).ssssss
     bool IsLastVert() const;
 
-   private:
+    private:
     CDispUtilsHelper *m_pNeighbor;  // The neighbor to the edge we were setup on.
 
     CVertIndex m_Index;
@@ -87,7 +87,7 @@ class CDispSubEdgeIterator
 // (As a result, it won't hit the midpoint of pDisps's edge if there are 2 neighbors).
 class CDispEdgeIterator
 {
-   public:
+    public:
     CDispEdgeIterator( CDispUtilsHelper *pDisp, int iEdge );
 
     // Seek to the next point on the edge.
@@ -108,7 +108,7 @@ class CDispEdgeIterator
         return m_It.GetNeighbor();
     }
 
-   private:
+    private:
     CDispUtilsHelper *m_pDisp;
     int m_iEdge;
     int m_iCurSub;
@@ -124,7 +124,7 @@ class CDispEdgeIterator
 //     ...
 class CDispCircumferenceIterator
 {
-   public:
+    public:
     CDispCircumferenceIterator( int sideLength );
 
     // Seek to the next point. Returns false when there are no more points.
@@ -135,7 +135,7 @@ class CDispCircumferenceIterator
         return m_VertIndex;
     }
 
-   private:
+    private:
     int m_SideLengthM1;
     int m_iCurEdge;
     CVertIndex m_VertIndex;
@@ -145,7 +145,7 @@ class CDispCircumferenceIterator
 // of different relations (in g_ShiftInfos).
 class CShiftInfo
 {
-   public:
+    public:
     int m_MidPointScale;
     int m_PowerShiftAdd;
     bool m_bValid;
@@ -153,7 +153,7 @@ class CShiftInfo
 
 class CDispBox
 {
-   public:
+    public:
     Vector m_Min, m_Max;
 };
 

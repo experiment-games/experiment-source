@@ -35,7 +35,7 @@ CAI_Network *g_pBigAINet;
 
 abstract_class INodeListFilter
 {
-   public:
+    public:
     virtual bool NodeIsValid( CAI_Node & node ) = 0;
     virtual float NodeDistanceSqr( CAI_Node & node ) = 0;
 };
@@ -46,7 +46,7 @@ abstract_class INodeListFilter
 
 class CNodeFilter : public INodeListFilter
 {
-   public:
+    public:
     CNodeFilter( CAI_BaseNPC *pNPC, const Vector &pos )
         : m_pNPC( pNPC ), m_pos( pos )
     {
@@ -72,7 +72,7 @@ class CNodeFilter : public INodeListFilter
 
         // Check that node is of proper type for this NPC's navigation ability
         if ( ( node.GetType() == NODE_AIR && !( m_capabilities & bits_CAP_MOVE_FLY ) ) ||
-             ( node.GetType() == NODE_GROUND && !( m_capabilities & bits_CAP_MOVE_GROUND ) ) )
+            ( node.GetType() == NODE_GROUND && !( m_capabilities & bits_CAP_MOVE_GROUND ) ) )
             return false;
 
         if ( m_pNPC->IsUnusableNode( node.GetId(), node.GetHint() ) )
@@ -218,8 +218,8 @@ int CAI_Network::ListNodesInBox( CNodeList &list, int maxListCount, const Vector
         const Vector &origin = pNode->GetOrigin();
         // in box?
         if ( origin.x < mins.x || origin.x > maxs.x ||
-             origin.y < mins.y || origin.y > maxs.y ||
-             origin.z < mins.z || origin.z > maxs.z )
+            origin.y < mins.y || origin.y > maxs.y ||
+            origin.z < mins.z || origin.z > maxs.z )
             continue;
 
         if ( !pFilter->NodeIsValid( *pNode ) )

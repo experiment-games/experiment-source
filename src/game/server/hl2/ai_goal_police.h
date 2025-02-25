@@ -12,7 +12,7 @@
 
 class CAI_PoliceGoal : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CAI_PoliceGoal, CBaseEntity );
 
     CAI_PoliceGoal( void );

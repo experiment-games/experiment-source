@@ -111,7 +111,7 @@ class CBaseCombatCharacter : public CBaseFlex
 {
     DECLARE_CLASS( CBaseCombatCharacter, CBaseFlex );
 
-   public:
+    public:
     CBaseCombatCharacter( void );
     ~CBaseCombatCharacter( void );
 
@@ -119,7 +119,7 @@ class CBaseCombatCharacter : public CBaseFlex
     DECLARE_DATADESC();
     DECLARE_PREDICTABLE();
 
-   public:
+    public:
     virtual void Spawn( void );
     virtual void Precache();
 
@@ -369,10 +369,10 @@ class CBaseCombatCharacter : public CBaseFlex
 
     virtual void SetLightingOriginRelative( CBaseEntity *pLightingOrigin );
 
-   protected:
+    protected:
     Relationship_t *FindEntityRelationship( CBaseEntity *pTarget );
 
-   public:
+    public:
     // Vehicle queries
     virtual bool IsInAVehicle( void ) const
     {
@@ -505,7 +505,7 @@ class CBaseCombatCharacter : public CBaseFlex
 #endif  // GLOWS_ENABLE
 
 #ifdef INVASION_DLL
-   public:
+    public:
     // TF2 Powerups
     virtual bool CanBePoweredUp( void );
     bool HasPowerup( int iPowerup );
@@ -521,7 +521,7 @@ class CBaseCombatCharacter : public CBaseFlex
     void PowerupThink( void );
     virtual void PowerupThink( int iPowerup );
 
-   public:
+    public:
     CNetworkVar( int, m_iPowerups );
     float m_flPowerupAttemptTimes[MAX_POWERUPS];
     float m_flPowerupEndTimes[MAX_POWERUPS];
@@ -529,34 +529,34 @@ class CBaseCombatCharacter : public CBaseFlex
 
 #endif
 
-   public:
+    public:
     // returns the last body region that took damage
     int LastHitGroup() const
     {
         return m_LastHitGroup;
     }
 
-   protected:
+    protected:
     void SetLastHitGroup( int nHitGroup )
     {
         m_LastHitGroup = nHitGroup;
     }
 
-   public:
+    public:
     CNetworkVar( float, m_flNextAttack );  // cannot attack again until this time
 
 #ifdef GLOWS_ENABLE
-   protected:
+    protected:
     CNetworkVar( bool, m_bGlowEnabled );
 #endif  // GLOWS_ENABLE
 
-   private:
+    private:
     Hull_t m_eHull;
 
     void UpdateGlowEffect( void );
     void DestroyGlowEffect( void );
 
-   protected:
+    protected:
     int m_bloodColor;  // color of blood particless
 
     // -------------------
@@ -567,14 +567,14 @@ class CBaseCombatCharacter : public CBaseFlex
     string_t m_RelationshipString;  // Used to load up relationship keyvalues
     float m_impactEnergyScale;      // scale the amount of energy used to calculate damage this ent takes due to physics
 
-   public:
+    public:
     static int GetInteractionID();  // Returns the next interaction #
 
-   protected:
+    protected:
     // Visibility-related stuff
     bool ComputeLOS( const Vector &vecEyePosition, const Vector &vecTarget ) const;
 
-   private:
+    private:
     // For weapon strip
     void ThrowDirForWeaponStrip( CBaseCombatWeapon *pWeapon, const Vector &vecForward, Vector *pVecThrowDir );
     void DropWeaponForWeaponStrip( CBaseCombatWeapon *pWeapon, const Vector &vecForward, const QAngle &vecAngles, float flDiameter );
@@ -598,7 +598,7 @@ class CBaseCombatCharacter : public CBaseFlex
     // ---------------
     CUtlVector< Relationship_t > m_Relationship;  // Array of relationships
 
-   protected:
+    protected:
     // shared ammo slots
     CNetworkArrayForDerived( int, m_iAmmo, MAX_AMMO_SLOTS );
 
@@ -683,7 +683,7 @@ void RadiusDamage( const CTakeDamageInfo &info, const Vector &vecSrc, float flRa
 //-----------------------------------------------------------------------------
 class CTraceFilterMelee : public CTraceFilterEntitiesOnly
 {
-   public:
+    public:
     // It does have a base, but we'll never network anything below here..
     DECLARE_CLASS_NOBASE( CTraceFilterMelee );
 
@@ -694,7 +694,7 @@ class CTraceFilterMelee : public CTraceFilterEntitiesOnly
 
     virtual bool ShouldHitEntity( IHandleEntity *pHandleEntity, int contentsMask );
 
-   public:
+    public:
     const IHandleEntity *m_pPassEnt;
     int m_collisionGroup;
     CTakeDamageInfo *m_dmgInfo;

@@ -33,7 +33,7 @@ class TreeView : public Panel
 {
     DECLARE_CLASS_SIMPLE( TreeView, Panel );
 
-   public:
+    public:
     TreeView( Panel *parent, const char *panelName );
     ~TreeView();
 
@@ -109,9 +109,9 @@ class TreeView : public Panel
 
     /* message sent
 
-      "TreeViewItemSelected"  int "itemIndex"
+    "TreeViewItemSelected"  int "itemIndex"
         called when the selected item changes
-      "TreeViewItemDeselected" int "itemIndex"
+    "TreeViewItemDeselected" int "itemIndex"
         called when item is deselected
     */
     int GetRowHeight();
@@ -143,7 +143,7 @@ class TreeView : public Panel
 
     int FindItemUnderMouse( int mx, int my );
 
-   protected:
+    protected:
     // functions to override
     // called when a node, marked as "Expand", needs to generate it's child nodes when expanded
     virtual void GenerateChildrenOfNode( int itemIndex ) {}
@@ -158,7 +158,7 @@ class TreeView : public Panel
     MESSAGE_FUNC_INT( OnSliderMoved, "ScrollBarSliderMoved", position );
     virtual void SetBgColor( Color color );
 
-   private:
+    private:
     friend class TreeNode;
     friend class TreeNodeText;
 

@@ -44,7 +44,7 @@ RAPIDJSON_NAMESPACE_BEGIN
 template < typename StreamType >
 class BasicOStreamWrapper
 {
-   public:
+    public:
     typedef typename StreamType::char_type Ch;
     BasicOStreamWrapper( StreamType& stream )
         : stream_( stream ) {}
@@ -86,7 +86,7 @@ class BasicOStreamWrapper
         return 0;
     }
 
-   private:
+    private:
     BasicOStreamWrapper( const BasicOStreamWrapper& );
     BasicOStreamWrapper& operator=( const BasicOStreamWrapper& );
 

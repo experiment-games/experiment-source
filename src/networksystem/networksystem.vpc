@@ -11,49 +11,49 @@ $Include "$SRCDIR\vpc_scripts\source_dll_base.vpc"
 
 $Configuration
 {
-	$Compiler
-	{
-		$PreprocessorDefinitions			"$BASE;NETWORKSYSTEM_EXPORTS"
-	}
+    $Compiler
+    {
+        $PreprocessorDefinitions			"$BASE;NETWORKSYSTEM_EXPORTS"
+    }
 
-	$Linker
-	{
-		$AdditionalDependencies				"$BASE winmm.lib ws2_32.lib"
-	}
+    $Linker
+    {
+        $AdditionalDependencies				"$BASE winmm.lib ws2_32.lib"
+    }
 }
 
 $Project "Networksystem"
 {
-	$Folder	"Source Files"
-	{
-		$File	"netpacket.cpp"
-		$File	"netpacket.h"
+    $Folder	"Source Files"
+    {
+        $File	"netpacket.cpp"
+        $File	"netpacket.h"
 
-		$File	"networkclient.cpp"
-		$File	"networkclient.h"
-		$File	"networkserver.cpp"
-		$File	"networkserver.h"
+        $File	"networkclient.cpp"
+        $File	"networkclient.h"
+        $File	"networkserver.cpp"
+        $File	"networkserver.h"
 
-		$File	"networksystem.cpp"
-		$File	"networksystem.h"
+        $File	"networksystem.cpp"
+        $File	"networksystem.h"
 
-		$File	"tcp_process.cpp"
-		$File	"tcp_process.h"
-		$File	"tcp_sockets.cpp"
-		$File	"tcp_sockets.h"
-	}
+        $File	"tcp_process.cpp"
+        $File	"tcp_process.h"
+        $File	"tcp_sockets.cpp"
+        $File	"tcp_sockets.h"
+    }
 
-	$Folder	"Interface"
-	{
-		$File	"$SRCDIR\common\networksystem\isockets.h"
-		$File	"$SRCDIR\common\networksystem\inetworkmessage.h"
-		$File	"$SRCDIR\common\networksystem\inetworkgrouphandler.h"
-		$File	"$SRCDIR\common\networksystem\inetworksystem.h"
-		$File	"$SRCDIR\common\networksystem\inetworkpeerbase.h"
-	}
+    $Folder	"Interface"
+    {
+        $File	"$SRCDIR\common\networksystem\isockets.h"
+        $File	"$SRCDIR\common\networksystem\inetworkmessage.h"
+        $File	"$SRCDIR\common\networksystem\inetworkgrouphandler.h"
+        $File	"$SRCDIR\common\networksystem\inetworksystem.h"
+        $File	"$SRCDIR\common\networksystem\inetworkpeerbase.h"
+    }
 
-	$Folder "Link Libraries"
-	{
-		$Lib tier2
-	}
+    $Folder "Link Libraries"
+    {
+        $Lib tier2
+    }
 }

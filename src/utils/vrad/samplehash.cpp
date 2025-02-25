@@ -22,8 +22,8 @@ static unsigned short g_PatchIterationKey = 0;
 bool SampleData_CompareFunc( SampleData_t const &src1, SampleData_t const &src2 )
 {
     return ( ( src1.x == src2.x ) &&
-             ( src1.y == src2.y ) &&
-             ( src1.z == src2.z ) );
+            ( src1.y == src2.y ) &&
+            ( src1.z == src2.z ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -118,8 +118,8 @@ void SampleData_Log( void )
 bool PatchSampleData_CompareFunc( PatchSampleData_t const &src1, PatchSampleData_t const &src2 )
 {
     return ( ( src1.x == src2.x ) &&
-             ( src1.y == src2.y ) &&
-             ( src1.z == src2.z ) );
+            ( src1.y == src2.y ) &&
+            ( src1.z == src2.z ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -130,10 +130,10 @@ unsigned int PatchSampleData_KeyFunc( PatchSampleData_t const &src )
 }
 
 CUtlHash< PatchSampleData_t > g_PatchSampleHashTable( SAMPLEHASH_NUM_BUCKETS,
-                                                      SAMPLEHASH_GROW_SIZE,
-                                                      SAMPLEHASH_INIT_SIZE,
-                                                      PatchSampleData_CompareFunc,
-                                                      PatchSampleData_KeyFunc );
+                                                    SAMPLEHASH_GROW_SIZE,
+                                                    SAMPLEHASH_INIT_SIZE,
+                                                    PatchSampleData_CompareFunc,
+                                                    PatchSampleData_KeyFunc );
 
 void GetPatchSampleHashXYZ( const Vector &vOrigin, int &x, int &y, int &z )
 {

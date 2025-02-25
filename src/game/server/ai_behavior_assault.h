@@ -56,7 +56,7 @@ class CRallyPoint : public CPointEntity
 {
     DECLARE_CLASS( CRallyPoint, CPointEntity );
 
-   public:
+    public:
     CRallyPoint()
     {
         m_hLockedBy.Set( NULL );
@@ -118,7 +118,7 @@ class CRallyPoint : public CPointEntity
 
     DECLARE_DATADESC();
 
-   private:
+    private:
     EHANDLE m_hLockedBy;
 };
 
@@ -128,7 +128,7 @@ class CAssaultPoint : public CPointEntity
 {
     DECLARE_CLASS( CAssaultPoint, CPointEntity );
 
-   public:
+    public:
     CAssaultPoint()
     {
         // This used to be a constant in code. Now it's a keyfield in hammer.
@@ -152,7 +152,7 @@ class CAssaultPoint : public CPointEntity
         m_bInputForcedClear = inputdata.value.Bool();
     }
 
-   public:
+    public:
     string_t m_AssaultHintGroup;
     string_t m_NextAssaultPointName;
     COutputEvent m_OnAssaultClear;
@@ -179,7 +179,7 @@ class CAI_AssaultBehavior : public CAI_SimpleBehavior
 {
     DECLARE_CLASS( CAI_AssaultBehavior, CAI_SimpleBehavior );
 
-   public:
+    public:
     CAI_AssaultBehavior();
 
     virtual const char *GetName()
@@ -287,14 +287,14 @@ class CAI_AssaultBehavior : public CAI_SimpleBehavior
 
     DEFINE_CUSTOM_SCHEDULE_PROVIDER;
 
-   public:
+    public:
     CHandle< CAssaultPoint > m_hAssaultPoint;
     CHandle< CRallyPoint > m_hRallyPoint;
 
-   public:
+    public:
     void UnlockRallyPoint( void );
 
-   private:
+    private:
     void OnScheduleChange();
     virtual int SelectSchedule();
 

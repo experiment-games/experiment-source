@@ -23,7 +23,7 @@
 // Interface to the VB mem alloc tracker
 abstract_class IVBAllocTracker
 {
-   public:
+    public:
     // This should be called wherever VertexBuffers are allocated
     virtual void CountVB( void* buffer, bool isDynamic, int bufferSize, int vertexSize, VertexFormat_t fmt ) = 0;
     // This should be called wherever VertexBuffers are freed

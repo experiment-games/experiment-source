@@ -55,7 +55,7 @@ struct materialfloatlerpcommands_t
 
 class C_MaterialModifyControl : public C_BaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_MaterialModifyControl, C_BaseEntity );
 
     C_MaterialModifyControl();
@@ -109,7 +109,7 @@ class C_MaterialModifyControl : public C_BaseEntity
         return ( MaterialModifyMode_t )m_nModifyMode;
     }
 
-   private:
+    private:
     char m_szMaterialName[MATERIAL_MODIFY_STRING_SIZE];
     char m_szMaterialVar[MATERIAL_MODIFY_STRING_SIZE];
     char m_szMaterialVarValue[MATERIAL_MODIFY_STRING_SIZE];
@@ -225,14 +225,14 @@ bool C_MaterialModifyControl::ShouldDraw()
 //
 class CMaterialModifyProxy : public CBaseAnimatedTextureProxy
 {
-   public:
+    public:
     CMaterialModifyProxy();
     virtual ~CMaterialModifyProxy();
     virtual bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
     virtual void OnBind( void *pEntity );
     virtual IMaterial *GetMaterial();
 
-   private:
+    private:
     void OnBindSetVar( C_MaterialModifyControl *pControl );
     void OnBindAnimatedTexture( C_MaterialModifyControl *pControl );
     void OnBindFloatLerp( C_MaterialModifyControl *pControl );
@@ -602,7 +602,7 @@ void CMaterialModifyProxy::OnBindFloatLerp( C_MaterialModifyControl *pControl )
 //
 class CMaterialModifyAnimatedProxy : public CBaseAnimatedTextureProxy
 {
-   public:
+    public:
     CMaterialModifyAnimatedProxy(){};
     virtual ~CMaterialModifyAnimatedProxy(){};
     virtual bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
@@ -611,7 +611,7 @@ class CMaterialModifyAnimatedProxy : public CBaseAnimatedTextureProxy
     virtual float GetAnimationStartTime( void *pBaseEntity );
     virtual void AnimationWrapped( void *pC_BaseEntity );
 
-   private:
+    private:
     IMaterial *m_pMaterial;
     int m_iFrameStart;
     int m_iFrameEnd;

@@ -463,11 +463,11 @@ bool VMatrix::IsRotationMatrix() const
     Vector &v3 = ( Vector & )m[2][0];
 
     return FloatMakePositive( 1 - v1.Length() ) < 0.01f &&
-           FloatMakePositive( 1 - v2.Length() ) < 0.01f &&
-           FloatMakePositive( 1 - v3.Length() ) < 0.01f &&
-           FloatMakePositive( v1.Dot( v2 ) ) < 0.01f &&
-           FloatMakePositive( v1.Dot( v3 ) ) < 0.01f &&
-           FloatMakePositive( v2.Dot( v3 ) ) < 0.01f;
+            FloatMakePositive( 1 - v2.Length() ) < 0.01f &&
+            FloatMakePositive( 1 - v3.Length() ) < 0.01f &&
+            FloatMakePositive( v1.Dot( v2 ) ) < 0.01f &&
+            FloatMakePositive( v1.Dot( v3 ) ) < 0.01f &&
+            FloatMakePositive( v2.Dot( v3 ) ) < 0.01f;
 }
 
 static void SetupMatrixAnglesInternal( vec_t m[4][4], const QAngle &vAngles )
@@ -1187,51 +1187,51 @@ void FrustumPlanesFromMatrix( const VMatrix &clipToWorld, Frustum_t &frustum )
     float dist;
 
     FrustumPlanesFromMatrixHelper( clipToWorld,
-                                   Vector( 0.0f, 0.0f, 0.0f ),
-                                   Vector( 1.0f, 0.0f, 0.0f ),
-                                   Vector( 0.0f, 1.0f, 0.0f ),
-                                   normal,
-                                   dist );
+                                    Vector( 0.0f, 0.0f, 0.0f ),
+                                    Vector( 1.0f, 0.0f, 0.0f ),
+                                    Vector( 0.0f, 1.0f, 0.0f ),
+                                    normal,
+                                    dist );
     frustum.SetPlane( FRUSTUM_NEARZ, PLANE_ANYZ, normal, dist );
 
     FrustumPlanesFromMatrixHelper( clipToWorld,
-                                   Vector( 0.0f, 0.0f, 1.0f ),
-                                   Vector( 0.0f, 1.0f, 1.0f ),
-                                   Vector( 1.0f, 0.0f, 1.0f ),
-                                   normal,
-                                   dist );
+                                    Vector( 0.0f, 0.0f, 1.0f ),
+                                    Vector( 0.0f, 1.0f, 1.0f ),
+                                    Vector( 1.0f, 0.0f, 1.0f ),
+                                    normal,
+                                    dist );
     frustum.SetPlane( FRUSTUM_FARZ, PLANE_ANYZ, normal, dist );
 
     FrustumPlanesFromMatrixHelper( clipToWorld,
-                                   Vector( 1.0f, 0.0f, 0.0f ),
-                                   Vector( 1.0f, 1.0f, 1.0f ),
-                                   Vector( 1.0f, 1.0f, 0.0f ),
-                                   normal,
-                                   dist );
+                                    Vector( 1.0f, 0.0f, 0.0f ),
+                                    Vector( 1.0f, 1.0f, 1.0f ),
+                                    Vector( 1.0f, 1.0f, 0.0f ),
+                                    normal,
+                                    dist );
     frustum.SetPlane( FRUSTUM_RIGHT, PLANE_ANYZ, normal, dist );
 
     FrustumPlanesFromMatrixHelper( clipToWorld,
-                                   Vector( 0.0f, 0.0f, 0.0f ),
-                                   Vector( 0.0f, 1.0f, 1.0f ),
-                                   Vector( 0.0f, 0.0f, 1.0f ),
-                                   normal,
-                                   dist );
+                                    Vector( 0.0f, 0.0f, 0.0f ),
+                                    Vector( 0.0f, 1.0f, 1.0f ),
+                                    Vector( 0.0f, 0.0f, 1.0f ),
+                                    normal,
+                                    dist );
     frustum.SetPlane( FRUSTUM_LEFT, PLANE_ANYZ, normal, dist );
 
     FrustumPlanesFromMatrixHelper( clipToWorld,
-                                   Vector( 1.0f, 1.0f, 0.0f ),
-                                   Vector( 1.0f, 1.0f, 1.0f ),
-                                   Vector( 0.0f, 1.0f, 1.0f ),
-                                   normal,
-                                   dist );
+                                    Vector( 1.0f, 1.0f, 0.0f ),
+                                    Vector( 1.0f, 1.0f, 1.0f ),
+                                    Vector( 0.0f, 1.0f, 1.0f ),
+                                    normal,
+                                    dist );
     frustum.SetPlane( FRUSTUM_TOP, PLANE_ANYZ, normal, dist );
 
     FrustumPlanesFromMatrixHelper( clipToWorld,
-                                   Vector( 1.0f, 0.0f, 0.0f ),
-                                   Vector( 0.0f, 0.0f, 1.0f ),
-                                   Vector( 1.0f, 0.0f, 1.0f ),
-                                   normal,
-                                   dist );
+                                    Vector( 1.0f, 0.0f, 0.0f ),
+                                    Vector( 0.0f, 0.0f, 1.0f ),
+                                    Vector( 1.0f, 0.0f, 1.0f ),
+                                    normal,
+                                    dist );
     frustum.SetPlane( FRUSTUM_BOTTOM, PLANE_ANYZ, normal, dist );
 }
 

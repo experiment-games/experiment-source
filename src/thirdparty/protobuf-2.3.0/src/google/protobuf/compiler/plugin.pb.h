@@ -46,7 +46,7 @@ class CodeGeneratorResponse_File;
 
 class LIBPROTOC_EXPORT CodeGeneratorRequest : public ::google::protobuf::Message
 {
-   public:
+    public:
     CodeGeneratorRequest();
     virtual ~CodeGeneratorRequest();
 
@@ -94,12 +94,12 @@ class LIBPROTOC_EXPORT CodeGeneratorRequest : public ::google::protobuf::Message
         return _cached_size_;
     }
 
-   private:
+    private:
     void SharedCtor();
     void SharedDtor();
     void SetCachedSize( int size ) const;
 
-   public:
+    public:
     ::google::protobuf::Metadata GetMetadata() const;
 
     // nested types ----------------------------------------------------
@@ -145,7 +145,7 @@ class LIBPROTOC_EXPORT CodeGeneratorRequest : public ::google::protobuf::Message
     mutable_proto_file();
 
     // @@protoc_insertion_point(class_scope:google.protobuf.compiler.CodeGeneratorRequest)
-   private:
+    private:
     ::google::protobuf::UnknownFieldSet _unknown_fields_;
     mutable int _cached_size_;
 
@@ -180,7 +180,7 @@ class LIBPROTOC_EXPORT CodeGeneratorRequest : public ::google::protobuf::Message
 
 class LIBPROTOC_EXPORT CodeGeneratorResponse_File : public ::google::protobuf::Message
 {
-   public:
+    public:
     CodeGeneratorResponse_File();
     virtual ~CodeGeneratorResponse_File();
 
@@ -228,12 +228,12 @@ class LIBPROTOC_EXPORT CodeGeneratorResponse_File : public ::google::protobuf::M
         return _cached_size_;
     }
 
-   private:
+    private:
     void SharedCtor();
     void SharedDtor();
     void SetCachedSize( int size ) const;
 
-   public:
+    public:
     ::google::protobuf::Metadata GetMetadata() const;
 
     // nested types ----------------------------------------------------
@@ -271,7 +271,7 @@ class LIBPROTOC_EXPORT CodeGeneratorResponse_File : public ::google::protobuf::M
     inline ::std::string* mutable_content();
 
     // @@protoc_insertion_point(class_scope:google.protobuf.compiler.CodeGeneratorResponse.File)
-   private:
+    private:
     ::google::protobuf::UnknownFieldSet _unknown_fields_;
     mutable int _cached_size_;
 
@@ -308,7 +308,7 @@ class LIBPROTOC_EXPORT CodeGeneratorResponse_File : public ::google::protobuf::M
 
 class LIBPROTOC_EXPORT CodeGeneratorResponse : public ::google::protobuf::Message
 {
-   public:
+    public:
     CodeGeneratorResponse();
     virtual ~CodeGeneratorResponse();
 
@@ -356,12 +356,12 @@ class LIBPROTOC_EXPORT CodeGeneratorResponse : public ::google::protobuf::Messag
         return _cached_size_;
     }
 
-   private:
+    private:
     void SharedCtor();
     void SharedDtor();
     void SetCachedSize( int size ) const;
 
-   public:
+    public:
     ::google::protobuf::Metadata GetMetadata() const;
 
     // nested types ----------------------------------------------------
@@ -393,7 +393,7 @@ class LIBPROTOC_EXPORT CodeGeneratorResponse : public ::google::protobuf::Messag
     mutable_file();
 
     // @@protoc_insertion_point(class_scope:google.protobuf.compiler.CodeGeneratorResponse)
-   private:
+    private:
     ::google::protobuf::UnknownFieldSet _unknown_fields_;
     mutable int _cached_size_;
 

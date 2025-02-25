@@ -39,10 +39,10 @@
 
 Widget::Widget(int number, const std::string& name)
     : number_(number),
-      name_(name) {}
+    name_(name) {}
 
 Widget::~Widget() {}
-  
+
 float Widget::GetFloatValue() const {
   return number_;
 }
@@ -50,7 +50,7 @@ float Widget::GetFloatValue() const {
 int Widget::GetIntValue() const {
   return static_cast<int>(number_);
 }
-  
+
 std::string Widget::GetStringValue() const {
   return name_;
 }

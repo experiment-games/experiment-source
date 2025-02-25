@@ -5,7 +5,7 @@
 
 abstract_class INetworkPeerBase
 {
-   public:
+    public:
     virtual void Shutdown() = 0;
 
     virtual void Update() = 0;
@@ -17,7 +17,7 @@ abstract_class INetworkPeerBase
 };
 
 #define NETWORK_PEER_DECLARATION( TcpImplementationClass )                  \
-   public:                                                                  \
+    public:                                                                  \
     void Shutdown() override;                                               \
                                                                             \
     void Update() override;                                                 \

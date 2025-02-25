@@ -14,7 +14,7 @@ class CWeaponOldManHarpoon : public CWeaponCitizenPackage
 {
     DECLARE_CLASS( CWeaponOldManHarpoon, CWeaponCitizenPackage );
 
-   public:
+    public:
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
     DECLARE_ACTTABLE();

@@ -23,7 +23,7 @@
 
 class CSplinePatch
 {
-   public:
+    public:
     // The last argument represents the number of float channels in addition to position
     CSplinePatch();
     ~CSplinePatch();
@@ -59,12 +59,12 @@ class CSplinePatch
         return m_Height;
     }
 
-   public:
+    public:
     // The integer + float values for the patch query
     int m_is, m_it;
     float m_fs, m_ft;
 
-   private:
+    private:
     enum
     {
         MAX_CHANNELS = 4

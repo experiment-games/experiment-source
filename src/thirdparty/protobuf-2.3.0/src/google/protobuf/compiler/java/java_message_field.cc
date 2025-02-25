@@ -51,7 +51,7 @@ namespace {
 // TODO(kenton):  Factor out a "SetCommonFieldVariables()" to get rid of
 //   repeat code between this and the other field types.
 void SetMessageVariables(const FieldDescriptor* descriptor,
-                         map<string, string>* variables) {
+                        map<string, string>* variables) {
   (*variables)["name"] =
     UnderscoresToCamelCase(descriptor);
   (*variables)["capitalized_name"] =
@@ -152,10 +152,10 @@ GenerateParsingCode(io::Printer* printer) const {
 
   if (GetType(descriptor_) == FieldDescriptor::TYPE_GROUP) {
     printer->Print(variables_,
-      "input.readGroup($number$, subBuilder, extensionRegistry);\n");
+    "input.readGroup($number$, subBuilder, extensionRegistry);\n");
   } else {
     printer->Print(variables_,
-      "input.readMessage(subBuilder, extensionRegistry);\n");
+    "input.readMessage(subBuilder, extensionRegistry);\n");
   }
 
   printer->Print(variables_,
@@ -231,7 +231,7 @@ GenerateBuilderMembers(io::Printer* printer) const {
     "  return this;\n"
     "}\n"
     "public Builder set$capitalized_name$(int index, "
-      "$type$.Builder builderForValue) {\n"
+    "$type$.Builder builderForValue) {\n"
     "  result.$name$_.set(index, builderForValue.build());\n"
     "  return this;\n"
     "}\n"
@@ -298,10 +298,10 @@ GenerateParsingCode(io::Printer* printer) const {
 
   if (GetType(descriptor_) == FieldDescriptor::TYPE_GROUP) {
     printer->Print(variables_,
-      "input.readGroup($number$, subBuilder, extensionRegistry);\n");
+    "input.readGroup($number$, subBuilder, extensionRegistry);\n");
   } else {
     printer->Print(variables_,
-      "input.readMessage(subBuilder, extensionRegistry);\n");
+    "input.readMessage(subBuilder, extensionRegistry);\n");
   }
 
   printer->Print(variables_,

@@ -21,7 +21,7 @@ class CReplay;
 
 class IReplayPerformanceManager : public IBaseInterface
 {
-   public:
+    public:
     virtual CReplayPerformance *CreatePerformance( CReplay *pReplay ) = 0;
     virtual void DeletePerformance( CReplayPerformance *pPerformance ) = 0;
 

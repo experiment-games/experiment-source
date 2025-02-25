@@ -20,7 +20,7 @@
 //-----------------------------------------------------------------------------
 class CHL2PlayerLocalData
 {
-   public:
+    public:
     // Save/restore
     DECLARE_SIMPLE_DATADESC();
     DECLARE_CLASS_NOBASE( CHL2PlayerLocalData );

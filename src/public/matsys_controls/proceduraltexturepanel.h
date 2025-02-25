@@ -29,7 +29,7 @@ class CProceduralTexturePanel : public vgui::EditablePanel, public ITextureRegen
 {
     DECLARE_CLASS_SIMPLE( CProceduralTexturePanel, vgui::EditablePanel );
 
-   public:
+    public:
     // constructor
     CProceduralTexturePanel( vgui::Panel *pParent, const char *pName );
     ~CProceduralTexturePanel();
@@ -62,10 +62,10 @@ class CProceduralTexturePanel : public vgui::EditablePanel, public ITextureRegen
     virtual void Paint( void );
     virtual void PaintBackground( void ) {}
 
-   private:
+    private:
     void CleanUp();
 
-   protected:
+    protected:
     // Image buffer
     BGRA8888_t *m_pImageBuffer;
     int m_nWidth;

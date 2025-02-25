@@ -16,8 +16,8 @@
 #include "tier0/memdbgon.h"
 
 bool BSP_SyncRepack( const char *pszInputMapFile,
-                     const char *pszOutputMapFile,
-                     IBSPPack::eRepackBSPFlags eRepackFlags )
+                    const char *pszOutputMapFile,
+                    IBSPPack::eRepackBSPFlags eRepackFlags )
 {
     // load the bsppack dll
     IBSPPack *libBSPPack = NULL;
@@ -62,24 +62,24 @@ bool BSP_SyncRepack( const char *pszInputMapFile,
     g_pFullFileSystem->WriteFile( pszOutputMapFile, NULL, outputBuffer );
 
     Msg( "Successfully repacked %s as %s -- %u -> %u bytes\n",
-         pszInputMapFile,
-         pszOutputMapFile,
-         inputBuffer.TellPut(),
-         outputBuffer.TellPut() );
+        pszInputMapFile,
+        pszOutputMapFile,
+        inputBuffer.TellPut(),
+        outputBuffer.TellPut() );
 
     return true;
 }
 
 // Helper to create a thread that calls SyncCompressMap, and clean it up when it exists
 void BSP_BackgroundRepack( const char *pszInputMapFile,
-                           const char *pszOutputMapFile,
-                           IBSPPack::eRepackBSPFlags eRepackFlags )
+                            const char *pszOutputMapFile,
+                            IBSPPack::eRepackBSPFlags eRepackFlags )
 {
     // Make this a gamesystem and thread, so it can check for completion each frame and clean itself up. Run() is the
     // background thread, Update() is the main thread tick.
     class BackgroundBSPRepackThread : public CThread, public CAutoGameSystemPerFrame
     {
-       public:
+        public:
         BackgroundBSPRepackThread( const char *pszInputFile, const char *pszOutputFile, IBSPPack::eRepackBSPFlags eRepackFlags )
             : m_strInput( pszInputFile ), m_strOutput( pszOutputFile ), m_eRepackFlags( eRepackFlags )
         {
@@ -125,7 +125,7 @@ void BSP_BackgroundRepack( const char *pszInputMapFile,
             CheckFinished();
         }
 #endif
-       private:
+        private:
         CUtlString m_strInput;
         CUtlString m_strOutput;
         IBSPPack::eRepackBSPFlags m_eRepackFlags;

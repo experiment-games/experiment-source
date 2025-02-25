@@ -18,7 +18,7 @@
 
 class CRuleEntity : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CRuleEntity, CBaseEntity );
 
     void Spawn( void );
@@ -30,10 +30,10 @@ class CRuleEntity : public CBaseEntity
         m_iszMaster = iszMaster;
     }
 
-   protected:
+    protected:
     bool CanFireForActivator( CBaseEntity *pActivator );
 
-   private:
+    private:
     string_t m_iszMaster;
 };
 
@@ -68,7 +68,7 @@ bool CRuleEntity::CanFireForActivator( CBaseEntity *pActivator )
 //
 class CRulePointEntity : public CRuleEntity
 {
-   public:
+    public:
     DECLARE_DATADESC();
     DECLARE_CLASS( CRulePointEntity, CRuleEntity );
 
@@ -98,12 +98,12 @@ DEFINE_FIELD( m_Score, FIELD_INTEGER ),
 //
 class CRuleBrushEntity : public CRuleEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CRuleBrushEntity, CRuleEntity );
 
     void Spawn( void );
 
-   private:
+    private:
 };
 
 void CRuleBrushEntity::Spawn( void )
@@ -122,7 +122,7 @@ void CRuleBrushEntity::Spawn( void )
 
 class CGameScore : public CRulePointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CGameScore, CRulePointEntity );
     DECLARE_DATADESC();
 
@@ -150,7 +150,7 @@ class CGameScore : public CRulePointEntity
 
     void InputApplyScore( inputdata_t &inputdata );
 
-   private:
+    private:
 };
 
 LINK_ENTITY_TO_CLASS( game_score, CGameScore );
@@ -228,13 +228,13 @@ class CGameEnd : public CRulePointEntity
 {
     DECLARE_CLASS( CGameEnd, CRulePointEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     void InputGameEnd( inputdata_t &inputdata );
     void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
 
-   private:
+    private:
 };
 
 BEGIN_DATADESC( CGameEnd )
@@ -267,7 +267,7 @@ void CGameEnd::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useT
 
 class CGameText : public CRulePointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CGameText, CRulePointEntity );
 
     bool KeyValue( const char *szKeyName, const char *szValue );
@@ -295,7 +295,7 @@ class CGameText : public CRulePointEntity
         Display( pActivator );
     }
 
-   private:
+    private:
     string_t m_iszMessage;
     hudtextparms_t m_textParms;
 };
@@ -434,13 +434,13 @@ void CGameTeamSet::InputTrigger( inputdata_t &inputdata )
 // Needs master?
 class CGamePlayerZone : public CRuleBrushEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CGamePlayerZone, CRuleBrushEntity );
     void InputCountPlayersInZone( inputdata_t &inputdata );
 
     DECLARE_DATADESC();
 
-   private:
+    private:
     COutputEvent m_OnPlayerInZone;
     COutputEvent m_OnPlayerOutZone;
 
@@ -554,11 +554,11 @@ void CGamePlayerHurt::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TY
   {
     if ( m_flDamage < 0 )
     {
-      pActivator->TakeHealth( -m_flDamage, DMG_GENERIC );
+    pActivator->TakeHealth( -m_flDamage, DMG_GENERIC );
     }
     else
     {
-      pActivator->TakeDamage( this, this, m_flDamage, DMG_GENERIC );
+    pActivator->TakeDamage( this, this, m_flDamage, DMG_GENERIC );
     }
   }
 
@@ -583,7 +583,7 @@ class CGamePlayerEquip : public CRulePointEntity
 {
     DECLARE_DATADESC();
 
-   public:
+    public:
     DECLARE_CLASS( CGamePlayerEquip, CRulePointEntity );
 
     bool KeyValue( const char *szKeyName, const char *szValue );
@@ -595,7 +595,7 @@ class CGamePlayerEquip : public CRulePointEntity
         return ( m_spawnflags & SF_PLAYEREQUIP_USEONLY ) ? true : false;
     }
 
-   private:
+    private:
     void EquipPlayer( CBaseEntity *pPlayer );
 
     string_t m_weaponNames[MAX_EQUIP];
@@ -683,12 +683,12 @@ void CGamePlayerEquip::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_T
 
 class CGamePlayerTeam : public CRulePointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CGamePlayerTeam, CRulePointEntity );
 
     void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
 
-   private:
+    private:
     inline bool RemoveOnFire( void )
     {
         return ( m_spawnflags & SF_PTEAM_FIREONCE ) ? true : false;

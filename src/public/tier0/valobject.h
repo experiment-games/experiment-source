@@ -16,7 +16,7 @@
 #ifdef DBGFLAG_VALIDATE
 class CValObject
 {
-   public:
+    public:
     // Constructors & destructors
     CValObject( void ){};
     ~CValObject( void );
@@ -87,7 +87,7 @@ class CValObject
         return m_bNewSinceSnapshot;
     }
 
-   private:
+    private:
     bool m_bNewSinceSnapshot;  // If this block is new since the snapshot.
     tchar m_rgchType[64];      // Type of the object we represent
     tchar m_rgchName[64];      // Name of this particular object

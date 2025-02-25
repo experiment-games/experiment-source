@@ -146,13 +146,13 @@ int CWeaponStunStick::WeaponMeleeAttack1Condition( float flDot, float flDist )
         }
     }
     /*
-      if( metropolice_move_and_melee.GetBool() )
-      {
+    if( metropolice_move_and_melee.GetBool() )
+    {
         if( pNPC->IsMoving() )
         {
-          flTargetDist *= 1.5f;
+        flTargetDist *= 1.5f;
         }
-      }
+    }
     */
     float flTargetDist = 48.0f;
     if ( ( flDist > flTargetDist ) && ( flExtrapolatedDist > flTargetDist ) )

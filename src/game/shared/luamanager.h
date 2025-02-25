@@ -66,7 +66,7 @@
 #endif
 
 #pragma warning( disable : 4800 )  // forcing value to bool 'true' or 'false'
-                                   // (performance warning)
+                                    // (performance warning)
 
 #define LUA_SET_ENUM_LIB_BEGIN( L, libraryName ) \
     {                                            \
@@ -351,7 +351,7 @@
     if ( lua_gettop( L ) >= 1 )                                     \
     {                                                               \
         if ( lua_isuserdata( L, -1 ) &&                             \
-             luaL_testudata( L, -1, LUA_BASECOMBATWEAPONLIBNAME ) ) \
+            luaL_testudata( L, -1, LUA_BASECOMBATWEAPONLIBNAME ) ) \
         {                                                           \
             CBaseCombatWeapon *res = lua_toweapon( L, -1 );         \
             lua_pop( L, 1 );                                        \
@@ -468,31 +468,31 @@
 // Merge any methods from the metatable with the given name into the metatable at the top of the stack.
 #define LUA_MERGE_METATABLE( L, DerivedFrom )                                        \
     luaL_getmetatable( L, DerivedFrom );                                             \
-                                                                                     \
+                                                                                    \
     lua_pushnil( L );                                                                \
     while ( lua_next( L, -2 ) != 0 )                                                 \
     {                                                                                \
         lua_getfield( L, -4, lua_tostring( L, -2 ) );                                \
-                                                                                     \
+                                                                                    \
         /* Only copy the metamethod if it doesn't already exist in the metatable */  \
         if ( !lua_isnil( L, -1 ) )                                                   \
         {                                                                            \
             lua_pop( L, 1 ); /* Pop the field value from the Button metatable */     \
-                                                                                     \
+                                                                                    \
             lua_pop( L, 1 ); /* Pop the field value from the Label metatable */      \
             continue;                                                                \
         }                                                                            \
-                                                                                     \
+                                                                                    \
         lua_pop( L, 1 ); /* Pop the field value from the Button metatable */         \
-                                                                                     \
+                                                                                    \
         lua_pushvalue( L, -2 ); /* Copy the key */                                   \
         lua_pushvalue( L, -2 ); /* Copy the value */                                 \
         lua_settable( L, -6 );  /* Set the key-value pair in the Button metatable */ \
-                                                                                     \
+                                                                                    \
         /* Pop the value, leaving the key on the stack for the next iteration */     \
         lua_pop( L, 1 );                                                             \
     }                                                                                \
-                                                                                     \
+                                                                                    \
     lua_pop( L, 1 ); /* Pop the Label metatable */
 
 #define LUA_GET_REF_TABLE( L, Target )                     \
@@ -530,7 +530,7 @@
         {                                                                                                                            \
             lua_pushfstring( L, "%s:%d: attempt to index an unknown type (that has no metatable)", ar2.short_src, ar1.currentline ); \
         }                                                                                                                            \
-                                                                                                                                     \
+                                                                                                                                    \
         return lua_error( L );                                                                                                       \
     }
 
@@ -538,12 +538,12 @@
 #define LUA_METATABLE_INDEX_CHECK_TABLE( L ) \
     lua_pushvalue( L, 2 );                   \
     lua_gettable( L, -2 );                   \
-                                             \
+                                            \
     if ( !lua_isnil( L, -1 ) )               \
     {                                        \
         return 1;                            \
     }                                        \
-                                             \
+                                            \
     lua_pop( L, 2 ); /* Pop the table and the nil value */
 
 #define LUA_METATABLE_INDEX_CHECK_REF_TABLE( L, Target )                                    \
@@ -571,7 +571,7 @@
             lua_gettable( L, -2 );                                 \
             return 1;                                              \
         }                                                          \
-                                                                   \
+                                                                    \
         lua_pop( L, 1 ); /* Pop the result of luaL_getmetatable */ \
     }
 

@@ -31,7 +31,7 @@ class CReplayBrowserBasePage : public PropertyPage
 {
     DECLARE_CLASS_SIMPLE( CReplayBrowserBasePage, PropertyPage );
 
-   public:
+    public:
     CReplayBrowserBasePage( Panel *pParent );
     virtual ~CReplayBrowserBasePage();
 

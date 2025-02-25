@@ -191,7 +191,7 @@ bool IsLeafAmbientSurfaceLight( dworldlight_t *wl )
 
 class CLeafSampler
 {
-   public:
+    public:
     CLeafSampler( int iThread )
         : m_iThread( iThread ) {}
 
@@ -261,7 +261,7 @@ class CLeafSampler
         }
     }
 
-   private:
+    private:
     int m_iThread;
     CUniformRandomStream m_random;
 };
@@ -454,7 +454,7 @@ float AABBDistance( const Vector &mins0, const Vector &maxs0, const Vector &mins
 // build a list of leaves from a query
 class CLeafList : public ISpatialLeafEnumerator
 {
-   public:
+    public:
     virtual bool EnumerateLeaf( int leaf, int context )
     {
         m_list.AddToTail( leaf );

@@ -16,11 +16,11 @@
 
 class CVCoverage
 {
-   public:
+    public:
     CVCoverage()
         : m_bActive( false ),
-          m_depth( 0 ),
-          m_token( 1 )
+        m_depth( 0 ),
+        m_token( 1 )
     {
     }
 
@@ -74,7 +74,7 @@ class CVCoverage
         }
     }
 
-   private:
+    private:
     struct Location_t
     {
         const char *pszFile;
@@ -83,7 +83,7 @@ class CVCoverage
 
     class CLocationLess
     {
-       public:
+        public:
         CLocationLess( int ignored ) {}
         bool operator!()
         {

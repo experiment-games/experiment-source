@@ -34,7 +34,7 @@ enum iimage_rotation_t
 //-----------------------------------------------------------------------------
 class IImage
 {
-   public:
+    public:
     // Call to Paint the image
     // Image will draw within the current panel context at the specified position
     virtual void Paint() = 0;

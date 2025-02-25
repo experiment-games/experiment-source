@@ -13,7 +13,7 @@
 
 class CWorld : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CWorld, CBaseEntity );
 
     CWorld();
@@ -54,7 +54,7 @@ class CWorld : public CBaseEntity
 
     bool IsColdWorld( void );
 
-   private:
+    private:
     DECLARE_DATADESC();
 
     string_t m_iszChapterTitle;

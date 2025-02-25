@@ -34,7 +34,7 @@ typedef CUtlString ChoreoStr_t;
 //-----------------------------------------------------------------------------
 class CEventRelativeTag
 {
-   public:
+    public:
     DECLARE_CLASS_NOBASE( CEventRelativeTag );
 
     enum
@@ -54,7 +54,7 @@ class CEventRelativeTag
     CChoreoEvent *GetOwner( void );
     void SetOwner( CChoreoEvent *event );
 
-   protected:
+    protected:
     ChoreoStr_t m_Name;
     float m_flPercentage;
     CChoreoEvent *m_pOwner;
@@ -66,7 +66,7 @@ class CEventRelativeTag
 //-----------------------------------------------------------------------------
 class CEventAbsoluteTag
 {
-   public:
+    public:
     enum
     {
         MAX_EVENTTAG_LENGTH = 128,
@@ -101,7 +101,7 @@ class CEventAbsoluteTag
     void SetExit( bool bExit );
     bool GetExit( void );
 
-   protected:
+    protected:
     ChoreoStr_t m_Name;
     float m_flPercentage;
     bool m_bLocked : 1;
@@ -119,14 +119,14 @@ class CFlexTimingTag : public CEventRelativeTag
 {
     DECLARE_CLASS( CFlexTimingTag, CEventRelativeTag );
 
-   public:
+    public:
     CFlexTimingTag( CChoreoEvent *owner, const char *name, float percentage, bool locked );
     CFlexTimingTag( const CFlexTimingTag &src );
 
     bool GetLocked( void );
     void SetLocked( bool locked );
 
-   protected:
+    protected:
     bool m_bLocked;
 };
 
@@ -135,7 +135,7 @@ class CFlexTimingTag : public CEventRelativeTag
 //-----------------------------------------------------------------------------
 class CFlexAnimationTrack
 {
-   public:
+    public:
     enum
     {
         MAX_CONTROLLER_NAME = 128,
@@ -204,18 +204,18 @@ class CFlexAnimationTrack
     void SetServerSide( bool state );
     bool IsServerSide() const;
 
-   private:
+    private:
     // remove any samples after endtime
     void RemoveOutOfRangeSamples( int type );
 
     // returns scaled value for absolute time per mag/balance
     float GetIntensityInternal( float time, int type );
 
-   public:
+    public:
     // returns the fractional (0..1) value for "zero" based on Min/Max ranges
     float GetZeroValue( int type, bool leftSide );
 
-   private:
+    private:
     char *m_pControllerName;
 
     // base track has range, combo is always 0..1
@@ -248,7 +248,7 @@ class CFlexAnimationTrack
 //-----------------------------------------------------------------------------
 class CChoreoEvent : public ICurveDataAccessor
 {
-   public:
+    public:
     // Type of event this object represents
     typedef enum
     {
@@ -613,7 +613,7 @@ class CChoreoEvent : public ICurveDataAccessor
     static CLOSECAPTION CCTypeForName( const char *name );
     static const char *NameForCCType( CLOSECAPTION type );
 
-   private:
+    private:
     // Declare copy constructor private to prevent accidental usage...
     CChoreoEvent( const CChoreoEvent &src );
 
@@ -704,7 +704,7 @@ class CChoreoEvent : public ICurveDataAccessor
 
     int m_nDefaultCurveType;
 
-   public:
+    public:
     // used only during scrubbing of looping sequences
     float m_flPrevCycle;
     float m_flPrevTime;

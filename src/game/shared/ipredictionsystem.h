@@ -22,7 +22,7 @@ class CBaseEntity;
 //-----------------------------------------------------------------------------
 class IPredictionSystem
 {
-   public:
+    public:
     IPredictionSystem()
     {
         m_pNextSystem = g_pPredictionSystems;
@@ -93,7 +93,7 @@ class IPredictionSystem
         }
     }
 
-   private:
+    private:
     static void Push( void )
     {
         IPredictionSystem *sys = g_pPredictionSystems;
@@ -139,7 +139,7 @@ class IPredictionSystem
 
 class CDisablePredictionFiltering
 {
-   public:
+    public:
     CDisablePredictionFiltering( bool disable = true )
     {
         m_bDisabled = disable;
@@ -157,7 +157,7 @@ class CDisablePredictionFiltering
         }
     }
 
-   private:
+    private:
     bool m_bDisabled;
 };
 

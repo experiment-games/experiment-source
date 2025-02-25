@@ -36,7 +36,7 @@ class CBaseAnimatingOverlay;
 // to drive how the animation state is generated.
 class CModAnimConfig
 {
-   public:
+    public:
     // This tells how far the upper body can rotate left and right. If he begins to rotate
     // past this, it'll turn his feet to face his upper body.
     float m_flMaxBodyYawDegrees;
@@ -54,7 +54,7 @@ class CModAnimConfig
 
 abstract_class CBasePlayerAnimState : virtual public IPlayerAnimState
 {
-   public:
+    public:
     DECLARE_CLASS_NOBASE( CBasePlayerAnimState );
 
     enum
@@ -92,7 +92,7 @@ abstract_class CBasePlayerAnimState : virtual public IPlayerAnimState
     virtual const QAngle &GetRenderAngles();
 
     // Overrideables.
-   public:
+    public:
     virtual bool ShouldUpdateAnimState();
 
     // This is called near the start of each frame.
@@ -151,7 +151,7 @@ abstract_class CBasePlayerAnimState : virtual public IPlayerAnimState
     // Allow inheriting classes to override SelectWeightedSequence
     virtual int SelectWeightedSequence( Activity activity );
 
-   public:
+    public:
     void GetPoseParameters( CStudioHdr * pStudioHdr, float poseParameter[MAXSTUDIOPOSEPARAM] );
 
     CBaseAnimatingOverlay *GetOuter() const;
@@ -159,7 +159,7 @@ abstract_class CBasePlayerAnimState : virtual public IPlayerAnimState
     void RestartMainSequence();
 
     // Helpers for the derived classes to use.
-   protected:
+    protected:
     // Sets up the string you specify, looks for that sequence and returns the index.
     // Complains in the console and returns 0 if it can't find it.
     virtual int CalcSequenceIndex( PRINTF_FORMAT_STRING const char *pBaseName, ... );
@@ -177,11 +177,11 @@ abstract_class CBasePlayerAnimState : virtual public IPlayerAnimState
         return m_flEyeYaw;
     }
 
-   protected:
+    protected:
     CModAnimConfig m_AnimConfig;
     CBaseAnimatingOverlay *m_pOuter;
 
-   protected:
+    protected:
     int ConvergeAngles( float goal, float maxrate, float maxgap, float dt, float &current );
     virtual void ComputePoseParam_MoveYaw( CStudioHdr * pStudioHdr );
     virtual void ComputePoseParam_BodyPitch( CStudioHdr * pStudioHdr );
@@ -189,7 +189,7 @@ abstract_class CBasePlayerAnimState : virtual public IPlayerAnimState
 
     virtual void ResetGroundSpeed( void );
 
-   protected:
+    protected:
     // The player's eye yaw and pitch angles.
     float m_flEyeYaw;
     float m_flEyePitch;
@@ -215,7 +215,7 @@ abstract_class CBasePlayerAnimState : virtual public IPlayerAnimState
 
     QAngle m_angRender;
 
-   private:
+    private:
     // Update the prone state machine.
     void UpdateProneState();
 
@@ -237,7 +237,7 @@ abstract_class CBasePlayerAnimState : virtual public IPlayerAnimState
     void UpdateInterpolators();
     float GetInterpolatedGroundSpeed();
 
-   private:
+    private:
     float m_flMaxGroundSpeed;
 
     float m_flLastAnimationStateClearTime;

@@ -29,7 +29,7 @@
 
 class CEnvMeteorShared
 {
-   public:
+    public:
     //-------------------------------------------------------------------------
     // Initialization.
     //-------------------------------------------------------------------------
@@ -71,7 +71,7 @@ class CEnvMeteorShared
     //-------------------------------------------------------------------------
     float GetDamageRadius( void );
 
-   public:
+    public:
     int m_nID;  // unique identifier
 
     // The objects initial parametric conditions.
@@ -99,7 +99,7 @@ class CEnvMeteorShared
 
     float m_flDamageRadius;  //
 
-   private:
+    private:
     // Calculate the enter/exit times. (called from Init)
     void CalcEnterAndExitTimes( const Vector &vecTriggerMins, const Vector &vecTriggerMaxs );
 };
@@ -110,7 +110,7 @@ class CEnvMeteorShared
 //
 abstract_class IMeteorFactory
 {
-   public:
+    public:
     virtual void CreateMeteor( int nID, int iType, const Vector &vecPosition, const Vector &vecDirection, float flSpeed, float flStartTime, float flDamageRadius, const Vector &vecTriggerMins, const Vector &vecTriggerMaxs ) = 0;
 };
 
@@ -120,7 +120,7 @@ abstract_class IMeteorFactory
 //
 class CEnvMeteorSpawnerShared
 {
-   public:
+    public:
     DECLARE_CLASS_NOBASE( CEnvMeteorSpawnerShared );
     DECLARE_EMBEDDED_NETWORKVAR();
 
@@ -146,7 +146,7 @@ class CEnvMeteorSpawnerShared
     int GetRandomInt( int nMin, int nMax );
     float GetRandomFloat( float flMin, float flMax );
 
-   public:
+    public:
     // Factory.
     IMeteorFactory *m_pFactory;  // Meteor creation factory.
 

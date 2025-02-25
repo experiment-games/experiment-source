@@ -45,7 +45,7 @@ enum FindAudioSourceFlags_t
 
 abstract_class ISoundSystem : public IAppSystem
 {
-   public:
+    public:
     virtual void Update( float time ) = 0;
     virtual void Flush( void ) = 0;
 

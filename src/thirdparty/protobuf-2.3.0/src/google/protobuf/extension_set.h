@@ -127,7 +127,7 @@ struct ExtensionInfo
 // when parsing.
 class LIBPROTOBUF_EXPORT ExtensionFinder
 {
-   public:
+    public:
     virtual ~ExtensionFinder();
 
     // Find the extension with the given containing type and number.
@@ -138,7 +138,7 @@ class LIBPROTOBUF_EXPORT ExtensionFinder
 // files which have been compiled into the binary.
 class LIBPROTOBUF_EXPORT GeneratedExtensionFinder : public ExtensionFinder
 {
-   public:
+    public:
     GeneratedExtensionFinder( const MessageLite* containing_type )
         : containing_type_( containing_type ) {}
     virtual ~GeneratedExtensionFinder() {}
@@ -146,7 +146,7 @@ class LIBPROTOBUF_EXPORT GeneratedExtensionFinder : public ExtensionFinder
     // Returns true and fills in *output if found, otherwise returns false.
     virtual bool Find( int number, ExtensionInfo* output );
 
-   private:
+    private:
     const MessageLite* containing_type_;
 };
 
@@ -166,7 +166,7 @@ class LIBPROTOBUF_EXPORT GeneratedExtensionFinder : public ExtensionFinder
 // off to the ExtensionSet for parsing.  Etc.
 class LIBPROTOBUF_EXPORT ExtensionSet
 {
-   public:
+    public:
     ExtensionSet();
     ~ExtensionSet();
 
@@ -176,30 +176,30 @@ class LIBPROTOBUF_EXPORT ExtensionSet
     // does not use ParseField(); only protocol-compiler-generated parsing
     // methods do.
     static void RegisterExtension( const MessageLite* containing_type,
-                                   int number,
-                                   FieldType type,
-                                   bool is_repeated,
-                                   bool is_packed );
+                                    int number,
+                                    FieldType type,
+                                    bool is_repeated,
+                                    bool is_packed );
     static void RegisterEnumExtension( const MessageLite* containing_type,
-                                       int number,
-                                       FieldType type,
-                                       bool is_repeated,
-                                       bool is_packed,
-                                       EnumValidityFunc* is_valid );
+                                        int number,
+                                        FieldType type,
+                                        bool is_repeated,
+                                        bool is_packed,
+                                        EnumValidityFunc* is_valid );
     static void RegisterMessageExtension( const MessageLite* containing_type,
-                                          int number,
-                                          FieldType type,
-                                          bool is_repeated,
-                                          bool is_packed,
-                                          const MessageLite* prototype );
+                                        int number,
+                                        FieldType type,
+                                        bool is_repeated,
+                                        bool is_packed,
+                                        const MessageLite* prototype );
 
     // =================================================================
 
     // Add all fields which are currently present to the given vector.  This
     // is useful to implement Reflection::ListFields().
     void AppendToList( const Descriptor* containing_type,
-                       const DescriptorPool* pool,
-                       vector< const FieldDescriptor* >* output ) const;
+                        const DescriptorPool* pool,
+                        vector< const FieldDescriptor* >* output ) const;
 
     // =================================================================
     // Accessors
@@ -247,7 +247,7 @@ class LIBPROTOBUF_EXPORT ExtensionSet
     int GetEnum( int number, int default_value ) const;
     const string& GetString( int number, const string& default_value ) const;
     const MessageLite& GetMessage( int number,
-                                   const MessageLite& default_value ) const;
+                                    const MessageLite& default_value ) const;
     const MessageLite& GetMessage( int number, const Descriptor* message_type, MessageFactory* factory ) const;
 
     // |descriptor| may be NULL so long as it is known that the descriptor for
@@ -266,7 +266,7 @@ class LIBPROTOBUF_EXPORT ExtensionSet
     string* MutableString( int number, FieldType type, desc );
     MessageLite* MutableMessage( int number, FieldType type, const MessageLite& prototype, desc );
     MessageLite* MutableMessage( const FieldDescriptor* decsriptor,
-                                 MessageFactory* factory );
+                                MessageFactory* factory );
 #undef desc
 
     // repeated fields -------------------------------------------------
@@ -307,7 +307,7 @@ class LIBPROTOBUF_EXPORT ExtensionSet
     string* AddString( int number, FieldType type, desc );
     MessageLite* AddMessage( int number, FieldType type, const MessageLite& prototype, desc );
     MessageLite* AddMessage( const FieldDescriptor* descriptor,
-                             MessageFactory* factory );
+                            MessageFactory* factory );
 #undef desc
 
     void RemoveLast( int number );
@@ -343,24 +343,24 @@ class LIBPROTOBUF_EXPORT ExtensionSet
     // Parse an entire message in MessageSet format.  Such messages have no
     // fields, only extensions.
     bool ParseMessageSet( io::CodedInputStream* input,
-                          ExtensionFinder* extension_finder,
-                          FieldSkipper* field_skipper );
+                        ExtensionFinder* extension_finder,
+                        FieldSkipper* field_skipper );
 
     // Specific versions for lite or full messages (constructs the appropriate
     // FieldSkipper automatically).
     bool ParseMessageSet( io::CodedInputStream* input,
-                          const MessageLite* containing_type );
+                        const MessageLite* containing_type );
     bool ParseMessageSet( io::CodedInputStream* input,
-                          const Message* containing_type,
-                          UnknownFieldSet* unknown_fields );
+                        const Message* containing_type,
+                        UnknownFieldSet* unknown_fields );
 
     // Write all extension fields with field numbers in the range
     //   [start_field_number, end_field_number)
     // to the output stream, using the cached sizes computed when ByteSize() was
     // last called.  Note that the range bounds are inclusive-exclusive.
     void SerializeWithCachedSizes( int start_field_number,
-                                   int end_field_number,
-                                   io::CodedOutputStream* output ) const;
+                                    int end_field_number,
+                                    io::CodedOutputStream* output ) const;
 
     // Same as SerializeWithCachedSizes, but without any bounds checking.
     // The caller must ensure that target has sufficient capacity for the
@@ -390,7 +390,7 @@ class LIBPROTOBUF_EXPORT ExtensionSet
     // SpaceUsed()).
     int SpaceUsedExcludingSelf() const;
 
-   private:
+    private:
     struct Extension
     {
         union
@@ -470,8 +470,8 @@ class LIBPROTOBUF_EXPORT ExtensionSet
     // Parse a single MessageSet item -- called just after the item group start
     // tag has been read.
     bool ParseMessageSetItem( io::CodedInputStream* input,
-                              ExtensionFinder* extension_finder,
-                              FieldSkipper* field_skipper );
+                            ExtensionFinder* extension_finder,
+                            FieldSkipper* field_skipper );
 
     // Hack:  RepeatedPtrFieldBase declares ExtensionSet as a friend.  This
     //   friendship should automatically extend to ExtensionSet::Extension, but
@@ -560,7 +560,7 @@ inline void ExtensionSet::AddString( int number, FieldType type, const string& v
 template < typename Type >
 class PrimitiveTypeTraits
 {
-   public:
+    public:
     typedef Type ConstType;
 
     static inline ConstType Get( int number, const ExtensionSet& set, ConstType default_value );
@@ -570,7 +570,7 @@ class PrimitiveTypeTraits
 template < typename Type >
 class RepeatedPrimitiveTypeTraits
 {
-   public:
+    public:
     typedef Type ConstType;
 
     static inline Type Get( int number, const ExtensionSet& set, int index );
@@ -591,7 +591,7 @@ class RepeatedPrimitiveTypeTraits
     {                                                                                     \
         set->Set##METHOD( number, field_type, value, NULL );                              \
     }                                                                                     \
-                                                                                          \
+                                                                                        \
     template <>                                                                           \
     inline TYPE RepeatedPrimitiveTypeTraits< TYPE >::Get(                                 \
         int number, const ExtensionSet& set, int index )                                  \
@@ -627,7 +627,7 @@ PROTOBUF_DEFINE_PRIMITIVE_TYPE( bool, Bool )
 // Strings support both Set() and Mutable().
 class LIBPROTOBUF_EXPORT StringTypeTraits
 {
-   public:
+    public:
     typedef const string& ConstType;
     typedef string* MutableType;
 
@@ -647,7 +647,7 @@ class LIBPROTOBUF_EXPORT StringTypeTraits
 
 class LIBPROTOBUF_EXPORT RepeatedStringTypeTraits
 {
-   public:
+    public:
     typedef const string& ConstType;
     typedef string* MutableType;
 
@@ -681,7 +681,7 @@ class LIBPROTOBUF_EXPORT RepeatedStringTypeTraits
 template < typename Type, bool IsValid( int ) >
 class EnumTypeTraits
 {
-   public:
+    public:
     typedef Type ConstType;
 
     static inline ConstType Get( int number, const ExtensionSet& set, ConstType default_value )
@@ -698,7 +698,7 @@ class EnumTypeTraits
 template < typename Type, bool IsValid( int ) >
 class RepeatedEnumTypeTraits
 {
-   public:
+    public:
     typedef Type ConstType;
 
     static inline ConstType Get( int number, const ExtensionSet& set, int index )
@@ -726,7 +726,7 @@ class RepeatedEnumTypeTraits
 template < typename Type >
 class MessageTypeTraits
 {
-   public:
+    public:
     typedef const Type& ConstType;
     typedef Type* MutableType;
 
@@ -745,7 +745,7 @@ class MessageTypeTraits
 template < typename Type >
 class RepeatedMessageTypeTraits
 {
-   public:
+    public:
     typedef const Type& ConstType;
     typedef Type* MutableType;
 
@@ -784,7 +784,7 @@ class RepeatedMessageTypeTraits
 template < typename ExtendeeType, typename TypeTraitsType, FieldType field_type, bool is_packed >
 class ExtensionIdentifier
 {
-   public:
+    public:
     typedef TypeTraitsType TypeTraits;
     typedef ExtendeeType Extendee;
 
@@ -799,7 +799,7 @@ class ExtensionIdentifier
         return default_value_;
     }
 
-   private:
+    private:
     const int number_;
     typename TypeTraits::ConstType default_value_;
 };
@@ -817,8 +817,8 @@ class ExtensionIdentifier
 #define GOOGLE_PROTOBUF_EXTENSION_ACCESSORS( CLASSNAME )                                    \
     /* Has, Size, Clear */                                                                  \
     template < typename _proto_TypeTraits,                                                  \
-               ::google::protobuf::internal::FieldType field_type,                          \
-               bool is_packed >                                                             \
+                ::google::protobuf::internal::FieldType field_type,                          \
+                bool is_packed >                                                             \
     inline bool HasExtension(                                                               \
         const ::google::protobuf::internal::ExtensionIdentifier<                            \
             CLASSNAME,                                                                      \
@@ -830,8 +830,8 @@ class ExtensionIdentifier
     }                                                                                       \
                                                                                             \
     template < typename _proto_TypeTraits,                                                  \
-               ::google::protobuf::internal::FieldType field_type,                          \
-               bool is_packed >                                                             \
+                ::google::protobuf::internal::FieldType field_type,                          \
+                bool is_packed >                                                             \
     inline void ClearExtension(                                                             \
         const ::google::protobuf::internal::ExtensionIdentifier<                            \
             CLASSNAME,                                                                      \
@@ -843,8 +843,8 @@ class ExtensionIdentifier
     }                                                                                       \
                                                                                             \
     template < typename _proto_TypeTraits,                                                  \
-               ::google::protobuf::internal::FieldType field_type,                          \
-               bool is_packed >                                                             \
+                ::google::protobuf::internal::FieldType field_type,                          \
+                bool is_packed >                                                             \
     inline int ExtensionSize(                                                               \
         const ::google::protobuf::internal::ExtensionIdentifier<                            \
             CLASSNAME,                                                                      \
@@ -857,8 +857,8 @@ class ExtensionIdentifier
                                                                                             \
     /* Singular accessors */                                                                \
     template < typename _proto_TypeTraits,                                                  \
-               ::google::protobuf::internal::FieldType field_type,                          \
-               bool is_packed >                                                             \
+                ::google::protobuf::internal::FieldType field_type,                          \
+                bool is_packed >                                                             \
     inline typename _proto_TypeTraits::ConstType GetExtension(                              \
         const ::google::protobuf::internal::ExtensionIdentifier<                            \
             CLASSNAME,                                                                      \
@@ -870,8 +870,8 @@ class ExtensionIdentifier
     }                                                                                       \
                                                                                             \
     template < typename _proto_TypeTraits,                                                  \
-               ::google::protobuf::internal::FieldType field_type,                          \
-               bool is_packed >                                                             \
+                ::google::protobuf::internal::FieldType field_type,                          \
+                bool is_packed >                                                             \
     inline typename _proto_TypeTraits::MutableType MutableExtension(                        \
         const ::google::protobuf::internal::ExtensionIdentifier<                            \
             CLASSNAME,                                                                      \
@@ -883,8 +883,8 @@ class ExtensionIdentifier
     }                                                                                       \
                                                                                             \
     template < typename _proto_TypeTraits,                                                  \
-               ::google::protobuf::internal::FieldType field_type,                          \
-               bool is_packed >                                                             \
+                ::google::protobuf::internal::FieldType field_type,                          \
+                bool is_packed >                                                             \
     inline void SetExtension(                                                               \
         const ::google::protobuf::internal::ExtensionIdentifier<                            \
             CLASSNAME,                                                                      \
@@ -898,8 +898,8 @@ class ExtensionIdentifier
                                                                                             \
     /* Repeated accessors */                                                                \
     template < typename _proto_TypeTraits,                                                  \
-               ::google::protobuf::internal::FieldType field_type,                          \
-               bool is_packed >                                                             \
+                ::google::protobuf::internal::FieldType field_type,                          \
+                bool is_packed >                                                             \
     inline typename _proto_TypeTraits::ConstType GetExtension(                              \
         const ::google::protobuf::internal::ExtensionIdentifier<                            \
             CLASSNAME,                                                                      \
@@ -912,8 +912,8 @@ class ExtensionIdentifier
     }                                                                                       \
                                                                                             \
     template < typename _proto_TypeTraits,                                                  \
-               ::google::protobuf::internal::FieldType field_type,                          \
-               bool is_packed >                                                             \
+                ::google::protobuf::internal::FieldType field_type,                          \
+                bool is_packed >                                                             \
     inline typename _proto_TypeTraits::MutableType MutableExtension(                        \
         const ::google::protobuf::internal::ExtensionIdentifier<                            \
             CLASSNAME,                                                                      \
@@ -926,8 +926,8 @@ class ExtensionIdentifier
     }                                                                                       \
                                                                                             \
     template < typename _proto_TypeTraits,                                                  \
-               ::google::protobuf::internal::FieldType field_type,                          \
-               bool is_packed >                                                             \
+                ::google::protobuf::internal::FieldType field_type,                          \
+                bool is_packed >                                                             \
     inline void SetExtension(                                                               \
         const ::google::protobuf::internal::ExtensionIdentifier<                            \
             CLASSNAME,                                                                      \
@@ -941,8 +941,8 @@ class ExtensionIdentifier
     }                                                                                       \
                                                                                             \
     template < typename _proto_TypeTraits,                                                  \
-               ::google::protobuf::internal::FieldType field_type,                          \
-               bool is_packed >                                                             \
+                ::google::protobuf::internal::FieldType field_type,                          \
+                bool is_packed >                                                             \
     inline typename _proto_TypeTraits::MutableType AddExtension(                            \
         const ::google::protobuf::internal::ExtensionIdentifier<                            \
             CLASSNAME,                                                                      \
@@ -954,8 +954,8 @@ class ExtensionIdentifier
     }                                                                                       \
                                                                                             \
     template < typename _proto_TypeTraits,                                                  \
-               ::google::protobuf::internal::FieldType field_type,                          \
-               bool is_packed >                                                             \
+                ::google::protobuf::internal::FieldType field_type,                          \
+                bool is_packed >                                                             \
     inline void AddExtension(                                                               \
         const ::google::protobuf::internal::ExtensionIdentifier<                            \
             CLASSNAME,                                                                      \

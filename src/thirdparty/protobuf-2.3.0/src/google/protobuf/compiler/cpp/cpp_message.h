@@ -61,10 +61,10 @@ class ExtensionGenerator;  // extension.h
 
 class MessageGenerator
 {
-   public:
+    public:
     // See generator.cc for the meaning of dllexport_decl.
     explicit MessageGenerator( const Descriptor* descriptor,
-                               const string& dllexport_decl );
+                                const string& dllexport_decl );
     ~MessageGenerator();
 
     // Header stuff.
@@ -116,7 +116,7 @@ class MessageGenerator
     // Generate all non-inline methods for this class.
     void GenerateClassMethods( io::Printer* printer );
 
-   private:
+    private:
     // Generate declarations and definitions of accessors for fields.
     void GenerateFieldAccessorDeclarations( io::Printer* printer );
     void GenerateFieldAccessorDefinitions( io::Printer* printer );
@@ -142,7 +142,7 @@ class MessageGenerator
     void GenerateSerializeWithCachedSizes( io::Printer* printer );
     void GenerateSerializeWithCachedSizesToArray( io::Printer* printer );
     void GenerateSerializeWithCachedSizesBody( io::Printer* printer,
-                                               bool to_array );
+                                                bool to_array );
     void GenerateByteSize( io::Printer* printer );
     void GenerateMergeFrom( io::Printer* printer );
     void GenerateCopyFrom( io::Printer* printer );

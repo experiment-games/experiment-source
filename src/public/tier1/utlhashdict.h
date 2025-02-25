@@ -21,7 +21,7 @@
 template < typename T, bool bCaseInsensitive = true, bool bDupeStrings = true >
 class CUtlHashDict
 {
-   public:
+    public:
     // constructor, destructor
     CUtlHashDict( int bucketCount = 16, int growCount = 0, int initCount = 0 );
     ~CUtlHashDict();
@@ -64,7 +64,7 @@ class CUtlHashDict
     unsigned First() const;
     unsigned Next( unsigned i ) const;
 
-   protected:
+    protected:
     struct Entry_t
     {
         const char *pszSymbol;
@@ -74,7 +74,7 @@ class CUtlHashDict
     template < bool bCaseInsensitive >
     class CCompare
     {
-       public:
+        public:
         CCompare( int ignored ) {}
 
         bool operator()( const Entry_t &entry1, const Entry_t &entry2 ) const
@@ -86,7 +86,7 @@ class CUtlHashDict
     template < bool bCaseInsensitive >
     class CHash
     {
-       public:
+        public:
         CHash( int ignored ) {}
 
         unsigned operator()( const Entry_t &entry ) const

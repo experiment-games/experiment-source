@@ -27,7 +27,7 @@ class CCurveEditorPanel : public vgui::Panel
 {
     DECLARE_CLASS_SIMPLE( CCurveEditorPanel, vgui::Panel );
 
-   public:
+    public:
     // constructor
     CCurveEditorPanel( vgui::Panel *pParent, const char *pName );
     ~CCurveEditorPanel();
@@ -40,7 +40,7 @@ class CCurveEditorPanel : public vgui::Panel
     virtual void OnMouseReleased( vgui::MouseCode code );
     virtual void OnKeyCodePressed( vgui::KeyCode code );
 
-   protected:
+    protected:
     // Control points + values...
     virtual int FindOrAddControlPoint( float flIn, float flTolerance, float flOut ) = 0;
     virtual int FindControlPoint( float flIn, float flTolerance ) = 0;
@@ -50,7 +50,7 @@ class CCurveEditorPanel : public vgui::Panel
     virtual int ControlPointCount() = 0;
     virtual void GetControlPoint( int nPoint, float *pIn, float *pOut ) = 0;
 
-   private:
+    private:
     // Converts screen location to normalized values and back
     void ScreenToValue( int x, int y, float *pIn, float *pOut );
     void ValueToScreen( float flIn, float flOut, int *x, int *y );

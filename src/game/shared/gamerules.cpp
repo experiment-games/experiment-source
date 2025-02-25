@@ -128,7 +128,7 @@ bool CGameRules::IsLocalPlayer( int nEntIndex )
 {
     C_BasePlayer *pLocalPlayer = C_BasePlayer::GetLocalPlayer();
     return ( pLocalPlayer &&
-             pLocalPlayer == ClientEntityList().GetEnt( nEntIndex ) );
+            pLocalPlayer == ClientEntityList().GetEnt( nEntIndex ) );
 }
 
 CGameRules::CGameRules()
@@ -185,7 +185,7 @@ bool CGameRules::CanHaveAmmo( CBaseCombatCharacter *pPlayer, int iAmmoIndex )
 // type
 //-----------------------------------------------------------------------------
 bool CGameRules::CanHaveAmmo( CBaseCombatCharacter *pPlayer,
-                              const char *szName )
+                            const char *szName )
 {
     return CanHaveAmmo( pPlayer, GetAmmoDef()->Index( szName ) );
 }
@@ -218,8 +218,8 @@ bool CGameRules::IsSpawnPointValid( CBaseEntity *pSpot, CBasePlayer *pPlayer )
     }
 
     for ( CEntitySphereQuery sphere( pSpot->GetAbsOrigin(), 128 );
-          ( ent = sphere.GetCurrentEntity() ) != NULL;
-          sphere.NextEntity() )
+        ( ent = sphere.GetCurrentEntity() ) != NULL;
+        sphere.NextEntity() )
     {
         // if ent is a client, don't spawn on 'em
         if ( ent->IsPlayer() && ent != pPlayer )
@@ -240,9 +240,9 @@ bool CGameRules::CanHavePlayerItem( CBasePlayer *pPlayer,
                     if ( !CanHaveAmmo( pPlayer, pWeapon->m_iPrimaryAmmoType ) )
                     {
                             // we can't carry anymore ammo for this gun. We can
-       only
+        only
                             // have the gun if we aren't already carrying one of
-       this type if ( pPlayer->Weapon_OwnsThisType( pWeapon ) )
+        this type if ( pPlayer->Weapon_OwnsThisType( pWeapon ) )
                             {
                                     return FALSE;
                             }
@@ -251,7 +251,7 @@ bool CGameRules::CanHavePlayerItem( CBasePlayer *pPlayer,
             else
             {
                     // weapon doesn't use ammo, don't take another if you
-       already have it. if ( pPlayer->Weapon_OwnsThisType( pWeapon ) )
+        already have it. if ( pPlayer->Weapon_OwnsThisType( pWeapon ) )
                     {
                             return FALSE;
                     }
@@ -317,8 +317,8 @@ bool IsExplosionTraceBlocked( trace_t *ptr )
         // All doors are push, but not all things that push are doors. This
         // narrows the search before we start to do classname compares.
         if ( FClassnameIs( ptr->m_pEnt, "prop_door_rotating" ) ||
-             FClassnameIs( ptr->m_pEnt, "func_door" ) ||
-             FClassnameIs( ptr->m_pEnt, "func_door_rotating" ) )
+            FClassnameIs( ptr->m_pEnt, "func_door" ) ||
+            FClassnameIs( ptr->m_pEnt, "func_door_rotating" ) )
             return true;
     }
 
@@ -330,12 +330,12 @@ bool IsExplosionTraceBlocked( trace_t *ptr )
 //-----------------------------------------------------------------------------
 #define ROBUST_RADIUS_PROBE_DIST \
     16.0f  // If a solid surface blocks the explosion, this is how far to creep
-           // along the surface looking for another way to the target
+            // along the surface looking for another way to the target
 void CGameRules::RadiusDamage( const CTakeDamageInfo &info,
-                               const Vector &vecSrcIn,
-                               float flRadius,
-                               int iClassIgnore,
-                               CBaseEntity *pEntityIgnore )
+                                const Vector &vecSrcIn,
+                                float flRadius,
+                                int iClassIgnore,
+                                CBaseEntity *pEntityIgnore )
 {
     const int MASK_RADIUS_DAMAGE = MASK_SHOT & ( ~CONTENTS_HITBOX );
     CBaseEntity *pEntity = NULL;
@@ -369,8 +369,8 @@ void CGameRules::RadiusDamage( const CTakeDamageInfo &info,
 
     // iterate on all entities in the vicinity.
     for ( CEntitySphereQuery sphere( vecSrc, flRadius );
-          ( pEntity = sphere.GetCurrentEntity() ) != NULL;
-          sphere.NextEntity() )
+        ( pEntity = sphere.GetCurrentEntity() ) != NULL;
+        sphere.NextEntity() )
     {
         // This value is used to scale damage when the explosion is blocked by
         // some other object.
@@ -384,10 +384,10 @@ void CGameRules::RadiusDamage( const CTakeDamageInfo &info,
 
         // UNDONE: this should check a damage mask, not an ignore
         if ( iClassIgnore != CLASS_NONE &&
-             pEntity->Classify() ==
-                 iClassIgnore )
+            pEntity->Classify() ==
+                iClassIgnore )
         {  // houndeyes don't hurt other houndeyes with
-           // their attack
+            // their attack
             continue;
         }
 
@@ -468,7 +468,7 @@ void CGameRules::RadiusDamage( const CTakeDamageInfo &info,
                 // behavior? HL2 - Dissolve damage is not reduced by interposing
                 // non-world objects
                 if ( tr.m_pEnt && tr.m_pEnt != pEntity &&
-                     tr.m_pEnt->GetOwnerEntity() != pEntity )
+                    tr.m_pEnt->GetOwnerEntity() != pEntity )
                 {
                     // Some entity was hit by the trace, meaning the explosion
                     // does not have clear line of sight to the entity that it's
@@ -544,7 +544,7 @@ void CGameRules::RadiusDamage( const CTakeDamageInfo &info,
 
         // Now make a consideration for skill level!
         if ( info.GetAttacker() && info.GetAttacker()->IsPlayer() &&
-             pEntity->IsNPC() )
+            pEntity->IsNPC() )
         {
             // An explosion set off by the player is harming an NPC. Adjust
             // damage accordingly.
@@ -556,7 +556,7 @@ void CGameRules::RadiusDamage( const CTakeDamageInfo &info,
 
         // If we don't have a damage force, manufacture one
         if ( adjustedInfo.GetDamagePosition() == vec3_origin ||
-             adjustedInfo.GetDamageForce() == vec3_origin )
+            adjustedInfo.GetDamageForce() == vec3_origin )
         {
             if ( !( adjustedInfo.GetDamageType() & DMG_PREVENT_PHYSICS_FORCE ) )
             {
@@ -588,7 +588,7 @@ void CGameRules::RadiusDamage( const CTakeDamageInfo &info,
 
 #if defined( GAME_DLL )
         if ( info.GetAttacker() && info.GetAttacker()->IsPlayer() &&
-             ToBaseCombatCharacter( tr.m_pEnt ) )
+            ToBaseCombatCharacter( tr.m_pEnt ) )
         {
             // This is a total hack!!!
             bool bIsPrimary = true;
@@ -611,7 +611,7 @@ bool CGameRules::ClientCommand( CBaseEntity *pEdict, const CCommand &args )
     if ( pEdict->IsPlayer() )
     {
         if ( GetVoiceGameMgr()->ClientCommand( static_cast< CBasePlayer * >( pEdict ),
-                                               args ) )
+                                                args ) )
             return true;
     }
 
@@ -670,10 +670,10 @@ void CGameRules::EndGameFrame( void )
 // trace line rules
 //-----------------------------------------------------------------------------
 float CGameRules::WeaponTraceEntity( CBaseEntity *pEntity,
-                                     const Vector &vecStart,
-                                     const Vector &vecEnd,
-                                     unsigned int mask,
-                                     trace_t *ptr )
+                                    const Vector &vecStart,
+                                    const Vector &vecEnd,
+                                    unsigned int mask,
+                                    trace_t *ptr )
 {
     UTIL_TraceEntity( pEntity, vecStart, vecEnd, mask, ptr );
     return 1.0f;
@@ -694,7 +694,7 @@ void CGameRules::CreateStandardEntities()
 // achievement enum?)
 //-----------------------------------------------------------------------------
 void CGameRules::MarkAchievement( IRecipientFilter &filter,
-                                  char const *pchAchievementName )
+                                char const *pchAchievementName )
 {
     gamestats->Event_IncrementCountedStatistic( vec3_origin, pchAchievementName, 1.0f );
 
@@ -718,7 +718,7 @@ CGameRules::~CGameRules()
 }
 
 bool CGameRules::SwitchToNextBestWeapon( CBaseCombatCharacter *pPlayer,
-                                         CBaseCombatWeapon *pCurrentWeapon )
+                                        CBaseCombatWeapon *pCurrentWeapon )
 {
     return false;
 }
@@ -740,15 +740,15 @@ bool CGameRules::ShouldCollide( int collisionGroup0, int collisionGroup1 )
 
 #if !defined( HL2MP ) && !defined( EXPERIMENT_SOURCE )
     if ( ( collisionGroup0 == COLLISION_GROUP_PLAYER ||
-           collisionGroup0 == COLLISION_GROUP_PLAYER_MOVEMENT ) &&
-         collisionGroup1 == COLLISION_GROUP_PUSHAWAY )
+            collisionGroup0 == COLLISION_GROUP_PLAYER_MOVEMENT ) &&
+        collisionGroup1 == COLLISION_GROUP_PUSHAWAY )
     {
         return false;
     }
 #endif
 
     if ( collisionGroup0 == COLLISION_GROUP_DEBRIS &&
-         collisionGroup1 == COLLISION_GROUP_PUSHAWAY )
+        collisionGroup1 == COLLISION_GROUP_PUSHAWAY )
     {
         // let debris and multiplayer objects collide
         return true;
@@ -761,19 +761,19 @@ bool CGameRules::ShouldCollide( int collisionGroup0, int collisionGroup1 )
 
     // Don't bother if either is in a vehicle...
     if ( ( collisionGroup0 == COLLISION_GROUP_IN_VEHICLE ) ||
-         ( collisionGroup1 == COLLISION_GROUP_IN_VEHICLE ) )
+        ( collisionGroup1 == COLLISION_GROUP_IN_VEHICLE ) )
         return false;
 
     if ( ( collisionGroup1 == COLLISION_GROUP_DOOR_BLOCKER ) &&
-         ( collisionGroup0 != COLLISION_GROUP_NPC ) )
+        ( collisionGroup0 != COLLISION_GROUP_NPC ) )
         return false;
 
     if ( ( collisionGroup0 == COLLISION_GROUP_PLAYER ) &&
-         ( collisionGroup1 == COLLISION_GROUP_PASSABLE_DOOR ) )
+        ( collisionGroup1 == COLLISION_GROUP_PASSABLE_DOOR ) )
         return false;
 
     if ( collisionGroup0 == COLLISION_GROUP_DEBRIS ||
-         collisionGroup0 == COLLISION_GROUP_DEBRIS_TRIGGER )
+        collisionGroup0 == COLLISION_GROUP_DEBRIS_TRIGGER )
     {
         // put exceptions here, right now this will only collide with
         // COLLISION_GROUP_NONE
@@ -782,7 +782,7 @@ bool CGameRules::ShouldCollide( int collisionGroup0, int collisionGroup1 )
 
     // Dissolving guys only collide with COLLISION_GROUP_NONE
     if ( ( collisionGroup0 == COLLISION_GROUP_DISSOLVING ) ||
-         ( collisionGroup1 == COLLISION_GROUP_DISSOLVING ) )
+        ( collisionGroup1 == COLLISION_GROUP_DISSOLVING ) )
     {
         if ( collisionGroup0 != COLLISION_GROUP_NONE )
             return false;
@@ -791,34 +791,34 @@ bool CGameRules::ShouldCollide( int collisionGroup0, int collisionGroup1 )
     // doesn't collide with other members of this group
     // or debris, but that's handled above
     if ( collisionGroup0 == COLLISION_GROUP_INTERACTIVE_DEBRIS &&
-         collisionGroup1 == COLLISION_GROUP_INTERACTIVE_DEBRIS )
+        collisionGroup1 == COLLISION_GROUP_INTERACTIVE_DEBRIS )
         return false;
 
 #if !defined( HL2MP ) && !defined( EXPERIMENT_SOURCE )
     // This change was breaking HL2DM
     // Adrian: TEST! Interactive Debris doesn't collide with the player.
     if ( collisionGroup0 == COLLISION_GROUP_INTERACTIVE_DEBRIS &&
-         ( collisionGroup1 == COLLISION_GROUP_PLAYER_MOVEMENT ||
-           collisionGroup1 == COLLISION_GROUP_PLAYER ) )
+        ( collisionGroup1 == COLLISION_GROUP_PLAYER_MOVEMENT ||
+            collisionGroup1 == COLLISION_GROUP_PLAYER ) )
         return false;
 #endif
 
     if ( collisionGroup0 == COLLISION_GROUP_BREAKABLE_GLASS &&
-         collisionGroup1 == COLLISION_GROUP_BREAKABLE_GLASS )
+        collisionGroup1 == COLLISION_GROUP_BREAKABLE_GLASS )
         return false;
 
     // interactive objects collide with everything except debris & interactive
     // debris
     if ( collisionGroup1 == COLLISION_GROUP_INTERACTIVE &&
-         collisionGroup0 != COLLISION_GROUP_NONE )
+        collisionGroup0 != COLLISION_GROUP_NONE )
         return false;
 
     // Projectiles hit everything but debris, weapons, + other projectiles
     if ( collisionGroup1 == COLLISION_GROUP_PROJECTILE )
     {
         if ( collisionGroup0 == COLLISION_GROUP_DEBRIS ||
-             collisionGroup0 == COLLISION_GROUP_WEAPON ||
-             collisionGroup0 == COLLISION_GROUP_PROJECTILE )
+            collisionGroup0 == COLLISION_GROUP_WEAPON ||
+            collisionGroup0 == COLLISION_GROUP_PROJECTILE )
         {
             return false;
         }
@@ -831,8 +831,8 @@ bool CGameRules::ShouldCollide( int collisionGroup0, int collisionGroup1 )
     if ( collisionGroup1 == COLLISION_GROUP_WEAPON )
     {
         if ( collisionGroup0 == COLLISION_GROUP_VEHICLE ||
-             collisionGroup0 == COLLISION_GROUP_PLAYER ||
-             collisionGroup0 == COLLISION_GROUP_NPC )
+            collisionGroup0 == COLLISION_GROUP_PLAYER ||
+            collisionGroup0 == COLLISION_GROUP_NPC )
         {
             return false;
         }
@@ -840,7 +840,7 @@ bool CGameRules::ShouldCollide( int collisionGroup0, int collisionGroup1 )
 
     // collision with vehicle clip entity??
     if ( collisionGroup0 == COLLISION_GROUP_VEHICLE_CLIP ||
-         collisionGroup1 == COLLISION_GROUP_VEHICLE_CLIP )
+        collisionGroup1 == COLLISION_GROUP_VEHICLE_CLIP )
     {
         // yes then if it's a vehicle, collide, otherwise no collision
         // vehicle sorts lower than vehicle clip, so must be in 0

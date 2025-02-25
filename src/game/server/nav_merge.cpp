@@ -32,7 +32,7 @@ void CNavArea::RestoreFromSelectedSet( KeyValues *areaKey )
 //--------------------------------------------------------------------------------------------------------
 class BuildSelectedSet
 {
-   public:
+    public:
     BuildSelectedSet( KeyValues *kv )
     {
         m_kv = kv;
@@ -67,7 +67,7 @@ class BuildSelectedSet
         return m_areaCount;
     }
 
-   private:
+    private:
     void WriteCorner( CNavArea *area, KeyValues *areaKey, NavCornerType corner, const char *cornerName )
     {
         KeyValues *cornerKey = areaKey->FindKey( cornerName, true );

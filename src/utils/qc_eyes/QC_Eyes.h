@@ -22,13 +22,13 @@
 
 class CQC_EyesApp : public CWinApp
 {
-   public:
+    public:
     CQC_EyesApp();
 
     // Overrides
     // ClassWizard generated virtual function overrides
     //{{AFX_VIRTUAL(CQC_EyesApp)
-   public:
+    public:
     virtual BOOL InitInstance();
     //}}AFX_VIRTUAL
 

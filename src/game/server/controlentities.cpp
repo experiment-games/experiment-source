@@ -18,14 +18,14 @@
 //-----------------------------------------------------------------------------
 class CTargetCDAudioRep : public CPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTargetCDAudioRep, CPointEntity );
 
     void InputChangeCDTrack( inputdata_t &inputdata );
 
     DECLARE_DATADESC();
 
-   private:
+    private:
     int m_iTrack;  // CD track to change to when fired
 };
 
@@ -85,7 +85,7 @@ DEFINE_KEYFIELD( m_iTrack, FIELD_INTEGER, "track" ),
 //-----------------------------------------------------------------------------
 class CTargetChangeGravity : public CPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTargetChangeGravity, CPointEntity );
 
     DECLARE_DATADESC();

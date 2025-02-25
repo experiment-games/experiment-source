@@ -793,9 +793,9 @@ static int mime_global_eol(lua_State *L)
     luaL_buffinit(L, &buffer);
     /* end of input blackhole */
     if (!input) {
-       lua_pushnil(L);
-       lua_pushnumber(L, 0);
-       return 2;
+        lua_pushnil(L);
+        lua_pushnumber(L, 0);
+        return 2;
     }
     /* process all input */
     while (input < last)
@@ -849,4 +849,3 @@ static int mime_global_dot(lua_State *L)
     lua_pushnumber(L, (lua_Number) state);
     return 2;
 }
-

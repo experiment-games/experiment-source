@@ -310,7 +310,7 @@
     GTEST_HAS_STD_WSTRING || GTEST_HAS_GLOBAL_WSTRING
 #include <string>  // NOLINT
 #endif             // GTEST_HAS_STD_STRING || GTEST_HAS_GLOBAL_STRING ||
-                   // GTEST_HAS_STD_WSTRING || GTEST_HAS_GLOBAL_WSTRING
+                    // GTEST_HAS_STD_WSTRING || GTEST_HAS_GLOBAL_WSTRING
 
 #if GTEST_HAS_STD_STRING
 #include <sstream>  // NOLINT
@@ -461,7 +461,7 @@
 //      pops up a dialog window that cannot be suppressed programmatically.
 #if GTEST_HAS_STD_STRING &&                                \
     ( GTEST_OS_LINUX || GTEST_OS_MAC || GTEST_OS_CYGWIN || \
-      ( GTEST_OS_WINDOWS_DESKTOP && _MSC_VER >= 1400 ) || GTEST_OS_WINDOWS_MINGW )
+    ( GTEST_OS_WINDOWS_DESKTOP && _MSC_VER >= 1400 ) || GTEST_OS_WINDOWS_MINGW )
 #define GTEST_HAS_DEATH_TEST 1
 #include <vector>  // NOLINT
 #endif
@@ -592,7 +592,7 @@ bool IsTrue( bool condition );
 template < typename T >
 class scoped_ptr
 {
-   public:
+    public:
     explicit scoped_ptr( T* p = NULL )
         : ptr_( p ) {}
     ~scoped_ptr()
@@ -632,7 +632,7 @@ class scoped_ptr
         }
     }
 
-   private:
+    private:
     T* ptr_;
 
     GTEST_DISALLOW_COPY_AND_ASSIGN_( scoped_ptr );
@@ -644,7 +644,7 @@ class scoped_ptr
 // Regular Expression syntax.
 class RE
 {
-   public:
+    public:
     // Constructs an RE from a string.
 #if GTEST_HAS_STD_STRING
     RE( const ::std::string& regex )
@@ -704,7 +704,7 @@ class RE
     static bool FullMatch( const char* str, const RE& re );
     static bool PartialMatch( const char* str, const RE& re );
 
-   private:
+    private:
     void Init( const char* regex );
 
     // We use a const char* instead of a string, as Google Test may be used
@@ -742,7 +742,7 @@ enum GTestLogSeverity
 // scope.
 class GTestLog
 {
-   public:
+    public:
     GTestLog( GTestLogSeverity severity, const char* file, int line );
 
     // Flushes the buffers and, if severity is GTEST_FATAL, aborts the program.
@@ -753,7 +753,7 @@ class GTestLog
         return ::std::cerr;
     }
 
-   private:
+    private:
     const GTestLogSeverity severity_;
 
     GTEST_DISALLOW_COPY_AND_ASSIGN_( GTestLog );
@@ -761,8 +761,8 @@ class GTestLog
 
 #define GTEST_LOG_( severity )                                            \
     ::testing::internal::GTestLog( ::testing::internal::GTEST_##severity, \
-                                   __FILE__,                              \
-                                   __LINE__ )                             \
+                                    __FILE__,                              \
+                                    __LINE__ )                             \
         .GetStream()
 
 inline void LogToStderr() {}
@@ -797,7 +797,7 @@ const ::std::vector< String >& GetArgvs();
 
 class Mutex
 {
-   public:
+    public:
     Mutex() {}
     explicit Mutex( int /*unused*/ ) {}
     void AssertHeld() const {}
@@ -812,7 +812,7 @@ class Mutex
 // platforms.  Hence the typedef trick below.
 class GTestMutexLock
 {
-   public:
+    public:
     explicit GTestMutexLock( Mutex* ) {}  // NOLINT
 };
 
@@ -821,7 +821,7 @@ typedef GTestMutexLock MutexLock;
 template < typename T >
 class ThreadLocal
 {
-   public:
+    public:
     ThreadLocal()
         : value_() {}
     explicit ThreadLocal( const T& value )
@@ -843,7 +843,7 @@ class ThreadLocal
         value_ = value;
     }
 
-   private:
+    private:
     T value_;
 };
 
@@ -1137,7 +1137,7 @@ const BiggestInt kMaxBiggestInt =
 template < size_t size >
 class TypeWithSize
 {
-   public:
+    public:
     // This prevents the user from using TypeWithSize<N> with incorrect
     // values of N.
     typedef void UInt;
@@ -1147,7 +1147,7 @@ class TypeWithSize
 template <>
 class TypeWithSize< 4 >
 {
-   public:
+    public:
     // unsigned int has size 4 in both gcc and MSVC.
     //
     // As base/basictypes.h doesn't compile on Windows, we cannot use
@@ -1160,7 +1160,7 @@ class TypeWithSize< 4 >
 template <>
 class TypeWithSize< 8 >
 {
-   public:
+    public:
 #if GTEST_OS_WINDOWS
     typedef __int64 Int;
     typedef unsigned __int64 UInt;

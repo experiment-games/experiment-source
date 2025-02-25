@@ -27,9 +27,9 @@ class CAI_MoveProbe;
 //-----------------------------------------------------------------------------
 
 class CAI_LocalNavigator : public CAI_Component,
-                           public CAI_ProxyMovementSink
+                            public CAI_ProxyMovementSink
 {
-   public:
+    public:
     CAI_LocalNavigator( CAI_BaseNPC *pOuter );
     virtual ~CAI_LocalNavigator();
 
@@ -45,7 +45,7 @@ class CAI_LocalNavigator : public CAI_Component,
     void AddObstacle( const Vector &pos, float radius, AI_MoveSuggType_t type = AIMST_AVOID_OBJECT );
     bool HaveObstacles();
 
-   protected:
+    protected:
     AIMoveResult_t MoveCalcRaw( AILocalMoveGoal_t *pResult, bool bOnlyCurThink );
     bool MoveCalcDirect( AILocalMoveGoal_t *pMoveGoal, bool bOnlyCurThink, float *pDistClear, AIMoveResult_t *pResult );
     bool MoveCalcSteer( AILocalMoveGoal_t *pMoveGoal, float distClear, AIMoveResult_t *pResult );
@@ -60,7 +60,7 @@ class CAI_LocalNavigator : public CAI_Component,
         return m_pMoveProbe;
     }
 
-   private:
+    private:
     // --------------------------------
 
     bool m_fLastWasClear;

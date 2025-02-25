@@ -19,10 +19,10 @@
 template < uint32 TBufferSize >
 class CUtlMovingAverage
 {
-   public:
+    public:
     CUtlMovingAverage()
         : m_nValuesPushed( 0 ),
-          m_flTotal( 0.0f )
+        m_flTotal( 0.0f )
     {
     }
 
@@ -94,7 +94,7 @@ class CUtlMovingAverage
         }
     }
 
-   private:
+    private:
     float m_Buffer[TBufferSize];
     uint32 m_nValuesPushed;
 

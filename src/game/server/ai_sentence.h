@@ -45,7 +45,7 @@ abstract_class CAI_SentenceBase : public CAI_Component
     DECLARE_CLASS_NOBASE( CAI_SentenceBase );
     DECLARE_SIMPLE_DATADESC();
 
-   public:
+    public:
     CAI_SentenceBase();
 
     void SetVoicePitch( int voicePitch );
@@ -66,11 +66,11 @@ abstract_class CAI_SentenceBase : public CAI_Component
     // Clears the sentence queue
     void ClearQueue();
 
-   protected:
+    protected:
     virtual float GetVolume() = 0;
     virtual soundlevel_t GetSoundLevel() = 0;
 
-   private:
+    private:
     // Speech criteria
     bool MatchesCriteria( SentenceCriteria_t nCriteria );
 
@@ -94,10 +94,10 @@ class CAI_Sentence : public CAI_SentenceBase
 {
     DECLARE_CLASS_NOFRIEND( CAI_Sentence, CAI_SentenceBase );
 
-   public:
+    public:
     void Init( NPC_CLASS *pOuter, const char *pGameSound );
 
-   protected:
+    protected:
     virtual float GetVolume()
     {
         return m_sentenceVolume;
@@ -107,7 +107,7 @@ class CAI_Sentence : public CAI_SentenceBase
         return m_sentenceSoundlevel;
     }
 
-   private:
+    private:
     static float m_sentenceVolume;
     static soundlevel_t m_sentenceSoundlevel;
     static int m_voicePitchMin;

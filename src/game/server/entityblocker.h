@@ -17,7 +17,7 @@ class CEntityBlocker : public CBaseEntity
 {
     DECLARE_CLASS( CEntityBlocker, CBaseEntity );
 
-   public:
+    public:
     static CEntityBlocker *Create( const Vector &origin, const Vector &mins, const Vector &maxs, CBaseEntity *pOwner = NULL, bool bBlockPhysics = false );
 
     void Spawn( void );

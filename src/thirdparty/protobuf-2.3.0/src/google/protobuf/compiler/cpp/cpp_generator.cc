@@ -82,10 +82,10 @@ bool CppGenerator::Generate(const FileDescriptor* file,
 
   for (int i = 0; i < options.size(); i++) {
     if (options[i].first == "dllexport_decl") {
-      dllexport_decl = options[i].second;
+    dllexport_decl = options[i].second;
     } else {
-      *error = "Unknown generator option: " + options[i].first;
-      return false;
+    *error = "Unknown generator option: " + options[i].first;
+    return false;
     }
   }
 
@@ -100,7 +100,7 @@ bool CppGenerator::Generate(const FileDescriptor* file,
   // Generate header.
   {
     scoped_ptr<io::ZeroCopyOutputStream> output(
-      output_directory->Open(basename + ".h"));
+    output_directory->Open(basename + ".h"));
     io::Printer printer(output.get(), '$');
     file_generator.GenerateHeader(&printer);
   }
@@ -108,7 +108,7 @@ bool CppGenerator::Generate(const FileDescriptor* file,
   // Generate cc file.
   {
     scoped_ptr<io::ZeroCopyOutputStream> output(
-      output_directory->Open(basename + ".cc"));
+    output_directory->Open(basename + ".cc"));
     io::Printer printer(output.get(), '$');
     file_generator.GenerateSource(&printer);
   }

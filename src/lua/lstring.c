@@ -36,7 +36,7 @@ int luaS_eqlngstr (TString *a, TString *b) {
   lua_assert(a->tt == LUA_VLNGSTR && b->tt == LUA_VLNGSTR);
   return (a == b) ||  /* same instance or... */
     ((len == b->u.lnglen) &&  /* equal length and ... */
-     (memcmp(getstr(a), getstr(b), len) == 0));  /* equal contents */
+    (memcmp(getstr(a), getstr(b), len) == 0));  /* equal contents */
 }
 
 
@@ -67,11 +67,11 @@ static void tablerehash (TString **vect, int osize, int nsize) {
     TString *p = vect[i];
     vect[i] = NULL;
     while (p) {  /* for each string in the list */
-      TString *hnext = p->u.hnext;  /* save next */
-      unsigned int h = lmod(p->hash, nsize);  /* new position */
-      p->u.hnext = vect[h];  /* chain it into array */
-      vect[h] = p;
-      p = hnext;
+    TString *hnext = p->u.hnext;  /* save next */
+    unsigned int h = lmod(p->hash, nsize);  /* new position */
+    p->u.hnext = vect[h];  /* chain it into array */
+    vect[h] = p;
+    p = hnext;
     }
   }
 }
@@ -91,14 +91,14 @@ void luaS_resize (lua_State *L, int nsize) {
   newvect = luaM_reallocvector(L, tb->hash, osize, nsize, TString*);
   if (l_unlikely(newvect == NULL)) {  /* reallocation failed? */
     if (nsize < osize)  /* was it shrinking table? */
-      tablerehash(tb->hash, nsize, osize);  /* restore to original size */
+    tablerehash(tb->hash, nsize, osize);  /* restore to original size */
     /* leave table as it was */
   }
   else {  /* allocation succeeded */
     tb->hash = newvect;
     tb->size = nsize;
     if (nsize > osize)
-      tablerehash(newvect, osize, nsize);  /* rehash for new size */
+    tablerehash(newvect, osize, nsize);  /* rehash for new size */
   }
 }
 
@@ -111,7 +111,7 @@ void luaS_clearcache (global_State *g) {
   int i, j;
   for (i = 0; i < STRCACHE_N; i++)
     for (j = 0; j < STRCACHE_M; j++) {
-      if (iswhite(g->strcache[i][j]))  /* will entry be collected? */
+    if (iswhite(g->strcache[i][j]))  /* will entry be collected? */
         g->strcache[i][j] = g->memerrmsg;  /* replace it with something fixed */
     }
 }
@@ -132,7 +132,7 @@ void luaS_init (lua_State *L) {
   luaC_fix(L, obj2gco(g->memerrmsg));  /* it should never be collected */
   for (i = 0; i < STRCACHE_N; i++)  /* fill cache with valid strings */
     for (j = 0; j < STRCACHE_M; j++)
-      g->strcache[i][j] = g->memerrmsg;
+    g->strcache[i][j] = g->memerrmsg;
 }
 
 
@@ -175,7 +175,7 @@ static void growstrtab (lua_State *L, stringtable *tb) {
   if (l_unlikely(tb->nuse == MAX_INT)) {  /* too many strings? */
     luaC_fullgc(L, 1);  /* try to free some... */
     if (tb->nuse == MAX_INT)  /* still too many? */
-      luaM_error(L);  /* cannot even create a message... */
+    luaM_error(L);  /* cannot even create a message... */
   }
   if (tb->size <= MAXSTRTB / 2)  /* can grow string table? */
     luaS_resize(L, tb->size * 2);
@@ -194,10 +194,10 @@ static TString *internshrstr (lua_State *L, const char *str, size_t l) {
   lua_assert(str != NULL);  /* otherwise 'memcmp'/'memcpy' are undefined */
   for (ts = *list; ts != NULL; ts = ts->u.hnext) {
     if (l == ts->shrlen && (memcmp(str, getstr(ts), l * sizeof(char)) == 0)) {
-      /* found! */
-      if (isdead(g, ts))  /* dead (but not collected yet)? */
+    /* found! */
+    if (isdead(g, ts))  /* dead (but not collected yet)? */
         changewhite(ts);  /* resurrect it */
-      return ts;
+    return ts;
     }
   }
   /* else must create a new string */
@@ -224,7 +224,7 @@ TString *luaS_newlstr (lua_State *L, const char *str, size_t l) {
   else {
     TString *ts;
     if (l_unlikely(l >= (MAX_SIZE - sizeof(TString))/sizeof(char)))
-      luaM_toobig(L);
+    luaM_toobig(L);
     ts = luaS_createlngstrobj(L, l);
     memcpy(getstr(ts), str, l * sizeof(char));
     return ts;
@@ -244,7 +244,7 @@ TString *luaS_new (lua_State *L, const char *str) {
   TString **p = G(L)->strcache[i];
   for (j = 0; j < STRCACHE_M; j++) {
     if (strcmp(str, getstr(p[j])) == 0)  /* hit? */
-      return p[j];  /* that is it */
+    return p[j];  /* that is it */
   }
   /* normal route */
   for (j = STRCACHE_M - 1; j > 0; j--)
@@ -270,4 +270,3 @@ Udata *luaS_newudata (lua_State *L, size_t s, int nuvalue) {
     setnilvalue(&u->uv[i].uv);
   return u;
 }
-

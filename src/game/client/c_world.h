@@ -18,7 +18,7 @@
 
 class C_World : public C_BaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_World, C_BaseEntity );
     DECLARE_CLIENTCLASS();
 
@@ -44,7 +44,7 @@ class C_World : public C_BaseEntity
     float GetWaveHeight() const;
     const char *GetDetailSpriteMaterial() const;
 
-   public:
+    public:
     enum
     {
         MAX_DETAIL_SPRITE_MATERIAL_NAME_LENGTH = 256,
@@ -60,7 +60,7 @@ class C_World : public C_BaseEntity
     float m_flMaxPropScreenSpaceWidth;
     bool m_bColdWorld;
 
-   private:
+    private:
     void RegisterSharedActivities( void );
     char m_iszDetailSpriteMaterial[MAX_DETAIL_SPRITE_MATERIAL_NAME_LENGTH];
 };

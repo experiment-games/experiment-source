@@ -16,7 +16,7 @@
 
 class CTestTraceline : public CPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTestTraceline, CPointEntity );
 
     void Spawn( void );
@@ -25,7 +25,7 @@ class CTestTraceline : public CPointEntity
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
 
-   private:
+    private:
     void Spin( void );
 };
 

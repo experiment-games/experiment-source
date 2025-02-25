@@ -23,7 +23,7 @@ class IQueryableReplayItem;
 
 abstract_class IReplayItemManager : public IBaseInterface
 {
-   public:
+    public:
     virtual int GetItemCount() = 0;
     virtual void GetItems( CUtlLinkedList< IQueryableReplayItem *, int > & items ) = 0;
     virtual IQueryableReplayItem *GetItem( ReplayItemHandle_t hItem ) = 0;

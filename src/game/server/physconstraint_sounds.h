@@ -29,7 +29,7 @@ buffer implementation (which will have to perform certain initialization).
 */
 class VelocitySampler
 {
-   public:
+    public:
     /*
     enum
     {
@@ -63,7 +63,7 @@ class VelocitySampler
     /// A convenience function for extracting the angular velocity of one object relative to another.
     inline static Vector GetRelativeAngularVelocity( IPhysicsObject *pObj, IPhysicsObject *pReferenceFrame );
 
-   protected:
+    protected:
     Vector m_prevSample;
     float m_fPrevSampleTime;
 
@@ -130,7 +130,7 @@ class CPhysConstraint;
  */
 class ConstraintSoundInfo
 {
-   public:
+    public:
     // no ctor.
     // dtor
     ~ConstraintSoundInfo();
@@ -170,7 +170,7 @@ class ConstraintSoundInfo
     // CSoundPatch		*m_pReversalSound;
     bool m_bPlayReversalSound;
 
-   protected:
+    protected:
     /// Maintain consistency of internal datastructures on start
     void ValidateInternals( CPhysConstraint *pOuter );
 

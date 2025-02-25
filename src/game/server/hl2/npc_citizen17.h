@@ -67,7 +67,7 @@ class CNPC_Citizen : public CNPC_PlayerCompanion
 {
     DECLARE_CLASS( CNPC_Citizen, CNPC_PlayerCompanion );
 
-   public:
+    public:
     CNPC_Citizen()
         : m_iHead( -1 )
     {
@@ -271,7 +271,7 @@ class CNPC_Citizen : public CNPC_PlayerCompanion
 
     virtual void OnChangeRunningBehavior( CAI_BehaviorBase *pOldBehavior, CAI_BehaviorBase *pNewBehavior );
 
-   private:
+    private:
     //-----------------------------------------------------
     // Conditions, Schedules, Tasks
     //-----------------------------------------------------
@@ -360,7 +360,7 @@ class CNPC_Citizen : public CNPC_PlayerCompanion
 
     DECLARE_DATADESC();
 #ifdef _XBOX
-   protected:
+    protected:
 #endif
     DEFINE_CUSTOM_AI;
 };
@@ -409,7 +409,7 @@ class CCitizenResponseSystem : public CBaseEntity
 {
     DECLARE_CLASS( CCitizenResponseSystem, CBaseEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     void Spawn();
@@ -424,7 +424,7 @@ class CCitizenResponseSystem : public CBaseEntity
     //---------------------------------
     void InputResponseVitalNPC( inputdata_t &inputdata );
 
-   private:
+    private:
     float m_flResponseAddedTime[MAX_CITIZEN_RESPONSES];  // Time at which the response was added. 0 if we have no response.
     float m_flNextResponseTime;
 };

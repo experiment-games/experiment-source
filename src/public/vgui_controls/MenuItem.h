@@ -32,7 +32,7 @@ class MenuItem : public Button
 {
     DECLARE_CLASS_SIMPLE( MenuItem, Button );
 
-   public:
+    public:
     MenuItem( Menu *parent, const char *panelName, const char *text, Menu *cascadeMenu = NULL, bool checkable = false );
     MenuItem( Menu *parent, const char *panelName, const wchar_t *wszText, Menu *cascadeMenu = NULL, bool checkable = false );
     ~MenuItem();
@@ -116,7 +116,7 @@ class MenuItem : public Button
 
     virtual void GetContentSize( int &cw, int &ch );
 
-   protected:
+    protected:
     void OnKeyCodeReleased( KeyCode code );
     void OnMenuClose();
     MESSAGE_FUNC( OnKeyModeSet, "KeyModeSet" );
@@ -126,7 +126,7 @@ class MenuItem : public Button
     virtual void ApplySchemeSettings( IScheme *pScheme );
     virtual IBorder *GetBorder( bool depressed, bool armed, bool selected, bool keyfocus );
 
-   private:
+    private:
     enum
     {
         CHECK_INSET = 6

@@ -176,7 +176,7 @@ void CTextureReference::InitProceduralTexture( const char *pTextureName, const c
     /*
     if ( m_pTexture )
     {
-      m_pTexture->IncrementReferenceCount();
+    m_pTexture->IncrementReferenceCount();
     }
     */
 }

@@ -34,7 +34,7 @@ class CMessageEntity : public CPointEntity
 {
     DECLARE_CLASS( CMessageEntity, CPointEntity );
 
-   public:
+    public:
     void Spawn( void );
     void Activate( void );
     void Think( void );
@@ -47,7 +47,7 @@ class CMessageEntity : public CPointEntity
 
     DECLARE_DATADESC();
 
-   protected:
+    protected:
     int m_radius;
     string_t m_messageText;
     bool m_drawText;

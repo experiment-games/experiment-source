@@ -60,7 +60,7 @@ class CCollisionProperty : public ICollideable
     DECLARE_DATADESC();
 #endif
 
-   public:
+    public:
     CCollisionProperty();
     ~CCollisionProperty();
 
@@ -100,7 +100,7 @@ class CCollisionProperty : public ICollideable
     virtual bool ShouldTouchTrigger( int triggerSolidFlags ) const;
     virtual const matrix3x4_t *GetRootParentToWorldTransform() const;
 
-   public:
+    public:
     // Spatial partition management
     void CreatePartitionHandle();
     void DestroyPartitionHandle();
@@ -214,7 +214,7 @@ class CCollisionProperty : public ICollideable
     // Compute the largest dot product of the OBB and the specified direction vector
     float ComputeSupportMap( const Vector &vecDirection ) const;
 
-   private:
+    private:
     // Transforms an AABB measured in collision space to a box that surrounds it in world space
     void CollisionAABBToWorldAABB( const Vector &entityMins, const Vector &entityMaxs, Vector *pWorldMins, Vector *pWorldMaxs ) const;
 
@@ -244,7 +244,7 @@ class CCollisionProperty : public ICollideable
     CBaseEntity *GetOuter();
     const CBaseEntity *GetOuter() const;
 
-   private:
+    private:
     CBaseEntity *m_pOuter;
 
     CNetworkVector( m_vecMinsPreScaled );
@@ -273,8 +273,8 @@ class CCollisionProperty : public ICollideable
 
     // Cached off world-aligned surrounding bounds
 #if 0
-	short	m_surroundingMins[3];
-	short	m_surroundingMaxs[3];
+    short	m_surroundingMins[3];
+    short	m_surroundingMaxs[3];
 #else
     Vector m_vecSurroundingMins;
     Vector m_vecSurroundingMaxs;
@@ -341,7 +341,7 @@ inline float CCollisionProperty::BoundingRadius() const
 inline bool CCollisionProperty::IsBoundsDefinedInEntitySpace() const
 {
     return ( ( m_usSolidFlags & FSOLID_FORCE_WORLD_ALIGNED ) == 0 ) &&
-           ( m_nSolidType != SOLID_BBOX ) && ( m_nSolidType != SOLID_NONE );
+            ( m_nSolidType != SOLID_BBOX ) && ( m_nSolidType != SOLID_NONE );
 }
 
 inline void CCollisionProperty::ClearSolidFlags( void )

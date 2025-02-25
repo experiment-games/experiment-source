@@ -262,7 +262,7 @@ void CBasePlayerAnimState::ComputeMainSequence()
     // If we went from idle to walk, reset the interpolation history.
     // Kind of hacky putting this here.. it might belong outside the base class.
     if ( ( oldActivity == ACT_CROUCHIDLE || oldActivity == ACT_IDLE ) &&
-         ( idealActivity == ACT_WALK || idealActivity == ACT_RUN_CROUCH ) )
+        ( idealActivity == ACT_WALK || idealActivity == ACT_RUN_CROUCH ) )
     {
         ResetGroundSpeed();
     }
@@ -967,11 +967,11 @@ void CBasePlayerAnimState::DebugShowAnimState( int iStartLine )
         AnimStatePrintf( iLine++, "%s(%d), weight: %.2f, cycle: %.2f, order (%d), aim (%d)", !pLayer->IsActive() ? "-- " : ( pLayer->m_nSequence == 0 ? "-- " : GetSequenceName( m_pOuter->GetModelPtr(), pLayer->m_nSequence ) ), !pLayer->IsActive() ? 0 : ( int )pLayer->m_nSequence, !pLayer->IsActive() ? 0 : ( float )pLayer->m_flWeight, !pLayer->IsActive() ? 0 : ( float )pLayer->m_flCycle, !pLayer->IsActive() ? 0 : ( int )pLayer->m_nOrder, i );
 #else
         AnimStatePrintf( iLine++, "%s(%d), flags (%d), weight: %.2f, cycle: %.2f, order (%d), aim (%d)", !pLayer->IsActive() ? "-- " : ( pLayer->m_nSequence == 0 ? "-- " : GetSequenceName( m_pOuter->GetModelPtr(), pLayer->m_nSequence ) ), !pLayer->IsActive() ? 0 : ( int )pLayer->m_nSequence,
-                         !pLayer->IsActive() ? 0 : ( int )pLayer->m_fFlags,  // Doesn't exist on client
-                         !pLayer->IsActive() ? 0 : ( float )pLayer->m_flWeight,
-                         !pLayer->IsActive() ? 0 : ( float )pLayer->m_flCycle,
-                         !pLayer->IsActive() ? 0 : ( int )pLayer->m_nOrder,
-                         i );
+                        !pLayer->IsActive() ? 0 : ( int )pLayer->m_fFlags,  // Doesn't exist on client
+                        !pLayer->IsActive() ? 0 : ( float )pLayer->m_flWeight,
+                        !pLayer->IsActive() ? 0 : ( float )pLayer->m_flCycle,
+                        !pLayer->IsActive() ? 0 : ( int )pLayer->m_nOrder,
+                        i );
 #endif
     }
 

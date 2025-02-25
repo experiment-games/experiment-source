@@ -52,13 +52,13 @@ namespace compiler {
 static void CloseHandleOrDie(HANDLE handle) {
   if (!CloseHandle(handle)) {
     GOOGLE_LOG(FATAL) << "CloseHandle: "
-                      << Subprocess::Win32ErrorMessage(GetLastError());
+                    << Subprocess::Win32ErrorMessage(GetLastError());
   }
 }
 
 Subprocess::Subprocess()
     : process_start_error_(ERROR_SUCCESS),
-      child_handle_(NULL), child_stdin_(NULL), child_stdout_(NULL) {}
+    child_handle_(NULL), child_stdin_(NULL), child_stdout_(NULL) {}
 
 Subprocess::~Subprocess() {
   if (child_stdin_ != NULL) {
@@ -87,12 +87,12 @@ void Subprocess::Start(const string& program, SearchMode search_mode) {
   if (!SetHandleInformation(stdin_pipe_read,
                             HANDLE_FLAG_INHERIT, HANDLE_FLAG_INHERIT)) {
     GOOGLE_LOG(FATAL) << "SetHandleInformation: "
-                      << Win32ErrorMessage(GetLastError());
+                    << Win32ErrorMessage(GetLastError());
   }
   if (!SetHandleInformation(stdout_pipe_write,
                             HANDLE_FLAG_INHERIT, HANDLE_FLAG_INHERIT)) {
     GOOGLE_LOG(FATAL) << "SetHandleInformation: "
-                      << Win32ErrorMessage(GetLastError());
+                    << Win32ErrorMessage(GetLastError());
   }
 
   // Setup STARTUPINFO to redirect handles.
@@ -106,7 +106,7 @@ void Subprocess::Start(const string& program, SearchMode search_mode) {
 
   if (startup_info.hStdError == INVALID_HANDLE_VALUE) {
     GOOGLE_LOG(FATAL) << "GetStdHandle: "
-                      << Win32ErrorMessage(GetLastError());
+                    << Win32ErrorMessage(GetLastError());
   }
 
   // CreateProcess() mutates its second parameter.  WTF?
@@ -141,7 +141,7 @@ void Subprocess::Start(const string& program, SearchMode search_mode) {
 }
 
 bool Subprocess::Communicate(const Message& input, Message* output,
-                             string* error) {
+                            string* error) {
   if (process_start_error_ != ERROR_SUCCESS) {
     *error = Win32ErrorMessage(process_start_error_);
     return false;
@@ -159,10 +159,10 @@ bool Subprocess::Communicate(const Message& input, Message* output,
     int handle_count = 0;
 
     if (child_stdin_ != NULL) {
-      handles[handle_count++] = child_stdin_;
+    handles[handle_count++] = child_stdin_;
     }
     if (child_stdout_ != NULL) {
-      handles[handle_count++] = child_stdout_;
+    handles[handle_count++] = child_stdout_;
     }
 
     DWORD wait_result =
@@ -171,44 +171,44 @@ bool Subprocess::Communicate(const Message& input, Message* output,
     HANDLE signaled_handle;
     if (wait_result >= WAIT_OBJECT_0 &&
         wait_result < WAIT_OBJECT_0 + handle_count) {
-      signaled_handle = handles[wait_result - WAIT_OBJECT_0];
+    signaled_handle = handles[wait_result - WAIT_OBJECT_0];
     } else if (wait_result == WAIT_FAILED) {
-      GOOGLE_LOG(FATAL) << "WaitForMultipleObjects: "
+    GOOGLE_LOG(FATAL) << "WaitForMultipleObjects: "
                         << Win32ErrorMessage(GetLastError());
     } else {
-      GOOGLE_LOG(FATAL) << "WaitForMultipleObjects: Unexpected return code: "
+    GOOGLE_LOG(FATAL) << "WaitForMultipleObjects: Unexpected return code: "
                         << wait_result;
     }
 
     if (signaled_handle == child_stdin_) {
-      DWORD n;
-      if (!WriteFile(child_stdin_,
-                     input_data.data() + input_pos,
-                     input_data.size() - input_pos,
-                     &n, NULL)) {
+    DWORD n;
+    if (!WriteFile(child_stdin_,
+                    input_data.data() + input_pos,
+                    input_data.size() - input_pos,
+                    &n, NULL)) {
         // Child closed pipe.  Presumably it will report an error later.
         // Pretend we're done for now.
         input_pos = input_data.size();
-      } else {
+    } else {
         input_pos += n;
-      }
+    }
 
-      if (input_pos == input_data.size()) {
+    if (input_pos == input_data.size()) {
         // We're done writing.  Close.
         CloseHandleOrDie(child_stdin_);
         child_stdin_ = NULL;
-      }
+    }
     } else if (signaled_handle == child_stdout_) {
-      char buffer[4096];
-      DWORD n;
+    char buffer[4096];
+    DWORD n;
 
-      if (!ReadFile(child_stdout_, buffer, sizeof(buffer), &n, NULL)) {
+    if (!ReadFile(child_stdout_, buffer, sizeof(buffer), &n, NULL)) {
         // We're done reading.  Close.
         CloseHandleOrDie(child_stdout_);
         child_stdout_ = NULL;
-      } else {
+    } else {
         output_data.append(buffer, n);
-      }
+    }
     }
   }
 
@@ -223,16 +223,16 @@ bool Subprocess::Communicate(const Message& input, Message* output,
 
   if (wait_result == WAIT_FAILED) {
     GOOGLE_LOG(FATAL) << "WaitForSingleObject: "
-                      << Win32ErrorMessage(GetLastError());
+                    << Win32ErrorMessage(GetLastError());
   } else if (wait_result != WAIT_OBJECT_0) {
     GOOGLE_LOG(FATAL) << "WaitForSingleObject: Unexpected return code: "
-                      << wait_result;
+                    << wait_result;
   }
 
   DWORD exit_code;
   if (!GetExitCodeProcess(child_handle_, &exit_code)) {
     GOOGLE_LOG(FATAL) << "GetExitCodeProcess: "
-                      << Win32ErrorMessage(GetLastError());
+                    << Win32ErrorMessage(GetLastError());
   }
 
   CloseHandleOrDie(child_handle_);
@@ -311,10 +311,10 @@ void Subprocess::Start(const string& program, SearchMode search_mode) {
     close(stdout_pipe[1]);
 
     switch (search_mode) {
-      case SEARCH_PATH:
+    case SEARCH_PATH:
         execvp(argv[0], argv);
         break;
-      case EXACT_NAME:
+    case EXACT_NAME:
         execv(argv[0], argv);
         break;
     }
@@ -340,7 +340,7 @@ void Subprocess::Start(const string& program, SearchMode search_mode) {
 }
 
 bool Subprocess::Communicate(const Message& input, Message* output,
-                             string* error) {
+                            string* error) {
 
   GOOGLE_CHECK_NE(child_stdin_, -1) << "Must call Start() first.";
 
@@ -362,50 +362,50 @@ bool Subprocess::Communicate(const Message& input, Message* output,
     FD_ZERO(&read_fds);
     FD_ZERO(&write_fds);
     if (child_stdout_ != -1) {
-      FD_SET(child_stdout_, &read_fds);
+    FD_SET(child_stdout_, &read_fds);
     }
     if (child_stdin_ != -1) {
-      FD_SET(child_stdin_, &write_fds);
+    FD_SET(child_stdin_, &write_fds);
     }
 
     if (select(max_fd + 1, &read_fds, &write_fds, NULL, NULL) < 0) {
-      if (errno == EINTR) {
+    if (errno == EINTR) {
         // Interrupted by signal.  Try again.
         continue;
-      } else {
+    } else {
         GOOGLE_LOG(FATAL) << "select: " << strerror(errno);
-      }
+    }
     }
 
     if (child_stdin_ != -1 && FD_ISSET(child_stdin_, &write_fds)) {
-      int n = write(child_stdin_, input_data.data() + input_pos,
-                                  input_data.size() - input_pos);
-      if (n < 0) {
+    int n = write(child_stdin_, input_data.data() + input_pos,
+                                input_data.size() - input_pos);
+    if (n < 0) {
         // Child closed pipe.  Presumably it will report an error later.
         // Pretend we're done for now.
         input_pos = input_data.size();
-      } else {
+    } else {
         input_pos += n;
-      }
+    }
 
-      if (input_pos == input_data.size()) {
+    if (input_pos == input_data.size()) {
         // We're done writing.  Close.
         close(child_stdin_);
         child_stdin_ = -1;
-      }
+    }
     }
 
     if (child_stdout_ != -1 && FD_ISSET(child_stdout_, &read_fds)) {
-      char buffer[4096];
-      int n = read(child_stdout_, buffer, sizeof(buffer));
+    char buffer[4096];
+    int n = read(child_stdout_, buffer, sizeof(buffer));
 
-      if (n > 0) {
+    if (n > 0) {
         output_data.append(buffer, n);
-      } else {
+    } else {
         // We're done reading.  Close.
         close(child_stdout_);
         child_stdout_ = -1;
-      }
+    }
     }
   }
 
@@ -419,7 +419,7 @@ bool Subprocess::Communicate(const Message& input, Message* output,
   int status;
   while (waitpid(child_pid_, &status, 0) == -1) {
     if (errno != EINTR) {
-      GOOGLE_LOG(FATAL) << "waitpid: " << strerror(errno);
+    GOOGLE_LOG(FATAL) << "waitpid: " << strerror(errno);
     }
   }
 
@@ -428,10 +428,10 @@ bool Subprocess::Communicate(const Message& input, Message* output,
 
   if (WIFEXITED(status)) {
     if (WEXITSTATUS(status) != 0) {
-      int error_code = WEXITSTATUS(status);
-      *error = strings::Substitute(
-          "Plugin failed with status code $0.", error_code);
-      return false;
+    int error_code = WEXITSTATUS(status);
+    *error = strings::Substitute(
+        "Plugin failed with status code $0.", error_code);
+    return false;
     }
   } else if (WIFSIGNALED(status)) {
     int signal = WTERMSIG(status);

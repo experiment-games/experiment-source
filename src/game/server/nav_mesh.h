@@ -41,7 +41,7 @@ class NavAreaCollector
 {
     bool m_checkForDuplicates;
 
-   public:
+    public:
     NavAreaCollector( bool checkForDuplicates = false )
     {
         m_checkForDuplicates = checkForDuplicates;
@@ -63,7 +63,7 @@ class EditDestroyNotification
 {
     CNavArea *m_deadArea;
 
-   public:
+    public:
     EditDestroyNotification( CNavArea *deadArea )
     {
         m_deadArea = deadArea;
@@ -79,7 +79,7 @@ class EditDestroyNotification
 //--------------------------------------------------------------------------------------------------------
 class NavAttributeClearer
 {
-   public:
+    public:
     NavAttributeClearer( NavAttributeType attribute )
     {
         m_attribute = attribute;
@@ -98,7 +98,7 @@ class NavAttributeClearer
 //--------------------------------------------------------------------------------------------------------
 class NavAttributeSetter
 {
-   public:
+    public:
     NavAttributeSetter( NavAttributeType attribute )
     {
         m_attribute = attribute;
@@ -117,7 +117,7 @@ class NavAttributeSetter
 //--------------------------------------------------------------------------------------------------------
 class NavAttributeToggler
 {
-   public:
+    public:
     NavAttributeToggler( NavAttributeType attribute )
     {
         m_attribute = attribute;
@@ -140,14 +140,14 @@ extern NavAttributeLookup TheNavAttributeTable[];
 //--------------------------------------------------------------------------------------------------------
 class SelectOverlappingAreas
 {
-   public:
+    public:
     bool operator()( CNavArea *area );
 };
 
 //--------------------------------------------------------------------------------------------------------
 abstract_class INavAvoidanceObstacle
 {
-   public:
+    public:
     virtual bool IsPotentiallyAbleToObstructNavAreas( void ) const = 0;  // could we at some future time obstruct nav?
     virtual float GetNavObstructionHeight( void ) const = 0;             // height at which to obstruct nav areas
     virtual bool CanObstructNavAreas( void ) const = 0;                  // can we obstruct nav right this instant?
@@ -181,7 +181,7 @@ struct NavVisPair_t
 // for nav mesh visibilty computation
 class CVisPairHashFuncs
 {
-   public:
+    public:
     CVisPairHashFuncs( int ) {}
 
     bool operator()( const NavVisPair_t &lhs, const NavVisPair_t &rhs ) const
@@ -211,7 +211,7 @@ class CVisPairHashFuncs
 //
 class PlaceDirectory
 {
-   public:
+    public:
     typedef unsigned short IndexType;  // Loaded/Saved as UnsignedShort.  Change this and you'll have to version.
 
     PlaceDirectory( void );
@@ -232,7 +232,7 @@ class PlaceDirectory
         return m_hasUnnamedAreas;
     }
 
-   private:
+    private:
     CUtlVector< Place > m_directory;
     bool m_hasUnnamedAreas;
 };
@@ -246,7 +246,7 @@ extern PlaceDirectory placeDirectory;
  */
 class CNavMesh : public CGameEventListener
 {
-   public:
+    public:
     CNavMesh( void );
     virtual ~CNavMesh();
 
@@ -272,9 +272,9 @@ class CNavMesh : public CGameEventListener
     }  // return true if a Navigation Mesh has been analyzed
 
     /**
-     * Return true if nav mesh can be trusted for all climbing/jumping decisions because game environment is fairly simple.
-     * Authoritative meshes mean path followers can skip CPU intensive realtime scanning of unpredictable geometry.
-     */
+    * Return true if nav mesh can be trusted for all climbing/jumping decisions because game environment is fairly simple.
+    * Authoritative meshes mean path followers can skip CPU intensive realtime scanning of unpredictable geometry.
+    */
     virtual bool IsAuthoritative( void ) const
     {
         return false;
@@ -511,10 +511,10 @@ class CNavMesh : public CGameEventListener
     const NavAreaVector &GetSelectedSet( void ) const;  // return the selected set
 
     /**
-     * Apply the functor to all navigation areas in the Selected Set,
-     * or the current selected area.
-     * If functor returns false, stop processing and return false.
-     */
+    * Apply the functor to all navigation areas in the Selected Set,
+    * or the current selected area.
+    * If functor returns false, stop processing and return false.
+    */
     template < typename Functor >
     bool ForAllSelectedAreas( Functor &func )
     {
@@ -544,9 +544,9 @@ class CNavMesh : public CGameEventListener
 
     //-------------------------------------------------------------------------------------
     /**
-     * Apply the functor to all navigation areas.
-     * If functor returns false, stop processing and return false.
-     */
+    * Apply the functor to all navigation areas.
+    * If functor returns false, stop processing and return false.
+    */
     template < typename Functor >
     bool ForAllAreas( Functor &func )
     {
@@ -578,9 +578,9 @@ class CNavMesh : public CGameEventListener
 
     //-------------------------------------------------------------------------------------
     /**
-     * Apply the functor to all navigation areas that overlap the given extent.
-     * If functor returns false, stop processing and return false.
-     */
+    * Apply the functor to all navigation areas that overlap the given extent.
+    * If functor returns false, stop processing and return false.
+    */
     template < typename Functor >
     bool ForAllAreasOverlappingExtent( Functor &func, const Extent &extent )
     {
@@ -644,8 +644,8 @@ class CNavMesh : public CGameEventListener
 
     //-------------------------------------------------------------------------------------
     /**
-     * Populate the given vector with all navigation areas that overlap the given extent.
-     */
+    * Populate the given vector with all navigation areas that overlap the given extent.
+    */
     template < typename NavAreaType >
     void CollectAreasOverlappingExtent( const Extent &extent, CUtlVector< NavAreaType * > *outVector )
     {
@@ -765,9 +765,9 @@ class CNavMesh : public CGameEventListener
 
     //---------------------------------------------------------------------------------------------------------------
     /*
-     * Step through nav mesh along line between startArea and endArea.
-     * Return true if enumeration reached endArea, false if doesn't reach it (no mesh between, bad connection, etc)
-     */
+    * Step through nav mesh along line between startArea and endArea.
+    * Return true if enumeration reached endArea, false if doesn't reach it (no mesh between, bad connection, etc)
+    */
     template < typename Functor >
     bool ForAllAreasAlongLine( Functor &func, CNavArea *startArea, CNavArea *endArea )
     {
@@ -984,9 +984,9 @@ class CNavMesh : public CGameEventListener
 
     //-------------------------------------------------------------------------------------
     /**
-     * Apply the functor to all navigation ladders.
-     * If functor returns false, stop processing and return false.
-     */
+    * Apply the functor to all navigation ladders.
+    * If functor returns false, stop processing and return false.
+    */
     template < typename Functor >
     bool ForAllLadders( Functor &func )
     {
@@ -1003,9 +1003,9 @@ class CNavMesh : public CGameEventListener
 
     //-------------------------------------------------------------------------------------
     /**
-     * Apply the functor to all navigation ladders.
-     * If functor returns false, stop processing and return false.
-     */
+    * Apply the functor to all navigation ladders.
+    * If functor returns false, stop processing and return false.
+    */
     template < typename Functor >
     bool ForAllLadders( Functor &func ) const
     {
@@ -1022,18 +1022,18 @@ class CNavMesh : public CGameEventListener
 
     //-------------------------------------------------------------------------------------
     /**
-     * tests a new area for connections to adjacent pre-existing areas
-     */
+    * tests a new area for connections to adjacent pre-existing areas
+    */
     template < typename Functor >
     void StitchAreaIntoMesh( CNavArea *area, NavDirType dir, Functor &func );
 
     //-------------------------------------------------------------------------------------
     /**
-     * Use the functor to test if an area is needing stitching into the existing nav mesh.
-     * The functor is different from how we normally use functors - it does no processing,
-     * and it's return value is true if the area is in the new set to be stiched, and false
-     * if it's a pre-existing area.
-     */
+    * Use the functor to test if an area is needing stitching into the existing nav mesh.
+    * The functor is different from how we normally use functors - it does no processing,
+    * and it's return value is true if the area is in the new set to be stiched, and false
+    * if it's a pre-existing area.
+    */
     template < typename Functor >
     bool StitchMesh( Functor &func )
     {
@@ -1083,7 +1083,7 @@ class CNavMesh : public CGameEventListener
     void PostProcessCliffAreas();
     void SimplifySelectedAreas( void );  // Simplifies the selected set by reducing to 1x1 areas and re-merging them up with loosened tolerances
 
-   protected:
+    protected:
     virtual void PostCustomAnalysis( void ) {}     // invoked when custom analysis step is complete
     bool FindActiveNavArea( void );                // Finds the area or ladder the local player is currently pointing at.  Returns true if a surface was hit by the traceline.
     virtual void RemoveNavArea( CNavArea *area );  // remove an area from the grid
@@ -1091,7 +1091,7 @@ class CNavMesh : public CGameEventListener
     void GenerateNodes( const Extent &bounds );
     void RemoveNodes( void );
 
-   private:
+    private:
     friend class CNavArea;
     friend class CNavNode;
     friend class CNavUIBasePanel;

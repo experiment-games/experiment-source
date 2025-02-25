@@ -54,4 +54,3 @@ options(c)
 local s = m:accept()
 
 options(s)
-

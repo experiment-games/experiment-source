@@ -69,7 +69,7 @@ enum VCRMode_t
 //-----------------------------------------------------------------------------
 abstract_class IVCRHelpers
 {
-   public:
+    public:
     virtual void ErrorMessage( const tchar *pMsg ) = 0;
     virtual void *GetMainWindow() = 0;
 };
@@ -77,7 +77,7 @@ abstract_class IVCRHelpers
 // Used by the vcrtrace program.
 abstract_class IVCRTrace
 {
-   public:
+    public:
     virtual VCREvent ReadEvent() = 0;
     virtual void Read( void *pDest, int size ) = 0;
 };

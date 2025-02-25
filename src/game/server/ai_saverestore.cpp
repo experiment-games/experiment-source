@@ -28,7 +28,7 @@ static short AI_SAVE_RESTORE_VERSION = 2;
 
 class CAI_SaveRestoreBlockHandler : public CDefSaveRestoreBlockHandler
 {
-   public:
+    public:
     const char *GetBlockName()
     {
         return "AI";
@@ -173,7 +173,7 @@ class CAI_SaveRestoreBlockHandler : public CDefSaveRestoreBlockHandler
 #endif  // HL2_DLL
     }
 
-   private:
+    private:
     bool m_fDoLoad;
 };
 

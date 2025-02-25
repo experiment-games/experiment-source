@@ -32,7 +32,7 @@ RecvPropTime( RECVINFO( m_flStartupTime ) ),
 //-----------------------------------------------------------------------------
 class CHeliBladeMaterialProxy : public CEntityMaterialProxy
 {
-   public:
+    public:
     CHeliBladeMaterialProxy()
     {
         m_AlphaVar = NULL;
@@ -42,7 +42,7 @@ class CHeliBladeMaterialProxy : public CEntityMaterialProxy
     virtual void OnBind( C_BaseEntity *pEntity );
     virtual IMaterial *GetMaterial();
 
-   private:
+    private:
     IMaterialVar *m_AlphaVar;
     bool m_bFadeOut;
 };

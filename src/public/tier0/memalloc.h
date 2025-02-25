@@ -51,7 +51,7 @@ typedef size_t ( *MemAllocFailHandler_t )( size_t );
 //-----------------------------------------------------------------------------
 abstract_class IMemAlloc
 {
-   public:
+    public:
     // Release versions
     virtual void *Alloc( size_t nSize ) = 0;
     virtual void *Realloc( void *pMem, size_t nSize ) = 0;
@@ -361,7 +361,7 @@ inline size_t MemAlloc_GetSizeAligned( void *pMemBlock )
 
 class CMemAllocAttributeAlloction
 {
-   public:
+    public:
     CMemAllocAttributeAlloction( const char *pszFile, int line )
     {
         MemAlloc_PushAllocDbgInfo( pszFile, line );
@@ -432,7 +432,7 @@ struct MemAllocFileLine_t
         {                                                                              \
             g_##tag##Allocs.Insert( p, fileLine );                                     \
         }                                                                              \
-                                                                                       \
+                                                                                        \
         MemAlloc_RegisterAllocation( fileLine.pszFile, fileLine.line, size, size, 0 ); \
     }
 
@@ -448,7 +448,7 @@ struct MemAllocFileLine_t
             fileLine = g_##tag##Allocs[iRecordedFileLine];                                                     \
             g_##tag##Allocs.RemoveAt( iRecordedFileLine );                                                     \
         }                                                                                                      \
-                                                                                                               \
+                                                                                                                \
         MemAlloc_RegisterDeallocation( fileLine.pszFile, fileLine.line, size, size, 0 );                       \
     }
 
@@ -646,7 +646,7 @@ the cost/benefit did not justify it.
 template < int bytesAlignment = 16, class T = aligned_tmp_t >
 class CAlignedNewDelete : public T
 {
-   public:
+    public:
     /*
     Note that this class does not overload operator new[] and delete[] which means that
     classes that depend on this for alignment may end up misaligned if an array is

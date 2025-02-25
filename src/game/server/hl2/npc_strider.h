@@ -47,7 +47,7 @@ void AdjustStriderNodePosition( CAI_Network *pNetwork, CAI_Node *pNode );
 
 abstract_class IMinigunHost
 {
-   public:
+    public:
     virtual void ShootMinigun( const Vector *pTarget, float aimError, const Vector &vecSpread = vec3_origin ) = 0;
     virtual void UpdateMinigunControls( float &yaw, float &pitch ) = 0;
     virtual void GetViewCone( StriderMinigunViewcone_t & cone ) = 0;
@@ -59,7 +59,7 @@ abstract_class IMinigunHost
 
 abstract_class IStriderMinigunHost : public IMinigunHost
 {
-   public:
+    public:
     virtual float GetMinigunRateOfFire() = 0;
     virtual float GetMinigunOnTargetTime() = 0;
     virtual float GetMinigunShootDuration() = 0;
@@ -78,12 +78,12 @@ const int NUM_STRIDER_IK_TARGETS = 6;
 //---------------------------------------------------------
 
 class CNPC_Strider : public CAI_BlendingHost< CAI_BaseNPC >,
-                     public IStriderMinigunHost
+                    public IStriderMinigunHost
 {
     DECLARE_CLASS( CNPC_Strider, CAI_BaseNPC );
     DECLARE_SERVERCLASS();
 
-   public:
+    public:
     CNPC_Strider();
     ~CNPC_Strider();
 
@@ -311,7 +311,7 @@ class CNPC_Strider : public CAI_BlendingHost< CAI_BaseNPC >,
     {
         typedef CAI_ComponentWithOuter< CNPC_Strider, CAI_Navigator > BaseClass;
 
-       public:
+        public:
         CNavigator( CNPC_Strider *pOuter )
             : BaseClass( pOuter )
         {
@@ -328,7 +328,7 @@ class CNPC_Strider : public CAI_BlendingHost< CAI_BaseNPC >,
     {
         typedef CAI_Pathfinder BaseClass;
 
-       public:
+        public:
         CPathfinder( CNPC_Strider *pOuter )
             : BaseClass( pOuter ) {}
         virtual bool CanUseLocalNavigation()
@@ -415,7 +415,7 @@ class CNPC_Strider : public CAI_BlendingHost< CAI_BaseNPC >,
     void StriderBusterDetached( CBaseEntity *pAttached );
 #endif  // HL2_EPISODIC
 
-   public:
+    public:
     //---------------------------------
     // Misc
     //---------------------------------
@@ -436,7 +436,7 @@ class CNPC_Strider : public CAI_BlendingHost< CAI_BaseNPC >,
     CBoneFollower *GetBoneFollowerByIndex( int nIndex );
     int GetBoneFollowerIndex( CBoneFollower *pFollower );
 
-   protected:
+    protected:
     // Because the strider is a leaf class, we can use
     // static variables to store this information, and save some memory.
     // Should the strider end up having inheritors, their activate may
@@ -448,7 +448,7 @@ class CNPC_Strider : public CAI_BlendingHost< CAI_BaseNPC >,
     static bool m_sbStaticPoseParamsLoaded;
     virtual void PopulatePoseParameters( void );
 
-   private:
+    private:
     bool ShouldExplodeFromDamage( const CTakeDamageInfo &info );
     bool m_bExploding;
 
@@ -645,7 +645,7 @@ struct StriderMinigunAnimController_t
 
 class CStriderMinigun
 {
-   public:
+    public:
     DECLARE_DATADESC();
 
     void Init();
@@ -702,7 +702,7 @@ class CStriderMinigun
         return GetState() == MINIGUN_SHOOTING;
     }
 
-   private:
+    private:
     bool m_enable;
     int m_minigunState;
     float m_nextBulletTime;  // Minigun is shooting, when can I fire my next bullet?

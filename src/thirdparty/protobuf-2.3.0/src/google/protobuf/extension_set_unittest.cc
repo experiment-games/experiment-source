@@ -71,7 +71,7 @@ TEST(ExtensionSetTest, Defaults) {
             &message.GetExtension(unittest::optional_nested_message_extension));
   EXPECT_EQ(&unittest::ForeignMessage::default_instance(),
             &message.GetExtension(
-              unittest::optional_foreign_message_extension));
+            unittest::optional_foreign_message_extension));
   EXPECT_EQ(&unittest_import::ImportMessage::default_instance(),
             &message.GetExtension(unittest::optional_import_message_extension));
 }
@@ -107,7 +107,7 @@ TEST(ExtensionSetTest, Clear) {
             &message.GetExtension(unittest::optional_nested_message_extension));
   EXPECT_NE(&unittest::ForeignMessage::default_instance(),
             &message.GetExtension(
-              unittest::optional_foreign_message_extension));
+            unittest::optional_foreign_message_extension));
   EXPECT_NE(&unittest_import::ImportMessage::default_instance(),
             &message.GetExtension(unittest::optional_import_message_extension));
 
@@ -364,7 +364,7 @@ TEST(ExtensionSetTest, SpaceUsedExcludingSelf) {
     unittest::TestAllExtensions message;
     const int base_size = message.SpaceUsed();
     message.SetExtension(unittest::optional_nested_enum_extension,
-                         unittest::TestAllTypes::FOO);
+                        unittest::TestAllTypes::FOO);
     int min_expected_size = base_size +
         sizeof(message.GetExtension(unittest::optional_nested_enum_extension));
     EXPECT_LE(min_expected_size, message.SpaceUsed());
@@ -375,7 +375,7 @@ TEST(ExtensionSetTest, SpaceUsedExcludingSelf) {
     unittest::TestAllExtensions message;
     const int base_size = message.SpaceUsed();
     const string s("this is a fairly large string that will cause some "
-                   "allocation in order to store it in the extension");
+                    "allocation in order to store it in the extension");
     message.SetExtension(unittest::optional_string_extension, s);
     int min_expected_size = base_size + s.length();
     EXPECT_LE(min_expected_size, message.SpaceUsed());
@@ -416,7 +416,7 @@ TEST(ExtensionSetTest, SpaceUsedExcludingSelf) {
     EXPECT_EQ(empty_repeated_field_size, message.SpaceUsed()) << #type;        \
     message.ClearExtension(unittest::repeated_##type##_extension);             \
     for (int i = 0; i < 16; ++i) {                                             \
-      message.AddExtension(unittest::repeated_##type##_extension, value);      \
+    message.AddExtension(unittest::repeated_##type##_extension, value);      \
     }                                                                          \
     int expected_size = sizeof(cpptype) * 16 + empty_repeated_field_size;      \
     EXPECT_EQ(expected_size, message.SpaceUsed()) << #type;                    \
@@ -436,7 +436,7 @@ TEST(ExtensionSetTest, SpaceUsedExcludingSelf) {
   TEST_REPEATED_EXTENSIONS_SPACE_USED(double  , double, 112);
   TEST_REPEATED_EXTENSIONS_SPACE_USED(bool    , bool  , true);
   TEST_REPEATED_EXTENSIONS_SPACE_USED(nested_enum, int,
-                                      unittest::TestAllTypes::FOO);
+                                    unittest::TestAllTypes::FOO);
 #undef TEST_REPEATED_EXTENSIONS_SPACE_USED
   // Repeated strings
   {
@@ -448,7 +448,7 @@ TEST(ExtensionSetTest, SpaceUsedExcludingSelf) {
     // without the hardcore memory management accessors there isn't a notion of
     // the empty repeated field memory usage as there is with primitive types.
     for (int i = 0; i < 16; ++i) {
-      message.AddExtension(unittest::repeated_string_extension, value);
+    message.AddExtension(unittest::repeated_string_extension, value);
     }
     min_expected_size += (sizeof(value) + value.size()) * 16;
     EXPECT_LE(min_expected_size, message.SpaceUsed());
@@ -462,8 +462,8 @@ TEST(ExtensionSetTest, SpaceUsedExcludingSelf) {
     unittest::ForeignMessage prototype;
     prototype.set_c(2);
     for (int i = 0; i < 16; ++i) {
-      message.AddExtension(unittest::repeated_foreign_message_extension)->
-          CopyFrom(prototype);
+    message.AddExtension(unittest::repeated_foreign_message_extension)->
+        CopyFrom(prototype);
     }
     min_expected_size += 16 * prototype.SpaceUsed();
     EXPECT_LE(min_expected_size, message.SpaceUsed());
@@ -476,7 +476,7 @@ TEST(ExtensionSetTest, InvalidEnumDeath) {
   unittest::TestAllExtensions message;
   EXPECT_DEBUG_DEATH(
     message.SetExtension(unittest::optional_foreign_enum_extension,
-                         static_cast<unittest::ForeignEnum>(53)),
+                        static_cast<unittest::ForeignEnum>(53)),
     "IsValid");
 }
 
@@ -488,21 +488,21 @@ TEST(ExtensionSetTest, DynamicExtensions) {
   FileDescriptorProto dynamic_proto;
   dynamic_proto.set_name("dynamic_extensions_test.proto");
   dynamic_proto.add_dependency(
-      unittest::TestAllExtensions::descriptor()->file()->name());
+    unittest::TestAllExtensions::descriptor()->file()->name());
   dynamic_proto.set_package("dynamic_extensions");
 
   // Copy the fields and nested types from TestDynamicExtensions into our new
   // proto, converting the fields into extensions.
   const Descriptor* template_descriptor =
-      unittest::TestDynamicExtensions::descriptor();
+    unittest::TestDynamicExtensions::descriptor();
   DescriptorProto template_descriptor_proto;
   template_descriptor->CopyTo(&template_descriptor_proto);
   dynamic_proto.mutable_message_type()->MergeFrom(
-      template_descriptor_proto.nested_type());
+    template_descriptor_proto.nested_type());
   dynamic_proto.mutable_enum_type()->MergeFrom(
-      template_descriptor_proto.enum_type());
+    template_descriptor_proto.enum_type());
   dynamic_proto.mutable_extension()->MergeFrom(
-      template_descriptor_proto.field());
+    template_descriptor_proto.field());
 
   // For each extension that we added...
   for (int i = 0; i < dynamic_proto.extension_size(); i++) {
@@ -515,10 +515,10 @@ TEST(ExtensionSetTest, DynamicExtensions) {
     // make it refer to the type in our dynamic proto instead.
     string prefix = "." + template_descriptor->full_name() + ".";
     if (extension->has_type_name()) {
-      string* type_name = extension->mutable_type_name();
-      if (HasPrefixString(*type_name, prefix)) {
+    string* type_name = extension->mutable_type_name();
+    if (HasPrefixString(*type_name, prefix)) {
         type_name->replace(0, prefix.size(), ".dynamic_extensions.");
-      }
+    }
     }
   }
 
@@ -552,8 +552,8 @@ TEST(ExtensionSetTest, DynamicExtensions) {
 
     // An unknown enum value (for a known field).
     message.mutable_unknown_fields()->AddVarint(
-      unittest::TestDynamicExtensions::kDynamicEnumExtensionFieldNumber,
-      12345);
+    unittest::TestDynamicExtensions::kDynamicEnumExtensionFieldNumber,
+    12345);
     // A regular unknown field.
     message.mutable_unknown_fields()->AddLengthDelimited(54321, "unknown");
 
@@ -629,7 +629,7 @@ TEST(ExtensionSetTest, DynamicExtensions) {
     const Message& parent = unittest::TestAllExtensions::default_instance();
     const Message& sub_message =
         parent.GetReflection()->GetMessage(parent, dynamic_message_extension,
-                                           &dynamic_factory);
+                                            &dynamic_factory);
     const Message* prototype =
         dynamic_factory.GetPrototype(dynamic_message_extension->message_type());
     EXPECT_EQ(prototype, &sub_message);

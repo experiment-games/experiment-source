@@ -120,13 +120,13 @@ struct vehiclesounds_t
 //-----------------------------------------------------------------------------
 class CVehicleSoundsParser : public IVPhysicsKeyHandler
 {
-   public:
+    public:
     CVehicleSoundsParser( void );
 
     virtual void ParseKeyValue( void *pData, const char *pKey, const char *pValue );
     virtual void SetDefaults( void *pData );
 
-   private:
+    private:
     // Index of the gear we're currently reading data into
     int m_iCurrentGear;
     int m_iCurrentState;

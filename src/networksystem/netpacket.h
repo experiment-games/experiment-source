@@ -19,14 +19,14 @@ class CNetPacket
 {
     DECLARE_FIXEDSIZE_ALLOCATOR( CNetPacket );
 
-   public:
+    public:
     CNetPacket();
     ~CNetPacket();
 
     void AddRef();
     void Release();
 
-   public:
+    public:
     netadr_t m_From;
     ISocket *m_pSource;
     float m_flReceivedTime;
@@ -36,7 +36,7 @@ class CNetPacket
     int m_nSizeInBytes;
     int m_nCurrentSizeInBytes;
 
-   private:
+    private:
     int m_nRefCount;
 };
 

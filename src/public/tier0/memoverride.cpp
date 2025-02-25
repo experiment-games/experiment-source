@@ -408,7 +408,7 @@ void __cdecl operator delete[]( void *pMem )
 
 class CAttibCRT
 {
-   public:
+    public:
     CAttibCRT( int nBlockUse )
         : m_nBlockUse( nBlockUse )
     {
@@ -426,7 +426,7 @@ class CAttibCRT
         }
     }
 
-   private:
+    private:
     int m_nBlockUse;
 };
 
@@ -749,35 +749,35 @@ extern "C"
     class Base
     {
     public:
-      virtual void PureFunction() = 0;
+    virtual void PureFunction() = 0;
 
-      Base()
-      {
+    Base()
+    {
         NonPureFunction();
-      }
+    }
 
-      void NonPureFunction()
-      {
+    void NonPureFunction()
+    {
         PureFunction();
-      }
+    }
     };
 
     class Derived : public Base
     {
     public:
-      void PureFunction() OVERRIDE
-      {
-      }
+    void PureFunction() OVERRIDE
+    {
+    }
     };
 
     void PureCallViolation()
     {
-      Derived derived;
+    Derived derived;
     }
 
     void InvalidParameterViolation()
     {
-      printf( NULL );
+    printf( NULL );
     }
     */
 
@@ -815,10 +815,10 @@ extern "C"
     }
 
     void VInvalidParameterHandler( const wchar_t *expression,
-                                   const wchar_t *function,
-                                   const wchar_t *file,
-                                   unsigned int line,
-                                   uintptr_t pReserved )
+                                    const wchar_t *function,
+                                    const wchar_t *file,
+                                    unsigned int line,
+                                    uintptr_t pReserved )
     {
         WriteMiniDumpOrBreak( 1, "InvalidParameterHandler" );
     }
@@ -829,7 +829,7 @@ extern "C"
     // Helper class for registering error callbacks. See above for details.
     class ErrorHandlerRegistrar
     {
-       public:
+        public:
         ErrorHandlerRegistrar();
     } s_ErrorHandlerRegistration;
 
@@ -1062,62 +1062,62 @@ extern "C"
 #if 0
 _TSCHAR * __cdecl _tfullpath_dbg ( _TSCHAR *UserBuf, const _TSCHAR *path, size_t maxlen, int nBlockUse, const char * szFileName, int nLine )
 {
-	Assert(0);
-	return NULL;
+    Assert(0);
+    return NULL;
 }
 
 _TSCHAR * __cdecl _tfullpath ( _TSCHAR *UserBuf, const _TSCHAR *path, size_t maxlen )
 {
-	Assert(0);
-	return NULL;
+    Assert(0);
+    return NULL;
 }
 
 _TSCHAR * __cdecl _tgetdcwd_lk_dbg ( int drive, _TSCHAR *pnbuf, int maxlen, int nBlockUse, const char * szFileName, int nLine )
 {
-	Assert(0);
-	return NULL;
+    Assert(0);
+    return NULL;
 }
 
 _TSCHAR * __cdecl _tgetdcwd_nolock ( int drive, _TSCHAR *pnbuf, int maxlen )
 {
-	Assert(0);
-	return NULL;
+    Assert(0);
+    return NULL;
 }
 
 errno_t __cdecl _tdupenv_s_helper ( _TSCHAR **pBuffer, size_t *pBufferSizeInTChars, const _TSCHAR *varname, int nBlockUse, const char * szFileName, int nLine )
 {
-	Assert(0);
-	return 0;
+    Assert(0);
+    return 0;
 }
 
 errno_t __cdecl _tdupenv_s_helper ( _TSCHAR **pBuffer, size_t *pBufferSizeInTChars, const _TSCHAR *varname )
 {
-	Assert(0);
-	return 0;
+    Assert(0);
+    return 0;
 }
 
 _TSCHAR * __cdecl _ttempnam_dbg ( const _TSCHAR *dir, const _TSCHAR *pfx, int nBlockUse, const char * szFileName, int nLine )
 {
-	Assert(0);
-	return 0;
+    Assert(0);
+    return 0;
 }
 
 _TSCHAR * __cdecl _ttempnam ( const _TSCHAR *dir, const _TSCHAR *pfx )
 {
-	Assert(0);
-	return 0;
+    Assert(0);
+    return 0;
 }
 
 wchar_t * __cdecl _wcsdup_dbg ( const wchar_t * string, int nBlockUse, const char * szFileName, int nLine )
 {
-	Assert(0);
-	return 0;
+    Assert(0);
+    return 0;
 }
 
 wchar_t * __cdecl _wcsdup ( const wchar_t * string )
 {
-	Assert(0);
-	return 0;
+    Assert(0);
+    return 0;
 }
 #endif
 }  // end extern "C"
@@ -1343,13 +1343,13 @@ struct _tiddata
     void *_initarg;  /* initial user thread argument */
 
     /* following three fields are needed to support signal handling and
-     * runtime errors */
+    * runtime errors */
     void *_pxcptacttab;    /* ptr to exception-action table */
     void *_tpxcptinfoptrs; /* ptr to exception info pointers */
     int _tfpecode;         /* float point exception code */
 
     /* pointer to the copy of the multibyte character information used by
-     * the thread */
+    * the thread */
     pthreadmbcinfo ptmbcinfo;
 
     /* pointer to the copy of the locale informaton used by the thead */
@@ -1360,8 +1360,8 @@ struct _tiddata
     unsigned long _NLG_dwCode;
 
     /*
-     * Per-Thread data needed by C++ Exception Handling
-     */
+    * Per-Thread data needed by C++ Exception Handling
+    */
     void *_terminate;     /* terminate() routine */
     void *_unexpected;    /* unexpected() routine */
     void *_translator;    /* S.E. translator */
@@ -1460,13 +1460,13 @@ struct _tiddata
     void *_initarg;  /* initial user thread argument */
 
     /* following three fields are needed to support signal handling and
-     * runtime errors */
+    * runtime errors */
     void *_pxcptacttab;    /* ptr to exception-action table */
     void *_tpxcptinfoptrs; /* ptr to exception info pointers */
     int _tfpecode;         /* float point exception code */
 
     /* pointer to the copy of the multibyte character information used by
-     * the thread */
+    * the thread */
     pthreadmbcinfo ptmbcinfo;
 
     /* pointer to the copy of the locale informaton used by the thead */
@@ -1477,8 +1477,8 @@ struct _tiddata
     unsigned long _NLG_dwCode;
 
     /*
-     * Per-Thread data needed by C++ Exception Handling
-     */
+    * Per-Thread data needed by C++ Exception Handling
+    */
     void *_terminate;     /* terminate() routine */
     void *_unexpected;    /* unexpected() routine */
     void *_translator;    /* S.E. translator */
@@ -1523,7 +1523,7 @@ class _LocaleUpdate
     _ptiddata ptd;
     bool updated;
 
-   public:
+    public:
     _LocaleUpdate( _locale_t plocinfo )
         : updated( false )
     {
@@ -1571,14 +1571,14 @@ namespace _NATIVE_STARTUP_NAMESPACE
 {
 class NativeDll
 {
-   private:
+    private:
     static const unsigned int ProcessDetach = 0;
     static const unsigned int ProcessAttach = 1;
     static const unsigned int ThreadAttach = 2;
     static const unsigned int ThreadDetach = 3;
     static const unsigned int ProcessVerifier = 4;
 
-   public:
+    public:
     inline static bool IsInDllMain()
     {
         return false;

@@ -73,7 +73,7 @@ static size_t loadUnsigned (LoadState *S, size_t limit) {
   do {
     b = loadByte(S);
     if (x >= limit)
-      error(S, "integer overflow");
+    error(S, "integer overflow");
     x = (x << 7) | (b & 0x7f);
   } while ((b & 0x80) == 0);
   return x;
@@ -163,26 +163,26 @@ static void loadConstants (LoadState *S, Proto *f) {
     TValue *o = &f->k[i];
     int t = loadByte(S);
     switch (t) {
-      case LUA_VNIL:
+    case LUA_VNIL:
         setnilvalue(o);
         break;
-      case LUA_VFALSE:
+    case LUA_VFALSE:
         setbfvalue(o);
         break;
-      case LUA_VTRUE:
+    case LUA_VTRUE:
         setbtvalue(o);
         break;
-      case LUA_VNUMFLT:
+    case LUA_VNUMFLT:
         setfltvalue(o, loadNumber(S));
         break;
-      case LUA_VNUMINT:
+    case LUA_VNUMINT:
         setivalue(o, loadInteger(S));
         break;
-      case LUA_VSHRSTR:
-      case LUA_VLNGSTR:
+    case LUA_VSHRSTR:
+    case LUA_VLNGSTR:
         setsvalue2n(S->L, o, loadString(S, f));
         break;
-      default: lua_assert(0);
+    default: lua_assert(0);
     }
   }
 }
@@ -332,4 +332,3 @@ LClosure *luaU_undump(lua_State *L, ZIO *Z, const char *name) {
   luai_verifycode(L, cl->p);
   return cl;
 }
-

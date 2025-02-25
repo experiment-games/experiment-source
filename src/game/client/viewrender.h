@@ -86,7 +86,7 @@ view_id_t CurrentViewID();
 //-----------------------------------------------------------------------------
 class CPitchDrift
 {
-   public:
+    public:
     float pitchvel;
     bool nodrift;
     float driftmove;
@@ -163,7 +163,7 @@ class CBase3dView : public CRefCounted<>,
 {
     DECLARE_CLASS_NOBASE( CBase3dView );
 
-   public:
+    public:
     CBase3dView( CViewRender *pMainView );
 
     VPlane *GetFrustum();
@@ -176,7 +176,7 @@ class CBase3dView : public CRefCounted<>,
     virtual void EnableWorldFog(){};
 #endif
 
-   protected:
+    protected:
     // @MULTICORE (toml 8/11/2006): need to have per-view frustum. Change when move view stack to client
     VPlane *m_Frustum;
     CViewRender *m_pMainView;
@@ -189,7 +189,7 @@ class CRendering3dView : public CBase3dView
 {
     DECLARE_CLASS( CRendering3dView, CBase3dView );
 
-   public:
+    public:
     CRendering3dView( CViewRender *pMainView );
     virtual ~CRendering3dView()
     {
@@ -203,7 +203,7 @@ class CRendering3dView : public CBase3dView
 
     virtual void Draw(){};
 
-   protected:
+    protected:
     // Fog setup
     void EnableWorldFog( void );
     void SetFogVolumeState( const VisibleFogVolumeInfo_t &fogInfo, bool bUseHeightFog );
@@ -273,11 +273,11 @@ class CRenderExecutor
 {
     DECLARE_CLASS_NOBASE( CRenderExecutor );
 
-   public:
+    public:
     virtual void AddView( CRendering3dView *pView ) = 0;
     virtual void Execute() = 0;
 
-   protected:
+    protected:
     CRenderExecutor( CViewRender *pMainView )
         : m_pMainView( pMainView ) {}
     CViewRender *m_pMainView;
@@ -291,7 +291,7 @@ class CSimpleRenderExecutor : public CRenderExecutor
 {
     DECLARE_CLASS( CSimpleRenderExecutor, CRenderExecutor );
 
-   public:
+    public:
     CSimpleRenderExecutor( CViewRender *pMainView )
         : CRenderExecutor( pMainView ) {}
 
@@ -308,7 +308,7 @@ class CViewRender : public IViewRender,
 {
     DECLARE_CLASS_NOBASE( CViewRender );
 
-   public:
+    public:
     virtual void Init( void );
     virtual void Shutdown( void );
 
@@ -338,7 +338,7 @@ class CViewRender : public IViewRender,
         m_SimpleExecutor.AddView( pView );
     }
 
-   protected:
+    protected:
     // Sets up the view parameters for all views (left, middle and right eyes).
     void SetUpViews();
 
@@ -372,12 +372,12 @@ class CViewRender : public IViewRender,
     // Pitch drifting data
     CPitchDrift m_PitchDrift;
 
-   public:
+    public:
     CViewRender();
     virtual ~CViewRender( void ) {}
 
     // Implementation of IViewRender interface
-   public:
+    public:
     void SetupVis( const CViewSetup &view, unsigned int &visFlags, ViewCustomVisibility_t *pCustomVisibility = NULL );
 
     // Render functions
@@ -474,7 +474,7 @@ class CViewRender : public IViewRender,
         m_UnderWaterOverlayMaterial.Init( pMaterial );
     }
 
-   private:
+    private:
     int m_BuildWorldListsNumber;
 
     // General draw methods

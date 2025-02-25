@@ -23,17 +23,17 @@ class CBuyMenu;
 //-----------------------------------------------------------------------------
 class CBuySubMenu : public vgui::WizardSubPanel
 {
-   private:
+    private:
     DECLARE_CLASS_SIMPLE( CBuySubMenu, vgui::WizardSubPanel );
 
-   public:
+    public:
     CBuySubMenu( vgui::Panel *parent, const char *name = "BuySubMenu" );
     ~CBuySubMenu();
 
     virtual void SetVisible( bool state );
     virtual void DeleteSubPanels();
 
-   protected:
+    protected:
     // command callbacks
     virtual void OnCommand( const char *command );
     virtual vgui::WizardSubPanel *GetNextSubPanel();  // this is the last menu in the list

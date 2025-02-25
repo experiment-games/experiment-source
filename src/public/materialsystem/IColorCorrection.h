@@ -21,7 +21,7 @@ struct ShaderColorCorrectionInfo_t;
 
 abstract_class IColorCorrectionSystem
 {
-   public:
+    public:
     virtual void Init() = 0;
     virtual void Shutdown() = 0;
 

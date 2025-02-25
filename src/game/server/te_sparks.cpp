@@ -16,7 +16,7 @@
 //-----------------------------------------------------------------------------
 class CTESparks : public CTEParticleSystem
 {
-   public:
+    public:
     DECLARE_CLASS( CTESparks, CTEParticleSystem );
     DECLARE_SERVERCLASS();
 

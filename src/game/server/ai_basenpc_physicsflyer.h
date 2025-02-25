@@ -21,7 +21,7 @@ abstract_class CAI_BasePhysicsFlyingBot : public CAI_BaseNPC, public IMotionEven
 {
     DECLARE_CLASS( CAI_BasePhysicsFlyingBot, CAI_BaseNPC );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     void StartTask( const Task_t *pTask );
@@ -33,7 +33,7 @@ abstract_class CAI_BasePhysicsFlyingBot : public CAI_BaseNPC, public IMotionEven
         return true;
     }
 
-   protected:
+    protected:
     CAI_BasePhysicsFlyingBot();
     ~CAI_BasePhysicsFlyingBot();
 
@@ -104,10 +104,10 @@ abstract_class CAI_BasePhysicsFlyingBot : public CAI_BaseNPC, public IMotionEven
     }
 
     AI_NavPathProgress_t ProgressFlyPath( float flInterval,
-                                          const CBaseEntity *pNewTarget,
-                                          unsigned collisionMask,
-                                          bool bNewTrySimplify = true,
-                                          float strictPointTolerance = 32.0 );
+                                        const CBaseEntity *pNewTarget,
+                                        unsigned collisionMask,
+                                        bool bNewTrySimplify = true,
+                                        float strictPointTolerance = 32.0 );
 
     const Vector &GetCurrentVelocity() const
     {

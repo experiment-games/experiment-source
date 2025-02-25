@@ -39,7 +39,7 @@
 
 class CThirdPersonManager
 {
-   public:
+    public:
     CThirdPersonManager();
     void SetCameraOffsetAngles( const Vector& vecOffset )
     {
@@ -112,7 +112,7 @@ class CThirdPersonManager
         return m_bForced;
     }
 
-   private:
+    private:
     // What is the current camera offset from the view origin?
     Vector m_vecCameraOffset;
     // Distances from the center

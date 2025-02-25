@@ -25,7 +25,7 @@ typedef enum
 
 typedef struct netadr_s
 {
-   public:
+    public:
     netadr_s()
     {
         SetIP( 0 );
@@ -78,7 +78,7 @@ typedef struct netadr_s
     }
     bool operator<( const netadr_s &netadr ) const;
 
-   public:  // members are public to avoid to much changes
+    public:  // members are public to avoid to much changes
     netadrtype_t type;
     unsigned char ip[4];
     unsigned short port;

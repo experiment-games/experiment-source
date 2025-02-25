@@ -44,7 +44,7 @@ enum FuncDoorSpawnPos_t
 
 class CBaseDoor : public CBaseToggle
 {
-   public:
+    public:
     DECLARE_CLASS( CBaseDoor, CBaseToggle );
 
     DECLARE_SERVERCLASS();
@@ -158,7 +158,7 @@ class CBaseDoor : public CBaseToggle
         return false;
     }
 
-   private:
+    private:
     void ChainUse( void );                   ///< Chains +use on through to m_ChainTarget
     void ChainTouch( CBaseEntity *pOther );  ///< Chains touch on through to m_ChainTarget
     void SetChaining( bool chaining )

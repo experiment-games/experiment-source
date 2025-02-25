@@ -22,7 +22,7 @@ class CRagdollProp : public CBaseAnimating, public CDefaultPlayerPickupVPhysics
 {
     DECLARE_CLASS( CRagdollProp, CBaseAnimating );
 
-   public:
+    public:
     CRagdollProp( void );
     ~CRagdollProp( void );
 
@@ -124,11 +124,11 @@ class CRagdollProp : public CBaseAnimating, public CDefaultPlayerPickupVPhysics
 
     DECLARE_DATADESC();
 
-   protected:
+    protected:
     void CalcRagdollSize( void );
     ragdoll_t m_ragdoll;
 
-   private:
+    private:
     void UpdateNetworkDataFromVPhysics( IPhysicsObject *pPhysics, int index );
     void FadeOutThink();
 

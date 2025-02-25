@@ -25,7 +25,7 @@
 
 class FleckParticle : public Particle
 {
-   public:
+    public:
     Vector m_vecVelocity;
     float m_flRoll;
     float m_flRollDelta;
@@ -41,7 +41,7 @@ class FleckParticle : public Particle
 
 class CFleckParticles : public CSimpleEmitter
 {
-   public:
+    public:
     CFleckParticles( const char *pDebugName );
     ~CFleckParticles();
     static CSmartPtr< CFleckParticles > Create( const char *pDebugName, const Vector &vCenter, const Vector &extents );
@@ -56,7 +56,7 @@ class CFleckParticles : public CSimpleEmitter
 
     CFleckParticles *m_pNextParticleSystem;
 
-   private:
+    private:
     CFleckParticles( const CFleckParticles & );  // not defined, not accessible
 };
 

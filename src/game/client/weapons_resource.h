@@ -23,7 +23,7 @@ class CHudTexture;
 //-----------------------------------------------------------------------------
 class WeaponsResource
 {
-   public:
+    public:
     WeaponsResource( void );
     ~WeaponsResource( void );
 

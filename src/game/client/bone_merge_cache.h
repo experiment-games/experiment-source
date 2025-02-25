@@ -17,7 +17,7 @@ class CStudioHdr;
 
 class CBoneMergeCache
 {
-   public:
+    public:
     CBoneMergeCache();
 
     void Init( C_BaseAnimating *pOwner );
@@ -41,7 +41,7 @@ class CBoneMergeCache
 
     bool GetRootBone( matrix3x4_t &rootBone );
 
-   private:
+    private:
     // This is the entity that we're keeping the cache updated for.
     C_BaseAnimating *m_pOwner;
 
@@ -58,7 +58,7 @@ class CBoneMergeCache
     // Cache data.
     class CMergedBone
     {
-       public:
+        public:
         unsigned short m_iMyBone;
         unsigned short m_iParentBone;
     };

@@ -110,7 +110,7 @@ struct Bitmap_t
     /// the rectangle is clipped if necessary
     void SetPixelData( const Bitmap_t &src, int nDestX1 = 0, int nDestY1 = 0 );
 
-   private:
+    private:
     void Reset();
 
     /// Dimensions

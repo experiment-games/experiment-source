@@ -17,7 +17,7 @@
 
 class IVTex : public IAppSystem
 {
-   public:
+    public:
     // For use by command-line tools
     virtual int VTex( int argc, char **argv ) = 0;
 

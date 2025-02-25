@@ -48,7 +48,7 @@ enum
 //-----------------------------------------------------------------------------
 abstract_class IAppSystemGroup
 {
-   public:
+    public:
     // An installed application creation function, you should tell the group
     // the DLLs and the singleton interfaces you want to instantiate.
     // Return false if there's any problems and the app will abort
@@ -85,7 +85,7 @@ struct AppSystemInfo_t
 //-----------------------------------------------------------------------------
 class CAppSystemGroup : public IAppSystemGroup
 {
-   public:
+    public:
     // Used to determine where we exited out from the system
     enum AppSystemGroupStage_t
     {
@@ -101,7 +101,7 @@ class CAppSystemGroup : public IAppSystemGroup
         NONE,  // This means no error
     };
 
-   public:
+    public:
     // constructor
     CAppSystemGroup( CAppSystemGroup *pParentAppSystem = NULL );
 
@@ -119,7 +119,7 @@ class CAppSystemGroup : public IAppSystemGroup
     // Returns the stage at which the app system group ran into an error
     AppSystemGroupStage_t GetErrorStage() const;
 
-   protected:
+    protected:
     // These methods are meant to be called by derived classes of CAppSystemGroup
 
     // Methods to load + unload DLLs
@@ -140,7 +140,7 @@ class CAppSystemGroup : public IAppSystemGroup
     // Gets at a class factory for the topmost appsystem group in an appsystem stack
     static CreateInterfaceFn GetFactory();
 
-   private:
+    private:
     int OnStartup();
     void OnShutdown();
 
@@ -185,20 +185,20 @@ class CAppSystemGroup : public IAppSystemGroup
 //-----------------------------------------------------------------------------
 class CSteamAppSystemGroup : public CAppSystemGroup
 {
-   public:
+    public:
     CSteamAppSystemGroup( IFileSystem *pFileSystem = NULL, CAppSystemGroup *pParentAppSystem = NULL );
 
     // Used by CSteamApplication to set up necessary pointers if we can't do it in the constructor
     void Setup( IFileSystem *pFileSystem, CAppSystemGroup *pParentAppSystem );
 
-   protected:
+    protected:
     // Sets up the search paths
     bool SetupSearchPaths( const char *pStartingDir, bool bOnlyUseStartingDir, bool bIsTool );
 
     // Returns the game info path. Only works if you've called SetupSearchPaths first
     const char *GetGameInfoPath() const;
 
-   private:
+    private:
     virtual CSysModule *LoadModuleDLL( const char *pDLLName );
 
     IFileSystem *m_pFileSystem;
@@ -211,7 +211,7 @@ class CSteamAppSystemGroup : public CAppSystemGroup
 template < class CBaseClass >
 class CDefaultAppSystemGroup : public CBaseClass
 {
-   public:
+    public:
     virtual bool Create()
     {
         return true;

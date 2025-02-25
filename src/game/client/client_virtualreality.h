@@ -42,7 +42,7 @@ class CClientVirtualReality : public CTier3AppSystem< IClientVirtualReality >
 {
     typedef CTier3AppSystem< IClientVirtualReality > BaseClass;
 
-   public:
+    public:
     CClientVirtualReality();
     ~CClientVirtualReality();
 
@@ -103,7 +103,7 @@ class CClientVirtualReality : public CTier3AppSystem< IClientVirtualReality >
     void Activate();
     void Deactivate();
 
-   private:
+    private:
     HeadtrackMovementMode_t m_hmmMovementActual;
 
     // Where the current mideye is relative to the (game)world.

@@ -16,7 +16,7 @@ class CPathCorner : public CPointEntity
 {
     DECLARE_CLASS( CPathCorner, CPointEntity );
 
-   public:
+    public:
     void Spawn();
     float GetDelay( void )
     {
@@ -31,7 +31,7 @@ class CPathCorner : public CPointEntity
 
     DECLARE_DATADESC();
 
-   private:
+    private:
     float m_flWait;
     COutputEvent m_OnPass;
 };

@@ -45,8 +45,8 @@
 #define MAX_SERVER_DUMP_INTERVAL 30
 
 #define DOWNLOAD_TIMEOUT_THRESHOLD 90  // Timeout for a replay download - if no blocks
-                                       // are added or updated after this many seconds,
-                                       // the replay will be put in the error state.
+                                        // are added or updated after this many seconds,
+                                        // the replay will be put in the error state.
 
 //----------------------------------------------------------------------------------------
 

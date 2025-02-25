@@ -50,7 +50,7 @@ class Vector;
 
 abstract_class IEngineSound
 {
-   public:
+    public:
     // Precache a particular sample
     virtual bool PrecacheSound( const char *pSample, bool bPreload = false, bool bIsUISound = false ) = 0;
     virtual bool IsSoundPrecached( const char *pSample ) = 0;

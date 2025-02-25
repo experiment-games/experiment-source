@@ -56,7 +56,7 @@ class TreeNodeText : public TextEntry
 {
     DECLARE_CLASS_SIMPLE( TreeNodeText, TextEntry );
 
-   public:
+    public:
     TreeNodeText( Panel *parent, const char *panelName, TreeView *tree )
         : BaseClass( parent, panelName ), m_pTree( tree )
     {
@@ -209,12 +209,12 @@ class TreeNodeText : public TextEntry
             bool bIsOnlyOneItemSelected = ( list.Count() == 1 );
 
             if ( !shift &&
-                 !ctrl &&
-                 !m_bArmForEditing &&
-                 IsLabelEditingAllowed() &&
-                 bIsOnlyOneItemSelected &&
-                 IsTextFullySelected() &&
-                 !IsBeingDragged() )
+                !ctrl &&
+                !m_bArmForEditing &&
+                IsLabelEditingAllowed() &&
+                bIsOnlyOneItemSelected &&
+                IsTextFullySelected() &&
+                !IsBeingDragged() )
             {
                 m_bWaitingForRelease = true;
             }
@@ -323,7 +323,7 @@ class TreeNodeText : public TextEntry
         return m_bEditingInPlace;
     }
 
-   private:
+    private:
     bool m_bEditingInPlace;
     CUtlString m_OriginalText;
     bool m_bLabelEditingAllowed;
@@ -339,7 +339,7 @@ class TreeNodeText : public TextEntry
 //-----------------------------------------------------------------------------
 class TreeNodeImage : public ImagePanel
 {
-   public:
+    public:
     TreeNodeImage( Panel *parent, const char *name )
         : ImagePanel( parent, name )
     {
@@ -377,7 +377,7 @@ class TreeNodeImage : public ImagePanel
 //-----------------------------------------------------------------------------
 class TreeViewSubPanel : public Panel
 {
-   public:
+    public:
     TreeViewSubPanel( Panel *parent )
         : Panel( parent ) {}
 
@@ -418,7 +418,7 @@ class TreeNode : public Panel
 {
     DECLARE_CLASS_SIMPLE( TreeNode, Panel );
 
-   public:
+    public:
     TreeNode( Panel *parent, TreeView *pTreeView );
     ~TreeNode();
     void SetText( const char *pszText );
@@ -495,14 +495,14 @@ class TreeNode : public Panel
     void SetSelectionBgColor( const Color &clr );
     void SetSelectionUnfocusedBgColor( const Color &clr );
 
-   public:
+    public:
     int m_ItemIndex;
     int m_ParentIndex;
     KeyValues *m_pData;
     CUtlVector< TreeNode * > m_Children;
     bool m_bExpand;
 
-   private:
+    private:
     void FindNodesInRange_R( CUtlVector< TreeNode * > &list, bool &finished, bool &foundStart, int startIndex, int endIndex );
 
     int m_iNodeWidth;
@@ -521,8 +521,8 @@ class TreeNode : public Panel
 
 TreeNode::TreeNode( Panel *parent, TreeView *pTreeView )
     : BaseClass( parent, "TreeNode" ),
-      m_nClickedItem( 0 ),
-      m_bClickedSelected( false )
+    m_nClickedItem( 0 ),
+    m_bClickedSelected( false )
 {
     m_pData = NULL;
     m_pTreeView = pTreeView;
@@ -633,7 +633,7 @@ void TreeNode::OnLabelChanged( KeyValues *data )
 void TreeNode::EditLabel()
 {
     if ( m_pText->IsLabelEditingAllowed() &&
-         !m_pText->IsBeingEdited() )
+        !m_pText->IsBeingEdited() )
     {
         m_pText->EnterEditingInPlace();
     }
@@ -712,7 +712,7 @@ void TreeNode::PerformLayout()
 
     int width = 0;
     if ( m_pData->GetInt( "SelectedImage", 0 ) == 0 &&
-         m_pData->GetInt( "Image", 0 ) == 0 )
+        m_pData->GetInt( "Image", 0 ) == 0 )
     {
         width = TREE_INDENT_AMOUNT;
     }

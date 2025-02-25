@@ -21,7 +21,7 @@ class mpcontrol_t;
 //-----------------------------------------------------------------------------
 class CCreateMultiplayerGameGameplayPage : public vgui::PropertyPage
 {
-   public:
+    public:
     CCreateMultiplayerGameGameplayPage( vgui::Panel *parent, const char *name );
     ~CCreateMultiplayerGameGameplayPage();
 
@@ -30,10 +30,10 @@ class CCreateMultiplayerGameGameplayPage : public vgui::PropertyPage
     const char *GetPassword();
     const char *GetHostName();
 
-   protected:
+    protected:
     virtual void OnApplyChanges();
 
-   private:
+    private:
     const char *GetValue( const char *cvarName, const char *defaultValue );
     void LoadGameOptionsList();
     void GatherCurrentValues();

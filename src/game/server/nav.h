@@ -215,24 +215,24 @@ struct Extent
     bool Contains( const Vector &pos ) const
     {
         return ( pos.x >= lo.x && pos.x <= hi.x &&
-                 pos.y >= lo.y && pos.y <= hi.y &&
-                 pos.z >= lo.z && pos.z <= hi.z );
+                pos.y >= lo.y && pos.y <= hi.y &&
+                pos.z >= lo.z && pos.z <= hi.z );
     }
 
     // return true if this extent overlaps the given one
     bool IsOverlapping( const Extent &other ) const
     {
         return ( lo.x <= other.hi.x && hi.x >= other.lo.x &&
-                 lo.y <= other.hi.y && hi.y >= other.lo.y &&
-                 lo.z <= other.hi.z && hi.z >= other.lo.z );
+                lo.y <= other.hi.y && hi.y >= other.lo.y &&
+                lo.z <= other.hi.z && hi.z >= other.lo.z );
     }
 
     // return true if this extent completely contains the given one
     bool IsEncompassing( const Extent &other, float tolerance = 0.0f ) const
     {
         return ( lo.x <= other.lo.x + tolerance && hi.x >= other.hi.x - tolerance &&
-                 lo.y <= other.lo.y + tolerance && hi.y >= other.hi.y - tolerance &&
-                 lo.z <= other.lo.z + tolerance && hi.z >= other.hi.z - tolerance );
+                lo.y <= other.lo.y + tolerance && hi.y >= other.hi.y - tolerance &&
+                lo.z <= other.lo.z + tolerance && hi.z >= other.hi.z - tolerance );
     }
 };
 
@@ -531,7 +531,7 @@ inline bool IsEntityWalkable( CBaseEntity *entity, unsigned int flags )
  */
 class CTraceFilterWalkableEntities : public CTraceFilterNoNPCsOrPlayer
 {
-   public:
+    public:
     CTraceFilterWalkableEntities( const IHandleEntity *passentity, int collisionGroup, unsigned int flags )
         : CTraceFilterNoNPCsOrPlayer( passentity, collisionGroup ), m_flags( flags )
     {
@@ -547,7 +547,7 @@ class CTraceFilterWalkableEntities : public CTraceFilterNoNPCsOrPlayer
         return false;
     }
 
-   private:
+    private:
     unsigned int m_flags;
 };
 

@@ -33,19 +33,19 @@ enum Type
 
 abstract_class IBassManagerCallbackData
 {
-   public:
+    public:
     virtual void Release() = 0;
 };
 
 class CBassManager : public CBaseGameSystemPerFrame
 {
-   public:
+    public:
     virtual bool Init();
     virtual void Shutdown();
 
     virtual void Update( float frametime );
 
-   public:
+    public:
     bool IsInitialized() const
     {
         return m_bInitialized;
@@ -69,7 +69,7 @@ class CBassManager : public CBaseGameSystemPerFrame
 
     // void EnqueueCallbackTask( std::function< void() > task );
 
-   protected:
+    protected:
     int ToBassFlags( int flags );
 
     bool m_bInitialized;
@@ -84,7 +84,7 @@ extern CBassManager *g_pBassManager;
 
 abstract_class IAudioChannel
 {
-   public:
+    public:
     virtual ~IAudioChannel() {}
 
     virtual void Release() = 0;
@@ -148,7 +148,7 @@ abstract_class IAudioChannel
 /* Wrapper around a BASS handle */
 class CAudioChannel : public IAudioChannel
 {
-   public:
+    public:
     CAudioChannel( HSTREAM handle );
     virtual ~CAudioChannel();
 
@@ -209,7 +209,7 @@ class CAudioChannel : public IAudioChannel
 
     virtual void FFT( CUtlVector< float > &fft, int size ) OVERRIDE;
 
-   private:
+    private:
     HSTREAM m_Handle;
 };
 

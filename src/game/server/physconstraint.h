@@ -35,7 +35,7 @@ abstract_class CPhysConstraint : public CLogicalEntity
 {
     DECLARE_CLASS( CPhysConstraint, CLogicalEntity );
 
-   public:
+    public:
     CPhysConstraint();
     ~CPhysConstraint();
 
@@ -86,7 +86,7 @@ abstract_class CPhysConstraint : public CLogicalEntity
         return m_nameAttach2;
     }
 
-   protected:
+    protected:
     void GetConstraintObjects( hl_constraint_info_t & info );
     void SetupTeleportationHandling( hl_constraint_info_t & info );
     bool ActivateConstraint( void );
@@ -114,7 +114,7 @@ class CPhysFixed : public CPhysConstraint
 {
     DECLARE_CLASS( CPhysFixed, CPhysConstraint );
 
-   public:
+    public:
     IPhysicsConstraint *CreateConstraint( IPhysicsConstraintGroup *pGroup, const hl_constraint_info_t &info );
 
     // just for debugging - move to the position of the reference entity

@@ -16,7 +16,7 @@
 
 class C_ParticleTrail : public C_BaseParticleEntity, public IPrototypeAppEffect
 {
-   public:
+    public:
     DECLARE_CLASS( C_ParticleTrail, C_BaseParticleEntity );
 
     C_ParticleTrail( void );
@@ -33,7 +33,7 @@ class C_ParticleTrail : public C_BaseParticleEntity, public IPrototypeAppEffect
     void SetSpawnRate( float rate );
 
     // C_BaseEntity.
-   public:
+    public:
     virtual void OnDataChanged( DataUpdateType_t updateType );
 
     virtual void Start( CParticleMgr *pParticleMgr, IPrototypeArgAccess *pArgs );
@@ -41,14 +41,14 @@ class C_ParticleTrail : public C_BaseParticleEntity, public IPrototypeAppEffect
     int m_nAttachment;
     float m_flLifetime;  // How long this effect will last
 
-   private:
+    private:
     float m_SpawnRate;  // How many particles per second.
     bool m_bEmit;       // Keep emitting particles?
 
     TimedEvent m_ParticleSpawn;
     CParticleMgr *m_pParticleMgr;
 
-   private:
+    private:
     C_ParticleTrail( const C_ParticleTrail & );
 };
 

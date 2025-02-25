@@ -57,7 +57,7 @@ struct FGDAutoVisGroups_s
 //-----------------------------------------------------------------------------
 class GameData
 {
-   public:
+    public:
     typedef enum
     {
         NAME_FIXUP_PREFIX = 0,
@@ -90,7 +90,7 @@ class GameData
 
     CUtlVector< FGDAutoVisGroups_s > m_FGDAutoVisGroups;
 
-   private:
+    private:
     bool ParseMapSize( TokenReader &tr );
 
     CUtlVector< GDclass * > m_Classes;

@@ -32,11 +32,11 @@
         va_list arg_ptr;                                                                                             \
         bool bTruncated = false;                                                                                     \
         static int scAsserted = 0;                                                                                   \
-                                                                                                                     \
+                                                                                                                    \
         va_start( arg_ptr, lastArg );                                                                                \
         result = V_vsnprintfRet( ( szBuf ), ( nBufSize )-1, ( *( ppszFormat ) ), arg_ptr, &bTruncated );             \
         va_end( arg_ptr );                                                                                           \
-                                                                                                                     \
+                                                                                                                    \
         ( szBuf )[( nBufSize )-1] = 0;                                                                               \
         if ( bTruncated && !( bQuietTruncation ) && scAsserted < 5 )                                                 \
         {                                                                                                            \
@@ -55,11 +55,11 @@
         va_list arg_ptr;                                                                                             \
         bool bTruncated = false;                                                                                     \
         static int scAsserted = 0;                                                                                   \
-                                                                                                                     \
+                                                                                                                    \
         va_start( arg_ptr, lastArg );                                                                                \
         result = V_vsnprintfRet( ( szBuf ), ( nBufSize )-1, ( *( ppszFormat ) ), arg_ptr, &bTruncated );             \
         va_end( arg_ptr );                                                                                           \
-                                                                                                                     \
+                                                                                                                    \
         ( szBuf )[( nBufSize )-1] = 0;                                                                               \
         if ( bTruncated && !( bQuietTruncation ) && scAsserted < 5 )                                                 \
         {                                                                                                            \
@@ -77,7 +77,7 @@
 template < int SIZE_BUF, bool QUIET_TRUNCATION = false >
 class CFmtStrN
 {
-   public:
+    public:
     CFmtStrN()
     {
         InitQuietTruncation();
@@ -240,7 +240,7 @@ class CFmtStrN
         m_bQuietTruncation = bQuiet;
     }
 
-   protected:
+    protected:
     virtual void InitQuietTruncation()
     {
         m_bQuietTruncation = QUIET_TRUNCATION;
@@ -248,7 +248,7 @@ class CFmtStrN
 
     bool m_bQuietTruncation;
 
-   private:
+    private:
     char m_szBuf[SIZE_BUF];
     int m_nLength;
 };
@@ -305,7 +305,7 @@ typedef CFmtStrN< 8192 > CFmtStrMax;
 
 class CNumStr
 {
-   public:
+    public:
     CNumStr()
     {
         m_szBuf[0] = 0;
@@ -475,7 +475,7 @@ class CNumStr
         m_szBuf[nLength + 2] = 0;
     }
 
-   protected:
+    protected:
     char m_szBuf[28];  // long enough to hold 18 digits of precision, a decimal, a - sign, e+### suffix, and quotes
 };
 

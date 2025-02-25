@@ -472,9 +472,9 @@ LUA_BINDING_END( "boolean", "True if the client PVS is expanded, false otherwise
 LUA_BINDING_BEGIN( Entities, FindClientInPvs, "library", "Finds a client in the PVS", "server" )
 {
     CBaseEntity::PushLuaInstanceSafe( L,
-                                      UTIL_FindClientInPVS(
-                                          LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "minimumVector" ),
-                                          LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "maximumVector" ) ) );
+                                    UTIL_FindClientInPVS(
+                                        LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "minimumVector" ),
+                                        LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "maximumVector" ) ) );
     return 1;
 }
 LUA_BINDING_END( "Entity", "The entity found, or NULL if not found." )

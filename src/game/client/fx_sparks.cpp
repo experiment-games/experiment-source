@@ -310,13 +310,13 @@ void FX_ElectricSpark( const Vector &pos, int nMagnitude, int nTrailLength, cons
 
     // Setup our collision information
     pSparkEmitter->Setup( ( Vector & )pos,
-                          NULL,
-                          SPARK_ELECTRIC_SPREAD,
-                          SPARK_ELECTRIC_MINSPEED,
-                          SPARK_ELECTRIC_MAXSPEED,
-                          SPARK_ELECTRIC_GRAVITY,
-                          SPARK_ELECTRIC_DAMPEN,
-                          bitsPARTICLE_TRAIL_VELOCITY_DAMPEN );
+                        NULL,
+                        SPARK_ELECTRIC_SPREAD,
+                        SPARK_ELECTRIC_MINSPEED,
+                        SPARK_ELECTRIC_MAXSPEED,
+                        SPARK_ELECTRIC_GRAVITY,
+                        SPARK_ELECTRIC_DAMPEN,
+                        bitsPARTICLE_TRAIL_VELOCITY_DAMPEN );
 
     pSparkEmitter->SetSortOrigin( pos );
 
@@ -556,13 +556,13 @@ void FX_MetalScrape( Vector &position, Vector &normal )
 
     // Setup our collision information
     sparkEmitter->Setup( offset,
-                         &normal,
-                         METAL_SCRAPE_SPREAD,
-                         METAL_SCRAPE_MINSPEED,
-                         METAL_SCRAPE_MAXSPEED,
-                         METAL_SCRAPE_GRAVITY,
-                         METAL_SCRAPE_DAMPEN,
-                         bitsPARTICLE_TRAIL_VELOCITY_DAMPEN );
+                        &normal,
+                        METAL_SCRAPE_SPREAD,
+                        METAL_SCRAPE_MINSPEED,
+                        METAL_SCRAPE_MAXSPEED,
+                        METAL_SCRAPE_GRAVITY,
+                        METAL_SCRAPE_DAMPEN,
+                        bitsPARTICLE_TRAIL_VELOCITY_DAMPEN );
 
     int numSparks = random->RandomInt( 4, 8 );
 
@@ -742,13 +742,13 @@ void FX_Sparks( const Vector &pos, int nMagnitude, int nTrailLength, const Vecto
 
     // Setup our collision information
     pSparkEmitter->Setup( ( Vector & )pos,
-                          NULL,
-                          SPARK_SPREAD,
-                          flMinSpeed,
-                          flMaxSpeed,
-                          SPARK_GRAVITY,
-                          SPARK_DAMPEN,
-                          bitsPARTICLE_TRAIL_VELOCITY_DAMPEN );
+                        NULL,
+                        SPARK_SPREAD,
+                        flMinSpeed,
+                        flMaxSpeed,
+                        SPARK_GRAVITY,
+                        SPARK_DAMPEN,
+                        bitsPARTICLE_TRAIL_VELOCITY_DAMPEN );
 
     pSparkEmitter->SetSortOrigin( pos );
 
@@ -958,13 +958,13 @@ void FX_MicroExplosion( Vector &position, Vector &normal )
 
     // Setup our collision information
     sparkEmitter->Setup( offset,
-                         &normal,
-                         MICRO_EXPLOSION_SPREAD,
-                         MICRO_EXPLOSION_MINSPEED,
-                         MICRO_EXPLOSION_MAXSPEED,
-                         MICRO_EXPLOSION_GRAVITY,
-                         MICRO_EXPLOSION_DAMPEN,
-                         bitsPARTICLE_TRAIL_VELOCITY_DAMPEN );
+                        &normal,
+                        MICRO_EXPLOSION_SPREAD,
+                        MICRO_EXPLOSION_MINSPEED,
+                        MICRO_EXPLOSION_MAXSPEED,
+                        MICRO_EXPLOSION_GRAVITY,
+                        MICRO_EXPLOSION_DAMPEN,
+                        bitsPARTICLE_TRAIL_VELOCITY_DAMPEN );
 
     int numSparks = random->RandomInt( 8, 16 );
 
@@ -1069,13 +1069,13 @@ void FX_Explosion( Vector &origin, Vector &normal, char materialType )
 
     // Setup our collision information
     pSparkEmitter->Setup( offset,
-                          &normal,
-                          EXPLOSION_SPREAD,
-                          EXPLOSION_MINSPEED,
-                          EXPLOSION_MAXSPEED,
-                          EXPLOSION_GRAVITY,
-                          EXPLOSION_DAMPEN,
-                          bitsPARTICLE_TRAIL_VELOCITY_DAMPEN );
+                        &normal,
+                        EXPLOSION_SPREAD,
+                        EXPLOSION_MINSPEED,
+                        EXPLOSION_MAXSPEED,
+                        EXPLOSION_GRAVITY,
+                        EXPLOSION_DAMPEN,
+                        bitsPARTICLE_TRAIL_VELOCITY_DAMPEN );
 
     pSparkEmitter->SetSortOrigin( offset );
 
@@ -1415,13 +1415,13 @@ void FX_ConcussiveExplosion( Vector &origin, Vector &normal )
     {
         // Setup our collision information
         pCollisionEmitter->Setup( ( Vector & )offset,
-                                  NULL,
-                                  SPARK_ELECTRIC_SPREAD,
-                                  SPARK_ELECTRIC_MINSPEED * 6,
-                                  SPARK_ELECTRIC_MAXSPEED * 6,
-                                  -400,
-                                  SPARK_ELECTRIC_DAMPEN,
-                                  bitsPARTICLE_TRAIL_FADE );
+                                NULL,
+                                SPARK_ELECTRIC_SPREAD,
+                                SPARK_ELECTRIC_MINSPEED * 6,
+                                SPARK_ELECTRIC_MAXSPEED * 6,
+                                -400,
+                                SPARK_ELECTRIC_DAMPEN,
+                                bitsPARTICLE_TRAIL_FADE );
 
         pCollisionEmitter->SetSortOrigin( offset );
 
@@ -1466,13 +1466,13 @@ void FX_SparkFan( Vector &position, Vector &normal )
 
     // Setup our collision information
     sparkEmitter->Setup( offset,
-                         &normal,
-                         METAL_SCRAPE_SPREAD,
-                         METAL_SCRAPE_MINSPEED,
-                         METAL_SCRAPE_MAXSPEED,
-                         METAL_SCRAPE_GRAVITY,
-                         METAL_SCRAPE_DAMPEN,
-                         bitsPARTICLE_TRAIL_VELOCITY_DAMPEN );
+                        &normal,
+                        METAL_SCRAPE_SPREAD,
+                        METAL_SCRAPE_MINSPEED,
+                        METAL_SCRAPE_MAXSPEED,
+                        METAL_SCRAPE_GRAVITY,
+                        METAL_SCRAPE_DAMPEN,
+                        bitsPARTICLE_TRAIL_VELOCITY_DAMPEN );
 
     if ( g_Material_Spark == NULL )
     {

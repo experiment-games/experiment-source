@@ -71,8 +71,8 @@ inline bool IsNaN(double value) {
 // exactly as we want them.
 inline bool isxdigit(char c) {
   return ('0' <= c && c <= '9') ||
-         ('a' <= c && c <= 'f') ||
-         ('A' <= c && c <= 'F');
+        ('a' <= c && c <= 'f') ||
+        ('A' <= c && c <= 'F');
 }
 
 inline bool isprint(char c) {
@@ -88,8 +88,8 @@ void StripString(string* s, const char* remove, char replacewith) {
   const char * str_start = s->c_str();
   const char * str = str_start;
   for (str = strpbrk(str, remove);
-       str != NULL;
-       str = strpbrk(str + 1, remove)) {
+        str != NULL;
+        str = strpbrk(str + 1, remove)) {
     (*s)[str - str_start] = replacewith;
   }
 }
@@ -102,8 +102,8 @@ void StripString(string* s, const char* remove, char replacewith) {
 // ----------------------------------------------------------------------
 
 void StringReplace(const string& s, const string& oldsub,
-                   const string& newsub, bool replace_all,
-                   string* res) {
+                    const string& newsub, bool replace_all,
+                    string* res) {
   if (oldsub.empty()) {
     res->append(s);  // if empty, append the given string.
     return;
@@ -114,7 +114,7 @@ void StringReplace(const string& s, const string& oldsub,
   do {
     pos = s.find(oldsub, start_pos);
     if (pos == string::npos) {
-      break;
+    break;
     }
     res->append(s, start_pos, pos - start_pos);
     res->append(newsub);
@@ -133,7 +133,7 @@ void StringReplace(const string& s, const string& oldsub,
 // ----------------------------------------------------------------------
 
 string StringReplace(const string& s, const string& oldsub,
-                     const string& newsub, bool replace_all) {
+                    const string& newsub, bool replace_all) {
   string ret;
   StringReplace(s, oldsub, newsub, replace_all, &ret);
   return ret;
@@ -158,13 +158,13 @@ void SplitStringToIteratorUsing(const string& full,
     const char* p = full.data();
     const char* end = p + full.size();
     while (p != end) {
-      if (*p == c) {
+    if (*p == c) {
         ++p;
-      } else {
+    } else {
         const char* start = p;
         while (++p != end && *p != c);
         *result++ = string(start, p - start);
-      }
+    }
     }
     return;
   }
@@ -174,8 +174,8 @@ void SplitStringToIteratorUsing(const string& full,
   while (begin_index != string::npos) {
     end_index = full.find_first_of(delim, begin_index);
     if (end_index == string::npos) {
-      *result++ = full.substr(begin_index);
-      return;
+    *result++ = full.substr(begin_index);
+    return;
     }
     *result++ = full.substr(begin_index, (end_index - begin_index));
     begin_index = full.find_first_not_of(delim, end_index);
@@ -183,8 +183,8 @@ void SplitStringToIteratorUsing(const string& full,
 }
 
 void SplitStringUsing(const string& full,
-                      const char* delim,
-                      vector<string>* result) {
+                    const char* delim,
+                    vector<string>* result) {
   back_insert_iterator< vector<string> > it(*result);
   SplitStringToIteratorUsing(full, delim, it);
 }
@@ -208,7 +208,7 @@ static void JoinStringsIterator(const ITERATOR& start,
   int length = 0;
   for (ITERATOR iter = start; iter != end; ++iter) {
     if (iter != start) {
-      length += delim_length;
+    length += delim_length;
     }
     length += iter->size();
   }
@@ -217,15 +217,15 @@ static void JoinStringsIterator(const ITERATOR& start,
   // Now combine everything.
   for (ITERATOR iter = start; iter != end; ++iter) {
     if (iter != start) {
-      result->append(delim, delim_length);
+    result->append(delim, delim_length);
     }
     result->append(iter->data(), iter->size());
   }
 }
 
 void JoinStrings(const vector<string>& components,
-                 const char* delim,
-                 string * result) {
+                const char* delim,
+                string * result) {
   JoinStringsIterator(components.begin(), components.end(), delim, result);
 }
 
@@ -263,7 +263,7 @@ int UnescapeCEscapeSequences(const char* source, char* dest) {
 }
 
 int UnescapeCEscapeSequences(const char* source, char* dest,
-                             vector<string> *errors) {
+                            vector<string> *errors) {
   GOOGLE_DCHECK(errors == NULL) << "Error reporting not implemented.";
 
   char* d = dest;
@@ -275,13 +275,13 @@ int UnescapeCEscapeSequences(const char* source, char* dest,
 
   while (*p != '\0') {
     if (*p != '\\') {
-      *d++ = *p++;
+    *d++ = *p++;
     } else {
-      switch ( *++p ) {                    // skip past the '\\'
+    switch ( *++p ) {                    // skip past the '\\'
         case '\0':
-          LOG_STRING(ERROR, errors) << "String cannot end with \\";
-          *d = '\0';
-          return d - dest;   // we're done with p
+        LOG_STRING(ERROR, errors) << "String cannot end with \\";
+        *d = '\0';
+        return d - dest;   // we're done with p
         case 'a':  *d++ = '\a';  break;
         case 'b':  *d++ = '\b';  break;
         case 'f':  *d++ = '\f';  break;
@@ -295,85 +295,85 @@ int UnescapeCEscapeSequences(const char* source, char* dest,
         case '"':  *d++ = '\"';  break;
         case '0': case '1': case '2': case '3':  // octal digit: 1 to 3 digits
         case '4': case '5': case '6': case '7': {
-          char ch = *p - '0';
-          if ( IS_OCTAL_DIGIT(p[1]) )
+        char ch = *p - '0';
+        if ( IS_OCTAL_DIGIT(p[1]) )
             ch = ch * 8 + *++p - '0';
-          if ( IS_OCTAL_DIGIT(p[1]) )      // safe (and easy) to do this twice
+        if ( IS_OCTAL_DIGIT(p[1]) )      // safe (and easy) to do this twice
             ch = ch * 8 + *++p - '0';      // now points at last digit
-          *d++ = ch;
-          break;
+        *d++ = ch;
+        break;
         }
         case 'x': case 'X': {
-          if (!isxdigit(p[1])) {
+        if (!isxdigit(p[1])) {
             if (p[1] == '\0') {
-              LOG_STRING(ERROR, errors) << "String cannot end with \\x";
+            LOG_STRING(ERROR, errors) << "String cannot end with \\x";
             } else {
-              LOG_STRING(ERROR, errors) <<
+            LOG_STRING(ERROR, errors) <<
                 "\\x cannot be followed by non-hex digit: \\" << *p << p[1];
             }
             break;
-          }
-          unsigned int ch = 0;
-          const char *hex_start = p;
-          while (isxdigit(p[1]))  // arbitrarily many hex digits
+        }
+        unsigned int ch = 0;
+        const char *hex_start = p;
+        while (isxdigit(p[1]))  // arbitrarily many hex digits
             ch = (ch << 4) + hex_digit_to_int(*++p);
-          if (ch > 0xFF)
+        if (ch > 0xFF)
             LOG_STRING(ERROR, errors) << "Value of " <<
-              "\\" << string(hex_start, p+1-hex_start) << " exceeds 8 bits";
-          *d++ = ch;
-          break;
+            "\\" << string(hex_start, p+1-hex_start) << " exceeds 8 bits";
+        *d++ = ch;
+        break;
         }
 #if 0  // TODO(kenton):  Support \u and \U?  Requires runetochar().
         case 'u': {
-          // \uhhhh => convert 4 hex digits to UTF-8
-          char32 rune = 0;
-          const char *hex_start = p;
-          for (int i = 0; i < 4; ++i) {
+        // \uhhhh => convert 4 hex digits to UTF-8
+        char32 rune = 0;
+        const char *hex_start = p;
+        for (int i = 0; i < 4; ++i) {
             if (isxdigit(p[1])) {  // Look one char ahead.
-              rune = (rune << 4) + hex_digit_to_int(*++p);  // Advance p.
+            rune = (rune << 4) + hex_digit_to_int(*++p);  // Advance p.
             } else {
-              LOG_STRING(ERROR, errors)
+            LOG_STRING(ERROR, errors)
                 << "\\u must be followed by 4 hex digits: \\"
                 <<  string(hex_start, p+1-hex_start);
-              break;
+            break;
             }
-          }
-          d += runetochar(d, &rune);
-          break;
+        }
+        d += runetochar(d, &rune);
+        break;
         }
         case 'U': {
-          // \Uhhhhhhhh => convert 8 hex digits to UTF-8
-          char32 rune = 0;
-          const char *hex_start = p;
-          for (int i = 0; i < 8; ++i) {
+        // \Uhhhhhhhh => convert 8 hex digits to UTF-8
+        char32 rune = 0;
+        const char *hex_start = p;
+        for (int i = 0; i < 8; ++i) {
             if (isxdigit(p[1])) {  // Look one char ahead.
-              // Don't change rune until we're sure this
-              // is within the Unicode limit, but do advance p.
-              char32 newrune = (rune << 4) + hex_digit_to_int(*++p);
-              if (newrune > 0x10FFFF) {
+            // Don't change rune until we're sure this
+            // is within the Unicode limit, but do advance p.
+            char32 newrune = (rune << 4) + hex_digit_to_int(*++p);
+            if (newrune > 0x10FFFF) {
                 LOG_STRING(ERROR, errors)
-                  << "Value of \\"
-                  << string(hex_start, p + 1 - hex_start)
-                  << " exceeds Unicode limit (0x10FFFF)";
+                << "Value of \\"
+                << string(hex_start, p + 1 - hex_start)
+                << " exceeds Unicode limit (0x10FFFF)";
                 break;
-              } else {
-                rune = newrune;
-              }
             } else {
-              LOG_STRING(ERROR, errors)
+                rune = newrune;
+            }
+            } else {
+            LOG_STRING(ERROR, errors)
                 << "\\U must be followed by 8 hex digits: \\"
                 <<  string(hex_start, p+1-hex_start);
-              break;
+            break;
             }
-          }
-          d += runetochar(d, &rune);
-          break;
+        }
+        d += runetochar(d, &rune);
+        break;
         }
 #endif
         default:
-          LOG_STRING(ERROR, errors) << "Unknown escape sequence: \\" << *p;
-      }
-      p++;                                 // read past letter we escaped
+        LOG_STRING(ERROR, errors) << "Unknown escape sequence: \\" << *p;
+    }
+    p++;                                 // read past letter we escaped
     }
   }
   *d = '\0';
@@ -399,7 +399,7 @@ int UnescapeCEscapeString(const string& src, string* dest) {
 }
 
 int UnescapeCEscapeString(const string& src, string* dest,
-                          vector<string> *errors) {
+                        vector<string> *errors) {
   scoped_array<char> unescaped(new char[src.size() + 1]);
   int len = UnescapeCEscapeSequences(src.c_str(), unescaped.get(), errors);
   GOOGLE_CHECK(dest);
@@ -433,31 +433,31 @@ int CEscapeInternal(const char* src, int src_len, char* dest,
 
   for (; src < src_end; src++) {
     if (dest_len - used < 2)   // Need space for two letter escape
-      return -1;
+    return -1;
 
     bool is_hex_escape = false;
     switch (*src) {
-      case '\n': dest[used++] = '\\'; dest[used++] = 'n';  break;
-      case '\r': dest[used++] = '\\'; dest[used++] = 'r';  break;
-      case '\t': dest[used++] = '\\'; dest[used++] = 't';  break;
-      case '\"': dest[used++] = '\\'; dest[used++] = '\"'; break;
-      case '\'': dest[used++] = '\\'; dest[used++] = '\''; break;
-      case '\\': dest[used++] = '\\'; dest[used++] = '\\'; break;
-      default:
+    case '\n': dest[used++] = '\\'; dest[used++] = 'n';  break;
+    case '\r': dest[used++] = '\\'; dest[used++] = 'r';  break;
+    case '\t': dest[used++] = '\\'; dest[used++] = 't';  break;
+    case '\"': dest[used++] = '\\'; dest[used++] = '\"'; break;
+    case '\'': dest[used++] = '\\'; dest[used++] = '\''; break;
+    case '\\': dest[used++] = '\\'; dest[used++] = '\\'; break;
+    default:
         // Note that if we emit \xNN and the src character after that is a hex
         // digit then that digit must be escaped too to prevent it being
         // interpreted as part of the character code by C.
         if ((!utf8_safe || static_cast<uint8>(*src) < 0x80) &&
             (!isprint(*src) ||
-             (last_hex_escape && isxdigit(*src)))) {
-          if (dest_len - used < 4) // need space for 4 letter escape
+            (last_hex_escape && isxdigit(*src)))) {
+        if (dest_len - used < 4) // need space for 4 letter escape
             return -1;
-          sprintf(dest + used, (use_hex ? "\\x%02x" : "\\%03o"),
-                  static_cast<uint8>(*src));
-          is_hex_escape = use_hex;
-          used += 4;
+        sprintf(dest + used, (use_hex ? "\\x%02x" : "\\%03o"),
+                static_cast<uint8>(*src));
+        is_hex_escape = use_hex;
+        used += 4;
         } else {
-          dest[used++] = *src; break;
+        dest[used++] = *src; break;
         }
     }
     last_hex_escape = is_hex_escape;
@@ -488,7 +488,7 @@ string CEscape(const string& src) {
   const int dest_length = src.size() * 4 + 1; // Maximum possible expansion
   scoped_array<char> dest(new char[dest_length]);
   const int len = CEscapeInternal(src.data(), src.size(),
-                                  dest.get(), dest_length, false, false);
+                                dest.get(), dest_length, false, false);
   GOOGLE_DCHECK_GE(len, 0);
   return string(dest.get(), len);
 }
@@ -499,7 +499,7 @@ string Utf8SafeCEscape(const string& src) {
   const int dest_length = src.size() * 4 + 1; // Maximum possible expansion
   scoped_array<char> dest(new char[dest_length]);
   const int len = CEscapeInternal(src.data(), src.size(),
-                                  dest.get(), dest_length, false, true);
+                                dest.get(), dest_length, false, true);
   GOOGLE_DCHECK_GE(len, 0);
   return string(dest.get(), len);
 }
@@ -508,7 +508,7 @@ string CHexEscape(const string& src) {
   const int dest_length = src.size() * 4 + 1; // Maximum possible expansion
   scoped_array<char> dest(new char[dest_length]);
   const int len = CEscapeInternal(src.data(), src.size(),
-                                  dest.get(), dest_length, true, false);
+                                dest.get(), dest_length, true, false);
   GOOGLE_DCHECK_GE(len, 0);
   return string(dest.get(), len);
 }
@@ -578,8 +578,8 @@ char *FastInt64ToBuffer(int64 i, char* buffer) {
   *p-- = '\0';
   if (i >= 0) {
     do {
-      *p-- = '0' + i % 10;
-      i /= 10;
+    *p-- = '0' + i % 10;
+    i /= 10;
     } while (i > 0);
     return p + 1;
   } else {
@@ -587,23 +587,23 @@ char *FastInt64ToBuffer(int64 i, char* buffer) {
     // negative numbers, so we need to jump through hoops to make sure
     // we don't divide negative numbers.
     if (i > -10) {
-      i = -i;
-      *p-- = '0' + i;
-      *p = '-';
-      return p;
+    i = -i;
+    *p-- = '0' + i;
+    *p = '-';
+    return p;
     } else {
-      // Make sure we aren't at MIN_INT, in which case we can't say i = -i
-      i = i + 10;
-      i = -i;
-      *p-- = '0' + i % 10;
-      // Undo what we did a moment ago
-      i = i / 10 + 1;
-      do {
+    // Make sure we aren't at MIN_INT, in which case we can't say i = -i
+    i = i + 10;
+    i = -i;
+    *p-- = '0' + i % 10;
+    // Undo what we did a moment ago
+    i = i / 10 + 1;
+    do {
         *p-- = '0' + i % 10;
         i /= 10;
-      } while (i > 0);
-      *p = '-';
-      return p;
+    } while (i > 0);
+    *p = '-';
+    return p;
     }
   }
 }
@@ -623,8 +623,8 @@ char *FastInt32ToBuffer(int32 i, char* buffer) {
   *p-- = '\0';
   if (i >= 0) {
     do {
-      *p-- = '0' + i % 10;
-      i /= 10;
+    *p-- = '0' + i % 10;
+    i /= 10;
     } while (i > 0);
     return p + 1;
   } else {
@@ -632,23 +632,23 @@ char *FastInt32ToBuffer(int32 i, char* buffer) {
     // negative numbers, so we need to jump through hoops to make sure
     // we don't divide negative numbers.
     if (i > -10) {
-      i = -i;
-      *p-- = '0' + i;
-      *p = '-';
-      return p;
+    i = -i;
+    *p-- = '0' + i;
+    *p = '-';
+    return p;
     } else {
-      // Make sure we aren't at MIN_INT, in which case we can't say i = -i
-      i = i + 10;
-      i = -i;
-      *p-- = '0' + i % 10;
-      // Undo what we did a moment ago
-      i = i / 10 + 1;
-      do {
+    // Make sure we aren't at MIN_INT, in which case we can't say i = -i
+    i = i + 10;
+    i = -i;
+    *p-- = '0' + i % 10;
+    // Undo what we did a moment ago
+    i = i / 10 + 1;
+    do {
         *p-- = '0' + i % 10;
         i /= 10;
-      } while (i > 0);
-      *p = '-';
-      return p;
+    } while (i > 0);
+    *p = '-';
+    return p;
     }
   }
 }
@@ -685,10 +685,10 @@ char *FastHex32ToBuffer(uint32 value, char* buffer) {
 }
 
 static inline char* PlaceNum(char* p, int num, char prev_sep) {
-   *p-- = '0' + num % 10;
-   *p-- = '0' + num / 10;
-   *p-- = prev_sep;
-   return p;
+    *p-- = '0' + num % 10;
+    *p-- = '0' + num / 10;
+    *p-- = prev_sep;
+    return p;
 }
 
 // ----------------------------------------------------------------------
@@ -974,8 +974,8 @@ string SimpleFtoa(float value) {
 
 static inline bool IsValidFloatChar(char c) {
   return ('0' <= c && c <= '9') ||
-         c == 'e' || c == 'E' ||
-         c == '+' || c == '-';
+        c == 'e' || c == 'E' ||
+        c == '+' || c == '-';
 }
 
 void DelocalizeRadix(char* buffer) {
@@ -1039,7 +1039,7 @@ char* DoubleToBuffer(double value, char* buffer) {
   volatile double parsed_value = strtod(buffer, NULL);
   if (parsed_value != value) {
     int snprintf_result =
-      snprintf(buffer, kDoubleToBufferSize, "%.*g", DBL_DIG+2, value);
+    snprintf(buffer, kDoubleToBufferSize, "%.*g", DBL_DIG+2, value);
 
     // Should never overflow; see above.
     GOOGLE_DCHECK(snprintf_result > 0 && snprintf_result < kDoubleToBufferSize);
@@ -1088,7 +1088,7 @@ char* FloatToBuffer(float value, char* buffer) {
   float parsed_value;
   if (!safe_strtof(buffer, &parsed_value) || parsed_value != value) {
     int snprintf_result =
-      snprintf(buffer, kFloatToBufferSize, "%.*g", FLT_DIG+2, value);
+    snprintf(buffer, kFloatToBufferSize, "%.*g", FLT_DIG+2, value);
 
     // Should never overflow; see above.
     GOOGLE_DCHECK(snprintf_result > 0 && snprintf_result < kFloatToBufferSize);
@@ -1147,14 +1147,14 @@ double NoLocaleStrtod(const char* text, char** original_endptr) {
   char* localized_endptr;
   result = strtod(localized_cstr, &localized_endptr);
   if ((localized_endptr - localized_cstr) >
-      (temp_endptr - text)) {
+    (temp_endptr - text)) {
     // This attempt got further, so replacing the decimal must have helped.
     // Update original_endptr to point at the right location.
     if (original_endptr != NULL) {
-      // size_diff is non-zero if the localized radix has multiple bytes.
-      int size_diff = localized.size() - strlen(text);
-      // const_cast is necessary to match the strtod() interface.
-      *original_endptr = const_cast<char*>(
+    // size_diff is non-zero if the localized radix has multiple bytes.
+    int size_diff = localized.size() - strlen(text);
+    // const_cast is necessary to match the strtod() interface.
+    *original_endptr = const_cast<char*>(
         text + (localized_endptr - localized_cstr - size_diff));
     }
   }

@@ -25,7 +25,7 @@ typedef unsigned int UtlHashHandle_t;
 template < class Data, typename C = bool ( * )( Data const &, Data const & ), typename K = unsigned int ( * )( Data const & ) >
 class CUtlHash
 {
-   public:
+    public:
     // compare and key functions - implemented by the
     typedef C CompareFunc_t;
     typedef K KeyFunc_t;
@@ -70,14 +70,14 @@ class CUtlHash
     // debugging!!
     void Log( const char *filename );
 
-   protected:
+    protected:
     int GetBucketIndex( UtlHashHandle_t handle ) const;
     int GetKeyDataIndex( UtlHashHandle_t handle ) const;
     UtlHashHandle_t BuildHandle( int ndxBucket, int ndxKeyData ) const;
 
     bool DoFind( Data const &src, unsigned int *pBucket, int *pIndex ) const;
 
-   protected:
+    protected:
     // handle upper 16 bits = bucket index (bucket heads)
     // handle lower 16 bits = key index (bucket list)
     typedef CUtlVector< Data > HashBucketList_t;
@@ -95,7 +95,7 @@ class CUtlHash
 template < class Data, typename C, typename K >
 CUtlHash< Data, C, K >::CUtlHash( int bucketCount, int growCount, int initCount, CompareFunc_t compareFunc, KeyFunc_t keyFunc )
     : m_CompareFunc( compareFunc ),
-      m_KeyFunc( keyFunc )
+    m_KeyFunc( keyFunc )
 {
     m_Buckets.SetSize( bucketCount );
     for ( int ndxBucket = 0; ndxBucket < bucketCount; ndxBucket++ )
@@ -454,7 +454,7 @@ typedef int UtlHashFastHandle_t;
 
 class CUtlHashFastNoHash
 {
-   public:
+    public:
     static int Hash( int key, int bucketMask )
     {
         return ( key & bucketMask );
@@ -463,7 +463,7 @@ class CUtlHashFastNoHash
 
 class CUtlHashFastGenericHash
 {
-   public:
+    public:
     static int Hash( int key, int bucketMask )
     {
         return ( HashIntConventional( key ) & bucketMask );
@@ -473,7 +473,7 @@ class CUtlHashFastGenericHash
 template < class Data, class HashFuncs = CUtlHashFastNoHash >
 class CUtlHashFast
 {
-   public:
+    public:
     // Constructor/Deconstructor.
     CUtlHashFast();
     ~CUtlHashFast();
@@ -727,7 +727,7 @@ typedef int UtlHashFixedHandle_t;
 template < int NUM_BUCKETS >
 class CUtlHashFixedGenericHash
 {
-   public:
+    public:
     static int Hash( int key, int bucketMask )
     {
         int hash = HashIntConventional( key );
@@ -746,7 +746,7 @@ class CUtlHashFixedGenericHash
 template < class Data, int NUM_BUCKETS, class CHashFuncs = CUtlHashFastNoHash >
 class CUtlHashFixed
 {
-   public:
+    public:
     // Constructor/Deconstructor.
     CUtlHashFixed();
     ~CUtlHashFixed();

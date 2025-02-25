@@ -27,7 +27,7 @@ class ImagePanel : public Panel
 {
     DECLARE_CLASS_SIMPLE( ImagePanel, Panel );
 
-   public:
+    public:
     ImagePanel( Panel *parent, const char *name );
     ~ImagePanel();
 
@@ -76,14 +76,14 @@ class ImagePanel : public Panel
         m_iRotation = iRotation;
     }
 
-   protected:
+    protected:
     virtual void PaintBackground();
     virtual void GetSettings( KeyValues *outResourceData );
     virtual const char *GetDescription();
     virtual void OnSizeChanged( int newWide, int newTall );
     virtual void ApplySchemeSettings( IScheme *pScheme );
 
-   private:
+    private:
     IImage *m_pImage;
     char *m_pszImageName;
     char *m_pszFillColorName;

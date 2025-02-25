@@ -76,7 +76,7 @@ class CPropAirboat : public CPropVehicleDriveable
 {
     DECLARE_CLASS( CPropAirboat, CPropVehicleDriveable );
 
-   public:
+    public:
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
 
@@ -167,7 +167,7 @@ class CPropAirboat : public CPropVehicleDriveable
 
     const char *GetTracerType( void );
 
-   private:
+    private:
     void CreateAntiFlipConstraint();
 
     void ApplyStressDamage( IPhysicsObject *pPhysics );
@@ -213,7 +213,7 @@ class CPropAirboat : public CPropVehicleDriveable
     void DestroyPlayerBlocker();
     void EnablePlayerBlocker( bool bEnable );
 
-   private:
+    private:
     enum
     {
         GUN_STATE_IDLE = 0,
@@ -713,10 +713,10 @@ void CPropAirboat::ExitVehicle( int nRole )
         return;
 
 #if 0
-	// On ORANGE BOX this is causing a big blank box to show up, which is worse
-	// than the HUD hint persisting for a little while, so don't do it. (sjb)
-	// clear the hint
-	UTIL_HudHintText( pDriver, "" );
+    // On ORANGE BOX this is causing a big blank box to show up, which is worse
+    // than the HUD hint persisting for a little while, so don't do it. (sjb)
+    // clear the hint
+    UTIL_HudHintText( pDriver, "" );
 #endif
 
     // NPCs like manhacks should try to avoid us again
@@ -1845,16 +1845,16 @@ void CPropAirboat::CreateDangerSounds( void )
         // NDebugOverlay::Box(vecSpot, Vector(-radius,-radius,-radius),Vector(radius,radius,radius), 255, 0, 255, 0, soundDuration);
 
 #if 0
-		// put sounds a bit to left and right but slightly closer to vehicle to make
-		// a "cone" of sound  in front of it.
-		trace_t	tr;
-		vecSpot = vecStart + vecDir * (speed * 0.5f) - vecRight * speed * 0.5;
-		UTIL_TraceLine( vecStart, vecSpot, MASK_SHOT, this, COLLISION_GROUP_NONE, &tr );
-		CSoundEnt::InsertSound( SOUND_DANGER, vecSpot, 400, soundDuration, this, 1 );
+        // put sounds a bit to left and right but slightly closer to vehicle to make
+        // a "cone" of sound  in front of it.
+        trace_t	tr;
+        vecSpot = vecStart + vecDir * (speed * 0.5f) - vecRight * speed * 0.5;
+        UTIL_TraceLine( vecStart, vecSpot, MASK_SHOT, this, COLLISION_GROUP_NONE, &tr );
+        CSoundEnt::InsertSound( SOUND_DANGER, vecSpot, 400, soundDuration, this, 1 );
 
-		vecSpot = vecStart + vecDir * (speed * 0.5f) + vecRight * speed * 0.5;
-		UTIL_TraceLine( vecStart, vecSpot, MASK_SHOT, this, COLLISION_GROUP_NONE, &tr );
-		CSoundEnt::InsertSound( SOUND_DANGER, vecSpot, 400, soundDuration, this, 2);
+        vecSpot = vecStart + vecDir * (speed * 0.5f) + vecRight * speed * 0.5;
+        UTIL_TraceLine( vecStart, vecSpot, MASK_SHOT, this, COLLISION_GROUP_NONE, &tr );
+        CSoundEnt::InsertSound( SOUND_DANGER, vecSpot, 400, soundDuration, this, 2);
 #endif
     }
 }

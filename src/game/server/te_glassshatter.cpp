@@ -22,7 +22,7 @@
 //-----------------------------------------------------------------------------
 class CTEShatterSurface : public CBaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTEShatterSurface, CBaseTempEntity );
 
     CTEShatterSurface( const char* name );
@@ -31,7 +31,7 @@ class CTEShatterSurface : public CBaseTempEntity
 
     DECLARE_SERVERCLASS();
 
-   public:
+    public:
     CNetworkVector( m_vecOrigin );
     CNetworkQAngle( m_vecAngles );
     CNetworkVector( m_vecForce );

@@ -24,7 +24,7 @@ class IReplayErrorSystem;
 
 class IReplayContext : public IBaseInterface
 {
-   public:
+    public:
     virtual bool Init( CreateInterfaceFn fnCreateFactory ) = 0;
     virtual void Shutdown() = 0;
 

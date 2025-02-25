@@ -20,7 +20,7 @@
 //       the same way the client does.
 class ConVar_ServerBounded : public ConVar
 {
-   public:
+    public:
     ConVar_ServerBounded( char const *pName, char const *pDefaultValue, int flags, char const *pHelpString )
         : ConVar( pName, pDefaultValue, flags, pHelpString )
     {

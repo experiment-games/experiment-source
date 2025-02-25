@@ -27,7 +27,7 @@ enum SlamState_t
 
 class CWeapon_SLAM : public CBaseHLCombatWeapon
 {
-   public:
+    public:
     DECLARE_CLASS( CWeapon_SLAM, CBaseHLCombatWeapon );
 
     DECLARE_SERVERCLASS();

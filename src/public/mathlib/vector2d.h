@@ -31,7 +31,7 @@
 
 class Vector2D
 {
-   public:
+    public:
     // Members
     vec_t x, y;
 
@@ -82,7 +82,7 @@ class Vector2D
     bool IsZero( float tolerance = 0.01f ) const
     {
         return ( x > -tolerance && x < tolerance &&
-                 y > -tolerance && y < tolerance );
+                y > -tolerance && y < tolerance );
     }
 
     // Normalize in place and return the old length.
@@ -135,7 +135,7 @@ class Vector2D
 
 #else
 
-   private:
+    private:
     // No copy constructors allowed if we're in optimal mode
     Vector2D( const Vector2D& vOther );
 #endif
@@ -594,13 +594,13 @@ inline void ComputeClosestPoint2D( const Vector2D& vecStart, float flMaxDist, co
 inline Vector2D Vector2D::Min( const Vector2D& vOther ) const
 {
     return Vector2D( x < vOther.x ? x : vOther.x,
-                     y < vOther.y ? y : vOther.y );
+                    y < vOther.y ? y : vOther.y );
 }
 
 inline Vector2D Vector2D::Max( const Vector2D& vOther ) const
 {
     return Vector2D( x > vOther.x ? x : vOther.x,
-                     y > vOther.y ? y : vOther.y );
+                    y > vOther.y ? y : vOther.y );
 }
 
 //-----------------------------------------------------------------------------

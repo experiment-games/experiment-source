@@ -86,8 +86,8 @@ size_t GetThreadCount() {
     // task_threads allocates resources in thread_list and we need to free them
     // to avoid leaks.
     vm_deallocate(task,
-                  reinterpret_cast<vm_address_t>(thread_list),
-                  sizeof(thread_t) * thread_count);
+                reinterpret_cast<vm_address_t>(thread_list),
+                sizeof(thread_t) * thread_count);
     return static_cast<size_t>(thread_count);
   } else {
     return 0;
@@ -152,10 +152,10 @@ void RE::Init(const char* regex) {
   // regex.  We change it to an equivalent form "()" to be safe.
   const char* const partial_regex = (*regex == '\0') ? "()" : regex;
   is_valid_ = (regcomp(&partial_regex_, partial_regex, REG_EXTENDED) == 0)
-      && is_valid_;
+    && is_valid_;
   EXPECT_TRUE(is_valid_)
-      << "Regular expression \"" << regex
-      << "\" is not a valid POSIX Extended regular expression.";
+    << "Regular expression \"" << regex
+    << "\" is not a valid POSIX Extended regular expression.";
 
   delete[] full_pattern;
 }
@@ -179,7 +179,7 @@ bool IsRepeat(char ch) { return IsInSet(ch, "?*+"); }
 bool IsWhiteSpace(char ch) { return IsInSet(ch, " \f\n\r\t\v"); }
 bool IsWordChar(char ch) {
   return ('a' <= ch && ch <= 'z') || ('A' <= ch && ch <= 'Z') ||
-      ('0' <= ch && ch <= '9') || ch == '_';
+    ('0' <= ch && ch <= '9') || ch == '_';
 }
 
 // Returns true iff "\\c" is a supported escape sequence.
@@ -192,17 +192,17 @@ bool IsValidEscape(char c) {
 bool AtomMatchesChar(bool escaped, char pattern_char, char ch) {
   if (escaped) {  // "\\p" where p is pattern_char.
     switch (pattern_char) {
-      case 'd': return IsDigit(ch);
-      case 'D': return !IsDigit(ch);
-      case 'f': return ch == '\f';
-      case 'n': return ch == '\n';
-      case 'r': return ch == '\r';
-      case 's': return IsWhiteSpace(ch);
-      case 'S': return !IsWhiteSpace(ch);
-      case 't': return ch == '\t';
-      case 'v': return ch == '\v';
-      case 'w': return IsWordChar(ch);
-      case 'W': return !IsWordChar(ch);
+    case 'd': return IsDigit(ch);
+    case 'D': return !IsDigit(ch);
+    case 'f': return ch == '\f';
+    case 'n': return ch == '\n';
+    case 'r': return ch == '\r';
+    case 's': return IsWhiteSpace(ch);
+    case 'S': return !IsWhiteSpace(ch);
+    case 't': return ch == '\t';
+    case 'v': return ch == '\v';
+    case 'w': return IsWordChar(ch);
+    case 'W': return !IsWordChar(ch);
     }
     return IsPunct(pattern_char) && pattern_char == ch;
   }
@@ -213,7 +213,7 @@ bool AtomMatchesChar(bool escaped, char pattern_char, char ch) {
 // Helper function used by ValidateRegex() to format error messages.
 String FormatRegexSyntaxError(const char* regex, int index) {
   return (Message() << "Syntax error at index " << index
-          << " in simple regular expression \"" << regex << "\": ").GetString();
+        << " in simple regular expression \"" << regex << "\": ").GetString();
 }
 
 // Generates non-fatal failures and returns false if regex is invalid;
@@ -233,41 +233,41 @@ bool ValidateRegex(const char* regex) {
   bool prev_repeatable = false;
   for (int i = 0; regex[i]; i++) {
     if (regex[i] == '\\') {  // An escape sequence
-      i++;
-      if (regex[i] == '\0') {
+    i++;
+    if (regex[i] == '\0') {
         ADD_FAILURE() << FormatRegexSyntaxError(regex, i - 1)
-                      << "'\\' cannot appear at the end.";
+                    << "'\\' cannot appear at the end.";
         return false;
-      }
+    }
 
-      if (!IsValidEscape(regex[i])) {
+    if (!IsValidEscape(regex[i])) {
         ADD_FAILURE() << FormatRegexSyntaxError(regex, i - 1)
-                      << "invalid escape sequence \"\\" << regex[i] << "\".";
+                    << "invalid escape sequence \"\\" << regex[i] << "\".";
         is_valid = false;
-      }
-      prev_repeatable = true;
+    }
+    prev_repeatable = true;
     } else {  // Not an escape sequence.
-      const char ch = regex[i];
+    const char ch = regex[i];
 
-      if (ch == '^' && i > 0) {
+    if (ch == '^' && i > 0) {
         ADD_FAILURE() << FormatRegexSyntaxError(regex, i)
-                      << "'^' can only appear at the beginning.";
+                    << "'^' can only appear at the beginning.";
         is_valid = false;
-      } else if (ch == '$' && regex[i + 1] != '\0') {
+    } else if (ch == '$' && regex[i + 1] != '\0') {
         ADD_FAILURE() << FormatRegexSyntaxError(regex, i)
-                      << "'$' can only appear at the end.";
+                    << "'$' can only appear at the end.";
         is_valid = false;
-      } else if (IsInSet(ch, "()[]{}|")) {
+    } else if (IsInSet(ch, "()[]{}|")) {
         ADD_FAILURE() << FormatRegexSyntaxError(regex, i)
-                      << "'" << ch << "' is unsupported.";
+                    << "'" << ch << "' is unsupported.";
         is_valid = false;
-      } else if (IsRepeat(ch) && !prev_repeatable) {
+    } else if (IsRepeat(ch) && !prev_repeatable) {
         ADD_FAILURE() << FormatRegexSyntaxError(regex, i)
-                      << "'" << ch << "' can only follow a repeatable token.";
+                    << "'" << ch << "' can only follow a repeatable token.";
         is_valid = false;
-      }
+    }
 
-      prev_repeatable = !IsInSet(ch, "^$?*+");
+    prev_repeatable = !IsInSet(ch, "^$?*+");
     }
   }
 
@@ -286,21 +286,21 @@ bool MatchRepetitionAndRegexAtHead(
     const char* str) {
   const size_t min_count = (repeat == '+') ? 1 : 0;
   const size_t max_count = (repeat == '?') ? 1 :
-      static_cast<size_t>(-1) - 1;
+    static_cast<size_t>(-1) - 1;
   // We cannot call numeric_limits::max() as it conflicts with the
   // max() macro on Windows.
 
   for (size_t i = 0; i <= max_count; ++i) {
     // We know that the atom matches each of the first i characters in str.
     if (i >= min_count && MatchRegexAtHead(regex, str + i)) {
-      // We have enough matches at the head, and the tail matches too.
-      // Since we only care about *whether* the pattern matches str
-      // (as opposed to *how* it matches), there is no need to find a
-      // greedy match.
-      return true;
+    // We have enough matches at the head, and the tail matches too.
+    // Since we only care about *whether* the pattern matches str
+    // (as opposed to *how* it matches), there is no need to find a
+    // greedy match.
+    return true;
     }
     if (str[i] == '\0' || !AtomMatchesChar(escaped, c, str[i]))
-      return false;
+    return false;
   }
   return false;
 }
@@ -354,7 +354,7 @@ bool MatchRegexAnywhere(const char* regex, const char* str) {
   // A successful match can be anywhere in str.
   do {
     if (MatchRegexAtHead(regex, str))
-      return true;
+    return true;
   } while (*str++ != '\0');
   return false;
 }
@@ -417,11 +417,11 @@ void RE::Init(const char* regex) {
 GTestLog::GTestLog(GTestLogSeverity severity, const char* file, int line)
     : severity_(severity) {
   const char* const marker =
-      severity == GTEST_INFO ?    "[  INFO ]" :
-      severity == GTEST_WARNING ? "[WARNING]" :
-      severity == GTEST_ERROR ?   "[ ERROR ]" : "[ FATAL ]";
+    severity == GTEST_INFO ?    "[  INFO ]" :
+    severity == GTEST_WARNING ? "[WARNING]" :
+    severity == GTEST_ERROR ?   "[ ERROR ]" : "[ FATAL ]";
   GetStream() << ::std::endl << marker << " "
-              << FormatFileLocation(file, line).c_str() << ": ";
+            << FormatFileLocation(file, line).c_str() << ": ";
 }
 
 // Flushes the buffers and, if severity is GTEST_FATAL, aborts the program.
@@ -583,7 +583,7 @@ void Abort() {
 // "GTEST_FOO" in the open-source version.
 static String FlagToEnvVar(const char* flag) {
   const String full_flag =
-      (Message() << GTEST_FLAG_PREFIX_ << flag).GetString();
+    (Message() << GTEST_FLAG_PREFIX_ << flag).GetString();
 
   Message env_var;
   for (size_t i = 0; i != full_flag.length(); i++) {
@@ -616,11 +616,11 @@ bool ParseInt32(const Message& src_text, const char* str, Int32* value) {
   // Is the parsed value in the range of an Int32?
   const Int32 result = static_cast<Int32>(long_value);
   if (long_value == LONG_MAX || long_value == LONG_MIN ||
-      // The parsed value overflows as a long.  (strtol() returns
-      // LONG_MAX or LONG_MIN when the input overflows.)
-      result != long_value
-      // The parsed value overflows as an Int32.
-      ) {
+    // The parsed value overflows as a long.  (strtol() returns
+    // LONG_MAX or LONG_MIN when the input overflows.)
+    result != long_value
+    // The parsed value overflows as an Int32.
+    ) {
     Message msg;
     msg << "WARNING: " << src_text
         << " is expected to be a 32-bit integer, but actually"
@@ -642,7 +642,7 @@ bool BoolFromGTestEnv(const char* flag, bool default_value) {
   const String env_var = FlagToEnvVar(flag);
   const char* const string_value = posix::GetEnv(env_var.c_str());
   return string_value == NULL ?
-      default_value : strcmp(string_value, "0") != 0;
+    default_value : strcmp(string_value, "0") != 0;
 }
 
 // Reads and returns a 32-bit integer stored in the environment
@@ -658,9 +658,9 @@ Int32 Int32FromGTestEnv(const char* flag, Int32 default_value) {
 
   Int32 result = default_value;
   if (!ParseInt32(Message() << "Environment variable " << env_var,
-                  string_value, &result)) {
+                string_value, &result)) {
     printf("The default value %s is used.\n",
-           (Message() << default_value).GetString().c_str());
+            (Message() << default_value).GetString().c_str());
     fflush(stdout);
     return default_value;
   }

@@ -19,7 +19,7 @@ sub r5.a, v0.a, r4.g
 add_sat r5.a, r5.a, c1.a
 mad	r6.a, c1.g, r5.a, c1.r
 mul r6.a, r6.a, r5.a
-mul r5.a, r6.a, r5.a 
+mul r5.a, r6.a, r5.a
 #else
 mov_sat r5.a, v0.a
 #endif

@@ -377,8 +377,8 @@ int UTF8GenericScan(const UTF8ScanObj* st,
   // Check initial few bytes one at a time until 8-byte aligned
   //----------------------------
   while ((((uintptr_t)src & 0x07) != 0) &&
-         (src < srclimit) &&
-         Tbl2[src[0]] == 0) {
+        (src < srclimit) &&
+        Tbl2[src[0]] == 0) {
     src++;
   }
   if (((uintptr_t)src & 0x07) == 0) {
@@ -387,28 +387,28 @@ int UTF8GenericScan(const UTF8ScanObj* st,
     // including slowing slightly on cr/lf/ht
     //----------------------------
     while (src < srclimit8) {
-      uint32 s0123 = (reinterpret_cast<const uint32 *>(src))[0];
-      uint32 s4567 = (reinterpret_cast<const uint32 *>(src))[1];
-      src += 8;
-      // This is a fast range check for all bytes in [lowsub..0x80-hiadd)
-      uint32 temp = (s0123 - losub) | (s0123 + hiadd) |
+    uint32 s0123 = (reinterpret_cast<const uint32 *>(src))[0];
+    uint32 s4567 = (reinterpret_cast<const uint32 *>(src))[1];
+    src += 8;
+    // This is a fast range check for all bytes in [lowsub..0x80-hiadd)
+    uint32 temp = (s0123 - losub) | (s0123 + hiadd) |
                     (s4567 - losub) | (s4567 + hiadd);
-      if ((temp & 0x80808080) != 0) {
+    if ((temp & 0x80808080) != 0) {
         // We typically end up here on cr/lf/ht; src was incremented
         int e0123 = (Tbl2[src[-8]] | Tbl2[src[-7]]) |
                     (Tbl2[src[-6]] | Tbl2[src[-5]]);
         if (e0123 != 0) {
-          src -= 8;
-          break;
+        src -= 8;
+        break;
         }    // Exit on Non-interchange
         e0123 = (Tbl2[src[-4]] | Tbl2[src[-3]]) |
                 (Tbl2[src[-2]] | Tbl2[src[-1]]);
         if (e0123 != 0) {
-          src -= 4;
-          break;
+        src -= 4;
+        break;
         }    // Exit on Non-interchange
         // Else OK, go around again
-      }
+    }
     }
   }
   //----------------------------
@@ -439,15 +439,15 @@ int UTF8GenericScan(const UTF8ScanObj* st,
     src--;
     // Back up more if needed
     if (!InStateZero(st, Tbl)) {
-      do {
+    do {
         src--;
-      } while ((src > isrc) && ((src[0] & 0xc0) == 0x80));
+    } while ((src > isrc) && ((src[0] & 0xc0) == 0x80));
     }
   } else if (!InStateZero(st, Tbl)) {
     // Back up over truncated UTF-8 character
     e = kExitIllegalStructure;
     do {
-      src--;
+    src--;
     } while ((src > isrc) && ((src[0] & 0xc0) == 0x80));
   } else {
     // Normal termination, source fully consumed
@@ -480,18 +480,18 @@ int UTF8GenericScanFastAscii(const UTF8ScanObj* st,
   do {
     // Check initial few bytes one at a time until 8-byte aligned
     while ((((uintptr_t)src & 0x07) != 0) &&
-           (src < srclimit) && (src[0] < 0x80)) {
-      src++;
+            (src < srclimit) && (src[0] < 0x80)) {
+    src++;
     }
     if (((uintptr_t)src & 0x07) == 0) {
-      while ((src < srclimit8) &&
-             (((reinterpret_cast<const uint32*>(src)[0] |
+    while ((src < srclimit8) &&
+            (((reinterpret_cast<const uint32*>(src)[0] |
                 reinterpret_cast<const uint32*>(src)[1]) & 0x80808080) == 0)) {
         src += 8;
-      }
+    }
     }
     while ((src < srclimit) && (src[0] < 0x80)) {
-      src++;
+    src++;
     }
     // Run state table on the rest
     n = src - isrc;
@@ -524,10 +524,10 @@ InitDetector init_detector;
 
 bool IsStructurallyValidUTF8(const char* buf, int len) {
   if (!module_initialized_) return true;
-  
+
   int bytes_consumed = 0;
   UTF8GenericScanFastAscii(&utf8acceptnonsurrogates_obj,
-                           buf, len, &bytes_consumed);
+                            buf, len, &bytes_consumed);
   return (bytes_consumed == len);
 }
 

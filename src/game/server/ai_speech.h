@@ -28,7 +28,7 @@ class AI_CriteriaSet;
 
 class CAI_TimedSemaphore
 {
-   public:
+    public:
     CAI_TimedSemaphore()
         : m_ReleaseTime( 0 )
     {
@@ -61,7 +61,7 @@ class CAI_TimedSemaphore
         return m_hCurrentTalker;
     }
 
-   private:
+    private:
     float m_ReleaseTime;
     EHANDLE m_hCurrentTalker;
 };
@@ -132,7 +132,7 @@ class AI_Response;
 
 class CAI_ExpresserSink
 {
-   public:
+    public:
     virtual void OnSpokeConcept( AIConcept_t concept, AI_Response *response ){};
     virtual void OnStartSpeaking() {}
     virtual bool UseSemaphore()
@@ -162,7 +162,7 @@ struct ConceptHistory_t
 
 class CAI_Expresser : public IResponseFilter
 {
-   public:
+    public:
     CAI_Expresser( CBaseFlex *pOuter = NULL );
     ~CAI_Expresser();
 
@@ -227,7 +227,7 @@ class CAI_Expresser : public IResponseFilter
     // Force the NPC to release the semaphore & clear next speech time
     void ForceNotSpeaking( void );
 
-   protected:
+    protected:
     CAI_TimedSemaphore *GetMySpeechSemaphore( CBaseEntity *pNpc );
 
     bool SpeakRawScene( const char *pszScene, float delay, AI_Response *response, IRecipientFilter *filter = NULL );
@@ -245,7 +245,7 @@ class CAI_Expresser : public IResponseFilter
         return m_pSink;
     }
 
-   private:
+    private:
     // --------------------------------
 
     virtual bool IsValidResponse( ResponseType_t type, const char *pszValue );
@@ -276,7 +276,7 @@ class CAI_Expresser : public IResponseFilter
 
     // --------------------------------
     //
-   public:
+    public:
     virtual void SetOuter( CBaseFlex *pOuter )
     {
         m_pOuter = pOuter;
@@ -291,13 +291,13 @@ class CAI_Expresser : public IResponseFilter
         return m_pOuter;
     }
 
-   private:
+    private:
     CHandle< CBaseFlex > m_pOuter;
 };
 
 class CMultiplayer_Expresser : public CAI_Expresser
 {
-   public:
+    public:
     CMultiplayer_Expresser( CBaseFlex *pOuter = NULL );
     //~CMultiplayer_Expresser();
 
@@ -306,7 +306,7 @@ class CMultiplayer_Expresser : public CAI_Expresser
     void AllowMultipleScenes();
     void DisallowMultipleScenes();
 
-   private:
+    private:
     bool m_bAllowMultipleScenes;
 };
 
@@ -321,7 +321,7 @@ class CAI_ExpresserHost : public BASE_NPC, protected CAI_ExpresserSink
 {
     DECLARE_CLASS_NOFRIEND( CAI_ExpresserHost, BASE_NPC );
 
-   public:
+    public:
     virtual void NoteSpeaking( float duration, float delay );
 
     virtual bool Speak( AIConcept_t concept, const char *modifiers = NULL, char *pszOutResponseChosen = NULL, size_t bufsize = 0, IRecipientFilter *filter = NULL );
@@ -366,7 +366,7 @@ class CAI_ExpresserHost : public BASE_NPC, protected CAI_ExpresserSink
         return this->GetExpresser()->SpokeConcept( concept );
     }
 
-   protected:
+    protected:
     int PlaySentence( const char *pszSentence, float delay, float volume = VOL_NORM, soundlevel_t soundlevel = SNDLVL_TALKING, CBaseEntity *pListener = NULL );
     virtual void ModifyOrAppendCriteria( AI_CriteriaSet &set );
 

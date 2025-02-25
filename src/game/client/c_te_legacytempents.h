@@ -36,7 +36,7 @@ enum
 //-----------------------------------------------------------------------------
 abstract_class ITempEnts
 {
-   public:
+    public:
     virtual ~ITempEnts() {}
 
     virtual void Init( void ) = 0;
@@ -82,11 +82,11 @@ abstract_class ITempEnts
 class CTempEnts : public ITempEnts
 {
     // Construction
-   public:
+    public:
     CTempEnts( void );
     virtual ~CTempEnts( void );
     // Exposed interface
-   public:
+    public:
     virtual void Init( void );
     virtual void Shutdown( void );
 
@@ -129,7 +129,7 @@ class CTempEnts : public ITempEnts
     C_LocalTempEntity *ClientProjectile( const Vector &vecOrigin, const Vector &vecVelocity, const Vector &vecAcceleration, int modelindex, int lifetime, CBaseEntity *pOwner, const char *pszImpactEffect = NULL, const char *pszParticleEffect = NULL );
 
     // Data
-   public:
+    public:
     enum
     {
         MAX_TEMP_ENTITIES = 500,
@@ -137,7 +137,7 @@ class CTempEnts : public ITempEnts
         MAX_TEMP_ENTITY_STUDIOMODEL = 50,
     };
 
-   private:
+    private:
     // Global temp entity pool
     CClassMemoryPool< C_LocalTempEntity > m_TempEntsPool;
     CUtlLinkedList< C_LocalTempEntity *, unsigned short > m_TempEnts;
@@ -163,12 +163,12 @@ class CTempEnts : public ITempEnts
 #endif
 
     // Internal methods also available to children
-   protected:
+    protected:
     C_LocalTempEntity *TempEntAlloc( const Vector &org, const model_t *model );
     C_LocalTempEntity *TempEntAllocHigh( const Vector &org, const model_t *model );
 
     // Material handle caches
-   private:
+    private:
     inline void CacheMuzzleFlashes( void );
     PMaterialHandle m_Material_MuzzleFlash_Player[4];
     PMaterialHandle m_Material_MuzzleFlash_NPC[4];
@@ -176,7 +176,7 @@ class CTempEnts : public ITempEnts
     PMaterialHandle m_Material_Combine_MuzzleFlash_NPC[2];
 
     // Internal methods
-   private:
+    private:
     CTempEnts( const CTempEnts & );
 
     void TempEntFree( int index );

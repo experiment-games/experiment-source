@@ -21,7 +21,7 @@
 //-----------------------------------------------------------------------------
 class CBSPTreeData : public IBSPTreeData, public ISpatialLeafEnumerator
 {
-   public:
+    public:
     // constructor, destructor
     CBSPTreeData();
     virtual ~CBSPTreeData();
@@ -49,7 +49,7 @@ class CBSPTreeData : public IBSPTreeData, public ISpatialLeafEnumerator
     // Is the element in any leaves at all?
     bool IsElementInTree( BSPTreeDataHandle_t handle ) const;
 
-   private:
+    private:
     // Creates a new handle
     BSPTreeDataHandle_t NewHandle( int userId );
 
@@ -63,7 +63,7 @@ class CBSPTreeData : public IBSPTreeData, public ISpatialLeafEnumerator
     // Returns the number of elements in a leaf
     int CountElementsInLeaf( int leaf );
 
-   private:
+    private:
     // All the information associated with a particular handle
     struct HandleInfo_t
     {

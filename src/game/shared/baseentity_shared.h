@@ -265,8 +265,8 @@ inline bool IsEntityPositionReasonable( const Vector &v )
 {
     float r = k_flMaxEntityPosCoord;
     return v.x > -r && v.x < r &&
-           v.y > -r && v.y < r &&
-           v.z > -r && v.z < r;
+            v.y > -r && v.y < r &&
+            v.z > -r && v.z < r;
 }
 
 // Returns:
@@ -279,8 +279,8 @@ inline bool IsEntityQAngleReasonable( const QAngle &q )
 {
     float r = k_flMaxEntityEulerAngle;
     return q.x > -r && q.x < r &&
-           q.y > -r && q.y < r &&
-           q.z > -r && q.z < r;
+            q.y > -r && q.y < r &&
+            q.z > -r && q.z < r;
 }
 
 // Angular velocity in exponential map form
@@ -288,8 +288,8 @@ inline bool IsEntityAngularVelocityReasonable( const Vector &q )
 {
     float r = k_flMaxEntitySpinRate;
     return q.x > -r && q.x < r &&
-           q.y > -r && q.y < r &&
-           q.z > -r && q.z < r;
+            q.y > -r && q.y < r &&
+            q.z > -r && q.z < r;
 }
 
 // Angular velocity of each Euler angle.
@@ -297,8 +297,8 @@ inline bool IsEntityQAngleVelReasonable( const QAngle &q )
 {
     float r = k_flMaxEntitySpinRate;
     return q.x > -r && q.x < r &&
-           q.y > -r && q.y < r &&
-           q.z > -r && q.z < r;
+            q.y > -r && q.y < r &&
+            q.z > -r && q.z < r;
 }
 
 extern bool CheckEmitReasonablePhysicsSpew();

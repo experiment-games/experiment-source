@@ -1,4 +1,4 @@
-//===== Copyright © 1996-2006, Valve Corporation, All rights reserved. ======//
+//===== Copyright ï¿½ 1996-2006, Valve Corporation, All rights reserved. ======//
 //
 // Base class for windows that draw vgui in Maya
 //
@@ -36,7 +36,7 @@ class EditablePanel;
 
 class CVsVGuiWindowBase
 {
-   public:
+    public:
     virtual void SetPeriod( float flPeriod ) = 0;
     virtual void StartTick() = 0;
     virtual void StartTick( float flPeriod ) = 0;
@@ -56,7 +56,7 @@ void DestroyMayaVGuiWindow( const char *pPanelName );
 //-----------------------------------------------------------------------------
 class CVsVguiWindowFactoryBase : public IMayaVguiWindowFactory
 {
-   public:
+    public:
     CVsVguiWindowFactoryBase( const char *pWindowTypeName, const char *pDccStartupCommand );
 
     // Returns the DCC command
@@ -66,11 +66,11 @@ class CVsVguiWindowFactoryBase : public IMayaVguiWindowFactory
     static void RegisterAllVguiWindows();
     static void UnregisterAllVguiWindows();
 
-   protected:
+    protected:
     const char *m_pWindowTypeName;
     const char *m_pDccStartupCommand;
 
-   private:
+    private:
     CVsVguiWindowFactoryBase *m_pNext;
     static CVsVguiWindowFactoryBase *s_pFirstCommandFactory;
 };
@@ -85,7 +85,7 @@ class CVsVguiWindowFactory : public CVsVguiWindowFactoryBase
         return StringLessThan( a.Get(), b.Get() );
     }
 
-   public:
+    public:
     CVsVguiWindowFactory( const char *pWindowTypeName, const char *pDccCommand )
         : BaseClass( pWindowTypeName, pDccCommand ), m_panelMap( StringLessFunc )
     {
@@ -173,7 +173,7 @@ class CVsVguiWindowFactory : public CVsVguiWindowFactoryBase
         return NULL;
     }
 
-   private:
+    private:
     PanelMap_t m_panelMap;
 };
 

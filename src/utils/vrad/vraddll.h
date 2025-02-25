@@ -17,7 +17,7 @@
 class CVRadDLL : public IVRadDLL, public ILaunchableDLL
 {
     // IVRadDLL overrides.
-   public:
+    public:
     virtual int main( int argc, char **argv );
     virtual bool Init( char const *pFilename );
     virtual void Release();

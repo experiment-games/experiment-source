@@ -26,7 +26,7 @@ class CHudCrosshair : public CHudElement, public vgui::Panel
 {
     DECLARE_CLASS_SIMPLE( CHudCrosshair, vgui::Panel );
 
-   public:
+    public:
     CHudCrosshair( const char *pElementName );
     virtual ~CHudCrosshair();
 
@@ -43,7 +43,7 @@ class CHudCrosshair : public CHudElement, public vgui::Panel
     // any UI element that wants to be at the aim point can use this to figure out where to draw
     static void GetDrawPosition( float *pX, float *pY, bool *pbBehindCamera, QAngle angleCrosshairOffset = vec3_angle );
 
-   protected:
+    protected:
     virtual void ApplySchemeSettings( vgui::IScheme *scheme );
     virtual void Paint();
 

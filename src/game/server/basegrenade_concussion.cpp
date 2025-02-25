@@ -16,7 +16,7 @@ class CBaseGrenadeConcussion : public CBaseGrenade
 {
     DECLARE_DATADESC();
 
-   public:
+    public:
     DECLARE_CLASS( CBaseGrenadeConcussion, CBaseGrenade );
 
     void Spawn( void );
@@ -24,7 +24,7 @@ class CBaseGrenadeConcussion : public CBaseGrenade
     void FallThink( void );
     void ExplodeConcussion( CBaseEntity *pOther );
 
-   protected:
+    protected:
     static int m_nTrailSprite;
 };
 

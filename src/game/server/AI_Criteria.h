@@ -19,7 +19,7 @@ extern const char *SplitContext( const char *raw, char *key, int keylen, char *v
 
 class AI_CriteriaSet
 {
-   public:
+    public:
     AI_CriteriaSet();
     AI_CriteriaSet( const AI_CriteriaSet &src );
     ~AI_CriteriaSet();
@@ -36,12 +36,12 @@ class AI_CriteriaSet
     const char *GetValue( int index ) const;
     float GetWeight( int index ) const;
 
-   private:
+    private:
     struct CritEntry_t
     {
         CritEntry_t()
             : criterianame( UTL_INVAL_SYMBOL ),
-              weight( 0.0f )
+            weight( 0.0f )
         {
             value[0] = 0;
         }
@@ -183,7 +183,7 @@ enum ResponseType_t
 
 class AI_Response
 {
-   public:
+    public:
     DECLARE_SIMPLE_DATADESC();
 
     AI_Response();
@@ -229,12 +229,12 @@ class AI_Response
     const AI_CriteriaSet *GetCriteria();
 
     void Init( ResponseType_t type,
-               const char *responseName,
-               const AI_CriteriaSet &criteria,
-               const AI_ResponseParams &responseparams,
-               const char *matchingRule,
-               const char *applyContext,
-               bool bApplyContextToWorld );
+                const char *responseName,
+                const AI_CriteriaSet &criteria,
+                const AI_ResponseParams &responseparams,
+                const char *matchingRule,
+                const char *applyContext,
+                bool bApplyContextToWorld );
 
     static const char *DescribeResponse( ResponseType_t type );
 
@@ -244,7 +244,7 @@ class AI_Response
         MAX_RULE_NAME = 64
     };
 
-   private:
+    private:
     byte m_Type;
     char m_szResponseName[MAX_RESPONSE_NAME];
     char m_szMatchingRule[MAX_RULE_NAME];

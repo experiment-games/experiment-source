@@ -144,7 +144,7 @@ class Schema;
 
 class ISchemaValidator
 {
-   public:
+    public:
     virtual ~ISchemaValidator() {}
     virtual bool IsValid() const = 0;
 };
@@ -155,7 +155,7 @@ class ISchemaValidator
 template < typename SchemaType >
 class ISchemaStateFactory
 {
-   public:
+    public:
     virtual ~ISchemaStateFactory() {}
     virtual ISchemaValidator* CreateSchemaValidator( const SchemaType& ) = 0;
     virtual void DestroySchemaValidator( ISchemaValidator* validator ) = 0;
@@ -172,7 +172,7 @@ class ISchemaStateFactory
 template < typename SchemaType >
 class IValidationErrorHandler
 {
-   public:
+    public:
     typedef typename SchemaType::Ch Ch;
     typedef typename SchemaType::SValue SValue;
 
@@ -229,7 +229,7 @@ class IValidationErrorHandler
 template < typename Encoding, typename Allocator >
 class Hasher
 {
-   public:
+    public:
     typedef typename Encoding::Ch Ch;
 
     Hasher( Allocator* allocator = 0, size_t stackCapacity = kDefaultSize )
@@ -337,7 +337,7 @@ class Hasher
         return *stack_.template Top< uint64_t >();
     }
 
-   private:
+    private:
     static const size_t kDefaultSize = 256;
     struct Number
     {
@@ -402,23 +402,23 @@ struct SchemaValidationContext
 
     SchemaValidationContext( SchemaValidatorFactoryType& f, ErrorHandlerType& eh, const SchemaType* s )
         : factory( f ),
-          error_handler( eh ),
-          schema( s ),
-          valueSchema(),
-          invalidKeyword(),
-          hasher(),
-          arrayElementHashCodes(),
-          validators(),
-          validatorCount(),
-          patternPropertiesValidators(),
-          patternPropertiesValidatorCount(),
-          patternPropertiesSchemas(),
-          patternPropertiesSchemaCount(),
-          valuePatternValidatorType( kPatternValidatorOnly ),
-          propertyExist(),
-          inArray( false ),
-          valueUniqueness( false ),
-          arrayUniqueness( false )
+        error_handler( eh ),
+        schema( s ),
+        valueSchema(),
+        invalidKeyword(),
+        hasher(),
+        arrayElementHashCodes(),
+        validators(),
+        validatorCount(),
+        patternPropertiesValidators(),
+        patternPropertiesValidatorCount(),
+        patternPropertiesSchemas(),
+        patternPropertiesSchemaCount(),
+        valuePatternValidatorType( kPatternValidatorOnly ),
+        propertyExist(),
+        inArray( false ),
+        valueUniqueness( false ),
+        arrayUniqueness( false )
     {
     }
 
@@ -472,7 +472,7 @@ struct SchemaValidationContext
 template < typename SchemaDocumentType >
 class Schema
 {
-   public:
+    public:
     typedef typename SchemaDocumentType::ValueType ValueType;
     typedef typename SchemaDocumentType::AllocatorType AllocatorType;
     typedef typename SchemaDocumentType::PointerType PointerType;
@@ -486,40 +486,40 @@ class Schema
 
     Schema( SchemaDocumentType* schemaDocument, const PointerType& p, const ValueType& value, const ValueType& document, AllocatorType* allocator )
         : allocator_( allocator ),
-          uri_( schemaDocument->GetURI(), *allocator ),
-          pointer_( p ),
-          typeless_( schemaDocument->GetTypeless() ),
-          enum_(),
-          enumCount_(),
-          not_(),
-          type_( ( 1 << kTotalSchemaType ) - 1 ),  // typeless
-          validatorCount_(),
-          notValidatorIndex_(),
-          properties_(),
-          additionalPropertiesSchema_(),
-          patternProperties_(),
-          patternPropertyCount_(),
-          propertyCount_(),
-          minProperties_(),
-          maxProperties_( SizeType( ~0 ) ),
-          additionalProperties_( true ),
-          hasDependencies_(),
-          hasRequired_(),
-          hasSchemaDependencies_(),
-          additionalItemsSchema_(),
-          itemsList_(),
-          itemsTuple_(),
-          itemsTupleCount_(),
-          minItems_(),
-          maxItems_( SizeType( ~0 ) ),
-          additionalItems_( true ),
-          uniqueItems_( false ),
-          pattern_(),
-          minLength_( 0 ),
-          maxLength_( ~SizeType( 0 ) ),
-          exclusiveMinimum_( false ),
-          exclusiveMaximum_( false ),
-          defaultValueLength_( 0 )
+        uri_( schemaDocument->GetURI(), *allocator ),
+        pointer_( p ),
+        typeless_( schemaDocument->GetTypeless() ),
+        enum_(),
+        enumCount_(),
+        not_(),
+        type_( ( 1 << kTotalSchemaType ) - 1 ),  // typeless
+        validatorCount_(),
+        notValidatorIndex_(),
+        properties_(),
+        additionalPropertiesSchema_(),
+        patternProperties_(),
+        patternPropertyCount_(),
+        propertyCount_(),
+        minProperties_(),
+        maxProperties_( SizeType( ~0 ) ),
+        additionalProperties_( true ),
+        hasDependencies_(),
+        hasRequired_(),
+        hasSchemaDependencies_(),
+        additionalItemsSchema_(),
+        itemsList_(),
+        itemsTuple_(),
+        itemsTupleCount_(),
+        minItems_(),
+        maxItems_( SizeType( ~0 ) ),
+        additionalItems_( true ),
+        uniqueItems_( false ),
+        pattern_(),
+        minLength_( 0 ),
+        maxLength_( ~SizeType( 0 ) ),
+        exclusiveMinimum_( false ),
+        exclusiveMaximum_( false ),
+        defaultValueLength_( 0 )
     {
         typedef typename SchemaDocumentType::ValueType ValueType;
         typedef typename ValueType::ConstValueIterator ConstValueIterator;
@@ -1231,7 +1231,7 @@ class Schema
 
 #undef RAPIDJSON_STRING_
 
-   private:
+    private:
     enum SchemaValueType
     {
         kNullSchemaType,
@@ -1434,7 +1434,7 @@ class Schema
         const Ch* str = name.GetString();
         for ( SizeType index = 0; index < propertyCount_; index++ )
             if ( properties_[index].name.GetStringLength() == len &&
-                 ( std::memcmp( properties_[index].name.GetString(), str, sizeof( Ch ) * len ) == 0 ) )
+                ( std::memcmp( properties_[index].name.GetString(), str, sizeof( Ch ) * len ) == 0 ) )
             {
                 *outIndex = index;
                 return true;
@@ -1740,7 +1740,7 @@ struct TokenHelper< Stack, char >
 template < typename SchemaDocumentType >
 class IGenericRemoteSchemaDocumentProvider
 {
-   public:
+    public:
     typedef typename SchemaDocumentType::Ch Ch;
 
     virtual ~IGenericRemoteSchemaDocumentProvider() {}
@@ -1762,7 +1762,7 @@ class IGenericRemoteSchemaDocumentProvider
 template < typename ValueT, typename Allocator = CrtAllocator >
 class GenericSchemaDocument
 {
-   public:
+    public:
     typedef ValueT ValueType;
     typedef IGenericRemoteSchemaDocumentProvider< GenericSchemaDocument > IRemoteSchemaDocumentProviderType;
     typedef Allocator AllocatorType;
@@ -1787,12 +1787,12 @@ class GenericSchemaDocument
     */
     explicit GenericSchemaDocument( const ValueType& document, const Ch* uri = 0, SizeType uriLength = 0, IRemoteSchemaDocumentProviderType* remoteProvider = 0, Allocator* allocator = 0 )
         : remoteProvider_( remoteProvider ),
-          allocator_( allocator ),
-          ownAllocator_(),
-          root_(),
-          typeless_(),
-          schemaMap_( allocator, kInitialSchemaMapSize ),
-          schemaRef_( allocator, kInitialSchemaRefSize )
+        allocator_( allocator ),
+        ownAllocator_(),
+        root_(),
+        typeless_(),
+        schemaMap_( allocator, kInitialSchemaMapSize ),
+        schemaRef_( allocator, kInitialSchemaRefSize )
     {
         if ( !allocator_ )
             ownAllocator_ = allocator_ = RAPIDJSON_NEW( Allocator )();
@@ -1836,13 +1836,13 @@ class GenericSchemaDocument
 #if RAPIDJSON_HAS_CXX11_RVALUE_REFS
     //! Move constructor in C++11
     GenericSchemaDocument( GenericSchemaDocument&& rhs ) RAPIDJSON_NOEXCEPT : remoteProvider_( rhs.remoteProvider_ ),
-                                                                              allocator_( rhs.allocator_ ),
-                                                                              ownAllocator_( rhs.ownAllocator_ ),
-                                                                              root_( rhs.root_ ),
-                                                                              typeless_( rhs.typeless_ ),
-                                                                              schemaMap_( std::move( rhs.schemaMap_ ) ),
-                                                                              schemaRef_( std::move( rhs.schemaRef_ ) ),
-                                                                              uri_( std::move( rhs.uri_ ) )
+                                                                            allocator_( rhs.allocator_ ),
+                                                                            ownAllocator_( rhs.ownAllocator_ ),
+                                                                            root_( rhs.root_ ),
+                                                                            typeless_( rhs.typeless_ ),
+                                                                            schemaMap_( std::move( rhs.schemaMap_ ) ),
+                                                                            schemaRef_( std::move( rhs.schemaRef_ ) ),
+                                                                            uri_( std::move( rhs.uri_ ) )
     {
         rhs.remoteProvider_ = 0;
         rhs.allocator_ = 0;
@@ -1877,7 +1877,7 @@ class GenericSchemaDocument
         return *root_;
     }
 
-   private:
+    private:
     //! Prohibit copying
     GenericSchemaDocument( const GenericSchemaDocument& );
     //! Prohibit assignment
@@ -2059,10 +2059,10 @@ template <
     typename OutputHandler = BaseReaderHandler< typename SchemaDocumentType::SchemaType::EncodingType >,
     typename StateAllocator = CrtAllocator >
 class GenericSchemaValidator : public internal::ISchemaStateFactory< typename SchemaDocumentType::SchemaType >,
-                               public internal::ISchemaValidator,
-                               public internal::IValidationErrorHandler< typename SchemaDocumentType::SchemaType >
+                                public internal::ISchemaValidator,
+                                public internal::IValidationErrorHandler< typename SchemaDocumentType::SchemaType >
 {
-   public:
+    public:
     typedef typename SchemaDocumentType::SchemaType SchemaType;
     typedef typename SchemaDocumentType::PointerType PointerType;
     typedef typename SchemaType::EncodingType EncodingType;
@@ -2084,19 +2084,19 @@ class GenericSchemaValidator : public internal::ISchemaStateFactory< typename Sc
         size_t schemaStackCapacity = kDefaultSchemaStackCapacity,
         size_t documentStackCapacity = kDefaultDocumentStackCapacity )
         : schemaDocument_( &schemaDocument ),
-          root_( schemaDocument.GetRoot() ),
-          stateAllocator_( allocator ),
-          ownStateAllocator_( 0 ),
-          schemaStack_( allocator, schemaStackCapacity ),
-          documentStack_( allocator, documentStackCapacity ),
-          outputHandler_( 0 ),
-          error_( kObjectType ),
-          currentError_(),
-          missingDependents_(),
-          valid_( true )
+        root_( schemaDocument.GetRoot() ),
+        stateAllocator_( allocator ),
+        ownStateAllocator_( 0 ),
+        schemaStack_( allocator, schemaStackCapacity ),
+        documentStack_( allocator, documentStackCapacity ),
+        outputHandler_( 0 ),
+        error_( kObjectType ),
+        currentError_(),
+        missingDependents_(),
+        valid_( true )
 #if RAPIDJSON_SCHEMA_VERBOSE
-          ,
-          depth_( 0 )
+        ,
+        depth_( 0 )
 #endif
     {
     }
@@ -2115,19 +2115,19 @@ class GenericSchemaValidator : public internal::ISchemaStateFactory< typename Sc
         size_t schemaStackCapacity = kDefaultSchemaStackCapacity,
         size_t documentStackCapacity = kDefaultDocumentStackCapacity )
         : schemaDocument_( &schemaDocument ),
-          root_( schemaDocument.GetRoot() ),
-          stateAllocator_( allocator ),
-          ownStateAllocator_( 0 ),
-          schemaStack_( allocator, schemaStackCapacity ),
-          documentStack_( allocator, documentStackCapacity ),
-          outputHandler_( &outputHandler ),
-          error_( kObjectType ),
-          currentError_(),
-          missingDependents_(),
-          valid_( true )
+        root_( schemaDocument.GetRoot() ),
+        stateAllocator_( allocator ),
+        ownStateAllocator_( 0 ),
+        schemaStack_( allocator, schemaStackCapacity ),
+        documentStack_( allocator, documentStackCapacity ),
+        outputHandler_( &outputHandler ),
+        error_( kObjectType ),
+        currentError_(),
+        missingDependents_(),
+        valid_( true )
 #if RAPIDJSON_SCHEMA_VERBOSE
-          ,
-          depth_( 0 )
+        ,
+        depth_( 0 )
 #endif
     {
     }
@@ -2335,14 +2335,14 @@ class GenericSchemaValidator : public internal::ISchemaStateFactory< typename Sc
     {
         if ( !missingDependents_.Empty() )
             currentError_.AddMember( ValueType( sourceName, GetStateAllocator() ).Move(),
-                                     missingDependents_,
-                                     GetStateAllocator() );
+                                    missingDependents_,
+                                    GetStateAllocator() );
     }
     void AddDependencySchemaError( const SValue& sourceName, ISchemaValidator* subvalidator )
     {
         currentError_.AddMember( ValueType( sourceName, GetStateAllocator() ).Move(),
-                                 static_cast< GenericSchemaValidator* >( subvalidator )->GetError(),
-                                 GetStateAllocator() );
+                                static_cast< GenericSchemaValidator* >( subvalidator )->GetError(),
+                                GetStateAllocator() );
     }
     bool EndDependencyErrors()
     {
@@ -2542,9 +2542,9 @@ class GenericSchemaValidator : public internal::ISchemaStateFactory< typename Sc
     {
         return new ( GetStateAllocator().Malloc( sizeof( GenericSchemaValidator ) ) ) GenericSchemaValidator( *schemaDocument_, root, documentStack_.template Bottom< char >(), documentStack_.GetSize(),
 #if RAPIDJSON_SCHEMA_VERBOSE
-                                                                                                              depth_ + 1,
+                                                                                                            depth_ + 1,
 #endif
-                                                                                                              &GetStateAllocator() );
+                                                                                                            &GetStateAllocator() );
     }
 
     virtual void DestroySchemaValidator( ISchemaValidator* validator )
@@ -2581,7 +2581,7 @@ class GenericSchemaValidator : public internal::ISchemaStateFactory< typename Sc
         StateAllocator::Free( p );
     }
 
-   private:
+    private:
     typedef typename SchemaType::Context Context;
     typedef GenericValue< UTF8<>, StateAllocator > HashCodeArray;
     typedef internal::Hasher< EncodingType, StateAllocator > HasherType;
@@ -2598,19 +2598,19 @@ class GenericSchemaValidator : public internal::ISchemaStateFactory< typename Sc
         size_t schemaStackCapacity = kDefaultSchemaStackCapacity,
         size_t documentStackCapacity = kDefaultDocumentStackCapacity )
         : schemaDocument_( &schemaDocument ),
-          root_( root ),
-          stateAllocator_( allocator ),
-          ownStateAllocator_( 0 ),
-          schemaStack_( allocator, schemaStackCapacity ),
-          documentStack_( allocator, documentStackCapacity ),
-          outputHandler_( 0 ),
-          error_( kObjectType ),
-          currentError_(),
-          missingDependents_(),
-          valid_( true )
+        root_( root ),
+        stateAllocator_( allocator ),
+        ownStateAllocator_( 0 ),
+        schemaStack_( allocator, schemaStackCapacity ),
+        documentStack_( allocator, documentStackCapacity ),
+        outputHandler_( 0 ),
+        error_( kObjectType ),
+        currentError_(),
+        missingDependents_(),
+        valid_( true )
 #if RAPIDJSON_SCHEMA_VERBOSE
-          ,
-          depth_( depth )
+        ,
+        depth_( depth )
 #endif
     {
         if ( basePath && basePathSize )
@@ -2743,8 +2743,8 @@ class GenericSchemaValidator : public internal::ISchemaStateFactory< typename Sc
         GenericStringBuffer< EncodingType > sb;
         PointerType instancePointer = GetInvalidDocumentPointer();
         ( ( parent && instancePointer.GetTokenCount() > 0 )
-              ? PointerType( instancePointer.GetTokens(), instancePointer.GetTokenCount() - 1 )
-              : instancePointer )
+            ? PointerType( instancePointer.GetTokens(), instancePointer.GetTokenCount() - 1 )
+            : instancePointer )
             .StringifyUriFragment( sb );
         ValueType instanceRef( sb.GetString(), static_cast< SizeType >( sb.GetSize() / sizeof( Ch ) ), GetStateAllocator() );
         result.AddMember( GetInstanceRefString(), instanceRef, GetStateAllocator() );
@@ -2864,7 +2864,7 @@ template <
     typename StackAllocator = CrtAllocator >
 class SchemaValidatingReader
 {
-   public:
+    public:
     typedef typename SchemaDocumentType::PointerType PointerType;
     typedef typename InputStream::Ch Ch;
     typedef GenericValue< SourceEncoding, StackAllocator > ValueType;
@@ -2928,7 +2928,7 @@ class SchemaValidatingReader
         return error_;
     }
 
-   private:
+    private:
     InputStream& is_;
     const SchemaDocumentType& sd_;
 

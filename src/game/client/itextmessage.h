@@ -21,7 +21,7 @@
 
 abstract_class ITextMessage
 {
-   public:
+    public:
     virtual void SetPosition( int x, int y ) = 0;
     virtual void AddChar( int r, int g, int b, int a, wchar_t ch ) = 0;
 

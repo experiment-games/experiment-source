@@ -22,7 +22,7 @@
 //-----------------------------------------------------------------------------
 class CRecipientFilter : public IRecipientFilter
 {
-   public:
+    public:
     CRecipientFilter();
     virtual ~CRecipientFilter();
 
@@ -32,7 +32,7 @@ class CRecipientFilter : public IRecipientFilter
     virtual int GetRecipientCount( void ) const;
     virtual int GetRecipientIndex( int slot ) const;
 
-   public:
+    public:
     void CopyFrom( const CRecipientFilter& src );
 
     void Reset( void );
@@ -62,15 +62,15 @@ class CRecipientFilter : public IRecipientFilter
     void AddPlayersFromBitMask( CBitVec< ABSOLUTE_PLAYER_LIMIT >& playerbits );
     void RemovePlayersFromBitMask( CBitVec< ABSOLUTE_PLAYER_LIMIT >& playerbits );
 
-   private:
+    private:
     bool m_bReliable;
     bool m_bInitMessage;
 #ifdef LUA_SDK
-   public:
+    public:
 #endif
     CUtlVector< int > m_Recipients;
 #ifdef LUA_SDK
-   private:
+    private:
 #endif
 
     // If using prediction rules, the filter itself suppresses local player
@@ -85,7 +85,7 @@ class CRecipientFilter : public IRecipientFilter
 //-----------------------------------------------------------------------------
 class CSingleUserRecipientFilter : public CRecipientFilter
 {
-   public:
+    public:
     CSingleUserRecipientFilter( const CBasePlayer* player )
     {
         AddRecipient( player );
@@ -97,7 +97,7 @@ class CSingleUserRecipientFilter : public CRecipientFilter
 //-----------------------------------------------------------------------------
 class CTeamRecipientFilter : public CRecipientFilter
 {
-   public:
+    public:
     CTeamRecipientFilter( int team, bool isReliable = false );
 };
 
@@ -106,7 +106,7 @@ class CTeamRecipientFilter : public CRecipientFilter
 //-----------------------------------------------------------------------------
 class CBroadcastRecipientFilter : public CRecipientFilter
 {
-   public:
+    public:
     CBroadcastRecipientFilter( void )
     {
         AddAllPlayers();
@@ -118,7 +118,7 @@ class CBroadcastRecipientFilter : public CRecipientFilter
 //-----------------------------------------------------------------------------
 class CReliableBroadcastRecipientFilter : public CBroadcastRecipientFilter
 {
-   public:
+    public:
     CReliableBroadcastRecipientFilter( void )
     {
         MakeReliable();
@@ -130,7 +130,7 @@ class CReliableBroadcastRecipientFilter : public CBroadcastRecipientFilter
 //-----------------------------------------------------------------------------
 class CBroadcastNonOwnerRecipientFilter : public CRecipientFilter
 {
-   public:
+    public:
     CBroadcastNonOwnerRecipientFilter( CBasePlayer* player )
     {
         AddAllPlayers();
@@ -143,7 +143,7 @@ class CBroadcastNonOwnerRecipientFilter : public CRecipientFilter
 //-----------------------------------------------------------------------------
 class CPASFilter : public CRecipientFilter
 {
-   public:
+    public:
     CPASFilter( void )
     {
     }
@@ -162,7 +162,7 @@ class CPASFilter : public CRecipientFilter
 //-----------------------------------------------------------------------------
 class CPASAttenuationFilter : public CPASFilter
 {
-   public:
+    public:
     CPASAttenuationFilter( void )
     {
     }
@@ -223,7 +223,7 @@ class CPASAttenuationFilter : public CPASFilter
         Filter( origin, attenuation );
     }
 
-   public:
+    public:
     void Filter( const Vector& origin, float attenuation = ATTN_NORM );
 };
 
@@ -232,7 +232,7 @@ class CPASAttenuationFilter : public CPASFilter
 //-----------------------------------------------------------------------------
 class CPVSFilter : public CRecipientFilter
 {
-   public:
+    public:
     CPVSFilter( const Vector& origin )
     {
         AddRecipientsByPVS( origin );

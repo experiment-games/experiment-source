@@ -36,7 +36,7 @@ bool IsAmmoType( int iAmmoType, const char *pAmmoName );
 
 class CWeaponExperimentBase : public CBaseCombatWeapon
 {
-   public:
+    public:
     DECLARE_CLASS( CWeaponExperimentBase, CBaseCombatWeapon );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -64,7 +64,7 @@ class CWeaponExperimentBase : public CBaseCombatWeapon
     virtual void FallInit( void );
     virtual bool Reload();
 
-   public:
+    public:
 #if defined( CLIENT_DLL )
 
     virtual bool ShouldPredict();
@@ -90,7 +90,7 @@ class CWeaponExperimentBase : public CBaseCombatWeapon
         return m_vOriginalSpawnAngles;
     }
 
-   private:
+    private:
     CWeaponExperimentBase( const CWeaponExperimentBase & );
 
     Vector m_vOriginalSpawnOrigin;

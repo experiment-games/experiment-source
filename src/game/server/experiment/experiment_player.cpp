@@ -54,10 +54,10 @@ extern void SendProxy_Origin( const SendProp *pProp, const void *pStruct, const 
 
 // Tony; this should ideally be added to dt_send.cpp
 void *SendProxy_SendNonLocalDataTable( const SendProp *pProp,
-                                       const void *pStruct,
-                                       const void *pVarData,
-                                       CSendProxyRecipients *pRecipients,
-                                       int objectID )
+                                        const void *pStruct,
+                                        const void *pVarData,
+                                        CSendProxyRecipients *pRecipients,
+                                        int objectID )
 {
     pRecipients->SetAllRecipients();
     pRecipients->ClearRecipient( objectID - 1 );
@@ -292,7 +292,7 @@ void CExperiment_Player::GiveDefaultItems( void )
     CBasePlayer::GiveAmmo( 6, "357" );
 
     if ( GetPlayerModelType() == PLAYER_SOUNDS_METROPOLICE ||
-         GetPlayerModelType() == PLAYER_SOUNDS_COMBINESOLDIER )
+        GetPlayerModelType() == PLAYER_SOUNDS_COMBINESOLDIER )
     {
         GiveNamedItem( "weapon_stunstick" );
     }
@@ -362,7 +362,7 @@ void CExperiment_Player::PickDefaultSpawnTeam( void )
                     ChangeTeam( TEAM_REBELS );
                 }
                 else if ( pCombine->GetNumPlayers() <
-                          pRebels->GetNumPlayers() )
+                        pRebels->GetNumPlayers() )
                 {
                     ChangeTeam( TEAM_COMBINE );
                 }
@@ -403,7 +403,7 @@ void CExperiment_Player::Spawn( void )
     m_Local.m_iHideHUD = 0;
 
     AddFlag( FL_ONGROUND );  // set the player on the ground at the start of the
-                             // round.
+                            // round.
 
     m_impactEnergyScale = ExperimentPLAYER_PHYSDAMAGE_SCALE;
 
@@ -730,7 +730,7 @@ bool CExperiment_Player::WantsLagCompensationOnEntity(
     // No need to lag compensate at all if we're not attacking in this command
     // and we haven't attacked recently.
     if ( !( pCmd->buttons & IN_ATTACK ) &&
-         ( pCmd->command_number - m_iLastWeaponFireUsercmd > 5 ) )
+        ( pCmd->command_number - m_iLastWeaponFireUsercmd > 5 ) )
         return false;
 
     // If this entity hasn't been transmitted to us and acked, then don't bother
@@ -798,7 +798,7 @@ bool CExperiment_Player::BumpWeapon( CBaseCombatWeapon *pWeapon )
         return false;
 
     if ( pOwner || !Weapon_CanUse( pWeapon ) ||
-         !g_pGameRules->CanHavePlayerItem( this, pWeapon ) )
+        !g_pGameRules->CanHavePlayerItem( this, pWeapon ) )
     {
         if ( gEvilImpulse101 )
         {
@@ -998,7 +998,7 @@ bool CExperiment_Player::ShouldRunRateLimitedCommand( const CCommand &args )
         return true;
     }
     else if ( ( gpGlobals->curtime - m_RateLimitLastCommandTimes[i] ) <
-              Experiment_COMMAND_MAX_RATE )
+            Experiment_COMMAND_MAX_RATE )
     {
         // Too fast.
         return false;
@@ -1128,8 +1128,8 @@ void CExperiment_Player::FlashlightTurnOff( void )
 }
 
 void CExperiment_Player::Weapon_Drop( CBaseCombatWeapon *pWeapon,
-                                      const Vector *pvecTarget,
-                                      const Vector *pVelocity )
+                                    const Vector *pvecTarget,
+                                    const Vector *pVelocity )
 {
     // Drop a grenade if it's primed.
     if ( GetActiveWeapon() )
@@ -1216,7 +1216,7 @@ int CExperiment_Player::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 {
     // return here if the player is in the respawn grace period vs. slams.
     if ( gpGlobals->curtime < m_flSlamProtectTime &&
-         ( inputInfo.GetDamageType() == DMG_BLAST ) )
+        ( inputInfo.GetDamageType() == DMG_BLAST ) )
         return 0;
 
     m_vecTotalBulletForce += inputInfo.GetDamageForce();
@@ -1345,8 +1345,8 @@ CBaseEntity *CExperiment_Player::EntSelectSpawnPoint( void )
     {
         CBaseEntity *ent = NULL;
         for ( CEntitySphereQuery sphere( pSpot->GetAbsOrigin(), 128 );
-              ( ent = sphere.GetCurrentEntity() ) != NULL;
-              sphere.NextEntity() )
+            ( ent = sphere.GetCurrentEntity() ) != NULL;
+            sphere.NextEntity() )
         {
             // if ent is a client, kill em (unless they are ourselves)
             if ( ent->IsPlayer() && !( ent->edict() == player ) )
@@ -1453,7 +1453,7 @@ void CExperiment_Player::CheckChatText( char *p, int bufsize )
 
     // Parse say text for escape sequences
     for ( char *pSrc = p; pSrc != NULL && *pSrc != 0 && pos < bufsize - 1;
-          pSrc++ )
+        pSrc++ )
     {
         // copy each char across
         buf[pos] = *pSrc;
@@ -1549,7 +1549,7 @@ void CExperiment_Player::State_Enter_OBSERVER_MODE()
         {
             observerMode = atoi( pIdealMode );
             if ( observerMode <= OBS_MODE_FIXED ||
-                 observerMode > OBS_MODE_ROAMING )
+                observerMode > OBS_MODE_ROAMING )
             {
                 observerMode = m_iObserverLastMode;
             }
@@ -1638,7 +1638,7 @@ void CExperiment_Player::SetAnimation( PLAYER_ANIM playerAnim )
 // -------------------------------------------------------------------------------- //
 class CTEPlayerAnimEvent : public CBaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTEPlayerAnimEvent, CBaseTempEntity );
     DECLARE_SERVERCLASS();
 

@@ -63,9 +63,9 @@ public class GeneratedMessageTest extends TestCase {
 
   public void testDefaultInstance() throws Exception {
     assertSame(TestAllTypes.getDefaultInstance(),
-               TestAllTypes.getDefaultInstance().getDefaultInstanceForType());
+                TestAllTypes.getDefaultInstance().getDefaultInstanceForType());
     assertSame(TestAllTypes.getDefaultInstance(),
-               TestAllTypes.newBuilder().getDefaultInstanceForType());
+                TestAllTypes.newBuilder().getDefaultInstanceForType());
   }
 
   public void testAccessors() throws Exception {
@@ -79,10 +79,10 @@ public class GeneratedMessageTest extends TestCase {
     TestAllTypes.Builder builder = TestAllTypes.newBuilder();
     builder.build();
     try {
-      builder.build();
-      fail("Should have thrown exception.");
+    builder.build();
+    fail("Should have thrown exception.");
     } catch (IllegalStateException e) {
-      // Success.
+    // Success.
     }
   }
 
@@ -90,76 +90,76 @@ public class GeneratedMessageTest extends TestCase {
     TestAllTypes.Builder builder = TestAllTypes.newBuilder();
     builder.build();
     try {
-      builder.clear();
-      fail("Should have thrown exception.");
+    builder.clear();
+    fail("Should have thrown exception.");
     } catch (IllegalStateException e) {
-      // Success.
+    // Success.
     }
   }
 
   public void testSettersRejectNull() throws Exception {
     TestAllTypes.Builder builder = TestAllTypes.newBuilder();
     try {
-      builder.setOptionalString(null);
-      fail("Exception was not thrown");
+    builder.setOptionalString(null);
+    fail("Exception was not thrown");
     } catch (NullPointerException e) {
-      // We expect this exception.
+    // We expect this exception.
     }
     try {
-      builder.setOptionalBytes(null);
-      fail("Exception was not thrown");
+    builder.setOptionalBytes(null);
+    fail("Exception was not thrown");
     } catch (NullPointerException e) {
-      // We expect this exception.
+    // We expect this exception.
     }
     try {
-      builder.setOptionalNestedMessage((TestAllTypes.NestedMessage) null);
-      fail("Exception was not thrown");
+    builder.setOptionalNestedMessage((TestAllTypes.NestedMessage) null);
+    fail("Exception was not thrown");
     } catch (NullPointerException e) {
-      // We expect this exception.
+    // We expect this exception.
     }
     try {
-      builder.setOptionalNestedMessage(
-          (TestAllTypes.NestedMessage.Builder) null);
-      fail("Exception was not thrown");
+    builder.setOptionalNestedMessage(
+        (TestAllTypes.NestedMessage.Builder) null);
+    fail("Exception was not thrown");
     } catch (NullPointerException e) {
-      // We expect this exception.
+    // We expect this exception.
     }
     try {
-      builder.setOptionalNestedEnum(null);
-      fail("Exception was not thrown");
+    builder.setOptionalNestedEnum(null);
+    fail("Exception was not thrown");
     } catch (NullPointerException e) {
-      // We expect this exception.
+    // We expect this exception.
     }
     try {
-      builder.addRepeatedString(null);
-      fail("Exception was not thrown");
+    builder.addRepeatedString(null);
+    fail("Exception was not thrown");
     } catch (NullPointerException e) {
-      // We expect this exception.
+    // We expect this exception.
     }
     try {
-      builder.addRepeatedBytes(null);
-      fail("Exception was not thrown");
+    builder.addRepeatedBytes(null);
+    fail("Exception was not thrown");
     } catch (NullPointerException e) {
-      // We expect this exception.
+    // We expect this exception.
     }
     try {
-      builder.addRepeatedNestedMessage((TestAllTypes.NestedMessage) null);
-      fail("Exception was not thrown");
+    builder.addRepeatedNestedMessage((TestAllTypes.NestedMessage) null);
+    fail("Exception was not thrown");
     } catch (NullPointerException e) {
-      // We expect this exception.
+    // We expect this exception.
     }
     try {
-      builder.addRepeatedNestedMessage(
-          (TestAllTypes.NestedMessage.Builder) null);
-      fail("Exception was not thrown");
+    builder.addRepeatedNestedMessage(
+        (TestAllTypes.NestedMessage.Builder) null);
+    fail("Exception was not thrown");
     } catch (NullPointerException e) {
-      // We expect this exception.
+    // We expect this exception.
     }
     try {
-      builder.addRepeatedNestedEnum(null);
-      fail("Exception was not thrown");
+    builder.addRepeatedNestedEnum(null);
+    fail("Exception was not thrown");
     } catch (NullPointerException e) {
-      // We expect this exception.
+    // We expect this exception.
     }
   }
 
@@ -177,46 +177,46 @@ public class GeneratedMessageTest extends TestCase {
     builder.addRepeatedString("one");
     builder.addRepeatedString("two");
     try {
-      builder.setRepeatedString(1, null);
-      fail("Exception was not thrown");
+    builder.setRepeatedString(1, null);
+    fail("Exception was not thrown");
     } catch (NullPointerException e) {
-      // We expect this exception.
+    // We expect this exception.
     }
 
     builder.addRepeatedBytes(TestUtil.toBytes("one"));
     builder.addRepeatedBytes(TestUtil.toBytes("two"));
     try {
-      builder.setRepeatedBytes(1, null);
-      fail("Exception was not thrown");
+    builder.setRepeatedBytes(1, null);
+    fail("Exception was not thrown");
     } catch (NullPointerException e) {
-      // We expect this exception.
+    // We expect this exception.
     }
 
     builder.addRepeatedNestedMessage(
-      TestAllTypes.NestedMessage.newBuilder().setBb(218).build());
+    TestAllTypes.NestedMessage.newBuilder().setBb(218).build());
     builder.addRepeatedNestedMessage(
-      TestAllTypes.NestedMessage.newBuilder().setBb(456).build());
+    TestAllTypes.NestedMessage.newBuilder().setBb(456).build());
     try {
-      builder.setRepeatedNestedMessage(1, (TestAllTypes.NestedMessage) null);
-      fail("Exception was not thrown");
+    builder.setRepeatedNestedMessage(1, (TestAllTypes.NestedMessage) null);
+    fail("Exception was not thrown");
     } catch (NullPointerException e) {
-      // We expect this exception.
+    // We expect this exception.
     }
     try {
-      builder.setRepeatedNestedMessage(
-          1, (TestAllTypes.NestedMessage.Builder) null);
-      fail("Exception was not thrown");
+    builder.setRepeatedNestedMessage(
+        1, (TestAllTypes.NestedMessage.Builder) null);
+    fail("Exception was not thrown");
     } catch (NullPointerException e) {
-      // We expect this exception.
+    // We expect this exception.
     }
 
     builder.addRepeatedNestedEnum(TestAllTypes.NestedEnum.FOO);
     builder.addRepeatedNestedEnum(TestAllTypes.NestedEnum.BAR);
     try {
-      builder.setRepeatedNestedEnum(1, null);
-      fail("Exception was not thrown");
+    builder.setRepeatedNestedEnum(1, null);
+    fail("Exception was not thrown");
     } catch (NullPointerException e) {
-      // We expect this exception.
+    // We expect this exception.
     }
   }
 
@@ -244,33 +244,33 @@ public class GeneratedMessageTest extends TestCase {
     ForeignMessage foreignMessage =
         ForeignMessage.newBuilder().setC(12).build();
     try {
-      builder.addAllRepeatedForeignMessage(
-          Arrays.asList(foreignMessage, (ForeignMessage) null));
-      fail("Exception was not thrown");
+    builder.addAllRepeatedForeignMessage(
+        Arrays.asList(foreignMessage, (ForeignMessage) null));
+    fail("Exception was not thrown");
     } catch (NullPointerException e) {
-      // We expect this exception.
+    // We expect this exception.
     }
 
     try {
-      builder.addAllRepeatedForeignEnum(
-          Arrays.asList(ForeignEnum.FOREIGN_BAZ, null));
-      fail("Exception was not thrown");
+    builder.addAllRepeatedForeignEnum(
+        Arrays.asList(ForeignEnum.FOREIGN_BAZ, null));
+    fail("Exception was not thrown");
     } catch (NullPointerException e) {
-      // We expect this exception.
+    // We expect this exception.
     }
 
     try {
-      builder.addAllRepeatedString(Arrays.asList("one", null));
-      fail("Exception was not thrown");
+    builder.addAllRepeatedString(Arrays.asList("one", null));
+    fail("Exception was not thrown");
     } catch (NullPointerException e) {
-      // We expect this exception.
+    // We expect this exception.
     }
 
     try {
-      builder.addAllRepeatedBytes(Arrays.asList(TestUtil.toBytes("one"), null));
-      fail("Exception was not thrown");
+    builder.addAllRepeatedBytes(Arrays.asList(TestUtil.toBytes("one"), null));
+    fail("Exception was not thrown");
     } catch (NullPointerException e) {
-      // We expect this exception.
+    // We expect this exception.
     }
   }
 
@@ -350,9 +350,9 @@ public class GeneratedMessageTest extends TestCase {
 
   public void testReflectionDefaults() throws Exception {
     reflectionTester.assertClearViaReflection(
-      TestAllTypes.getDefaultInstance());
+    TestAllTypes.getDefaultInstance());
     reflectionTester.assertClearViaReflection(
-      TestAllTypes.newBuilder().build());
+    TestAllTypes.newBuilder().build());
   }
 
   public void testEnumInterface() throws Exception {
@@ -364,7 +364,7 @@ public class GeneratedMessageTest extends TestCase {
     Internal.EnumLiteMap<ForeignEnum> map = ForeignEnum.internalGetValueMap();
 
     for (ForeignEnum value : ForeignEnum.values()) {
-      assertEquals(value, map.findValueByNumber(value.getNumber()));
+    assertEquals(value, map.findValueByNumber(value.getNumber()));
     }
 
     assertTrue(map.findValueByNumber(12345) == null);
@@ -373,14 +373,14 @@ public class GeneratedMessageTest extends TestCase {
   public void testParsePackedToUnpacked() throws Exception {
     TestUnpackedTypes.Builder builder = TestUnpackedTypes.newBuilder();
     TestUnpackedTypes message =
-      builder.mergeFrom(TestUtil.getPackedSet().toByteString()).build();
+    builder.mergeFrom(TestUtil.getPackedSet().toByteString()).build();
     TestUtil.assertUnpackedFieldsSet(message);
   }
 
   public void testParseUnpackedToPacked() throws Exception {
     TestPackedTypes.Builder builder = TestPackedTypes.newBuilder();
     TestPackedTypes message =
-      builder.mergeFrom(TestUtil.getUnpackedSet().toByteString()).build();
+    builder.mergeFrom(TestUtil.getUnpackedSet().toByteString()).build();
     TestUtil.assertPackedFieldsSet(message);
   }
 
@@ -389,7 +389,7 @@ public class GeneratedMessageTest extends TestCase {
 
   TestUtil.ReflectionTester extensionsReflectionTester =
     new TestUtil.ReflectionTester(TestAllExtensions.getDescriptor(),
-                                  TestUtil.getExtensionRegistry());
+                                TestUtil.getExtensionRegistry());
 
   public void testExtensionAccessors() throws Exception {
     TestAllExtensions.Builder builder = TestAllExtensions.newBuilder();
@@ -439,7 +439,7 @@ public class GeneratedMessageTest extends TestCase {
   }
 
   public void testExtensionReflectionRepeatedSettersRejectNull()
-      throws Exception {
+    throws Exception {
     TestAllExtensions.Builder builder = TestAllExtensions.newBuilder();
     extensionsReflectionTester.assertReflectionRepeatedSettersRejectNull(
         builder);
@@ -447,20 +447,20 @@ public class GeneratedMessageTest extends TestCase {
 
   public void testExtensionReflectionDefaults() throws Exception {
     extensionsReflectionTester.assertClearViaReflection(
-      TestAllExtensions.getDefaultInstance());
+    TestAllExtensions.getDefaultInstance());
     extensionsReflectionTester.assertClearViaReflection(
-      TestAllExtensions.newBuilder().build());
+    TestAllExtensions.newBuilder().build());
   }
 
   public void testClearExtension() throws Exception {
     // clearExtension() is not actually used in TestUtil, so try it manually.
     assertFalse(
-      TestAllExtensions.newBuilder()
+    TestAllExtensions.newBuilder()
         .setExtension(UnittestProto.optionalInt32Extension, 1)
         .clearExtension(UnittestProto.optionalInt32Extension)
         .hasExtension(UnittestProto.optionalInt32Extension));
     assertEquals(0,
-      TestAllExtensions.newBuilder()
+    TestAllExtensions.newBuilder()
         .addExtension(UnittestProto.repeatedInt32Extension, 1)
         .clearExtension(UnittestProto.repeatedInt32Extension)
         .getExtensionCount(UnittestProto.repeatedInt32Extension));
@@ -474,7 +474,7 @@ public class GeneratedMessageTest extends TestCase {
 
   public void testExtensionMergeFrom() throws Exception {
     TestAllExtensions original =
-      TestAllExtensions.newBuilder()
+    TestAllExtensions.newBuilder()
         .setExtension(UnittestProto.optionalInt32Extension, 1).build();
     TestAllExtensions merged =
         TestAllExtensions.newBuilder().mergeFrom(original).build();
@@ -514,12 +514,12 @@ public class GeneratedMessageTest extends TestCase {
   public void testClearLiteExtension() throws Exception {
     // clearExtension() is not actually used in TestUtil, so try it manually.
     assertFalse(
-      TestAllExtensionsLite.newBuilder()
+    TestAllExtensionsLite.newBuilder()
         .setExtension(UnittestLite.optionalInt32ExtensionLite, 1)
         .clearExtension(UnittestLite.optionalInt32ExtensionLite)
         .hasExtension(UnittestLite.optionalInt32ExtensionLite));
     assertEquals(0,
-      TestAllExtensionsLite.newBuilder()
+    TestAllExtensionsLite.newBuilder()
         .addExtension(UnittestLite.repeatedInt32ExtensionLite, 1)
         .clearExtension(UnittestLite.repeatedInt32ExtensionLite)
         .getExtensionCount(UnittestLite.repeatedInt32ExtensionLite));
@@ -534,7 +534,7 @@ public class GeneratedMessageTest extends TestCase {
 
   public void testLiteExtensionMergeFrom() throws Exception {
     TestAllExtensionsLite original =
-      TestAllExtensionsLite.newBuilder()
+    TestAllExtensionsLite.newBuilder()
         .setExtension(UnittestLite.optionalInt32ExtensionLite, 1).build();
     TestAllExtensionsLite merged =
         TestAllExtensionsLite.newBuilder().mergeFrom(original).build();
@@ -549,7 +549,7 @@ public class GeneratedMessageTest extends TestCase {
   public void testMultipleFilesOption() throws Exception {
     // We mostly just want to check that things compile.
     MessageWithNoOuter message =
-      MessageWithNoOuter.newBuilder()
+    MessageWithNoOuter.newBuilder()
         .setNested(MessageWithNoOuter.NestedMessage.newBuilder().setI(1))
         .addForeign(TestAllTypes.newBuilder().setOptionalInt32(1))
         .setNestedEnum(MessageWithNoOuter.NestedEnum.BAZ)
@@ -558,18 +558,18 @@ public class GeneratedMessageTest extends TestCase {
     assertEquals(message, MessageWithNoOuter.parseFrom(message.toByteString()));
 
     assertEquals(MultipleFilesTestProto.getDescriptor(),
-                 MessageWithNoOuter.getDescriptor().getFile());
+                MessageWithNoOuter.getDescriptor().getFile());
 
     Descriptors.FieldDescriptor field =
-      MessageWithNoOuter.getDescriptor().findFieldByName("foreign_enum");
+    MessageWithNoOuter.getDescriptor().findFieldByName("foreign_enum");
     assertEquals(EnumWithNoOuter.BAR.getValueDescriptor(),
-                 message.getField(field));
+                message.getField(field));
 
     assertEquals(MultipleFilesTestProto.getDescriptor(),
-                 ServiceWithNoOuter.getDescriptor().getFile());
+                ServiceWithNoOuter.getDescriptor().getFile());
 
     assertFalse(
-      TestAllExtensions.getDefaultInstance().hasExtension(
+    TestAllExtensions.getDefaultInstance().hasExtension(
         MultipleFilesTestProto.extensionWithOuter));
   }
 
@@ -591,7 +591,7 @@ public class GeneratedMessageTest extends TestCase {
   }
 
   public void testUninitializedExtensionInOptimizedForSize()
-      throws Exception {
+    throws Exception {
     TestOptimizedForSize.Builder builder = TestOptimizedForSize.newBuilder();
     builder.setExtension(TestOptimizedForSize.testExtension2,
         TestRequiredOptimizedForSize.newBuilder().buildPartial());
@@ -630,12 +630,12 @@ public class GeneratedMessageTest extends TestCase {
     assertEquals(UnittestProto.OPTIONAL_INT32_EXTENSION_FIELD_NUMBER, 1);
     assertEquals(UnittestProto.OPTIONALGROUP_EXTENSION_FIELD_NUMBER, 16);
     assertEquals(
-      UnittestProto.OPTIONAL_NESTED_MESSAGE_EXTENSION_FIELD_NUMBER, 18);
+    UnittestProto.OPTIONAL_NESTED_MESSAGE_EXTENSION_FIELD_NUMBER, 18);
     assertEquals(UnittestProto.OPTIONAL_NESTED_ENUM_EXTENSION_FIELD_NUMBER, 21);
     assertEquals(UnittestProto.REPEATED_INT32_EXTENSION_FIELD_NUMBER, 31);
     assertEquals(UnittestProto.REPEATEDGROUP_EXTENSION_FIELD_NUMBER, 46);
     assertEquals(
-      UnittestProto.REPEATED_NESTED_MESSAGE_EXTENSION_FIELD_NUMBER, 48);
+    UnittestProto.REPEATED_NESTED_MESSAGE_EXTENSION_FIELD_NUMBER, 48);
     assertEquals(UnittestProto.REPEATED_NESTED_ENUM_EXTENSION_FIELD_NUMBER, 51);
   }
 

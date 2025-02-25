@@ -56,7 +56,7 @@ namespace internal {
 TEST(GtestCheckSyntaxTest, BehavesLikeASingleStatement) {
   if (AlwaysFalse())
     GTEST_CHECK_(false) << "This should never be executed; "
-                           "It's a compilation test only.";
+                            "It's a compilation test only.";
 
   if (AlwaysTrue())
     GTEST_CHECK_(true);
@@ -72,14 +72,14 @@ TEST(GtestCheckSyntaxTest, BehavesLikeASingleStatement) {
 TEST(GtestCheckSyntaxTest, WorksWithSwitch) {
   switch (0) {
     case 1:
-      break;
+    break;
     default:
-      GTEST_CHECK_(true);
+    GTEST_CHECK_(true);
   }
 
   switch(0)
     case 0:
-      GTEST_CHECK_(true) << "Check failed in switch case";
+    GTEST_CHECK_(true) << "Check failed in switch case";
 }
 
 #if GTEST_OS_MAC
@@ -117,7 +117,7 @@ TEST(GetThreadCountTest, ReturnsCorrectValue) {
   // wait for up to .5 seconds for the OS to report the correct value.
   for (int i = 0; i < 5; ++i) {
     if (GetThreadCount() == 1)
-      break;
+    break;
 
     timespec time;
     time.tv_sec = 0;
@@ -137,11 +137,11 @@ TEST(GtestCheckDeathTest, DiesWithCorrectOutputOnFailure) {
   const bool a_false_condition = false;
   const char regex[] =
 #ifdef _MSC_VER
-     "gtest-port_test\\.cc\\(\\d+\\):"
+    "gtest-port_test\\.cc\\(\\d+\\):"
 #else
-     "gtest-port_test\\.cc:[0-9]+"
+    "gtest-port_test\\.cc:[0-9]+"
 #endif  // _MSC_VER
-     ".*a_false_condition.*Extra info.*";
+    ".*a_false_condition.*Extra info.*";
 
   EXPECT_DEATH_IF_SUPPORTED(GTEST_CHECK_(a_false_condition) << "Extra info",
                             regex);
@@ -151,10 +151,10 @@ TEST(GtestCheckDeathTest, DiesWithCorrectOutputOnFailure) {
 
 TEST(GtestCheckDeathTest, LivesSilentlyOnSuccess) {
   EXPECT_EXIT({
-      GTEST_CHECK_(true) << "Extra info";
-      ::std::cerr << "Success\n";
-      exit(0); },
-      ::testing::ExitedWithCode(0), "Success");
+    GTEST_CHECK_(true) << "Extra info";
+    ::std::cerr << "Success\n";
+    exit(0); },
+    ::testing::ExitedWithCode(0), "Success");
 }
 
 #endif  // GTEST_HAS_DEATH_TEST
@@ -479,38 +479,38 @@ TEST(AtomMatchesCharTest, UnescapedChar) {
 
 TEST(ValidateRegexTest, GeneratesFailureAndReturnsFalseForInvalid) {
   EXPECT_NONFATAL_FAILURE(ASSERT_FALSE(ValidateRegex(NULL)),
-                          "NULL is not a valid simple regular expression");
+                        "NULL is not a valid simple regular expression");
   EXPECT_NONFATAL_FAILURE(
-      ASSERT_FALSE(ValidateRegex("a\\")),
-      "Syntax error at index 1 in simple regular expression \"a\\\": ");
+    ASSERT_FALSE(ValidateRegex("a\\")),
+    "Syntax error at index 1 in simple regular expression \"a\\\": ");
   EXPECT_NONFATAL_FAILURE(ASSERT_FALSE(ValidateRegex("a\\")),
-                          "'\\' cannot appear at the end");
+                        "'\\' cannot appear at the end");
   EXPECT_NONFATAL_FAILURE(ASSERT_FALSE(ValidateRegex("\\n\\")),
-                          "'\\' cannot appear at the end");
+                        "'\\' cannot appear at the end");
   EXPECT_NONFATAL_FAILURE(ASSERT_FALSE(ValidateRegex("\\s\\hb")),
-                          "invalid escape sequence \"\\h\"");
+                        "invalid escape sequence \"\\h\"");
   EXPECT_NONFATAL_FAILURE(ASSERT_FALSE(ValidateRegex("^^")),
-                          "'^' can only appear at the beginning");
+                        "'^' can only appear at the beginning");
   EXPECT_NONFATAL_FAILURE(ASSERT_FALSE(ValidateRegex(".*^b")),
-                          "'^' can only appear at the beginning");
+                        "'^' can only appear at the beginning");
   EXPECT_NONFATAL_FAILURE(ASSERT_FALSE(ValidateRegex("$$")),
-                          "'$' can only appear at the end");
+                        "'$' can only appear at the end");
   EXPECT_NONFATAL_FAILURE(ASSERT_FALSE(ValidateRegex("^$a")),
-                          "'$' can only appear at the end");
+                        "'$' can only appear at the end");
   EXPECT_NONFATAL_FAILURE(ASSERT_FALSE(ValidateRegex("a(b")),
-                          "'(' is unsupported");
+                        "'(' is unsupported");
   EXPECT_NONFATAL_FAILURE(ASSERT_FALSE(ValidateRegex("ab)")),
-                          "')' is unsupported");
+                        "')' is unsupported");
   EXPECT_NONFATAL_FAILURE(ASSERT_FALSE(ValidateRegex("[ab")),
-                          "'[' is unsupported");
+                        "'[' is unsupported");
   EXPECT_NONFATAL_FAILURE(ASSERT_FALSE(ValidateRegex("a{2")),
-                          "'{' is unsupported");
+                        "'{' is unsupported");
   EXPECT_NONFATAL_FAILURE(ASSERT_FALSE(ValidateRegex("?")),
-                          "'?' can only follow a repeatable token");
+                        "'?' can only follow a repeatable token");
   EXPECT_NONFATAL_FAILURE(ASSERT_FALSE(ValidateRegex("^*")),
-                          "'*' can only follow a repeatable token");
+                        "'*' can only follow a repeatable token");
   EXPECT_NONFATAL_FAILURE(ASSERT_FALSE(ValidateRegex("5*+")),
-                          "'+' can only follow a repeatable token");
+                        "'+' can only follow a repeatable token");
 }
 
 TEST(ValidateRegexTest, ReturnsTrueForValid) {
@@ -588,7 +588,7 @@ TEST(MatchRegexAtHeadTest, WorksWhenRegexStartsWithRepetition) {
 }
 
 TEST(MatchRegexAtHeadTest,
-     WorksWhenRegexStartsWithRepetionOfEscapeSequence) {
+    WorksWhenRegexStartsWithRepetionOfEscapeSequence) {
   EXPECT_FALSE(MatchRegexAtHead("\\.+a", "abc"));
   EXPECT_FALSE(MatchRegexAtHead("\\s?b", "  b"));
 

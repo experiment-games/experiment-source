@@ -21,17 +21,17 @@ class CHudSuitPower : public CHudElement, public vgui::Panel
 {
     DECLARE_CLASS_SIMPLE( CHudSuitPower, vgui::Panel );
 
-   public:
+    public:
     CHudSuitPower( const char *pElementName );
     virtual void Init( void );
     virtual void Reset( void );
     virtual void OnThink( void );
     bool ShouldDraw( void );
 
-   protected:
+    protected:
     virtual void Paint();
 
-   private:
+    private:
     CPanelAnimationVar( Color, m_AuxPowerColor, "AuxPowerColor", "255 0 0 255" );
     CPanelAnimationVar( int, m_iAuxPowerDisabledAlpha, "AuxPowerDisabledAlpha", "70" );
 

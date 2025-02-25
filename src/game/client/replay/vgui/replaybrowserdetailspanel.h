@@ -42,7 +42,7 @@ class CKeyValueLabelPanel : public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CKeyValueLabelPanel, EditablePanel );
 
-   public:
+    public:
     CKeyValueLabelPanel( Panel *pParent, const char *pKey, const char *pValue );
     CKeyValueLabelPanel( Panel *pParent, const char *pKey, const wchar_t *pValue );
     virtual void ApplySchemeSettings( IScheme *pScheme );
@@ -53,7 +53,7 @@ class CKeyValueLabelPanel : public EditablePanel
 
     void SetValue( const wchar_t *pValue );
 
-   private:
+    private:
     CExLabel *m_pLabels[2];
 };
 
@@ -64,7 +64,7 @@ class CBaseDetailsPanel : public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CBaseDetailsPanel, EditablePanel );
 
-   public:
+    public:
     CBaseDetailsPanel( Panel *pParent, const char *pName, ReplayHandle_t hReplay );
 
     virtual void ApplySchemeSettings( IScheme *pScheme );
@@ -80,7 +80,7 @@ class CBaseDetailsPanel : public EditablePanel
         return m_bShouldShow;
     }
 
-   protected:
+    protected:
     EditablePanel *GetInset()
     {
         return m_pInsetPanel;
@@ -89,7 +89,7 @@ class CBaseDetailsPanel : public EditablePanel
     ReplayHandle_t m_hReplay;
     bool m_bShouldShow;
 
-   private:
+    private:
     EditablePanel *m_pInsetPanel;  // padding on left/top
 };
 
@@ -100,13 +100,13 @@ class CRecordsPanel : public CBaseDetailsPanel
 {
     DECLARE_CLASS_SIMPLE( CRecordsPanel, CBaseDetailsPanel );
 
-   public:
+    public:
     CRecordsPanel( Panel *pParent, ReplayHandle_t hReplay );
 
     virtual void ApplySchemeSettings( IScheme *pScheme );
     virtual void PerformLayout();
 
-   private:
+    private:
     ImagePanel *m_pClassImage;
 };
 
@@ -117,13 +117,13 @@ class CStatsPanel : public CBaseDetailsPanel
 {
     DECLARE_CLASS_SIMPLE( CStatsPanel, CBaseDetailsPanel );
 
-   public:
+    public:
     CStatsPanel( Panel *pParent, ReplayHandle_t hReplay );
 
     virtual void ApplySchemeSettings( IScheme *pScheme );
     virtual void PerformLayout();
 
-   private:
+    private:
     CKeyValueLabelPanel *m_paStatLabels[REPLAY_MAX_DISPLAY_GAMESTATS];
 };
 
@@ -134,7 +134,7 @@ class CDominationsPanel : public CBaseDetailsPanel
 {
     DECLARE_CLASS_SIMPLE( CDominationsPanel, CBaseDetailsPanel );
 
-   public:
+    public:
     CDominationsPanel( Panel *pParent, ReplayHandle_t hReplay );
 
     virtual void ApplySchemeSettings( IScheme *pScheme );
@@ -151,7 +151,7 @@ class CKillsPanel : public CBaseDetailsPanel
 {
     DECLARE_CLASS_SIMPLE( CKillsPanel, CBaseDetailsPanel );
 
-   public:
+    public:
     CKillsPanel( Panel *pParent, ReplayHandle_t hReplay );
 
     virtual void ApplySchemeSettings( IScheme *pScheme );
@@ -168,13 +168,13 @@ class CBasicLifeInfoPanel : public CBaseDetailsPanel
 {
     DECLARE_CLASS_SIMPLE( CBasicLifeInfoPanel, CBaseDetailsPanel );
 
-   public:
+    public:
     CBasicLifeInfoPanel( Panel *pParent, ReplayHandle_t hReplay );
 
     virtual void ApplySchemeSettings( IScheme *pScheme );
     virtual void PerformLayout();
 
-   private:
+    private:
     CKeyValueLabelPanel *m_pKilledByLabels;
     CKeyValueLabelPanel *m_pMapLabels;
     CKeyValueLabelPanel *m_pLifeLabels;
@@ -187,13 +187,13 @@ class CMovieInfoPanel : public CBaseDetailsPanel
 {
     DECLARE_CLASS_SIMPLE( CMovieInfoPanel, CBaseDetailsPanel );
 
-   public:
+    public:
     CMovieInfoPanel( Panel *pParent, ReplayHandle_t hReplay, QueryableReplayItemHandle_t hMovie, IReplayItemManager *pItemManager );
 
     virtual void ApplySchemeSettings( IScheme *pScheme );
     virtual void PerformLayout();
 
-   private:
+    private:
     CKeyValueLabelPanel *m_pRenderTimeLabels;
 };
 
@@ -204,14 +204,14 @@ class CYouTubeInfoPanel : public CBaseDetailsPanel
 {
     DECLARE_CLASS_SIMPLE( CYouTubeInfoPanel, CBaseDetailsPanel );
 
-   public:
+    public:
     CYouTubeInfoPanel( Panel *pParent );
 
     virtual void PerformLayout();
 
     void SetInfo( const wchar_t *pInfo );
 
-   private:
+    private:
     CKeyValueLabelPanel *m_pLabels;
 };
 
@@ -222,7 +222,7 @@ class CTitleEditPanel : public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CTitleEditPanel, EditablePanel );
 
-   public:
+    public:
     CTitleEditPanel( Panel *pParent, QueryableReplayItemHandle_t hReplayItem, IReplayItemManager *pItemManager );
     ~CTitleEditPanel();
 
@@ -252,13 +252,13 @@ class CPlaybackPanel : public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CPlaybackPanel, EditablePanel );
 
-   public:
+    public:
     CPlaybackPanel( Panel *pParent );
     ~CPlaybackPanel();
 
     virtual void FreeMovieMaterial() {}
 
-   protected:
+    protected:
     virtual void ApplySchemeSettings( IScheme *pScheme );
     virtual void PerformLayout();
 
@@ -283,13 +283,13 @@ class CPlaybackPanelSlideshow : public CPlaybackPanel
 {
     DECLARE_CLASS_SIMPLE( CPlaybackPanelSlideshow, CPlaybackPanel );
 
-   public:
+    public:
     CPlaybackPanelSlideshow( Panel *pParent, ReplayHandle_t hReplay );
 
     virtual void ApplySchemeSettings( IScheme *pScheme );
     virtual void PerformLayout();
 
-   private:
+    private:
     ReplayHandle_t m_hReplay;
     CExLabel *m_pNoScreenshotLabel;
     CReplayScreenshotSlideshowPanel *m_pScreenshotImage;
@@ -304,7 +304,7 @@ class CPlaybackPanelMovie : public CPlaybackPanel
 {
     DECLARE_CLASS_SIMPLE( CPlaybackPanelMovie, CPlaybackPanel );
 
-   public:
+    public:
     CPlaybackPanelMovie( Panel *pParent, ReplayHandle_t hReplay );
 
     virtual void ApplySchemeSettings( IScheme *pScheme );
@@ -312,7 +312,7 @@ class CPlaybackPanelMovie : public CPlaybackPanel
 
     virtual void FreeMovieMaterial();
 
-   private:
+    private:
     CExLabel *m_pLoadingLabel;
     CMoviePlayerPanel *m_pMoviePlayerPanel;
     ReplayHandle_t m_hMovie;
@@ -325,14 +325,14 @@ class CCutImagePanel : public CExImageButton
 {
     DECLARE_CLASS_SIMPLE( CCutImagePanel, CExImageButton );
 
-   public:
+    public:
     CCutImagePanel( Panel *pParent, const char *pName );
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
 
     virtual void SetSelected( bool bState );
 
-   private:
+    private:
     virtual IBorder *GetBorder( bool bDepressed, bool bArmed, bool bSelected, bool bKeyFocus );
 
     IBorder *m_pSelectedBorder;
@@ -347,7 +347,7 @@ class CCutsPanel : public CBaseDetailsPanel
 {
     DECLARE_CLASS_SIMPLE( CCutsPanel, CBaseDetailsPanel );
 
-   public:
+    public:
     CCutsPanel( Panel *pParent, ReplayHandle_t hReplay, int iPerformance );
     ~CCutsPanel();
 
@@ -369,7 +369,7 @@ class CCutsPanel : public CBaseDetailsPanel
 
     void UpdateNameLabel( int iPerformance );
 
-   private:
+    private:
     void SelectButtonFromPerformance( int iPerformance );
     void SetPage( int iPage, int iButtonToSelect = 0 );
     int ButtonToPerformance( int iButton ) const;
@@ -414,7 +414,7 @@ class CReplayDetailsPanel : public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CReplayDetailsPanel, EditablePanel );
 
-   public:
+    public:
     CReplayDetailsPanel( Panel *pParent, QueryableReplayItemHandle_t hReplayItem, int iPerformance, IReplayItemManager *pItemManager );
     ~CReplayDetailsPanel();
 
@@ -480,7 +480,7 @@ class CReplayDetailsPanel : public EditablePanel
     CYouTubeGetStatsHandler *m_pYouTubeResponseHandler;
     vgui::FileOpenDialog *m_hExportMovieDialog;
 
-   private:
+    private:
     void ShowRenderInfo();
 
     MESSAGE_FUNC_PARAMS( OnConfirmDisconnect, "ConfirmDlgResult", data );

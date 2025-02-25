@@ -48,7 +48,7 @@ const float STRIDERFX_END_ALL_TIME = 4.0f;
 
 class C_StriderFX : public C_EnvelopeFX
 {
-   public:
+    public:
     typedef C_EnvelopeFX BaseClass;
 
     C_StriderFX();
@@ -107,7 +107,7 @@ class C_Strider : public C_AI_BaseNPC
 {
     DECLARE_CLASS( C_Strider, C_AI_BaseNPC );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
     DECLARE_INTERPOLATION();
 
@@ -133,7 +133,7 @@ class C_Strider : public C_AI_BaseNPC
                 CIKTarget &target = m_pIk->m_target[i];
                 target.SetPos( m_vecIKTarget[i] );
 #if 0
-				debugoverlay->AddBoxOverlay( m_vecIKTarget[i], Vector( -2, -2, -2 ), Vector( 2, 2, 2), QAngle( 0, 0, 0 ), (int)255*m_pIk->m_target[i].est.latched, 0, 0, 0, 0 );
+                debugoverlay->AddBoxOverlay( m_vecIKTarget[i], Vector( -2, -2, -2 ), Vector( 2, 2, 2), QAngle( 0, 0, 0 ), (int)255*m_pIk->m_target[i].est.latched, 0, 0, 0, 0 );
 #endif
             }
         }
@@ -143,7 +143,7 @@ class C_Strider : public C_AI_BaseNPC
     virtual void GetRenderBounds( Vector &theMins, Vector &theMaxs );
     virtual void ClientThink();
 
-   private:
+    private:
     C_Strider( const C_Strider & );
     C_StriderFX m_cannonFX;
     Vector m_vecHitPos;
@@ -229,7 +229,7 @@ enum
 
 class CStriderFXEnvelope
 {
-   public:
+    public:
     CStriderFXEnvelope();
 
     void AddKey( int parameterIndex, const CSimpleKeyInterp &key )
@@ -616,7 +616,7 @@ int C_StriderFX::DrawModel( int )
 //-----------------------------------------------------------------------------
 C_Strider::C_Strider()
     : m_iv_vecHitPos( "C_Strider::m_iv_vecHitPos" ),
-      m_iv_vecIKTarget( "C_Strider::m_iv_vecIKTarget" )
+    m_iv_vecIKTarget( "C_Strider::m_iv_vecIKTarget" )
 {
     AddVar( &m_vecHitPos, &m_iv_vecHitPos, LATCH_ANIMATION_VAR );
 
@@ -696,35 +696,35 @@ void C_Strider::ClientThink()
     ComputeEntitySpaceHitboxSurroundingBox( &m_vecRenderMins, &m_vecRenderMaxs );
     // UNDONE: Disabled this until we can get closer to a final map and tune
 #if 0
-	// Cut ropes.
-	if ( gpGlobals->curtime >= m_flNextRopeCutTime )
-	{
-		// Blow the bbox out a little.
-		Vector vExtendedMins = vecMins - Vector( 50, 50, 50 );
-		Vector vExtendedMaxs = vecMaxs + Vector( 50, 50, 50 );
+    // Cut ropes.
+    if ( gpGlobals->curtime >= m_flNextRopeCutTime )
+    {
+        // Blow the bbox out a little.
+        Vector vExtendedMins = vecMins - Vector( 50, 50, 50 );
+        Vector vExtendedMaxs = vecMaxs + Vector( 50, 50, 50 );
 
-		C_RopeKeyframe *ropes[512];
-		int nRopes = C_RopeKeyframe::GetRopesIntersectingAABB( ropes, ARRAYSIZE( ropes ), GetAbsOrigin() + vExtendedMins, GetAbsOrigin() + vExtendedMaxs );
-		for ( int i=0; i < nRopes; i++ )
-		{
-			C_RopeKeyframe *pRope = ropes[i];
+        C_RopeKeyframe *ropes[512];
+        int nRopes = C_RopeKeyframe::GetRopesIntersectingAABB( ropes, ARRAYSIZE( ropes ), GetAbsOrigin() + vExtendedMins, GetAbsOrigin() + vExtendedMaxs );
+        for ( int i=0; i < nRopes; i++ )
+        {
+            C_RopeKeyframe *pRope = ropes[i];
 
-			if ( pRope->GetEndEntity() )
-			{
-				Vector vPos;
-				if ( pRope->GetEndPointPos( 1, vPos ) )
-				{
-					// Detach the endpoint.
-					pRope->SetEndEntity( NULL );
-					
-					// Make some spark effect here..
-					g_pEffects->Sparks( vPos );
-				}				
-			}
-		}
+            if ( pRope->GetEndEntity() )
+            {
+                Vector vPos;
+                if ( pRope->GetEndPointPos( 1, vPos ) )
+                {
+                    // Detach the endpoint.
+                    pRope->SetEndEntity( NULL );
 
-		m_flNextRopeCutTime = gpGlobals->curtime + 0.5;
-	}
+                    // Make some spark effect here..
+                    g_pEffects->Sparks( vPos );
+                }
+            }
+        }
+
+        m_flNextRopeCutTime = gpGlobals->curtime + 0.5;
+    }
 #endif
 
     // True argument because the origin may have stayed the same, but the size is expected to always change

@@ -30,9 +30,9 @@ scriptversion=2007-03-29.01
 
 case $1 in
   '')
-     echo "$0: No command.  Try \`$0 --help' for more information." 1>&2
-     exit 1;
-     ;;
+    echo "$0: No command.  Try \`$0 --help' for more information." 1>&2
+    exit 1;
+    ;;
   -h | --h*)
     cat <<\EOF
 Usage: depcomp [--help] [--version] PROGRAM [ARGS]
@@ -82,9 +82,9 @@ if test "$depmode" = hp; then
 fi
 
 if test "$depmode" = dashXmstdout; then
-   # This is just like dashmstdout with a different argument.
-   dashmflag=-xM
-   depmode=dashmstdout
+    # This is just like dashmstdout with a different argument.
+    dashmflag=-xM
+    depmode=dashmstdout
 fi
 
 case "$depmode" in
@@ -140,7 +140,7 @@ gcc)
   alpha=ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
 ## The second -e expression handles DOS-style file names with drive letters.
   sed -e 's/^[^:]*: / /' \
-      -e 's/^['$alpha']:\/[^:]*: / /' < "$tmpdepfile" >> "$depfile"
+    -e 's/^['$alpha']:\/[^:]*: / /' < "$tmpdepfile" >> "$depfile"
 ## This next piece of magic avoids the `deleted header file' problem.
 ## The problem is that when a header file which appears in a .P file
 ## is deleted, the dependency causes make to die (because there is
@@ -198,8 +198,8 @@ sgi)
     # The second pass generates a dummy entry for each header file.
     tr ' ' '
 ' < "$tmpdepfile" \
-   | sed -e 's/^.*\.o://' -e 's/#.*$//' -e '/^$/ d' -e 's/$/:/' \
-   >> $depfile
+    | sed -e 's/^.*\.o://' -e 's/#.*$//' -e '/^$/ d' -e 's/$/:/' \
+    >> $depfile
   else
     # The sourcefile does not contain any dependencies, so just
     # store a dummy comment line, to avoid errors with the Makefile
@@ -317,8 +317,8 @@ hp2)
   stat=$?
   if test $stat -eq 0; then :
   else
-     rm -f "$tmpdepfile1" "$tmpdepfile2"
-     exit $stat
+    rm -f "$tmpdepfile1" "$tmpdepfile2"
+    exit $stat
   fi
 
   for tmpdepfile in "$tmpdepfile1" "$tmpdepfile2"
@@ -336,62 +336,62 @@ hp2)
   ;;
 
 tru64)
-   # The Tru64 compiler uses -MD to generate dependencies as a side
-   # effect.  `cc -MD -o foo.o ...' puts the dependencies into `foo.o.d'.
-   # At least on Alpha/Redhat 6.1, Compaq CCC V6.2-504 seems to put
-   # dependencies in `foo.d' instead, so we check for that too.
-   # Subdirectories are respected.
-   dir=`echo "$object" | sed -e 's|/[^/]*$|/|'`
-   test "x$dir" = "x$object" && dir=
-   base=`echo "$object" | sed -e 's|^.*/||' -e 's/\.o$//' -e 's/\.lo$//'`
+    # The Tru64 compiler uses -MD to generate dependencies as a side
+    # effect.  `cc -MD -o foo.o ...' puts the dependencies into `foo.o.d'.
+    # At least on Alpha/Redhat 6.1, Compaq CCC V6.2-504 seems to put
+    # dependencies in `foo.d' instead, so we check for that too.
+    # Subdirectories are respected.
+    dir=`echo "$object" | sed -e 's|/[^/]*$|/|'`
+    test "x$dir" = "x$object" && dir=
+    base=`echo "$object" | sed -e 's|^.*/||' -e 's/\.o$//' -e 's/\.lo$//'`
 
-   if test "$libtool" = yes; then
-      # With Tru64 cc, shared objects can also be used to make a
-      # static library.  This mechanism is used in libtool 1.4 series to
-      # handle both shared and static libraries in a single compilation.
-      # With libtool 1.4, dependencies were output in $dir.libs/$base.lo.d.
-      #
-      # With libtool 1.5 this exception was removed, and libtool now
-      # generates 2 separate objects for the 2 libraries.  These two
-      # compilations output dependencies in $dir.libs/$base.o.d and
-      # in $dir$base.o.d.  We have to check for both files, because
-      # one of the two compilations can be disabled.  We should prefer
-      # $dir$base.o.d over $dir.libs/$base.o.d because the latter is
-      # automatically cleaned when .libs/ is deleted, while ignoring
-      # the former would cause a distcleancheck panic.
-      tmpdepfile1=$dir.libs/$base.lo.d   # libtool 1.4
-      tmpdepfile2=$dir$base.o.d          # libtool 1.5
-      tmpdepfile3=$dir.libs/$base.o.d    # libtool 1.5
-      tmpdepfile4=$dir.libs/$base.d      # Compaq CCC V6.2-504
-      "$@" -Wc,-MD
-   else
-      tmpdepfile1=$dir$base.o.d
-      tmpdepfile2=$dir$base.d
-      tmpdepfile3=$dir$base.d
-      tmpdepfile4=$dir$base.d
-      "$@" -MD
-   fi
+    if test "$libtool" = yes; then
+    # With Tru64 cc, shared objects can also be used to make a
+    # static library.  This mechanism is used in libtool 1.4 series to
+    # handle both shared and static libraries in a single compilation.
+    # With libtool 1.4, dependencies were output in $dir.libs/$base.lo.d.
+    #
+    # With libtool 1.5 this exception was removed, and libtool now
+    # generates 2 separate objects for the 2 libraries.  These two
+    # compilations output dependencies in $dir.libs/$base.o.d and
+    # in $dir$base.o.d.  We have to check for both files, because
+    # one of the two compilations can be disabled.  We should prefer
+    # $dir$base.o.d over $dir.libs/$base.o.d because the latter is
+    # automatically cleaned when .libs/ is deleted, while ignoring
+    # the former would cause a distcleancheck panic.
+    tmpdepfile1=$dir.libs/$base.lo.d   # libtool 1.4
+    tmpdepfile2=$dir$base.o.d          # libtool 1.5
+    tmpdepfile3=$dir.libs/$base.o.d    # libtool 1.5
+    tmpdepfile4=$dir.libs/$base.d      # Compaq CCC V6.2-504
+    "$@" -Wc,-MD
+    else
+    tmpdepfile1=$dir$base.o.d
+    tmpdepfile2=$dir$base.d
+    tmpdepfile3=$dir$base.d
+    tmpdepfile4=$dir$base.d
+    "$@" -MD
+    fi
 
-   stat=$?
-   if test $stat -eq 0; then :
-   else
-      rm -f "$tmpdepfile1" "$tmpdepfile2" "$tmpdepfile3" "$tmpdepfile4"
-      exit $stat
-   fi
+    stat=$?
+    if test $stat -eq 0; then :
+    else
+    rm -f "$tmpdepfile1" "$tmpdepfile2" "$tmpdepfile3" "$tmpdepfile4"
+    exit $stat
+    fi
 
-   for tmpdepfile in "$tmpdepfile1" "$tmpdepfile2" "$tmpdepfile3" "$tmpdepfile4"
-   do
-     test -f "$tmpdepfile" && break
-   done
-   if test -f "$tmpdepfile"; then
-      sed -e "s,^.*\.[a-z]*:,$object:," < "$tmpdepfile" > "$depfile"
-      # That's a tab and a space in the [].
-      sed -e 's,^.*\.[a-z]*:[	 ]*,,' -e 's,$,:,' < "$tmpdepfile" >> "$depfile"
-   else
-      echo "#dummy" > "$depfile"
-   fi
-   rm -f "$tmpdepfile"
-   ;;
+    for tmpdepfile in "$tmpdepfile1" "$tmpdepfile2" "$tmpdepfile3" "$tmpdepfile4"
+    do
+    test -f "$tmpdepfile" && break
+    done
+    if test -f "$tmpdepfile"; then
+    sed -e "s,^.*\.[a-z]*:,$object:," < "$tmpdepfile" > "$depfile"
+    # That's a tab and a space in the [].
+    sed -e 's,^.*\.[a-z]*:[	 ]*,,' -e 's,$,:,' < "$tmpdepfile" >> "$depfile"
+    else
+    echo "#dummy" > "$depfile"
+    fi
+    rm -f "$tmpdepfile"
+    ;;
 
 #nosideeffect)
   # This comment above is used by automake to tell side-effect
@@ -405,7 +405,7 @@ dashmstdout)
   # Remove the call to Libtool.
   if test "$libtool" = yes; then
     while test $1 != '--mode=compile'; do
-      shift
+    shift
     done
     shift
   fi
@@ -416,16 +416,16 @@ dashmstdout)
   do
     case $arg in
     -o)
-      shift
-      ;;
+    shift
+    ;;
     $object)
-      shift
-      ;;
+    shift
+    ;;
     *)
-      set fnord "$@" "$arg"
-      shift # fnord
-      shift # $arg
-      ;;
+    set fnord "$@" "$arg"
+    shift # fnord
+    shift # $arg
+    ;;
     esac
   done
 
@@ -456,7 +456,7 @@ makedepend)
   # Remove any Libtool call
   if test "$libtool" = yes; then
     while test $1 != '--mode=compile'; do
-      shift
+    shift
     done
     shift
   fi
@@ -466,18 +466,18 @@ makedepend)
   for arg in "$@"; do
     case $cleared in
     no)
-      set ""; shift
-      cleared=yes ;;
+    set ""; shift
+    cleared=yes ;;
     esac
     case "$arg" in
     -D*|-I*)
-      set fnord "$@" "$arg"; shift ;;
+    set fnord "$@" "$arg"; shift ;;
     # Strip any option that makedepend may not understand.  Remove
     # the object too, otherwise makedepend will parse it as a source file.
     -*|$object)
-      ;;
+    ;;
     *)
-      set fnord "$@" "$arg"; shift ;;
+    set fnord "$@" "$arg"; shift ;;
     esac
   done
   obj_suffix="`echo $object | sed 's/^.*\././'`"
@@ -501,7 +501,7 @@ cpp)
   # Remove the call to Libtool.
   if test "$libtool" = yes; then
     while test $1 != '--mode=compile'; do
-      shift
+    shift
     done
     shift
   fi
@@ -512,22 +512,22 @@ cpp)
   do
     case $arg in
     -o)
-      shift
-      ;;
+    shift
+    ;;
     $object)
-      shift
-      ;;
+    shift
+    ;;
     *)
-      set fnord "$@" "$arg"
-      shift # fnord
-      shift # $arg
-      ;;
+    set fnord "$@" "$arg"
+    shift # fnord
+    shift # $arg
+    ;;
     esac
   done
 
   "$@" -E |
     sed -n -e '/^# [0-9][0-9]* "\([^"]*\)".*/ s:: \1 \\:p' \
-       -e '/^#line [0-9][0-9]* "\([^"]*\)".*/ s:: \1 \\:p' |
+        -e '/^#line [0-9][0-9]* "\([^"]*\)".*/ s:: \1 \\:p' |
     sed '$ s: \\$::' > "$tmpdepfile"
   rm -f "$depfile"
   echo "$object : \\" > "$depfile"
@@ -546,15 +546,15 @@ msvisualcpp)
   do
     case "$arg" in
     "-Gm"|"/Gm"|"-Gi"|"/Gi"|"-ZI"|"/ZI")
-	set fnord "$@"
-	shift
-	shift
-	;;
+    set fnord "$@"
+    shift
+    shift
+    ;;
     *)
-	set fnord "$@" "$arg"
-	shift
-	shift
-	;;
+    set fnord "$@" "$arg"
+    shift
+    shift
+    ;;
     esac
   done
   "$@" -E |

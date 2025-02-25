@@ -13,14 +13,14 @@
 #else
 
 /*
-   Decode literal, length, and distance codes and write out the resulting
-   literal and match bytes until either not enough input or output is
-   available, an end-of-block is encountered, or a data error is encountered.
-   When large enough input and output buffers are supplied to inflate(), for
-   example, a 16K input buffer and a 64K output buffer, more than 95% of the
-   inflate execution time is spent in this routine.
+    Decode literal, length, and distance codes and write out the resulting
+    literal and match bytes until either not enough input or output is
+    available, an end-of-block is encountered, or a data error is encountered.
+    When large enough input and output buffers are supplied to inflate(), for
+    example, a 16K input buffer and a 64K output buffer, more than 95% of the
+    inflate execution time is spent in this routine.
 
-   Entry assumptions:
+    Entry assumptions:
 
         state->mode == LEN
         strm->avail_in >= 6
@@ -28,24 +28,24 @@
         start >= strm->avail_out
         state->bits < 8
 
-   On return, state->mode is one of:
+    On return, state->mode is one of:
 
         LEN -- ran out of enough output space or enough available input
         TYPE -- reached end of block code, inflate() to interpret next block
         BAD -- error in block data
 
-   Notes:
+    Notes:
 
     - The maximum input bits used by a length/distance pair is 15 bits for the
-      length code, 5 bits for the length extra, 15 bits for the distance code,
-      and 13 bits for the distance extra.  This totals 48 bits, or six bytes.
-      Therefore if strm->avail_in >= 6, then there is enough input to avoid
-      checking for available input while decoding.
+    length code, 5 bits for the length extra, 15 bits for the distance code,
+    and 13 bits for the distance extra.  This totals 48 bits, or six bytes.
+    Therefore if strm->avail_in >= 6, then there is enough input to avoid
+    checking for available input while decoding.
 
     - The maximum bytes that a single length/distance pair can output is 258
-      bytes, which is the maximum length that can be coded.  inflate_fast()
-      requires strm->avail_out >= 258 for each loop to avoid checking for
-      output space.
+    bytes, which is the maximum length that can be coded.  inflate_fast()
+    requires strm->avail_out >= 258 for each loop to avoid checking for
+    output space.
  */
 void ZLIB_INTERNAL inflate_fast(z_streamp strm, unsigned start) {
     struct inflate_state FAR *state;
@@ -96,7 +96,7 @@ void ZLIB_INTERNAL inflate_fast(z_streamp strm, unsigned start) {
     dmask = (1U << state->distbits) - 1;
 
     /* decode literals and length/distances until end-of-block or not enough
-       input data or output space */
+        input data or output space */
     do {
         if (bits < 15) {
             hold += (unsigned long)(*in++) << bits;
@@ -105,7 +105,7 @@ void ZLIB_INTERNAL inflate_fast(z_streamp strm, unsigned start) {
             bits += 8;
         }
         here = lcode + (hold & lmask);
-      dolen:
+    dolen:
         op = (unsigned)(here->bits);
         hold >>= op;
         bits -= op;
@@ -136,7 +136,7 @@ void ZLIB_INTERNAL inflate_fast(z_streamp strm, unsigned start) {
                 bits += 8;
             }
             here = dcode + (hold & dmask);
-          dodist:
+        dodist:
             op = (unsigned)(here->bits);
             hold >>= op;
             bits -= op;
@@ -297,24 +297,24 @@ void ZLIB_INTERNAL inflate_fast(z_streamp strm, unsigned start) {
     strm->next_out = out;
     strm->avail_in = (unsigned)(in < last ? 5 + (last - in) : 5 - (in - last));
     strm->avail_out = (unsigned)(out < end ?
-                                 257 + (end - out) : 257 - (out - end));
+                                257 + (end - out) : 257 - (out - end));
     state->hold = hold;
     state->bits = bits;
     return;
 }
 
 /*
-   inflate_fast() speedups that turned out slower (on a PowerPC G3 750CXe):
-   - Using bit fields for code structure
-   - Different op definition to avoid & for extra bits (do & for table bits)
-   - Three separate decoding do-loops for direct, window, and wnext == 0
-   - Special case for distance > 1 copies to do overlapped load and store copy
-   - Explicit branch predictions (based on measured branch probabilities)
-   - Deferring match copy and interspersed it with decoding subsequent codes
-   - Swapping literal/length else
-   - Swapping window/direct else
-   - Larger unrolled copy loops (three is about right)
-   - Moving len -= 3 statement into middle of loop
+    inflate_fast() speedups that turned out slower (on a PowerPC G3 750CXe):
+    - Using bit fields for code structure
+    - Different op definition to avoid & for extra bits (do & for table bits)
+    - Three separate decoding do-loops for direct, window, and wnext == 0
+    - Special case for distance > 1 copies to do overlapped load and store copy
+    - Explicit branch predictions (based on measured branch probabilities)
+    - Deferring match copy and interspersed it with decoding subsequent codes
+    - Swapping literal/length else
+    - Swapping window/direct else
+    - Larger unrolled copy loops (three is about right)
+    - Moving len -= 3 statement into middle of loop
  */
 
 #endif /* !ASMINF */

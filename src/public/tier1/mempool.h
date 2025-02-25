@@ -35,13 +35,13 @@ enum MemoryPoolGrowType_t
 {
     UTLMEMORYPOOL_GROW_NONE = 0,  // Don't allow new blobs.
     UTLMEMORYPOOL_GROW_FAST = 1,  // New blob size is numElements * (i+1)  (ie: the blocks it allocates
-                                  // get larger and larger each time it allocates one).
+                                // get larger and larger each time it allocates one).
     UTLMEMORYPOOL_GROW_SLOW = 2   // New blob size is numElements.
 };
 
 class CUtlMemoryPool
 {
-   public:
+    public:
     // !KLUDGE! For legacy code support, import the global enum into this scope
     enum MemoryPoolGrowType_t
     {
@@ -75,10 +75,10 @@ class CUtlMemoryPool
         return m_PeakAlloc;
     }
 
-   protected:
+    protected:
     class CBlob
     {
-       public:
+        public:
         CBlob *m_pPrev, *m_pNext;
         int m_NumBytes;  // Number of bytes in this blob.
         char m_Data[1];
@@ -115,7 +115,7 @@ class CUtlMemoryPool
 //-----------------------------------------------------------------------------
 class CMemoryPoolMT : public CUtlMemoryPool
 {
-   public:
+    public:
     CMemoryPoolMT( int blockSize, int numElements, int growMode = UTLMEMORYPOOL_GROW_FAST, const char *pszAllocOwner = NULL )
         : CUtlMemoryPool( blockSize, numElements, growMode, pszAllocOwner ) {}
 
@@ -152,7 +152,7 @@ class CMemoryPoolMT : public CUtlMemoryPool
         return CUtlMemoryPool::Clear();
     }
 
-   private:
+    private:
     CThreadFastMutex m_mutex;  // @TODO: Rework to use tslist (toml 7/6/2007)
 };
 
@@ -163,7 +163,7 @@ class CMemoryPoolMT : public CUtlMemoryPool
 template < class T >
 class CClassMemoryPool : public CUtlMemoryPool
 {
-   public:
+    public:
     CClassMemoryPool( int numElements, int growMode = GROW_FAST, int nAlignment = 0 )
         : CUtlMemoryPool( sizeof( T ), numElements, growMode, MEM_ALLOC_CLASSNAME( T ), nAlignment )
     {
@@ -192,7 +192,7 @@ class CAlignedMemPool
         BLOCK_SIZE = ALIGN_VALUE( ITEM_SIZE, ALIGNMENT ) > 8 ? ALIGN_VALUE( ITEM_SIZE, ALIGNMENT ) : 8
     };
 
-   public:
+    public:
     CAlignedMemPool();
 
     void *Alloc();
@@ -240,7 +240,7 @@ class CAlignedMemPool
         return CHUNK_SIZE;
     }
 
-   private:
+    private:
     struct FreeBlock_t
     {
         FreeBlock_t *pNext;
@@ -260,7 +260,7 @@ class CAlignedMemPool
 template < typename T, int nInitialCount = 0, bool bDefCreateNewIfEmpty = true >
 class CObjectPool
 {
-   public:
+    public:
     CObjectPool()
     {
         int i = nInitialCount;
@@ -304,7 +304,7 @@ class CObjectPool
         m_AvailableObjects.PushItem( p );
     }
 
-   private:
+    private:
     CTSList< T * > m_AvailableObjects;
 };
 
@@ -391,7 +391,7 @@ inline void CClassMemoryPool< T >::Clear()
 // Put DEFINE_FIXEDSIZE_ALLOCATOR in the CPP file
 //-----------------------------------------------------------------------------
 #define DECLARE_FIXEDSIZE_ALLOCATOR( _class )                                                 \
-   public:                                                                                    \
+    public:                                                                                    \
     inline void *operator new( size_t size )                                                  \
     {                                                                                         \
         MEM_ALLOC_CREDIT_( #_class " pool" );                                                 \
@@ -410,8 +410,8 @@ inline void CClassMemoryPool< T >::Clear()
     {                                                                                         \
         s_Allocator.Free( p );                                                                \
     }                                                                                         \
-                                                                                              \
-   private:                                                                                   \
+                                                                                            \
+    private:                                                                                   \
     static CUtlMemoryPool s_Allocator
 
 #define DEFINE_FIXEDSIZE_ALLOCATOR( _class, _initsize, _grow ) \
@@ -421,7 +421,7 @@ inline void CClassMemoryPool< T >::Clear()
     CUtlMemoryPool _class::s_Allocator( sizeof( _class ), _initsize, _grow, #_class " pool", _alignment )
 
 #define DECLARE_FIXEDSIZE_ALLOCATOR_MT( _class )                                              \
-   public:                                                                                    \
+    public:                                                                                    \
     inline void *operator new( size_t size )                                                  \
     {                                                                                         \
         MEM_ALLOC_CREDIT_( #_class " pool" );                                                 \
@@ -440,8 +440,8 @@ inline void CClassMemoryPool< T >::Clear()
     {                                                                                         \
         s_Allocator.Free( p );                                                                \
     }                                                                                         \
-                                                                                              \
-   private:                                                                                   \
+                                                                                            \
+    private:                                                                                   \
     static CMemoryPoolMT s_Allocator
 
 #define DEFINE_FIXEDSIZE_ALLOCATOR_MT( _class, _initsize, _grow ) \
@@ -455,7 +455,7 @@ inline void CClassMemoryPool< T >::Clear()
 //-----------------------------------------------------------------------------
 
 #define DECLARE_FIXEDSIZE_ALLOCATOR_EXTERNAL( _class )                                        \
-   public:                                                                                    \
+    public:                                                                                    \
     inline void *operator new( size_t size )                                                  \
     {                                                                                         \
         MEM_ALLOC_CREDIT_( #_class " pool" );                                                 \
@@ -470,8 +470,8 @@ inline void CClassMemoryPool< T >::Clear()
     {                                                                                         \
         s_pAllocator->Free( p );                                                              \
     }                                                                                         \
-                                                                                              \
-   private:                                                                                   \
+                                                                                            \
+    private:                                                                                   \
     static CUtlMemoryPool *s_pAllocator
 
 #define DEFINE_FIXEDSIZE_ALLOCATOR_EXTERNAL( _class, _allocator ) \
@@ -480,8 +480,8 @@ inline void CClassMemoryPool< T >::Clear()
 template < int ITEM_SIZE, int ALIGNMENT, int CHUNK_SIZE, class CAllocator, int COMPACT_THRESHOLD >
 inline CAlignedMemPool< ITEM_SIZE, ALIGNMENT, CHUNK_SIZE, CAllocator, COMPACT_THRESHOLD >::CAlignedMemPool()
     : m_pFirstFree( 0 ),
-      m_nFree( 0 ),
-      m_TimeLastCompact( 0 )
+    m_nFree( 0 ),
+    m_TimeLastCompact( 0 )
 {
     COMPILE_TIME_ASSERT( sizeof( FreeBlock_t ) >= BLOCK_SIZE );
     COMPILE_TIME_ASSERT( ALIGN_VALUE( sizeof( FreeBlock_t ), ALIGNMENT ) == sizeof( FreeBlock_t ) );

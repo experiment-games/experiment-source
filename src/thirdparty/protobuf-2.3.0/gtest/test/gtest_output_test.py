@@ -32,10 +32,10 @@
 """Tests the text output of Google C++ Testing Framework.
 
 SYNOPSIS
-       gtest_output_test.py --gtest_build_dir=BUILD/DIR --gengolden
-         # where BUILD/DIR contains the built gtest_output_test_ file.
-       gtest_output_test.py --gengolden
-       gtest_output_test.py
+        gtest_output_test.py --gtest_build_dir=BUILD/DIR --gengolden
+        # where BUILD/DIR contains the built gtest_output_test_ file.
+        gtest_output_test.py --gengolden
+        gtest_output_test.py
 """
 
 __author__ = 'wan@google.com (Zhanyong Wan)'
@@ -63,19 +63,19 @@ PROGRAM_PATH = gtest_test_utils.GetTestExecutablePath('gtest_output_test_')
 COMMAND_LIST_TESTS = ({}, [PROGRAM_PATH, '--gtest_list_tests'])
 COMMAND_WITH_COLOR = ({}, [PROGRAM_PATH, '--gtest_color=yes'])
 COMMAND_WITH_TIME = ({}, [PROGRAM_PATH,
-                          '--gtest_print_time',
-                          '--gtest_internal_skip_environment_and_ad_hoc_tests',
-                          '--gtest_filter=FatalFailureTest.*:LoggingTest.*'])
+                        '--gtest_print_time',
+                        '--gtest_internal_skip_environment_and_ad_hoc_tests',
+                        '--gtest_filter=FatalFailureTest.*:LoggingTest.*'])
 COMMAND_WITH_DISABLED = (
     {}, [PROGRAM_PATH,
-         '--gtest_also_run_disabled_tests',
-         '--gtest_internal_skip_environment_and_ad_hoc_tests',
-         '--gtest_filter=*DISABLED_*'])
+        '--gtest_also_run_disabled_tests',
+        '--gtest_internal_skip_environment_and_ad_hoc_tests',
+        '--gtest_filter=*DISABLED_*'])
 COMMAND_WITH_SHARDING = (
     {'GTEST_SHARD_INDEX': '1', 'GTEST_TOTAL_SHARDS': '2'},
     [PROGRAM_PATH,
-     '--gtest_internal_skip_environment_and_ad_hoc_tests',
-     '--gtest_filter=PassingTest.*'])
+    '--gtest_internal_skip_environment_and_ad_hoc_tests',
+    '--gtest_filter=PassingTest.*'])
 
 GOLDEN_PATH = os.path.join(gtest_test_utils.GetSourceDir(), GOLDEN_NAME)
 
@@ -90,13 +90,13 @@ def RemoveLocations(test_output):
   """Removes all file location info from a Google Test program's output.
 
   Args:
-       test_output:  the output of a Google Test program.
+        test_output:  the output of a Google Test program.
 
   Returns:
-       output with all file location info (in the form of
-       'DIRECTORY/FILE_NAME:LINE_NUMBER: 'or
-       'DIRECTORY\\FILE_NAME(LINE_NUMBER): ') replaced by
-       'FILE_NAME:#: '.
+        output with all file location info (in the form of
+        'DIRECTORY/FILE_NAME:LINE_NUMBER: 'or
+        'DIRECTORY\\FILE_NAME(LINE_NUMBER): ') replaced by
+        'FILE_NAME:#: '.
   """
 
   return re.sub(r'.*[/\\](.+)(\:\d+|\(\d+\))\: ', r'\1:#: ', test_output)
@@ -127,13 +127,13 @@ def RemoveTestCounts(output):
   """Removes test counts from a Google Test program's output."""
 
   output = re.sub(r'\d+ tests, listed below',
-                  '? tests, listed below', output)
+                '? tests, listed below', output)
   output = re.sub(r'\d+ FAILED TESTS',
-                  '? FAILED TESTS', output)
+                '? FAILED TESTS', output)
   output = re.sub(r'\d+ tests from \d+ test cases',
-                  '? tests from ? test cases', output)
+                '? tests from ? test cases', output)
   output = re.sub(r'\d+ tests from ([a-zA-Z_])',
-                  r'? tests from \1', output)
+                r'? tests from \1', output)
   return re.sub(r'\d+ tests\.', '? tests.', output)
 
 
@@ -146,17 +146,17 @@ def RemoveMatchingTests(test_output, pattern):
   Args:
     test_output:       A string containing the test output.
     pattern:           A regex string that matches names of test cases or
-                       tests to remove.
+                        tests to remove.
 
   Returns:
     Contents of test_output with tests whose names match pattern removed.
   """
 
   test_output = re.sub(
-      r'.*\[ RUN      \] .*%s(.|\n)*?\[(  FAILED  |       OK )\] .*%s.*\n' % (
-          pattern, pattern),
-      '',
-      test_output)
+    r'.*\[ RUN      \] .*%s(.|\n)*?\[(  FAILED  |       OK )\] .*%s.*\n' % (
+        pattern, pattern),
+    '',
+    test_output)
   return re.sub(r'.*%s.*\n' % pattern, '', test_output)
 
 
@@ -175,8 +175,8 @@ def GetShellCommandOutput(env_cmd):
 
   Args:
     env_cmd: The shell command. A 2-tuple where element 0 is a dict of extra
-             environment variables to set, and element 1 is a string with
-             the command and any flags.
+            environment variables to set, and element 1 is a string with
+            the command and any flags.
 
   Returns:
     A string with the command's combined standard and diagnostic output.
@@ -204,8 +204,8 @@ def GetCommandOutput(env_cmd):
 
   Args:
     env_cmd:  The shell command. A 2-tuple where element 0 is a dict of extra
-              environment variables to set, and element 1 is a string with
-              the command and any flags.
+            environment variables to set, and element 1 is a string with
+            the command and any flags.
   """
 
   # Disables exception pop-ups on Windows.
@@ -217,9 +217,9 @@ def GetOutputOfAllCommands():
   """Returns concatenated output from several representative commands."""
 
   return (GetCommandOutput(COMMAND_WITH_COLOR) +
-          GetCommandOutput(COMMAND_WITH_TIME) +
-          GetCommandOutput(COMMAND_WITH_DISABLED) +
-          GetCommandOutput(COMMAND_WITH_SHARDING))
+        GetCommandOutput(COMMAND_WITH_TIME) +
+        GetCommandOutput(COMMAND_WITH_DISABLED) +
+        GetCommandOutput(COMMAND_WITH_SHARDING))
 
 
 test_list = GetShellCommandOutput(COMMAND_LIST_TESTS)
@@ -234,18 +234,18 @@ CAN_GENERATE_GOLDEN_FILE = SUPPORTS_DEATH_TESTS and SUPPORTS_TYPED_TESTS
 class GTestOutputTest(gtest_test_utils.TestCase):
   def RemoveUnsupportedTests(self, test_output):
     if not SUPPORTS_DEATH_TESTS:
-      test_output = RemoveMatchingTests(test_output, 'DeathTest')
+    test_output = RemoveMatchingTests(test_output, 'DeathTest')
     if not SUPPORTS_TYPED_TESTS:
-      test_output = RemoveMatchingTests(test_output, 'TypedTest')
+    test_output = RemoveMatchingTests(test_output, 'TypedTest')
     if not SUPPORTS_THREADS:
-      test_output = RemoveMatchingTests(test_output,
+    test_output = RemoveMatchingTests(test_output,
                                         'ExpectFailureWithThreadsTest')
-      test_output = RemoveMatchingTests(test_output,
+    test_output = RemoveMatchingTests(test_output,
                                         'ScopedFakeTestPartResultReporterTest')
-      test_output = RemoveMatchingTests(test_output,
+    test_output = RemoveMatchingTests(test_output,
                                         'WorksConcurrently')
     if not SUPPORTS_STACK_TRACES:
-      test_output = RemoveStackTraces(test_output)
+    test_output = RemoveStackTraces(test_output)
 
     return test_output
 
@@ -263,45 +263,45 @@ class GTestOutputTest(gtest_test_utils.TestCase):
     # We want the test to pass regardless of certain features being
     # supported or not.
     if CAN_GENERATE_GOLDEN_FILE:
-      self.assert_(golden == output)
+    self.assert_(golden == output)
     else:
-      normalized_actual = RemoveTestCounts(output)
-      normalized_golden = RemoveTestCounts(self.RemoveUnsupportedTests(golden))
+    normalized_actual = RemoveTestCounts(output)
+    normalized_golden = RemoveTestCounts(self.RemoveUnsupportedTests(golden))
 
-      # This code is very handy when debugging test differences so I left it
-      # here, commented.
-      # open(os.path.join(
-      #     gtest_test_utils.GetSourceDir(),
-      #     '_gtest_output_test_normalized_actual.txt'), 'wb').write(
-      #         normalized_actual)
-      # open(os.path.join(
-      #     gtest_test_utils.GetSourceDir(),
-      #     '_gtest_output_test_normalized_golden.txt'), 'wb').write(
-      #         normalized_golden)
+    # This code is very handy when debugging test differences so I left it
+    # here, commented.
+    # open(os.path.join(
+    #     gtest_test_utils.GetSourceDir(),
+    #     '_gtest_output_test_normalized_actual.txt'), 'wb').write(
+    #         normalized_actual)
+    # open(os.path.join(
+    #     gtest_test_utils.GetSourceDir(),
+    #     '_gtest_output_test_normalized_golden.txt'), 'wb').write(
+    #         normalized_golden)
 
-      self.assert_(normalized_golden == normalized_actual)
+    self.assert_(normalized_golden == normalized_actual)
 
 
 if __name__ == '__main__':
   if sys.argv[1:] == [GENGOLDEN_FLAG]:
     if CAN_GENERATE_GOLDEN_FILE:
-      output = GetOutputOfAllCommands()
-      golden_file = open(GOLDEN_PATH, 'wb')
-      golden_file.write(output)
-      golden_file.close()
+    output = GetOutputOfAllCommands()
+    golden_file = open(GOLDEN_PATH, 'wb')
+    golden_file.write(output)
+    golden_file.close()
     else:
-      message = (
-          """Unable to write a golden file when compiled in an environment
+    message = (
+        """Unable to write a golden file when compiled in an environment
 that does not support all the required features (death tests""")
-      if IS_WINDOWS:
+    if IS_WINDOWS:
         message += (
             """\nand typed tests). Please check that you are using VC++ 8.0 SP1
 or higher as your compiler.""")
-      else:
+    else:
         message += """\nand typed tests).  Please generate the golden file
 using a binary built with those features enabled."""
 
-      sys.stderr.write(message)
-      sys.exit(1)
+    sys.stderr.write(message)
+    sys.exit(1)
   else:
     gtest_test_utils.Main()

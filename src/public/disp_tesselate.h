@@ -160,7 +160,7 @@ inline void TesselateDisplacement_R(
 
 class CBaseTesselateHelper
 {
-   public:
+    public:
     // Functions your derived class must implement:
     // void EndTriangle();								// (the 3 indices are in m_TempIndices).
     // DispNodeInfo_t& GetNodeInfo( int iNodeBit );

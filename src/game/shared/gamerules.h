@@ -85,7 +85,7 @@ enum
 // This class has the data tables and gets the CGameRules data to the client.
 class CGameRulesProxy : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CGameRulesProxy, CBaseEntity );
     DECLARE_NETWORKCLASS();
 
@@ -106,13 +106,13 @@ class CGameRulesProxy : public CBaseEntity
     // is the actual entity that will send the data.
     static void NotifyNetworkStateChanged();
 
-   private:
+    private:
     static CGameRulesProxy *s_pGameRulesProxy;
 };
 
 abstract_class CGameRules : public CAutoGameSystemPerFrame
 {
-   public:
+    public:
     DECLARE_CLASS_GAMEROOT( CGameRules, CAutoGameSystemPerFrame );
 
     virtual char const *Name()
@@ -248,7 +248,7 @@ abstract_class CGameRules : public CAutoGameSystemPerFrame
     virtual void CheckHaptics( CBasePlayer * pPlayer );
 
     // CBaseEntity overrides.
-   public:
+    public:
     // Setup
 
     // Called when game rules are destroyed by CWorld
@@ -272,7 +272,7 @@ abstract_class CGameRules : public CAutoGameSystemPerFrame
 #if defined( LUA_SDK ) || !defined( CLIENT_DLL )
     virtual void Think(
         void ) = 0;  // GR_Think - runs every frame, should handle any
-                     // timer tasks, periodic events, etc.
+                    // timer tasks, periodic events, etc.
 #endif
 
 #ifndef CLIENT_DLL
@@ -579,7 +579,7 @@ abstract_class CGameRules : public CAutoGameSystemPerFrame
     }
 
 #ifndef CLIENT_DLL
-   private:
+    private:
     float m_flNextVerboseLogOutput;
 #endif  // CLIENT_DLL
 };

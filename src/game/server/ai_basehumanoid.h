@@ -21,7 +21,7 @@ class CAI_BaseHumanoid : public CAI_BaseHumanoidBase
 {
     DECLARE_CLASS( CAI_BaseHumanoid, CAI_BaseHumanoidBase );
 
-   public:
+    public:
     bool HandleInteraction( int interactionType, void *data, CBaseCombatCharacter *sourceEnt );
 
     // Tasks

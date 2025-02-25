@@ -37,7 +37,7 @@ class IMoveHelper;
 
 class CMoveData
 {
-   public:
+    public:
     bool m_bFirstRunOfFunctions : 1;
     bool m_bGameCodeMovedPlayer : 1;
 
@@ -75,7 +75,7 @@ class CMoveData
     void SetAbsOrigin( const Vector &vec );
     const Vector &GetAbsOrigin() const;
 
-   private:
+    private:
     Vector m_vecAbsOrigin;  // edict::origin
 };
 
@@ -108,7 +108,7 @@ inline void CMoveData::SetAbsOrigin( const Vector &vec )
 
 abstract_class IGameMovement
 {
-   public:
+    public:
     virtual ~IGameMovement( void ) {}
 
     // Process the current movement command

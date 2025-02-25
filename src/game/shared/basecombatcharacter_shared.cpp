@@ -260,7 +260,7 @@ enum
 
 class CCombatCharVisCache : public CAutoGameSystemPerFrame
 {
-   public:
+    public:
     virtual void FrameUpdatePreEntityThink();
     virtual void LevelShutdownPreEntity();
 
@@ -268,7 +268,7 @@ class CCombatCharVisCache : public CAutoGameSystemPerFrame
     VisCacheResult_t HasVisibility( int iCache ) const;
     void RegisterVisibility( int iCache, bool bChar1SeesChar2, bool bChar2SeesChar1 );
 
-   private:
+    private:
     struct VisCacheEntry_t
     {
         CHandle< CBaseCombatCharacter > m_hEntity1;
@@ -280,7 +280,7 @@ class CCombatCharVisCache : public CAutoGameSystemPerFrame
 
     class CVisCacheEntryLess
     {
-       public:
+        public:
         CVisCacheEntryLess( int ) {}
         bool operator!() const
         {
@@ -524,7 +524,7 @@ bool CBaseCombatCharacter::IsAbleToSee( CBaseCombatCharacter *pBCC, FieldOfViewC
 
 class CTraceFilterNoCombatCharacters : public CTraceFilterSimple
 {
-   public:
+    public:
     CTraceFilterNoCombatCharacters( const IHandleEntity *passentity = NULL, int collisionGroup = COLLISION_GROUP_NONE )
         : CTraceFilterSimple( passentity, collisionGroup )
     {

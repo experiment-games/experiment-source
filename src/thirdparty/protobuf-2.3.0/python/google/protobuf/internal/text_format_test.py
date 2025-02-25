@@ -60,22 +60,22 @@ class TextFormatTest(unittest.TestCase):
   def CompareToGoldenLines(self, text, golden_lines):
     actual_lines = text.splitlines(1)
     self.assertEqual(golden_lines, actual_lines,
-      "Text doesn't match golden.  Diff:\n" +
-      ''.join(difflib.ndiff(golden_lines, actual_lines)))
+    "Text doesn't match golden.  Diff:\n" +
+    ''.join(difflib.ndiff(golden_lines, actual_lines)))
 
   def testPrintAllFields(self):
     message = unittest_pb2.TestAllTypes()
     test_util.SetAllFields(message)
     self.CompareToGoldenFile(
-      self.RemoveRedundantZeros(text_format.MessageToString(message)),
-      'text_format_unittest_data.txt')
+    self.RemoveRedundantZeros(text_format.MessageToString(message)),
+    'text_format_unittest_data.txt')
 
   def testPrintAllExtensions(self):
     message = unittest_pb2.TestAllExtensions()
     test_util.SetAllExtensions(message)
     self.CompareToGoldenFile(
-      self.RemoveRedundantZeros(text_format.MessageToString(message)),
-      'text_format_unittest_extensions_data.txt')
+    self.RemoveRedundantZeros(text_format.MessageToString(message)),
+    'text_format_unittest_extensions_data.txt')
 
   def testPrintMessageSet(self):
     message = unittest_mset_pb2.TestMessageSetContainer()
@@ -84,14 +84,14 @@ class TextFormatTest(unittest.TestCase):
     message.message_set.Extensions[ext1].i = 23
     message.message_set.Extensions[ext2].str = 'foo'
     self.CompareToGoldenText(text_format.MessageToString(message),
-      'message_set {\n'
-      '  [protobuf_unittest.TestMessageSetExtension1] {\n'
-      '    i: 23\n'
-      '  }\n'
-      '  [protobuf_unittest.TestMessageSetExtension2] {\n'
-      '    str: \"foo\"\n'
-      '  }\n'
-      '}\n')
+    'message_set {\n'
+    '  [protobuf_unittest.TestMessageSetExtension1] {\n'
+    '    i: 23\n'
+    '  }\n'
+    '  [protobuf_unittest.TestMessageSetExtension2] {\n'
+    '    str: \"foo\"\n'
+    '  }\n'
+    '}\n')
 
   def testPrintExotic(self):
     message = unittest_pb2.TestAllTypes()
@@ -102,13 +102,13 @@ class TextFormatTest(unittest.TestCase):
     message.repeated_double.append(1.23e-18);
     message.repeated_string.append('\000\001\a\b\f\n\r\t\v\\\'\"');
     self.CompareToGoldenText(
-      self.RemoveRedundantZeros(text_format.MessageToString(message)),
-      'repeated_int64: -9223372036854775808\n'
-      'repeated_uint64: 18446744073709551615\n'
-      'repeated_double: 123.456\n'
-      'repeated_double: 1.23e+22\n'
-      'repeated_double: 1.23e-18\n'
-      'repeated_string: '
+    self.RemoveRedundantZeros(text_format.MessageToString(message)),
+    'repeated_int64: -9223372036854775808\n'
+    'repeated_uint64: 18446744073709551615\n'
+    'repeated_double: 123.456\n'
+    'repeated_double: 1.23e+22\n'
+    'repeated_double: 1.23e-18\n'
+    'repeated_string: '
         '\"\\000\\001\\007\\010\\014\\n\\r\\t\\013\\\\\\\'\\\"\"\n')
 
   def testMessageToString(self):
@@ -120,7 +120,7 @@ class TextFormatTest(unittest.TestCase):
     # Some platforms print 1e+5 as 1e+005.  This is fine, but we need to remove
     # these zeros in order to match the golden file.
     return text.replace('e+0','e+').replace('e+0','e+') \
-               .replace('e-0','e-').replace('e-0','e-')
+                .replace('e-0','e-').replace('e-0','e-')
 
   def testMergeGolden(self):
     golden_text = '\n'.join(self.ReadGolden('text_format_unittest_data.txt'))
@@ -210,7 +210,7 @@ class TextFormatTest(unittest.TestCase):
     self.assertRaisesWithMessage(
         text_format.ParseError,
         ('1:1 : Message type "protobuf_unittest.TestAllTypes" has no field named '
-         '"unknown_field".'),
+        '"unknown_field".'),
         text_format.Merge, text, message)
 
   def testMergeBadExtension(self):
@@ -224,7 +224,7 @@ class TextFormatTest(unittest.TestCase):
     self.assertRaisesWithMessage(
         text_format.ParseError,
         ('1:2 : Message type "protobuf_unittest.TestAllTypes" does not have '
-         'extensions.'),
+        'extensions.'),
         text_format.Merge, text, message)
 
   def testMergeGroupNotClosed(self):
@@ -258,7 +258,7 @@ class TextFormatTest(unittest.TestCase):
     self.assertRaisesWithMessage(
         text_format.ParseError,
         ('1:23 : Enum type "protobuf_unittest.TestAllTypes.NestedEnum" '
-         'has no value named BARR.'),
+        'has no value named BARR.'),
         text_format.Merge, text, message)
 
     message = unittest_pb2.TestAllTypes()
@@ -266,27 +266,27 @@ class TextFormatTest(unittest.TestCase):
     self.assertRaisesWithMessage(
         text_format.ParseError,
         ('1:23 : Enum type "protobuf_unittest.TestAllTypes.NestedEnum" '
-         'has no value with number 100.'),
+        'has no value with number 100.'),
         text_format.Merge, text, message)
 
   def assertRaisesWithMessage(self, e_class, e, func, *args, **kwargs):
     """Same as assertRaises, but also compares the exception message."""
     if hasattr(e_class, '__name__'):
-      exc_name = e_class.__name__
+    exc_name = e_class.__name__
     else:
-      exc_name = str(e_class)
+    exc_name = str(e_class)
 
     try:
-      func(*args, **kwargs)
+    func(*args, **kwargs)
     except e_class, expr:
-      if str(expr) != e:
+    if str(expr) != e:
         msg = '%s raised, but with wrong message: "%s" instead of "%s"'
         raise self.failureException(msg % (exc_name,
-                                           str(expr).encode('string_escape'),
-                                           e.encode('string_escape')))
-      return
+                                            str(expr).encode('string_escape'),
+                                            e.encode('string_escape')))
+    return
     else:
-      raise self.failureException('%s not raised' % exc_name)
+    raise self.failureException('%s not raised' % exc_name)
 
 
 class TokenizerTest(unittest.TestCase):
@@ -300,65 +300,65 @@ class TokenizerTest(unittest.TestCase):
             'ID12: 2222222222222222222')
     tokenizer = text_format._Tokenizer(text)
     methods = [(tokenizer.ConsumeIdentifier, 'identifier1'),
-               ':',
-               (tokenizer.ConsumeString, 'string1'),
-               (tokenizer.ConsumeIdentifier, 'identifier2'),
-               ':',
-               (tokenizer.ConsumeInt32, 123),
-               (tokenizer.ConsumeIdentifier, 'identifier3'),
-               ':',
-               (tokenizer.ConsumeString, 'string'),
-               (tokenizer.ConsumeIdentifier, 'identifiER_4'),
-               ':',
-               (tokenizer.ConsumeFloat, 1.1e+2),
-               (tokenizer.ConsumeIdentifier, 'ID5'),
-               ':',
-               (tokenizer.ConsumeFloat, -0.23),
-               (tokenizer.ConsumeIdentifier, 'ID6'),
-               ':',
-               (tokenizer.ConsumeString, 'aaaa\'bbbb'),
-               (tokenizer.ConsumeIdentifier, 'ID7'),
-               ':',
-               (tokenizer.ConsumeString, 'aa\"bb'),
-               (tokenizer.ConsumeIdentifier, 'ID8'),
-               ':',
-               '{',
-               (tokenizer.ConsumeIdentifier, 'A'),
-               ':',
-               (tokenizer.ConsumeFloat, text_format._INFINITY),
-               (tokenizer.ConsumeIdentifier, 'B'),
-               ':',
-               (tokenizer.ConsumeFloat, -text_format._INFINITY),
-               (tokenizer.ConsumeIdentifier, 'C'),
-               ':',
-               (tokenizer.ConsumeBool, True),
-               (tokenizer.ConsumeIdentifier, 'D'),
-               ':',
-               (tokenizer.ConsumeBool, False),
-               '}',
-               (tokenizer.ConsumeIdentifier, 'ID9'),
-               ':',
-               (tokenizer.ConsumeUint32, 22),
-               (tokenizer.ConsumeIdentifier, 'ID10'),
-               ':',
-               (tokenizer.ConsumeInt64, -111111111111111111),
-               (tokenizer.ConsumeIdentifier, 'ID11'),
-               ':',
-               (tokenizer.ConsumeInt32, -22),
-               (tokenizer.ConsumeIdentifier, 'ID12'),
-               ':',
-               (tokenizer.ConsumeUint64, 2222222222222222222)]
+                ':',
+                (tokenizer.ConsumeString, 'string1'),
+                (tokenizer.ConsumeIdentifier, 'identifier2'),
+                ':',
+                (tokenizer.ConsumeInt32, 123),
+                (tokenizer.ConsumeIdentifier, 'identifier3'),
+                ':',
+                (tokenizer.ConsumeString, 'string'),
+                (tokenizer.ConsumeIdentifier, 'identifiER_4'),
+                ':',
+                (tokenizer.ConsumeFloat, 1.1e+2),
+                (tokenizer.ConsumeIdentifier, 'ID5'),
+                ':',
+                (tokenizer.ConsumeFloat, -0.23),
+                (tokenizer.ConsumeIdentifier, 'ID6'),
+                ':',
+                (tokenizer.ConsumeString, 'aaaa\'bbbb'),
+                (tokenizer.ConsumeIdentifier, 'ID7'),
+                ':',
+                (tokenizer.ConsumeString, 'aa\"bb'),
+                (tokenizer.ConsumeIdentifier, 'ID8'),
+                ':',
+                '{',
+                (tokenizer.ConsumeIdentifier, 'A'),
+                ':',
+                (tokenizer.ConsumeFloat, text_format._INFINITY),
+                (tokenizer.ConsumeIdentifier, 'B'),
+                ':',
+                (tokenizer.ConsumeFloat, -text_format._INFINITY),
+                (tokenizer.ConsumeIdentifier, 'C'),
+                ':',
+                (tokenizer.ConsumeBool, True),
+                (tokenizer.ConsumeIdentifier, 'D'),
+                ':',
+                (tokenizer.ConsumeBool, False),
+                '}',
+                (tokenizer.ConsumeIdentifier, 'ID9'),
+                ':',
+                (tokenizer.ConsumeUint32, 22),
+                (tokenizer.ConsumeIdentifier, 'ID10'),
+                ':',
+                (tokenizer.ConsumeInt64, -111111111111111111),
+                (tokenizer.ConsumeIdentifier, 'ID11'),
+                ':',
+                (tokenizer.ConsumeInt32, -22),
+                (tokenizer.ConsumeIdentifier, 'ID12'),
+                ':',
+                (tokenizer.ConsumeUint64, 2222222222222222222)]
 
     i = 0
     while not tokenizer.AtEnd():
-      m = methods[i]
-      if type(m) == str:
+    m = methods[i]
+    if type(m) == str:
         token = tokenizer.token
         self.assertEqual(token, m)
         tokenizer.NextToken()
-      else:
+    else:
         self.assertEqual(m[1], m[0]())
-      i += 1
+    i += 1
 
   def testConsumeIntegers(self):
     # This test only tests the failures in the integer parsing methods as well

@@ -56,7 +56,7 @@ class CPropJetski : public CPropVehicleDriveable
     DECLARE_CLASS( CPropJetski, CPropVehicleDriveable );
     DECLARE_DATADESC();
 
-   public:
+    public:
     // CPropVehicle
     virtual void ProcessMovement( CBasePlayer *pPlayer, CMoveData *pMoveData );
     virtual void DriveVehicle( CBasePlayer *pPlayer, CUserCmd *ucmd );
@@ -70,7 +70,7 @@ class CPropJetski : public CPropVehicleDriveable
     virtual void TraceAttack( const CTakeDamageInfo &info, const Vector &vecDir, trace_t *ptr );
     virtual int OnTakeDamage( const CTakeDamageInfo &info );
 
-   private:
+    private:
     void OnTurn( CUserCmd *ucmd );
     void OnSpeed( CUserCmd *ucmd );
     void UpdateTurnAndSpeed( void );
@@ -81,7 +81,7 @@ class CPropJetski : public CPropVehicleDriveable
     float CalculateFriction( CUserCmd *ucmd );
     float CalculateDrag( CUserCmd *ucmd );
 
-   private:
+    private:
     float m_flSpringLengthApproach[4];  //
     float m_flFrictionWheels[4];
 
@@ -240,15 +240,15 @@ void CPropJetski::Think( void )
 void CPropJetski::OnTurn( CUserCmd *ucmd )
 {
 #if 0
-	// Check for lean and adjust the turning radius accordingly.
-	if ( ucmd->buttons & IN_JUMP )
-	{
-		m_VehiclePhysics.SetSteeringDegrees( JETSKI_STEERING_LEAN );
-	}
-	else
-	{
-		m_VehiclePhysics.SetSteeringDegrees( JETSKI_STEERING_NORMAL );
-	}
+    // Check for lean and adjust the turning radius accordingly.
+    if ( ucmd->buttons & IN_JUMP )
+    {
+        m_VehiclePhysics.SetSteeringDegrees( JETSKI_STEERING_LEAN );
+    }
+    else
+    {
+        m_VehiclePhysics.SetSteeringDegrees( JETSKI_STEERING_NORMAL );
+    }
 
 #endif
     float flSteering = m_VehiclePhysics.GetSteering();
@@ -362,22 +362,22 @@ float CPropJetski::CalculateDrag( CUserCmd *ucmd )
     bool bLean = UpdateLean( ucmd );
 
 #if 0
-	if ( bLean )
-	{
-		flDrag += JETSKI_DRAG_LEAN_ADD;
-	}
-		float flNormalizedRatio = ( flRatio - 0.4f ) * 1.667f;
-		float flSplineRatio = SimpleSpline( flNormalizedRatio );
+    if ( bLean )
+    {
+        flDrag += JETSKI_DRAG_LEAN_ADD;
+    }
+        float flNormalizedRatio = ( flRatio - 0.4f ) * 1.667f;
+        float flSplineRatio = SimpleSpline( flNormalizedRatio );
 
-		flFriction = JETSKI_FRICTION_MAX + ( JETSKI_FRICTION_MIN - JETSKI_FRICTION_MAX ) * flSplineRatio;
-		flDrag = JETSKI_DRAG_IN_WATER + ( JETSKI_DRAG_ON_WATER - JETSKI_DRAG_IN_WATER ) * flNormalizedRatio;
+        flFriction = JETSKI_FRICTION_MAX + ( JETSKI_FRICTION_MIN - JETSKI_FRICTION_MAX ) * flSplineRatio;
+        flDrag = JETSKI_DRAG_IN_WATER + ( JETSKI_DRAG_ON_WATER - JETSKI_DRAG_IN_WATER ) * flNormalizedRatio;
 
-		// Leaning backwards.
-		if ( bLean )
-		{
-			flDrag += JETSKI_DRAG_LEAN_ADD;
-		}
-	}
+        // Leaning backwards.
+        if ( bLean )
+        {
+            flDrag += JETSKI_DRAG_LEAN_ADD;
+        }
+    }
 
 #define JETSKI_DRAG_NO_THRUST_IN_WATER 10.0f
 #define JETSKI_DRAG_NO_THRUST_ON_WATER 30.0f
@@ -416,17 +416,17 @@ void CPropJetski::OnSpeed( CUserCmd *ucmd )
     pPhysJetski->SetDragCoefficient( &flDrag, &flZero );
 
 #if 0
-	// Splash effects.
-	if ( flRatio > 0.1f )
-	{
-		CreateSplash( JETSKI_SPLASH_RIPPLE );
-	}
+    // Splash effects.
+    if ( flRatio > 0.1f )
+    {
+        CreateSplash( JETSKI_SPLASH_RIPPLE );
+    }
 
-	float flRandom = random->RandomFloat( 0.0f, 1.0f );
-	if ( flRatio > 0.8f && flRandom < 0.15f )
-	{
-		CreateSplash( JETSKI_SPLASH_SPRAY );
-	}
+    float flRandom = random->RandomFloat( 0.0f, 1.0f );
+    if ( flRatio > 0.8f && flRandom < 0.15f )
+    {
+        CreateSplash( JETSKI_SPLASH_SPRAY );
+    }
 #endif
 }
 

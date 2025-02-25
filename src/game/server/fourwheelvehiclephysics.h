@@ -30,7 +30,7 @@ class CFourWheelServerVehicle;
 //-----------------------------------------------------------------------------
 class CFourWheelVehiclePhysics
 {
-   public:
+    public:
     DECLARE_DATADESC();
 
     CFourWheelVehiclePhysics( CBaseAnimating *pOuter );
@@ -135,7 +135,7 @@ class CFourWheelVehiclePhysics
 
     int VPhysicsGetObjectList( IPhysicsObject **pList, int listMax );
 
-   private:
+    private:
     // engine sounds
     void CalcWheelData( vehicleparams_t &vehicle );
 
@@ -152,7 +152,7 @@ class CFourWheelVehiclePhysics
     void InitializePoseParameters();
     bool ParseVehicleScript( const char *pScriptName, solid_t &solid, vehicleparams_t &vehicle );
 
-   private:
+    private:
     // This is the entity that contains this class
     CHandle< CBaseAnimating > m_pOuter;
     CFourWheelServerVehicle *m_pOuterServerVehicle;

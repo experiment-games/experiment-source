@@ -72,7 +72,7 @@ extern void glBufferSubDataMaxSize( GLenum target, GLintptr offset, GLsizeiptr s
 // https://www.opengl.org/registry/specs/ARB/buffer_storage.txt
 class CPersistentBuffer
 {
-   public:
+    public:
     CPersistentBuffer();
     ~CPersistentBuffer();
 
@@ -101,7 +101,7 @@ class CPersistentBuffer
         return m_nHandle;
     }
 
-   private:
+    private:
     CPersistentBuffer( const CPersistentBuffer & );
     CPersistentBuffer &operator=( const CPersistentBuffer & );
 
@@ -141,7 +141,7 @@ class CGLMBufferSpanManager
     CGLMBufferSpanManager( const CGLMBufferSpanManager & );
     CGLMBufferSpanManager &operator=( const CGLMBufferSpanManager & );
 
-   public:
+    public:
     CGLMBufferSpanManager();
     ~CGLMBufferSpanManager();
 
@@ -180,7 +180,7 @@ class CGLMBufferSpanManager
 
     bool IsValid( uint nOffset, uint nSize ) const;
 
-   private:
+    private:
     bool AllocDynamicBuf( uint nSize, GLDynamicBuf_t &buf );
     void ReleaseDynamicBuf( GLDynamicBuf_t &buf );
 
@@ -204,7 +204,7 @@ class CGLMBufferSpanManager
 
 class CGLMBuffer
 {
-   public:
+    public:
     void Lock( GLMBuffLockParams *pParams, char **pAddressOut );
     void Unlock( int nActualSize = -1, const void *pActualData = NULL );
 

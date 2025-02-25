@@ -30,7 +30,7 @@
 template < class T >
 class CUtlReference
 {
-   public:
+    public:
     FORCEINLINE CUtlReference( void )
     {
         m_pNext = m_pPrev = NULL;
@@ -99,7 +99,7 @@ class CUtlReference
         return ( o.m_pObject == m_pObject );
     }
 
-   public:
+    public:
     CUtlReference *m_pNext;
     CUtlReference *m_pPrev;
 
@@ -127,7 +127,7 @@ class CUtlReference
 template < class T >
 class CUtlReferenceList : public CUtlIntrusiveDList< CUtlReference< T > >
 {
-   public:
+    public:
     ~CUtlReferenceList( void )
     {
         CUtlReference< T > *i = CUtlIntrusiveDList< CUtlReference< T > >::m_pHead;
@@ -147,7 +147,7 @@ class CUtlReferenceList : public CUtlIntrusiveDList< CUtlReference< T > >
 // Put this macro in classes that are referenced by CUtlReference
 //-----------------------------------------------------------------------------
 #define DECLARE_REFERENCED_CLASS( _className )    \
-   private:                                       \
+    private:                                       \
     CUtlReferenceList< _className > m_References; \
     template < class T >                          \
     friend class CUtlReference;

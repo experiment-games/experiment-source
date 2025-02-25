@@ -6,7 +6,7 @@ CAPTION "BASS 3D test"
 FONT 8, "MS Sans Serif"
 BEGIN
     GROUPBOX        "Channels",-1,5,0,120,111
-    LISTBOX         10,10,9,110,35,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | 
+    LISTBOX         10,10,9,110,35,LBS_NOINTEGRALHEIGHT | WS_VSCROLL |
                     WS_TABSTOP
     PUSHBUTTON      "Add...",11,12,49,50,12
     PUSHBUTTON      "Remove",12,68,49,50,12,WS_DISABLED
@@ -19,10 +19,10 @@ BEGIN
     EDITTEXT        16,59,91,20,13,ES_NUMBER | WS_DISABLED
     PUSHBUTTON      "reset",17,88,91,30,12,WS_DISABLED
     GROUPBOX        "Rolloff factor",-1,5,113,120,23
-    CONTROL         "",20,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | 
+    CONTROL         "",20,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS |
                     WS_TABSTOP,15,123,100,10
     GROUPBOX        "Doppler factor",-1,130,113,120,23
-    CONTROL         "",21,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | 
+    CONTROL         "",21,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS |
                     WS_TABSTOP,140,123,100,10
     GROUPBOX        "",-1,130,0,120,111
     LTEXT           "",30,135,9,109,96,SS_SUNKEN

@@ -36,7 +36,7 @@
 
 class Vector32
 {
-   public:
+    public:
     // Construction/destruction:
     Vector32( void );
     Vector32( vec_t X, vec_t Y, vec_t Z );
@@ -45,7 +45,7 @@ class Vector32
     Vector32 &operator=( const Vector &vOther );
     operator Vector();
 
-   private:
+    private:
     unsigned short x : 10;
     unsigned short y : 10;
     unsigned short z : 10;
@@ -96,7 +96,7 @@ inline Vector32::operator Vector()
 
 class Normal32
 {
-   public:
+    public:
     // Construction/destruction:
     Normal32( void );
     Normal32( vec_t X, vec_t Y, vec_t Z );
@@ -105,7 +105,7 @@ class Normal32
     Normal32 &operator=( const Vector &vOther );
     operator Vector();
 
-   private:
+    private:
     unsigned short x : 15;
     unsigned short y : 15;
     unsigned short zneg : 1;
@@ -142,7 +142,7 @@ inline Normal32::operator Vector()
 
 class Quaternion64
 {
-   public:
+    public:
     // Construction/destruction:
     Quaternion64( void );
     Quaternion64( vec_t X, vec_t Y, vec_t Z );
@@ -152,7 +152,7 @@ class Quaternion64
     Quaternion64 &operator=( const Quaternion &vOther );
     operator Quaternion();
 
-   private:
+    private:
     uint64 x : 21;
     uint64 y : 21;
     uint64 z : 21;
@@ -190,7 +190,7 @@ inline Quaternion64 &Quaternion64::operator=( const Quaternion &vOther )
 
 class Quaternion48
 {
-   public:
+    public:
     // Construction/destruction:
     Quaternion48( void );
     Quaternion48( vec_t X, vec_t Y, vec_t Z );
@@ -200,7 +200,7 @@ class Quaternion48
     Quaternion48 &operator=( const Quaternion &vOther );
     operator Quaternion();
 
-   private:
+    private:
     unsigned short x : 16;
     unsigned short y : 16;
     unsigned short z : 15;
@@ -237,7 +237,7 @@ inline Quaternion48 &Quaternion48::operator=( const Quaternion &vOther )
 
 class Quaternion32
 {
-   public:
+    public:
     // Construction/destruction:
     Quaternion32( void );
     Quaternion32( vec_t X, vec_t Y, vec_t Z );
@@ -247,7 +247,7 @@ class Quaternion32
     Quaternion32 &operator=( const Quaternion &vOther );
     operator Quaternion();
 
-   private:
+    private:
     unsigned int x : 11;
     unsigned int y : 10;
     unsigned int z : 10;
@@ -289,7 +289,7 @@ const float maxfloat16bits = 65504.0f;
 
 class float16
 {
-   public:
+    public:
     // float16() {}
     // float16( float f ) { m_storage.rawWord = ConvertFloatTo16bits(f); }
 
@@ -335,7 +335,7 @@ class float16
     //	bool operator< (const float other) const	   { return GetFloat() < other; }
     //	bool operator> (const float other) const	   { return GetFloat() > other; }
 
-   protected:
+    protected:
     union float32bits
     {
         float rawFloat;
@@ -397,9 +397,9 @@ class float16
         else if ( ( inFloat.bits.biased_exponent == 0xff ) && ( inFloat.bits.mantissa == 0 ) )
         {
 #if 0
-			// infinity
-			output.bits.mantissa = 0;
-			output.bits.biased_exponent = 31;
+            // infinity
+            output.bits.mantissa = 0;
+            output.bits.biased_exponent = 31;
 #else
             // infinity maps to maxfloat
             output.bits.mantissa = 0x3ff;
@@ -409,9 +409,9 @@ class float16
         else if ( ( inFloat.bits.biased_exponent == 0xff ) && ( inFloat.bits.mantissa != 0 ) )
         {
 #if 0
-			// NaN
-			output.bits.mantissa = 1;
-			output.bits.biased_exponent = 31;
+            // NaN
+            output.bits.mantissa = 1;
+            output.bits.biased_exponent = 31;
 #else
             // NaN maps to zero
             output.bits.mantissa = 0;
@@ -443,9 +443,9 @@ class float16
             else if ( new_exp > 15 )
             {
 #if 0
-				// map this value to infinity
-				output.bits.mantissa = 0;
-				output.bits.biased_exponent = 31;
+                // map this value to infinity
+                output.bits.mantissa = 0;
+                output.bits.biased_exponent = 31;
 #else
                 // to big. . . maps to maxfloat
                 output.bits.mantissa = 0x3ff;
@@ -502,7 +502,7 @@ class float16
 
 class float16_with_assign : public float16
 {
-   public:
+    public:
     float16_with_assign() {}
     float16_with_assign( float f )
     {
@@ -532,7 +532,7 @@ class float16_with_assign : public float16
 
 class Vector48
 {
-   public:
+    public:
     // Construction/destruction:
     Vector48( void ) {}
     Vector48( vec_t X, vec_t Y, vec_t Z )
@@ -583,7 +583,7 @@ inline Vector48::operator Vector()
 
 class Vector2d32
 {
-   public:
+    public:
     // Construction/destruction:
     Vector2d32( void ) {}
     Vector2d32( vec_t X, vec_t Y )

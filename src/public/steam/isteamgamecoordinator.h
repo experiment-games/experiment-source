@@ -1,4 +1,4 @@
-//====== Copyright ©, Valve Corporation, All rights reserved. =======
+//====== Copyright ï¿½, Valve Corporation, All rights reserved. =======
 //
 // Purpose: interface to the game coordinator for this application
 //
@@ -28,7 +28,7 @@ enum EGCResults
 //-----------------------------------------------------------------------------
 class ISteamGameCoordinator
 {
-   public:
+    public:
     // sends a message to the Game Coordinator
     virtual EGCResults SendMessage( uint32 unMsgType, const void *pubData, uint32 cubData ) = 0;
 

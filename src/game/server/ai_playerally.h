@@ -199,7 +199,7 @@ class CAI_AllySpeechManager : public CLogicalEntity
 {
     DECLARE_CLASS( CAI_AllySpeechManager, CLogicalEntity );
 
-   public:
+    public:
     CAI_AllySpeechManager();
     ~CAI_AllySpeechManager();
 
@@ -214,7 +214,7 @@ class CAI_AllySpeechManager : public CLogicalEntity
     bool CategoryDelayExpired( ConceptCategory_t category );
     bool ConceptDelayExpired( AIConcept_t concept );
 
-   private:
+    private:
     CSimpleSimTimer m_ConceptCategoryTimers[SPEECH_NUM_CATEGORIES];
 
     CUtlMap< string_t, CSimpleSimTimer, char > m_ConceptTimers;
@@ -259,7 +259,7 @@ class CAI_PlayerAlly : public CAI_BaseActor
 {
     DECLARE_CLASS( CAI_PlayerAlly, CAI_BaseActor );
 
-   public:
+    public:
     //---------------------------------
 
     int ObjectCaps( void )
@@ -420,7 +420,7 @@ class CAI_PlayerAlly : public CAI_BaseActor
 
     void AnswerQuestion( CAI_PlayerAlly *pQuestioner, int iQARandomNum, bool bAnsweringHello );
 
-   protected:
+    protected:
 #ifdef HL2_DLL
     // Health regeneration for friendly allies
     virtual bool ShouldRegenerateHealth( void )
@@ -459,7 +459,7 @@ class CAI_PlayerAlly : public CAI_BaseActor
         NEXT_CONDITION
     };
 
-   private:
+    private:
     void SetCategoryDelay( ConceptCategory_t category, float minDelay, float maxDelay = 0.0 )
     {
         m_ConceptCategoryTimers[category].Set( minDelay, maxDelay );
@@ -501,11 +501,11 @@ class CAI_PlayerAlly : public CAI_BaseActor
     float m_flHealthAccumulator;  // Counterpart to the damage accumulator in CBaseCombatCharacter. So ally health regeneration is accurate over time.
 
 #ifdef _XBOX
-   protected:
+    protected:
 #endif
     DECLARE_DATADESC();
 
-   protected:
+    protected:
     DEFINE_CUSTOM_AI;
 };
 

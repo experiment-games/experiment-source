@@ -55,13 +55,13 @@ public class TextFormatTest extends TestCase {
 
   // A basic string with different escapable characters for testing.
   private final static String kEscapeTestString =
-      "\"A string with ' characters \n and \r newlines and \t tabs and \001 "
-          + "slashes \\";
+    "\"A string with ' characters \n and \r newlines and \t tabs and \001 "
+        + "slashes \\";
 
   // A representation of the above string with all the characters escaped.
   private final static String kEscapeTestStringEscaped =
-      "\"\\\"A string with \\' characters \\n and \\r newlines "
-          + "and \\t tabs and \\001 slashes \\\\\"";
+    "\"\\\"A string with \\' characters \\n and \\r newlines "
+        + "and \\t tabs and \\001 slashes \\\\\"";
 
   private static String allFieldsSetText = TestUtil.readTextFromFile(
     "text_format_unittest_data.txt");
@@ -94,12 +94,12 @@ public class TextFormatTest extends TestCase {
     "repeated_double: -Infinity\n" +
     "repeated_double: NaN\n" +
     "repeated_string: \"\\000\\001\\a\\b\\f\\n\\r\\t\\v\\\\\\'\\\"" +
-      "\\341\\210\\264\"\n" +
+    "\\341\\210\\264\"\n" +
     "repeated_bytes: \"\\000\\001\\a\\b\\f\\n\\r\\t\\v\\\\\\'\\\"\\376\"\n";
 
   private static String canonicalExoticText =
-      exoticText.replace(": .", ": 0.").replace(": -.", ": -0.")   // short-form double
-      .replace("23e", "23E").replace("E+", "E").replace("0.23E17", "2.3E16");
+    exoticText.replace(": .", ": 0.").replace(": -.", ": -0.")   // short-form double
+    .replace("23e", "23E").replace("E+", "E").replace("0.23E17", "2.3E16");
 
   private String messageSetText =
     "[protobuf_unittest.TestMessageSetExtension1] {\n" +
@@ -137,31 +137,31 @@ public class TextFormatTest extends TestCase {
     // Test printing of unknown fields in a message.
 
     TestEmptyMessage message =
-      TestEmptyMessage.newBuilder()
+    TestEmptyMessage.newBuilder()
         .setUnknownFields(
-          UnknownFieldSet.newBuilder()
+        UnknownFieldSet.newBuilder()
             .addField(5,
-              UnknownFieldSet.Field.newBuilder()
+            UnknownFieldSet.Field.newBuilder()
                 .addVarint(1)
                 .addFixed32(2)
                 .addFixed64(3)
                 .addLengthDelimited(ByteString.copyFromUtf8("4"))
                 .addGroup(
-                  UnknownFieldSet.newBuilder()
+                UnknownFieldSet.newBuilder()
                     .addField(10,
-                      UnknownFieldSet.Field.newBuilder()
+                    UnknownFieldSet.Field.newBuilder()
                         .addVarint(5)
                         .build())
                     .build())
                 .build())
             .addField(8,
-              UnknownFieldSet.Field.newBuilder()
+            UnknownFieldSet.Field.newBuilder()
                 .addVarint(1)
                 .addVarint(2)
                 .addVarint(3)
                 .build())
             .addField(15,
-              UnknownFieldSet.Field.newBuilder()
+            UnknownFieldSet.Field.newBuilder()
                 .addVarint(0xABCDEF1234567890L)
                 .addFixed32(0xABCD1234)
                 .addFixed64(0xABCDEF1234567890L)
@@ -170,108 +170,108 @@ public class TextFormatTest extends TestCase {
         .build();
 
     assertEquals(
-      "5: 1\n" +
-      "5: 0x00000002\n" +
-      "5: 0x0000000000000003\n" +
-      "5: \"4\"\n" +
-      "5 {\n" +
-      "  10: 5\n" +
-      "}\n" +
-      "8: 1\n" +
-      "8: 2\n" +
-      "8: 3\n" +
-      "15: 12379813812177893520\n" +
-      "15: 0xabcd1234\n" +
-      "15: 0xabcdef1234567890\n",
-      TextFormat.printToString(message));
+    "5: 1\n" +
+    "5: 0x00000002\n" +
+    "5: 0x0000000000000003\n" +
+    "5: \"4\"\n" +
+    "5 {\n" +
+    "  10: 5\n" +
+    "}\n" +
+    "8: 1\n" +
+    "8: 2\n" +
+    "8: 3\n" +
+    "15: 12379813812177893520\n" +
+    "15: 0xabcd1234\n" +
+    "15: 0xabcdef1234567890\n",
+    TextFormat.printToString(message));
   }
 
   public void testPrintField() throws Exception {
     final FieldDescriptor dataField =
-      OneString.getDescriptor().findFieldByName("data");
+    OneString.getDescriptor().findFieldByName("data");
     assertEquals(
-      "data: \"test data\"\n",
-      TextFormat.printFieldToString(dataField, "test data"));
+    "data: \"test data\"\n",
+    TextFormat.printFieldToString(dataField, "test data"));
 
     final FieldDescriptor optionalField =
-      TestAllTypes.getDescriptor().findFieldByName("optional_nested_message");
+    TestAllTypes.getDescriptor().findFieldByName("optional_nested_message");
     final Object value = NestedMessage.newBuilder().setBb(42).build();
 
     assertEquals(
-      "optional_nested_message {\n  bb: 42\n}\n",
-      TextFormat.printFieldToString(optionalField, value));
+    "optional_nested_message {\n  bb: 42\n}\n",
+    TextFormat.printFieldToString(optionalField, value));
   }
 
   /**
-   * Helper to construct a ByteString from a String containing only 8-bit
-   * characters.  The characters are converted directly to bytes, *not*
-   * encoded using UTF-8.
-   */
+    * Helper to construct a ByteString from a String containing only 8-bit
+    * characters.  The characters are converted directly to bytes, *not*
+    * encoded using UTF-8.
+    */
   private ByteString bytes(String str) throws Exception {
     return ByteString.copyFrom(str.getBytes("ISO-8859-1"));
   }
 
   /**
-   * Helper to construct a ByteString from a bunch of bytes.  The inputs are
-   * actually ints so that I can use hex notation and not get stupid errors
-   * about precision.
-   */
+    * Helper to construct a ByteString from a bunch of bytes.  The inputs are
+    * actually ints so that I can use hex notation and not get stupid errors
+    * about precision.
+    */
   private ByteString bytes(int... bytesAsInts) {
     byte[] bytes = new byte[bytesAsInts.length];
     for (int i = 0; i < bytesAsInts.length; i++) {
-      bytes[i] = (byte) bytesAsInts[i];
+    bytes[i] = (byte) bytesAsInts[i];
     }
     return ByteString.copyFrom(bytes);
   }
 
   public void testPrintExotic() throws Exception {
     Message message = TestAllTypes.newBuilder()
-      // Signed vs. unsigned numbers.
-      .addRepeatedInt32 (-1)
-      .addRepeatedUint32(-1)
-      .addRepeatedInt64 (-1)
-      .addRepeatedUint64(-1)
+    // Signed vs. unsigned numbers.
+    .addRepeatedInt32 (-1)
+    .addRepeatedUint32(-1)
+    .addRepeatedInt64 (-1)
+    .addRepeatedUint64(-1)
 
-      .addRepeatedInt32 (1  << 31)
-      .addRepeatedUint32(1  << 31)
-      .addRepeatedInt64 (1l << 63)
-      .addRepeatedUint64(1l << 63)
+    .addRepeatedInt32 (1  << 31)
+    .addRepeatedUint32(1  << 31)
+    .addRepeatedInt64 (1l << 63)
+    .addRepeatedUint64(1l << 63)
 
-      // Floats of various precisions and exponents.
-      .addRepeatedDouble(123)
-      .addRepeatedDouble(123.5)
-      .addRepeatedDouble(0.125)
-      .addRepeatedDouble(.125)
-      .addRepeatedDouble(-.125)
-      .addRepeatedDouble(123e15)
-      .addRepeatedDouble(123e15)
-      .addRepeatedDouble(-1.23e-17)
-      .addRepeatedDouble(.23e17)
-      .addRepeatedDouble(-23e15)
-      .addRepeatedDouble(123.5e20)
-      .addRepeatedDouble(123.5e-20)
-      .addRepeatedDouble(123.456789)
-      .addRepeatedDouble(Double.POSITIVE_INFINITY)
-      .addRepeatedDouble(Double.NEGATIVE_INFINITY)
-      .addRepeatedDouble(Double.NaN)
+    // Floats of various precisions and exponents.
+    .addRepeatedDouble(123)
+    .addRepeatedDouble(123.5)
+    .addRepeatedDouble(0.125)
+    .addRepeatedDouble(.125)
+    .addRepeatedDouble(-.125)
+    .addRepeatedDouble(123e15)
+    .addRepeatedDouble(123e15)
+    .addRepeatedDouble(-1.23e-17)
+    .addRepeatedDouble(.23e17)
+    .addRepeatedDouble(-23e15)
+    .addRepeatedDouble(123.5e20)
+    .addRepeatedDouble(123.5e-20)
+    .addRepeatedDouble(123.456789)
+    .addRepeatedDouble(Double.POSITIVE_INFINITY)
+    .addRepeatedDouble(Double.NEGATIVE_INFINITY)
+    .addRepeatedDouble(Double.NaN)
 
-      // Strings and bytes that needing escaping.
-      .addRepeatedString("\0\001\007\b\f\n\r\t\013\\\'\"\u1234")
-      .addRepeatedBytes(bytes("\0\001\007\b\f\n\r\t\013\\\'\"\u00fe"))
-      .build();
+    // Strings and bytes that needing escaping.
+    .addRepeatedString("\0\001\007\b\f\n\r\t\013\\\'\"\u1234")
+    .addRepeatedBytes(bytes("\0\001\007\b\f\n\r\t\013\\\'\"\u00fe"))
+    .build();
 
     assertEquals(canonicalExoticText, message.toString());
   }
 
   public void testPrintMessageSet() throws Exception {
     TestMessageSet messageSet =
-      TestMessageSet.newBuilder()
+    TestMessageSet.newBuilder()
         .setExtension(
-          TestMessageSetExtension1.messageSetExtension,
-          TestMessageSetExtension1.newBuilder().setI(123).build())
+        TestMessageSetExtension1.messageSetExtension,
+        TestMessageSetExtension1.newBuilder().setI(123).build())
         .setExtension(
-          TestMessageSetExtension2.messageSetExtension,
-          TestMessageSetExtension2.newBuilder().setStr("foo").build())
+        TestMessageSetExtension2.messageSetExtension,
+        TestMessageSetExtension2.newBuilder().setStr("foo").build())
         .build();
 
     assertEquals(messageSetText, messageSet.toString());
@@ -294,24 +294,24 @@ public class TextFormatTest extends TestCase {
   public void testParseExtensions() throws Exception {
     TestAllExtensions.Builder builder = TestAllExtensions.newBuilder();
     TextFormat.merge(allExtensionsSetText,
-                     TestUtil.getExtensionRegistry(),
-                     builder);
+                    TestUtil.getExtensionRegistry(),
+                    builder);
     TestUtil.assertAllExtensionsSet(builder.build());
   }
 
   public void testParseCompatibility() throws Exception {
     String original = "repeated_float: inf\n" +
-                      "repeated_float: -inf\n" +
-                      "repeated_float: nan\n" +
-                      "repeated_float: inff\n" +
-                      "repeated_float: -inff\n" +
-                      "repeated_float: nanf\n" +
-                      "repeated_float: 1.0f\n" +
-                      "repeated_float: infinityf\n" +
-                      "repeated_float: -Infinityf\n" +
-                      "repeated_double: infinity\n" +
-                      "repeated_double: -infinity\n" +
-                      "repeated_double: nan\n";
+                    "repeated_float: -inf\n" +
+                    "repeated_float: nan\n" +
+                    "repeated_float: inff\n" +
+                    "repeated_float: -inff\n" +
+                    "repeated_float: nanf\n" +
+                    "repeated_float: 1.0f\n" +
+                    "repeated_float: infinityf\n" +
+                    "repeated_float: -Infinityf\n" +
+                    "repeated_double: infinity\n" +
+                    "repeated_double: -infinity\n" +
+                    "repeated_double: nan\n";
     String canonical =  "repeated_float: Infinity\n" +
                         "repeated_float: -Infinity\n" +
                         "repeated_float: NaN\n" +
@@ -348,13 +348,13 @@ public class TextFormatTest extends TestCase {
     TestMessageSet messageSet = builder.build();
 
     assertTrue(messageSet.hasExtension(
-      TestMessageSetExtension1.messageSetExtension));
+    TestMessageSetExtension1.messageSetExtension));
     assertEquals(123, messageSet.getExtension(
-      TestMessageSetExtension1.messageSetExtension).getI());
+    TestMessageSetExtension1.messageSetExtension).getI());
     assertTrue(messageSet.hasExtension(
-      TestMessageSetExtension2.messageSetExtension));
+    TestMessageSetExtension2.messageSetExtension));
     assertEquals("foo", messageSet.getExtension(
-      TestMessageSetExtension2.messageSetExtension).getStr());
+    TestMessageSetExtension2.messageSetExtension).getStr());
   }
 
   public void testParseNumericEnum() throws Exception {
@@ -373,10 +373,10 @@ public class TextFormatTest extends TestCase {
   public void testParseComment() throws Exception {
     TestAllTypes.Builder builder = TestAllTypes.newBuilder();
     TextFormat.merge(
-      "# this is a comment\n" +
-      "optional_int32: 1  # another comment\n" +
-      "optional_int64: 2\n" +
-      "# EOF comment", builder);
+    "# this is a comment\n" +
+    "optional_int32: 1  # another comment\n" +
+    "optional_int64: 2\n" +
+    "# EOF comment", builder);
     assertEquals(1, builder.getOptionalInt32());
     assertEquals(2, builder.getOptionalInt64());
   }
@@ -384,77 +384,77 @@ public class TextFormatTest extends TestCase {
   private void assertParseError(String error, String text) {
     TestAllTypes.Builder builder = TestAllTypes.newBuilder();
     try {
-      TextFormat.merge(text, TestUtil.getExtensionRegistry(), builder);
-      fail("Expected parse exception.");
+    TextFormat.merge(text, TestUtil.getExtensionRegistry(), builder);
+    fail("Expected parse exception.");
     } catch (TextFormat.ParseException e) {
-      assertEquals(error, e.getMessage());
+    assertEquals(error, e.getMessage());
     }
   }
 
   public void testParseErrors() throws Exception {
     assertParseError(
-      "1:16: Expected \":\".",
-      "optional_int32 123");
+    "1:16: Expected \":\".",
+    "optional_int32 123");
     assertParseError(
-      "1:23: Expected identifier.",
-      "optional_nested_enum: ?");
+    "1:23: Expected identifier.",
+    "optional_nested_enum: ?");
     assertParseError(
-      "1:18: Couldn't parse integer: Number must be positive: -1",
-      "optional_uint32: -1");
+    "1:18: Couldn't parse integer: Number must be positive: -1",
+    "optional_uint32: -1");
     assertParseError(
-      "1:17: Couldn't parse integer: Number out of range for 32-bit signed " +
+    "1:17: Couldn't parse integer: Number out of range for 32-bit signed " +
         "integer: 82301481290849012385230157",
-      "optional_int32: 82301481290849012385230157");
+    "optional_int32: 82301481290849012385230157");
     assertParseError(
-      "1:16: Expected \"true\" or \"false\".",
-      "optional_bool: maybe");
+    "1:16: Expected \"true\" or \"false\".",
+    "optional_bool: maybe");
     assertParseError(
-      "1:18: Expected string.",
-      "optional_string: 123");
+    "1:18: Expected string.",
+    "optional_string: 123");
     assertParseError(
-      "1:18: String missing ending quote.",
-      "optional_string: \"ueoauaoe");
+    "1:18: String missing ending quote.",
+    "optional_string: \"ueoauaoe");
     assertParseError(
-      "1:18: String missing ending quote.",
-      "optional_string: \"ueoauaoe\n" +
-      "optional_int32: 123");
+    "1:18: String missing ending quote.",
+    "optional_string: \"ueoauaoe\n" +
+    "optional_int32: 123");
     assertParseError(
-      "1:18: Invalid escape sequence: '\\z'",
-      "optional_string: \"\\z\"");
+    "1:18: Invalid escape sequence: '\\z'",
+    "optional_string: \"\\z\"");
     assertParseError(
-      "1:18: String missing ending quote.",
-      "optional_string: \"ueoauaoe\n" +
-      "optional_int32: 123");
+    "1:18: String missing ending quote.",
+    "optional_string: \"ueoauaoe\n" +
+    "optional_int32: 123");
     assertParseError(
-      "1:2: Extension \"nosuchext\" not found in the ExtensionRegistry.",
-      "[nosuchext]: 123");
+    "1:2: Extension \"nosuchext\" not found in the ExtensionRegistry.",
+    "[nosuchext]: 123");
     assertParseError(
-      "1:20: Extension \"protobuf_unittest.optional_int32_extension\" does " +
+    "1:20: Extension \"protobuf_unittest.optional_int32_extension\" does " +
         "not extend message type \"protobuf_unittest.TestAllTypes\".",
-      "[protobuf_unittest.optional_int32_extension]: 123");
+    "[protobuf_unittest.optional_int32_extension]: 123");
     assertParseError(
-      "1:1: Message type \"protobuf_unittest.TestAllTypes\" has no field " +
+    "1:1: Message type \"protobuf_unittest.TestAllTypes\" has no field " +
         "named \"nosuchfield\".",
-      "nosuchfield: 123");
+    "nosuchfield: 123");
     assertParseError(
-      "1:21: Expected \">\".",
-      "OptionalGroup < a: 1");
+    "1:21: Expected \">\".",
+    "OptionalGroup < a: 1");
     assertParseError(
-      "1:23: Enum type \"protobuf_unittest.TestAllTypes.NestedEnum\" has no " +
+    "1:23: Enum type \"protobuf_unittest.TestAllTypes.NestedEnum\" has no " +
         "value named \"NO_SUCH_VALUE\".",
-      "optional_nested_enum: NO_SUCH_VALUE");
+    "optional_nested_enum: NO_SUCH_VALUE");
     assertParseError(
-      "1:23: Enum type \"protobuf_unittest.TestAllTypes.NestedEnum\" has no " +
+    "1:23: Enum type \"protobuf_unittest.TestAllTypes.NestedEnum\" has no " +
         "value with number 123.",
-      "optional_nested_enum: 123");
+    "optional_nested_enum: 123");
 
     // Delimiters must match.
     assertParseError(
-      "1:22: Expected identifier.",
-      "OptionalGroup < a: 1 }");
+    "1:22: Expected identifier.",
+    "OptionalGroup < a: 1 }");
     assertParseError(
-      "1:22: Expected identifier.",
-      "OptionalGroup { a: 1 >");
+    "1:22: Expected identifier.",
+    "OptionalGroup { a: 1 >");
   }
 
   // =================================================================
@@ -462,45 +462,45 @@ public class TextFormatTest extends TestCase {
   public void testEscape() throws Exception {
     // Escape sequences.
     assertEquals("\\000\\001\\a\\b\\f\\n\\r\\t\\v\\\\\\'\\\"",
-      TextFormat.escapeBytes(bytes("\0\001\007\b\f\n\r\t\013\\\'\"")));
+    TextFormat.escapeBytes(bytes("\0\001\007\b\f\n\r\t\013\\\'\"")));
     assertEquals("\\000\\001\\a\\b\\f\\n\\r\\t\\v\\\\\\'\\\"",
-      TextFormat.escapeText("\0\001\007\b\f\n\r\t\013\\\'\""));
+    TextFormat.escapeText("\0\001\007\b\f\n\r\t\013\\\'\""));
     assertEquals(bytes("\0\001\007\b\f\n\r\t\013\\\'\""),
-      TextFormat.unescapeBytes("\\000\\001\\a\\b\\f\\n\\r\\t\\v\\\\\\'\\\""));
+    TextFormat.unescapeBytes("\\000\\001\\a\\b\\f\\n\\r\\t\\v\\\\\\'\\\""));
     assertEquals("\0\001\007\b\f\n\r\t\013\\\'\"",
-      TextFormat.unescapeText("\\000\\001\\a\\b\\f\\n\\r\\t\\v\\\\\\'\\\""));
+    TextFormat.unescapeText("\\000\\001\\a\\b\\f\\n\\r\\t\\v\\\\\\'\\\""));
 
     // Unicode handling.
     assertEquals("\\341\\210\\264", TextFormat.escapeText("\u1234"));
     assertEquals("\\341\\210\\264",
-                 TextFormat.escapeBytes(bytes(0xe1, 0x88, 0xb4)));
+                TextFormat.escapeBytes(bytes(0xe1, 0x88, 0xb4)));
     assertEquals("\u1234", TextFormat.unescapeText("\\341\\210\\264"));
     assertEquals(bytes(0xe1, 0x88, 0xb4),
-                 TextFormat.unescapeBytes("\\341\\210\\264"));
+                TextFormat.unescapeBytes("\\341\\210\\264"));
     assertEquals("\u1234", TextFormat.unescapeText("\\xe1\\x88\\xb4"));
     assertEquals(bytes(0xe1, 0x88, 0xb4),
-                 TextFormat.unescapeBytes("\\xe1\\x88\\xb4"));
+                TextFormat.unescapeBytes("\\xe1\\x88\\xb4"));
 
     // Errors.
     try {
-      TextFormat.unescapeText("\\x");
-      fail("Should have thrown an exception.");
+    TextFormat.unescapeText("\\x");
+    fail("Should have thrown an exception.");
     } catch (TextFormat.InvalidEscapeSequenceException e) {
-      // success
+    // success
     }
 
     try {
-      TextFormat.unescapeText("\\z");
-      fail("Should have thrown an exception.");
+    TextFormat.unescapeText("\\z");
+    fail("Should have thrown an exception.");
     } catch (TextFormat.InvalidEscapeSequenceException e) {
-      // success
+    // success
     }
 
     try {
-      TextFormat.unescapeText("\\");
-      fail("Should have thrown an exception.");
+    TextFormat.unescapeText("\\");
+    fail("Should have thrown an exception.");
     } catch (TextFormat.InvalidEscapeSequenceException e) {
-      // success
+    // success
     }
   }
 
@@ -530,9 +530,9 @@ public class TextFormatTest extends TestCase {
     assertEquals( 4294967295L, TextFormat.parseInt64( "4294967295"));
     assertEquals( 4294967296L, TextFormat.parseInt64( "4294967296"));
     assertEquals(9223372036854775807L,
-                 TextFormat.parseInt64("9223372036854775807"));
+                TextFormat.parseInt64("9223372036854775807"));
     assertEquals(-9223372036854775808L,
-                 TextFormat.parseInt64("-9223372036854775808"));
+                TextFormat.parseInt64("-9223372036854775808"));
 
     assertEquals(          0L, TextFormat.parseUInt64(          "0"));
     assertEquals(          1L, TextFormat.parseUInt64(          "1"));
@@ -541,9 +541,9 @@ public class TextFormatTest extends TestCase {
     assertEquals( 4294967295L, TextFormat.parseUInt64( "4294967295"));
     assertEquals( 4294967296L, TextFormat.parseUInt64( "4294967296"));
     assertEquals(9223372036854775807L,
-                 TextFormat.parseUInt64("9223372036854775807"));
+                TextFormat.parseUInt64("9223372036854775807"));
     assertEquals(-9223372036854775808L,
-                 TextFormat.parseUInt64("9223372036854775808"));
+                TextFormat.parseUInt64("9223372036854775808"));
     assertEquals(-1L, TextFormat.parseUInt64("18446744073709551615"));
 
     // Hex
@@ -551,99 +551,99 @@ public class TextFormatTest extends TestCase {
     assertEquals(-0x1234abcd, TextFormat.parseInt32("-0x1234abcd"));
     assertEquals(-1, TextFormat.parseUInt64("0xffffffffffffffff"));
     assertEquals(0x7fffffffffffffffL,
-                 TextFormat.parseInt64("0x7fffffffffffffff"));
+                TextFormat.parseInt64("0x7fffffffffffffff"));
 
     // Octal
     assertEquals(01234567, TextFormat.parseInt32("01234567"));
 
     // Out-of-range
     try {
-      TextFormat.parseInt32("2147483648");
-      fail("Should have thrown an exception.");
+    TextFormat.parseInt32("2147483648");
+    fail("Should have thrown an exception.");
     } catch (NumberFormatException e) {
-      // success
+    // success
     }
 
     try {
-      TextFormat.parseInt32("-2147483649");
-      fail("Should have thrown an exception.");
+    TextFormat.parseInt32("-2147483649");
+    fail("Should have thrown an exception.");
     } catch (NumberFormatException e) {
-      // success
+    // success
     }
 
     try {
-      TextFormat.parseUInt32("4294967296");
-      fail("Should have thrown an exception.");
+    TextFormat.parseUInt32("4294967296");
+    fail("Should have thrown an exception.");
     } catch (NumberFormatException e) {
-      // success
+    // success
     }
 
     try {
-      TextFormat.parseUInt32("-1");
-      fail("Should have thrown an exception.");
+    TextFormat.parseUInt32("-1");
+    fail("Should have thrown an exception.");
     } catch (NumberFormatException e) {
-      // success
+    // success
     }
 
     try {
-      TextFormat.parseInt64("9223372036854775808");
-      fail("Should have thrown an exception.");
+    TextFormat.parseInt64("9223372036854775808");
+    fail("Should have thrown an exception.");
     } catch (NumberFormatException e) {
-      // success
+    // success
     }
 
     try {
-      TextFormat.parseInt64("-9223372036854775809");
-      fail("Should have thrown an exception.");
+    TextFormat.parseInt64("-9223372036854775809");
+    fail("Should have thrown an exception.");
     } catch (NumberFormatException e) {
-      // success
+    // success
     }
 
     try {
-      TextFormat.parseUInt64("18446744073709551616");
-      fail("Should have thrown an exception.");
+    TextFormat.parseUInt64("18446744073709551616");
+    fail("Should have thrown an exception.");
     } catch (NumberFormatException e) {
-      // success
+    // success
     }
 
     try {
-      TextFormat.parseUInt64("-1");
-      fail("Should have thrown an exception.");
+    TextFormat.parseUInt64("-1");
+    fail("Should have thrown an exception.");
     } catch (NumberFormatException e) {
-      // success
+    // success
     }
 
     // Not a number.
     try {
-      TextFormat.parseInt32("abcd");
-      fail("Should have thrown an exception.");
+    TextFormat.parseInt32("abcd");
+    fail("Should have thrown an exception.");
     } catch (NumberFormatException e) {
-      // success
+    // success
     }
   }
 
   public void testParseLongString() throws Exception {
     String longText =
-      "123456789012345678901234567890123456789012345678901234567890" +
-      "123456789012345678901234567890123456789012345678901234567890" +
-      "123456789012345678901234567890123456789012345678901234567890" +
-      "123456789012345678901234567890123456789012345678901234567890" +
-      "123456789012345678901234567890123456789012345678901234567890" +
-      "123456789012345678901234567890123456789012345678901234567890" +
-      "123456789012345678901234567890123456789012345678901234567890" +
-      "123456789012345678901234567890123456789012345678901234567890" +
-      "123456789012345678901234567890123456789012345678901234567890" +
-      "123456789012345678901234567890123456789012345678901234567890" +
-      "123456789012345678901234567890123456789012345678901234567890" +
-      "123456789012345678901234567890123456789012345678901234567890" +
-      "123456789012345678901234567890123456789012345678901234567890" +
-      "123456789012345678901234567890123456789012345678901234567890" +
-      "123456789012345678901234567890123456789012345678901234567890" +
-      "123456789012345678901234567890123456789012345678901234567890" +
-      "123456789012345678901234567890123456789012345678901234567890" +
-      "123456789012345678901234567890123456789012345678901234567890" +
-      "123456789012345678901234567890123456789012345678901234567890" +
-      "123456789012345678901234567890123456789012345678901234567890";
+    "123456789012345678901234567890123456789012345678901234567890" +
+    "123456789012345678901234567890123456789012345678901234567890" +
+    "123456789012345678901234567890123456789012345678901234567890" +
+    "123456789012345678901234567890123456789012345678901234567890" +
+    "123456789012345678901234567890123456789012345678901234567890" +
+    "123456789012345678901234567890123456789012345678901234567890" +
+    "123456789012345678901234567890123456789012345678901234567890" +
+    "123456789012345678901234567890123456789012345678901234567890" +
+    "123456789012345678901234567890123456789012345678901234567890" +
+    "123456789012345678901234567890123456789012345678901234567890" +
+    "123456789012345678901234567890123456789012345678901234567890" +
+    "123456789012345678901234567890123456789012345678901234567890" +
+    "123456789012345678901234567890123456789012345678901234567890" +
+    "123456789012345678901234567890123456789012345678901234567890" +
+    "123456789012345678901234567890123456789012345678901234567890" +
+    "123456789012345678901234567890123456789012345678901234567890" +
+    "123456789012345678901234567890123456789012345678901234567890" +
+    "123456789012345678901234567890123456789012345678901234567890" +
+    "123456789012345678901234567890123456789012345678901234567890" +
+    "123456789012345678901234567890123456789012345678901234567890";
 
     TestAllTypes.Builder builder = TestAllTypes.newBuilder();
     TextFormat.merge("optional_string: \"" + longText + "\"", builder);

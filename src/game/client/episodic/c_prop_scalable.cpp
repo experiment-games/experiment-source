@@ -12,7 +12,7 @@ class C_PropScalable : public C_BaseAnimating
     DECLARE_CLIENTCLASS();
     DECLARE_DATADESC();
 
-   public:
+    public:
     C_PropScalable();
 
     virtual void ApplyBoneMatrixTransform( matrix3x4_t &transform );
@@ -35,7 +35,7 @@ class C_PropScalable : public C_BaseAnimating
     bool m_bRunningScale[3];
     float m_flTargetScale[3];
 
-   private:
+    private:
     void CalculateScale( void );
     float m_nCalcFrame;  // Frame the last calculation was made at
 };

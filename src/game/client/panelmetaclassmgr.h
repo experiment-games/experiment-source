@@ -34,7 +34,7 @@ class Panel;
 //-----------------------------------------------------------------------------
 abstract_class IPanelFactory
 {
-   public:
+    public:
     // Creation, destruction methods
     virtual vgui::Panel* Create( const char* pMetaClassName, KeyValues* pKeyValues, void* pInitData, vgui::Panel* pParent ) = 0;
 };
@@ -46,7 +46,7 @@ abstract_class IPanelFactory
 //-----------------------------------------------------------------------------
 abstract_class IPanelMetaClassMgr
 {
-   public:
+    public:
     // Call this to load up a file containing metaclass definitions
     virtual void LoadMetaClassDefinitionFile( const char* pFileName ) = 0;
 
@@ -60,15 +60,15 @@ abstract_class IPanelMetaClassMgr
     // it recursively iterates through the keyvalue sections and calls
     // chainKeyValue on sections whose name matches the chain name
     virtual vgui::Panel* CreatePanelMetaClass( const char* pMetaClassType,
-                                               int sortorder,
-                                               void* pInitData,
-                                               vgui::Panel* pParent,
-                                               const char* pChainName = NULL ) = 0;
+                                                int sortorder,
+                                                void* pInitData,
+                                                vgui::Panel* pParent,
+                                                const char* pChainName = NULL ) = 0;
 
     // removes a particular panel meta class
     virtual void DestroyPanelMetaClass( vgui::Panel * pPanel ) = 0;
 
-   protected:
+    protected:
     // Don't delete me!
     virtual ~IPanelMetaClassMgr() {}
 };
@@ -93,7 +93,7 @@ IPanelMetaClassMgr* PanelMetaClassMgr();
 template < class CPanel, class CInitData >
 class CPanelFactory : public IPanelFactory
 {
-   public:
+    public:
     CPanelFactory( const char* pTypeName )
     {
         // Hook us up baby
@@ -137,14 +137,14 @@ class CPanelFactory : public IPanelFactory
 //-----------------------------------------------------------------------------
 class CPanelWrapper
 {
-   public:
+    public:
     CPanelWrapper();
     ~CPanelWrapper();
     void Activate( char const* pMetaClassName, vgui::Panel* pParent, int sortorder, void* pVoidInitData );
     void Deactivate( void );
     vgui::Panel* GetPanel();
 
-   private:
+    private:
     vgui::Panel* m_pPanel;
 };
 

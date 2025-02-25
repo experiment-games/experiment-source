@@ -98,34 +98,34 @@ void ExtensionGenerator::Generate(io::Printer* printer) {
   string singular_type;
   switch (java_type) {
     case JAVATYPE_MESSAGE:
-      vars["type"] = ClassName(descriptor_->message_type());
-      break;
+    vars["type"] = ClassName(descriptor_->message_type());
+    break;
     case JAVATYPE_ENUM:
-      vars["type"] = ClassName(descriptor_->enum_type());
-      break;
+    vars["type"] = ClassName(descriptor_->enum_type());
+    break;
     default:
-      vars["type"] = BoxedPrimitiveTypeName(java_type);
-      break;
+    vars["type"] = BoxedPrimitiveTypeName(java_type);
+    break;
   }
 
   printer->Print(vars,
     "public static final int $constant_name$ = $number$;\n");
   if (descriptor_->is_repeated()) {
     printer->Print(vars,
-      "public static final\n"
-      "  com.google.protobuf.GeneratedMessage$lite$.GeneratedExtension<\n"
-      "    $containing_type$,\n"
-      "    java.util.List<$type$>> $name$ =\n"
-      "      com.google.protobuf.GeneratedMessage$lite$\n"
-      "        .newGeneratedExtension();\n");
+    "public static final\n"
+    "  com.google.protobuf.GeneratedMessage$lite$.GeneratedExtension<\n"
+    "    $containing_type$,\n"
+    "    java.util.List<$type$>> $name$ =\n"
+    "      com.google.protobuf.GeneratedMessage$lite$\n"
+    "        .newGeneratedExtension();\n");
   } else {
     printer->Print(vars,
-      "public static final\n"
-      "  com.google.protobuf.GeneratedMessage$lite$.GeneratedExtension<\n"
-      "    $containing_type$,\n"
-      "    $type$> $name$ =\n"
-      "      com.google.protobuf.GeneratedMessage$lite$\n"
-      "        .newGeneratedExtension();\n");
+    "public static final\n"
+    "  com.google.protobuf.GeneratedMessage$lite$.GeneratedExtension<\n"
+    "    $containing_type$,\n"
+    "    $type$> $name$ =\n"
+    "      com.google.protobuf.GeneratedMessage$lite$\n"
+    "        .newGeneratedExtension();\n");
   }
 }
 
@@ -146,28 +146,28 @@ void ExtensionGenerator::GenerateInitializationCode(io::Printer* printer) {
   string singular_type;
   switch (java_type) {
     case JAVATYPE_MESSAGE:
-      vars["type"] = ClassName(descriptor_->message_type());
-      vars["prototype"] = ClassName(descriptor_->message_type()) +
-                          ".getDefaultInstance()";
-      break;
+    vars["type"] = ClassName(descriptor_->message_type());
+    vars["prototype"] = ClassName(descriptor_->message_type()) +
+                        ".getDefaultInstance()";
+    break;
     case JAVATYPE_ENUM:
-      vars["type"] = ClassName(descriptor_->enum_type());
-      vars["enum_map"] = ClassName(descriptor_->enum_type()) +
-                         ".internalGetValueMap()";
-      break;
+    vars["type"] = ClassName(descriptor_->enum_type());
+    vars["enum_map"] = ClassName(descriptor_->enum_type()) +
+                        ".internalGetValueMap()";
+    break;
     default:
-      vars["type"] = BoxedPrimitiveTypeName(java_type);
-      break;
+    vars["type"] = BoxedPrimitiveTypeName(java_type);
+    break;
   }
 
   if (HasDescriptorMethods(descriptor_->file())) {
     printer->Print(vars,
-      "$scope$.$name$.internalInit(\n"
-      "    $scope$.getDescriptor().getExtensions().get($index$),\n"
-      "    $type$.class);\n");
+    "$scope$.$name$.internalInit(\n"
+    "    $scope$.getDescriptor().getExtensions().get($index$),\n"
+    "    $type$.class);\n");
   } else {
     if (descriptor_->is_repeated()) {
-      printer->Print(vars,
+    printer->Print(vars,
         "$scope$.$name$.internalInitRepeated(\n"
         "    $extendee$.getDefaultInstance(),\n"
         "    $prototype$,\n"
@@ -176,7 +176,7 @@ void ExtensionGenerator::GenerateInitializationCode(io::Printer* printer) {
         "    com.google.protobuf.WireFormat.FieldType.$type_constant$,\n"
         "    $packed$);\n");
     } else {
-      printer->Print(vars,
+    printer->Print(vars,
         "$scope$.$name$.internalInitSingular(\n"
         "    $extendee$.getDefaultInstance(),\n"
         "    $default$,\n"

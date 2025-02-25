@@ -75,17 +75,17 @@ void CCompiledKeyValuesWriter::Describe( const KVFile_t &file )
         if ( info.IsSubTree() )
         {
             Msg( "%d:  %s -> subtree at parent %i\n",
-                 file.firstElement + i,
-                 m_StringTable.String( info.key ),
-                 info.GetParent() );
+                file.firstElement + i,
+                m_StringTable.String( info.key ),
+                info.GetParent() );
         }
         else
         {
             Msg( "%d:  %s -> %s at parent %i\n",
-                 file.firstElement + i,
-                 m_StringTable.String( info.key ),
-                 m_StringTable.String( info.value ),
-                 info.GetParent() );
+                file.firstElement + i,
+                m_StringTable.String( info.key ),
+                m_StringTable.String( info.value ),
+                info.GetParent() );
         }
     }
 }

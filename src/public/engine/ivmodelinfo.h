@@ -41,10 +41,10 @@ class IClientRenderable;
 //-----------------------------------------------------------------------------
 abstract_class IModelLoadCallback
 {
-   public:
+    public:
     virtual void OnModelLoadComplete( const model_t *pModel ) = 0;
 
-   protected:
+    protected:
     // Protected destructor so that nobody tries to delete via this interface.
     // Automatically unregisters if the callback is destroyed while still pending.
     ~IModelLoadCallback();
@@ -55,10 +55,10 @@ abstract_class IModelLoadCallback
 //-----------------------------------------------------------------------------
 class CRefCountedModelIndex
 {
-   private:
+    private:
     int m_nIndex;
 
-   public:
+    public:
     CRefCountedModelIndex()
         : m_nIndex( -1 ) {}
     ~CRefCountedModelIndex()
@@ -133,7 +133,7 @@ inline bool IsClientOnlyModelIndex( int modelindex )
 
 abstract_class IVModelInfo
 {
-   public:
+    public:
     virtual ~IVModelInfo( void ) {}
 
     // Returns model_t* pointer for a model given a precached or dynamic model index.
@@ -258,7 +258,7 @@ typedef IVModelInfo IVModelInfo003;
 
 abstract_class IVModelInfoClient : public IVModelInfo
 {
-   public:
+    public:
     virtual void OnDynamicModelsStringTableChange( int nStringIndex, const char *pString, const void *pData ) = 0;
 
     // For tools only!

@@ -20,11 +20,11 @@
 //
 class CP4File
 {
-   public:
+    public:
     explicit CP4File( char const *szFilename );
     virtual ~CP4File();
 
-   public:
+    public:
     // Opens the file for edit
     virtual bool Edit( void );
 
@@ -40,7 +40,7 @@ class CP4File
     // Changes the file to the specified filetype.
     virtual bool SetFileType( const CUtlString &desiredFileType );
 
-   protected:
+    protected:
     // The filename that this class instance represents
     CUtlString m_sFilename;
 };
@@ -50,11 +50,11 @@ class CP4File
 //
 class CP4File_Dummy : public CP4File
 {
-   public:
+    public:
     explicit CP4File_Dummy( char const *szFilename )
         : CP4File( szFilename ) {}
 
-   public:
+    public:
     virtual bool Edit( void )
     {
         return true;
@@ -78,25 +78,25 @@ class CP4File_Dummy : public CP4File
 //
 class CP4Factory
 {
-   public:
+    public:
     CP4Factory();
     ~CP4Factory();
 
-   public:
+    public:
     // Sets whether dummy objects are created by the factory.
     // Returns the old state of the dummy mode.
     bool SetDummyMode( bool bDummyMode );
 
-   public:
+    public:
     // Sets the name of the changelist to open files under,
     // NULL for "Default" changelist.
     void SetOpenFileChangeList( const char *szChangeListName );
 
-   public:
+    public:
     // Creates a file access object for the given filename.
     CP4File *AccessFile( char const *szFilename ) const;
 
-   protected:
+    protected:
     // Whether the factory is in the "dummy mode" and is creating dummy objects
     bool m_bDummyMode;
 };
@@ -109,7 +109,7 @@ extern CP4Factory *g_p4factory;
 //
 class CP4AutoEditFile
 {
-   public:
+    public:
     explicit CP4AutoEditFile( char const *szFilename )
         : m_spImpl( g_p4factory->AccessFile( szFilename ) )
     {
@@ -121,7 +121,7 @@ class CP4AutoEditFile
         return m_spImpl.Get();
     }
 
-   protected:
+    protected:
     CPlainAutoPtr< CP4File > m_spImpl;
 };
 
@@ -130,7 +130,7 @@ class CP4AutoEditFile
 //
 class CP4AutoAddFile
 {
-   public:
+    public:
     explicit CP4AutoAddFile( char const *szFilename )
         : m_spImpl( g_p4factory->AccessFile( szFilename ) )
     {
@@ -142,7 +142,7 @@ class CP4AutoAddFile
         return m_spImpl.Get();
     }
 
-   protected:
+    protected:
     CPlainAutoPtr< CP4File > m_spImpl;
 };
 
@@ -151,7 +151,7 @@ class CP4AutoAddFile
 //
 class CP4AutoEditAddFile
 {
-   public:
+    public:
     explicit CP4AutoEditAddFile( char const *szFilename )
         : m_spImpl( g_p4factory->AccessFile( szFilename ) ), m_bHasDesiredFileType( false )
     {
@@ -177,7 +177,7 @@ class CP4AutoEditAddFile
         return m_spImpl.Get();
     }
 
-   protected:
+    protected:
     CPlainAutoPtr< CP4File > m_spImpl;
     CUtlString m_sFileType;
     bool m_bHasDesiredFileType;
@@ -188,7 +188,7 @@ class CP4AutoEditAddFile
 //
 class CP4AutoRevertFile
 {
-   public:
+    public:
     explicit CP4AutoRevertFile( char const *szFilename )
         : m_spImpl( g_p4factory->AccessFile( szFilename ) )
     {
@@ -200,7 +200,7 @@ class CP4AutoRevertFile
         return m_spImpl.Get();
     }
 
-   protected:
+    protected:
     CPlainAutoPtr< CP4File > m_spImpl;
 };
 

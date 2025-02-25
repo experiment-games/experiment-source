@@ -512,15 +512,15 @@ static void AddDetailSpriteToLump( const Vector& vecOrigin, const QAngle& vecAng
 static void AddDetailSpriteToLump( const Vector& vecOrigin, const QAngle& vecAngles, DetailModel_t const& model, float flScale )
 {
     AddDetailSpriteToLump( vecOrigin,
-                           vecAngles,
-                           model.m_Orientation,
-                           model.m_Pos,
-                           model.m_Tex,
-                           flScale,
-                           model.m_Type,
-                           model.m_ShapeAngle,
-                           model.m_ShapeSize,
-                           model.m_SwayAmount );
+                            vecAngles,
+                            model.m_Orientation,
+                            model.m_Pos,
+                            model.m_Tex,
+                            flScale,
+                            model.m_Type,
+                            model.m_ShapeAngle,
+                            model.m_ShapeSize,
+                            model.m_SwayAmount );
 }
 
 //-----------------------------------------------------------------------------
@@ -717,8 +717,8 @@ static float ComputeDisplacementFaceArea( dface_t* pFace )
 // Places Detail Objects on a face
 //-----------------------------------------------------------------------------
 static void EmitDetailObjectsOnDisplacementFace( dface_t* pFace,
-                                                 DetailObject_t& detail,
-                                                 CCoreDispInfo& coreDispInfo )
+                                                DetailObject_t& detail,
+                                                CCoreDispInfo& coreDispInfo )
 {
     assert( pFace->numedges == 4 );
 
@@ -830,8 +830,8 @@ void EmitDetailModels()
         bool found;
         MaterialSystemMaterial_t handle =
             FindOriginalMaterial( TexDataStringTable_GetString( pTexData->nameStringTableID ),
-                                  &found,
-                                  false );
+                                &found,
+                                false );
         if ( !found )
             continue;
 
@@ -847,8 +847,8 @@ void EmitDetailModels()
         if ( objectType < 0 )
         {
             Warning( "Material %s uses unknown detail object type %s!\n",
-                     TexDataStringTable_GetString( pTexData->nameStringTableID ),
-                     pDetailType );
+                    TexDataStringTable_GetString( pTexData->nameStringTableID ),
+                    pDetailType );
             continue;
         }
 

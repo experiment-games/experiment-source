@@ -33,7 +33,7 @@ struct opendata_t
 
 abstract_class CBasePropDoor : public CDynamicProp
 {
-   public:
+    public:
     DECLARE_CLASS( CBasePropDoor, CDynamicProp );
     DECLARE_SERVERCLASS();
 
@@ -79,7 +79,7 @@ abstract_class CBasePropDoor : public CDynamicProp
     virtual float GetOpenInterval( void ) = 0;
     // }
 
-   protected:
+    protected:
     enum DoorState_t
     {
         DOOR_STATE_CLOSED = 0,
@@ -108,7 +108,7 @@ abstract_class CBasePropDoor : public CDynamicProp
 
     inline CBaseEntity *GetActivator();
 
-   private:
+    private:
     // Implement these in your leaf class.
     // {
     // Called when the door becomes fully open.
@@ -133,7 +133,7 @@ abstract_class CBasePropDoor : public CDynamicProp
     virtual void DoorTeleportToSpawnPosition() = 0;
     // }
 
-   private:
+    private:
     // Main entry points for the door base behaviors.
     // Do not make the functions in this block virtual!!
     // {

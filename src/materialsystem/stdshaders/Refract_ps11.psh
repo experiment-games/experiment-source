@@ -3,12 +3,12 @@
 
 ps.1.1
 
-; t0: 
+; t0:
 ;		texture: dudv map
 ;		texcoords: dudvmap texcoords
 ; t1:
 ;		texture: refraction render target
-;		texcoords: 
+;		texcoords:
 
 tex t0				; sample dudv map
 texbem t1, t0		; refraction

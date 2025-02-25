@@ -20,7 +20,7 @@ class CBaseEntity;
 //-----------------------------------------------------------------------------
 class CDamageModifier
 {
-   public:
+    public:
     CDamageModifier();
 
     void AddModifierToEntity( CBaseEntity *pChar );
@@ -34,7 +34,7 @@ class CDamageModifier
 
     CBaseEntity *GetCharacter() const;
 
-   private:
+    private:
     float m_flModifier;
     CHandle< CBaseEntity > m_hEnt;
     bool m_bDoneToMe;  // True = modifies damage done to the entity, false = damage done by the entity

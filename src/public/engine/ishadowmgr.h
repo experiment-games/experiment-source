@@ -96,7 +96,7 @@ struct FlashlightState_t;
 //-----------------------------------------------------------------------------
 abstract_class IShadowMgr
 {
-   public:
+    public:
     // Create, destroy shadows (see ShadowCreateFlags_t for creationFlags)
     virtual ShadowHandle_t CreateShadow( IMaterial * pMaterial, IMaterial * pModelMaterial, void* pBindProxy, int creationFlags ) = 0;
     virtual void DestroyShadow( ShadowHandle_t handle ) = 0;

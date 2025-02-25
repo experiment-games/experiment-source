@@ -32,7 +32,7 @@ class CSequencePicker : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CSequencePicker, vgui::EditablePanel );
 
-   public:
+    public:
     enum PickType_t
     {
         PICK_NONE = 0,
@@ -55,7 +55,7 @@ class CSequencePicker : public vgui::EditablePanel
     PickType_t GetSelectedSequenceType();
     const char *GetSelectedSequenceName();
 
-   private:
+    private:
     void RefreshActivitiesAndSequencesList();
 
     // Plays the selected activity
@@ -87,7 +87,7 @@ class CSequencePickerFrame : public vgui::Frame
 {
     DECLARE_CLASS_SIMPLE( CSequencePickerFrame, vgui::Frame );
 
-   public:
+    public:
     CSequencePickerFrame( vgui::Panel *pParent, int nFlags );
 
     // Inherited from Frame
@@ -96,7 +96,7 @@ class CSequencePickerFrame : public vgui::Frame
     // Purpose: Activate the dialog
     void DoModal( const char *pMDLName );
 
-   private:
+    private:
     MESSAGE_FUNC_PARAMS( OnSequencePreviewChanged, "SequencePreviewChanged", kv );
 
     CSequencePicker *m_pPicker;

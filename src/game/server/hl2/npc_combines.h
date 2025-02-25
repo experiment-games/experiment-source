@@ -22,7 +22,7 @@ class CNPC_CombineS : public CNPC_Combine
     DECLARE_DATADESC();
 #endif
 
-   public:
+    public:
     void Spawn( void );
     void Precache( void );
     void DeathSound( const CTakeDamageInfo &info );
@@ -47,14 +47,14 @@ class CNPC_CombineS : public CNPC_Combine
         return true;
     }
 
-   private:
+    private:
     bool ShouldHitPlayer( const Vector &targetDir, float targetDist );
 
 #if HL2_EPISODIC
-   public:
+    public:
     Activity NPC_TranslateActivity( Activity eNewActivity );
 
-   protected:
+    protected:
     /// whether to use the more casual march anim in ep2_outland_05
     int m_iUseMarch;
 #endif

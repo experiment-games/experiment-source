@@ -379,7 +379,7 @@ CON_COMMAND( cl_removeentity_backtrace_dump, "Dump backtraces for client OnRemov
     for ( int i = 0; i < ARRAYSIZE( g_RemoveEntityBacktraces ); i++ )
     {
         if ( g_RemoveEntityBacktraces[i].time &&
-             ( entnum == -1 || g_RemoveEntityBacktraces[i].entnum == entnum ) )
+            ( entnum == -1 || g_RemoveEntityBacktraces[i].entnum == entnum ) )
         {
             Msg( "%d: time:%.2f pBaseEntity:%p\n", g_RemoveEntityBacktraces[i].entnum, g_RemoveEntityBacktraces[i].time, g_RemoveEntityBacktraces[i].pBaseEntity );
             for ( int j = 0; j < ARRAYSIZE( g_RemoveEntityBacktraces[i].backtrace_addrs ); j++ )

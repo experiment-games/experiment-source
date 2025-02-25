@@ -33,7 +33,7 @@ class Vector2D;
 
 class Vector4D
 {
-   public:
+    public:
     // Members
     vec_t x, y, z, w;
 
@@ -91,9 +91,9 @@ class Vector4D
     bool IsZero( float tolerance = 0.01f ) const
     {
         return ( x > -tolerance && x < tolerance &&
-                 y > -tolerance && y < tolerance &&
-                 z > -tolerance && z < tolerance &&
-                 w > -tolerance && w < tolerance );
+                y > -tolerance && y < tolerance &&
+                z > -tolerance && z < tolerance &&
+                w > -tolerance && w < tolerance );
     }
 
     // Get the distance from this Vector4D to the other one.
@@ -115,9 +115,9 @@ class Vector4D
 
     // No copy constructors allowed if we're in optimal mode
 #ifdef VECTOR_NO_SLOW_OPERATIONS
-   private:
+    private:
 #else
-   public:
+    public:
 #endif
     Vector4D( Vector4D const& vOther );
 
@@ -134,7 +134,7 @@ const Vector4D vec4_invalid( FLT_MAX, FLT_MAX, FLT_MAX, FLT_MAX );
 
 class ALIGN16 Vector4DAligned : public Vector4D
 {
-   public:
+    public:
     Vector4DAligned( void ) {}
     Vector4DAligned( vec_t X, vec_t Y, vec_t Z, vec_t W );
 
@@ -150,7 +150,7 @@ class ALIGN16 Vector4DAligned : public Vector4D
         return *( const __m128* )&x;
     }
 
-   private:
+    private:
     // No copy constructors allowed if we're in optimal mode
     Vector4DAligned( Vector4DAligned const& vOther );
 

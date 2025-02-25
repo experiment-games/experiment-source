@@ -86,8 +86,8 @@ static t_opt optset[] = {
     {"ipv6-add-membership",  opt_set_ip6_add_membership},
     {"ipv6-drop-membership", opt_set_ip6_drop_membersip},
     {"ipv6-v6only",          opt_set_ip6_v6only},
-	{"recv-buffer-size",     opt_set_recv_buf_size},
-	{"send-buffer-size",     opt_set_send_buf_size},
+    {"recv-buffer-size",     opt_set_recv_buf_size},
+    {"send-buffer-size",     opt_set_send_buf_size},
     {NULL,                   NULL}
 };
 
@@ -104,8 +104,8 @@ static t_opt optget[] = {
     {"ipv6-multicast-hops",  opt_get_ip6_unicast_hops},
     {"ipv6-multicast-loop",  opt_get_ip6_multicast_loop},
     {"ipv6-v6only",          opt_get_ip6_v6only},
-	{"recv-buffer-size",     opt_get_recv_buf_size},
-	{"send-buffer-size",     opt_get_send_buf_size},
+    {"recv-buffer-size",     opt_get_recv_buf_size},
+    {"send-buffer-size",     opt_get_send_buf_size},
     {NULL,                   NULL}
 };
 
@@ -143,7 +143,7 @@ int udp_open(lua_State *L) {
 \*=========================================================================*/
 static const char *udp_strerror(int err) {
     /* a 'closed' error on an unconnected means the target address was not
-     * accepted by the transport layer */
+    * accepted by the transport layer */
     if (err == IO_CLOSED) return "refused";
     else return socket_strerror(err);
 }
@@ -189,7 +189,7 @@ static int meth_sendto(lua_State *L) {
     aihint.ai_flags |= AI_NUMERICSERV;
 #endif
     err = getaddrinfo(ip, port, &aihint, &ai);
-	if (err) {
+    if (err) {
         lua_pushnil(L);
         lua_pushstring(L, LUA_GAI_STRERROR(err));
         return 2;
@@ -288,7 +288,7 @@ static int meth_receivefrom(lua_State *L) {
     }
     err = getnameinfo((struct sockaddr *)&addr, addr_len, addrstr,
         INET6_ADDRSTRLEN, portstr, 6, NI_NUMERICHOST | NI_NUMERICSERV);
-	if (err) {
+    if (err) {
         lua_pushnil(L);
         lua_pushstring(L, LUA_GAI_STRERROR(err));
         if (wanted > sizeof(buf)) free(dgram);
@@ -406,7 +406,7 @@ static int meth_setpeername(lua_State *L) {
         auxiliar_setclass(L, "udp{connected}", 1);
     } else {
         /* we ignore possible errors because Mac OS X always
-         * returns EAFNOSUPPORT */
+        * returns EAFNOSUPPORT */
         inet_trydisconnect(&udp->sock, udp->family, tm);
         auxiliar_setclass(L, "udp{unconnected}", 1);
     }
@@ -458,8 +458,8 @@ static int udp_create(lua_State *L, int family) {
     p_udp udp = (p_udp) lua_newuserdata(L, sizeof(t_udp));
     auxiliar_setclass(L, "udp{unconnected}", -1);
     /* if family is AF_UNSPEC, we leave the socket invalid and
-     * store AF_UNSPEC into family. This will allow it to later be
-     * replaced with an AF_INET6 or AF_INET socket upon first use. */
+    * store AF_UNSPEC into family. This will allow it to later be
+    * replaced with an AF_INET6 or AF_INET socket upon first use. */
     udp->sock = SOCKET_INVALID;
     timeout_init(&udp->tm, -1, -1);
     udp->family = family;

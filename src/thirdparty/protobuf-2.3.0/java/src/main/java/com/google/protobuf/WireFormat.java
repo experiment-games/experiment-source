@@ -71,9 +71,9 @@ public final class WireFormat {
   }
 
   /**
-   * Lite equivalent to {@link Descriptors.FieldDescriptor.JavaType}.  This is
-   * only here to support the lite runtime and should not be used by users.
-   */
+    * Lite equivalent to {@link Descriptors.FieldDescriptor.JavaType}.  This is
+    * only here to support the lite runtime and should not be used by users.
+    */
   public enum JavaType {
     INT(0),
     LONG(0L),
@@ -86,24 +86,24 @@ public final class WireFormat {
     MESSAGE(null);
 
     JavaType(final Object defaultDefault) {
-      this.defaultDefault = defaultDefault;
+    this.defaultDefault = defaultDefault;
     }
 
     /**
-     * The default default value for fields of this type, if it's a primitive
-     * type.
-     */
+    * The default default value for fields of this type, if it's a primitive
+    * type.
+    */
     Object getDefaultDefault() {
-      return defaultDefault;
+    return defaultDefault;
     }
 
     private final Object defaultDefault;
   }
 
   /**
-   * Lite equivalent to {@link Descriptors.FieldDescriptor.Type}.  This is
-   * only here to support the lite runtime and should not be used by users.
-   */
+    * Lite equivalent to {@link Descriptors.FieldDescriptor.Type}.  This is
+    * only here to support the lite runtime and should not be used by users.
+    */
   public enum FieldType {
     DOUBLE  (JavaType.DOUBLE     , WIRETYPE_FIXED64         ),
     FLOAT   (JavaType.FLOAT      , WIRETYPE_FIXED32         ),
@@ -114,16 +114,16 @@ public final class WireFormat {
     FIXED32 (JavaType.INT        , WIRETYPE_FIXED32         ),
     BOOL    (JavaType.BOOLEAN    , WIRETYPE_VARINT          ),
     STRING  (JavaType.STRING     , WIRETYPE_LENGTH_DELIMITED) {
-      public boolean isPackable() { return false; }
+    public boolean isPackable() { return false; }
     },
     GROUP   (JavaType.MESSAGE    , WIRETYPE_START_GROUP     ) {
-      public boolean isPackable() { return false; }
+    public boolean isPackable() { return false; }
     },
     MESSAGE (JavaType.MESSAGE    , WIRETYPE_LENGTH_DELIMITED) {
-      public boolean isPackable() { return false; }
+    public boolean isPackable() { return false; }
     },
     BYTES   (JavaType.BYTE_STRING, WIRETYPE_LENGTH_DELIMITED) {
-      public boolean isPackable() { return false; }
+    public boolean isPackable() { return false; }
     },
     UINT32  (JavaType.INT        , WIRETYPE_VARINT          ),
     ENUM    (JavaType.ENUM       , WIRETYPE_VARINT          ),
@@ -133,8 +133,8 @@ public final class WireFormat {
     SINT64  (JavaType.LONG       , WIRETYPE_VARINT          );
 
     FieldType(final JavaType javaType, final int wireType) {
-      this.javaType = javaType;
-      this.wireType = wireType;
+    this.javaType = javaType;
+    this.wireType = wireType;
     }
 
     private final JavaType javaType;

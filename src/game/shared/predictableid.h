@@ -17,7 +17,7 @@
 //-----------------------------------------------------------------------------
 class CPredictableId
 {
-   public:
+    public:
     // Construction
     CPredictableId( void );
 
@@ -55,7 +55,7 @@ class CPredictableId
     bool operator==( const CPredictableId &other ) const;
     bool operator!=( const CPredictableId &other ) const;
 
-   private:
+    private:
     void SetCommandNumber( int commandNumber );
     void SetPlayer( int playerIndex );
     void SetInstanceNumber( int counter );

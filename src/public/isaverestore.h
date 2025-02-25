@@ -59,7 +59,7 @@ const int SIZE_BLOCK_NAME_BUF = 31 + 1;
 
 abstract_class ISaveRestoreBlockHandler
 {
-   public:
+    public:
     virtual const char *GetBlockName() = 0;
 
     virtual void PreSave( CSaveRestoreData * ) = 0;  // Called immediately prior to save, generally used to set up any necessary tables
@@ -77,7 +77,7 @@ abstract_class ISaveRestoreBlockHandler
 
 abstract_class ISaveRestoreBlockSet : public ISaveRestoreBlockHandler
 {
-   public:
+    public:
     virtual void AddBlockHandler( ISaveRestoreBlockHandler * pHandler ) = 0;
     virtual void RemoveBlockHandler( ISaveRestoreBlockHandler * pHandler ) = 0;
     virtual void CallBlockHandlerRestore( ISaveRestoreBlockHandler * pHandler, int baseFilePos, IRestore *pRestore, bool fCreatePlayers ) = 0;
@@ -110,7 +110,7 @@ abstract_class CDefSaveRestoreBlockHandler : public ISaveRestoreBlockHandler
 
 abstract_class ISave
 {
-   public:
+    public:
     //---------------------------------
     // Logging
     virtual void StartLogging( const char *pszLogName ) = 0;
@@ -209,7 +209,7 @@ abstract_class ISave
     // Back door to support somewhat awkward ownership of game save/restore data
     virtual CGameSaveRestoreInfo *GetGameSaveRestoreInfo() = 0;
 
-   protected:
+    protected:
     virtual ~ISave(){};
 };
 
@@ -221,7 +221,7 @@ abstract_class ISave
 
 abstract_class IRestore
 {
-   public:
+    public:
     //---------------------------------
 
     virtual int GetReadPos() const = 0;
@@ -306,7 +306,7 @@ abstract_class IRestore
     // Back door to support somewhat awkward ownership of game save/restore data
     virtual CGameSaveRestoreInfo *GetGameSaveRestoreInfo() = 0;
 
-   protected:
+    protected:
     virtual ~IRestore(){};
 };
 
@@ -327,7 +327,7 @@ struct SaveRestoreFieldInfo_t
 
 abstract_class ISaveRestoreOps
 {
-   public:
+    public:
     // save data type interface
     virtual void Save( const SaveRestoreFieldInfo_t &fieldInfo, ISave *pSave ) = 0;
     virtual void Restore( const SaveRestoreFieldInfo_t &fieldInfo, IRestore *pRestore ) = 0;
@@ -370,7 +370,7 @@ abstract_class ISaveRestoreOps
 
 class CDefSaveRestoreOps : public ISaveRestoreOps
 {
-   public:
+    public:
     // save data type interface
     virtual void Save( const SaveRestoreFieldInfo_t &fieldInfo, ISave *pSave ) {}
     virtual void Restore( const SaveRestoreFieldInfo_t &fieldInfo, IRestore *pRestore ) {}
@@ -391,7 +391,7 @@ class CDefSaveRestoreOps : public ISaveRestoreOps
 //-----------------------------------------------------------------------------
 class CClassPtrSaveRestoreOps : public CDefSaveRestoreOps
 {
-   public:
+    public:
     virtual bool IsEmpty( const SaveRestoreFieldInfo_t &fieldInfo )
     {
         void **ppClassPtr = ( void ** )fieldInfo.pField;

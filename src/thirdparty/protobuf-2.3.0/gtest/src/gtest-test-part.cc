@@ -51,17 +51,17 @@ using internal::GetUnitTestImpl;
 internal::String TestPartResult::ExtractSummary(const char* message) {
   const char* const stack_trace = strstr(message, internal::kStackTraceMarker);
   return stack_trace == NULL ? internal::String(message) :
-      internal::String(message, stack_trace - message);
+    internal::String(message, stack_trace - message);
 }
 
 // Prints a TestPartResult object.
 std::ostream& operator<<(std::ostream& os, const TestPartResult& result) {
   return os
-      << result.file_name() << ":" << result.line_number() << ": "
-      << (result.type() == TestPartResult::kSuccess ? "Success" :
-          result.type() == TestPartResult::kFatalFailure ? "Fatal failure" :
-          "Non-fatal failure") << ":\n"
-      << result.message() << std::endl;
+    << result.file_name() << ":" << result.line_number() << ": "
+    << (result.type() == TestPartResult::kSuccess ? "Success" :
+        result.type() == TestPartResult::kFatalFailure ? "Fatal failure" :
+        "Non-fatal failure") << ":\n"
+    << result.message() << std::endl;
 }
 
 // Constructs an empty TestPartResultArray.
@@ -98,14 +98,14 @@ namespace internal {
 
 HasNewFatalFailureHelper::HasNewFatalFailureHelper()
     : has_new_fatal_failure_(false),
-      original_reporter_(GetUnitTestImpl()->
-                         GetTestPartResultReporterForCurrentThread()) {
+    original_reporter_(GetUnitTestImpl()->
+                        GetTestPartResultReporterForCurrentThread()) {
   GetUnitTestImpl()->SetTestPartResultReporterForCurrentThread(this);
 }
 
 HasNewFatalFailureHelper::~HasNewFatalFailureHelper() {
   GetUnitTestImpl()->SetTestPartResultReporterForCurrentThread(
-      original_reporter_);
+    original_reporter_);
 }
 
 void HasNewFatalFailureHelper::ReportTestPartResult(

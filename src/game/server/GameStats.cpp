@@ -50,7 +50,7 @@ bool StatsTrackingIsFullyEnabled( void );
 // used to drive most of the game stat event handlers as well as track basic stats under the hood of CBaseGameStats
 class CBaseGameStats_Driver : public CAutoGameSystemPerFrame
 {
-   public:
+    public:
     CBaseGameStats_Driver( void );
 
     typedef CAutoGameSystemPerFrame BaseClass;
@@ -93,15 +93,15 @@ static CBaseGameStats_Driver CBGSDriver;
 
 CBaseGameStats_Driver::CBaseGameStats_Driver( void )
     : BaseClass( "CGameStats" ),
-      m_iLoadedVersion( -1 ),
-      m_bEnabled( false ),
-      m_bShuttingDown( false ),
-      m_bInLevel( false ),
-      m_bFirstLevel( true ),
-      m_flLevelStartTime( 0.0f ),
-      m_bStationary( false ),
-      m_flLastMovementTime( 0.0f ),
-      m_bGamePaused( false )
+    m_iLoadedVersion( -1 ),
+    m_bEnabled( false ),
+    m_bShuttingDown( false ),
+    m_bInLevel( false ),
+    m_bFirstLevel( true ),
+    m_flLevelStartTime( 0.0f ),
+    m_bStationary( false ),
+    m_flLastMovementTime( 0.0f ),
+    m_bGamePaused( false )
 {
     m_szLoadedUserID[0] = 0;
     ;
@@ -113,7 +113,7 @@ static FileHandle_t g_LogFileHandle = FILESYSTEM_INVALID_HANDLE;
 
 CBaseGameStats::CBaseGameStats()
     : m_bLogging( false ),
-      m_bLoggingToFile( false )
+    m_bLoggingToFile( false )
 {
 }
 
@@ -631,12 +631,12 @@ bool CBaseGameStats_Driver::Init()
     }
 
 #if 0
-	// This should only impact us internally!!!
-	if ( IsPC() && !filesystem->IsSteam() )
-	{
-		Warning( "Forcing gamestats logging to file, remove before shipping!!!\n" );
-		gamestats->m_bLoggingToFile = true;
-	}
+    // This should only impact us internally!!!
+    if ( IsPC() && !filesystem->IsSteam() )
+    {
+        Warning( "Forcing gamestats logging to file, remove before shipping!!!\n" );
+        gamestats->m_bLoggingToFile = true;
+    }
 #endif
 
     if ( gamestatsuploader )
@@ -1007,20 +1007,20 @@ static ConCommand resetGameStats( "_resetgamestats", CC_ResetGameStats, "Erases 
 
 class CPointGamestatsCounter : public CPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CPointGamestatsCounter, CPointEntity );
     DECLARE_DATADESC();
 
     CPointGamestatsCounter();
 
-   protected:
+    protected:
     void InputSetName( inputdata_t &inputdata );
     void InputIncrement( inputdata_t &inputdata );
 
     void InputEnable( inputdata_t &inputdata );
     void InputDisable( inputdata_t &inputdata );
 
-   private:
+    private:
     string_t m_strStatisticName;
     bool m_bDisabled;
 };
@@ -1043,7 +1043,7 @@ DEFINE_KEYFIELD( m_strStatisticName, FIELD_STRING, "Name" ),
 
             CPointGamestatsCounter::CPointGamestatsCounter()
     : m_strStatisticName( NULL_STRING ),
-      m_bDisabled( false )
+    m_bDisabled( false )
 {
 }
 

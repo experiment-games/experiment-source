@@ -278,7 +278,7 @@ HALF4 main( PS_INPUT i )
 
 #if OUTLINE
     if ( ( distAlphaMask >= OUTLINE_MIN_VALUE0 ) &&
-         ( distAlphaMask <= OUTLINE_MAX_VALUE1 ) )
+        ( distAlphaMask <= OUTLINE_MAX_VALUE1 ) )
     {
         float oFactor = 1.0;
         if ( distAlphaMask <= OUTLINE_MIN_VALUE1 )
@@ -433,8 +433,8 @@ HALF4 main( PS_INPUT i )
 // ssbump
 #if ( BUMPMAP == 2 )
         diffuseLighting = vNormal.x * lightmapColor1 +
-                          vNormal.y * lightmapColor2 +
-                          vNormal.z * lightmapColor3;
+                        vNormal.y * lightmapColor2 +
+                        vNormal.z * lightmapColor3;
         diffuseLighting *= g_TintValuesAndLightmapScale.rgb;
 
         // now, calculate vNormal for reflection purposes. if vNormal isn't needed, hopefully
@@ -451,8 +451,8 @@ HALF4 main( PS_INPUT i )
         dp *= 2 * detailColor;
 #endif
         diffuseLighting = dp.x * lightmapColor1 +
-                          dp.y * lightmapColor2 +
-                          dp.z * lightmapColor3;
+                        dp.y * lightmapColor2 +
+                        dp.z * lightmapColor3;
         float sum = dot( dp, float3( 1.0f, 1.0f, 1.0f ) );
         diffuseLighting *= g_TintValuesAndLightmapScale.rgb / sum;
 #endif

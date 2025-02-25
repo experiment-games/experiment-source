@@ -50,7 +50,7 @@ namespace unittest_import = protobuf_unittest_import;
 
 class TestUtil
 {
-   public:
+    public:
     // Set every field in the message to a unique value.
     static void SetAllFields( unittest::TestAllTypes* message );
     static void SetAllExtensions( unittest::TestAllExtensions* message );
@@ -117,7 +117,7 @@ class TestUtil
     // Like above, but use the reflection interface.
     class ReflectionTester
     {
-       public:
+        public:
         // base_descriptor must be a descriptor for TestAllTypes or
         // TestAllExtensions.  In the former case, ReflectionTester fetches from
         // it the FieldDescriptors needed to use the reflection interface.  In
@@ -138,7 +138,7 @@ class TestUtil
         void RemoveLastRepeatedsViaReflection( Message* message );
         void SwapRepeatedsViaReflection( Message* message );
 
-       private:
+        private:
         const FieldDescriptor* F( const string& name );
 
         const Descriptor* base_descriptor_;
@@ -168,7 +168,7 @@ class TestUtil
         GOOGLE_DISALLOW_EVIL_CONSTRUCTORS( ReflectionTester );
     };
 
-   private:
+    private:
     GOOGLE_DISALLOW_EVIL_CONSTRUCTORS( TestUtil );
 };
 

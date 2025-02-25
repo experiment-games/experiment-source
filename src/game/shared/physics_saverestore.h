@@ -39,7 +39,7 @@ ISaveRestoreOps *GetPhysObjSaveRestoreOps( PhysInterfaceId_t );
 
 abstract_class IPhysSaveRestoreManager
 {
-   public:
+    public:
     virtual void NoteBBox( const Vector &mins, const Vector &maxs, CPhysCollide * ) = 0;
 
     virtual void AssociateModel( IPhysicsObject *, int modelIndex ) = 0;

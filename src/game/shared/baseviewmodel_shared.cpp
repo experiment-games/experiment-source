@@ -146,20 +146,20 @@ void CBaseViewModel::SpawnControlPanels()
     /*
     if ( IsBuiltOnAttachment() )
     {
-      pEntityToSpawnOn = dynamic_cast<CBaseAnimating*>((CBaseEntity*)m_hBuiltOnEntity.Get());
-      if ( pEntityToSpawnOn )
-      {
+    pEntityToSpawnOn = dynamic_cast<CBaseAnimating*>((CBaseEntity*)m_hBuiltOnEntity.Get());
+    if ( pEntityToSpawnOn )
+    {
         char sBuildPointLL[64];
         char sBuildPointUR[64];
         Q_snprintf( sBuildPointLL, sizeof( sBuildPointLL ), "bp%d_controlpanel%%d_ll", m_iBuiltOnPoint );
         Q_snprintf( sBuildPointUR, sizeof( sBuildPointUR ), "bp%d_controlpanel%%d_ur", m_iBuiltOnPoint );
         pAttachmentNameLL = sBuildPointLL;
         pAttachmentNameUR = sBuildPointUR;
-      }
-      else
-      {
+    }
+    else
+    {
         pEntityToSpawnOn = this;
-      }
+    }
     }
     */
 

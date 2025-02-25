@@ -82,13 +82,13 @@ class DescriptorBase(object):
     descriptor.
     """
     if self._options:
-      return self._options
+    return self._options
     from google.protobuf import descriptor_pb2
     try:
-      options_class = getattr(descriptor_pb2, self._options_class_name)
+    options_class = getattr(descriptor_pb2, self._options_class_name)
     except AttributeError:
-      raise RuntimeError('Unknown options class name %s!' %
-                         (self._options_class_name))
+    raise RuntimeError('Unknown options class name %s!' %
+                        (self._options_class_name))
     self._options = options_class()
     return self._options
 
@@ -97,25 +97,25 @@ class _NestedDescriptorBase(DescriptorBase):
   """Common class for descriptors that can be nested."""
 
   def __init__(self, options, options_class_name, name, full_name,
-               file, containing_type, serialized_start=None,
-               serialized_end=None):
+                file, containing_type, serialized_start=None,
+                serialized_end=None):
     """Constructor.
 
     Args:
-      options: Protocol message options or None
+    options: Protocol message options or None
         to use default message options.
-      options_class_name: (str) The class name of the above options.
+    options_class_name: (str) The class name of the above options.
 
-      name: (str) Name of this protocol message type.
-      full_name: (str) Fully-qualified name of this protocol message type,
+    name: (str) Name of this protocol message type.
+    full_name: (str) Fully-qualified name of this protocol message type,
         which will include protocol "package" name and the name of any
         enclosing types.
-      file: (FileDescriptor) Reference to file info.
-      containing_type: if provided, this is a nested descriptor, with this
+    file: (FileDescriptor) Reference to file info.
+    containing_type: if provided, this is a nested descriptor, with this
         descriptor as parent, otherwise None.
-      serialized_start: The start index (inclusive) in block in the
+    serialized_start: The start index (inclusive) in block in the
         file.serialized_pb that describes this descriptor.
-      serialized_end: The end index (exclusive) in block in the
+    serialized_end: The end index (exclusive) in block in the
         file.serialized_pb that describes this descriptor.
     """
     super(_NestedDescriptorBase, self).__init__(
@@ -135,25 +135,25 @@ class _NestedDescriptorBase(DescriptorBase):
     """Returns the root if this is a nested type, or itself if its the root."""
     desc = self
     while desc.containing_type is not None:
-      desc = desc.containing_type
+    desc = desc.containing_type
     return desc
 
   def CopyToProto(self, proto):
     """Copies this to the matching proto in descriptor_pb2.
 
     Args:
-      proto: An empty proto instance from descriptor_pb2.
+    proto: An empty proto instance from descriptor_pb2.
 
     Raises:
-      Error: If self couldnt be serialized, due to to few constructor arguments.
+    Error: If self couldnt be serialized, due to to few constructor arguments.
     """
     if (self.file is not None and
         self._serialized_start is not None and
         self._serialized_end is not None):
-      proto.ParseFromString(self.file.serialized_pb[
-          self._serialized_start:self._serialized_end])
+    proto.ParseFromString(self.file.serialized_pb[
+        self._serialized_start:self._serialized_end])
     else:
-      raise Error('Descriptor does not contain serialization.')
+    raise Error('Descriptor does not contain serialization.')
 
 
 class Descriptor(_NestedDescriptorBase):
@@ -164,53 +164,53 @@ class Descriptor(_NestedDescriptorBase):
 
     name: (str) Name of this protocol message type.
     full_name: (str) Fully-qualified name of this protocol message type,
-      which will include protocol "package" name and the name of any
-      enclosing types.
+    which will include protocol "package" name and the name of any
+    enclosing types.
 
     containing_type: (Descriptor) Reference to the descriptor of the
-      type containing us, or None if this is top-level.
+    type containing us, or None if this is top-level.
 
     fields: (list of FieldDescriptors) Field descriptors for all
-      fields in this type.
+    fields in this type.
     fields_by_number: (dict int -> FieldDescriptor) Same FieldDescriptor
-      objects as in |fields|, but indexed by "number" attribute in each
-      FieldDescriptor.
+    objects as in |fields|, but indexed by "number" attribute in each
+    FieldDescriptor.
     fields_by_name: (dict str -> FieldDescriptor) Same FieldDescriptor
-      objects as in |fields|, but indexed by "name" attribute in each
-      FieldDescriptor.
+    objects as in |fields|, but indexed by "name" attribute in each
+    FieldDescriptor.
 
     nested_types: (list of Descriptors) Descriptor references
-      for all protocol message types nested within this one.
+    for all protocol message types nested within this one.
     nested_types_by_name: (dict str -> Descriptor) Same Descriptor
-      objects as in |nested_types|, but indexed by "name" attribute
-      in each Descriptor.
+    objects as in |nested_types|, but indexed by "name" attribute
+    in each Descriptor.
 
     enum_types: (list of EnumDescriptors) EnumDescriptor references
-      for all enums contained within this type.
+    for all enums contained within this type.
     enum_types_by_name: (dict str ->EnumDescriptor) Same EnumDescriptor
-      objects as in |enum_types|, but indexed by "name" attribute
-      in each EnumDescriptor.
+    objects as in |enum_types|, but indexed by "name" attribute
+    in each EnumDescriptor.
     enum_values_by_name: (dict str -> EnumValueDescriptor) Dict mapping
-      from enum value name to EnumValueDescriptor for that value.
+    from enum value name to EnumValueDescriptor for that value.
 
     extensions: (list of FieldDescriptor) All extensions defined directly
-      within this message type (NOT within a nested type).
+    within this message type (NOT within a nested type).
     extensions_by_name: (dict, string -> FieldDescriptor) Same FieldDescriptor
-      objects as |extensions|, but indexed by "name" attribute of each
-      FieldDescriptor.
+    objects as |extensions|, but indexed by "name" attribute of each
+    FieldDescriptor.
 
     is_extendable:  Does this type define any extension ranges?
 
     options: (descriptor_pb2.MessageOptions) Protocol message options or None
-      to use default message options.
+    to use default message options.
 
     file: (FileDescriptor) Reference to file descriptor.
   """
 
   def __init__(self, name, full_name, filename, containing_type, fields,
-               nested_types, enum_types, extensions, options=None,
-               is_extendable=True, extension_ranges=None, file=None,
-               serialized_start=None, serialized_end=None):
+                nested_types, enum_types, extensions, options=None,
+                is_extendable=True, extension_ranges=None, file=None,
+                serialized_start=None, serialized_end=None):
     """Arguments to __init__() are as described in the description
     of Descriptor fields above.
 
@@ -229,7 +229,7 @@ class Descriptor(_NestedDescriptorBase):
     #      syntax: for f in descriptor.fields: ...
     self.fields = fields
     for field in self.fields:
-      field.containing_type = self
+    field.containing_type = self
     self.fields_by_number = dict((f.number, f) for f in fields)
     self.fields_by_name = dict((f.name, f) for f in fields)
 
@@ -238,14 +238,14 @@ class Descriptor(_NestedDescriptorBase):
 
     self.enum_types = enum_types
     for enum_type in self.enum_types:
-      enum_type.containing_type = self
+    enum_type.containing_type = self
     self.enum_types_by_name = dict((t.name, t) for t in enum_types)
     self.enum_values_by_name = dict(
         (v.name, v) for t in enum_types for v in t.values)
 
     self.extensions = extensions
     for extension in self.extensions:
-      extension.extension_scope = self
+    extension.extension_scope = self
     self.extensions_by_name = dict((f.name, f) for f in extensions)
     self.is_extendable = is_extendable
     self.extension_ranges = extension_ranges
@@ -257,7 +257,7 @@ class Descriptor(_NestedDescriptorBase):
     """Copies this to a descriptor_pb2.DescriptorProto.
 
     Args:
-      proto: An empty descriptor_pb2.DescriptorProto.
+    proto: An empty descriptor_pb2.DescriptorProto.
     """
     # This function is overriden to give a better doc comment.
     super(Descriptor, self).CopyToProto(proto)
@@ -282,43 +282,43 @@ class FieldDescriptor(DescriptorBase):
 
     name: (str) Name of this field, exactly as it appears in .proto.
     full_name: (str) Name of this field, including containing scope.  This is
-      particularly relevant for extensions.
+    particularly relevant for extensions.
     index: (int) Dense, 0-indexed index giving the order that this
-      field textually appears within its message in the .proto file.
+    field textually appears within its message in the .proto file.
     number: (int) Tag number declared for this field in the .proto file.
 
     type: (One of the TYPE_* constants below) Declared type.
     cpp_type: (One of the CPPTYPE_* constants below) C++ type used to
-      represent this field.
+    represent this field.
 
     label: (One of the LABEL_* constants below) Tells whether this
-      field is optional, required, or repeated.
+    field is optional, required, or repeated.
     has_default_value: (bool) True if this field has a default value defined,
-      otherwise false.
+    otherwise false.
     default_value: (Varies) Default value of this field.  Only
-      meaningful for non-repeated scalar fields.  Repeated fields
-      should always set this to [], and non-repeated composite
-      fields should always set this to None.
+    meaningful for non-repeated scalar fields.  Repeated fields
+    should always set this to [], and non-repeated composite
+    fields should always set this to None.
 
     containing_type: (Descriptor) Descriptor of the protocol message
-      type that contains this field.  Set by the Descriptor constructor
-      if we're passed into one.
-      Somewhat confusingly, for extension fields, this is the
-      descriptor of the EXTENDED message, not the descriptor
-      of the message containing this field.  (See is_extension and
-      extension_scope below).
+    type that contains this field.  Set by the Descriptor constructor
+    if we're passed into one.
+    Somewhat confusingly, for extension fields, this is the
+    descriptor of the EXTENDED message, not the descriptor
+    of the message containing this field.  (See is_extension and
+    extension_scope below).
     message_type: (Descriptor) If a composite field, a descriptor
-      of the message type contained in this field.  Otherwise, this is None.
+    of the message type contained in this field.  Otherwise, this is None.
     enum_type: (EnumDescriptor) If this field contains an enum, a
-      descriptor of that enum.  Otherwise, this is None.
+    descriptor of that enum.  Otherwise, this is None.
 
     is_extension: True iff this describes an extension field.
     extension_scope: (Descriptor) Only meaningful if is_extension is True.
-      Gives the message that immediately contains this extension field.
-      Will be None iff we're a top-level (file-level) extension field.
+    Gives the message that immediately contains this extension field.
+    Will be None iff we're a top-level (file-level) extension field.
 
     options: (descriptor_pb2.FieldOptions) Protocol message field options or
-      None to use default field options.
+    None to use default field options.
   """
 
   # Must be consistent with C++ FieldDescriptor::Type enum in
@@ -371,9 +371,9 @@ class FieldDescriptor(DescriptorBase):
   MAX_LABEL           = 3
 
   def __init__(self, name, full_name, index, number, type, cpp_type, label,
-               default_value, message_type, enum_type, containing_type,
-               is_extension, extension_scope, options=None,
-               has_default_value=True):
+                default_value, message_type, enum_type, containing_type,
+                is_extension, extension_scope, options=None,
+                has_default_value=True):
     """The arguments are as described in the description of FieldDescriptor
     attributes above.
 
@@ -406,26 +406,26 @@ class EnumDescriptor(_NestedDescriptorBase):
 
     name: (str) Name of the enum type.
     full_name: (str) Full name of the type, including package name
-      and any enclosing type(s).
+    and any enclosing type(s).
 
     values: (list of EnumValueDescriptors) List of the values
-      in this enum.
+    in this enum.
     values_by_name: (dict str -> EnumValueDescriptor) Same as |values|,
-      but indexed by the "name" field of each EnumValueDescriptor.
+    but indexed by the "name" field of each EnumValueDescriptor.
     values_by_number: (dict int -> EnumValueDescriptor) Same as |values|,
-      but indexed by the "number" field of each EnumValueDescriptor.
+    but indexed by the "number" field of each EnumValueDescriptor.
     containing_type: (Descriptor) Descriptor of the immediate containing
-      type of this enum, or None if this is an enum defined at the
-      top level in a .proto file.  Set by Descriptor's constructor
-      if we're passed into one.
+    type of this enum, or None if this is an enum defined at the
+    top level in a .proto file.  Set by Descriptor's constructor
+    if we're passed into one.
     file: (FileDescriptor) Reference to file descriptor.
     options: (descriptor_pb2.EnumOptions) Enum options message or
-      None to use default enum options.
+    None to use default enum options.
   """
 
   def __init__(self, name, full_name, filename, values,
-               containing_type=None, options=None, file=None,
-               serialized_start=None, serialized_end=None):
+                containing_type=None, options=None, file=None,
+                serialized_start=None, serialized_end=None):
     """Arguments are as described in the attribute description above.
 
     Note that filename is an obsolete argument, that is not used anymore.
@@ -438,7 +438,7 @@ class EnumDescriptor(_NestedDescriptorBase):
 
     self.values = values
     for value in self.values:
-      value.type = self
+    value.type = self
     self.values_by_name = dict((v.name, v) for v in values)
     self.values_by_number = dict((v.number, v) for v in values)
 
@@ -449,7 +449,7 @@ class EnumDescriptor(_NestedDescriptorBase):
     """Copies this to a descriptor_pb2.EnumDescriptorProto.
 
     Args:
-      proto: An empty descriptor_pb2.EnumDescriptorProto.
+    proto: An empty descriptor_pb2.EnumDescriptorProto.
     """
     # This function is overriden to give a better doc comment.
     super(EnumDescriptor, self).CopyToProto(proto)
@@ -461,13 +461,13 @@ class EnumValueDescriptor(DescriptorBase):
 
     name: (str) Name of this value.
     index: (int) Dense, 0-indexed index giving the order that this
-      value appears textually within its enum in the .proto file.
+    value appears textually within its enum in the .proto file.
     number: (int) Actual number assigned to this enum value.
     type: (EnumDescriptor) EnumDescriptor to which this value
-      belongs.  Set by EnumDescriptor's constructor if we're
-      passed into one.
+    belongs.  Set by EnumDescriptor's constructor if we're
+    passed into one.
     options: (descriptor_pb2.EnumValueOptions) Enum value options message or
-      None to use default enum value options options.
+    None to use default enum value options options.
   """
 
   def __init__(self, name, index, number, type=None, options=None):
@@ -486,16 +486,16 @@ class ServiceDescriptor(_NestedDescriptorBase):
     name: (str) Name of the service.
     full_name: (str) Full name of the service, including package name.
     index: (int) 0-indexed index giving the order that this services
-      definition appears withing the .proto file.
+    definition appears withing the .proto file.
     methods: (list of MethodDescriptor) List of methods provided by this
-      service.
+    service.
     options: (descriptor_pb2.ServiceOptions) Service options message or
-      None to use default service options.
+    None to use default service options.
     file: (FileDescriptor) Reference to file info.
   """
 
   def __init__(self, name, full_name, index, methods, options=None, file=None,
-               serialized_start=None, serialized_end=None):
+                serialized_start=None, serialized_end=None):
     super(ServiceDescriptor, self).__init__(
         options, 'ServiceOptions', name, full_name, file,
         None, serialized_start=serialized_start,
@@ -504,12 +504,12 @@ class ServiceDescriptor(_NestedDescriptorBase):
     self.methods = methods
     # Set the containing service for each method in this service.
     for method in self.methods:
-      method.containing_service = self
+    method.containing_service = self
 
   def FindMethodByName(self, name):
     """Searches for the specified method, and returns its descriptor."""
     for method in self.methods:
-      if name == method.name:
+    if name == method.name:
         return method
     return None
 
@@ -517,7 +517,7 @@ class ServiceDescriptor(_NestedDescriptorBase):
     """Copies this to a descriptor_pb2.ServiceDescriptorProto.
 
     Args:
-      proto: An empty descriptor_pb2.ServiceDescriptorProto.
+    proto: An empty descriptor_pb2.ServiceDescriptorProto.
     """
     # This function is overriden to give a better doc comment.
     super(ServiceDescriptor, self).CopyToProto(proto)
@@ -539,7 +539,7 @@ class MethodDescriptor(DescriptorBase):
   """
 
   def __init__(self, name, full_name, index, containing_service,
-               input_type, output_type, options=None):
+                input_type, output_type, options=None):
     """The arguments are as described in the description of MethodDescriptor
     attributes above.
 
@@ -575,7 +575,7 @@ class FileDescriptor(DescriptorBase):
     """Copies this to a descriptor_pb2.FileDescriptorProto.
 
     Args:
-      proto: An empty descriptor_pb2.FileDescriptorProto.
+    proto: An empty descriptor_pb2.FileDescriptorProto.
     """
     proto.ParseFromString(self.serialized_pb)
 

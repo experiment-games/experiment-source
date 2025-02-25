@@ -52,7 +52,7 @@ extern const ConVar *sv_cheats;
 
 class ConVar_m_pitch : public ConVar_ServerBounded
 {
-   public:
+    public:
     ConVar_m_pitch()
         : ConVar_ServerBounded( "m_pitch", "0.022", FCVAR_ARCHIVE, "Mouse pitch factor." )
     {
@@ -89,11 +89,11 @@ static ConVar m_yaw( "m_yaw", "0.022", FCVAR_ARCHIVE, "Mouse yaw factor." );
 static ConVar m_forward( "m_forward", "1", FCVAR_ARCHIVE, "Mouse forward factor." );
 
 static ConVar m_customaccel( "m_customaccel", "0", FCVAR_ARCHIVE,
-                             "Custom mouse acceleration:"
-                             "\n0: custom accelaration disabled"
-                             "\n1: mouse_acceleration = min(m_customaccel_max, pow(raw_mouse_delta, m_customaccel_exponent) * m_customaccel_scale + sensitivity)"
-                             "\n2: Same as 1, with but x and y sensitivity are scaled by m_pitch and m_yaw respectively."
-                             "\n3: mouse_acceleration = pow(raw_mouse_delta, m_customaccel_exponent - 1) * sensitivity" );
+                            "Custom mouse acceleration:"
+                            "\n0: custom accelaration disabled"
+                            "\n1: mouse_acceleration = min(m_customaccel_max, pow(raw_mouse_delta, m_customaccel_exponent) * m_customaccel_scale + sensitivity)"
+                            "\n2: Same as 1, with but x and y sensitivity are scaled by m_pitch and m_yaw respectively."
+                            "\n3: mouse_acceleration = pow(raw_mouse_delta, m_customaccel_exponent - 1) * sensitivity" );
 static ConVar m_customaccel_scale( "m_customaccel_scale", "0.04", FCVAR_ARCHIVE, "Custom mouse acceleration value.", true, 0, false, 0.0f );
 static ConVar m_customaccel_max( "m_customaccel_max", "0", FCVAR_ARCHIVE, "Max mouse move scale factor, 0 for no limit" );
 static ConVar m_customaccel_exponent( "m_customaccel_exponent", "1", FCVAR_ARCHIVE, "Mouse move is raised to this power before being scaled by scale factor.", true, 1.0f, false, 0.0f );
@@ -188,9 +188,9 @@ void CInput::CheckMouseAcclerationVars()
 {
     // Don't change them if the mouse is inactive, invalid, or not using parameters for restore
     if ( !m_fMouseActive ||
-         !m_fMouseInitialized ||
-         !m_fMouseParmsValid ||
-         !m_fRestoreSPI )
+        !m_fMouseInitialized ||
+        !m_fMouseParmsValid ||
+        !m_fRestoreSPI )
     {
         return;
     }
@@ -397,8 +397,8 @@ void CInput::ScaleMouse( float *x, float *y )
     float my = *y;
 
     float mouse_sensitivity = ( gHUD.GetSensitivity() != 0 )
-                                  ? gHUD.GetSensitivity()
-                                  : sensitivity.GetFloat();
+                                ? gHUD.GetSensitivity()
+                                : sensitivity.GetFloat();
 
     if ( m_customaccel.GetInt() == 1 || m_customaccel.GetInt() == 2 )
     {
@@ -409,7 +409,7 @@ void CInput::ScaleMouse( float *x, float *y )
         float accelerated_sensitivity = ( ( float )pow( raw_mouse_movement_distance, accelerated_sensitivity_exponent ) * acceleration_scale + mouse_sensitivity );
 
         if ( accelerated_sensitivity_max > 0.0001f &&
-             accelerated_sensitivity > accelerated_sensitivity_max )
+            accelerated_sensitivity > accelerated_sensitivity_max )
         {
             accelerated_sensitivity = accelerated_sensitivity_max;
         }
@@ -540,7 +540,7 @@ void CInput::ApplyMouse( QAngle &viewangles, CUserCmd *cmd, float mouse_x, float
         // Otherwise if holding strafe key and noclipping, then move upward
         /*		if ((in_strafe.state & 1) && IsNoClipping() )
             {
-              cmd->upmove -= m_forward.GetFloat() * mouse_y;
+            cmd->upmove -= m_forward.GetFloat() * mouse_y;
             }
             else */
         {
@@ -661,7 +661,7 @@ void CInput::MouseMove( CUserCmd *cmd )
     // jjb - this disables normal mouse control if the user is trying to
     //       move the camera, or if the mouse cursor is visible
     if ( !m_fCameraInterceptingMouse &&
-         !vgui::surface()->IsCursorVisible() )
+        !vgui::surface()->IsCursorVisible() )
     {
         // Sample mouse one more time
         AccumulateMouse();

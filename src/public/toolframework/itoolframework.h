@@ -32,11 +32,11 @@ struct BaseEntityRecordingState_t
 {
     BaseEntityRecordingState_t()
         : m_flTime( 0.0f ),
-          m_pModelName( 0 ),
-          m_nOwner( -1 ),
-          m_nEffects( 0 ),
-          m_bVisible( false ),
-          m_bRecordFinalVisibleSample( false )
+        m_pModelName( 0 ),
+        m_nOwner( -1 ),
+        m_nEffects( 0 ),
+        m_bVisible( false ),
+        m_bRecordFinalVisibleSample( false )
     {
         m_vecRenderOrigin.Init();
         m_vecRenderAngles.Init();
@@ -165,7 +165,7 @@ struct ParticleSystemSetControlPointOrientationState_t
 //-----------------------------------------------------------------------------
 class IToolFrameworkInternal : public IAppSystem
 {
-   public:  // Client Hooks
+    public:  // Client Hooks
     virtual bool ClientInit( CreateInterfaceFn clientFactory ) = 0;
     virtual void ClientShutdown() = 0;
 
@@ -187,7 +187,7 @@ class IToolFrameworkInternal : public IAppSystem
     // is the current tool recording?
     virtual bool IsToolRecording() = 0;
 
-   public:  // Server Hooks
+    public:  // Server Hooks
     // Level init, shutdown
     virtual bool ServerInit( CreateInterfaceFn serverFactory ) = 0;
     virtual void ServerShutdown() = 0;
@@ -209,7 +209,7 @@ class IToolFrameworkInternal : public IAppSystem
 
     virtual void ServerPreSetupVisibilityAllTools() = 0;
 
-   public:  // Other Hooks
+    public:  // Other Hooks
     // If any tool returns false, the engine will not actually quit
     // FIXME:  Not implemented yet
     virtual bool CanQuit() = 0;
@@ -244,7 +244,7 @@ class IToolFrameworkInternal : public IAppSystem
 
     virtual IMaterialProxy *LookupProxy( const char *proxyName ) = 0;
 
-   public:  // general framework hooks
+    public:  // general framework hooks
     virtual int GetToolCount() = 0;
     virtual char const *GetToolName( int index ) = 0;
     virtual void SwitchToTool( int index ) = 0;

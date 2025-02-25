@@ -40,7 +40,7 @@ namespace internal
 
 class WorkingMemory
 {
-   public:
+    public:
     WorkingMemory()
         : large_table_( NULL ) {}
     ~WorkingMemory()
@@ -53,7 +53,7 @@ class WorkingMemory
     // the base of the hash table.
     uint16* GetHashTable( size_t input_size, int* table_size );
 
-   private:
+    private:
     uint16 small_table_[1 << 10];  // 2KB
     uint16* large_table_;          // Allocated only when needed
 
@@ -90,8 +90,8 @@ char* CompressFragment( const char* input,
 // x86_64 is little endian.
 #if defined( ARCH_K8 )
 static inline int FindMatchLength( const char* s1,
-                                   const char* s2,
-                                   const char* s2_limit )
+                                    const char* s2,
+                                    const char* s2_limit )
 {
     assert( s2_limit >= s2 );
     int matched = 0;
@@ -135,8 +135,8 @@ static inline int FindMatchLength( const char* s1,
 }
 #else
 static inline int FindMatchLength( const char* s1,
-                                   const char* s2,
-                                   const char* s2_limit )
+                                    const char* s2,
+                                    const char* s2_limit )
 {
     // Implementation based on the x86-64 version, above.
     assert( s2_limit >= s2 );

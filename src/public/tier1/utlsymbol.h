@@ -32,7 +32,7 @@ typedef unsigned short UtlSymId_t;
 
 class CUtlSymbol
 {
-   public:
+    public:
     // constructor, destructor
     CUtlSymbol()
         : m_Id( UTL_INVAL_SYMBOL ) {}
@@ -74,7 +74,7 @@ class CUtlSymbol
     // Modules can choose to disable the static symbol table so to prevent accidental use of them.
     static void DisableStaticSymbolTable();
 
-   protected:
+    protected:
     UtlSymId_t m_Id;
 
     // Initializes the symbol table
@@ -102,7 +102,7 @@ class CUtlSymbol
 
 class CUtlSymbolTable
 {
-   public:
+    public:
     // constructor, destructor
     CUtlSymbolTable( int growSize = 0, int initSize = 32, bool caseInsensitive = false );
     ~CUtlSymbolTable();
@@ -124,10 +124,10 @@ class CUtlSymbolTable
         return m_Lookup.Count();
     }
 
-   protected:
+    protected:
     class CStringPoolIndex
     {
-       public:
+        public:
         inline CStringPoolIndex()
         {
         }
@@ -149,7 +149,7 @@ class CUtlSymbolTable
 
     class CLess
     {
-       public:
+        public:
         CLess( int ignored = 0 ) {}  // permits default initialization to NULL in CUtlRBTree
         bool operator!() const
         {
@@ -161,7 +161,7 @@ class CUtlSymbolTable
     // Stores the symbol lookup
     class CTree : public CUtlRBTree< CStringPoolIndex, unsigned short, CLess >
     {
-       public:
+        public:
         CTree( int growSize, int initSize )
             : CUtlRBTree< CStringPoolIndex, unsigned short, CLess >( growSize, initSize ) {}
         friend class CUtlSymbolTable::CLess;  // Needed to allow CLess to calculate pointer to symbol table
@@ -181,7 +181,7 @@ class CUtlSymbolTable
     // stores the string data
     CUtlVector< StringPool_t* > m_StringPools;
 
-   private:
+    private:
     int FindPoolWithSpace( int len ) const;
     const char* StringFromIndex( const CStringPoolIndex& index ) const;
 
@@ -190,7 +190,7 @@ class CUtlSymbolTable
 
 class CUtlSymbolTableMT : private CUtlSymbolTable
 {
-   public:
+    public:
     CUtlSymbolTableMT( int growSize = 0, int initSize = 32, bool caseInsensitive = false )
         : CUtlSymbolTable( growSize, initSize, caseInsensitive )
     {
@@ -220,7 +220,7 @@ class CUtlSymbolTableMT : private CUtlSymbolTable
         return pszResult;
     }
 
-   private:
+    private:
 #if defined( WIN32 ) || defined( _WIN32 )
     mutable CThreadSpinRWLock m_lock;
 #else
@@ -265,7 +265,7 @@ class CUtlFilenameSymbolTable
 
     class HashTable;
 
-   public:
+    public:
     CUtlFilenameSymbolTable();
     ~CUtlFilenameSymbolTable();
     FileNameHandle_t FindOrAddFileName( const char* pFileName );
@@ -277,7 +277,7 @@ class CUtlFilenameSymbolTable
     bool String( const FileNameHandle_t& handle, char* buf, int buflen );
     void RemoveAll();
 
-   private:
+    private:
     // CCountedStringPool	m_StringPool;
     HashTable* m_Strings;
     mutable CThreadSpinRWLock m_lock;

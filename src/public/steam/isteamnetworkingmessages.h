@@ -35,7 +35,7 @@
 ///
 class ISteamNetworkingMessages
 {
-   public:
+    public:
     /// Sends a message to the specified host.  If we don't already have a session with that user,
     /// a session is implicitly created.  There might be some handshaking that needs to happen
     /// before we can actually begin sending message data.  If this handshaking fails and we can't

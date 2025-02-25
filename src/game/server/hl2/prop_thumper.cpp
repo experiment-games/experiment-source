@@ -28,7 +28,7 @@ ConVar thumper_show_radius( "thumper_show_radius", "0", FCVAR_CHEAT, "If true, a
 
 class CPropThumper : public CBaseAnimating
 {
-   public:
+    public:
     DECLARE_CLASS( CPropThumper, CBaseAnimating );
     DECLARE_DATADESC();
 
@@ -47,7 +47,7 @@ class CPropThumper : public CBaseAnimating
 
     void Thump( void );
 
-   private:
+    private:
     bool m_bEnabled;
     int m_iHammerAttachment;
     CSoundPatch *m_sndMotor;

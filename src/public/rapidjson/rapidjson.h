@@ -32,8 +32,8 @@
     Some additional customization is available in the \ref RAPIDJSON_ERRORS APIs.
 
     \note These macros should be given on the compiler command-line
-          (where applicable)  to avoid inconsistent values when compiling
-          different translation units of a single application.
+        (where applicable)  to avoid inconsistent values when compiling
+        different translation units of a single application.
  */
 
 #include <cstdlib>  // malloc(), realloc(), free(), size_t
@@ -400,7 +400,7 @@ RAPIDJSON_NAMESPACE_END
     User can override it by defining RAPIDJSON_ASSERT(x) macro.
 
     \note Parsing errors are handled and can be customized by the
-          \ref RAPIDJSON_ERRORS APIs.
+        \ref RAPIDJSON_ERRORS APIs.
 */
 #ifndef RAPIDJSON_ASSERT
 #include <cassert>
@@ -610,13 +610,13 @@ RAPIDJSON_NAMESPACE_END
 
 //! Assertion (in non-throwing contexts).
 /*! \ingroup RAPIDJSON_CONFIG
-   Some functions provide a \c noexcept guarantee, if the compiler supports it.
-   In these cases, the \ref RAPIDJSON_ASSERT macro cannot be overridden to
-   throw an exception.  This macro adds a separate customization point for
-   such cases.
+    Some functions provide a \c noexcept guarantee, if the compiler supports it.
+    In these cases, the \ref RAPIDJSON_ASSERT macro cannot be overridden to
+    throw an exception.  This macro adds a separate customization point for
+    such cases.
 
-   Defaults to C \c assert() (as \ref RAPIDJSON_ASSERT), if \c noexcept is
-   supported, and to \ref RAPIDJSON_ASSERT otherwise.
+    Defaults to C \c assert() (as \ref RAPIDJSON_ASSERT), if \c noexcept is
+    supported, and to \ref RAPIDJSON_ASSERT otherwise.
 */
 
 ///////////////////////////////////////////////////////////////////////////////

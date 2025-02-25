@@ -8,36 +8,36 @@ find(\&convert, "." );
 
 sub convert
   {
-	return unless (/\.pcf$/i);
-	return if (/^tmp\.pcf$/i);
-	return if (/^tmp2\.pcf$/i);
-	return if (/360\.pcf$/i);
-	print STDERR "process ", $File::Find::name," ($_) dir=",`cd`," \n";
-	my $fname=$_;
-	print `p4 edit $fname`;
-	print `dmxconvert -i $_ -o tmp.pcf -oe keyvalues2`;
-	open(TMP, "tmp.pcf" ) || return;
-	open(OUT, ">tmp2.pcf" ) || die;
-	while(<TMP>)
-	  {
-		s/[\n\r]//g;
-		if ( (/^(\s*\"functionName\"\s*\"string\"\s*\")(.*)\"(.*)$/) &&
-			 length($map{$2}) )
-		  {
-			$_=$1.$map{$2}.'"'.$3;
-		  }
-		if ( (/^(\s*\"name\"\s*\"string\"\s*\")(.*)\"(.*)$/) &&
-			 length($map{$2}) )
-		  {
-			$_=$1.$map{$2}.'"'.$3;
-		  }
-		print OUT "$_\n";
-	  }
-	close OUT;
-	close TMP;
-	print `dmxconvert -i tmp2.pcf -o $fname -ie keyvalues2 -oe binary`;
-	unlink "tmp.pcf";
-	unlink "tmp2.pcf";
+    return unless (/\.pcf$/i);
+    return if (/^tmp\.pcf$/i);
+    return if (/^tmp2\.pcf$/i);
+    return if (/360\.pcf$/i);
+    print STDERR "process ", $File::Find::name," ($_) dir=",`cd`," \n";
+    my $fname=$_;
+    print `p4 edit $fname`;
+    print `dmxconvert -i $_ -o tmp.pcf -oe keyvalues2`;
+    open(TMP, "tmp.pcf" ) || return;
+    open(OUT, ">tmp2.pcf" ) || die;
+    while(<TMP>)
+    {
+        s/[\n\r]//g;
+        if ( (/^(\s*\"functionName\"\s*\"string\"\s*\")(.*)\"(.*)$/) &&
+            length($map{$2}) )
+        {
+            $_=$1.$map{$2}.'"'.$3;
+        }
+        if ( (/^(\s*\"name\"\s*\"string\"\s*\")(.*)\"(.*)$/) &&
+            length($map{$2}) )
+        {
+            $_=$1.$map{$2}.'"'.$3;
+        }
+        print OUT "$_\n";
+    }
+    close OUT;
+    close TMP;
+    print `dmxconvert -i tmp2.pcf -o $fname -ie keyvalues2 -oe binary`;
+    unlink "tmp.pcf";
+    unlink "tmp2.pcf";
 }
 
 
@@ -107,4 +107,3 @@ sub BuildRemapTable
   $map{"trail_length_random"}= "Trail Length Random";
   $map{"velocity_random"}= "Velocity Random";
 }
-

@@ -38,16 +38,16 @@ set DIRECTX_SDK_BIN_DIR=dx9sdk\utilities
 if /i "%6" == "-dx9_30" goto dx_sdk_dx9_30
 goto dx_sdk_end
 :dx_sdk_dx9_30
-			set DIRECTX_SDK_VER=pc09.30
-			set DIRECTX_SDK_BIN_DIR=dx10sdk\utilities\dx9_30
-			goto dx_sdk_end
+            set DIRECTX_SDK_VER=pc09.30
+            set DIRECTX_SDK_BIN_DIR=dx10sdk\utilities\dx9_30
+            goto dx_sdk_end
 :dx_sdk_end
 
 if /i "%7" == "-force30" goto set_force30_arg
 goto set_force_end
 :set_force30_arg
-			set DIRECTX_FORCE_MODEL=30
-			goto set_force_end
+            set DIRECTX_FORCE_MODEL=30
+            goto set_force_end
 :set_force_end
 
 if /i "%2" == "-game" goto set_mod_args
@@ -141,18 +141,18 @@ REM ****************
 REM Copy the inc files to their target
 REM ****************
 if exist "inclist.txt" (
-	echo Publishing shader inc files to target...
-	"%PERLPATH%" %SrcDirBase%\devtools\bin\copyshaderincfiles.pl inclist.txt
+    echo Publishing shader inc files to target...
+    "%PERLPATH%" %SrcDirBase%\devtools\bin\copyshaderincfiles.pl inclist.txt
 )
 
 REM ****************
 REM Add the executables to the worklist.
 REM ****************
 if /i "%DIRECTX_SDK_VER%" == "pc09.00" (
-	rem echo "Copy extra files for dx 9 std
+    rem echo "Copy extra files for dx 9 std
 )
 if /i "%DIRECTX_SDK_VER%" == "pc09.30" (
-	echo %SrcDirBase%\devtools\bin\d3dx9_33.dll >> filestocopy.txt
+    echo %SrcDirBase%\devtools\bin\d3dx9_33.dll >> filestocopy.txt
 )
 
 echo %SrcDirBase%\%DIRECTX_SDK_BIN_DIR%\dx_proxy.dll >> filestocopy.txt
@@ -177,12 +177,12 @@ REM ****************
 
 set shader_path_cd=%cd%
 if exist "filelist.txt" if exist "uniquefilestocopy.txt" if not "%dynamic_shaders%" == "1" (
-	echo Running distributed shader compilation...
+    echo Running distributed shader compilation...
 
-	cd /D %ChangeToDir%
-	echo %shadercompilecommand% %SDKArgs% -shaderpath "%shader_path_cd:/=\%" -allowdebug
-	%shadercompilecommand% %SDKArgs% -shaderpath "%shader_path_cd:/=\%" -allowdebug
-	cd /D "%shader_path_cd%"
+    cd /D %ChangeToDir%
+    echo %shadercompilecommand% %SDKArgs% -shaderpath "%shader_path_cd:/=\%" -allowdebug
+    %shadercompilecommand% %SDKArgs% -shaderpath "%shader_path_cd:/=\%" -allowdebug
+    cd /D "%shader_path_cd%"
 )
 
 REM ****************
@@ -205,4 +205,3 @@ REM ****************
 
 %TTEXE% -diff %tt_start%
 echo.
-

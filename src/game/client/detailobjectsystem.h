@@ -25,7 +25,7 @@ struct model_t;
 //-----------------------------------------------------------------------------
 abstract_class IDetailObjectSystem : public IGameSystem
 {
-   public:
+    public:
     // Gets a particular detail object
     virtual IClientRenderable *GetDetailModel( int idx ) = 0;
 

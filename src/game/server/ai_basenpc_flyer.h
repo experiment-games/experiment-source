@@ -21,14 +21,14 @@ abstract_class CAI_BaseFlyingBot : public CAI_BaseNPC
 {
     DECLARE_CLASS( CAI_BaseFlyingBot, CAI_BaseNPC );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     void StartTask( const Task_t *pTask );
     void GetVelocity( Vector * vVelocity, AngularImpulse * vAngVelocity );
     virtual QAngle BodyAngles();
 
-   protected:
+    protected:
     CAI_BaseFlyingBot();
 
     Vector VelocityToAvoidObstacles( float flInterval );
@@ -98,10 +98,10 @@ abstract_class CAI_BaseFlyingBot : public CAI_BaseNPC
     }
 
     AI_NavPathProgress_t ProgressFlyPath( float flInterval,
-                                          const CBaseEntity *pNewTarget,
-                                          unsigned collisionMask,
-                                          bool bNewTrySimplify = true,
-                                          float strictPointTolerance = 32.0 );
+                                        const CBaseEntity *pNewTarget,
+                                        unsigned collisionMask,
+                                        bool bNewTrySimplify = true,
+                                        float strictPointTolerance = 32.0 );
 
     virtual float GetHeadTurnRate( void )
     {

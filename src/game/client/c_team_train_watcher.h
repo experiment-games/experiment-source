@@ -20,7 +20,7 @@ class C_TeamTrainWatcher : public C_BaseEntity
 {
     DECLARE_CLASS( C_TeamTrainWatcher, C_BaseEntity );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
 
     C_TeamTrainWatcher();
@@ -42,16 +42,16 @@ class C_TeamTrainWatcher : public C_BaseEntity
     }
 
     // IClientThinkable overrides.
-   public:
+    public:
     virtual void ClientThink();
 
 #ifdef GLOWS_ENABLE
-   private:
+    private:
     void UpdateGlowEffect( void );
     void DestroyGlowEffect( void );
 #endif  // GLOWS_ENABLE
 
-   private:
+    private:
     // === Networked Data ===
 
     // percent distance to cp1, distance to cp2, etc

@@ -26,7 +26,7 @@ class RotatingProgressBar : public ProgressBar
 {
     DECLARE_CLASS_SIMPLE( RotatingProgressBar, ProgressBar );
 
-   public:
+    public:
     RotatingProgressBar( Panel *parent, const char *panelName );
     ~RotatingProgressBar();
 
@@ -35,12 +35,12 @@ class RotatingProgressBar : public ProgressBar
 
     void SetImage( const char *imageName );
 
-   protected:
+    protected:
     virtual void Paint();
     virtual void PaintBackground();
     virtual void OnTick();
 
-   private:
+    private:
     int m_nTextureId;
     char *m_pszImageName;
 

@@ -90,14 +90,14 @@ inline void CodedInputStream::RecomputeBufferLimits() {
 CodedInputStream::Limit CodedInputStream::PushLimit(int byte_limit) {
   // Current position relative to the beginning of the stream.
   int current_position = total_bytes_read_ -
-      (BufferSize() + buffer_size_after_limit_);
+    (BufferSize() + buffer_size_after_limit_);
 
   Limit old_limit = current_limit_;
 
   // security: byte_limit is possibly evil, so check for negative values
   // and overflow.
   if (byte_limit >= 0 &&
-      byte_limit <= INT_MAX - current_position) {
+    byte_limit <= INT_MAX - current_position) {
     current_limit_ = current_position + byte_limit;
   } else {
     // Negative or overflow.
@@ -127,7 +127,7 @@ void CodedInputStream::PopLimit(Limit limit) {
 int CodedInputStream::BytesUntilLimit() {
   if (current_limit_ == INT_MAX) return -1;
   int current_position = total_bytes_read_ -
-      (BufferSize() + buffer_size_after_limit_);
+    (BufferSize() + buffer_size_after_limit_);
 
   return current_limit_ - current_position;
 }
@@ -137,7 +137,7 @@ void CodedInputStream::SetTotalBytesLimit(
   // Make sure the limit isn't already past, since this could confuse other
   // code.
   int current_position = total_bytes_read_ -
-      (BufferSize() + buffer_size_after_limit_);
+    (BufferSize() + buffer_size_after_limit_);
   total_bytes_limit_ = max(current_position, total_bytes_limit);
   total_bytes_warning_threshold_ = warning_threshold;
   RecomputeBufferLimits();
@@ -146,7 +146,7 @@ void CodedInputStream::SetTotalBytesLimit(
 void CodedInputStream::PrintTotalBytesLimitError() {
   GOOGLE_LOG(ERROR) << "A protocol message was rejected because it was too "
                 "big (more than " << total_bytes_limit_
-             << " bytes).  To increase the limit (or to disable these "
+            << " bytes).  To increase the limit (or to disable these "
                 "warnings), see CodedInputStream::SetTotalBytesLimit() "
                 "in google/protobuf/io/coded_stream.h.";
 }
@@ -178,8 +178,8 @@ bool CodedInputStream::Skip(int count) {
   if (bytes_until_limit < count) {
     // We hit the limit.  Skip up to it then fail.
     if (bytes_until_limit > 0) {
-      total_bytes_read_ = closest_limit;
-      input_->Skip(bytes_until_limit);
+    total_bytes_read_ = closest_limit;
+    input_->Skip(bytes_until_limit);
     }
     return false;
   }
@@ -227,10 +227,10 @@ bool CodedInputStream::ReadStringFallback(string* buffer, int size) {
   while ((current_buffer_size = BufferSize()) < size) {
     // Some STL implementations "helpfully" crash on buffer->append(NULL, 0).
     if (current_buffer_size != 0) {
-      // Note:  string1.append(string2) is O(string2.size()) (as opposed to
-      //   O(string1.size() + string2.size()), which would be bad).
-      buffer->append(reinterpret_cast<const char*>(buffer_),
-                     current_buffer_size);
+    // Note:  string1.append(string2) is O(string2.size()) (as opposed to
+    //   O(string1.size() + string2.size()), which would be bad).
+    buffer->append(reinterpret_cast<const char*>(buffer_),
+                    current_buffer_size);
     }
     size -= current_buffer_size;
     Advance(current_buffer_size);
@@ -323,9 +323,9 @@ bool CodedInputStream::ReadVarint32Slow(uint32* value) {
 
 bool CodedInputStream::ReadVarint32Fallback(uint32* value) {
   if (BufferSize() >= kMaxVarintBytes ||
-      // Optimization:  If the varint ends at exactly the end of the buffer,
-      // we can detect that and still use the fast path.
-      (buffer_end_ > buffer_ && !(buffer_end_[-1] & 0x80))) {
+    // Optimization:  If the varint ends at exactly the end of the buffer,
+    // we can detect that and still use the fast path.
+    (buffer_end_ > buffer_ && !(buffer_end_[-1] & 0x80))) {
     const uint8* end = ReadVarint32FromArray(buffer_, value);
     if (end == NULL) return false;
     buffer_ = end;
@@ -342,18 +342,18 @@ uint32 CodedInputStream::ReadTagSlow() {
   if (buffer_ == buffer_end_) {
     // Call refresh.
     if (!Refresh()) {
-      // Refresh failed.  Make sure that it failed due to EOF, not because
-      // we hit total_bytes_limit_, which, unlike normal limits, is not a
-      // valid place to end a message.
-      int current_position = total_bytes_read_ - buffer_size_after_limit_;
-      if (current_position >= total_bytes_limit_) {
+    // Refresh failed.  Make sure that it failed due to EOF, not because
+    // we hit total_bytes_limit_, which, unlike normal limits, is not a
+    // valid place to end a message.
+    int current_position = total_bytes_read_ - buffer_size_after_limit_;
+    if (current_position >= total_bytes_limit_) {
         // Hit total_bytes_limit_.  But if we also hit the normal limit,
         // we're still OK.
         legitimate_message_end_ = current_limit_ == total_bytes_limit_;
-      } else {
+    } else {
         legitimate_message_end_ = true;
-      }
-      return 0;
+    }
+    return 0;
     }
   }
 
@@ -366,13 +366,13 @@ uint32 CodedInputStream::ReadTagSlow() {
 
 uint32 CodedInputStream::ReadTagFallback() {
   if (BufferSize() >= kMaxVarintBytes ||
-      // Optimization:  If the varint ends at exactly the end of the buffer,
-      // we can detect that and still use the fast path.
-      (buffer_end_ > buffer_ && !(buffer_end_[-1] & 0x80))) {
+    // Optimization:  If the varint ends at exactly the end of the buffer,
+    // we can detect that and still use the fast path.
+    (buffer_end_ > buffer_ && !(buffer_end_[-1] & 0x80))) {
     uint32 tag;
     const uint8* end = ReadVarint32FromArray(buffer_, &tag);
     if (end == NULL) {
-      return 0;
+    return 0;
     }
     buffer_ = end;
     return tag;
@@ -384,9 +384,9 @@ uint32 CodedInputStream::ReadTagFallback() {
         // in that case we still need to call Refresh() so that it prints an
         // error.
         total_bytes_read_ - buffer_size_after_limit_ < total_bytes_limit_) {
-      // We hit a byte limit.
-      legitimate_message_end_ = true;
-      return 0;
+    // We hit a byte limit.
+    legitimate_message_end_ = true;
+    return 0;
     }
     return ReadTagSlow();
   }
@@ -403,7 +403,7 @@ bool CodedInputStream::ReadVarint64Slow(uint64* value) {
   do {
     if (count == kMaxVarintBytes) return false;
     while (buffer_ == buffer_end_) {
-      if (!Refresh()) return false;
+    if (!Refresh()) return false;
     }
     b = *buffer_;
     result |= static_cast<uint64>(b & 0x7F) << (7 * count);
@@ -417,9 +417,9 @@ bool CodedInputStream::ReadVarint64Slow(uint64* value) {
 
 bool CodedInputStream::ReadVarint64Fallback(uint64* value) {
   if (BufferSize() >= kMaxVarintBytes ||
-      // Optimization:  If the varint ends at exactly the end of the buffer,
-      // we can detect that and still use the fast path.
-      (buffer_end_ > buffer_ && !(buffer_end_[-1] & 0x80))) {
+    // Optimization:  If the varint ends at exactly the end of the buffer,
+    // we can detect that and still use the fast path.
+    (buffer_end_ > buffer_ && !(buffer_end_[-1] & 0x80))) {
     // Fast path:  We have enough bytes left in the buffer to guarantee that
     // this read won't cross the end, so we can skip the checks.
 
@@ -445,11 +445,11 @@ bool CodedInputStream::ReadVarint64Fallback(uint64* value) {
     // must be corrupt.
     return NULL;
 
-   done:
+    done:
     Advance(ptr - buffer_);
     *value = (static_cast<uint64>(part0)      ) |
-             (static_cast<uint64>(part1) << 28) |
-             (static_cast<uint64>(part2) << 56);
+            (static_cast<uint64>(part1) << 28) |
+            (static_cast<uint64>(part2) << 56);
     return true;
   } else {
     return ReadVarint64Slow(value);
@@ -460,28 +460,28 @@ bool CodedInputStream::Refresh() {
   GOOGLE_DCHECK_EQ(0, BufferSize());
 
   if (buffer_size_after_limit_ > 0 || overflow_bytes_ > 0 ||
-      total_bytes_read_ == current_limit_) {
+    total_bytes_read_ == current_limit_) {
     // We've hit a limit.  Stop.
     int current_position = total_bytes_read_ - buffer_size_after_limit_;
 
     if (current_position >= total_bytes_limit_ &&
         total_bytes_limit_ != current_limit_) {
-      // Hit total_bytes_limit_.
-      PrintTotalBytesLimitError();
+    // Hit total_bytes_limit_.
+    PrintTotalBytesLimitError();
     }
 
     return false;
   }
 
   if (total_bytes_warning_threshold_ >= 0 &&
-      total_bytes_read_ >= total_bytes_warning_threshold_) {
-      GOOGLE_LOG(WARNING) << "Reading dangerously large protocol message.  If the "
-                      "message turns out to be larger than "
-                   << total_bytes_limit_ << " bytes, parsing will be halted "
-                      "for security reasons.  To increase the limit (or to "
-                      "disable these warnings), see "
-                      "CodedInputStream::SetTotalBytesLimit() in "
-                      "google/protobuf/io/coded_stream.h.";
+    total_bytes_read_ >= total_bytes_warning_threshold_) {
+    GOOGLE_LOG(WARNING) << "Reading dangerously large protocol message.  If the "
+                    "message turns out to be larger than "
+                    << total_bytes_limit_ << " bytes, parsing will be halted "
+                    "for security reasons.  To increase the limit (or to "
+                    "disable these warnings), see "
+                    "CodedInputStream::SetTotalBytesLimit() in "
+                    "google/protobuf/io/coded_stream.h.";
 
     // Don't warn again for this stream.
     total_bytes_warning_threshold_ = -1;
@@ -495,21 +495,21 @@ bool CodedInputStream::Refresh() {
     GOOGLE_CHECK_GE(buffer_size, 0);
 
     if (total_bytes_read_ <= INT_MAX - buffer_size) {
-      total_bytes_read_ += buffer_size;
+    total_bytes_read_ += buffer_size;
     } else {
-      // Overflow.  Reset buffer_end_ to not include the bytes beyond INT_MAX.
-      // We can't get that far anyway, because total_bytes_limit_ is guaranteed
-      // to be less than it.  We need to keep track of the number of bytes
-      // we discarded, though, so that we can call input_->BackUp() to back
-      // up over them on destruction.
+    // Overflow.  Reset buffer_end_ to not include the bytes beyond INT_MAX.
+    // We can't get that far anyway, because total_bytes_limit_ is guaranteed
+    // to be less than it.  We need to keep track of the number of bytes
+    // we discarded, though, so that we can call input_->BackUp() to back
+    // up over them on destruction.
 
-      // The following line is equivalent to:
-      //   overflow_bytes_ = total_bytes_read_ + buffer_size - INT_MAX;
-      // except that it avoids overflows.  Signed integer overflow has
-      // undefined results according to the C standard.
-      overflow_bytes_ = total_bytes_read_ - (INT_MAX - buffer_size);
-      buffer_end_ -= overflow_bytes_;
-      total_bytes_read_ = INT_MAX;
+    // The following line is equivalent to:
+    //   overflow_bytes_ = total_bytes_read_ + buffer_size - INT_MAX;
+    // except that it avoids overflows.  Signed integer overflow has
+    // undefined results according to the C standard.
+    overflow_bytes_ = total_bytes_read_ - (INT_MAX - buffer_size);
+    buffer_end_ -= overflow_bytes_;
+    total_bytes_read_ = INT_MAX;
     }
 
     RecomputeBufferLimits();
@@ -618,23 +618,23 @@ inline uint8* CodedOutputStream::WriteVarint32FallbackToArrayInline(
   if (value >= (1 << 7)) {
     target[1] = static_cast<uint8>((value >>  7) | 0x80);
     if (value >= (1 << 14)) {
-      target[2] = static_cast<uint8>((value >> 14) | 0x80);
-      if (value >= (1 << 21)) {
+    target[2] = static_cast<uint8>((value >> 14) | 0x80);
+    if (value >= (1 << 21)) {
         target[3] = static_cast<uint8>((value >> 21) | 0x80);
         if (value >= (1 << 28)) {
-          target[4] = static_cast<uint8>(value >> 28);
-          return target + 5;
+        target[4] = static_cast<uint8>(value >> 28);
+        return target + 5;
         } else {
-          target[3] &= 0x7F;
-          return target + 4;
+        target[3] &= 0x7F;
+        return target + 4;
         }
-      } else {
+    } else {
         target[2] &= 0x7F;
         return target + 3;
-      }
+    }
     } else {
-      target[1] &= 0x7F;
-      return target + 2;
+    target[1] &= 0x7F;
+    return target + 2;
     }
   } else {
     target[0] &= 0x7F;
@@ -656,8 +656,8 @@ void CodedOutputStream::WriteVarint32(uint32 value) {
     uint8 bytes[kMaxVarint32Bytes];
     int size = 0;
     while (value > 0x7F) {
-      bytes[size++] = (static_cast<uint8>(value) & 0x7F) | 0x80;
-      value >>= 7;
+    bytes[size++] = (static_cast<uint8>(value) & 0x7F) | 0x80;
+    value >>= 7;
     }
     bytes[size++] = static_cast<uint8>(value) & 0x7F;
     WriteRaw(bytes, size);
@@ -688,39 +688,39 @@ inline uint8* CodedOutputStream::WriteVarint64ToArrayInline(
   // we end up with a hardcoded binary search tree...
   if (part2 == 0) {
     if (part1 == 0) {
-      if (part0 < (1 << 14)) {
+    if (part0 < (1 << 14)) {
         if (part0 < (1 << 7)) {
-          size = 1; goto size1;
+        size = 1; goto size1;
         } else {
-          size = 2; goto size2;
+        size = 2; goto size2;
         }
-      } else {
-        if (part0 < (1 << 21)) {
-          size = 3; goto size3;
-        } else {
-          size = 4; goto size4;
-        }
-      }
     } else {
-      if (part1 < (1 << 14)) {
+        if (part0 < (1 << 21)) {
+        size = 3; goto size3;
+        } else {
+        size = 4; goto size4;
+        }
+    }
+    } else {
+    if (part1 < (1 << 14)) {
         if (part1 < (1 << 7)) {
-          size = 5; goto size5;
+        size = 5; goto size5;
         } else {
-          size = 6; goto size6;
+        size = 6; goto size6;
         }
-      } else {
+    } else {
         if (part1 < (1 << 21)) {
-          size = 7; goto size7;
+        size = 7; goto size7;
         } else {
-          size = 8; goto size8;
+        size = 8; goto size8;
         }
-      }
+    }
     }
   } else {
     if (part2 < (1 << 7)) {
-      size = 9; goto size9;
+    size = 9; goto size9;
     } else {
-      size = 10; goto size10;
+    size = 10; goto size10;
     }
   }
 
@@ -756,8 +756,8 @@ void CodedOutputStream::WriteVarint64(uint64 value) {
     uint8 bytes[kMaxVarintBytes];
     int size = 0;
     while (value > 0x7F) {
-      bytes[size++] = (static_cast<uint8>(value) & 0x7F) | 0x80;
-      value >>= 7;
+    bytes[size++] = (static_cast<uint8>(value) & 0x7F) | 0x80;
+    value >>= 7;
     }
     bytes[size++] = static_cast<uint8>(value) & 0x7F;
     WriteRaw(bytes, size);
@@ -800,27 +800,27 @@ int CodedOutputStream::VarintSize32Fallback(uint32 value) {
 int CodedOutputStream::VarintSize64(uint64 value) {
   if (value < (1ull << 35)) {
     if (value < (1ull << 7)) {
-      return 1;
+    return 1;
     } else if (value < (1ull << 14)) {
-      return 2;
+    return 2;
     } else if (value < (1ull << 21)) {
-      return 3;
+    return 3;
     } else if (value < (1ull << 28)) {
-      return 4;
+    return 4;
     } else {
-      return 5;
+    return 5;
     }
   } else {
     if (value < (1ull << 42)) {
-      return 6;
+    return 6;
     } else if (value < (1ull << 49)) {
-      return 7;
+    return 7;
     } else if (value < (1ull << 56)) {
-      return 8;
+    return 8;
     } else if (value < (1ull << 63)) {
-      return 9;
+    return 9;
     } else {
-      return 10;
+    return 10;
     }
   }
 }

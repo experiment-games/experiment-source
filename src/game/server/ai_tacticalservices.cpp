@@ -28,16 +28,16 @@ ConVar ai_debug_cover( "ai_debug_cover", "0" );
 int g_AIDebugFindCoverNode = -1;
 #define DebugFindCover( node, from, to, r, g, b )                              \
     if ( !ai_debug_cover.GetBool() ||                                          \
-         ( g_AIDebugFindCoverNode != -1 && g_AIDebugFindCoverNode != node ) || \
-         !GetOuter()->m_bSelected )                                            \
+        ( g_AIDebugFindCoverNode != -1 && g_AIDebugFindCoverNode != node ) || \
+        !GetOuter()->m_bSelected )                                            \
         ;                                                                      \
     else                                                                       \
         NDebugOverlay::Line( from, to, r, g, b, false, 1 )
 
 #define DebugFindCover2( node, from, to, r, g, b )                             \
     if ( ai_debug_cover.GetInt() < 2 ||                                        \
-         ( g_AIDebugFindCoverNode != -1 && g_AIDebugFindCoverNode != node ) || \
-         !GetOuter()->m_bSelected )                                            \
+        ( g_AIDebugFindCoverNode != -1 && g_AIDebugFindCoverNode != node ) || \
+        !GetOuter()->m_bSelected )                                            \
         ;                                                                      \
     else                                                                       \
         NDebugOverlay::Line( from, to, r, g, b, false, 1 )
@@ -580,13 +580,13 @@ int CAI_TacticalServices::FindLosNode( const Vector &vThreatPos, const Vector &v
             // Don't accept climb nodes, and assume my nearest node isn't valid because
             // we decided to make this check in the first place.  Keep moving
             if ( !skip && !GetNetwork()->GetNode( nodeIndex )->IsLocked() &&
-                 GetNetwork()->GetNode( nodeIndex )->GetType() != NODE_CLIMB )
+                GetNetwork()->GetNode( nodeIndex )->GetType() != NODE_CLIMB )
             {
                 // Now check its distance and only accept if in range
                 float flThreatDist = ( nodeOrigin - vThreatPos ).Length();
 
                 if ( flThreatDist < flMaxThreatDist &&
-                     flThreatDist > flMinThreatDist )
+                    flThreatDist > flMinThreatDist )
                 {
                     CAI_Node *pNode = GetNetwork()->GetNode( nodeIndex );
                     if ( GetOuter()->IsValidShootPosition( nodeOrigin, pNode, pNode->GetHint() ) )
@@ -598,19 +598,19 @@ int CAI_TacticalServices::FindLosNode( const Vector &vThreatPos, const Vector &v
                             GetNetwork()->GetNode( nodeIndex )->Lock( flBlockTime );
 
 #if 0
-							if ( GetOuter()->GetHintNode() )
-							{
-								GetOuter()->GetHintNode()->Unlock(GetOuter()->GetHintDelay(GetOuter()->GetHintNode()->HintType()));
-								GetOuter()->SetHintNode( NULL );
-							}
+                            if ( GetOuter()->GetHintNode() )
+                            {
+                                GetOuter()->GetHintNode()->Unlock(GetOuter()->GetHintDelay(GetOuter()->GetHintNode()->HintType()));
+                                GetOuter()->SetHintNode( NULL );
+                            }
 
-							// This used to not be set, why? (kenb)
-							// @Note (toml 05-19-04): I think because stomping  the hint can lead to
-							// unintended side effects. The hint node is primarily a high level
-							// tool, and certain NPCs break if it gets slammed here. If we need
-							// this, we should propagate it out and let the schedule selector
-							// or task decide to set the hint node
-							GetOuter()->SetHintNode( GetNetwork()->GetNode(nodeIndex)->GetHint() );
+                            // This used to not be set, why? (kenb)
+                            // @Note (toml 05-19-04): I think because stomping  the hint can lead to
+                            // unintended side effects. The hint node is primarily a high level
+                            // tool, and certain NPCs break if it gets slammed here. If we need
+                            // this, we should propagate it out and let the schedule selector
+                            // or task decide to set the hint node
+                            GetOuter()->SetHintNode( GetNetwork()->GetNode(nodeIndex)->GetHint() );
 #endif
                             if ( ShouldDebugLos( nodeIndex ) )
                             {
@@ -722,7 +722,7 @@ bool CAI_TacticalServices::FindLateralLos( const Vector &vecThreat, Vector *pRes
     int i;
 
     if ( !bLookingForEnemy || GetOuter()->HasCondition( COND_SEE_ENEMY ) || GetOuter()->HasCondition( COND_HAVE_ENEMY_LOS ) ||
-         GetOuter()->GetTimeScheduleStarted() == gpGlobals->curtime )  // Conditions get nuked before tasks run, assume should try
+        GetOuter()->GetTimeScheduleStarted() == gpGlobals->curtime )  // Conditions get nuked before tasks run, assume should try
     {
         // My current position might already be valid.
         if ( TestLateralLos( vecThreat, GetLocalOrigin() ) )

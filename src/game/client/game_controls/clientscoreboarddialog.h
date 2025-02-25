@@ -26,10 +26,10 @@
 //-----------------------------------------------------------------------------
 class CClientScoreBoardDialog : public vgui::EditablePanel, public IViewPortPanel, public CGameEventListener
 {
-   private:
+    private:
     DECLARE_CLASS_SIMPLE( CClientScoreBoardDialog, vgui::EditablePanel );
 
-   protected:
+    protected:
     // column widths at 640
     enum
     {
@@ -42,7 +42,7 @@ class CClientScoreBoardDialog : public vgui::EditablePanel, public IViewPortPane
     };
     // total = 340
 
-   public:
+    public:
     CClientScoreBoardDialog( IViewPort *pViewPort );
     ~CClientScoreBoardDialog();
 
@@ -87,7 +87,7 @@ class CClientScoreBoardDialog : public vgui::EditablePanel, public IViewPortPane
 
     virtual void UpdatePlayerAvatar( int playerIndex, KeyValues *kv );
 
-   protected:
+    protected:
     MESSAGE_FUNC_INT( OnPollHideCode, "PollHideCode", code );
 
     // functions to override
@@ -138,7 +138,7 @@ class CClientScoreBoardDialog : public vgui::EditablePanel, public IViewPortPane
     CPanelAnimationVarAliasType( int, m_iDeathWidth, "death_width", "35", "proportional_int" );
     CPanelAnimationVarAliasType( int, m_iPingWidth, "ping_width", "23", "proportional_int" );
 
-   private:
+    private:
     int m_iPlayerIndexSymbol;
     int m_iDesiredHeight;
     IViewPort *m_pViewPort;

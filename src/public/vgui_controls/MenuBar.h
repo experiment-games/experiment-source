@@ -25,7 +25,7 @@ class MenuBar : public Panel
 {
     DECLARE_CLASS_SIMPLE( MenuBar, Panel );
 
-   public:
+    public:
     MenuBar( Panel *parent, const char *panelName );
     ~MenuBar();
 
@@ -34,7 +34,7 @@ class MenuBar : public Panel
 
     virtual void GetContentSize( int &w, int &h );
 
-   protected:
+    protected:
     virtual void OnKeyCodeTyped( KeyCode code );
     virtual void OnKeyTyped( wchar_t unichar );
     virtual void ApplySchemeSettings( IScheme *pScheme );
@@ -43,7 +43,7 @@ class MenuBar : public Panel
     MESSAGE_FUNC( OnMenuClose, "MenuClose" );
     MESSAGE_FUNC_INT( OnCursorEnteredMenuButton, "CursorEnteredMenuButton", VPanel );
 
-   private:
+    private:
     CUtlVector< MenuButton * > m_pMenuButtons;
     int m_nRightEdge;
 };

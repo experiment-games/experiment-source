@@ -147,15 +147,15 @@ LUA_BINDING_BEGIN( KeyValuesHandle, FindKey, "class", "Find a key in the keyvalu
     {
         case LUA_TNUMBER:
             lua_pushkeyvalues( L,
-                               keyValues->FindKey(
-                                   LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "key" ) ) );
+                                keyValues->FindKey(
+                                    LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "key" ) ) );
             break;
         case LUA_TSTRING:
         default:
             lua_pushkeyvalues( L,
-                               keyValues->FindKey(
-                                   LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "key" ),
-                                   LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 3, false, "recursive" ) ) );
+                                keyValues->FindKey(
+                                    LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "key" ),
+                                    LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 3, false, "recursive" ) ) );
             break;
     }
     return 1;
@@ -169,15 +169,15 @@ LUA_BINDING_BEGIN( KeyValuesHandle, GetColor, "class", "Get a color from the key
     {
         case LUA_TNUMBER:
             lua_pushcolor( L,
-                           keyValues->GetColor(
-                               LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "key" ) ) );
+                            keyValues->GetColor(
+                                LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "key" ) ) );
             break;
         case LUA_TNONE:
         case LUA_TSTRING:
         default:
             lua_pushcolor( L,
-                           keyValues->GetColor(
-                               LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 2, 0, "key" ) ) );
+                            keyValues->GetColor(
+                                LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 2, 0, "key" ) ) );
             break;
     }
     return 1;
@@ -188,8 +188,8 @@ LUA_BINDING_BEGIN( KeyValuesHandle, GetDataType, "class", "Get the data type of 
 {
     lua_KeyValues *keyValues = LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 1, "keyValues" );
     lua_pushinteger( L,
-                     keyValues->GetDataType(
-                         LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 2, 0, "key" ) ) );
+                    keyValues->GetDataType(
+                        LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 2, 0, "key" ) ) );
     return 1;
 }
 LUA_BINDING_END( "integer", "The data type." )
@@ -249,17 +249,17 @@ LUA_BINDING_BEGIN( KeyValuesHandle, GetInt, "class", "Get an integer from the ke
     {
         case LUA_TNUMBER:
             lua_pushinteger( L,
-                             keyValues->GetInt(
-                                 LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "key" ),
-                                 ( int )LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 3, 0, "default" ) ) );
+                            keyValues->GetInt(
+                                LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "key" ),
+                                ( int )LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 3, 0, "default" ) ) );
             break;
         case LUA_TNONE:
         case LUA_TSTRING:
         default:
             lua_pushinteger( L,
-                             keyValues->GetInt(
-                                 LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 2, 0, "key" ),
-                                 ( int )LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 3, 0, "default" ) ) );
+                            keyValues->GetInt(
+                                LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 2, 0, "key" ),
+                                ( int )LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 3, 0, "default" ) ) );
             break;
     }
     return 1;
@@ -337,15 +337,15 @@ LUA_BINDING_BEGIN( KeyValuesHandle, IsEmpty, "class", "Check if the keyvalues is
     {
         case LUA_TNUMBER:
             lua_pushboolean( L,
-                             keyValues->IsEmpty(
-                                 LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "key" ) ) );
+                            keyValues->IsEmpty(
+                                LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "key" ) ) );
             break;
         case LUA_TNONE:
         case LUA_TSTRING:
         default:
             lua_pushboolean( L,
-                             keyValues->IsEmpty(
-                                 LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 2, 0, "key" ) ) );
+                            keyValues->IsEmpty(
+                                LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 2, 0, "key" ) ) );
             break;
     }
     return 1;
@@ -356,10 +356,10 @@ LUA_BINDING_BEGIN( KeyValuesHandle, LoadFromFile, "class", "Load keyvalues from 
 {
     lua_KeyValues *keyValues = LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 1, "keyValues" );
     lua_pushboolean( L,
-                     keyValues->LoadFromFile(
-                         filesystem,
-                         LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "filename" ),
-                         LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 3, 0, "pathID" ) ) );
+                    keyValues->LoadFromFile(
+                        filesystem,
+                        LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "filename" ),
+                        LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 3, 0, "pathID" ) ) );
     return 1;
 }
 LUA_BINDING_END( "boolean", "true if the keyvalues were loaded, false otherwise." )
@@ -376,8 +376,8 @@ LUA_BINDING_BEGIN( KeyValuesHandle, ProcessResolutionKeys, "class", "Process res
 {
     lua_KeyValues *keyValues = LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 1, "keyValues" );
     lua_pushboolean( L,
-                     keyValues->ProcessResolutionKeys(
-                         LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "key" ) ) );
+                    keyValues->ProcessResolutionKeys(
+                        LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "key" ) ) );
     return 1;
 }
 LUA_BINDING_END( "boolean", "true if the resolution keys were processed, false otherwise." )
@@ -395,10 +395,10 @@ LUA_BINDING_BEGIN( KeyValuesHandle, SaveToFile, "class", "Save keyvalues to a fi
 {
     lua_KeyValues *keyValues = LUA_BINDING_ARGUMENT( luaL_checkkeyvalues, 1, "keyValues" );
     lua_pushboolean( L,
-                     keyValues->SaveToFile(
-                         filesystem,
-                         LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "filename" ),
-                         LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 3, 0, "pathID" ) ) );
+                    keyValues->SaveToFile(
+                        filesystem,
+                        LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "filename" ),
+                        LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 3, 0, "pathID" ) ) );
     return 1;
 }
 LUA_BINDING_END( "boolean", "true if the keyvalues were saved, false otherwise." )
@@ -482,8 +482,8 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( KeyValuesHandle, __eq, "class", "Check if two keyvalues are equal." )
 {
     lua_pushboolean( L,
-                     LUA_BINDING_ARGUMENT( lua_tokeyvalues, 1, "keyValues" ) ==
-                         LUA_BINDING_ARGUMENT( lua_tokeyvalues, 2, "other" ) );
+                    LUA_BINDING_ARGUMENT( lua_tokeyvalues, 1, "keyValues" ) ==
+                        LUA_BINDING_ARGUMENT( lua_tokeyvalues, 2, "other" ) );
     return 1;
 }
 LUA_BINDING_END( "boolean", "true if the keyvalues are equal, false otherwise." )

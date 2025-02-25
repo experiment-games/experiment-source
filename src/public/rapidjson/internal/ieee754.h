@@ -23,7 +23,7 @@ namespace internal
 
 class Double
 {
-   public:
+    public:
     Double() {}
     Double( double d )
         : d_( d ) {}
@@ -102,7 +102,7 @@ class Double
             return order + 1074;
     }
 
-   private:
+    private:
     static const int kSignificandSize = 52;
     static const int kExponentBias = 0x3FF;
     static const int kDenormalExponent = 1 - kExponentBias;

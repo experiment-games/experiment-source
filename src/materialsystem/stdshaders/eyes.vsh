@@ -1,11 +1,11 @@
 vs.1.1
 ;------------------------------------------------------------------------------
-;	 $SHADER_SPECIFIC_CONST_0	 = eyeball origin			
-;	 $SHADER_SPECIFIC_CONST_1	 = eyeball up * 0.5			
-;	 $SHADER_SPECIFIC_CONST_2	 = iris projection U		
-;	 $SHADER_SPECIFIC_CONST_3	 = iris projection V		
-;	 $SHADER_SPECIFIC_CONST_4	 = glint projection U		
-;	 $SHADER_SPECIFIC_CONST_5	 = glint projection V		
+;	 $SHADER_SPECIFIC_CONST_0	 = eyeball origin
+;	 $SHADER_SPECIFIC_CONST_1	 = eyeball up * 0.5
+;	 $SHADER_SPECIFIC_CONST_2	 = iris projection U
+;	 $SHADER_SPECIFIC_CONST_3	 = iris projection V
+;	 $SHADER_SPECIFIC_CONST_4	 = glint projection U
+;	 $SHADER_SPECIFIC_CONST_5	 = glint projection V
 ;------------------------------------------------------------------------------
 
 # STATIC: "HALF_LAMBERT"			"0..1"
@@ -34,7 +34,7 @@ dp4 $projPos.w, $worldPos, $cViewProj3
 mov oPos, $projPos
 
 ;------------------------------------------------------------------------------
-; Normal is based on vertex position 
+; Normal is based on vertex position
 ;------------------------------------------------------------------------------
 &AllocateRegister( \$worldNormal );
 &AllocateRegister( \$normalDotUp );
@@ -55,7 +55,7 @@ mad $worldNormal, -$normalDotUp, $SHADER_SPECIFIC_CONST_1, $worldNormal
 &DoLighting( $worldPos, $worldNormal );
 
 &FreeRegister( \$worldNormal );
- 
+
 ;------------------------------------------------------------------------------
 ; Fog
 ;------------------------------------------------------------------------------

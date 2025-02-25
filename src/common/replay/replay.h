@@ -31,7 +31,7 @@ class CReplay : public CBaseReplaySerializeable,
 {
     typedef CBaseReplaySerializeable BaseClass;
 
-   public:
+    public:
     enum ReplayStatus_t
     {
         REPLAYSTATUS_INVALID,
@@ -133,11 +133,11 @@ class CReplay : public CBaseReplaySerializeable,
 
     // Non-persistent data
     mutable IReplayDownloadEventHandler *m_pDownloadEventHandler;  // Implemented by replay browser - the reason we've got one per replay rather than
-                                                                   // one per download group is because the browser needs to receive events per-thumbnail
+                                                                    // one per download group is because the browser needs to receive events per-thumbnail
     bool m_bSaved;                                                 // True as soon as the replay is saved to disk for the first time
     bool m_bRequestedByUser;                                       // Did the user request to save this replay?
     bool m_bComplete;                                              // Indicates whether the replay is done recording - this should be false
-                                                                   // until the player dies, the round ends, or the level changes
+                                                                    // until the player dies, the round ends, or the level changes
     void *m_pUserData;
     float m_flNextUpdateTime;
     bool m_bDirty;

@@ -27,10 +27,10 @@
 #define RENDER_DIST_EPSILON 0.01f
 
 #define BRUSH_CLIP_EPSILON 0.01f  // this should probably be the same
-                                  // as clip epsilon, but it is 0.1f and I
-                                  // currently don't know how that number was
-                                  // come to (cab) - this is 0.01 of an inch
-                                  // for clipping brush solids
+                                // as clip epsilon, but it is 0.1f and I
+                                // currently don't know how that number was
+                                // come to (cab) - this is 0.01 of an inch
+                                // for clipping brush solids
 struct LoadSide_t
 {
     mapbrush_t *pBrush;
@@ -400,11 +400,11 @@ int BrushContents( mapbrush_t *b )
 
         unionContents |= s->contents;
 #if 0
-		if (s->contents != contents)
-		{
-			Msg("Brush %i: mixed face contents\n", b->id);
-			break;
-		}
+        if (s->contents != contents)
+        {
+            Msg("Brush %i: mixed face contents\n", b->id);
+            break;
+        }
 #endif
     }
 
@@ -665,14 +665,14 @@ void CMapFile::MoveBrushesToWorld( entity_t *mapent )
     memcpy( temp, mapbrushes + mapent->firstbrush, newbrushes * sizeof( mapbrush_t ) );
 
 #if 0  // let them keep their original brush numbers
-	for (i=0 ; i<newbrushes ; i++)
-		temp[i].entitynum = 0;
+    for (i=0 ; i<newbrushes ; i++)
+        temp[i].entitynum = 0;
 #endif
 
     // make space to move the brushes (overlapped copy)
     memmove( mapbrushes + worldbrushes + newbrushes,
-             mapbrushes + worldbrushes,
-             sizeof( mapbrush_t ) * ( nummapbrushes - worldbrushes - newbrushes ) );
+            mapbrushes + worldbrushes,
+            sizeof( mapbrush_t ) * ( nummapbrushes - worldbrushes - newbrushes ) );
 
     // copy the new brushes down
     memcpy( mapbrushes + worldbrushes, temp, sizeof( mapbrush_t ) * newbrushes );
@@ -715,14 +715,14 @@ void CMapFile::MoveBrushesToWorldGeneral( entity_t *mapent )
     memcpy( temp, mapbrushes + mapent->firstbrush, newbrushes * sizeof( mapbrush_t ) );
 
 #if 0  // let them keep their original brush numbers
-	for (i=0 ; i<newbrushes ; i++)
-		temp[i].entitynum = 0;
+    for (i=0 ; i<newbrushes ; i++)
+        temp[i].entitynum = 0;
 #endif
 
     // make space to move the brushes (overlapped copy)
     memmove( mapbrushes + worldbrushes + newbrushes,
-             mapbrushes + worldbrushes,
-             sizeof( mapbrush_t ) * ( mapent->firstbrush - worldbrushes ) );
+            mapbrushes + worldbrushes,
+            sizeof( mapbrush_t ) * ( mapent->firstbrush - worldbrushes ) );
 
     // wwwxxxmmyyy
 
@@ -908,10 +908,10 @@ ChunkFileResult_t LoadDispInfoKeyCallback( const char *szKey, const char *szValu
         CChunkFile::ReadKeyValueInt( szValue, pMapDispInfo->flags );
     }
 #if 0  // old data
-	else if (!stricmp( szKey, "alpha" ) )
-	{
-		CChunkFile::ReadKeyValueVector4( szValue, pMapDispInfo->alphaValues );
-	}
+    else if (!stricmp( szKey, "alpha" ) )
+    {
+        CChunkFile::ReadKeyValueVector4( szValue, pMapDispInfo->alphaValues );
+    }
 #endif
     else if ( !stricmp( szKey, "mintess" ) )
     {

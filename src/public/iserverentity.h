@@ -25,7 +25,7 @@ class QAngle;
 // CBaseEntity implements this interface.
 class IServerEntity : public IServerUnknown
 {
-   public:
+    public:
     virtual ~IServerEntity() {}
 
     // Previously in pev

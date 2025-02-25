@@ -63,7 +63,7 @@ class CBaseTurret : public CAI_BaseNPC
 {
     DECLARE_CLASS( CBaseTurret, CAI_BaseNPC );
 
-   public:
+    public:
     void Spawn( void );
     virtual void Precache( void );
     bool KeyValue( const char *szKeyName, const char *szValue );
@@ -122,7 +122,7 @@ class CBaseTurret : public CAI_BaseNPC
     int m_iOn;
     int m_fBeserk;     // Sometimes this bitch will just freak out
     int m_iAutoStart;  // true if the turret auto deploys when a target
-                       // enters its range
+                        // enters its range
 
     Vector m_vecLastSight;  // Last seen position
     float m_flLastSight;    // Last time we saw a target
@@ -230,10 +230,10 @@ bool CBaseTurret::KeyValue( const char *szKeyName, const char *szValue )
         m_iBaseTurnRate = atoi( szValue );
     }
     else if ( FStrEq( szKeyName, "style" ) ||
-              FStrEq( szKeyName, "height" ) ||
-              FStrEq( szKeyName, "value1" ) ||
-              FStrEq( szKeyName, "value2" ) ||
-              FStrEq( szKeyName, "value3" ) )
+            FStrEq( szKeyName, "height" ) ||
+            FStrEq( szKeyName, "value1" ) ||
+            FStrEq( szKeyName, "value2" ) ||
+            FStrEq( szKeyName, "value3" ) )
     {
     }
     else
@@ -830,13 +830,13 @@ int CBaseTurret::MoveTurret( void )
 
     // update yaw, with acceleration
 #if 0
-	float flDist = AngleNormalize( vecGoalLocalAngles.y );
-	float flNewDist;
-	float flNewTurnRate;
+    float flDist = AngleNormalize( vecGoalLocalAngles.y );
+    float flNewDist;
+    float flNewTurnRate;
 
-	ChangeDistance( 0.1, flDist, 0.0, m_fTurnRate, m_iBaseTurnRate, m_iBaseTurnRate * 4, flNewDist, flNewTurnRate );
-	m_fTurnRate = flNewTurnRate;
-	flDiff = flDist - flNewDist;
+    ChangeDistance( 0.1, flDist, 0.0, m_fTurnRate, m_iBaseTurnRate, m_iBaseTurnRate * 4, flNewDist, flNewTurnRate );
+    m_fTurnRate = flNewTurnRate;
+    flDiff = flDist - flNewDist;
 #else
     flDiff = AngleNormalize( UTIL_ApproachAngle( vecGoalLocalAngles.y, 0.0, 0.1 * m_iBaseTurnRate ) );
 #endif
@@ -875,7 +875,7 @@ class CCeilingTurret : public CBaseTurret
 {
     DECLARE_CLASS( CCeilingTurret, CBaseTurret );
 
-   public:
+    public:
     void Spawn( void );
     void Precache( void );
 
@@ -942,58 +942,58 @@ void CCeilingTurret::Shoot( const Vector &vecSrc, const Vector &vecDirToEnemy )
 
 class CMiniTurret : public CBaseTurret
 {
-	DECLARE_CLASS( CMiniTurret, CBaseTurret );
+    DECLARE_CLASS( CMiniTurret, CBaseTurret );
 public:
-	void Spawn( );
-	void Precache(void);
-	// other functions
-	void Shoot(const Vector &vecSrc, const Vector &vecDirToEnemy);
+    void Spawn( );
+    void Precache(void);
+    // other functions
+    void Shoot(const Vector &vecSrc, const Vector &vecDirToEnemy);
 };
 
 LINK_ENTITY_TO_CLASS( npc_miniturret, CMiniTurret );
 
 
 void CMiniTurret::Spawn()
-{ 
-	Precache( );
-	SetModel( "models/miniturret.mdl" );
-	m_iHealth			= sk_miniturret_health.GetFloat();
-	m_HackedGunPos		= Vector( 0, 0, 12.75 );
-	m_vecViewOffset.z = 12.75;
-	m_flFieldOfView		= VIEW_FIELD_NARROW;
+{
+    Precache( );
+    SetModel( "models/miniturret.mdl" );
+    m_iHealth			= sk_miniturret_health.GetFloat();
+    m_HackedGunPos		= Vector( 0, 0, 12.75 );
+    m_vecViewOffset.z = 12.75;
+    m_flFieldOfView		= VIEW_FIELD_NARROW;
 
-	CBaseTurret::Spawn( );
+    CBaseTurret::Spawn( );
 
-	m_iAmmoType = g_pGameRules->GetAmmoDef()->Index("Pistol");
+    m_iAmmoType = g_pGameRules->GetAmmoDef()->Index("Pistol");
 
-	m_iRetractHeight = 16;
-	m_iDeployHeight = 32;
-	m_iMinPitch	= -45;
-	UTIL_SetSize(this, Vector(-16, -16, -m_iRetractHeight), Vector(16, 16, m_iRetractHeight));
+    m_iRetractHeight = 16;
+    m_iDeployHeight = 32;
+    m_iMinPitch	= -45;
+    UTIL_SetSize(this, Vector(-16, -16, -m_iRetractHeight), Vector(16, 16, m_iRetractHeight));
 
-	SetThink(Initialize);	
-	SetNextThink( gpGlobals->curtime + 0.3; );
+    SetThink(Initialize);
+    SetNextThink( gpGlobals->curtime + 0.3; );
 }
 
 
 void CMiniTurret::Precache()
 {
-	PrecacheModel ("models/miniturret.mdl");	
+    PrecacheModel ("models/miniturret.mdl");
 
-	PrecacheScriptSound( "MiniTurret.Shoot" );
+    PrecacheScriptSound( "MiniTurret.Shoot" );
 
-	BaseClass::Precache();
+    BaseClass::Precache();
 }
 
 
 
 void CMiniTurret::Shoot(const Vector &vecSrc, const Vector &vecDirToEnemy)
 {
-	FireBullets( 1, vecSrc, vecDirToEnemy, TURRET_SPREAD, TURRET_RANGE, m_iAmmoType, 1 );
+    FireBullets( 1, vecSrc, vecDirToEnemy, TURRET_SPREAD, TURRET_RANGE, m_iAmmoType, 1 );
 
-	EmitSound( "MiniTurret.Shoot" );
+    EmitSound( "MiniTurret.Shoot" );
 
-	DoMuzzleFlash();
+    DoMuzzleFlash();
 }
 
 #endif
@@ -1005,7 +1005,7 @@ class CSentry : public CBaseTurret
 {
     DECLARE_CLASS( CSentry, CBaseTurret );
 
-   public:
+    public:
     void Spawn();
     void Precache( void );
     // other functions
@@ -1014,7 +1014,7 @@ class CSentry : public CBaseTurret
     void SentryTouch( CBaseEntity *pOther );
     void SentryDeath( void );
 
-   protected:
+    protected:
     DECLARE_DATADESC();
 };
 
@@ -1139,8 +1139,8 @@ void CSentry ::SentryDeath( void )
     {
         // lots of smoke
         Vector pos = vecSrc + Vector( random->RandomFloat( -16, 16 ),
-                                      random->RandomFloat( -16, 16 ),
-                                      -32 );
+                                    random->RandomFloat( -16, 16 ),
+                                    -32 );
 
         CBroadcastRecipientFilter filter;
         te->Smoke( filter, 0.0, &pos, g_sModelIndexSmoke, 1.5, 8 );

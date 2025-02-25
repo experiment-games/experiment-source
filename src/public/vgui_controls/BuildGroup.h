@@ -35,7 +35,7 @@ class BuildGroup
 {
     DECLARE_HANDLES( BuildGroup, 20 );
 
-   public:
+    public:
     BuildGroup( Panel *parentPanel, Panel *contextPanel );
     ~BuildGroup();
 
@@ -129,7 +129,7 @@ class BuildGroup
     // conditional keys for selectively reading keyvalues
     void ProcessConditionalKeys( KeyValues *pDat, KeyValues *pConditions );
 
-   protected:
+    protected:
     virtual bool CursorMoved( int x, int y, Panel *panel );
     virtual bool MouseDoublePressed( MouseCode code, Panel *panel );
     virtual bool KeyCodeTyped( KeyCode code, Panel *panel );
@@ -139,7 +139,7 @@ class BuildGroup
 
     virtual HCursor GetCursor( Panel *panel );
 
-   private:
+    private:
     void ApplySnap( Panel *panel );
     Panel *CreateBuildDialog();
     void ActivateBuildDialog();

@@ -38,16 +38,16 @@ enum
 // This class keeps a list of unique normals and provides a fast
 class CNormalList
 {
-   public:
+    public:
     CNormalList();
 
     // Adds the normal if unique. Otherwise, returns the normal's index into m_Normals.
     int FindOrAddNormal( Vector const &vNormal );
 
-   public:
+    public:
     CUtlVector< Vector > m_Normals;
 
-   private:
+    private:
     // This represents a grid from (-1,-1,-1) to (1,1,1).
     enum
     {
@@ -558,9 +558,9 @@ bool BuildFacesamplesAndLuxels_DoFast( lightinfo_t *pLightInfo, facelight_t *pFa
     // ratio of world area / lightmap area
     texinfo_t *pTex = &texinfo[pLightInfo->face->texinfo];
     pFaceLight->worldAreaPerLuxel = 1.0 / ( sqrt( DotProduct( pTex->lightmapVecsLuxelsPerWorldUnits[0],
-                                                              pTex->lightmapVecsLuxelsPerWorldUnits[0] ) ) *
+                                                            pTex->lightmapVecsLuxelsPerWorldUnits[0] ) ) *
                                             sqrt( DotProduct( pTex->lightmapVecsLuxelsPerWorldUnits[1],
-                                                              pTex->lightmapVecsLuxelsPerWorldUnits[1] ) ) );
+                                                            pTex->lightmapVecsLuxelsPerWorldUnits[1] ) ) );
 
     //
     // quickly create samples and luxels (copy over samples)
@@ -630,9 +630,9 @@ bool BuildFacesamples( lightinfo_t *pLightInfo, facelight_t *pFaceLight )
     // ratio of world area / lightmap area
     texinfo_t *pTex = &texinfo[pLightInfo->face->texinfo];
     pFaceLight->worldAreaPerLuxel = 1.0 / ( sqrt( DotProduct( pTex->lightmapVecsLuxelsPerWorldUnits[0],
-                                                              pTex->lightmapVecsLuxelsPerWorldUnits[0] ) ) *
+                                                            pTex->lightmapVecsLuxelsPerWorldUnits[0] ) ) *
                                             sqrt( DotProduct( pTex->lightmapVecsLuxelsPerWorldUnits[1],
-                                                              pTex->lightmapVecsLuxelsPerWorldUnits[1] ) ) );
+                                                            pTex->lightmapVecsLuxelsPerWorldUnits[1] ) ) );
 
     // allocate a large number of samples for creation -- get copied later!
     CUtlVector< sample_t > sampleData;
@@ -1107,9 +1107,9 @@ static void ParseLightGeneric( entity_t *e, directlight_t *dl )
         e2 = FindTargetEntity( target );
         if ( !e2 )
             Warning( "WARNING: light at (%i %i %i) has missing target\n",
-                     ( int )dl->light.origin[0],
-                     ( int )dl->light.origin[1],
-                     ( int )dl->light.origin[2] );
+                    ( int )dl->light.origin[0],
+                    ( int )dl->light.origin[1],
+                    ( int )dl->light.origin[2] );
         else
         {
             GetVectorForKey( e2, "origin", dest );
@@ -1128,8 +1128,8 @@ static void ParseLightGeneric( entity_t *e, directlight_t *dl )
     }
     if ( g_bHDR )
         VectorScale( dl->light.intensity,
-                     FloatForKeyWithDefault( e, "_lightscaleHDR", 1.0 ),
-                     dl->light.intensity );
+                    FloatForKeyWithDefault( e, "_lightscaleHDR", 1.0 ),
+                    dl->light.intensity );
 }
 
 static void SetLightFalloffParams( entity_t *e, directlight_t *dl )
@@ -1253,18 +1253,18 @@ static void ParseLightSpot( entity_t *e, directlight_t *dl )
         if ( dl->light.stopdot > 90 )
         {
             Warning( "WARNING: light_spot at (%i %i %i) has inner angle larger than 90 degrees! Clamping to 90...\n",
-                     ( int )dl->light.origin[0],
-                     ( int )dl->light.origin[1],
-                     ( int )dl->light.origin[2] );
+                    ( int )dl->light.origin[0],
+                    ( int )dl->light.origin[1],
+                    ( int )dl->light.origin[2] );
             dl->light.stopdot = 90;
         }
 
         if ( dl->light.stopdot2 > 90 )
         {
             Warning( "WARNING: light_spot at (%i %i %i) has outer angle larger than 90 degrees! Clamping to 90...\n",
-                     ( int )dl->light.origin[0],
-                     ( int )dl->light.origin[1],
-                     ( int )dl->light.origin[2] );
+                    ( int )dl->light.origin[0],
+                    ( int )dl->light.origin[1],
+                    ( int )dl->light.origin[2] );
             dl->light.stopdot2 = 90;
         }
 
@@ -1472,8 +1472,8 @@ static void ParseLightEnvironment( entity_t *e, directlight_t *dl )
         if ( g_bHDR )
         {
             VectorScale( gAmbient->light.intensity,
-                         FloatForKeyWithDefault( e, "_AmbientScaleHDR", 1.0 ),
-                         gAmbient->light.intensity );
+                        FloatForKeyWithDefault( e, "_AmbientScaleHDR", 1.0 ),
+                        gAmbient->light.intensity );
         }
 
         BuildVisForLightEnvironment();
@@ -2096,9 +2096,9 @@ void GetPhongNormal( int facenum, Vector const &spot, Vector &phongnormal )
             Vector &n2 = fn->normal[( j + 1 ) % f->numedges];
 
             /*
-              if (VectorCompare( n1, fn->facenormal )
-              && VectorCompare( n2, fn->facenormal) )
-              continue;
+            if (VectorCompare( n1, fn->facenormal )
+            && VectorCompare( n2, fn->facenormal) )
+            continue;
             */
 
             vert1 = EdgeVertex( f, j );
@@ -2135,21 +2135,21 @@ void GetPhongNormal( int facenum, Vector const &spot, Vector &phongnormal )
                 VectorNormalize( phongnormal );
 
                 /*
-                  if (a1 > 1 || a2 > 1 || a1 + a2 > 1)
-                  {
-                  Msg("\n%.2f %.2f\n", a1, a2 );
-                  Msg("%.2f %.2f %.2f\n", v1[0], v1[1], v1[2] );
-                  Msg("%.2f %.2f %.2f\n", v2[0], v2[1], v2[2] );
-                  Msg("%.2f %.2f %.2f\n", vspot[0], vspot[1], vspot[2] );
-                  exit(1);
+                if (a1 > 1 || a2 > 1 || a1 + a2 > 1)
+                {
+                Msg("\n%.2f %.2f\n", a1, a2 );
+                Msg("%.2f %.2f %.2f\n", v1[0], v1[1], v1[2] );
+                Msg("%.2f %.2f %.2f\n", v2[0], v2[1], v2[2] );
+                Msg("%.2f %.2f %.2f\n", vspot[0], vspot[1], vspot[2] );
+                exit(1);
 
-                  a1 = 0;
-                  }
+                a1 = 0;
+                }
                 */
                 /*
-                  phongnormal[0] = (((j + 1) & 4) != 0) * 255;
-                  phongnormal[1] = (((j + 1) & 2) != 0) * 255;
-                  phongnormal[2] = (((j + 1) & 1) != 0) * 255;
+                phongnormal[0] = (((j + 1) & 4) != 0) * 255;
+                phongnormal[1] = (((j + 1) & 2) != 0) * 255;
+                phongnormal[2] = (((j + 1) & 1) != 0) * 255;
                 */
                 return;
             }
@@ -2471,9 +2471,9 @@ static void GatherSampleLightAt4Points( SSE_SampleInfo_t &info, int sampleIdx, i
             if ( info.m_WarnFace != info.m_FaceNum )
             {
                 Warning( "\nWARNING: Too many light styles on a face at (%f, %f, %f)\n",
-                         info.m_Points.x.m128_f32[0],
-                         info.m_Points.y.m128_f32[0],
-                         info.m_Points.z.m128_f32[0] );
+                        info.m_Points.x.m128_f32[0],
+                        info.m_Points.y.m128_f32[0],
+                        info.m_Points.z.m128_f32[0] );
                 info.m_WarnFace = info.m_FaceNum;
             }
             continue;
@@ -3259,28 +3259,28 @@ void BuildPatchLights( int facenum )
     // texture itself should still be full bright
 
 #if 0
-	// if( VectorAvg( g_FacePatches[facenum]->baselight ) >= dlight_threshold)	// Now all lighted surfaces glow
+    // if( VectorAvg( g_FacePatches[facenum]->baselight ) >= dlight_threshold)	// Now all lighted surfaces glow
  {
-	 for( j=0; j < MAXLIGHTMAPS && f->styles[j] != 255; j++ )
-	 {
-		 if ( f->styles[j] == 0 )
-		 {
-			 // BUG: shouldn't this be done for all patches on the face?
-			 for (i=0 ; i<fl->numsamples ; i++)
-			 {
-				 // garymctchange
-				 VectorAdd( fl->light[j][0][i], g_FacePatches[facenum]->baselight, fl->light[j][0][i] ); 
-				 if( needsBumpmap )
-				 {
-					 for( bumpSample = 1; bumpSample < NUM_BUMP_VECTS + 1; bumpSample++ )
-					 {
-						 VectorAdd( fl->light[j][bumpSample][i], g_FacePatches[facenum]->baselight, fl->light[j][bumpSample][i] ); 
-					 }
-				 }
-			 }
-			 break;
-		 }
-	 }
+    for( j=0; j < MAXLIGHTMAPS && f->styles[j] != 255; j++ )
+    {
+        if ( f->styles[j] == 0 )
+        {
+            // BUG: shouldn't this be done for all patches on the face?
+            for (i=0 ; i<fl->numsamples ; i++)
+            {
+                // garymctchange
+                VectorAdd( fl->light[j][0][i], g_FacePatches[facenum]->baselight, fl->light[j][0][i] );
+                if( needsBumpmap )
+                {
+                    for( bumpSample = 1; bumpSample < NUM_BUMP_VECTS + 1; bumpSample++ )
+                    {
+                        VectorAdd( fl->light[j][bumpSample][i], g_FacePatches[facenum]->baselight, fl->light[j][bumpSample][i] );
+                    }
+                }
+            }
+            break;
+        }
+    }
  }
 #endif
 }

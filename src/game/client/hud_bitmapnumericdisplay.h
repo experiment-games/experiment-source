@@ -16,13 +16,13 @@ class CHudBitmapNumericDisplay : public vgui::Panel
 {
     DECLARE_CLASS_SIMPLE( CHudBitmapNumericDisplay, vgui::Panel );
 
-   public:
+    public:
     CHudBitmapNumericDisplay( vgui::Panel *parent, const char *name );
 
     void SetDisplayValue( int value );
     void SetShouldDisplayValue( bool state );
 
-   protected:
+    protected:
     // vgui overrides
     virtual void PaintBackground( void );
     virtual void Paint();
@@ -40,7 +40,7 @@ class CHudBitmapNumericDisplay : public vgui::Panel
     CPanelAnimationVarAliasType( float, digit_ypos, "digit_ypos", "0", "proportional_float" );
     CPanelAnimationVarAliasType( float, digit_height, "digit_height", "16", "proportional_float" );
 
-   private:
+    private:
     CHudTexture *m_pNumbers[10];
 
     int m_iValue;

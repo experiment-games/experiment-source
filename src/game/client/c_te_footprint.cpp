@@ -21,7 +21,7 @@
 
 class C_TEFootprintDecal : public C_BaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_TEFootprintDecal, C_BaseTempEntity );
     DECLARE_CLIENTCLASS();
 
@@ -32,7 +32,7 @@ class C_TEFootprintDecal : public C_BaseTempEntity
 
     virtual void Precache( void );
 
-   public:
+    public:
     Vector m_vecOrigin;
     Vector m_vecDirection;
     Vector m_vecStart;
@@ -89,13 +89,13 @@ void C_TEFootprintDecal::PostDataUpdate( DataUpdateType_t updateType )
         if ( ent )
         {
             effects->DecalShoot( m_nIndex,
-                                 m_nEntity,
-                                 ent->GetModel(),
-                                 ent->GetAbsOrigin(),
-                                 ent->GetAbsAngles(),
-                                 m_vecOrigin,
-                                 &m_vecDirection,
-                                 0 );
+                                m_nEntity,
+                                ent->GetModel(),
+                                ent->GetAbsOrigin(),
+                                ent->GetAbsAngles(),
+                                m_vecOrigin,
+                                &m_vecDirection,
+                                0 );
         }
     }
 }

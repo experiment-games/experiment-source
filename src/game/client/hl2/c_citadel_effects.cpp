@@ -15,7 +15,7 @@ class C_CitadelEnergyCore : public C_BaseEntity
     DECLARE_CLASS( C_CitadelEnergyCore, C_BaseEntity );
     DECLARE_CLIENTCLASS();
 
-   public:
+    public:
     void OnDataChanged( DataUpdateType_t updateType );
     RenderGroup_t GetRenderGroup( void );
 
@@ -26,7 +26,7 @@ class C_CitadelEnergyCore : public C_BaseEntity
     void UpdateCharging( float percentage );
     void UpdateDischarging( void );
 
-   private:
+    private:
     bool SetupEmitters( void );
     inline float GetStateDurationPercentage( void );
 

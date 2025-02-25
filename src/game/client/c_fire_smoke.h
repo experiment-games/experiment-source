@@ -20,7 +20,7 @@ class C_FireSprite : public C_Sprite
 {
     DECLARE_CLASS( C_FireSprite, C_Sprite );
 
-   private:
+    private:
     virtual int DrawModel( int flags )
     {
         if ( m_bFadeFromAbove )
@@ -48,7 +48,7 @@ class C_FireSprite : public C_Sprite
         return BaseClass::DrawModel( flags );
     }
 
-   public:
+    public:
     Vector m_vecMoveDir;
     bool m_bFadeFromAbove;
 };
@@ -113,7 +113,7 @@ class C_FireFromAboveSprite : public C_Sprite
 
 class C_FireSmoke : public C_BaseEntity
 {
-   public:
+    public:
     DECLARE_CLIENTCLASS();
     DECLARE_CLASS( C_FireSmoke, C_BaseEntity );
 
@@ -126,7 +126,7 @@ class C_FireSmoke : public C_BaseEntity
     void StartClientOnly( void );
     void RemoveClientOnly( void );
 
-   protected:
+    protected:
     void Update( void );
     void UpdateAnimation( void );
     void UpdateScale( void );
@@ -136,7 +136,7 @@ class C_FireSmoke : public C_BaseEntity
     void FindClipPlane( void );
 
     // C_BaseEntity
-   public:
+    public:
     virtual void OnDataChanged( DataUpdateType_t updateType );
     virtual bool ShouldDraw();
 
@@ -146,7 +146,7 @@ class C_FireSmoke : public C_BaseEntity
     }
 
     // From the server
-   public:
+    public:
     float m_flStartScale;
     float m_flScale;
     float m_flScaleTime;
@@ -155,7 +155,7 @@ class C_FireSmoke : public C_BaseEntity
     int m_nFlameFromAboveModelIndex;
 
     // Client-side only
-   public:
+    public:
     float m_flScaleRegister;
     float m_flScaleStart;
     float m_flScaleEnd;
@@ -169,7 +169,7 @@ class C_FireSmoke : public C_BaseEntity
 
     bool m_bFadingOut;
 
-   protected:
+    protected:
     void UpdateEffects( void );
 
     // CSmartPtr<CEmberEffect> m_pEmberEmitter;
@@ -186,14 +186,14 @@ class C_FireSmoke : public C_BaseEntity
     // New Particle Fire Effect
     CNewParticleEffect *m_hEffect;
 
-   private:
+    private:
     C_FireSmoke( const C_FireSmoke & );
 };
 
 // Fire overlay
 class CFireOverlay : public CGlowOverlay
 {
-   public:
+    public:
     // Constructor
     CFireOverlay( C_FireSmoke *owner )
     {
@@ -261,7 +261,7 @@ class CFireOverlay : public CGlowOverlay
         return true;
     }
 
-   public:
+    public:
     C_FireSmoke *m_pOwner;
     Vector m_vBaseColors[MAX_SUN_LAYERS];
     float m_flScale;
@@ -276,7 +276,7 @@ class CFireOverlay : public CGlowOverlay
 
 class C_EntityFlame : public C_BaseEntity
 {
-   public:
+    public:
     DECLARE_CLIENTCLASS();
     DECLARE_CLASS( C_EntityFlame, C_BaseEntity );
 
@@ -292,7 +292,7 @@ class C_EntityFlame : public C_BaseEntity
     EHANDLE m_hEntAttached;  // The entity that we are burning (attached to).
     EHANDLE m_hOldAttached;
 
-   protected:
+    protected:
     void CreateEffect( void );
     void StopEffect( void );
 };

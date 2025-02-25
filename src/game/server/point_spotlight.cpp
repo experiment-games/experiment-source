@@ -22,7 +22,7 @@ class CPointSpotlight : public CPointEntity
 {
     DECLARE_CLASS( CPointSpotlight, CPointEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     CPointSpotlight();
@@ -33,7 +33,7 @@ class CPointSpotlight : public CPointEntity
 
     virtual void OnEntityEvent( EntityEvent_t event, void *pEventData );
 
-   private:
+    private:
     int UpdateTransmitState();
     void SpotlightThink( void );
     void SpotlightUpdate( void );
@@ -53,7 +53,7 @@ class CPointSpotlight : public CPointEntity
     // Computes render info for a spotlight
     void ComputeRenderInfo();
 
-   private:
+    private:
     bool m_bSpotlightOn;
     bool m_bEfficientSpotlight;
     bool m_bIgnoreSolid;
@@ -70,7 +70,7 @@ class CPointSpotlight : public CPointEntity
     float m_flHDRColorScale;
     int m_nMinDXLevel;
 
-   public:
+    public:
     COutputEvent m_OnOn, m_OnOff;  ///< output fires when turned on, off
 };
 

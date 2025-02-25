@@ -26,7 +26,7 @@
 //-----------------------------------------------------------------------------
 class CNPC_Eli : public CAI_BaseActor
 {
-   public:
+    public:
     DECLARE_CLASS( CNPC_Eli, CAI_BaseActor );
 
     void Spawn( void );

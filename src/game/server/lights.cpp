@@ -229,7 +229,7 @@ LINK_ENTITY_TO_CLASS( light_glspot, CLight );
 
 class CEnvLight : public CLight
 {
-   public:
+    public:
     DECLARE_CLASS( CEnvLight, CLight );
 
     bool KeyValue( const char *szKeyName, const char *szValue );

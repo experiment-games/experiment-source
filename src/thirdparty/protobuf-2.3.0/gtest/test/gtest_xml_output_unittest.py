@@ -60,7 +60,7 @@ EXPECTED_NON_EMPTY_XML = """<?xml version="1.0" encoding="UTF-8"?>
   </testsuite>
   <testsuite name="FailedTest" tests="1" failures="1" disabled="0" errors="0" time="*">
     <testcase name="Fails" status="run" time="*" classname="FailedTest">
-      <failure message="Value of: 2&#x0A;Expected: 1" type=""><![CDATA[gtest_xml_output_unittest_.cc:*
+    <failure message="Value of: 2&#x0A;Expected: 1" type=""><![CDATA[gtest_xml_output_unittest_.cc:*
 Value of: 2
 Expected: 1%(stack)s]]></failure>
     </testcase>
@@ -68,10 +68,10 @@ Expected: 1%(stack)s]]></failure>
   <testsuite name="MixedResultTest" tests="3" failures="1" disabled="1" errors="0" time="*">
     <testcase name="Succeeds" status="run" time="*" classname="MixedResultTest"/>
     <testcase name="Fails" status="run" time="*" classname="MixedResultTest">
-      <failure message="Value of: 2&#x0A;Expected: 1" type=""><![CDATA[gtest_xml_output_unittest_.cc:*
+    <failure message="Value of: 2&#x0A;Expected: 1" type=""><![CDATA[gtest_xml_output_unittest_.cc:*
 Value of: 2
 Expected: 1%(stack)s]]></failure>
-      <failure message="Value of: 3&#x0A;Expected: 2" type=""><![CDATA[gtest_xml_output_unittest_.cc:*
+    <failure message="Value of: 3&#x0A;Expected: 2" type=""><![CDATA[gtest_xml_output_unittest_.cc:*
 Value of: 3
 Expected: 2%(stack)s]]></failure>
     </testcase>
@@ -79,14 +79,14 @@ Expected: 2%(stack)s]]></failure>
   </testsuite>
   <testsuite name="XmlQuotingTest" tests="1" failures="1" disabled="0" errors="0" time="*">
     <testcase name="OutputsCData" status="run" time="*" classname="XmlQuotingTest">
-      <failure message="Failed&#x0A;XML output: &lt;?xml encoding=&quot;utf-8&quot;&gt;&lt;top&gt;&lt;![CDATA[cdata text]]&gt;&lt;/top&gt;" type=""><![CDATA[gtest_xml_output_unittest_.cc:*
+    <failure message="Failed&#x0A;XML output: &lt;?xml encoding=&quot;utf-8&quot;&gt;&lt;top&gt;&lt;![CDATA[cdata text]]&gt;&lt;/top&gt;" type=""><![CDATA[gtest_xml_output_unittest_.cc:*
 Failed
 XML output: <?xml encoding="utf-8"><top><![CDATA[cdata text]]>]]&gt;<![CDATA[</top>%(stack)s]]></failure>
     </testcase>
   </testsuite>
   <testsuite name="InvalidCharactersTest" tests="1" failures="1" disabled="0" errors="0" time="*">
     <testcase name="InvalidCharactersInMessage" status="run" time="*" classname="InvalidCharactersTest">
-      <failure message="Failed&#x0A;Invalid characters in brackets []" type=""><![CDATA[gtest_xml_output_unittest_.cc:*
+    <failure message="Failed&#x0A;Invalid characters in brackets []" type=""><![CDATA[gtest_xml_output_unittest_.cc:*
 Failed
 Invalid characters in brackets []%(stack)s]]></failure>
     </testcase>
@@ -101,9 +101,9 @@ Invalid characters in brackets []%(stack)s]]></failure>
     <testcase name="TwoValuesForOneKeyUsesLastValue" status="run" time="*" classname="PropertyRecordingTest" key_1="2"/>
   </testsuite>
   <testsuite name="NoFixtureTest" tests="3" failures="0" disabled="0" errors="0" time="*">
-     <testcase name="RecordProperty" status="run" time="*" classname="NoFixtureTest" key="1"/>
-     <testcase name="ExternalUtilityThatCallsRecordIntValuedProperty" status="run" time="*" classname="NoFixtureTest" key_for_utility_int="1"/>
-     <testcase name="ExternalUtilityThatCallsRecordStringValuedProperty" status="run" time="*" classname="NoFixtureTest" key_for_utility_string="1"/>
+    <testcase name="RecordProperty" status="run" time="*" classname="NoFixtureTest" key="1"/>
+    <testcase name="ExternalUtilityThatCallsRecordIntValuedProperty" status="run" time="*" classname="NoFixtureTest" key_for_utility_int="1"/>
+    <testcase name="ExternalUtilityThatCallsRecordStringValuedProperty" status="run" time="*" classname="NoFixtureTest" key_for_utility_string="1"/>
   </testsuite>
 </testsuites>""" % {'stack': STACK_TRACE_TEMPLATE}
 
@@ -140,13 +140,13 @@ class GTestXMLOutputUnitTest(gtest_xml_test_utils.GTestXMLTestCase):
     default name if no name is explicitly specified.
     """
     output_file = os.path.join(gtest_test_utils.GetTempDir(),
-                               GTEST_DEFAULT_OUTPUT_FILE)
+                                GTEST_DEFAULT_OUTPUT_FILE)
     gtest_prog_path = gtest_test_utils.GetTestExecutablePath(
         "gtest_no_test_unittest")
     try:
-      os.remove(output_file)
+    os.remove(output_file)
     except OSError, e:
-      if e.errno != errno.ENOENT:
+    if e.errno != errno.ENOENT:
         raise
 
     p = gtest_test_utils.Subprocess(
@@ -165,20 +165,20 @@ class GTestXMLOutputUnitTest(gtest_xml_test_utils.GTestXMLTestCase):
     xml_path = os.path.join(gtest_test_utils.GetTempDir(),
                             GTEST_PROGRAM_NAME + "out.xml")
     if os.path.isfile(xml_path):
-      os.remove(xml_path)
+    os.remove(xml_path)
 
     gtest_prog_path = gtest_test_utils.GetTestExecutablePath(GTEST_PROGRAM_NAME)
 
     command = [gtest_prog_path,
-               "%s=xml:%s" % (GTEST_OUTPUT_FLAG, xml_path),
-               "--shut_down_xml"]
+                "%s=xml:%s" % (GTEST_OUTPUT_FLAG, xml_path),
+                "--shut_down_xml"]
     p = gtest_test_utils.Subprocess(command)
     if p.terminated_by_signal:
-      self.assert_(False,
-                   "%s was killed by signal %d" % (gtest_prog_name, p.signal))
+    self.assert_(False,
+                    "%s was killed by signal %d" % (gtest_prog_name, p.signal))
     else:
-      self.assert_(p.exited)
-      self.assertEquals(1, p.exit_code,
+    self.assert_(p.exited)
+    self.assertEquals(1, p.exit_code,
                         "'%s' exited with code %s, which doesn't match "
                         "the expected exit code %s."
                         % (command, p.exit_code, 1))
@@ -200,11 +200,11 @@ class GTestXMLOutputUnitTest(gtest_xml_test_utils.GTestXMLTestCase):
     command = [gtest_prog_path, "%s=xml:%s" % (GTEST_OUTPUT_FLAG, xml_path)]
     p = gtest_test_utils.Subprocess(command)
     if p.terminated_by_signal:
-      self.assert_(False,
-                   "%s was killed by signal %d" % (gtest_prog_name, p.signal))
+    self.assert_(False,
+                    "%s was killed by signal %d" % (gtest_prog_name, p.signal))
     else:
-      self.assert_(p.exited)
-      self.assertEquals(expected_exit_code, p.exit_code,
+    self.assert_(p.exited)
+    self.assertEquals(expected_exit_code, p.exit_code,
                         "'%s' exited with code %s, which doesn't match "
                         "the expected exit code %s."
                         % (command, p.exit_code, expected_exit_code))
@@ -213,7 +213,7 @@ class GTestXMLOutputUnitTest(gtest_xml_test_utils.GTestXMLTestCase):
     actual   = minidom.parse(xml_path)
     self.NormalizeXml(actual.documentElement)
     self.AssertEquivalentNodes(expected.documentElement,
-                               actual.documentElement)
+                                actual.documentElement)
     expected.unlink()
     actual  .unlink()
 

@@ -21,7 +21,7 @@ class ToolWindow;
 // So that an app can have a "custom" tool window class created during window drag/drop operations on the property sheet
 class IToolWindowFactory
 {
-   public:
+    public:
     virtual ToolWindow *InstanceToolWindow( Panel *parent, bool contextLabel, Panel *firstPage, char const *title, bool contextMenu ) = 0;
 };
 
@@ -32,7 +32,7 @@ class ToolWindow : public Frame
 {
     DECLARE_CLASS_SIMPLE( ToolWindow, Frame );
 
-   public:
+    public:
     ToolWindow( Panel *parent, bool contextLabel, IToolWindowFactory *factory = 0, Panel *page = NULL, char const *title = NULL, bool contextMenu = false, bool inGlobalList = true );
 
     ~ToolWindow();
@@ -59,7 +59,7 @@ class ToolWindow : public Frame
     virtual void Grow( int edge = 0, int from_x = -1, int from_y = -1 );
     virtual void GrowFromClick();
 
-   protected:
+    protected:
     // vgui overrides
     virtual void PerformLayout();
     virtual void ActivateBuildMode();
@@ -67,7 +67,7 @@ class ToolWindow : public Frame
     virtual void OnMousePressed( MouseCode code );
     virtual void OnMouseDoublePressed( MouseCode code );
 
-   private:
+    private:
     PropertySheet *m_pPropertySheet;
     IToolWindowFactory *m_pFactory;
 };

@@ -18,7 +18,7 @@ class C_PhysicsProp : public C_BreakableProp
 {
     typedef C_BreakableProp BaseClass;
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
 
     C_PhysicsProp();
@@ -26,7 +26,7 @@ class C_PhysicsProp : public C_BreakableProp
 
     virtual bool OnInternalDrawModel( ClientModelRenderInfo_t *pInfo );
 
-   protected:
+    protected:
     // Networked vars.
     bool m_bAwake;
     bool m_bAwakeLastTime;

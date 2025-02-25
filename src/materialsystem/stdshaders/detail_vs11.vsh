@@ -43,7 +43,7 @@ add $projPos.xy, $projPos.xy, $projPos.w
 mul $projPos.xy, $projPos.xy, $cHalf
 mul $projPos.xy, $projPos.xy, $SHADER_SPECIFIC_CONST_0.xy
 mad $projPos.xy, $projPos.w, $SHADER_SPECIFIC_CONST_1.xy, $projPos.xy
- 
+
 mov oT1.xy, $projPos.xy
 mov oT1.z, $projPos.w
 mov oT1.w, $projPos.w

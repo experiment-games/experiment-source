@@ -22,7 +22,7 @@ extern "C"
 
 class CFileRead
 {
-   public:
+    public:
     CFileRead( IFileSystem *pFileSystem, FileHandle_t fp )
     {
         m_pFileSystem = pFileSystem;

@@ -27,7 +27,7 @@ enum Touch_t
 
 class CEnvBeam : public CBeam
 {
-   public:
+    public:
     DECLARE_CLASS( CEnvBeam, CBeam );
 
     void Spawn( void );
@@ -385,54 +385,54 @@ void CEnvBeam::Strike( void )
         }
 
         te->BeamEntPoint( filter, 0.0, pointStart ? 0 : pStart->entindex(), pointStart ? &pStart->GetAbsOrigin() : NULL, pointEnd ? 0 : pEnd->entindex(), pointEnd ? &pEnd->GetAbsOrigin() : NULL, m_spriteTexture,
-                          0,  // No halo
-                          m_frameStart,
-                          ( int )m_flFrameRate,
-                          m_life,
-                          m_boltWidth,
-                          m_boltWidth,  // End width
-                          0,            // No fade
-                          m_noiseAmplitude,
-                          m_clrRender->r,
-                          m_clrRender->g,
-                          m_clrRender->b,
-                          m_clrRender->a,
-                          m_speed );
+                        0,  // No halo
+                        m_frameStart,
+                        ( int )m_flFrameRate,
+                        m_life,
+                        m_boltWidth,
+                        m_boltWidth,  // End width
+                        0,            // No fade
+                        m_noiseAmplitude,
+                        m_clrRender->r,
+                        m_clrRender->g,
+                        m_clrRender->b,
+                        m_clrRender->a,
+                        m_speed );
     }
     else
     {
         if ( m_spawnflags & SF_BEAM_RING )
         {
             te->BeamRing( filter, 0.0, pStart->entindex(), pEnd->entindex(), m_spriteTexture,
-                          0,  // No halo
-                          m_frameStart,
-                          ( int )m_flFrameRate,
-                          m_life,
-                          m_boltWidth,
-                          0,  // No spread
-                          m_noiseAmplitude,
-                          m_clrRender->r,
-                          m_clrRender->g,
-                          m_clrRender->b,
-                          m_clrRender->a,
-                          m_speed );
+                        0,  // No halo
+                        m_frameStart,
+                        ( int )m_flFrameRate,
+                        m_life,
+                        m_boltWidth,
+                        0,  // No spread
+                        m_noiseAmplitude,
+                        m_clrRender->r,
+                        m_clrRender->g,
+                        m_clrRender->b,
+                        m_clrRender->a,
+                        m_speed );
         }
         else
         {
             te->BeamEnts( filter, 0.0, pStart->entindex(), pEnd->entindex(), m_spriteTexture,
-                          0,  // No halo
-                          m_frameStart,
-                          ( int )m_flFrameRate,
-                          m_life,
-                          m_boltWidth,
-                          m_boltWidth,  // End width
-                          0,            // No fade
-                          m_noiseAmplitude,
-                          m_clrRender->r,
-                          m_clrRender->g,
-                          m_clrRender->b,
-                          m_clrRender->a,
-                          m_speed );
+                        0,  // No halo
+                        m_frameStart,
+                        ( int )m_flFrameRate,
+                        m_life,
+                        m_boltWidth,
+                        m_boltWidth,  // End width
+                        0,            // No fade
+                        m_noiseAmplitude,
+                        m_clrRender->r,
+                        m_clrRender->g,
+                        m_clrRender->b,
+                        m_clrRender->a,
+                        m_speed );
         }
     }
 
@@ -447,7 +447,7 @@ void CEnvBeam::Strike( void )
 
 class CTraceFilterPlayersNPCs : public ITraceFilter
 {
-   public:
+    public:
     bool ShouldHitEntity( IHandleEntity *pServerEntity, int contentsMask )
     {
         CBaseEntity *pEntity = EntityFromEntityHandle( pServerEntity );
@@ -467,7 +467,7 @@ class CTraceFilterPlayersNPCs : public ITraceFilter
 
 class CTraceFilterPlayersNPCsPhysicsProps : public ITraceFilter
 {
-   public:
+    public:
     bool ShouldHitEntity( IHandleEntity *pServerEntity, int contentsMask )
     {
         CBaseEntity *pEntity = EntityFromEntityHandle( pServerEntity );

@@ -21,7 +21,7 @@
 //-----------------------------------------------------------------------------
 class CTEDynamicLight : public CBaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTEDynamicLight, CBaseTempEntity );
 
     CTEDynamicLight( const char* name );
@@ -31,7 +31,7 @@ class CTEDynamicLight : public CBaseTempEntity
 
     DECLARE_SERVERCLASS();
 
-   public:
+    public:
     CNetworkVector( m_vecOrigin );
     CNetworkVar( float, m_fRadius );
     CNetworkVar( int, r );

@@ -17,7 +17,7 @@
 
 class MessageBuffer
 {
-   public:
+    public:
     char *data;
 
     MessageBuffer();
@@ -43,7 +43,7 @@ class MessageBuffer
     void reset( int minsize );
     void print( FILE *ofile, int num );
 
-   private:
+    private:
     void resize( int minsize );
     int size;
     int offset;

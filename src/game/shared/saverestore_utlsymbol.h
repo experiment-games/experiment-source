@@ -14,7 +14,7 @@
 
 class CUtlSymbolDataOps : public CDefSaveRestoreOps
 {
-   public:
+    public:
     CUtlSymbolDataOps( CUtlSymbolTable &masterTable )
         : m_symbolTable( masterTable ) {}
 
@@ -46,7 +46,7 @@ class CUtlSymbolDataOps : public CDefSaveRestoreOps
         return ( *sym ).IsValid() ? false : true;
     }
 
-   private:
+    private:
     CUtlSymbolTable &m_symbolTable;
 };
 

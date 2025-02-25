@@ -37,7 +37,7 @@
 int Test1( char *pString, float x );
 class CTestClass
 {
-   public:
+    public:
     void Test2();
     static float Test3( int x );
 };

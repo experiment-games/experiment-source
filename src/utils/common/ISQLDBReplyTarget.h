@@ -16,7 +16,7 @@
 //-----------------------------------------------------------------------------
 class ISQLDBReplyTarget
 {
-   public:
+    public:
     // handles a response from the database
     virtual void SQLDBResponse( int cmdID, int returnState, int returnVal, void *data ) = 0;
 

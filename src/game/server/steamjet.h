@@ -21,7 +21,7 @@
 
 class CSteamJet : public CBaseParticleEntity
 {
-   public:
+    public:
     CSteamJet();
     DECLARE_CLASS( CSteamJet, CBaseParticleEntity );
     DECLARE_DATADESC();
@@ -30,14 +30,14 @@ class CSteamJet : public CBaseParticleEntity
     virtual void Spawn( void );
     virtual void Precache( void );
 
-   protected:
+    protected:
     // Input handlers.
     void InputTurnOn( inputdata_t &data );
     void InputTurnOff( inputdata_t &data );
     void InputToggle( inputdata_t &data );
 
     // Stuff from the datatable.
-   public:
+    public:
     CNetworkVar( float, m_SpreadSpeed );
     CNetworkVar( float, m_Speed );
     CNetworkVar( float, m_StartSize );

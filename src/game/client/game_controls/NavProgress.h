@@ -17,10 +17,10 @@
 
 class CNavProgress : public vgui::Frame, public IViewPortPanel
 {
-   private:
+    private:
     DECLARE_CLASS_SIMPLE( CNavProgress, vgui::Frame );
 
-   public:
+    public:
     CNavProgress( IViewPort *pViewPort );
     virtual ~CNavProgress();
 
@@ -55,12 +55,12 @@ class CNavProgress : public vgui::Frame, public IViewPortPanel
         BaseClass::SetParent( parent );
     }
 
-   public:
+    public:
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
     virtual void PerformLayout();
     void Init( const char *title, int numTicks, int currentTick );
 
-   protected:
+    protected:
     IViewPort *m_pViewPort;
 
     int m_numTicks;

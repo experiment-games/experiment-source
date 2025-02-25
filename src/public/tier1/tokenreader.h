@@ -49,7 +49,7 @@ typedef enum
 
 class TokenReader : private std::ifstream
 {
-   public:
+    public:
     TokenReader();
 
     bool Open( const char *pszFilename );
@@ -65,7 +65,7 @@ class TokenReader : private std::ifstream
 
     inline int GetErrorCount( void );
 
-   private:
+    private:
     // compiler can't generate an assignment operator since descended from std::ifstream
     inline TokenReader( TokenReader const & );
     inline int operator=( TokenReader const & );

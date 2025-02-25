@@ -23,7 +23,7 @@ extern short g_sModelIndexSmoke;  // (in combatweapon.cpp) holds the index for t
 //-----------------------------------------------------------------------------
 class CTELargeFunnel : public CTEParticleSystem
 {
-   public:
+    public:
     DECLARE_CLASS( CTELargeFunnel, CTEParticleSystem );
     DECLARE_SERVERCLASS();
 
@@ -32,7 +32,7 @@ class CTELargeFunnel : public CTEParticleSystem
 
     virtual void Test( const Vector& current_origin, const QAngle& current_angles );
 
-   public:
+    public:
     CNetworkVar( int, m_nModelIndex );
     CNetworkVar( int, m_nReversed );
 };

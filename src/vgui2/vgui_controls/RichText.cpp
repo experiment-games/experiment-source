@@ -36,7 +36,7 @@ class ClickPanel : public Panel
 {
     DECLARE_CLASS_SIMPLE( ClickPanel, Panel );
 
-   public:
+    public:
     ClickPanel( Panel *parent )
     {
         _viewIndex = 0;
@@ -91,7 +91,7 @@ class ClickPanel : public Panel
         }
     }
 
-   private:
+    private:
     int _textIndex;
     int _viewIndex;
 };
@@ -103,7 +103,7 @@ class RichTextInterior : public Panel
 {
     DECLARE_CLASS_SIMPLE( RichTextInterior, Panel );
 
-   public:
+    public:
     RichTextInterior( RichText *pParent, const char *pchName )
         : BaseClass( pParent, pchName )
     {
@@ -115,12 +115,12 @@ class RichTextInterior : public Panel
     }
 
     /*	virtual IAppearance *GetAppearance()
-      {
+    {
         if ( m_pRichText->IsScrollbarVisible() )
-          return m_pAppearanceScrollbar;
+        return m_pAppearanceScrollbar;
 
         return BaseClass::GetAppearance();
-      }*/
+    }*/
 
     virtual void ApplySchemeSettings( IScheme *pScheme )
     {
@@ -128,7 +128,7 @@ class RichTextInterior : public Panel
         //		m_pAppearanceScrollbar = FindSchemeAppearance( pScheme, "scrollbar_visible" );
     }
 
-   private:
+    private:
     RichText *m_pRichText;
     //	IAppearance *m_pAppearanceScrollbar;
 };
@@ -267,7 +267,7 @@ void RichText::SetFgColor( Color color )
     // Replace default format color if
     // the stream is empty and the color is the default ( or the previous FgColor )
     if ( m_FormatStream.Size() == 1 &&
-         ( m_FormatStream[0].color == _defaultTextColor || m_FormatStream[0].color == GetFgColor() ) )
+        ( m_FormatStream[0].color == _defaultTextColor || m_FormatStream[0].color == GetFgColor() ) )
     {
         m_FormatStream[0].color = color;
     }
@@ -352,25 +352,25 @@ const wchar_t *RichText::ResolveLocalizedTextAndVariables( char const *pchLookup
         if ( index == INVALID_LOCALIZE_STRING_INDEX )
         {
             /*			// if it's not found, maybe it's a special expanded variable - look for an expansion
-                  char rgchT[MAX_PATH];
+                char rgchT[MAX_PATH];
 
-                  // get the variables
-                  KeyValues *variables = GetDialogVariables_R();
-                  if ( variables )
-                  {
+                // get the variables
+                KeyValues *variables = GetDialogVariables_R();
+                if ( variables )
+                {
                     // see if any are any special vars to put in
                     for ( KeyValues *pkv = variables->GetFirstSubKey(); pkv != NULL; pkv = pkv->GetNextKey() )
                     {
-                      if ( !Q_strncmp( pkv->GetName(), "$", 1 ) )
-                      {
+                    if ( !Q_strncmp( pkv->GetName(), "$", 1 ) )
+                    {
                         // make a new lookup, with this key appended
                         Q_snprintf( rgchT, sizeof( rgchT ), "%s%s=%s", pchLookup, pkv->GetName(), pkv->GetString() );
                         index = localize()->FindIndex( rgchT );
                         break;
-                      }
                     }
-                  }
-                  */
+                    }
+                }
+                */
         }
 
         // see if we have a valid string
@@ -384,8 +384,8 @@ const wchar_t *RichText::ResolveLocalizedTextAndVariables( char const *pchLookup
                 KeyValues *variables = GetDialogVariables_R();
                 if ( variables )
                 {
-                  localize()->ConstructString( outbuf, outbufsizeinbytes, index, variables );
-                  return outbuf;
+                localize()->ConstructString( outbuf, outbufsizeinbytes, index, variables );
+                return outbuf;
                 }*/
             }
             V_wcsncpy( outbuf, format, outbufsizeinbytes );
@@ -850,9 +850,9 @@ void RichText::Paint()
 
         // Stop at the next format change
         if ( m_FormatStream.IsValidIndex( renderState.formatStreamIndex ) &&
-             m_FormatStream[renderState.formatStreamIndex].textStreamIndex < iLim &&
-             m_FormatStream[renderState.formatStreamIndex].textStreamIndex >= i &&
-             m_FormatStream[renderState.formatStreamIndex].textStreamIndex )
+            m_FormatStream[renderState.formatStreamIndex].textStreamIndex < iLim &&
+            m_FormatStream[renderState.formatStreamIndex].textStreamIndex >= i &&
+            m_FormatStream[renderState.formatStreamIndex].textStreamIndex )
         {
             iLim = m_FormatStream[renderState.formatStreamIndex].textStreamIndex;
         }
@@ -941,7 +941,7 @@ bool RichText::UpdateRenderState( int textStreamPos, TRenderState &renderState )
 {
     // check the color stream
     if ( m_FormatStream.IsValidIndex( renderState.formatStreamIndex ) &&
-         m_FormatStream[renderState.formatStreamIndex].textStreamIndex == textStreamPos )
+        m_FormatStream[renderState.formatStreamIndex].textStreamIndex == textStreamPos )
     {
         // set the current formatting
         renderState.textColor = m_FormatStream[renderState.formatStreamIndex].color;
@@ -2113,7 +2113,7 @@ void RichText::OpenEditMenu()
     Panel *panel = this;
     while ( panel->GetParent() != NULL)
     {
-      panel = panel->GetParent();
+    panel = panel->GetParent();
     }
     panel->ScreenToLocal(cursorX, cursorY);
     int x, y;

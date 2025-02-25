@@ -17,7 +17,7 @@ class C_NPC_Puppet : public C_AI_BaseNPC
 {
     DECLARE_CLASS( C_NPC_Puppet, C_AI_BaseNPC );
 
-   public:
+    public:
     virtual void ClientThink( void );
     virtual void OnDataChanged( DataUpdateType_t updateType );
     virtual void BuildTransformations( CStudioHdr *pStudioHdr, Vector *pos, Quaternion q[], const matrix3x4_t &cameraTransform, int boneMask, CBoneBitList &boneComputed );

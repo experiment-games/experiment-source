@@ -28,7 +28,7 @@
 
 class CHLTVGameEvent
 {
-   public:
+    public:
     int m_Tick;           // tick of this command
     int m_Priority;       // game event priority
     IGameEvent *m_Event;  // IGameEvent
@@ -36,7 +36,7 @@ class CHLTVGameEvent
 
 class CHLTVDirector : public CGameEventListener, public CBaseGameSystemPerFrame, public IHLTVDirector
 {
-   public:
+    public:
     DECLARE_CLASS_NOBASE( CHLTVDirector );
 
     virtual char const *Name()
@@ -59,10 +59,10 @@ class CHLTVDirector : public CGameEventListener, public CBaseGameSystemPerFrame,
 
     void BuildCameraList( void );
 
-   public:  // IGameEventListener Interface
+    public:  // IGameEventListener Interface
     virtual void FireGameEvent( IGameEvent *event );
 
-   public:  // CBaseGameSystem overrides
+    public:  // CBaseGameSystem overrides
     virtual bool Init();
     virtual void Shutdown();
     virtual void FrameUpdatePostEntityThink();
@@ -78,7 +78,7 @@ class CHLTVDirector : public CGameEventListener, public CBaseGameSystemPerFrame,
         return m_iCameraManIndex;
     }
 
-   protected:
+    protected:
     virtual void StartNewShot();
     virtual void StartRandomShot();
     virtual void StartDelayMessage();

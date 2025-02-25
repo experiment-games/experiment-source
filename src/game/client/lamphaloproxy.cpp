@@ -19,7 +19,7 @@
 //-----------------------------------------------------------------------------
 class CLampHaloProxy : public CEntityMaterialProxy
 {
-   public:
+    public:
     CLampHaloProxy( void );
     virtual ~CLampHaloProxy( void );
     virtual bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
@@ -27,7 +27,7 @@ class CLampHaloProxy : public CEntityMaterialProxy
 
     virtual IMaterial *GetMaterial();
 
-   private:
+    private:
     IMaterialVar *m_pFadeValue;
 };
 

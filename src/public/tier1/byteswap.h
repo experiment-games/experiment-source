@@ -14,7 +14,7 @@
 
 class CByteswap
 {
-   public:
+    public:
     CByteswap()
     {
         // Default behavior sets the target endian to match the machine native endian (no swap).
@@ -206,7 +206,7 @@ class CByteswap
         }
     }
 
-   private:
+    private:
     //-----------------------------------------------------------------------------
     // The lowest level byte swapping workhorse of doom.  output always contains the
     // swapped version of input.  ( Doesn't compare machine to target endianness )

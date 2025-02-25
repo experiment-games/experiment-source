@@ -97,8 +97,8 @@ struct VertexDesc_t
     int m_VertexSize_UserData;
 
     int m_ActualVertexSize;  // Size of the vertices.. Some of the m_VertexSize_ elements above
-                             // are set to this value and some are set to zero depending on which
-                             // fields exist in a buffer's vertex format.
+                            // are set to this value and some are set to zero depending on which
+                            // fields exist in a buffer's vertex format.
 
     // The type of compression applied to this vertex data
     VertexCompressionType_t m_CompressionType;
@@ -215,7 +215,7 @@ inline void IncrementFloatPointer( float *&pBufferPointer, int vertexSize )
 //-----------------------------------------------------------------------------
 class CPrimList
 {
-   public:
+    public:
     CPrimList();
     CPrimList( int nFirstIndex, int nIndexCount );
 
@@ -235,7 +235,7 @@ inline CPrimList::CPrimList( int nFirstIndex, int nIndexCount )
 
 abstract_class IVertexBuffer
 {
-   public:
+    public:
     // Add a virtual destructor to silence the clang warning.
     // This is harmless but not important since the only derived class
     // doesn't have a destructor.
@@ -269,7 +269,7 @@ abstract_class IVertexBuffer
 
 abstract_class IIndexBuffer
 {
-   public:
+    public:
     // Add a virtual destructor to silence the clang warning.
     // This is harmless but not important since the only derived class
     // doesn't have a destructor.
@@ -312,7 +312,7 @@ abstract_class IIndexBuffer
 //-----------------------------------------------------------------------------
 abstract_class IMesh : public IVertexBuffer, public IIndexBuffer
 {
-   public:
+    public:
     // -----------------------------------
 
     // Sets/gets the primitive type
@@ -380,7 +380,7 @@ abstract_class IMesh : public IVertexBuffer, public IIndexBuffer
 //-----------------------------------------------------------------------------
 class CVertexBuilder : private VertexDesc_t
 {
-   public:
+    public:
     CVertexBuilder();
     CVertexBuilder( IVertexBuffer *pVertexBuffer, VertexFormat_t fmt = 0 );
     ~CVertexBuilder();
@@ -585,7 +585,7 @@ class CVertexBuilder : private VertexDesc_t
     void AttachBeginModify( IMesh *pMesh, int nFirstVertex, int nVertexCount, const MeshDesc_t &desc );
     void AttachEndModify();
 
-   private:
+    private:
     // The vertex buffer we're modifying
     IVertexBuffer *m_pVertexBuffer;
 
@@ -1153,24 +1153,24 @@ inline void CVertexBuilder::FastVertex( const ModelVertexDX7_t &vertex )
 
     __asm
     {
-		mov esi, pRead
-			mov edi, pCurrPos
+        mov esi, pRead
+            mov edi, pCurrPos
 
-			movq mm0, [esi + 0]
-		movq mm1, [esi + 8]
-		movq mm2, [esi + 16]
-		movq mm3, [esi + 24]
-		movq mm4, [esi + 32]
-		movq mm5, [esi + 40]
+            movq mm0, [esi + 0]
+        movq mm1, [esi + 8]
+        movq mm2, [esi + 16]
+        movq mm3, [esi + 24]
+        movq mm4, [esi + 32]
+        movq mm5, [esi + 40]
 
-		movntq [edi + 0], mm0
-			movntq [edi + 8], mm1
-			movntq [edi + 16], mm2
-			movntq [edi + 24], mm3
-			movntq [edi + 32], mm4
-			movntq [edi + 40], mm5
+        movntq [edi + 0], mm0
+            movntq [edi + 8], mm1
+            movntq [edi + 16], mm2
+            movntq [edi + 24], mm3
+            movntq [edi + 32], mm4
+            movntq [edi + 40], mm5
 
-			emms
+            emms
     }
 #elif defined( GNUC )
     const void *pRead = &vertex;
@@ -1213,16 +1213,16 @@ inline void CVertexBuilder::FastVertexSSE( const ModelVertexDX7_t &vertex )
     void *pCurrPos = m_pCurrPosition;
     __asm
     {
-		mov esi, pRead
-			mov edi, pCurrPos
+        mov esi, pRead
+            mov edi, pCurrPos
 
-			movaps xmm0, [esi + 0]
-		movaps xmm1, [esi + 16]
-		movaps xmm2, [esi + 32]
+            movaps xmm0, [esi + 0]
+        movaps xmm1, [esi + 16]
+        movaps xmm2, [esi + 32]
 
-		movntps [edi + 0], xmm0
-			movntps [edi + 16], xmm1
-			movntps [edi + 32], xmm2
+        movntps [edi + 0], xmm0
+            movntps [edi + 16], xmm1
+            movntps [edi + 32], xmm2
     }
 #elif defined( GNUC )
     const char *pRead = ( char * )&vertex;
@@ -1259,42 +1259,42 @@ inline void CVertexBuilder::Fast4VerticesSSE(
     void *pCurrPos = m_pCurrPosition;
     __asm
         {
-		mov esi, vtx_a
-			mov ecx, vtx_b
+        mov esi, vtx_a
+            mov ecx, vtx_b
 
-			mov edi, pCurrPos
-			nop
+            mov edi, pCurrPos
+            nop
 
-			movaps xmm0, [esi + 0]
-		movaps xmm1, [esi + 16]
-		movaps xmm2, [esi + 32]
-		movaps xmm3, [ecx + 0]
-		movaps xmm4, [ecx + 16]
-		movaps xmm5, [ecx + 32]
+            movaps xmm0, [esi + 0]
+        movaps xmm1, [esi + 16]
+        movaps xmm2, [esi + 32]
+        movaps xmm3, [ecx + 0]
+        movaps xmm4, [ecx + 16]
+        movaps xmm5, [ecx + 32]
 
-		mov esi, vtx_c
-			mov ecx, vtx_d
+        mov esi, vtx_c
+            mov ecx, vtx_d
 
-			movntps [edi + 0], xmm0
-			movntps [edi + 16], xmm1
-			movntps [edi + 32], xmm2
-			movntps [edi + 48], xmm3
-			movntps [edi + 64], xmm4
-			movntps [edi + 80], xmm5
+            movntps [edi + 0], xmm0
+            movntps [edi + 16], xmm1
+            movntps [edi + 32], xmm2
+            movntps [edi + 48], xmm3
+            movntps [edi + 64], xmm4
+            movntps [edi + 80], xmm5
 
-			movaps xmm0, [esi + 0]
-		movaps xmm1, [esi + 16]
-		movaps xmm2, [esi + 32]
-		movaps xmm3, [ecx + 0]
-		movaps xmm4, [ecx + 16]
-		movaps xmm5, [ecx + 32]
+            movaps xmm0, [esi + 0]
+        movaps xmm1, [esi + 16]
+        movaps xmm2, [esi + 32]
+        movaps xmm3, [ecx + 0]
+        movaps xmm4, [ecx + 16]
+        movaps xmm5, [ecx + 32]
 
-		movntps [edi + 0+96], xmm0
-			movntps [edi + 16+96], xmm1
-			movntps [edi + 32+96], xmm2
-			movntps [edi + 48+96], xmm3
-			movntps [edi + 64+96], xmm4
-			movntps [edi + 80+96], xmm5
+        movntps [edi + 0+96], xmm0
+            movntps [edi + 16+96], xmm1
+            movntps [edi + 32+96], xmm2
+            movntps [edi + 48+96], xmm3
+            movntps [edi + 64+96], xmm4
+            movntps [edi + 80+96], xmm5
 
         }
 #else
@@ -1318,28 +1318,28 @@ inline void CVertexBuilder::FastVertex( const ModelVertexDX8_t &vertex )
     void *pCurrPos = m_pCurrPosition;
     __asm
     {
-		mov esi, pRead
-			mov edi, pCurrPos
+        mov esi, pRead
+            mov edi, pCurrPos
 
-			movq mm0, [esi + 0]
-		movq mm1, [esi + 8]
-		movq mm2, [esi + 16]
-		movq mm3, [esi + 24]
-		movq mm4, [esi + 32]
-		movq mm5, [esi + 40]
-		movq mm6, [esi + 48]
-		movq mm7, [esi + 56]
+            movq mm0, [esi + 0]
+        movq mm1, [esi + 8]
+        movq mm2, [esi + 16]
+        movq mm3, [esi + 24]
+        movq mm4, [esi + 32]
+        movq mm5, [esi + 40]
+        movq mm6, [esi + 48]
+        movq mm7, [esi + 56]
 
-		movntq [edi + 0], mm0
-			movntq [edi + 8], mm1
-			movntq [edi + 16], mm2
-			movntq [edi + 24], mm3
-			movntq [edi + 32], mm4
-			movntq [edi + 40], mm5
-			movntq [edi + 48], mm6
-			movntq [edi + 56], mm7
+        movntq [edi + 0], mm0
+            movntq [edi + 8], mm1
+            movntq [edi + 16], mm2
+            movntq [edi + 24], mm3
+            movntq [edi + 32], mm4
+            movntq [edi + 40], mm5
+            movntq [edi + 48], mm6
+            movntq [edi + 56], mm7
 
-			emms
+            emms
     }
 #elif defined( GNUC )
     const void *pRead = &vertex;
@@ -1386,18 +1386,18 @@ inline void CVertexBuilder::FastVertexSSE( const ModelVertexDX8_t &vertex )
     void *pCurrPos = m_pCurrPosition;
     __asm
     {
-		mov esi, pRead
-			mov edi, pCurrPos
+        mov esi, pRead
+            mov edi, pCurrPos
 
-			movaps xmm0, [esi + 0]
-		movaps xmm1, [esi + 16]
-		movaps xmm2, [esi + 32]
-		movaps xmm3, [esi + 48]
+            movaps xmm0, [esi + 0]
+        movaps xmm1, [esi + 16]
+        movaps xmm2, [esi + 32]
+        movaps xmm3, [esi + 48]
 
-		movntps [edi + 0], xmm0
-			movntps [edi + 16], xmm1
-			movntps [edi + 32], xmm2
-			movntps [edi + 48], xmm3
+        movntps [edi + 0], xmm0
+            movntps [edi + 16], xmm1
+            movntps [edi + 32], xmm2
+            movntps [edi + 48], xmm3
     }
 #elif defined( GNUC )
     const void *pRead = &vertex;
@@ -1732,8 +1732,8 @@ inline void CVertexBuilder::CompressedNormal3f( float nx, float ny, float nz )
         PackNormal_SHORT2( nx, ny, nz, ( unsigned int * )m_pCurrNormal );
 
 #else  //( COMPRESSED_NORMALS_TYPE == COMPRESSED_NORMALS_COMBINEDTANGENTS_UBYTE4 )
-       // NOTE: write the normal into the lower 16 bits of a word, clearing the top 16 bits - a userdata4
-       //       tangent must be written into the upper 16 bits by CompressedUserData() *AFTER* this.
+        // NOTE: write the normal into the lower 16 bits of a word, clearing the top 16 bits - a userdata4
+        //       tangent must be written into the upper 16 bits by CompressedUserData() *AFTER* this.
 #ifdef _DEBUG
         Assert( m_bWrittenUserData == false );
         m_bWrittenNormal = true;
@@ -2322,9 +2322,9 @@ inline void CVertexBuilder::CompressedUserData( const float *pData )
         float *pUserData = OffsetFloatPointer( m_pUserData, m_nCurrentVertex, m_VertexSize_UserData );
         PackNormal_SHORT2( pData, ( unsigned int * )pUserData, binormalSign );
 #else  //( COMPRESSED_NORMALS_TYPE == COMPRESSED_NORMALS_COMBINEDTANGENTS_UBYTE4 )
-       // FIXME: add a combined CompressedNormalAndTangent() accessor, to avoid reading back from write-combined memory here
-       // The normal should have already been written into the lower 16
-       // bits - here, we OR in the tangent into the upper 16 bits
+        // FIXME: add a combined CompressedNormalAndTangent() accessor, to avoid reading back from write-combined memory here
+        // The normal should have already been written into the lower 16
+        // bits - here, we OR in the tangent into the upper 16 bits
         unsigned int existingNormalData = *( unsigned int * )m_pCurrNormal;
         Assert( ( existingNormalData & 0xFFFF0000 ) == 0 );
 #ifdef _DEBUG
@@ -2352,7 +2352,7 @@ inline void CVertexBuilder::CompressedUserData( const float *pData )
 //-----------------------------------------------------------------------------
 class CIndexBuilder : private IndexDesc_t
 {
-   public:
+    public:
     CIndexBuilder();
     CIndexBuilder( IIndexBuffer *pIndexBuffer, MaterialIndexFormat_t fmt = MATERIAL_INDEX_FORMAT_UNKNOWN );
     ~CIndexBuilder();
@@ -2434,7 +2434,7 @@ class CIndexBuilder : private IndexDesc_t
     void FastPolygonList( int startVert, int *pVertexCount, int polygonCount );
     void FastIndexList( const unsigned short *pIndexList, int startVert, int indexCount );
 
-   private:
+    private:
     // The mesh we're modifying
     IIndexBuffer *m_pIndexBuffer;
 
@@ -2992,7 +2992,7 @@ inline void CIndexBuilder::GenerateIndices( MaterialPrimitiveType_t primitiveTyp
 // hack fixme
 class CMeshBuilder : public MeshDesc_t
 {
-   public:
+    public:
     CMeshBuilder();
     ~CMeshBuilder()
     {
@@ -3209,7 +3209,7 @@ class CMeshBuilder : public MeshDesc_t
     void VertexDX8ToX360( const ModelVertexDX8_t &vertex );
 #endif
 
-   private:
+    private:
     // Computes number of verts and indices
     void ComputeNumVertsAndIndices( int *pMaxVertices, int *pMaxIndices, MaterialPrimitiveType_t type, int nPrimitiveCount );
     int IndicesFromVertices( MaterialPrimitiveType_t type, int nVertexCount );

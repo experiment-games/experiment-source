@@ -50,7 +50,7 @@ namespace java
 
 class PrimitiveFieldGenerator : public FieldGenerator
 {
-   public:
+    public:
     explicit PrimitiveFieldGenerator( const FieldDescriptor* descriptor );
     ~PrimitiveFieldGenerator();
 
@@ -66,7 +66,7 @@ class PrimitiveFieldGenerator : public FieldGenerator
 
     string GetBoxedType() const;
 
-   private:
+    private:
     const FieldDescriptor* descriptor_;
     map< string, string > variables_;
 
@@ -75,7 +75,7 @@ class PrimitiveFieldGenerator : public FieldGenerator
 
 class RepeatedPrimitiveFieldGenerator : public FieldGenerator
 {
-   public:
+    public:
     explicit RepeatedPrimitiveFieldGenerator( const FieldDescriptor* descriptor );
     ~RepeatedPrimitiveFieldGenerator();
 
@@ -92,7 +92,7 @@ class RepeatedPrimitiveFieldGenerator : public FieldGenerator
 
     string GetBoxedType() const;
 
-   private:
+    private:
     const FieldDescriptor* descriptor_;
     map< string, string > variables_;
 

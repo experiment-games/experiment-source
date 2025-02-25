@@ -77,7 +77,7 @@ inline void FreeStripListVerts( STRIPLIST *pstriplist )
 //=========================================================================
 class CStripper
 {
-   public:
+    public:
     // ctors/dtors
     CStripper( int numtris, TRIANGLELIST ptriangles );
     ~CStripper();
@@ -119,7 +119,7 @@ class CStripper
 //=========================================================================
 class CVertCache
 {
-   public:
+    public:
     CVertCache()
     {
         Reset();
@@ -148,7 +148,7 @@ class CVertCache
         CACHE_SIZE = 18
     };
 
-   private:
+    private:
     int m_cachehits;                 // current # of cache hits
     WORD m_rgCache[CACHE_SIZE];      // vertex cache
     int m_rgCacheStrip[CACHE_SIZE];  // strip # which added vert
@@ -300,7 +300,7 @@ int CStripper::CreateStrip( int tri, int vert, int maxlen, int *pswaps, bool flo
 // Given a striplist and current cache state, pick the best next strip
 //=========================================================================
 STRIPLIST::iterator FindBestCachedStrip( STRIPLIST *pstriplist,
-                                         const CVertCache &vertcachestate )
+                                        const CVertCache &vertcachestate )
 {
     if ( pstriplist->empty() )
         return pstriplist->end();
@@ -314,8 +314,8 @@ STRIPLIST::iterator FindBestCachedStrip( STRIPLIST *pstriplist,
 
     // go through all the other strips looking for the best caching
     for ( STRIPLIST::iterator istriplist = pstriplist->begin();
-          istriplist != pstriplist->end();
-          ++istriplist )
+        istriplist != pstriplist->end();
+        ++istriplist )
     {
         bool fFlip = false;
         const STRIPVERTS &stripverts = **istriplist;
@@ -323,7 +323,7 @@ STRIPLIST::iterator FindBestCachedStrip( STRIPLIST *pstriplist,
 
         // check cache if this strip is the same type as us (ie: cw/odd)
         if ( ( FIsStripCW( stripverts ) == fstartcw ) &&
-             ( ( striplen & 0x1 ) == ( striplennew & 0x1 ) ) )
+            ( ( striplen & 0x1 ) == ( striplennew & 0x1 ) ) )
         {
             // copy current state of cache
             CVertCache vertcachenew = vertcachestate;
@@ -399,8 +399,8 @@ int CStripper::CreateManyStrips( STRIPLIST *pstriplist, WORD **ppstripindices )
     int numstripindices = 0;
 
     for ( istriplist = pstriplist->begin();
-          !pstriplist->empty();
-          istriplist = FindBestCachedStrip( pstriplist, vertcache ) )
+        !pstriplist->empty();
+        istriplist = FindBestCachedStrip( pstriplist, vertcache ) )
     {
         const STRIPVERTS &stripverts = **istriplist;
 
@@ -571,7 +571,7 @@ void CStripper::BuildStrips( STRIPLIST *pstriplist, int maxlen, bool flookahead 
                 // check if this ratio is better than what we've already got for
                 // this neighborcount
                 if ( ( curneightborcount < bestneighborcount ) ||
-                     ( ( curneightborcount == bestneighborcount ) && ( ratio < bestratio ) ) )
+                    ( ( curneightborcount == bestneighborcount ) && ( ratio < bestratio ) ) )
                 {
                     bestneighborcount = curneightborcount;
 
@@ -627,8 +627,8 @@ int EstimateStripCost( STRIPLIST *pstriplist )
     int count = 0;
 
     for ( STRIPLIST::iterator istriplist = pstriplist->begin();
-          istriplist != pstriplist->end();
-          ++istriplist )
+        istriplist != pstriplist->end();
+        ++istriplist )
     {
         // add count of indices
         count += StripLen( **istriplist );
@@ -654,7 +654,7 @@ void CStripper::InitTriangleInfo( int tri, int vert )
             for ( int ivert = 0; ivert < 3; ivert++ )
             {
                 if ( ( ptriverts[ivert] == vert1 ) &&
-                     ( ptriverts[( ivert + 1 ) % 3] == vert2 ) )
+                    ( ptriverts[( ivert + 1 ) % 3] == vert2 ) )
                 {
                     // add the triangle info
                     m_ptriinfo[tri].neighbortri[vert] = itri;
@@ -765,8 +765,8 @@ void EnableLeakChecking()
 
     flCrtDbgFlags &=
         ~( _CRTDBG_LEAK_CHECK_DF |
-           _CRTDBG_CHECK_ALWAYS_DF |
-           _CRTDBG_DELAY_FREE_MEM_DF );
+            _CRTDBG_CHECK_ALWAYS_DF |
+            _CRTDBG_DELAY_FREE_MEM_DF );
 
     // always check for memory leaks
     flCrtDbgFlags |= _CRTDBG_LEAK_CHECK_DF;
@@ -862,7 +862,7 @@ int Stripify( int numtris, WORD *ptriangles, int *pnumindices, WORD **ppstripind
 //=========================================================================
 struct SortEntry
 {
-   public:
+    public:
     int iFirstUsed;
     int iOrigIndex;
 

@@ -24,7 +24,7 @@
 
 class CClientThinkList : public IGameSystemPerFrame
 {
-   public:
+    public:
     CClientThinkList();
     virtual ~CClientThinkList();
 
@@ -55,7 +55,7 @@ class CClientThinkList : public IGameSystemPerFrame
     void RemoveFromDeleteList( ClientEntityHandle_t hEnt );
 
     // IClientSystem implementation.
-   public:
+    public:
     virtual bool Init();
     virtual void PostInit(){};
     virtual void Shutdown();
@@ -70,7 +70,7 @@ class CClientThinkList : public IGameSystemPerFrame
     virtual void OnRestore() {}
     virtual void SafeRemoveIfDesired() {}
 
-   private:
+    private:
     struct ThinkEntry_t
     {
         ClientEntityHandle_t m_hEnt;
@@ -87,7 +87,7 @@ class CClientThinkList : public IGameSystemPerFrame
     };
 
     // Internal stuff.
-   private:
+    private:
     void SetNextClientThink( ClientThinkHandle_t hThink, float nextTime );
     void RemoveThinkable( ClientThinkHandle_t hThink );
     void PerformThinkFunction( ThinkEntry_t *pEntry, float curtime );
@@ -97,7 +97,7 @@ class CClientThinkList : public IGameSystemPerFrame
     // Add entity to frame think list
     void AddEntityToFrameThinkList( ThinkEntry_t *pEntry, bool bAlwaysChain, int &nCount, ThinkEntry_t **ppFrameThinkList );
 
-   private:
+    private:
     CUtlLinkedList< ThinkEntry_t, unsigned short > m_ThinkEntries;
 
     CUtlVector< ClientEntityHandle_t > m_aDeleteList;

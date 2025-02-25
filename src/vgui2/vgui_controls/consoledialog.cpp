@@ -42,10 +42,10 @@ class CNonFocusableMenu : public Menu
 {
     DECLARE_CLASS_SIMPLE( CNonFocusableMenu, Menu );
 
-   public:
+    public:
     CNonFocusableMenu( Panel *parent, const char *panelName )
         : BaseClass( parent, panelName ),
-          m_pFocus( 0 )
+        m_pFocus( 0 )
     {
     }
 
@@ -62,7 +62,7 @@ class CNonFocusableMenu : public Menu
         return m_pFocus->GetVPanel();
     }
 
-   private:
+    private:
     Panel *m_pFocus;
 };
 
@@ -71,7 +71,7 @@ class CNonFocusableMenu : public Menu
 //-----------------------------------------------------------------------------
 class TabCatchingTextEntry : public TextEntry
 {
-   public:
+    public:
     TabCatchingTextEntry( Panel *parent, const char *name, VPANEL comp )
         : TextEntry( parent, name ), m_pCompletionList( comp )
     {
@@ -103,7 +103,7 @@ class TabCatchingTextEntry : public TextEntry
         }
     }
 
-   private:
+    private:
     VPANEL m_pCompletionList;
 };
 

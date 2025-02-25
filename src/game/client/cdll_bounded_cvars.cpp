@@ -18,7 +18,7 @@ bool g_bForceCLPredictOff = false;
 
 class CBoundedCvar_Predict : public ConVar_ServerBounded
 {
-   public:
+    public:
     CBoundedCvar_Predict()
         : ConVar_ServerBounded( "cl_predict",
                                 "1.0",
@@ -59,7 +59,7 @@ ConVar_ServerBounded *cl_predict = &cl_predict_var;
 
 class CBoundedCvar_InterpRatio : public ConVar_ServerBounded
 {
-   public:
+    public:
     CBoundedCvar_InterpRatio()
         : ConVar_ServerBounded( "cl_interp_ratio",
                                 "2.0",
@@ -92,7 +92,7 @@ ConVar_ServerBounded *cl_interp_ratio = &cl_interp_ratio_var;
 
 class CBoundedCvar_Interp : public ConVar_ServerBounded
 {
-   public:
+    public:
     CBoundedCvar_Interp()
         : ConVar_ServerBounded( "cl_interp",
                                 "0.1",

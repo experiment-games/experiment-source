@@ -132,7 +132,7 @@ string DefaultValue( const FieldDescriptor* field );
 inline bool HasUnknownFields( const Descriptor* descriptor )
 {
     return descriptor->file()->options().optimize_for() !=
-           FileOptions::LITE_RUNTIME;
+            FileOptions::LITE_RUNTIME;
 }
 
 // Does this message class have generated parsing, serialization, and other
@@ -140,32 +140,32 @@ inline bool HasUnknownFields( const Descriptor* descriptor )
 inline bool HasGeneratedMethods( const Descriptor* descriptor )
 {
     return descriptor->file()->options().optimize_for() !=
-           FileOptions::CODE_SIZE;
+            FileOptions::CODE_SIZE;
 }
 
 // Does this message class have descriptor and reflection methods?
 inline bool HasDescriptorMethods( const Descriptor* descriptor )
 {
     return descriptor->file()->options().optimize_for() !=
-           FileOptions::LITE_RUNTIME;
+            FileOptions::LITE_RUNTIME;
 }
 inline bool HasDescriptorMethods( const EnumDescriptor* descriptor )
 {
     return descriptor->file()->options().optimize_for() !=
-           FileOptions::LITE_RUNTIME;
+            FileOptions::LITE_RUNTIME;
 }
 inline bool HasDescriptorMethods( const FileDescriptor* descriptor )
 {
     return descriptor->options().optimize_for() !=
-           FileOptions::LITE_RUNTIME;
+            FileOptions::LITE_RUNTIME;
 }
 
 // Should we generate generic services for this file?
 inline bool HasGenericServices( const FileDescriptor* file )
 {
     return file->service_count() > 0 &&
-           file->options().optimize_for() != FileOptions::LITE_RUNTIME &&
-           file->options().java_generic_services();
+            file->options().optimize_for() != FileOptions::LITE_RUNTIME &&
+            file->options().java_generic_services();
 }
 
 }  // namespace java

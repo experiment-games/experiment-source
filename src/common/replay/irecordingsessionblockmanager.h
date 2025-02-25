@@ -17,7 +17,7 @@
 
 class IRecordingSessionBlockManager : public IBaseInterface
 {
-   public:
+    public:
     virtual CBaseRecordingSessionBlock *GetBlock( ReplayHandle_t hBlock ) = 0;
     virtual void DeleteBlock( CBaseRecordingSessionBlock *pBlock ) = 0;
     virtual void UnloadBlock( CBaseRecordingSessionBlock *pBlock ) = 0;

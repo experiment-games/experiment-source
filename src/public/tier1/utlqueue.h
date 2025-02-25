@@ -24,7 +24,7 @@ enum QueueIter_t
 template < class T, class M = CUtlMemory< T > >
 class CUtlQueue
 {
-   public:
+    public:
     CUtlQueue( int growSize = 0, int initSize = 0 );
     CUtlQueue( T *pMemory, int numElements );
 
@@ -67,7 +67,7 @@ class CUtlQueue
     // Memory deallocation
     void Purge();
 
-   protected:
+    protected:
     QueueIter_t Next_Unchecked( QueueIter_t it ) const;
     QueueIter_t Previous_Unchecked( QueueIter_t it ) const;
 
@@ -91,7 +91,7 @@ class CUtlQueueFixed : public CUtlQueue< T, CUtlMemoryFixed< T, MAX_SIZE > >
 {
     typedef CUtlQueue< T, CUtlMemoryFixed< T, MAX_SIZE > > BaseClass;
 
-   public:
+    public:
     // constructor, destructor
     CUtlQueueFixed( int growSize = 0, int initSize = 0 )
         : BaseClass( growSize, initSize ) {}
@@ -467,47 +467,47 @@ inline void CUtlQueue_Test()
 
         Assert( queue.Count() == n );
 #if 0
-		for ( int j = 0; j < n; ++j )
-		{
-			Assert( queue.m_head != QUEUE_ITERATOR_INVALID );
-			Assert( queue.m_tail != QUEUE_ITERATOR_INVALID );
+        for ( int j = 0; j < n; ++j )
+        {
+            Assert( queue.m_head != QUEUE_ITERATOR_INVALID );
+            Assert( queue.m_tail != QUEUE_ITERATOR_INVALID );
 
-			Assert( queue.Count() == n - j );
+            Assert( queue.Count() == n - j );
 
-			Data_t data = queue.RemoveAtHead();
+            Data_t data = queue.RemoveAtHead();
 
-			Assert( queue.Count() == n - j - 1 );
+            Assert( queue.Count() == n - j - 1 );
 
-			if ( queue.Count() > 0 )
-			{
-				int id = queue.Head().m_id % queue.m_memory.Count();
-				for ( QueueIter_t it = queue.First(); it != QUEUE_ITERATOR_INVALID; it = queue.Next( it ) )
-				{
-					Assert( queue.Element( it ).m_id % queue.m_memory.Count() == id );
-					id = ( id + 1 ) % queue.m_memory.Count();
-				}
+            if ( queue.Count() > 0 )
+            {
+                int id = queue.Head().m_id % queue.m_memory.Count();
+                for ( QueueIter_t it = queue.First(); it != QUEUE_ITERATOR_INVALID; it = queue.Next( it ) )
+                {
+                    Assert( queue.Element( it ).m_id % queue.m_memory.Count() == id );
+                    id = ( id + 1 ) % queue.m_memory.Count();
+                }
 
-				id = queue.Tail().m_id % queue.m_memory.Count();
-				for ( QueueIter_t it = queue.Last(); it != QUEUE_ITERATOR_INVALID; it = queue.Previous( it ) )
-				{
-					Assert( queue.Element( it ).m_id % queue.m_memory.Count() == id );
-					id = ( id + queue.m_memory.Count() - 1 ) % queue.m_memory.Count();
-				}
-			}
+                id = queue.Tail().m_id % queue.m_memory.Count();
+                for ( QueueIter_t it = queue.Last(); it != QUEUE_ITERATOR_INVALID; it = queue.Previous( it ) )
+                {
+                    Assert( queue.Element( it ).m_id % queue.m_memory.Count() == id );
+                    id = ( id + queue.m_memory.Count() - 1 ) % queue.m_memory.Count();
+                }
+            }
 
-			for ( int i = 0; i < j; ++i )
-			{
-				int id = queue.m_memory[ i ].m_id;
-				if ( queue.IsValid( QueueIter_t( i ) ) )
-				{
-					Assert( ( id & 0xff000000 ) == 0 );
-				}
-				else
-				{
-					Assert( id == 0xdddddddd );
-				}
-			}
-		}
+            for ( int i = 0; i < j; ++i )
+            {
+                int id = queue.m_memory[ i ].m_id;
+                if ( queue.IsValid( QueueIter_t( i ) ) )
+                {
+                    Assert( ( id & 0xff000000 ) == 0 );
+                }
+                else
+                {
+                    Assert( id == 0xdddddddd );
+                }
+            }
+        }
 #else
         for ( int j = n - 1; j >= 0; --j )
         {

@@ -150,7 +150,7 @@ class CGunshipRagdollMotion : public IMotionEvent
 {
     DECLARE_SIMPLE_DATADESC();
 
-   public:
+    public:
     virtual simresult_e Simulate( IPhysicsMotionController *pController, IPhysicsObject *pObject, float deltaTime, Vector &linear, AngularImpulse &angular )
     {
         linear = Vector( 0, 0, 400 );
@@ -170,7 +170,7 @@ class CTargetGunshipCrash : public CPointEntity
 {
     DECLARE_CLASS( CTargetGunshipCrash, CPointEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     void InputEnable( inputdata_t &inputdata )
@@ -190,7 +190,7 @@ class CTargetGunshipCrash : public CPointEntity
         m_OnCrashed.FireOutput( this, this );
     }
 
-   private:
+    private:
     bool m_bDisabled;
 
     COutputEvent m_OnCrashed;
@@ -214,7 +214,7 @@ DEFINE_FIELD( m_bDisabled, FIELD_BOOLEAN ),
     //===================================================================
     class CNPC_CombineGunship : public CBaseHelicopter
 {
-   public:
+    public:
     DECLARE_CLASS( CNPC_CombineGunship, CBaseHelicopter );
 
     CNPC_CombineGunship( void );
@@ -336,7 +336,7 @@ DEFINE_FIELD( m_bDisabled, FIELD_BOOLEAN ),
     void UpdateFacingDirection( void );
     void CreateBellyBlastEnergyCore( void );
 
-   protected:
+    protected:
     // Because the combine gunship is a leaf class, we can use
     // static variables to store this information, and save some memory.
     // Should the gunship end up having inheritors, their activate may
@@ -348,7 +348,7 @@ DEFINE_FIELD( m_bDisabled, FIELD_BOOLEAN ),
     static bool m_sbStaticPoseParamsLoaded;
     virtual void PopulatePoseParameters( void );
 
-   private:
+    private:
     // Outputs
     COutputEvent m_OnFireCannon;
     COutputEvent m_OnCrashed;
@@ -1118,23 +1118,23 @@ void CNPC_CombineGunship::DoGroundAttackExplosion( void )
 
         CBroadcastRecipientFilter filter;
         te->BeamRingPoint( filter, 0.0,
-                           tr.endpos,                   // origin
-                           0,                           // start radius
-                           GUNSHIP_BELLY_BLAST_RADIUS,  // end radius
-                           g_iGunshipEffectIndex,       // texture
-                           0,                           // halo index
-                           0,                           // start frame
-                           0,                           // framerate
-                           0.2,                         // life
-                           10,                          // width
-                           0,                           // spread
-                           0,                           // amplitude
-                           255,                         // r
-                           255,                         // g
-                           255,                         // b
-                           50,                          // a
-                           0,                           // speed
-                           FBEAM_FADEOUT );
+                            tr.endpos,                   // origin
+                            0,                           // start radius
+                            GUNSHIP_BELLY_BLAST_RADIUS,  // end radius
+                            g_iGunshipEffectIndex,       // texture
+                            0,                           // halo index
+                            0,                           // start frame
+                            0,                           // framerate
+                            0.2,                         // life
+                            10,                          // width
+                            0,                           // spread
+                            0,                           // amplitude
+                            255,                         // r
+                            255,                         // g
+                            255,                         // b
+                            50,                          // a
+                            0,                           // speed
+                            FBEAM_FADEOUT );
     }
 
     // Send the effect over
@@ -1404,9 +1404,9 @@ void CNPC_CombineGunship::MoveHead( void )
     float flPitch = GetPoseParameter( m_poseFlex_Vert );
 
     /*
-      This head-turning code will cause the head to POP when switching from looking at the enemy
-      to looking according to the flight model. I will fix this later. Right now I'm turning
-      the code over to Ken for some aiming fixups. (sjb)
+    This head-turning code will cause the head to POP when switching from looking at the enemy
+    to looking according to the flight model. I will fix this later. Right now I'm turning
+    the code over to Ken for some aiming fixups. (sjb)
     */
 
     while ( 1 )
@@ -1453,7 +1453,7 @@ void CNPC_CombineGunship::MoveHead( void )
         flYaw = UTIL_Approach( GetLocalAngularVelocity().y, flYaw, 2.0 * 10 * m_flDeltaT );
         flPitch = UTIL_Approach( GetLocalAngularVelocity().x, flPitch, 2.0 * 10 * m_flDeltaT );
 #else  // new way- look towards the next waypoint?
-       // !!!UNDONE
+        // !!!UNDONE
 #endif
         break;
     }
@@ -2032,7 +2032,7 @@ void CNPC_CombineGunship::BeginDestruct( void )
     int count = m_hRagdoll->VPhysicsGetObjectList( pList, ARRAYSIZE(pList) );
     for ( int i = 0; i < count; i++ )
     {
-      m_pCrashingController->AttachObject( pList[i], false );
+    m_pCrashingController->AttachObject( pList[i], false );
     }
     */
 
@@ -2779,14 +2779,14 @@ void CNPC_CombineGunship::DoImpactEffect( trace_t &tr, int nDamageType )
     UTIL_ImpactTrace( &tr, nDamageType, "ImpactGunship" );
 
     // These glow effects don't sort properly, so they're cut for E3 2003 (sjb)
-#if 0 
-	CEffectData data;
+#if 0
+    CEffectData data;
 
-	data.m_vOrigin = tr.endpos;
-	data.m_vNormal = vec3_origin;
-	data.m_vAngles = vec3_angle;
+    data.m_vOrigin = tr.endpos;
+    data.m_vNormal = vec3_origin;
+    data.m_vAngles = vec3_angle;
 
-	DispatchEffect( "GunshipImpact", data );
+    DispatchEffect( "GunshipImpact", data );
 #endif
 }
 

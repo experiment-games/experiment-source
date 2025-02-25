@@ -47,7 +47,7 @@ extern CUtlMemoryPool g_EntityListPool;
 
 class CDecal : public CPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CDecal, CPointEntity );
 
     void Spawn( void );
@@ -63,11 +63,11 @@ class CDecal : public CPointEntity
 
     DECLARE_DATADESC();
 
-   public:
+    public:
     int m_nTexture;
     bool m_bLowPriority;
 
-   private:
+    private:
     void StaticDecal( void );
 };
 
@@ -90,7 +90,7 @@ DEFINE_FIELD( m_nTexture, FIELD_INTEGER ),
 void CDecal::Spawn( void )
 {
     if ( m_nTexture < 0 ||
-         ( gpGlobals->deathmatch && HasSpawnFlags( SF_DECAL_NOTINDEATHMATCH ) ) )
+        ( gpGlobals->deathmatch && HasSpawnFlags( SF_DECAL_NOTINDEATHMATCH ) ) )
     {
         UTIL_Remove( this );
         return;
@@ -141,7 +141,7 @@ void CDecal::StaticDecal( void )
 {
     class CTraceFilterValidForDecal : public CTraceFilterSimple
     {
-       public:
+        public:
         CTraceFilterValidForDecal( const IHandleEntity *passentity, int collisionGroup )
             : CTraceFilterSimple( passentity, collisionGroup )
         {
@@ -198,9 +198,9 @@ void CDecal::StaticDecal( void )
             if ( !canDraw )
             {
                 Warning( "Suppressed StaticDecal which would have hit entity %i (class:%s, name:%s) with modelindex = 0\n",
-                         ent->entindex(),
-                         ent->GetClassname(),
-                         STRING( ent->GetEntityName() ) );
+                        ent->entindex(),
+                        ent->GetClassname(),
+                        STRING( ent->GetEntityName() ) );
             }
         }
     }
@@ -238,7 +238,7 @@ bool CDecal::KeyValue( const char *szKeyName, const char *szValue )
 //-----------------------------------------------------------------------------
 class CProjectedDecal : public CPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CProjectedDecal, CPointEntity );
 
     void Spawn( void );
@@ -254,11 +254,11 @@ class CProjectedDecal : public CPointEntity
 
     DECLARE_DATADESC();
 
-   public:
+    public:
     int m_nTexture;
     float m_flDistance;
 
-   private:
+    private:
     void ProjectDecal( CRecipientFilter &filter );
 
     void StaticDecal( void );
@@ -284,7 +284,7 @@ DEFINE_FIELD( m_nTexture, FIELD_INTEGER ),
 void CProjectedDecal::Spawn( void )
 {
     if ( m_nTexture < 0 ||
-         ( gpGlobals->deathmatch && HasSpawnFlags( SF_DECAL_NOTINDEATHMATCH ) ) )
+        ( gpGlobals->deathmatch && HasSpawnFlags( SF_DECAL_NOTINDEATHMATCH ) ) )
     {
         UTIL_Remove( this );
         return;

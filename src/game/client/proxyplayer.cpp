@@ -25,11 +25,11 @@ void ToolFramework_RecordMaterialParams( IMaterial *pMaterial );
 
 class CPlayerProximityProxy : public CResultProxy
 {
-   public:
+    public:
     bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
     void OnBind( void *pC_BaseEntity );
 
-   private:
+    private:
     float m_Factor;
 };
 
@@ -73,11 +73,11 @@ EXPOSE_INTERFACE( CPlayerProximityProxy, IMaterialProxy, "PlayerProximity" IMATE
 
 class CPlayerTeamMatchProxy : public CResultProxy
 {
-   public:
+    public:
     bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
     void OnBind( void *pC_BaseEntity );
 
-   private:
+    private:
 };
 
 bool CPlayerTeamMatchProxy::Init( IMaterial *pMaterial, KeyValues *pKeyValues )
@@ -115,11 +115,11 @@ EXPOSE_INTERFACE( CPlayerTeamMatchProxy, IMaterialProxy, "PlayerTeamMatch" IMATE
 //-----------------------------------------------------------------------------
 class CPlayerViewProxy : public CResultProxy
 {
-   public:
+    public:
     bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
     void OnBind( void *pC_BaseEntity );
 
-   private:
+    private:
     float m_Factor;
 };
 
@@ -166,11 +166,11 @@ EXPOSE_INTERFACE( CPlayerViewProxy, IMaterialProxy, "PlayerView" IMATERIAL_PROXY
 //-----------------------------------------------------------------------------
 class CPlayerSpeedProxy : public CResultProxy
 {
-   public:
+    public:
     bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
     void OnBind( void *pC_BaseEntity );
 
-   private:
+    private:
     float m_Factor;
 };
 
@@ -206,11 +206,11 @@ EXPOSE_INTERFACE( CPlayerSpeedProxy, IMaterialProxy, "PlayerSpeed" IMATERIAL_PRO
 //-----------------------------------------------------------------------------
 class CPlayerPositionProxy : public CResultProxy
 {
-   public:
+    public:
     bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
     void OnBind( void *pC_BaseEntity );
 
-   private:
+    private:
     float m_Factor;
 };
 
@@ -249,7 +249,7 @@ EXPOSE_INTERFACE( CPlayerPositionProxy, IMaterialProxy, "PlayerPosition" IMATERI
 //-----------------------------------------------------------------------------
 class CEntitySpeedProxy : public CResultProxy
 {
-   public:
+    public:
     void OnBind( void *pC_BaseEntity );
 };
 
@@ -278,11 +278,11 @@ EXPOSE_INTERFACE( CEntitySpeedProxy, IMaterialProxy, "EntitySpeed" IMATERIAL_PRO
 //-----------------------------------------------------------------------------
 class CEntityRandomProxy : public CResultProxy
 {
-   public:
+    public:
     bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
     void OnBind( void *pC_BaseEntity );
 
-   private:
+    private:
     CFloatInput m_Factor;
 };
 
@@ -324,7 +324,7 @@ EXPOSE_INTERFACE( CEntityRandomProxy, IMaterialProxy, "EntityRandom" IMATERIAL_P
 //-----------------------------------------------------------------------------
 class CPlayerLogoProxy : public IMaterialProxy
 {
-   public:
+    public:
     CPlayerLogoProxy();
 
     virtual bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
@@ -352,10 +352,10 @@ class CPlayerLogoProxy : public IMaterialProxy
 
     virtual IMaterial *GetMaterial();
 
-   protected:
+    protected:
     virtual void OnLogoBindInternal( int playerindex );
 
-   private:
+    private:
     IMaterialVar *m_pBaseTextureVar;
 
     struct PlayerLogo
@@ -498,17 +498,17 @@ void CPlayerLogoOnModelProxy::OnBind( void *pC_BaseEntity )
     C_BaseEntity *pEntity = pRend->GetIClientUnknown()->GetBaseEntity();
     if ( pEntity )
     {
-      if ( !pEntity->IsPlayer() )
-      {
+    if ( !pEntity->IsPlayer() )
+    {
         pEntity = pEntity->GetRootMoveParent();
-      }
+    }
 
-      if ( pEntity && pEntity->IsPlayer() )
-      {
+    if ( pEntity && pEntity->IsPlayer() )
+    {
         int iPlayerIndex = pEntity->entindex();
 
         OnLogoBindInternal( iPlayerIndex );
-      }
+    }
     }
   }
 }

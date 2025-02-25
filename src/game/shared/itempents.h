@@ -24,7 +24,7 @@ class KeyValues;
 //-----------------------------------------------------------------------------
 abstract_class ITempEntsSystem : public IPredictionSystem
 {
-   public:
+    public:
     virtual void ArmorRicochet( IRecipientFilter & filer, float delay, const Vector* pos, const Vector* dir ) = 0;
     virtual void BeamEntPoint( IRecipientFilter & filer, float delay, int nStartEntity, const Vector* start, int nEndEntity, const Vector* end, int modelindex, int haloindex, int startframe, int framerate, float life, float width, float endWidth, int fadeLength, float amplitude, int r, int g, int b, int a, int speed ) = 0;
     virtual void BeamEnts( IRecipientFilter & filer, float delay, int start, int end, int modelindex, int haloindex, int startframe, int framerate, float life, float width, float endWidth, int fadeLength, float amplitude, int r, int g, int b, int a, int speed ) = 0;

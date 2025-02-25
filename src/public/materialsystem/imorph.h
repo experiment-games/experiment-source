@@ -60,7 +60,7 @@ struct MorphWeight_t
 //-----------------------------------------------------------------------------
 abstract_class IMorph
 {
-   public:
+    public:
     // Locks the morph, destroys any existing contents
     virtual void Lock( float flFloatToFixedScale = 1.0f ) = 0;
 
@@ -76,7 +76,7 @@ abstract_class IMorph
 //-----------------------------------------------------------------------------
 class CMorphBuilder
 {
-   public:
+    public:
     CMorphBuilder();
     ~CMorphBuilder();
 
@@ -104,7 +104,7 @@ class CMorphBuilder
 
     void AdvanceMorph( int nSourceVertex, int nMorphTargetId );
 
-   private:
+    private:
     MorphVertexInfo_t m_Info;
     IMorph *m_pMorph;
 };

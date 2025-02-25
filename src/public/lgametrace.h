@@ -24,12 +24,12 @@ LUA_API void lua_pushtrace_t( lua_State *L, trace_t *trace, bool bNoNewTable = f
 
 class CTraceLuaFilter : public CTraceFilterSimple
 {
-   public:
+    public:
     CTraceLuaFilter( lua_State *L, int filterArg, int collisionGroup, bool bIgnoreWorld, bool bFilterTableInverted = false );
 
     virtual bool ShouldHitEntity( IHandleEntity *pHandleEntity, int contentsMask );
 
-   private:
+    private:
     const IHandleEntity *m_pPassEntity;
     lua_State *m_pLuaState;
     int m_iFilterType;

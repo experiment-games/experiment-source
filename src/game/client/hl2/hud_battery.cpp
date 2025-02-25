@@ -32,7 +32,7 @@ class CHudBattery : public CHudNumericDisplay, public CHudElement
 {
     DECLARE_CLASS_SIMPLE( CHudBattery, CHudNumericDisplay );
 
-   public:
+    public:
     CHudBattery( const char *pElementName );
     void Init( void );
     void Reset( void );
@@ -41,7 +41,7 @@ class CHudBattery : public CHudNumericDisplay, public CHudElement
     void MsgFunc_Battery( bf_read &msg );
     bool ShouldDraw();
 
-   private:
+    private:
     int m_iBat;
     int m_iNewBat;
 };

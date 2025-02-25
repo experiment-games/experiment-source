@@ -26,7 +26,7 @@ static CDllDemandLoader g_GameUI( "GameUI" );
 //-----------------------------------------------------------------------------
 class CPointBonusMapsAccessor : public CPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CPointBonusMapsAccessor, CPointEntity );
     DECLARE_DATADESC();
 
@@ -36,7 +36,7 @@ class CPointBonusMapsAccessor : public CPointEntity
     void InputComplete( inputdata_t &inputdata );
     void InputSave( inputdata_t &inputdata );
 
-   private:
+    private:
     string_t m_String_tFileName;
     string_t m_String_tMapName;
     IGameUI *m_pGameUI;

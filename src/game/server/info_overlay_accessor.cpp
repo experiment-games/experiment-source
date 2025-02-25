@@ -16,7 +16,7 @@
 
 class CInfoOverlayAccessor : public CPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CInfoOverlayAccessor, CPointEntity );
 
     int UpdateTransmitState();
@@ -24,7 +24,7 @@ class CInfoOverlayAccessor : public CPointEntity
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
 
-   private:
+    private:
     CNetworkVar( int, m_iOverlayID );
 };
 

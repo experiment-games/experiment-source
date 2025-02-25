@@ -35,7 +35,7 @@ class CBaseFilter : public CLogicalEntity
 {
     DECLARE_CLASS( CBaseFilter, CLogicalEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     bool PassesFilter( CBaseEntity *pCaller, CBaseEntity *pEntity );
@@ -50,7 +50,7 @@ class CBaseFilter : public CLogicalEntity
     COutputEvent m_OnPass;  // Fired when filter is passed
     COutputEvent m_OnFail;  // Fired when filter is failed
 
-   protected:
+    protected:
     virtual bool PassesFilterImpl( CBaseEntity *pCaller, CBaseEntity *pEntity );
     virtual bool PassesDamageFilterImpl( const CTakeDamageInfo &info );
 };

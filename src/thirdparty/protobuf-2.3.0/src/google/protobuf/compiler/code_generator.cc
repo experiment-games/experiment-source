@@ -52,7 +52,7 @@ io::ZeroCopyOutputStream* OutputDirectory::OpenForInsert(
 
 // Parses a set of comma-delimited name/value pairs.
 void ParseGeneratorParameter(const string& text,
-                             vector<pair<string, string> >* output) {
+                            vector<pair<string, string> >* output) {
   vector<string> parts;
   SplitStringUsing(text, ",", &parts);
 
@@ -60,11 +60,11 @@ void ParseGeneratorParameter(const string& text,
     string::size_type equals_pos = parts[i].find_first_of('=');
     pair<string, string> value;
     if (equals_pos == string::npos) {
-      value.first = parts[i];
-      value.second = "";
+    value.first = parts[i];
+    value.second = "";
     } else {
-      value.first = parts[i].substr(0, equals_pos);
-      value.second = parts[i].substr(equals_pos + 1);
+    value.first = parts[i].substr(0, equals_pos);
+    value.second = parts[i].substr(equals_pos + 1);
     }
     output->push_back(value);
   }

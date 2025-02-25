@@ -27,7 +27,7 @@
 // utlarray derives from this so we can do the type check above
 struct base_array_t
 {
-   public:
+    public:
     static const bool IsUtlArray = true;  // Used to match this at compiletime
 };
 
@@ -41,7 +41,7 @@ const bool base_array_t::IsUtlArray SELECTANY;
 template < class T, size_t MAX_SIZE >
 class CUtlArray : public base_array_t
 {
-   public:
+    public:
     typedef T ElemType_t;
     typedef T* iterator;
     typedef const T* const_iterator;
@@ -94,7 +94,7 @@ class CUtlArray : public base_array_t
 
     void Sort( int( __cdecl* pfnCompare )( const T*, const T* ) );
 
-   protected:
+    protected:
     T m_Memory[MAX_SIZE];
 };
 

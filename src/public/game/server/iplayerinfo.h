@@ -14,7 +14,7 @@
 // helper class for user commands
 class CBotCmd
 {
-   public:
+    public:
     CBotCmd()
     {
         Reset();
@@ -97,7 +97,7 @@ class CBotCmd
 
 abstract_class IPlayerInfo
 {
-   public:
+    public:
     // returns the players name (UTF-8 encoded)
     virtual const char *GetName() = 0;
     // returns the userid (slot number)
@@ -149,14 +149,14 @@ abstract_class IPlayerInfo
 #define INTERFACEVERSION_PLAYERINFOMANAGER "PlayerInfoManager002"
 abstract_class IPlayerInfoManager
 {
-   public:
+    public:
     virtual IPlayerInfo *GetPlayerInfo( edict_t * pEdict ) = 0;
     virtual CGlobalVars *GetGlobalVars() = 0;
 };
 
 abstract_class IBotController
 {
-   public:
+    public:
     // change the bots position
     virtual void SetAbsOrigin( Vector & vec ) = 0;
     virtual void SetAbsAngles( QAngle & ang ) = 0;
@@ -178,7 +178,7 @@ abstract_class IBotController
 #define INTERFACEVERSION_PLAYERBOTMANAGER "BotManager001"
 abstract_class IBotManager
 {
-   public:
+    public:
     virtual IBotController *GetBotController( edict_t * pEdict ) = 0;
     // create a new bot and spawn it into the server
     virtual edict_t *CreateBot( const char *botname ) = 0;

@@ -22,7 +22,7 @@ class C_DynamicProp : public C_BreakableProp
 {
     DECLARE_CLASS( C_DynamicProp, C_BreakableProp );
 
-   public:
+    public:
     DECLARE_NETWORKCLASS();
 
     // constructor, destructor
@@ -34,7 +34,7 @@ class C_DynamicProp : public C_BreakableProp
     bool TestBoneFollowers( const Ray_t& ray, unsigned int fContentsMask, trace_t& tr );
     bool TestCollision( const Ray_t& ray, unsigned int fContentsMask, trace_t& tr );
 
-   private:
+    private:
     C_DynamicProp( const C_DynamicProp& );
 
     bool m_bUseHitboxesForRenderBox;

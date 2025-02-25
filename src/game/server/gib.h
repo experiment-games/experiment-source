@@ -31,9 +31,9 @@ enum GibType_e
 };
 
 class CGib : public CBaseAnimating,
-             public CDefaultPlayerPickupVPhysics
+            public CDefaultPlayerPickupVPhysics
 {
-   public:
+    public:
     DECLARE_CLASS( CGib, CBaseAnimating );
 
     void Spawn( const char *szGibModel );
@@ -85,7 +85,7 @@ class CGib : public CBaseAnimating,
 
     DECLARE_DATADESC();
 
-   public:
+    public:
     void SetBloodColor( int nBloodColor );
 
     int m_cBloodDecals;
@@ -96,7 +96,7 @@ class CGib : public CBaseAnimating,
     CHandle< CBasePlayer > m_hPhysicsAttacker;
     float m_flLastPhysicsInfluenceTime;
 
-   private:
+    private:
     // A little piece of duplicated code
     void AdjustVelocityBasedOnHealth( int nHealth, Vector &vecVelocity );
     int m_bloodColor;
@@ -107,7 +107,7 @@ class CGib : public CBaseAnimating,
 
 class CRagGib : public CBaseAnimating
 {
-   public:
+    public:
     DECLARE_CLASS( CRagGib, CBaseAnimating );
 
     void Spawn( const char *szModel, const Vector &vecOrigin, const Vector &vecForce, float flFadeTime );

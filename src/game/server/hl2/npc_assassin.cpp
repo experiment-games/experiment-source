@@ -438,8 +438,8 @@ int CNPC_Assassin::SelectSchedule( void )
 
             // Need to move
             if ( /*(	HasCondition( COND_SEE_ENEMY ) && HasCondition( COND_ASSASSIN_ENEMY_TARGETTING_ME ) && random->RandomInt( 0, 32 ) == 0 && m_flNextFlipTime < gpGlobals->curtime ) )*/
-                 ( m_nNumFlips > 0 ) ||
-                 ( ( HasCondition( COND_LIGHT_DAMAGE ) && random->RandomInt( 0, 2 ) == 0 ) ) || ( HasCondition( COND_HEAVY_DAMAGE ) ) )
+                ( m_nNumFlips > 0 ) ||
+                ( ( HasCondition( COND_LIGHT_DAMAGE ) && random->RandomInt( 0, 2 ) == 0 ) ) || ( HasCondition( COND_HEAVY_DAMAGE ) ) )
             {
                 if ( m_nNumFlips <= 0 )
                 {
@@ -576,12 +576,12 @@ bool CNPC_Assassin::CanFlip( int flipType, Activity &activity, const Vector *avo
     // See if we're hit an obstruction in that direction
     if ( tr.fraction < 1.0f )
     {
-      if ( g_debug_assassin.GetBool() )
-      {
+    if ( g_debug_assassin.GetBool() )
+    {
         NDebugOverlay::BoxDirection( GetAbsOrigin(), NAI_Hull::Mins(m_eHull) + Vector( 0, 0, StepHeight() ), NAI_Hull::Maxs(m_eHull) + Vector( testDist, 0, StepHeight() ), testDir, 255, 0, 0, true, 2.0f );
-      }
+    }
 
-      return false;
+    return false;
     }
 
   #define NUM_STEPS 2
@@ -590,25 +590,25 @@ bool CNPC_Assassin::CanFlip( int flipType, Activity &activity, const Vector *avo
 
     for ( int i = 1; i <= NUM_STEPS; i++ )
     {
-      endPos = GetAbsOrigin() + ( testDir * (stepLength*i) );
+    endPos = GetAbsOrigin() + ( testDir * (stepLength*i) );
 
-      // Also check for a cliff edge
-      UTIL_TraceHull( endPos, endPos - Vector( 0, 0, StepHeight() * 4.0f ), NAI_Hull::Mins(m_eHull) + Vector( 0, 0, StepHeight() ), NAI_Hull::Maxs(m_eHull), MASK_NPCSOLID, this, COLLISION_GROUP_NONE, &tr );
+    // Also check for a cliff edge
+    UTIL_TraceHull( endPos, endPos - Vector( 0, 0, StepHeight() * 4.0f ), NAI_Hull::Mins(m_eHull) + Vector( 0, 0, StepHeight() ), NAI_Hull::Maxs(m_eHull), MASK_NPCSOLID, this, COLLISION_GROUP_NONE, &tr );
 
-      if ( tr.fraction == 1.0f )
-      {
+    if ( tr.fraction == 1.0f )
+    {
         if ( g_debug_assassin.GetBool() )
         {
-          NDebugOverlay::BoxDirection( endPos, NAI_Hull::Mins(m_eHull) + Vector( 0, 0, StepHeight() ), NAI_Hull::Maxs(m_eHull) + Vector( StepHeight() * 4.0f, 0, StepHeight() ), Vector(0,0,-1), 255, 0, 0, true, 2.0f );
+        NDebugOverlay::BoxDirection( endPos, NAI_Hull::Mins(m_eHull) + Vector( 0, 0, StepHeight() ), NAI_Hull::Maxs(m_eHull) + Vector( StepHeight() * 4.0f, 0, StepHeight() ), Vector(0,0,-1), 255, 0, 0, true, 2.0f );
         }
 
         return false;
-      }
+    }
     }
 
     if ( g_debug_assassin.GetBool() )
     {
-      NDebugOverlay::BoxDirection( GetAbsOrigin(), NAI_Hull::Mins(m_eHull) + Vector( 0, 0, StepHeight() ), NAI_Hull::Maxs(m_eHull) + Vector( testDist, 0, StepHeight() ), testDir, 0, 255, 0, true, 2.0f );
+    NDebugOverlay::BoxDirection( GetAbsOrigin(), NAI_Hull::Mins(m_eHull) + Vector( 0, 0, StepHeight() ), NAI_Hull::Maxs(m_eHull) + Vector( testDist, 0, StepHeight() ), testDir, 0, 255, 0, true, 2.0f );
     }
     */
 
@@ -650,9 +650,9 @@ void CNPC_Assassin::StartTask( const Task_t *pTask )
                 {
                     // Don't flip back to where we just were
                     if ( ( ( i == FLIP_LEFT ) && ( m_nLastFlipType == FLIP_RIGHT ) ) ||
-                         ( ( i == FLIP_RIGHT ) && ( m_nLastFlipType == FLIP_LEFT ) ) ||
-                         ( ( i == FLIP_FORWARD ) && ( m_nLastFlipType == FLIP_BACKWARD ) ) ||
-                         ( ( i == FLIP_BACKWARD ) && ( m_nLastFlipType == FLIP_FORWARD ) ) )
+                        ( ( i == FLIP_RIGHT ) && ( m_nLastFlipType == FLIP_LEFT ) ) ||
+                        ( ( i == FLIP_FORWARD ) && ( m_nLastFlipType == FLIP_BACKWARD ) ) ||
+                        ( ( i == FLIP_BACKWARD ) && ( m_nLastFlipType == FLIP_FORWARD ) ) )
                     {
                         flipAct = ACT_INVALID;
                         continue;
@@ -826,7 +826,7 @@ const Vector &CNPC_Assassin::GetViewOffset( void )
     // FIXME: Use eye attachment?
     //  If we're crouching, offset appropriately
     if ( ( GetActivity() == ACT_ASSASSIN_PERCH ) ||
-         ( GetActivity() == ACT_RANGE_ATTACK1 ) )
+        ( GetActivity() == ACT_RANGE_ATTACK1 ) )
     {
         eyeOffset = Vector( 0, 0, 24.0f );
     }

@@ -21,7 +21,7 @@
 //-----------------------------------------------------------------------------
 class CTEWorldDecal : public CBaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTEWorldDecal, CBaseTempEntity );
 
     CTEWorldDecal( const char* name );
@@ -31,7 +31,7 @@ class CTEWorldDecal : public CBaseTempEntity
 
     DECLARE_SERVERCLASS();
 
-   public:
+    public:
     CNetworkVector( m_vecOrigin );
     CNetworkVar( int, m_nIndex );
 };

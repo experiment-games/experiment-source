@@ -15,7 +15,7 @@
 //-----------------------------------------------------------------------------
 class CPluginHelpersCheck : public IPluginHelpersCheck
 {
-   public:
+    public:
     virtual bool CreateMessage( const char *plugin, edict_t *pEntity, DIALOG_TYPE type, KeyValues *data );
 };
 

@@ -25,7 +25,7 @@ class CBaseExperimentCombatWeapon : public CWeaponExperimentBase
 
     DECLARE_CLASS( CBaseExperimentCombatWeapon, CWeaponExperimentBase );
 
-   public:
+    public:
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
 
@@ -50,12 +50,12 @@ class CBaseExperimentCombatWeapon : public CWeaponExperimentBase
 
     virtual void ItemHolsterFrame( void );
 
-   protected:
+    protected:
     bool m_bLowered;        // Whether the viewmodel is raised or lowered
     float m_flRaiseTime;    // If lowered, the time we should raise the viewmodel
     float m_flHolsterTime;  // When the weapon was holstered
 
-   private:
+    private:
     CBaseExperimentCombatWeapon( const CBaseExperimentCombatWeapon & );
 };
 

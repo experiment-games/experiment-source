@@ -25,7 +25,7 @@ class ExpandButton : public ToggleButton
 {
     DECLARE_CLASS_SIMPLE( ExpandButton, ToggleButton );
 
-   public:
+    public:
     ExpandButton( Panel *parent, const char *panelName );
     ~ExpandButton();
 
@@ -38,18 +38,18 @@ class ExpandButton : public ToggleButton
 
     virtual void Paint();
 
-   protected:
+    protected:
     virtual void ApplySchemeSettings( IScheme *pScheme );
     MESSAGE_FUNC_PTR( OnExpanded, "Expanded", panel );
 
     virtual IBorder *GetBorder( bool depressed, bool armed, bool selected, bool keyfocus );
 
     /* MESSAGES SENT
-      "Expanded" - sent when the expand button state is changed
+    "Expanded" - sent when the expand button state is changed
         "state"	- button state: 1 is expanded, 0 is unexpanded
     */
 
-   private:
+    private:
     bool m_bExpandable;
     HFont m_hFont;
     Color m_Color;

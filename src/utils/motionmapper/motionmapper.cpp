@@ -299,7 +299,7 @@ int Grab_Nodes( s_node_t *pnodes )
             /*
             if (strlen(pnodes[index].name) != 0)
             {
-              MdlError( "bone \"%s\" exists more than once\n", name );
+            MdlError( "bone \"%s\" exists more than once\n", name );
             }
             */
             // copy name to struct array
@@ -725,10 +725,10 @@ int lookup_texture( char *texturename, int maxlen )
     g_texture[i].material = -1;
     /*
     if (stristr( texturename, "chrome" ) != NULL) {
-      texture[i].flags = STUDIO_NF_FLATSHADE | STUDIO_NF_CHROME;
+    texture[i].flags = STUDIO_NF_FLATSHADE | STUDIO_NF_CHROME;
     }
     else {
-      texture[i].flags = 0;
+    texture[i].flags = 0;
     }
     */
     g_numtextures++;
@@ -865,13 +865,13 @@ int faceCompare( const void *elem1, const void *elem2 )
 static void CalcTriangleTangentSpace( s_source_t *pSrc, int v1, int v2, int v3, Vector &sVect, Vector &tVect )
 {
     /*
-      static bool firstTime = true;
-      static FILE *fp = NULL;
-      if( firstTime )
-      {
+    static bool firstTime = true;
+    static FILE *fp = NULL;
+    if( firstTime )
+    {
         firstTime = false;
         fp = fopen( "crap.out", "w" );
-      }
+    }
     */
 
     /* Compute the partial derivatives of X, Y, and Z with respect to S and T. */
@@ -924,55 +924,55 @@ static void CalcTriangleTangentSpace( s_source_t *pSrc, int v1, int v2, int v3, 
     VectorNormalize( tVect );
 
     /*
-      // Calculate flat normal
-      Vector flatNormal;
-      edge01 = p1 - p0;
-      edge02 = p2 - p0;
-      CrossProduct( edge02, edge01, flatNormal );
-      VectorNormalize( flatNormal );
+    // Calculate flat normal
+    Vector flatNormal;
+    edge01 = p1 - p0;
+    edge02 = p2 - p0;
+    CrossProduct( edge02, edge01, flatNormal );
+    VectorNormalize( flatNormal );
 
-      // Get the average position
-      Vector avgPos = ( p0 + p1 + p2 ) / 3.0f;
+    // Get the average position
+    Vector avgPos = ( p0 + p1 + p2 ) / 3.0f;
 
-      // Draw the svect
-      Vector endS = avgPos + sVect * .2f;
-      fvprint( 0,  fp, "2\n" );
-      fvprint( 0,  fp, "%f %f %f 1.0 0.0 0.0\n", endS[0], endS[1], endS[2] );
-      fvprint( 0,  fp, "%f %f %f 1.0 0.0 0.0\n", avgPos[0], avgPos[1], avgPos[2] );
+    // Draw the svect
+    Vector endS = avgPos + sVect * .2f;
+    fvprint( 0,  fp, "2\n" );
+    fvprint( 0,  fp, "%f %f %f 1.0 0.0 0.0\n", endS[0], endS[1], endS[2] );
+    fvprint( 0,  fp, "%f %f %f 1.0 0.0 0.0\n", avgPos[0], avgPos[1], avgPos[2] );
 
-      // Draw the tvect
-      Vector endT = avgPos + tVect * .2f;
-      fvprint( 0,  fp, "2\n" );
-      fvprint( 0,  fp, "%f %f %f 0.0 1.0 0.0\n", endT[0], endT[1], endT[2] );
-      fvprint( 0,  fp, "%f %f %f 0.0 1.0 0.0\n", avgPos[0], avgPos[1], avgPos[2] );
+    // Draw the tvect
+    Vector endT = avgPos + tVect * .2f;
+    fvprint( 0,  fp, "2\n" );
+    fvprint( 0,  fp, "%f %f %f 0.0 1.0 0.0\n", endT[0], endT[1], endT[2] );
+    fvprint( 0,  fp, "%f %f %f 0.0 1.0 0.0\n", avgPos[0], avgPos[1], avgPos[2] );
 
-      // Draw the normal
-      Vector endN = avgPos + flatNormal * .2f;
-      fvprint( 0,  fp, "2\n" );
-      fvprint( 0,  fp, "%f %f %f 0.0 0.0 1.0\n", endN[0], endN[1], endN[2] );
-      fvprint( 0,  fp, "%f %f %f 0.0 0.0 1.0\n", avgPos[0], avgPos[1], avgPos[2] );
+    // Draw the normal
+    Vector endN = avgPos + flatNormal * .2f;
+    fvprint( 0,  fp, "2\n" );
+    fvprint( 0,  fp, "%f %f %f 0.0 0.0 1.0\n", endN[0], endN[1], endN[2] );
+    fvprint( 0,  fp, "%f %f %f 0.0 0.0 1.0\n", avgPos[0], avgPos[1], avgPos[2] );
 
-      // Draw the wireframe of the triangle in white.
-      fvprint( 0,  fp, "2\n" );
-      fvprint( 0,  fp, "%f %f %f 1.0 1.0 1.0\n", p0[0], p0[1], p0[2] );
-      fvprint( 0,  fp, "%f %f %f 1.0 1.0 1.0\n", p1[0], p1[1], p1[2] );
-      fvprint( 0,  fp, "2\n" );
-      fvprint( 0,  fp, "%f %f %f 1.0 1.0 1.0\n", p1[0], p1[1], p1[2] );
-      fvprint( 0,  fp, "%f %f %f 1.0 1.0 1.0\n", p2[0], p2[1], p2[2] );
-      fvprint( 0,  fp, "2\n" );
-      fvprint( 0,  fp, "%f %f %f 1.0 1.0 1.0\n", p2[0], p2[1], p2[2] );
-      fvprint( 0,  fp, "%f %f %f 1.0 1.0 1.0\n", p0[0], p0[1], p0[2] );
+    // Draw the wireframe of the triangle in white.
+    fvprint( 0,  fp, "2\n" );
+    fvprint( 0,  fp, "%f %f %f 1.0 1.0 1.0\n", p0[0], p0[1], p0[2] );
+    fvprint( 0,  fp, "%f %f %f 1.0 1.0 1.0\n", p1[0], p1[1], p1[2] );
+    fvprint( 0,  fp, "2\n" );
+    fvprint( 0,  fp, "%f %f %f 1.0 1.0 1.0\n", p1[0], p1[1], p1[2] );
+    fvprint( 0,  fp, "%f %f %f 1.0 1.0 1.0\n", p2[0], p2[1], p2[2] );
+    fvprint( 0,  fp, "2\n" );
+    fvprint( 0,  fp, "%f %f %f 1.0 1.0 1.0\n", p2[0], p2[1], p2[2] );
+    fvprint( 0,  fp, "%f %f %f 1.0 1.0 1.0\n", p0[0], p0[1], p0[2] );
 
-      // Draw a slightly shrunken version of the geometry to hide surfaces
-      Vector tmp0 = p0 - flatNormal * .1f;
-      Vector tmp1 = p1 - flatNormal * .1f;
-      Vector tmp2 = p2 - flatNormal * .1f;
-      fvprint( 0,  fp, "3\n" );
-      fvprint( 0,  fp, "%f %f %f 0.1 0.1 0.1\n", tmp0[0], tmp0[1], tmp0[2] );
-      fvprint( 0,  fp, "%f %f %f 0.1 0.1 0.1\n", tmp1[0], tmp1[1], tmp1[2] );
-      fvprint( 0,  fp, "%f %f %f 0.1 0.1 0.1\n", tmp2[0], tmp2[1], tmp2[2] );
+    // Draw a slightly shrunken version of the geometry to hide surfaces
+    Vector tmp0 = p0 - flatNormal * .1f;
+    Vector tmp1 = p1 - flatNormal * .1f;
+    Vector tmp2 = p2 - flatNormal * .1f;
+    fvprint( 0,  fp, "3\n" );
+    fvprint( 0,  fp, "%f %f %f 0.1 0.1 0.1\n", tmp0[0], tmp0[1], tmp0[2] );
+    fvprint( 0,  fp, "%f %f %f 0.1 0.1 0.1\n", tmp1[0], tmp1[1], tmp1[2] );
+    fvprint( 0,  fp, "%f %f %f 0.1 0.1 0.1\n", tmp2[0], tmp2[1], tmp2[2] );
 
-      fflush( fp );
+    fflush( fp );
     */
 }
 
@@ -1005,11 +1005,11 @@ void CalcModelTangentSpaces( s_source_t *pSrc )
         {
             s_face_t *pFace = &pSrc->face[triID + pMesh->faceoffset];
             CalcTriangleTangentSpace( pSrc,
-                                      pMesh->vertexoffset + pFace->a,
-                                      pMesh->vertexoffset + pFace->b,
-                                      pMesh->vertexoffset + pFace->c,
-                                      triSVect[triID],
-                                      triTVect[triID] );
+                                    pMesh->vertexoffset + pFace->a,
+                                    pMesh->vertexoffset + pFace->b,
+                                    pMesh->vertexoffset + pFace->c,
+                                    triSVect[triID],
+                                    triTVect[triID] );
         }
 
         // calculate an average tangent space for each vertex.
@@ -1183,7 +1183,7 @@ void BuildIndividualMeshes( s_source_t *psource )
     /*
     for (k = 0; k < MAXSTUDIOSKINS; k++)
     {
-      vprint( 0, "%d : %d:%d %d:%d\n", k, psource->mesh[k].numvertices, psource->mesh[k].vertexoffset, psource->mesh[k].numfaces, psource->mesh[k].faceoffset );
+    vprint( 0, "%d : %d:%d %d:%d\n", k, psource->mesh[k].numvertices, psource->mesh[k].vertexoffset, psource->mesh[k].numfaces, psource->mesh[k].faceoffset );
     }
     */
 
@@ -1412,7 +1412,7 @@ static s_source_t *FindCachedSource( char const *name, char const *xext )
         sprintf (g_szFilename, "%s%s.vta", cddir[numdirs], name );
         for (i = 0; i < g_numsources; i++)
         {
-          if (stricmp( g_szFilename, g_source[i]->filename ) == 0)
+        if (stricmp( g_szFilename, g_source[i]->filename ) == 0)
             return g_source[i];
         }
         */
@@ -1503,11 +1503,11 @@ s_source_t *Load_Source( char const *name, const char *ext, bool reverse, bool i
     /*
     if ( ( !result && xext[0] == '\0' ) || stricmp( xext, "dmx" ) == 0)
     {
-      Q_snprintf( g_szFilename, sizeof(g_szFilename), "%s%s.dmx", cddir[numdirs], pTempName );
-      V_strcpy_safe( g_source[g_numsources]->filename, g_szFilename );
+    Q_snprintf( g_szFilename, sizeof(g_szFilename), "%s%s.dmx", cddir[numdirs], pTempName );
+    V_strcpy_safe( g_source[g_numsources]->filename, g_szFilename );
 
-      // Import part, load smd file
-      result = Load_DMX( g_source[g_numsources] );
+    // Import part, load smd file
+    result = Load_DMX( g_source[g_numsources] );
     }
     */
 
@@ -1581,29 +1581,29 @@ void SaveAnimation( s_source_t *source, CUtlBuffer &buf )
 
 // If this is enabled, then we delta this pos vs the prev frame and don't write out a sample if it's the same value...
 #if 0
-			if ( prev )
-			{
-				Vector ppos = source->rawanim[ frame -1 ][ i ].pos; 
-				descale_vertex( pos );
-				RadianEuler prot = source->rawanim[ frame -1 ][ i ].rot;
+            if ( prev )
+            {
+                Vector ppos = source->rawanim[ frame -1 ][ i ].pos;
+                descale_vertex( pos );
+                RadianEuler prot = source->rawanim[ frame -1 ][ i ].rot;
 
-				// Only output it if there's a delta
-				if ( ( ppos != pos ) || 
-					Q_memcmp( &prot, &rot, sizeof( prot ) ) )
-				{
-					buf.Printf
-						( "%d %f %f %f %f %f %f\n", 
-						i,				// bone index
-						pos[ 0 ],
-						pos[ 1 ],
-						pos[ 2 ],
-						rot[ 0 ],
-						rot[ 1 ],
-						rot[ 2 ]
-						);
-				}
-			}
-			else
+                // Only output it if there's a delta
+                if ( ( ppos != pos ) ||
+                    Q_memcmp( &prot, &rot, sizeof( prot ) ) )
+                {
+                    buf.Printf
+                        ( "%d %f %f %f %f %f %f\n",
+                        i,				// bone index
+                        pos[ 0 ],
+                        pos[ 1 ],
+                        pos[ 2 ],
+                        rot[ 0 ],
+                        rot[ 1 ],
+                        rot[ 2 ]
+                        );
+                }
+            }
+            else
 #endif
             {
                 buf.Printf( "%d %f %f %f %f %f %f\n",
@@ -1901,9 +1901,9 @@ void M_MatrixInvert( const M_matrix4x4_t &in, M_matrix4x4_t &out )
     // inverse.LUBackSubstitution(index, invmat[3]);
 
     // #define SWAP(i,j)		 \
-		// temp = invmat[i][j];	 \
-		// invmat[i][j] = invmat[j][i];			\
-		// invmat[j][i] = temp;
+        // temp = invmat[i][j];	 \
+        // invmat[i][j] = invmat[j][i];			\
+        // invmat[j][i] = temp;
 
     // SWAP(1,0);
 
@@ -1941,9 +1941,9 @@ void M_ConcatTransforms( const M_matrix4x4_t &in1, const M_matrix4x4_t &in2, M_m
     // }
 
 #define MULT( i, j ) ( in1[i][0] * in2[0][j] + \
-                       in1[i][1] * in2[1][j] + \
-                       in1[i][2] * in2[2][j] + \
-                       in1[i][3] * in2[3][j] )
+                        in1[i][1] * in2[1][j] + \
+                        in1[i][2] * in2[2][j] + \
+                        in1[i][3] * in2[3][j] )
 
     out[0][0] = MULT( 0, 0 );
     out[0][1] = MULT( 0, 1 );
@@ -2213,7 +2213,7 @@ s_template_t *Load_Template( char *name )
             numSplit++;
         }
         if ( numSplit < 1 ||
-             *sp[0] == '\n' )
+            *sp[0] == '\n' )
             continue;
 
         // int numRead = sscanf( g_szLine, "%s %s %s", cmd, &option, &option2 );
@@ -2988,10 +2988,10 @@ s_source_t *MotionMap( s_source_t *pSource, s_source_t *pTarget, s_template_t *p
     pTarget->numframes = sourceNumFrames;
 
 #if 0
-	// Process motion mapping into out and return that
-	s_source_t *out = new s_source_t;
+    // Process motion mapping into out and return that
+    s_source_t *out = new s_source_t;
 
-	return out;
+    return out;
 #else
     // Just returns the start animation, to test the Save_SMD API.
     return pTarget;

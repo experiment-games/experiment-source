@@ -42,20 +42,20 @@ class CVGuiScreenPanel : public vgui::EditablePanel
 {
     DECLARE_CLASS_GAMEROOT( CVGuiScreenPanel, vgui::EditablePanel );
 
-   public:
+    public:
     CVGuiScreenPanel( vgui::Panel *parent, const char *panelName );
     CVGuiScreenPanel( vgui::Panel *parent, const char *panelName, vgui::HScheme hScheme );
     virtual bool Init( KeyValues *pKeyValues, VGuiScreenInitData_t *pInitData );
     vgui::Panel *CreateControlByName( const char *controlName );
     virtual void OnCommand( const char *command );
 
-   protected:
+    protected:
     C_BaseEntity *GetEntity() const
     {
         return m_hEntity.Get();
     }
 
-   private:
+    private:
     EHANDLE m_hEntity;
 };
 
@@ -66,7 +66,7 @@ class C_VGuiScreen : public C_BaseEntity
 {
     DECLARE_CLASS( C_VGuiScreen, C_BaseEntity );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
 
     C_VGuiScreen();
@@ -115,7 +115,7 @@ class C_VGuiScreen : public C_BaseEntity
     C_BasePlayer *GetPlayerOwner( void );
     bool IsInputOnlyToOwner( void );
 
-   private:
+    private:
     // Vgui screen management
     void CreateVguiScreen( const char *pTypeName );
     void DestroyVguiScreen();
@@ -129,7 +129,7 @@ class C_VGuiScreen : public C_BaseEntity
     // Writes the z buffer
     void DrawScreenOverlay();
 
-   private:
+    private:
     int m_nPixelWidth;
     int m_nPixelHeight;
     float m_flWidth;

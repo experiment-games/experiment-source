@@ -76,23 +76,23 @@ EnumDescriptorProto* AddEnum(FileDescriptorProto* file, const string& name) {
 }
 
 EnumDescriptorProto* AddNestedEnum(DescriptorProto* parent,
-                                   const string& name) {
+                                    const string& name) {
   EnumDescriptorProto* result = parent->add_enum_type();
   result->set_name(name);
   return result;
 }
 
 ServiceDescriptorProto* AddService(FileDescriptorProto* file,
-                                   const string& name) {
+                                    const string& name) {
   ServiceDescriptorProto* result = file->add_service();
   result->set_name(name);
   return result;
 }
 
 FieldDescriptorProto* AddField(DescriptorProto* parent,
-                               const string& name, int number,
-                               FieldDescriptorProto::Label label,
-                               FieldDescriptorProto::Type type) {
+                                const string& name, int number,
+                                FieldDescriptorProto::Label label,
+                                FieldDescriptorProto::Type type) {
   FieldDescriptorProto* result = parent->add_field();
   result->set_name(name);
   result->set_number(number);
@@ -102,10 +102,10 @@ FieldDescriptorProto* AddField(DescriptorProto* parent,
 }
 
 FieldDescriptorProto* AddExtension(FileDescriptorProto* file,
-                                   const string& extendee,
-                                   const string& name, int number,
-                                   FieldDescriptorProto::Label label,
-                                   FieldDescriptorProto::Type type) {
+                                    const string& extendee,
+                                    const string& name, int number,
+                                    FieldDescriptorProto::Label label,
+                                    FieldDescriptorProto::Type type) {
   FieldDescriptorProto* result = file->add_extension();
   result->set_name(name);
   result->set_number(number);
@@ -116,10 +116,10 @@ FieldDescriptorProto* AddExtension(FileDescriptorProto* file,
 }
 
 FieldDescriptorProto* AddNestedExtension(DescriptorProto* parent,
-                                         const string& extendee,
-                                         const string& name, int number,
-                                         FieldDescriptorProto::Label label,
-                                         FieldDescriptorProto::Type type) {
+                                        const string& extendee,
+                                        const string& name, int number,
+                                        FieldDescriptorProto::Label label,
+                                        FieldDescriptorProto::Type type) {
   FieldDescriptorProto* result = parent->add_extension();
   result->set_name(name);
   result->set_number(number);
@@ -130,7 +130,7 @@ FieldDescriptorProto* AddNestedExtension(DescriptorProto* parent,
 }
 
 DescriptorProto::ExtensionRange* AddExtensionRange(DescriptorProto* parent,
-                                                   int start, int end) {
+                                                    int start, int end) {
   DescriptorProto::ExtensionRange* result = parent->add_extension_range();
   result->set_start(start);
   result->set_end(end);
@@ -138,7 +138,7 @@ DescriptorProto::ExtensionRange* AddExtensionRange(DescriptorProto* parent,
 }
 
 EnumValueDescriptorProto* AddEnumValue(EnumDescriptorProto* enum_proto,
-                                       const string& name, int number) {
+                                        const string& name, int number) {
   EnumValueDescriptorProto* result = enum_proto->add_value();
   result->set_name(name);
   result->set_number(number);
@@ -146,9 +146,9 @@ EnumValueDescriptorProto* AddEnumValue(EnumDescriptorProto* enum_proto,
 }
 
 MethodDescriptorProto* AddMethod(ServiceDescriptorProto* service,
-                                 const string& name,
-                                 const string& input_type,
-                                 const string& output_type) {
+                                const string& name,
+                                const string& input_type,
+                                const string& output_type) {
   MethodDescriptorProto* result = service->add_method();
   result->set_name(name);
   result->set_input_type(input_type);
@@ -193,8 +193,8 @@ class FileDescriptorTest : public testing::Test {
     AddEnumValue(AddEnum(&foo_file, "FooEnum"), "FOO_ENUM_VALUE", 1);
     AddService(&foo_file, "FooService");
     AddExtension(&foo_file, "FooMessage", "foo_extension", 1,
-                 FieldDescriptorProto::LABEL_OPTIONAL,
-                 FieldDescriptorProto::TYPE_INT32);
+                FieldDescriptorProto::LABEL_OPTIONAL,
+                FieldDescriptorProto::TYPE_INT32);
 
     FileDescriptorProto bar_file;
     bar_file.set_name("bar.proto");
@@ -204,8 +204,8 @@ class FileDescriptorTest : public testing::Test {
     AddEnumValue(AddEnum(&bar_file, "BarEnum"), "BAR_ENUM_VALUE", 1);
     AddService(&bar_file, "BarService");
     AddExtension(&bar_file, "bar_package.BarMessage", "bar_extension", 1,
-                 FieldDescriptorProto::LABEL_OPTIONAL,
-                 FieldDescriptorProto::TYPE_INT32);
+                FieldDescriptorProto::LABEL_OPTIONAL,
+                FieldDescriptorProto::TYPE_INT32);
 
     FileDescriptorProto baz_file;
     baz_file.set_name("baz.proto");
@@ -402,20 +402,20 @@ class DescriptorTest : public testing::Test {
 
     DescriptorProto* message = AddMessage(&foo_file, "TestMessage");
     AddField(message, "foo", 1,
-             FieldDescriptorProto::LABEL_REQUIRED,
-             FieldDescriptorProto::TYPE_STRING);
+            FieldDescriptorProto::LABEL_REQUIRED,
+            FieldDescriptorProto::TYPE_STRING);
     AddField(message, "bar", 6,
-             FieldDescriptorProto::LABEL_OPTIONAL,
-             FieldDescriptorProto::TYPE_ENUM)
-      ->set_type_name("TestEnum");
+            FieldDescriptorProto::LABEL_OPTIONAL,
+            FieldDescriptorProto::TYPE_ENUM)
+    ->set_type_name("TestEnum");
     AddField(message, "baz", 500000000,
-             FieldDescriptorProto::LABEL_REPEATED,
-             FieldDescriptorProto::TYPE_MESSAGE)
-      ->set_type_name("TestForeign");
+            FieldDescriptorProto::LABEL_REPEATED,
+            FieldDescriptorProto::TYPE_MESSAGE)
+    ->set_type_name("TestForeign");
     AddField(message, "qux", 15,
-             FieldDescriptorProto::LABEL_OPTIONAL,
-             FieldDescriptorProto::TYPE_GROUP)
-      ->set_type_name("TestForeign");
+            FieldDescriptorProto::LABEL_OPTIONAL,
+            FieldDescriptorProto::TYPE_GROUP)
+    ->set_type_name("TestForeign");
 
     FileDescriptorProto bar_file;
     bar_file.set_name("bar.proto");
@@ -423,14 +423,14 @@ class DescriptorTest : public testing::Test {
 
     DescriptorProto* message2 = AddMessage(&bar_file, "TestMessage2");
     AddField(message2, "foo", 1,
-             FieldDescriptorProto::LABEL_REQUIRED,
-             FieldDescriptorProto::TYPE_STRING);
+            FieldDescriptorProto::LABEL_REQUIRED,
+            FieldDescriptorProto::TYPE_STRING);
     AddField(message2, "bar", 2,
-             FieldDescriptorProto::LABEL_REQUIRED,
-             FieldDescriptorProto::TYPE_STRING);
+            FieldDescriptorProto::LABEL_REQUIRED,
+            FieldDescriptorProto::TYPE_STRING);
     AddField(message2, "quux", 6,
-             FieldDescriptorProto::LABEL_REQUIRED,
-             FieldDescriptorProto::TYPE_STRING);
+            FieldDescriptorProto::LABEL_REQUIRED,
+            FieldDescriptorProto::TYPE_STRING);
 
     // Build the descriptors and get the pointers.
     foo_file_ = pool_.BuildFile(foo_file);
@@ -654,52 +654,52 @@ class StylizedFieldNamesTest : public testing::Test {
 
     DescriptorProto* message = AddMessage(&file, "TestMessage");
     AddField(message, "foo_foo", 1,
-             FieldDescriptorProto::LABEL_OPTIONAL,
-             FieldDescriptorProto::TYPE_INT32);
+            FieldDescriptorProto::LABEL_OPTIONAL,
+            FieldDescriptorProto::TYPE_INT32);
     AddField(message, "FooBar", 2,
-             FieldDescriptorProto::LABEL_OPTIONAL,
-             FieldDescriptorProto::TYPE_INT32);
+            FieldDescriptorProto::LABEL_OPTIONAL,
+            FieldDescriptorProto::TYPE_INT32);
     AddField(message, "fooBaz", 3,
-             FieldDescriptorProto::LABEL_OPTIONAL,
-             FieldDescriptorProto::TYPE_INT32);
+            FieldDescriptorProto::LABEL_OPTIONAL,
+            FieldDescriptorProto::TYPE_INT32);
     AddField(message, "fooFoo", 4,  // Camel-case conflict with foo_foo.
-             FieldDescriptorProto::LABEL_OPTIONAL,
-             FieldDescriptorProto::TYPE_INT32);
+            FieldDescriptorProto::LABEL_OPTIONAL,
+            FieldDescriptorProto::TYPE_INT32);
     AddField(message, "foobar", 5,  // Lower-case conflict with FooBar.
-             FieldDescriptorProto::LABEL_OPTIONAL,
-             FieldDescriptorProto::TYPE_INT32);
+            FieldDescriptorProto::LABEL_OPTIONAL,
+            FieldDescriptorProto::TYPE_INT32);
 
     AddNestedExtension(message, "ExtendableMessage", "bar_foo", 1,
-                       FieldDescriptorProto::LABEL_OPTIONAL,
-                       FieldDescriptorProto::TYPE_INT32);
+                        FieldDescriptorProto::LABEL_OPTIONAL,
+                        FieldDescriptorProto::TYPE_INT32);
     AddNestedExtension(message, "ExtendableMessage", "BarBar", 2,
-                       FieldDescriptorProto::LABEL_OPTIONAL,
-                       FieldDescriptorProto::TYPE_INT32);
+                        FieldDescriptorProto::LABEL_OPTIONAL,
+                        FieldDescriptorProto::TYPE_INT32);
     AddNestedExtension(message, "ExtendableMessage", "BarBaz", 3,
-                       FieldDescriptorProto::LABEL_OPTIONAL,
-                       FieldDescriptorProto::TYPE_INT32);
+                        FieldDescriptorProto::LABEL_OPTIONAL,
+                        FieldDescriptorProto::TYPE_INT32);
     AddNestedExtension(message, "ExtendableMessage", "barFoo", 4,  // Conflict
-                       FieldDescriptorProto::LABEL_OPTIONAL,
-                       FieldDescriptorProto::TYPE_INT32);
+                        FieldDescriptorProto::LABEL_OPTIONAL,
+                        FieldDescriptorProto::TYPE_INT32);
     AddNestedExtension(message, "ExtendableMessage", "barbar", 5,  // Conflict
-                       FieldDescriptorProto::LABEL_OPTIONAL,
-                       FieldDescriptorProto::TYPE_INT32);
+                        FieldDescriptorProto::LABEL_OPTIONAL,
+                        FieldDescriptorProto::TYPE_INT32);
 
     AddExtension(&file, "ExtendableMessage", "baz_foo", 11,
-                 FieldDescriptorProto::LABEL_OPTIONAL,
-                 FieldDescriptorProto::TYPE_INT32);
+                FieldDescriptorProto::LABEL_OPTIONAL,
+                FieldDescriptorProto::TYPE_INT32);
     AddExtension(&file, "ExtendableMessage", "BazBar", 12,
-                 FieldDescriptorProto::LABEL_OPTIONAL,
-                 FieldDescriptorProto::TYPE_INT32);
+                FieldDescriptorProto::LABEL_OPTIONAL,
+                FieldDescriptorProto::TYPE_INT32);
     AddExtension(&file, "ExtendableMessage", "BazBaz", 13,
-                 FieldDescriptorProto::LABEL_OPTIONAL,
-                 FieldDescriptorProto::TYPE_INT32);
+                FieldDescriptorProto::LABEL_OPTIONAL,
+                FieldDescriptorProto::TYPE_INT32);
     AddExtension(&file, "ExtendableMessage", "bazFoo", 14,  // Conflict
-                 FieldDescriptorProto::LABEL_OPTIONAL,
-                 FieldDescriptorProto::TYPE_INT32);
+                FieldDescriptorProto::LABEL_OPTIONAL,
+                FieldDescriptorProto::TYPE_INT32);
     AddExtension(&file, "ExtendableMessage", "bazbar", 15,  // Conflict
-                 FieldDescriptorProto::LABEL_OPTIONAL,
-                 FieldDescriptorProto::TYPE_INT32);
+                FieldDescriptorProto::LABEL_OPTIONAL,
+                FieldDescriptorProto::TYPE_INT32);
 
     file_ = pool_.BuildFile(file);
     ASSERT_TRUE(file_ != NULL);
@@ -1384,22 +1384,22 @@ class ExtensionDescriptorTest : public testing::Test {
     AddExtensionRange(foo, 30, 40);
 
     AddExtension(&foo_file, "Foo", "foo_int32", 10,
-                 FieldDescriptorProto::LABEL_OPTIONAL,
-                 FieldDescriptorProto::TYPE_INT32);
+                FieldDescriptorProto::LABEL_OPTIONAL,
+                FieldDescriptorProto::TYPE_INT32);
     AddExtension(&foo_file, "Foo", "foo_enum", 19,
-                 FieldDescriptorProto::LABEL_REPEATED,
-                 FieldDescriptorProto::TYPE_ENUM)
-      ->set_type_name("Baz");
+                FieldDescriptorProto::LABEL_REPEATED,
+                FieldDescriptorProto::TYPE_ENUM)
+    ->set_type_name("Baz");
 
     DescriptorProto* bar = AddMessage(&foo_file, "Bar");
     AddNestedExtension(bar, "Foo", "foo_message", 30,
-                       FieldDescriptorProto::LABEL_OPTIONAL,
-                       FieldDescriptorProto::TYPE_MESSAGE)
-      ->set_type_name("Qux");
+                        FieldDescriptorProto::LABEL_OPTIONAL,
+                        FieldDescriptorProto::TYPE_MESSAGE)
+    ->set_type_name("Qux");
     AddNestedExtension(bar, "Foo", "foo_group", 39,
-                       FieldDescriptorProto::LABEL_REPEATED,
-                       FieldDescriptorProto::TYPE_GROUP)
-      ->set_type_name("Qux");
+                        FieldDescriptorProto::LABEL_REPEATED,
+                        FieldDescriptorProto::TYPE_GROUP)
+    ->set_type_name("Qux");
 
     // Build the descriptors and get the pointers.
     foo_file_ = pool_.BuildFile(foo_file);
@@ -1527,14 +1527,14 @@ class MiscTest : public testing::Test {
 
     DescriptorProto* message = AddMessage(&file_proto, "TestMessage");
     FieldDescriptorProto* field =
-      AddField(message, "foo", 1, FieldDescriptorProto::LABEL_OPTIONAL,
-               static_cast<FieldDescriptorProto::Type>(static_cast<int>(type)));
+    AddField(message, "foo", 1, FieldDescriptorProto::LABEL_OPTIONAL,
+                static_cast<FieldDescriptorProto::Type>(static_cast<int>(type)));
 
     if (type == FieldDescriptor::TYPE_MESSAGE ||
         type == FieldDescriptor::TYPE_GROUP) {
-      field->set_type_name("TestMessage");
+    field->set_type_name("TestMessage");
     } else if (type == FieldDescriptor::TYPE_ENUM) {
-      field->set_type_name("DummyEnum");
+    field->set_type_name("DummyEnum");
     }
 
     // Build the descriptors and get the pointers.
@@ -1544,9 +1544,9 @@ class MiscTest : public testing::Test {
     if (file != NULL &&
         file->message_type_count() == 1 &&
         file->message_type(0)->field_count() == 1) {
-      return file->message_type(0)->field(0)->cpp_type();
+    return file->message_type(0)->field(0)->cpp_type();
     } else {
-      return static_cast<FieldDescriptor::CppType>(0);
+    return static_cast<FieldDescriptor::CppType>(0);
     }
   }
 };
@@ -1707,12 +1707,12 @@ TEST_F(MiscTest, FieldOptions) {
 
   DescriptorProto* message_proto = AddMessage(&file_proto, "TestMessage");
   AddField(message_proto, "foo", 1,
-           FieldDescriptorProto::LABEL_OPTIONAL,
-           FieldDescriptorProto::TYPE_INT32);
+            FieldDescriptorProto::LABEL_OPTIONAL,
+            FieldDescriptorProto::TYPE_INT32);
   FieldDescriptorProto* bar_proto =
     AddField(message_proto, "bar", 2,
-             FieldDescriptorProto::LABEL_OPTIONAL,
-             FieldDescriptorProto::TYPE_INT32);
+            FieldDescriptorProto::LABEL_OPTIONAL,
+            FieldDescriptorProto::TYPE_INT32);
 
   FieldOptions* options = bar_proto->mutable_options();
   options->set_ctype(FieldOptions::CORD);
@@ -1748,32 +1748,32 @@ class AllowUnknownDependenciesTest : public testing::Test {
     pool_.AllowUnknownDependencies();
 
     ASSERT_TRUE(TextFormat::ParseFromString(
-      "name: 'foo.proto'"
-      "dependency: 'bar.proto'"
-      "dependency: 'baz.proto'"
-      "message_type {"
-      "  name: 'Foo'"
-      "  field { name:'bar' number:1 label:LABEL_OPTIONAL type_name:'Bar' }"
-      "  field { name:'baz' number:2 label:LABEL_OPTIONAL type_name:'Baz' }"
-      "  field { name:'qux' number:3 label:LABEL_OPTIONAL"
-      "    type_name: '.corge.Qux'"
-      "    type: TYPE_ENUM"
-      "    options {"
-      "      uninterpreted_option {"
-      "        name {"
-      "          name_part: 'grault'"
-      "          is_extension: true"
-      "        }"
-      "        positive_int_value: 1234"
-      "      }"
-      "    }"
-      "  }"
-      "}",
-      &foo_proto));
+    "name: 'foo.proto'"
+    "dependency: 'bar.proto'"
+    "dependency: 'baz.proto'"
+    "message_type {"
+    "  name: 'Foo'"
+    "  field { name:'bar' number:1 label:LABEL_OPTIONAL type_name:'Bar' }"
+    "  field { name:'baz' number:2 label:LABEL_OPTIONAL type_name:'Baz' }"
+    "  field { name:'qux' number:3 label:LABEL_OPTIONAL"
+    "    type_name: '.corge.Qux'"
+    "    type: TYPE_ENUM"
+    "    options {"
+    "      uninterpreted_option {"
+    "        name {"
+    "          name_part: 'grault'"
+    "          is_extension: true"
+    "        }"
+    "        positive_int_value: 1234"
+    "      }"
+    "    }"
+    "  }"
+    "}",
+    &foo_proto));
     ASSERT_TRUE(TextFormat::ParseFromString(
-      "name: 'bar.proto'"
-      "message_type { name: 'Bar' }",
-      &bar_proto));
+    "name: 'bar.proto'"
+    "message_type { name: 'Bar' }",
+    &bar_proto));
 
     // Collect pointers to stuff.
     bar_file_ = pool_.BuildFile(bar_proto);
@@ -1953,13 +1953,13 @@ TEST_F(AllowUnknownDependenciesTest, CustomOption) {
 
 TEST(CustomOptions, OptionLocations) {
   const Descriptor* message =
-      protobuf_unittest::TestMessageWithCustomOptions::descriptor();
+    protobuf_unittest::TestMessageWithCustomOptions::descriptor();
   const FileDescriptor* file = message->file();
   const FieldDescriptor* field = message->FindFieldByName("field1");
   const EnumDescriptor* enm = message->FindEnumTypeByName("AnEnum");
   // TODO(benjy): Support EnumValue options, once the compiler does.
   const ServiceDescriptor* service =
-      file->FindServiceByName("TestServiceWithCustomOptions");
+    file->FindServiceByName("TestServiceWithCustomOptions");
   const MethodDescriptor* method = service->FindMethodByName("Foo");
 
   EXPECT_EQ(GOOGLE_LONGLONG(9876543210),
@@ -1974,7 +1974,7 @@ TEST(CustomOptions, OptionLocations) {
             enm->options().GetExtension(protobuf_unittest::enum_opt1));
   EXPECT_EQ(123,
             enm->value(1)->options().GetExtension(
-              protobuf_unittest::enum_value_opt1));
+            protobuf_unittest::enum_value_opt1));
   EXPECT_EQ(GOOGLE_LONGLONG(-9876543210),
             service->options().GetExtension(protobuf_unittest::service_opt1));
   EXPECT_EQ(protobuf_unittest::METHODOPT1_VAL2,
@@ -1989,7 +1989,7 @@ TEST(CustomOptions, OptionTypes) {
   const MessageOptions* options = NULL;
 
   options =
-      &protobuf_unittest::CustomOptionMinIntegerValues::descriptor()->options();
+    &protobuf_unittest::CustomOptionMinIntegerValues::descriptor()->options();
   EXPECT_EQ(false    , options->GetExtension(protobuf_unittest::bool_opt));
   EXPECT_EQ(kint32min, options->GetExtension(protobuf_unittest::int32_opt));
   EXPECT_EQ(kint64min, options->GetExtension(protobuf_unittest::int64_opt));
@@ -2003,7 +2003,7 @@ TEST(CustomOptions, OptionTypes) {
   EXPECT_EQ(kint64min, options->GetExtension(protobuf_unittest::sfixed64_opt));
 
   options =
-      &protobuf_unittest::CustomOptionMaxIntegerValues::descriptor()->options();
+    &protobuf_unittest::CustomOptionMaxIntegerValues::descriptor()->options();
   EXPECT_EQ(true      , options->GetExtension(protobuf_unittest::bool_opt));
   EXPECT_EQ(kint32max , options->GetExtension(protobuf_unittest::int32_opt));
   EXPECT_EQ(kint64max , options->GetExtension(protobuf_unittest::int64_opt));
@@ -2017,12 +2017,12 @@ TEST(CustomOptions, OptionTypes) {
   EXPECT_EQ(kint64max , options->GetExtension(protobuf_unittest::sfixed64_opt));
 
   options =
-      &protobuf_unittest::CustomOptionOtherValues::descriptor()->options();
+    &protobuf_unittest::CustomOptionOtherValues::descriptor()->options();
   EXPECT_EQ(-100, options->GetExtension(protobuf_unittest::int32_opt));
   EXPECT_FLOAT_EQ(12.3456789,
-                  options->GetExtension(protobuf_unittest::float_opt));
+                options->GetExtension(protobuf_unittest::float_opt));
   EXPECT_DOUBLE_EQ(1.234567890123456789,
-                   options->GetExtension(protobuf_unittest::double_opt));
+                    options->GetExtension(protobuf_unittest::double_opt));
   EXPECT_EQ("Hello, \"World\"",
             options->GetExtension(protobuf_unittest::string_opt));
 
@@ -2033,19 +2033,19 @@ TEST(CustomOptions, OptionTypes) {
             options->GetExtension(protobuf_unittest::enum_opt));
 
   options =
-      &protobuf_unittest::SettingRealsFromPositiveInts::descriptor()->options();
+    &protobuf_unittest::SettingRealsFromPositiveInts::descriptor()->options();
   EXPECT_FLOAT_EQ(12, options->GetExtension(protobuf_unittest::float_opt));
   EXPECT_DOUBLE_EQ(154, options->GetExtension(protobuf_unittest::double_opt));
 
   options =
-      &protobuf_unittest::SettingRealsFromNegativeInts::descriptor()->options();
+    &protobuf_unittest::SettingRealsFromNegativeInts::descriptor()->options();
   EXPECT_FLOAT_EQ(-12, options->GetExtension(protobuf_unittest::float_opt));
   EXPECT_DOUBLE_EQ(-154, options->GetExtension(protobuf_unittest::double_opt));
 }
 
 TEST(CustomOptions, ComplexExtensionOptions) {
   const MessageOptions* options =
-      &protobuf_unittest::VariousComplexOptions::descriptor()->options();
+    &protobuf_unittest::VariousComplexOptions::descriptor()->options();
   EXPECT_EQ(options->GetExtension(protobuf_unittest::complex_opt1).foo(), 42);
   EXPECT_EQ(options->GetExtension(protobuf_unittest::complex_opt1).
             GetExtension(protobuf_unittest::quux), 324);
@@ -2069,7 +2069,7 @@ TEST(CustomOptions, ComplexExtensionOptions) {
             GetExtension(protobuf_unittest::garply).
             GetExtension(protobuf_unittest::corge).qux(), 2121);
   EXPECT_EQ(options->GetExtension(
-      protobuf_unittest::ComplexOptionType2::ComplexOptionType4::complex_opt4).
+    protobuf_unittest::ComplexOptionType2::ComplexOptionType4::complex_opt4).
             waldo(), 1971);
   EXPECT_EQ(options->GetExtension(protobuf_unittest::complex_opt2).
             fred().waldo(), 321);
@@ -2233,21 +2233,21 @@ class MockErrorCollector : public DescriptorPool::ErrorCollector {
                 ErrorLocation location, const string& message) {
     const char* location_name = NULL;
     switch (location) {
-      case NAME         : location_name = "NAME"         ; break;
-      case NUMBER       : location_name = "NUMBER"       ; break;
-      case TYPE         : location_name = "TYPE"         ; break;
-      case EXTENDEE     : location_name = "EXTENDEE"     ; break;
-      case DEFAULT_VALUE: location_name = "DEFAULT_VALUE"; break;
-      case OPTION_NAME  : location_name = "OPTION_NAME"  ; break;
-      case OPTION_VALUE : location_name = "OPTION_VALUE" ; break;
-      case INPUT_TYPE   : location_name = "INPUT_TYPE"   ; break;
-      case OUTPUT_TYPE  : location_name = "OUTPUT_TYPE"  ; break;
-      case OTHER        : location_name = "OTHER"        ; break;
+    case NAME         : location_name = "NAME"         ; break;
+    case NUMBER       : location_name = "NUMBER"       ; break;
+    case TYPE         : location_name = "TYPE"         ; break;
+    case EXTENDEE     : location_name = "EXTENDEE"     ; break;
+    case DEFAULT_VALUE: location_name = "DEFAULT_VALUE"; break;
+    case OPTION_NAME  : location_name = "OPTION_NAME"  ; break;
+    case OPTION_VALUE : location_name = "OPTION_VALUE" ; break;
+    case INPUT_TYPE   : location_name = "INPUT_TYPE"   ; break;
+    case OUTPUT_TYPE  : location_name = "OUTPUT_TYPE"  ; break;
+    case OTHER        : location_name = "OTHER"        ; break;
     }
 
     strings::SubstituteAndAppend(
-      &text_, "$0: $1: $2: $3\n",
-      filename, element_name, location_name, message);
+    &text_, "$0: $1: $2: $3\n",
+    filename, element_name, location_name, message);
   }
 };
 
@@ -2265,13 +2265,13 @@ class ValidationErrorTest : public testing::Test {
   // to the DescriptorPool.  Expect errors to be produced which match the
   // given error text.
   void BuildFileWithErrors(const string& file_text,
-                           const string& expected_errors) {
+                            const string& expected_errors) {
     FileDescriptorProto file_proto;
     ASSERT_TRUE(TextFormat::ParseFromString(file_text, &file_proto));
 
     MockErrorCollector error_collector;
     EXPECT_TRUE(
-      pool_.BuildFileCollectingErrors(file_proto, &error_collector) == NULL);
+    pool_.BuildFileCollectingErrors(file_proto, &error_collector) == NULL);
     EXPECT_EQ(expected_errors, error_collector.text_);
   }
 
@@ -2308,7 +2308,7 @@ TEST_F(ValidationErrorTest, AlreadyDefinedInPackage) {
     "message_type { name: \"Foo\" }",
 
     "foo.proto: foo.bar.Foo: NAME: \"Foo\" is already defined in "
-      "\"foo.bar\".\n");
+    "\"foo.bar\".\n");
 }
 
 TEST_F(ValidationErrorTest, AlreadyDefinedInOtherFile) {
@@ -2321,7 +2321,7 @@ TEST_F(ValidationErrorTest, AlreadyDefinedInOtherFile) {
     "message_type { name: \"Foo\" }",
 
     "bar.proto: Foo: NAME: \"Foo\" is already defined in file "
-      "\"foo.proto\".\n");
+    "\"foo.proto\".\n");
 }
 
 TEST_F(ValidationErrorTest, PackageAlreadyDefined) {
@@ -2333,7 +2333,7 @@ TEST_F(ValidationErrorTest, PackageAlreadyDefined) {
     "package: \"foo.bar\"",
 
     "bar.proto: foo: NAME: \"foo\" is already defined (as something other "
-      "than a package) in file \"foo.proto\".\n");
+    "than a package) in file \"foo.proto\".\n");
 }
 
 TEST_F(ValidationErrorTest, EnumValueAlreadyDefinedInParent) {
@@ -2344,9 +2344,9 @@ TEST_F(ValidationErrorTest, EnumValueAlreadyDefinedInParent) {
 
     "foo.proto: FOO: NAME: \"FOO\" is already defined.\n"
     "foo.proto: FOO: NAME: Note that enum values use C++ scoping rules, "
-      "meaning that enum values are siblings of their type, not children of "
-      "it.  Therefore, \"FOO\" must be unique within the global scope, not "
-      "just within \"Bar\".\n");
+    "meaning that enum values are siblings of their type, not children of "
+    "it.  Therefore, \"FOO\" must be unique within the global scope, not "
+    "just within \"Bar\".\n");
 }
 
 TEST_F(ValidationErrorTest, EnumValueAlreadyDefinedInParentNonGlobal) {
@@ -2358,9 +2358,9 @@ TEST_F(ValidationErrorTest, EnumValueAlreadyDefinedInParentNonGlobal) {
 
     "foo.proto: pkg.FOO: NAME: \"FOO\" is already defined in \"pkg\".\n"
     "foo.proto: pkg.FOO: NAME: Note that enum values use C++ scoping rules, "
-      "meaning that enum values are siblings of their type, not children of "
-      "it.  Therefore, \"FOO\" must be unique within \"pkg\", not just within "
-      "\"Bar\".\n");
+    "meaning that enum values are siblings of their type, not children of "
+    "it.  Therefore, \"FOO\" must be unique within \"pkg\", not just within "
+    "\"Bar\".\n");
 }
 
 TEST_F(ValidationErrorTest, MissingName) {
@@ -2432,8 +2432,8 @@ TEST_F(ValidationErrorTest, ForeignUnimportedPackageNoCrash) {
 
     "bar.proto: bar.proto: OTHER: Import \"baz.proto\" has not been loaded.\n"
     "bar.proto: outer.bar.Bar.bar: TYPE: \"outer.foo\" seems to be defined in "
-      "\"foo.proto\", which is not imported by \"bar.proto\".  To use it here, "
-      "please add the necessary import.\n");
+    "\"foo.proto\", which is not imported by \"bar.proto\".  To use it here, "
+    "please add the necessary import.\n");
 }
 
 TEST_F(ValidationErrorTest, DupeFile) {
@@ -2450,7 +2450,7 @@ TEST_F(ValidationErrorTest, DupeFile) {
     "enum_type { name: \"Bar\" }",
 
     "foo.proto: foo.proto: OTHER: A file with this name is already in the "
-      "pool.\n");
+    "pool.\n");
 }
 
 TEST_F(ValidationErrorTest, FieldInExtensionRange) {
@@ -2466,9 +2466,9 @@ TEST_F(ValidationErrorTest, FieldInExtensionRange) {
     "}",
 
     "foo.proto: Foo.bar: NUMBER: Extension range 10 to 19 includes field "
-      "\"bar\" (10).\n"
+    "\"bar\" (10).\n"
     "foo.proto: Foo.baz: NUMBER: Extension range 10 to 19 includes field "
-      "\"baz\" (19).\n");
+    "\"baz\" (19).\n");
 }
 
 TEST_F(ValidationErrorTest, OverlappingExtensionRanges) {
@@ -2482,9 +2482,9 @@ TEST_F(ValidationErrorTest, OverlappingExtensionRanges) {
     "}",
 
     "foo.proto: Foo: NUMBER: Extension range 19 to 20 overlaps with "
-      "already-defined range 10 to 19.\n"
+    "already-defined range 10 to 19.\n"
     "foo.proto: Foo: NUMBER: Extension range 19 to 20 overlaps with "
-      "already-defined range 20 to 29.\n");
+    "already-defined range 20 to 29.\n");
 }
 
 TEST_F(ValidationErrorTest, InvalidDefaults) {
@@ -2522,14 +2522,14 @@ TEST_F(ValidationErrorTest, InvalidDefaults) {
     "foo.proto: Foo.foo: DEFAULT_VALUE: Couldn't parse default value.\n"
     "foo.proto: Foo.bar: DEFAULT_VALUE: Couldn't parse default value.\n"
     "foo.proto: Foo.baz: DEFAULT_VALUE: Boolean default must be true or "
-      "false.\n"
+    "false.\n"
     "foo.proto: Foo.qux: DEFAULT_VALUE: Messages can't have default values.\n"
     "foo.proto: Foo.corge: DEFAULT_VALUE: Repeated fields can't have default "
-      "values.\n"
+    "values.\n"
     // This ends up being reported later because the error is detected at
     // cross-linking time.
     "foo.proto: Foo.quux: DEFAULT_VALUE: Messages can't have default "
-      "values.\n");
+    "values.\n");
 }
 
 TEST_F(ValidationErrorTest, NegativeFieldNumber) {
@@ -2553,7 +2553,7 @@ TEST_F(ValidationErrorTest, HugeFieldNumber) {
     "}",
 
     "foo.proto: Foo.foo: NUMBER: Field numbers cannot be greater than "
-      "536870911.\n");
+    "536870911.\n");
 }
 
 TEST_F(ValidationErrorTest, ReservedFieldNumber) {
@@ -2568,9 +2568,9 @@ TEST_F(ValidationErrorTest, ReservedFieldNumber) {
     "}",
 
     "foo.proto: Foo.bar: NUMBER: Field numbers 19000 through 19999 are "
-      "reserved for the protocol buffer library implementation.\n"
+    "reserved for the protocol buffer library implementation.\n"
     "foo.proto: Foo.baz: NUMBER: Field numbers 19000 through 19999 are "
-      "reserved for the protocol buffer library implementation.\n");
+    "reserved for the protocol buffer library implementation.\n");
 }
 
 TEST_F(ValidationErrorTest, ExtensionMissingExtendee) {
@@ -2583,7 +2583,7 @@ TEST_F(ValidationErrorTest, ExtensionMissingExtendee) {
     "}",
 
     "foo.proto: Foo.foo: EXTENDEE: FieldDescriptorProto.extendee not set for "
-      "extension field.\n");
+    "extension field.\n");
 }
 
 TEST_F(ValidationErrorTest, NonExtensionWithExtendee) {
@@ -2600,7 +2600,7 @@ TEST_F(ValidationErrorTest, NonExtensionWithExtendee) {
     "}",
 
     "foo.proto: Foo.foo: EXTENDEE: FieldDescriptorProto.extendee set for "
-      "non-extension field.\n");
+    "non-extension field.\n");
 }
 
 TEST_F(ValidationErrorTest, FieldNumberConflict) {
@@ -2613,7 +2613,7 @@ TEST_F(ValidationErrorTest, FieldNumberConflict) {
     "}",
 
     "foo.proto: Foo.bar: NUMBER: Field number 1 has already been used in "
-      "\"Foo\" by field \"foo\".\n");
+    "\"Foo\" by field \"foo\".\n");
 }
 
 TEST_F(ValidationErrorTest, BadMessageSetExtensionType) {
@@ -2631,7 +2631,7 @@ TEST_F(ValidationErrorTest, BadMessageSetExtensionType) {
     "}",
 
     "foo.proto: Foo.foo: TYPE: Extensions of MessageSets must be optional "
-      "messages.\n");
+    "messages.\n");
 }
 
 TEST_F(ValidationErrorTest, BadMessageSetExtensionLabel) {
@@ -2649,7 +2649,7 @@ TEST_F(ValidationErrorTest, BadMessageSetExtensionLabel) {
     "}",
 
     "foo.proto: Foo.foo: TYPE: Extensions of MessageSets must be optional "
-      "messages.\n");
+    "messages.\n");
 }
 
 TEST_F(ValidationErrorTest, FieldInMessageSet) {
@@ -2662,7 +2662,7 @@ TEST_F(ValidationErrorTest, FieldInMessageSet) {
     "}",
 
     "foo.proto: Foo.foo: NAME: MessageSets cannot have fields, only "
-      "extensions.\n");
+    "extensions.\n");
 }
 
 TEST_F(ValidationErrorTest, NegativeExtensionRangeNumber) {
@@ -2685,7 +2685,7 @@ TEST_F(ValidationErrorTest, HugeExtensionRangeNumber) {
     "}",
 
     "foo.proto: Foo: NUMBER: Extension numbers cannot be greater than "
-      "536870911.\n");
+    "536870911.\n");
 }
 
 TEST_F(ValidationErrorTest, ExtensionRangeEndBeforeStart) {
@@ -2698,9 +2698,9 @@ TEST_F(ValidationErrorTest, ExtensionRangeEndBeforeStart) {
     "}",
 
     "foo.proto: Foo: NUMBER: Extension range end number must be greater than "
-      "start number.\n"
+    "start number.\n"
     "foo.proto: Foo: NUMBER: Extension range end number must be greater than "
-      "start number.\n");
+    "start number.\n");
 }
 
 TEST_F(ValidationErrorTest, EmptyEnum) {
@@ -2719,7 +2719,7 @@ TEST_F(ValidationErrorTest, EmptyEnum) {
 
     "foo.proto: Foo: NAME: Enums must contain at least one value.\n"
     "foo.proto: Bar.bar: DEFAULT_VALUE: Enum type \"Foo\" has no value named "
-      "\"NO_SUCH_VALUE\".\n");
+    "\"NO_SUCH_VALUE\".\n");
 }
 
 TEST_F(ValidationErrorTest, UndefinedExtendee) {
@@ -2760,7 +2760,7 @@ TEST_F(ValidationErrorTest, NotAnExtensionNumber) {
     "}",
 
     "foo.proto: Foo.foo: NUMBER: \"Bar\" does not declare 1 as an extension "
-      "number.\n");
+    "number.\n");
 }
 
 TEST_F(ValidationErrorTest, UndefinedFieldType) {
@@ -2786,8 +2786,8 @@ TEST_F(ValidationErrorTest, FieldTypeDefinedInUndeclaredDependency) {
     "  field { name:\"foo\" number:1 label:LABEL_OPTIONAL type_name:\"Bar\" }"
     "}",
     "foo.proto: Foo.foo: TYPE: \"Bar\" seems to be defined in \"bar.proto\", "
-      "which is not imported by \"foo.proto\".  To use it here, please add the "
-      "necessary import.\n");
+    "which is not imported by \"foo.proto\".  To use it here, please add the "
+    "necessary import.\n");
 }
 
 TEST_F(ValidationErrorTest, SearchMostLocalFirst) {
@@ -2956,7 +2956,7 @@ TEST_F(ValidationErrorTest, BadEnumDefaultValue) {
     "}",
 
     "foo.proto: Foo.foo: DEFAULT_VALUE: Enum type \"Bar\" has no value named "
-      "\"NO_SUCH_VALUE\".\n");
+    "\"NO_SUCH_VALUE\".\n");
 }
 
 TEST_F(ValidationErrorTest, PrimitiveWithTypeName) {
@@ -2980,7 +2980,7 @@ TEST_F(ValidationErrorTest, NonPrimitiveWithoutTypeName) {
     "}",
 
     "foo.proto: Foo.foo: TYPE: Field with message or enum type missing "
-      "type_name.\n");
+    "type_name.\n");
 }
 
 TEST_F(ValidationErrorTest, InputTypeNotDefined) {
@@ -3456,8 +3456,8 @@ TEST_F(ValidationErrorTest, NotLiteImportsLite) {
     "dependency: \"bar.proto\" ",
 
     "foo.proto: foo.proto: OTHER: Files that do not use optimize_for = "
-      "LITE_RUNTIME cannot import files which do use this option.  This file "
-      "is not lite, but it imports \"bar.proto\" which is.\n");
+    "LITE_RUNTIME cannot import files which do use this option.  This file "
+    "is not lite, but it imports \"bar.proto\" which is.\n");
 }
 
 TEST_F(ValidationErrorTest, LiteExtendsNotLite) {
@@ -3476,8 +3476,8 @@ TEST_F(ValidationErrorTest, LiteExtendsNotLite) {
     "            type: TYPE_INT32 extendee: \"Bar\" }",
 
     "foo.proto: ext: EXTENDEE: Extensions to non-lite types can only be "
-      "declared in non-lite files.  Note that you cannot extend a non-lite "
-      "type to contain a lite type, but the reverse is allowed.\n");
+    "declared in non-lite files.  Note that you cannot extend a non-lite "
+    "type to contain a lite type, but the reverse is allowed.\n");
 }
 
 TEST_F(ValidationErrorTest, NoLiteServices) {
@@ -3567,7 +3567,7 @@ TEST_F(ValidationErrorTest, ErrorsReportedToLogError) {
 // DescriptorDatabase
 
 static void AddToDatabase(SimpleDescriptorDatabase* database,
-                          const char* file_text) {
+                        const char* file_text) {
   FileDescriptorProto file_proto;
   EXPECT_TRUE(TextFormat::ParseFromString(file_text, &file_proto));
   database->Add(file_proto);
@@ -3581,61 +3581,61 @@ class DatabaseBackedPoolTest : public testing::Test {
 
   virtual void SetUp() {
     AddToDatabase(&database_,
-      "name: \"foo.proto\" "
-      "message_type { name:\"Foo\" extension_range { start: 1 end: 100 } } "
-      "enum_type { name:\"TestEnum\" value { name:\"DUMMY\" number:0 } } "
-      "service { name:\"TestService\" } ");
+    "name: \"foo.proto\" "
+    "message_type { name:\"Foo\" extension_range { start: 1 end: 100 } } "
+    "enum_type { name:\"TestEnum\" value { name:\"DUMMY\" number:0 } } "
+    "service { name:\"TestService\" } ");
     AddToDatabase(&database_,
-      "name: \"bar.proto\" "
-      "dependency: \"foo.proto\" "
-      "message_type { name:\"Bar\" } "
-      "extension { name:\"foo_ext\" extendee: \".Foo\" number:5 "
-      "            label:LABEL_OPTIONAL type:TYPE_INT32 } ");
+    "name: \"bar.proto\" "
+    "dependency: \"foo.proto\" "
+    "message_type { name:\"Bar\" } "
+    "extension { name:\"foo_ext\" extendee: \".Foo\" number:5 "
+    "            label:LABEL_OPTIONAL type:TYPE_INT32 } ");
   }
 
   // We can't inject a file containing errors into a DescriptorPool, so we
   // need an actual mock DescriptorDatabase to test errors.
   class ErrorDescriptorDatabase : public DescriptorDatabase {
-   public:
+    public:
     ErrorDescriptorDatabase() {}
     ~ErrorDescriptorDatabase() {}
 
     // implements DescriptorDatabase ---------------------------------
     bool FindFileByName(const string& filename,
                         FileDescriptorProto* output) {
-      // error.proto and error2.proto cyclically import each other.
-      if (filename == "error.proto") {
+    // error.proto and error2.proto cyclically import each other.
+    if (filename == "error.proto") {
         output->Clear();
         output->set_name("error.proto");
         output->add_dependency("error2.proto");
         return true;
-      } else if (filename == "error2.proto") {
+    } else if (filename == "error2.proto") {
         output->Clear();
         output->set_name("error2.proto");
         output->add_dependency("error.proto");
         return true;
-      } else {
+    } else {
         return false;
-      }
+    }
     }
     bool FindFileContainingSymbol(const string& symbol_name,
-                                  FileDescriptorProto* output) {
-      return false;
+                                FileDescriptorProto* output) {
+    return false;
     }
     bool FindFileContainingExtension(const string& containing_type,
-                                     int field_number,
-                                     FileDescriptorProto* output) {
-      return false;
+                                    int field_number,
+                                    FileDescriptorProto* output) {
+    return false;
     }
   };
 
   // A DescriptorDatabase that counts how many times each method has been
   // called and forwards to some other DescriptorDatabase.
   class CallCountingDatabase : public DescriptorDatabase {
-   public:
+    public:
     CallCountingDatabase(DescriptorDatabase* wrapped_db)
-      : wrapped_db_(wrapped_db) {
-      Clear();
+    : wrapped_db_(wrapped_db) {
+    Clear();
     }
     ~CallCountingDatabase() {}
 
@@ -3644,25 +3644,25 @@ class DatabaseBackedPoolTest : public testing::Test {
     int call_count_;
 
     void Clear() {
-      call_count_ = 0;
+    call_count_ = 0;
     }
 
     // implements DescriptorDatabase ---------------------------------
     bool FindFileByName(const string& filename,
                         FileDescriptorProto* output) {
-      ++call_count_;
-      return wrapped_db_->FindFileByName(filename, output);
+    ++call_count_;
+    return wrapped_db_->FindFileByName(filename, output);
     }
     bool FindFileContainingSymbol(const string& symbol_name,
-                                  FileDescriptorProto* output) {
-      ++call_count_;
-      return wrapped_db_->FindFileContainingSymbol(symbol_name, output);
+                                FileDescriptorProto* output) {
+    ++call_count_;
+    return wrapped_db_->FindFileContainingSymbol(symbol_name, output);
     }
     bool FindFileContainingExtension(const string& containing_type,
-                                     int field_number,
-                                     FileDescriptorProto* output) {
-      ++call_count_;
-      return wrapped_db_->FindFileContainingExtension(
+                                    int field_number,
+                                    FileDescriptorProto* output) {
+    ++call_count_;
+    return wrapped_db_->FindFileContainingExtension(
         containing_type, field_number, output);
     }
   };
@@ -3671,9 +3671,9 @@ class DatabaseBackedPoolTest : public testing::Test {
   // for any symbol or extension number.  This shouldn't cause the
   // DescriptorPool to reload foo.proto if it is already loaded.
   class FalsePositiveDatabase : public DescriptorDatabase {
-   public:
+    public:
     FalsePositiveDatabase(DescriptorDatabase* wrapped_db)
-      : wrapped_db_(wrapped_db) {}
+    : wrapped_db_(wrapped_db) {}
     ~FalsePositiveDatabase() {}
 
     DescriptorDatabase* wrapped_db_;
@@ -3681,16 +3681,16 @@ class DatabaseBackedPoolTest : public testing::Test {
     // implements DescriptorDatabase ---------------------------------
     bool FindFileByName(const string& filename,
                         FileDescriptorProto* output) {
-      return wrapped_db_->FindFileByName(filename, output);
+    return wrapped_db_->FindFileByName(filename, output);
     }
     bool FindFileContainingSymbol(const string& symbol_name,
-                                  FileDescriptorProto* output) {
-      return FindFileByName("foo.proto", output);
+                                FileDescriptorProto* output) {
+    return FindFileByName("foo.proto", output);
     }
     bool FindFileContainingExtension(const string& containing_type,
-                                     int field_number,
-                                     FileDescriptorProto* output) {
-      return FindFileByName("foo.proto", output);
+                                    int field_number,
+                                    FileDescriptorProto* output) {
+    return FindFileByName("foo.proto", output);
     }
   };
 };
@@ -3821,11 +3821,11 @@ TEST_F(DatabaseBackedPoolTest, ErrorWithErrorCollector) {
   EXPECT_TRUE(pool.FindFileByName("error.proto") == NULL);
   EXPECT_EQ(
     "error.proto: error.proto: OTHER: File recursively imports itself: "
-      "error.proto -> error2.proto -> error.proto\n"
+    "error.proto -> error2.proto -> error.proto\n"
     "error2.proto: error2.proto: OTHER: Import \"error.proto\" was not "
-      "found or had errors.\n"
+    "found or had errors.\n"
     "error.proto: error.proto: OTHER: Import \"error2.proto\" was not "
-      "found or had errors.\n",
+    "found or had errors.\n",
     error_collector.text_);
 }
 

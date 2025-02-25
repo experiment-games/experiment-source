@@ -1,6 +1,6 @@
 foreach $_ (sort <> )
 {
-	next if( defined( $prevline ) && $_ eq $prevline );
-	$prevline = $_;
-	print;
+    next if( defined( $prevline ) && $_ eq $prevline );
+    $prevline = $_;
+    print;
 }

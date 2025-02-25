@@ -24,7 +24,7 @@ class CUtlStreamBuffer : public CUtlBuffer
 {
     typedef CUtlBuffer BaseClass;
 
-   public:
+    public:
     // See CUtlBuffer::BufferFlags_t for flags
     CUtlStreamBuffer();
     CUtlStreamBuffer( const char *pFileName, const char *pPath, int nFlags = 0, bool bDelayOpen = false );
@@ -39,7 +39,7 @@ class CUtlStreamBuffer : public CUtlBuffer
     // Is the file open?
     bool IsOpen() const;
 
-   private:
+    private:
     // error flags
     enum
     {

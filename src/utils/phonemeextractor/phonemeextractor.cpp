@@ -1393,7 +1393,7 @@ static SR_RESULT SAPI_ExtractPhonemes(
 //-----------------------------------------------------------------------------
 class CPhonemeExtractorSAPI : public IPhonemeExtractor
 {
-   public:
+    public:
     virtual PE_APITYPE GetAPIType() const
     {
         return SPEECH_API_SAPI;

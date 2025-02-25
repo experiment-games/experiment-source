@@ -38,7 +38,7 @@ class CNPC_Combine_Cannon : public CAI_BaseNPC
 {
     DECLARE_CLASS( CNPC_Combine_Cannon, CAI_BaseNPC );
 
-   public:
+    public:
     CNPC_Combine_Cannon( void );
     virtual void Precache( void );
     virtual void Spawn( void );
@@ -85,7 +85,7 @@ class CNPC_Combine_Cannon : public CAI_BaseNPC
         return "HelicopterTracer";
     }
 
-   private:
+    private:
     void ScopeGlint( void );
     void AdjustShotPosition( CBaseEntity *pTarget, Vector *vecIn );
 
@@ -124,7 +124,7 @@ class CNPC_Combine_Cannon : public CAI_BaseNPC
 
     void PaintTarget( const Vector &vecTarget, float flPaintTime );
 
-   private:
+    private:
     void CreateLaser( void );
     void CreateAncillaryBeams( void );
     void UpdateAncillaryBeams( float flConvergencePerc, const Vector &vecOrigin, const Vector &vecBasis );
@@ -210,7 +210,7 @@ enum
 //-----------------------------------------------------------------------------
 CNPC_Combine_Cannon::CNPC_Combine_Cannon( void )
     : m_pBeam( NULL ),
-      m_hBarrageTarget( NULL )
+    m_hBarrageTarget( NULL )
 {
 #ifdef _DEBUG
     m_vecPaintCursor.Init();
@@ -1183,7 +1183,7 @@ bool CNPC_Combine_Cannon::FVisible( CBaseEntity *pEntity, int traceMask, CBaseEn
     UTIL_TraceLine( EyePosition(), pEntity->EyePosition() + vecEye, MASK_SHOT, this, COLLISION_GROUP_NONE, &tr );
 
 #if 0
-	NDebugOverlay::Line(EyePosition(), tr.endpos, 0,255,0, true, 0.1);
+    NDebugOverlay::Line(EyePosition(), tr.endpos, 0,255,0, true, 0.1);
 #endif
 
     bool fCheckFailed = false;
@@ -1200,7 +1200,7 @@ bool CNPC_Combine_Cannon::FVisible( CBaseEntity *pEntity, int traceMask, CBaseEn
         UTIL_TraceLine( EyePosition(), pEntity->EyePosition() + vecEye, MASK_SHOT, this, COLLISION_GROUP_NONE, &tr );
 
 #if 0
-		NDebugOverlay::Line(EyePosition(), tr.endpos, 0,255,0, true, 0.1);
+        NDebugOverlay::Line(EyePosition(), tr.endpos, 0,255,0, true, 0.1);
 #endif
 
         if ( tr.fraction != 1.0 && tr.m_pEnt != pEntity )

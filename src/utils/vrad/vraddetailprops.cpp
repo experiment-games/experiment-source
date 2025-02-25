@@ -292,7 +292,7 @@ static bool SurfHasBumpedLightmaps( dface_t* pSurf )
 {
     bool hasBumpmap = false;
     if ( ( texinfo[pSurf->texinfo].flags & SURF_BUMPLIGHT ) &&
-         ( !( texinfo[pSurf->texinfo].flags & SURF_NOLIGHT ) ) )
+        ( !( texinfo[pSurf->texinfo].flags & SURF_NOLIGHT ) ) )
     {
         hasBumpmap = true;
     }
@@ -345,7 +345,7 @@ static void ComputeLightmapColorPointSample( dface_t* pFace, directlight_t* pSky
 
 class CLightSurface : public IBSPNodeEnumerator
 {
-   public:
+    public:
     CLightSurface( int iThread )
         : m_pSurface( 0 ), m_HitFrac( 1.0f ), m_bHasLuxel( false ), m_iThread( iThread ) {}
 
@@ -478,7 +478,7 @@ class CLightSurface : public IBSPNodeEnumerator
         return !EnumerateNodesAlongRay( ray, this, 0 );
     }
 
-   private:
+    private:
     bool TestPointAgainstSurface( Vector const& pt, dface_t* pFace, texinfo_t* pTex )
     {
         // no lightmaps on this surface? punt...
@@ -524,7 +524,7 @@ class CLightSurface : public IBSPNodeEnumerator
         return bRet;
     }
 
-   public:
+    public:
     int m_iThread;
     dface_t* m_pSurface;
     float m_HitFrac;
@@ -795,7 +795,7 @@ static void ComputeLighting( DetailObjectLump_t& prop, int iThread )
         totalColor *= 0.5f;
 
         if ( ( totalColor[0] != 0.0f ) || ( totalColor[1] != 0.0f ) ||
-             ( totalColor[2] != 0.0f ) )
+            ( totalColor[2] != 0.0f ) )
         {
             if ( !hasLightstyles )
             {

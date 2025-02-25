@@ -864,8 +864,8 @@ void CNavArea::ComputeEarliestOccupyTimes( void )
     // determine the shortest time it will take a Terrorist to reach this area
     int team = TEAM_TERRORIST % MAX_NAV_TEAMS;
     for ( spot = gEntList.FindEntityByClassname( NULL, "info_player_terrorist" );
-          spot;
-          spot = gEntList.FindEntityByClassname( spot, "info_player_terrorist" ) )
+        spot;
+        spot = gEntList.FindEntityByClassname( spot, "info_player_terrorist" ) )
     {
         float travelDistance = NavAreaTravelDistance( spot->GetAbsOrigin(), m_center, cost );
         if ( travelDistance < 0.0f )
@@ -881,8 +881,8 @@ void CNavArea::ComputeEarliestOccupyTimes( void )
     // determine the shortest time it will take a CT to reach this area
     team = TEAM_CT % MAX_NAV_TEAMS;
     for ( spot = gEntList.FindEntityByClassname( NULL, "info_player_counterterrorist" );
-          spot;
-          spot = gEntList.FindEntityByClassname( spot, "info_player_counterterrorist" ) )
+        spot;
+        spot = gEntList.FindEntityByClassname( spot, "info_player_counterterrorist" ) )
     {
         float travelDistance = NavAreaTravelDistance( spot->GetAbsOrigin(), m_center, cost );
         if ( travelDistance < 0.0f )
@@ -911,60 +911,60 @@ void CNavMesh::ComputeBattlefrontAreas( void )
 {
 #if 0
 #ifdef CSTRIKE_DLL
-	ShortestPathCost cost;
-	CBaseEntity *tSpawn, *ctSpawn;
+    ShortestPathCost cost;
+    CBaseEntity *tSpawn, *ctSpawn;
 
-	for( tSpawn = gEntList.FindEntityByClassname( NULL, "info_player_terrorist" );
-		 tSpawn;
-		 tSpawn = gEntList.FindEntityByClassname( tSpawn, "info_player_terrorist" ) )
-	{
-		CNavArea *tArea = TheNavMesh->GetNavArea( tSpawn->GetAbsOrigin() );
-		if (tArea == NULL)
-			continue;
+    for( tSpawn = gEntList.FindEntityByClassname( NULL, "info_player_terrorist" );
+        tSpawn;
+        tSpawn = gEntList.FindEntityByClassname( tSpawn, "info_player_terrorist" ) )
+    {
+        CNavArea *tArea = TheNavMesh->GetNavArea( tSpawn->GetAbsOrigin() );
+        if (tArea == NULL)
+            continue;
 
-		for( ctSpawn = gEntList.FindEntityByClassname( NULL, "info_player_counterterrorist" );
-			 ctSpawn;
-			 ctSpawn = gEntList.FindEntityByClassname( ctSpawn, "info_player_counterterrorist" ) )
-		{
-			CNavArea *ctArea = TheNavMesh->GetNavArea( ctSpawn->GetAbsOrigin() );
+        for( ctSpawn = gEntList.FindEntityByClassname( NULL, "info_player_counterterrorist" );
+            ctSpawn;
+            ctSpawn = gEntList.FindEntityByClassname( ctSpawn, "info_player_counterterrorist" ) )
+        {
+            CNavArea *ctArea = TheNavMesh->GetNavArea( ctSpawn->GetAbsOrigin() );
 
-			if (ctArea == NULL)
-				continue;
+            if (ctArea == NULL)
+                continue;
 
-			if (tArea == ctArea)
-			{
-				m_isBattlefront = true;
-				return;
-			}
+            if (tArea == ctArea)
+            {
+                m_isBattlefront = true;
+                return;
+            }
 
-			// build path between these two spawn points - assume if path fails, it at least got close
-			// (ie: imagine spawn points that you jump down from - can't path to)
-			CNavArea *goalArea = NULL;
-			NavAreaBuildPath( tArea, ctArea, NULL, cost, &goalArea );
+            // build path between these two spawn points - assume if path fails, it at least got close
+            // (ie: imagine spawn points that you jump down from - can't path to)
+            CNavArea *goalArea = NULL;
+            NavAreaBuildPath( tArea, ctArea, NULL, cost, &goalArea );
 
-			if (goalArea == NULL)
-				continue;
+            if (goalArea == NULL)
+                continue;
 
 
 /**
  * @todo Need to enumerate ALL paths between all pairs of spawn points to find all battlefront areas
  */
 
-			// find the area with the earliest overlapping occupy times
-			CNavArea *battlefront = NULL;
-			float earliestTime = 999999.9f;
+            // find the area with the earliest overlapping occupy times
+            CNavArea *battlefront = NULL;
+            float earliestTime = 999999.9f;
 
-			const float epsilon = 1.0f;
-			CNavArea *area;
-			for( area = goalArea; area; area = area->GetParent() )
-			{
-				if (fabs(area->GetEarliestOccupyTime( TEAM_TERRORIST ) - area->GetEarliestOccupyTime( TEAM_CT )) < epsilon)
-				{
-				}
-				
-			}
-		}
-	}
+            const float epsilon = 1.0f;
+            CNavArea *area;
+            for( area = goalArea; area; area = area->GetParent() )
+            {
+                if (fabs(area->GetEarliestOccupyTime( TEAM_TERRORIST ) - area->GetEarliestOccupyTime( TEAM_CT )) < epsilon)
+                {
+                }
+
+            }
+        }
+    }
 #endif
 #endif
 }

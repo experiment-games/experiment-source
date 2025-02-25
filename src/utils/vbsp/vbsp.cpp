@@ -603,7 +603,7 @@ static void EmitOccluderBrushes()
             // Skip nodraw surfaces, but not triggers that have been marked as nodraw
             face_t *f = faceList[i];
             if ( ( texinfo[f->texinfo].flags & SURF_NODRAW ) &&
-                 ( ( texinfo[f->texinfo].flags & SURF_TRIGGER ) == 0 ) )
+                ( ( texinfo[f->texinfo].flags & SURF_TRIGGER ) == 0 ) )
                 continue;
 
             // Only emit faces that appear in the side list of the occluder
@@ -997,12 +997,12 @@ int RunVBSP( int argc, char **argv )
             g_snapAxialPlanes = true;
         }
 #if 0
-		else if (!Q_stricmp(argv[i], "-maxlightmapdim"))
-		{
-			g_maxLightmapDimension = atof(argv[i+1]);
-			Msg ("g_maxLightmapDimension = %f\n", g_maxLightmapDimension);
-			i++;
-		}
+        else if (!Q_stricmp(argv[i], "-maxlightmapdim"))
+        {
+            g_maxLightmapDimension = atof(argv[i+1]);
+            Msg ("g_maxLightmapDimension = %f\n", g_maxLightmapDimension);
+            i++;
+        }
 #endif
         else if ( !Q_stricmp( argv[i], "-block" ) )
         {
@@ -1018,10 +1018,10 @@ int RunVBSP( int argc, char **argv )
             block_xh = atoi( argv[i + 3] );
             block_yh = atoi( argv[i + 4] );
             Msg( "blocks: %i,%i to %i,%i\n",
-                 block_xl,
-                 block_yl,
-                 block_xh,
-                 block_yh );
+                block_xl,
+                block_yl,
+                block_xh,
+                block_yh );
             i += 4;
         }
         else if ( !Q_stricmp( argv[i], "-dumpcollide" ) )
@@ -1044,11 +1044,11 @@ int RunVBSP( int argc, char **argv )
             strcpy( outbase, "/tmp" );
         }
 #if 0
-		else if( !Q_stricmp( argv[i], "-defaultluxelsize" ) )
-		{
-			g_defaultLuxelSize = atof( argv[i+1] );
-			i++;
-		}
+        else if( !Q_stricmp( argv[i], "-defaultluxelsize" ) )
+        {
+            g_defaultLuxelSize = atof( argv[i+1] );
+            i++;
+        }
 #endif
         else if ( !Q_stricmp( argv[i], "-luxelscale" ) )
         {
@@ -1272,9 +1272,9 @@ int RunVBSP( int argc, char **argv )
     LoadSurfaceProperties();
 
 #if 0
-	Msg( "qdir: %s  This is the the path of the initial source file \n", qdir );
-	Msg( "gamedir: %s This is the base engine + mod-specific game dir (e.g. d:/tf2/mytfmod/) \n", gamedir );
-	Msg( "basegamedir: %s This is the base engine + base game directory (e.g. e:/hl2/hl2/, or d:/tf2/tf2/ )\n", basegamedir );
+    Msg( "qdir: %s  This is the the path of the initial source file \n", qdir );
+    Msg( "gamedir: %s This is the base engine + mod-specific game dir (e.g. d:/tf2/mytfmod/) \n", gamedir );
+    Msg( "basegamedir: %s This is the base engine + base game directory (e.g. e:/hl2/hl2/, or d:/tf2/tf2/ )\n", basegamedir );
 #endif
 
     sprintf( materialPath, "%smaterials", gamedir );

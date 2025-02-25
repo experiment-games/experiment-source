@@ -22,30 +22,30 @@ class bf_read;
 // stubbed version of haptics interface. Used when haptics is not available.
 class CHapticsStubbed : public IHaptics
 {
-   public:
-   public:  // Initialization.
+    public:
+    public:  // Initialization.
     virtual bool Initialize( IVEngineClient *newengine,
-                             IViewRender *newview,
-                             vgui::IInputInternal *newinput,
-                             CGlobalVarsBase *newgpGlobals,
-                             CreateInterfaceFn newengineFactory,
-                             void *IMEWindow,
-                             IFileSystem *filesystem,
-                             IEngineVGui *newvgui,
-                             ActivityList_IndexForName_t actIndexForName,
-                             ActivityList_NameForIndex_t actNameForIndex )
+                            IViewRender *newview,
+                            vgui::IInputInternal *newinput,
+                            CGlobalVarsBase *newgpGlobals,
+                            CreateInterfaceFn newengineFactory,
+                            void *IMEWindow,
+                            IFileSystem *filesystem,
+                            IEngineVGui *newvgui,
+                            ActivityList_IndexForName_t actIndexForName,
+                            ActivityList_NameForIndex_t actNameForIndex )
     {
         return false;
     };
 
-   public:  // Device methods
+    public:  // Device methods
     virtual bool HasDevice()
     {
         return false;
     };
     virtual void ShutdownHaptics(){};
 
-   public:  // Game input handling
+    public:  // Game input handling
     virtual void CalculateMove( float &forward_move, float &side_move, float delta ){};
     virtual void OnPlayerChanged() {}
     virtual void SetNavigationClass( const char *defaultNavigationName ){};
@@ -56,7 +56,7 @@ class CHapticsStubbed : public IHaptics
     virtual void GameProcess() {}
     virtual void MenuProcess() {}
 
-   public:  // Effect methods
+    public:  // Effect methods
     virtual void ProcessHapticEvent( int numArgs, ... ) {}
     virtual void ProcessHapticWeaponActivity( const char *weapon, int activity ) {}
     virtual void HapticsPunch( float strength, const QAngle &angle ) {}
@@ -78,7 +78,7 @@ class CHapticsStubbed : public IHaptics
     }
     virtual void SetDangling( float amount ){};
 
-   public:  // Notify methods
+    public:  // Notify methods
     virtual void LocalPlayerReset(){};
     virtual void UpdatePlayerFOV( float fov ){};
     virtual void WorldPrecache(){};

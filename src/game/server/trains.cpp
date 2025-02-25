@@ -25,7 +25,7 @@ class CBasePlatTrain : public CBaseToggle
 {
     DECLARE_CLASS( CBasePlatTrain, CBaseToggle );
 
-   public:
+    public:
     ~CBasePlatTrain();
     bool KeyValue( const char *szKeyName, const char *szValue );
     void Precache( void );
@@ -222,7 +222,7 @@ class CFuncPlat : public CBasePlatTrain
 {
     DECLARE_CLASS( CFuncPlat, CBasePlatTrain );
 
-   public:
+    public:
     void Spawn( void );
     void Precache( void );
     bool CreateVPhysics();
@@ -255,7 +255,7 @@ class CFuncPlat : public CBasePlatTrain
 
     DECLARE_DATADESC();
 
-   private:
+    private:
     string_t m_sNoise;
 };
 
@@ -285,7 +285,7 @@ class CPlatTrigger : public CBaseEntity
 {
     DECLARE_CLASS( CPlatTrigger, CBaseEntity );
 
-   public:
+    public:
     virtual int ObjectCaps( void )
     {
         return BaseClass::ObjectCaps() | FCAP_DONT_SAVE;
@@ -615,7 +615,7 @@ class CFuncPlatRot : public CFuncPlat
 {
     DECLARE_CLASS( CFuncPlatRot, CFuncPlat );
 
-   public:
+    public:
     void Spawn( void );
     void SetupRotation( void );
 
@@ -718,7 +718,7 @@ class CFuncTrain : public CBasePlatTrain
 {
     DECLARE_CLASS( CFuncTrain, CBasePlatTrain );
 
-   public:
+    public:
     void Spawn( void );
     void Precache( void );
     void Activate( void );
@@ -741,7 +741,7 @@ class CFuncTrain : public CBasePlatTrain
 
     DECLARE_DATADESC();
 
-   public:
+    public:
     EHANDLE m_hCurrentTarget;
 
     bool m_activated;
@@ -2444,14 +2444,14 @@ bool CFuncTrackTrain::OnControls( CBaseEntity *pTest )
 
     /*
     NDebugOverlay::Box( GetLocalOrigin(), m_controlMins, m_controlMaxs,
-          255, 0, 0, 100, 5.0 );
+        255, 0, 0, 100, 5.0 );
 
     NDebugOverlay::Box( GetLocalOrigin() + local, Vector(-5,-5,-5), Vector(5,5,5),
-          0, 0, 255, 100, 5.0 );
+        0, 0, 255, 100, 5.0 );
     */
 
     if ( local.x >= m_controlMins.x && local.y >= m_controlMins.y && local.z >= m_controlMins.z &&
-         local.x <= m_controlMaxs.x && local.y <= m_controlMaxs.y && local.z <= m_controlMaxs.z )
+        local.x <= m_controlMaxs.x && local.y <= m_controlMaxs.y && local.z <= m_controlMaxs.z )
         return true;
 
     return false;
@@ -2465,7 +2465,7 @@ void CFuncTrackTrain::Find( void )
 
     if ( !FClassnameIs( m_ppath, "path_track" )
 #ifndef PORTAL  // env_portal_path_track is a child of path_track and would like to get found
-         && !FClassnameIs( m_ppath, "env_portal_path_track" )
+        && !FClassnameIs( m_ppath, "env_portal_path_track" )
 #endif  // #ifndef PORTAL
     )
     {
@@ -2559,7 +2559,7 @@ void CFuncTrackTrain::OnRestore( void )
     BaseClass::OnRestore();
     if ( !m_ppath
 #ifdef HL1_DLL
-         && !m_bOnTrackChange
+        && !m_bOnTrackChange
 #endif
     )
     {
@@ -2723,7 +2723,7 @@ class CFuncTrainControls : public CBaseEntity
 {
     DECLARE_CLASS( CFuncTrainControls, CBaseEntity );
 
-   public:
+    public:
     void Spawn( void );
     void Find( void );
 
@@ -2795,7 +2795,7 @@ class CFuncTrackChange : public CFuncPlatRot
 {
     DECLARE_CLASS( CFuncTrackChange, CFuncPlatRot );
 
-   public:
+    public:
     void Spawn( void );
     void Precache( void );
 
@@ -2961,7 +2961,7 @@ TRAIN_CODE CFuncTrackChange::EvaluateTrain( CPathTrack *pcurrent )
         return TRAIN_SAFE;
 
     if ( m_train->m_ppath == pcurrent || ( pcurrent->m_pprevious && m_train->m_ppath == pcurrent->m_pprevious ) ||
-         ( pcurrent->m_pnext && m_train->m_ppath == pcurrent->m_pnext ) )
+        ( pcurrent->m_pnext && m_train->m_ppath == pcurrent->m_pnext ) )
     {
         if ( m_train->m_flSpeed != 0 )
             return TRAIN_BLOCKING;
@@ -3176,7 +3176,7 @@ class CFuncTrackAuto : public CFuncTrackChange
 {
     DECLARE_CLASS( CFuncTrackAuto, CFuncTrackChange );
 
-   public:
+    public:
     void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
     virtual void UpdateAutoTargets( int toggleState );
     void TriggerTrackChange( inputdata_t &inputdata );

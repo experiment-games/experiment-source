@@ -16,7 +16,7 @@ class CUtlMsgBuffer;
 
 class ISteamAddOn : public IBaseInterface
 {
-   public:
+    public:
     // allows SteamAddOn to link to the core vgui factories
     virtual bool Initialize( CreateInterfaceFn *vguiFactories, int factoryCount ) = 0;
 

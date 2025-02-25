@@ -80,7 +80,7 @@ class CTier3AppSystem : public CTier2AppSystem< IInterface, ConVarFlag >
 {
     typedef CTier2AppSystem< IInterface, ConVarFlag > BaseClass;
 
-   public:
+    public:
     CTier3AppSystem( bool bIsPrimaryAppSystem = true )
         : BaseClass( bIsPrimaryAppSystem )
     {

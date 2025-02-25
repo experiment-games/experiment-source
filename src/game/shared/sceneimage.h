@@ -15,7 +15,7 @@ class ISceneTokenProcessor;
 
 class ISceneCompileStatus
 {
-   public:
+    public:
     virtual void UpdateStatus( char const *pchSceneName, bool bQuiet, int nIndex, int nCount ) = 0;
 };
 
@@ -23,7 +23,7 @@ class CUtlBuffer;
 
 class ISceneImage
 {
-   public:
+    public:
     virtual bool CreateSceneImageFile( CUtlBuffer &targetBuffer, char const *pchModPath, bool bLittleEndian, bool bQuiet, ISceneCompileStatus *Status ) = 0;
 };
 

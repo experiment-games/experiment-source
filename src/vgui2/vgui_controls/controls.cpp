@@ -52,7 +52,7 @@ bool VGui_InitInterfacesList( const char *moduleName, CreateInterfaceFn *factory
 
     // NOTE: Vgui expects to use these interfaces which are defined in tier3.lib
     if ( !g_pVGui || !g_pVGuiInput || !g_pVGuiPanel ||
-         !g_pVGuiSurface || !g_pVGuiSchemeManager || !g_pVGuiSystem )
+        !g_pVGuiSurface || !g_pVGuiSchemeManager || !g_pVGuiSystem )
     {
         Warning( "vgui_controls is missing a required interface!\n" );
         return false;

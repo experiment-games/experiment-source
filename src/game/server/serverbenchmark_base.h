@@ -13,7 +13,7 @@
 // The base server code calls into this.
 class IServerBenchmark
 {
-   public:
+    public:
     virtual bool StartBenchmark() = 0;
     virtual void UpdateBenchmark() = 0;
     virtual void EndBenchmark() = 0;
@@ -40,7 +40,7 @@ extern IServerBenchmark *g_pServerBenchmark;
 //
 class CServerBenchmarkHook
 {
-   public:
+    public:
     CServerBenchmarkHook();
 
     virtual void StartBenchmark() {}
@@ -54,7 +54,7 @@ class CServerBenchmarkHook
     // If you want to manage the bots yourself, you can return NULL here.
     virtual CBasePlayer *CreateBot() = 0;
 
-   private:
+    private:
     friend class CServerBenchmark;
     static CServerBenchmarkHook *s_pBenchmarkHook;  // There can be only one!!
 };

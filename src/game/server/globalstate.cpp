@@ -28,7 +28,7 @@ struct globalentity_t
 
 class CGlobalState : public CAutoGameSystem
 {
-   public:
+    public:
     CGlobalState( char const *name )
         : CAutoGameSystem( name ), m_disableStateUpdates( false )
     {
@@ -153,10 +153,10 @@ class CGlobalState : public CAutoGameSystem
     void DumpGlobals( void );
     // #endif
 
-   public:
+    public:
     CUtlSymbolTable m_nameList;
 
-   private:
+    private:
     bool m_disableStateUpdates;
     CUtlVector< globalentity_t > m_list;
 };

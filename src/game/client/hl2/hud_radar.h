@@ -17,7 +17,7 @@
 
 class CRadarContact
 {
-   public:
+    public:
     Vector m_vecOrigin;
     int m_iType;
     float m_flTimeToRemove;
@@ -25,7 +25,7 @@ class CRadarContact
 
 class CHudRadar : public CVGuiScreenPanel
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CHudRadar, CVGuiScreenPanel );
 
     CHudRadar( vgui::Panel *parent, const char *panelName );
@@ -51,13 +51,13 @@ class CHudRadar : public CVGuiScreenPanel
         m_iNumRadarContacts = 0;
     }
 
-   public:
+    public:
     bool m_bUseFastUpdate;
     int m_ghostAlpha;  // How intense the alpha channel is for CRT ghosts
     float m_flTimeStopGhosting;
     float m_flTimeStartGhosting;
 
-   private:
+    private:
     bool WorldToRadar( const Vector location, const Vector origin, const QAngle angles, float &x, float &y, float &z_delta, float &scale );
 
     void DrawPositionOnRadar( Vector vecPos, C_BasePlayer *pLocalPlayer, int type, int flags, int r, int g, int b, int a );

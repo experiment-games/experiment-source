@@ -30,7 +30,7 @@ CLIENTEFFECT_REGISTER_END()
 
 class C_EnergyWave : public C_BaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_EnergyWave, C_BaseEntity );
     DECLARE_CLIENTCLASS();
 
@@ -47,7 +47,7 @@ class C_EnergyWave : public C_BaseEntity
     IMaterial* m_pWireframe;
     IMaterial* m_pEWaveMat;
 
-   private:
+    private:
     C_EnergyWave( const C_EnergyWave& );  // not defined, not accessible
 
     void ComputeEWavePoints( Vector* pt, Vector* normal, float* opacity );
@@ -201,7 +201,7 @@ void C_EnergyWave::ComputePoint( float s, float t, Vector& pt, Vector& normal, f
     opacity = DotProduct4D( tmp, svec );
 
     if ( ( s == 0.0f ) || ( t == 0.0f ) ||
-         ( s == ( EWAVE_NUM_HORIZONTAL_POINTS - 1.0f ) ) || ( t == ( EWAVE_NUM_VERTICAL_POINTS - 1.0f ) ) )
+        ( s == ( EWAVE_NUM_HORIZONTAL_POINTS - 1.0f ) ) || ( t == ( EWAVE_NUM_VERTICAL_POINTS - 1.0f ) ) )
     {
         opacity = 0.0f;
     }
@@ -255,7 +255,7 @@ void C_EnergyWave::DrawWireframeModel()
     IMesh* pMesh = materials->GetDynamicMesh( true, NULL, NULL, m_pWireframe );
 
     int numLines = ( EWAVE_NUM_VERTICAL_POINTS - 1 ) * EWAVE_NUM_HORIZONTAL_POINTS +
-                   EWAVE_NUM_VERTICAL_POINTS * ( EWAVE_NUM_HORIZONTAL_POINTS - 1 );
+                    EWAVE_NUM_VERTICAL_POINTS * ( EWAVE_NUM_HORIZONTAL_POINTS - 1 );
 
     CMeshBuilder meshBuilder;
     meshBuilder.Begin( pMesh, MATERIAL_LINES, numLines );

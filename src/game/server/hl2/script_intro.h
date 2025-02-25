@@ -19,7 +19,7 @@ class CScriptIntro : public CBaseEntity
 {
     DECLARE_CLASS( CScriptIntro, CBaseEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
     DECLARE_SERVERCLASS();
 
@@ -45,11 +45,11 @@ class CScriptIntro : public CBaseEntity
 
     bool GetIncludedPVSOrigin( Vector *pOrigin, CBaseEntity **ppCamera );
 
-   private:
+    private:
     // Think func used to finish the blend off
     void BlendComplete();
 
-   private:
+    private:
     CNetworkVar( Vector, m_vecPlayerView );
     CNetworkVar( QAngle, m_vecPlayerViewAngles );
     CNetworkVar( Vector, m_vecCameraView );

@@ -34,7 +34,7 @@
 
 class GLMDisplayMode
 {
-   public:
+    public:
     GLMDisplayModeInfoFields m_info;
 
     GLMDisplayMode( uint width, uint height, uint refreshHz );
@@ -51,7 +51,7 @@ class GLMDisplayMode
 
 class GLMDisplayInfo
 {
-   public:
+    public:
     GLMDisplayInfoFields m_info;
     CUtlVector< GLMDisplayMode * > *m_modes;  // starts out NULL, set by PopulateModes
     GLMDisplayMode m_DesktopMode;
@@ -69,7 +69,7 @@ class GLMDisplayInfo
     void Dump( int which );
 
 #ifdef OSX
-   private:
+    private:
     int m_display;
 #endif
 };
@@ -80,7 +80,7 @@ class GLMDisplayInfo
 
 class GLMRendererInfo
 {
-   public:
+    public:
     GLMRendererInfoFields m_info;
 #ifdef OSX
     CUtlVector< GLMDisplayInfo * > *m_displays;  // starts out NULL, set by PopulateDisplays
@@ -123,7 +123,7 @@ struct GLMFakeAdapter
 
 class GLMDisplayDB
 {
-   public:
+    public:
 #ifdef OSX
     CUtlVector< GLMRendererInfo * > *m_renderers;  // starts out NULL, set by PopulateRenderers
     CUtlVector< GLMFakeAdapter > m_fakeAdapters;

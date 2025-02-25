@@ -76,7 +76,7 @@ struct RagdollInfo_t
 
 class CAttachmentData
 {
-   public:
+    public:
     matrix3x4_t m_AttachmentToWorld;
     QAngle m_angRotation;
     Vector m_vOriginVelocity;
@@ -94,7 +94,7 @@ class C_BaseAnimating : public C_BaseEntity, private IModelLoadCallback
     LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( C_BaseAnimating, LUA_BASEANIMATINGLIBNAME )
 #endif
 
-   public:
+    public:
     DECLARE_CLASS( C_BaseAnimating, C_BaseEntity );
     DECLARE_CLIENTCLASS();
     DECLARE_PREDICTABLE();
@@ -458,7 +458,7 @@ class C_BaseAnimating : public C_BaseEntity, private IModelLoadCallback
 
     void DisableMuzzleFlash();       // Turn off the muzzle flash (ie: signal that we handled the server's event).
     virtual void DoMuzzleFlash();    // Force a muzzle flash event. Note: this only QUEUES an event, so
-                                     // ProcessMuzzleFlashEvent will get called later.
+                                    // ProcessMuzzleFlashEvent will get called later.
     bool ShouldMuzzleFlash() const;  // Is the muzzle flash event on?
 
     // This is called to do the actual muzzle flash effect.
@@ -540,7 +540,7 @@ class C_BaseAnimating : public C_BaseEntity, private IModelLoadCallback
         Q_strncpy( pOut, m_SubMaterialOverrides[iIndex], nLength );
     }
 
-   protected:
+    protected:
     // View models scale their attachment positions to account for FOV. To get the unmodified
     // attachment position (like if you're rendering something else during the view model's DrawModel call),
     // use TransformViewModelAttachmentToWorld.
@@ -561,7 +561,7 @@ class C_BaseAnimating : public C_BaseEntity, private IModelLoadCallback
 
     virtual bool CalcAttachments();
 
-   private:
+    private:
     // This method should return true if the bones have changed + SetupBones needs to be called
     virtual float LastBoneChangedTime()
     {
@@ -579,7 +579,7 @@ class C_BaseAnimating : public C_BaseEntity, private IModelLoadCallback
     void AddBaseAnimatingInterpolatedVars();
     void RemoveBaseAnimatingInterpolatedVars();
 
-   public:
+    public:
     CRagdoll *m_pRagdoll;
 
     // Texture group to use
@@ -593,7 +593,7 @@ class C_BaseAnimating : public C_BaseEntity, private IModelLoadCallback
 
     CSequenceTransitioner m_SequenceTransitioner;
 
-   protected:
+    protected:
     CIKContext *m_pIk;
 
     int m_iEyeAttachment;
@@ -630,7 +630,7 @@ class C_BaseAnimating : public C_BaseEntity, private IModelLoadCallback
     QAngle m_boneAngles;
     CHandle< C_BaseAnimating > m_pAttachedTo;
 
-   protected:
+    protected:
     float m_fadeMinDist;
     float m_fadeMaxDist;
     float m_flFadeScale;
@@ -641,7 +641,7 @@ class C_BaseAnimating : public C_BaseEntity, private IModelLoadCallback
     char m_SubMaterialOverrides[MAX_SUB_MATERIAL_OVERRIDES][MAX_PATH];
     CMaterialReference m_SubMaterialOverridesReferences[MAX_SUB_MATERIAL_OVERRIDES];
 
-   private:
+    private:
     float m_flGroundSpeed;     // computed linear movement rate for current sequence
     float m_flLastEventCheck;  // cycle index of when events were last checked
     bool m_bSequenceFinished;  // flag set when StudioAdvanceFrame moves across a frame boundry
@@ -672,14 +672,14 @@ class C_BaseAnimating : public C_BaseEntity, private IModelLoadCallback
     float m_flOldEncodedController[MAXSTUDIOBONECTRLS];
 
 #ifdef LUA_SDK
-   public:
+    public:
 #endif
     // Clientside animation
     bool m_bClientSideAnimation;
     bool m_bLastClientSideFrameReset;
 
 #ifdef LUA_SDK
-   private:
+    private:
 #endif
     int m_nNewSequenceParity;
     int m_nResetEventsParity;
@@ -696,17 +696,17 @@ class C_BaseAnimating : public C_BaseEntity, private IModelLoadCallback
     bool m_bReceivedSequence;
 
     // Current cycle location from server
-   protected:
+    protected:
     float m_flCycle;
     CInterpolatedVar< float > m_iv_flCycle;
     float m_flOldCycle;
     bool m_bNoModelParticles;
 
-   private:
+    private:
     float m_flOldModelScale;
     int m_nOldSequence;
     CBoneMergeCache *m_pBoneMergeCache;  // This caches the strcmp lookups that it has to do
-                                         // when merg
+                                        // when merg
 
     CUtlVector< matrix3x4_t > m_CachedBoneData;  // never access this directly. Use m_BoneAccessor.
     memhandle_t m_hitboxBoneCacheHandle;
@@ -733,7 +733,7 @@ class C_BaseAnimating : public C_BaseEntity, private IModelLoadCallback
     bool m_bResetSequenceInfoOnLoad;
     CRefCountedModelIndex m_AutoRefModelIndex;
 
-   public:
+    public:
     void EnableDynamicModels()
     {
         m_bDynamicModelAllowed = true;
@@ -743,10 +743,10 @@ class C_BaseAnimating : public C_BaseEntity, private IModelLoadCallback
         return m_bDynamicModelPending;
     }
 
-   private:
+    private:
     virtual void OnModelLoadComplete( const model_t *pModel );
 
-   private:
+    private:
     void LockStudioHdr();
     void UnlockStudioHdr();
     mutable CStudioHdr *m_pStudioHdr;
@@ -765,7 +765,7 @@ enum
 
 class C_ClientRagdoll : public C_BaseAnimating, public IPVSNotify
 {
-   public:
+    public:
     C_ClientRagdoll( bool bRestoring = true );
     DECLARE_CLASS( C_ClientRagdoll, C_BaseAnimating );
     DECLARE_DATADESC();
@@ -806,7 +806,7 @@ class C_ClientRagdoll : public C_BaseAnimating, public IPVSNotify
     bool m_bImportant;
     float m_flEffectTime;
 
-   private:
+    private:
     int m_iCurrentFriction;
     int m_iMinFriction;
     int m_iMaxFriction;

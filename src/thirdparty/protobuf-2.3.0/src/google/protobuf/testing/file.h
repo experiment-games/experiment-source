@@ -47,7 +47,7 @@ const int DEFAULT_FILE_MODE = 0777;
 // in tests.
 class File
 {
-   public:
+    public:
     // Check if the file exists.
     static bool Exists( const string& name );
 
@@ -74,10 +74,10 @@ class File
     // The "dummy" parameters have a meaning in the original version of this
     // method but they are not used anywhere in protocol buffers.
     static void DeleteRecursively( const string& name,
-                                   void* dummy1,
-                                   void* dummy2 );
+                                    void* dummy1,
+                                    void* dummy2 );
 
-   private:
+    private:
     GOOGLE_DISALLOW_EVIL_CONSTRUCTORS( File );
 };
 

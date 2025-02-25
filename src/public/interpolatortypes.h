@@ -83,20 +83,20 @@ void Interpolator_CurveInterpolate( int interpolationType,
 
 // Main spline interpolation function for Vectors, doesn't assume time is in .x and doesn't do normalization
 void Interpolator_CurveInterpolate_NonNormalized( int interpolationType,
-                                                  const Vector &vPre,
-                                                  const Vector &vStart,
-                                                  const Vector &vEnd,
-                                                  const Vector &vNext,
-                                                  float f,
-                                                  Vector &vOut );
+                                                const Vector &vPre,
+                                                const Vector &vStart,
+                                                const Vector &vEnd,
+                                                const Vector &vNext,
+                                                float f,
+                                                Vector &vOut );
 
 // Main spline interpolation function for Vectors, doesn't assume time is in .x and doesn't do normalization
 void Interpolator_CurveInterpolate_NonNormalized( int interpolationType,
-                                                  const Quaternion &vPre,
-                                                  const Quaternion &vStart,
-                                                  const Quaternion &vEnd,
-                                                  const Quaternion &vNext,
-                                                  float f,
-                                                  Quaternion &vOut );
+                                                const Quaternion &vPre,
+                                                const Quaternion &vStart,
+                                                const Quaternion &vEnd,
+                                                const Quaternion &vNext,
+                                                float f,
+                                                Quaternion &vOut );
 
 #endif  // INTERPOLATORTYPES_H

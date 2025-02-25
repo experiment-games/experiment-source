@@ -3,56 +3,56 @@
 /* Example how to plug this into an existing shader:
 
     In the VMT:
-      // Flesh Interior Pass
-      "$FleshInteriorEnabled"      "1" // Enables effect
-      "$FleshInteriorTexture"      "models/Alyx/alyx_flesh_color" // Mask in alpha
-      "$FleshNormalTexture"		 "models/Alyx/alyx_flesh_normal"
-      "$FleshBorderTexture1D"      "models/Alyx/alyx_flesh_border"
-      "$FleshInteriorNoiseTexture" "Engine/noise-blur-256x256"
-      "$FleshSubsurfaceTexture"	 "models/Alyx/alyx_flesh_subsurface"
-      "$FleshBorderNoiseScale"     "1.5" // Flesh Noise UV scalar for border
-      "$FleshBorderWidth"			 "0.3" // Width of flesh border
-      "$FleshBorderSoftness"		 "0.42" // Border softness must be greater than 0.0 and up tp 0.5
-      "$FleshBorderTint"			 "[1 1 1]" // Tint / brighten the border 1D texture
-      "$FleshGlossBrightness"		 "0.66" // Change the brightness of the glossy layer
-      "$FleshDebugForceFleshOn"	 "0" // DEBUG: This will force on full flesh for testing
-      "$FleshScrollSpeed"			 "1.0"
-      "Proxies"
-      {
+    // Flesh Interior Pass
+    "$FleshInteriorEnabled"      "1" // Enables effect
+    "$FleshInteriorTexture"      "models/Alyx/alyx_flesh_color" // Mask in alpha
+    "$FleshNormalTexture"		 "models/Alyx/alyx_flesh_normal"
+    "$FleshBorderTexture1D"      "models/Alyx/alyx_flesh_border"
+    "$FleshInteriorNoiseTexture" "Engine/noise-blur-256x256"
+    "$FleshSubsurfaceTexture"	 "models/Alyx/alyx_flesh_subsurface"
+    "$FleshBorderNoiseScale"     "1.5" // Flesh Noise UV scalar for border
+    "$FleshBorderWidth"			 "0.3" // Width of flesh border
+    "$FleshBorderSoftness"		 "0.42" // Border softness must be greater than 0.0 and up tp 0.5
+    "$FleshBorderTint"			 "[1 1 1]" // Tint / brighten the border 1D texture
+    "$FleshGlossBrightness"		 "0.66" // Change the brightness of the glossy layer
+    "$FleshDebugForceFleshOn"	 "0" // DEBUG: This will force on full flesh for testing
+    "$FleshScrollSpeed"			 "1.0"
+    "Proxies"
+    {
         "FleshInterior"
         {
         }
-      }
+    }
 
     #include "flesh_interior_blended_pass_helper.h"
 
     In BEGIN_SHADER_PARAMS:
-      // Flesh Interior Pass
-      SHADER_PARAM( FLESHINTERIORENABLED, SHADER_PARAM_TYPE_BOOL, "0", "Enable Flesh interior blend pass" )
-      SHADER_PARAM( FLESHINTERIORTEXTURE, SHADER_PARAM_TYPE_TEXTURE, "", "Flesh color texture" )
-      SHADER_PARAM( FLESHINTERIORNOISETEXTURE, SHADER_PARAM_TYPE_TEXTURE, "", "Flesh noise texture" )
-      SHADER_PARAM( FLESHBORDERTEXTURE1D, SHADER_PARAM_TYPE_TEXTURE, "", "Flesh border 1D texture" )
-      SHADER_PARAM( FLESHNORMALTEXTURE, SHADER_PARAM_TYPE_TEXTURE, "", "Flesh normal texture" )
-      SHADER_PARAM( FLESHSUBSURFACETEXTURE, SHADER_PARAM_TYPE_TEXTURE, "", "Flesh subsurface texture" )
-      SHADER_PARAM( FLESHCUBETEXTURE, SHADER_PARAM_TYPE_TEXTURE, "", "Flesh cubemap texture" )
-      SHADER_PARAM( FLESHBORDERNOISESCALE, SHADER_PARAM_TYPE_FLOAT, "1.5", "Flesh Noise UV scalar for border" )
-      SHADER_PARAM( FLESHDEBUGFORCEFLESHON, SHADER_PARAM_TYPE_BOOL, "0", "Flesh Debug full flesh" )
-      SHADER_PARAM( FLESHEFFECTCENTERRADIUS1, SHADER_PARAM_TYPE_VEC4, "[0 0 0 0.001]", "Flesh effect center and radius" )
-      SHADER_PARAM( FLESHEFFECTCENTERRADIUS2, SHADER_PARAM_TYPE_VEC4, "[0 0 0 0.001]", "Flesh effect center and radius" )
-      SHADER_PARAM( FLESHEFFECTCENTERRADIUS3, SHADER_PARAM_TYPE_VEC4, "[0 0 0 0.001]", "Flesh effect center and radius" )
-      SHADER_PARAM( FLESHEFFECTCENTERRADIUS4, SHADER_PARAM_TYPE_VEC4, "[0 0 0 0.001]", "Flesh effect center and radius" )
-      SHADER_PARAM( FLESHSUBSURFACETINT, SHADER_PARAM_TYPE_COLOR, "[1 1 1]", "Subsurface Color" )
-      SHADER_PARAM( FLESHBORDERWIDTH, SHADER_PARAM_TYPE_FLOAT, "0.3", "Flesh border" )
-      SHADER_PARAM( FLESHBORDERSOFTNESS, SHADER_PARAM_TYPE_FLOAT, "0.42", "Flesh border softness (> 0.0 && <= 0.5)" )
-      SHADER_PARAM( FLESHBORDERTINT, SHADER_PARAM_TYPE_COLOR, "[1 1 1]", "Flesh border Color" )
-      SHADER_PARAM( FLESHGLOBALOPACITY, SHADER_PARAM_TYPE_FLOAT, "1.0", "Flesh global opacity" )
-      SHADER_PARAM( FLESHGLOSSBRIGHTNESS, SHADER_PARAM_TYPE_FLOAT, "0.66", "Flesh gloss brightness" )
-      SHADER_PARAM( FLESHSCROLLSPEED, SHADER_PARAM_TYPE_FLOAT, "1.0", "Flesh scroll speed" )
+    // Flesh Interior Pass
+    SHADER_PARAM( FLESHINTERIORENABLED, SHADER_PARAM_TYPE_BOOL, "0", "Enable Flesh interior blend pass" )
+    SHADER_PARAM( FLESHINTERIORTEXTURE, SHADER_PARAM_TYPE_TEXTURE, "", "Flesh color texture" )
+    SHADER_PARAM( FLESHINTERIORNOISETEXTURE, SHADER_PARAM_TYPE_TEXTURE, "", "Flesh noise texture" )
+    SHADER_PARAM( FLESHBORDERTEXTURE1D, SHADER_PARAM_TYPE_TEXTURE, "", "Flesh border 1D texture" )
+    SHADER_PARAM( FLESHNORMALTEXTURE, SHADER_PARAM_TYPE_TEXTURE, "", "Flesh normal texture" )
+    SHADER_PARAM( FLESHSUBSURFACETEXTURE, SHADER_PARAM_TYPE_TEXTURE, "", "Flesh subsurface texture" )
+    SHADER_PARAM( FLESHCUBETEXTURE, SHADER_PARAM_TYPE_TEXTURE, "", "Flesh cubemap texture" )
+    SHADER_PARAM( FLESHBORDERNOISESCALE, SHADER_PARAM_TYPE_FLOAT, "1.5", "Flesh Noise UV scalar for border" )
+    SHADER_PARAM( FLESHDEBUGFORCEFLESHON, SHADER_PARAM_TYPE_BOOL, "0", "Flesh Debug full flesh" )
+    SHADER_PARAM( FLESHEFFECTCENTERRADIUS1, SHADER_PARAM_TYPE_VEC4, "[0 0 0 0.001]", "Flesh effect center and radius" )
+    SHADER_PARAM( FLESHEFFECTCENTERRADIUS2, SHADER_PARAM_TYPE_VEC4, "[0 0 0 0.001]", "Flesh effect center and radius" )
+    SHADER_PARAM( FLESHEFFECTCENTERRADIUS3, SHADER_PARAM_TYPE_VEC4, "[0 0 0 0.001]", "Flesh effect center and radius" )
+    SHADER_PARAM( FLESHEFFECTCENTERRADIUS4, SHADER_PARAM_TYPE_VEC4, "[0 0 0 0.001]", "Flesh effect center and radius" )
+    SHADER_PARAM( FLESHSUBSURFACETINT, SHADER_PARAM_TYPE_COLOR, "[1 1 1]", "Subsurface Color" )
+    SHADER_PARAM( FLESHBORDERWIDTH, SHADER_PARAM_TYPE_FLOAT, "0.3", "Flesh border" )
+    SHADER_PARAM( FLESHBORDERSOFTNESS, SHADER_PARAM_TYPE_FLOAT, "0.42", "Flesh border softness (> 0.0 && <= 0.5)" )
+    SHADER_PARAM( FLESHBORDERTINT, SHADER_PARAM_TYPE_COLOR, "[1 1 1]", "Flesh border Color" )
+    SHADER_PARAM( FLESHGLOBALOPACITY, SHADER_PARAM_TYPE_FLOAT, "1.0", "Flesh global opacity" )
+    SHADER_PARAM( FLESHGLOSSBRIGHTNESS, SHADER_PARAM_TYPE_FLOAT, "0.66", "Flesh gloss brightness" )
+    SHADER_PARAM( FLESHSCROLLSPEED, SHADER_PARAM_TYPE_FLOAT, "1.0", "Flesh scroll speed" )
 
     Add this above SHADER_INIT_PARAMS()
-      // Flesh Interior Pass
-      void SetupVarsFleshInteriorBlendedPass( FleshInteriorBlendedPassVars_t &info )
-      {
+    // Flesh Interior Pass
+    void SetupVarsFleshInteriorBlendedPass( FleshInteriorBlendedPassVars_t &info )
+    {
         info.m_nFleshTexture = FLESHINTERIORTEXTURE;
         info.m_nFleshNoiseTexture = FLESHINTERIORNOISETEXTURE;
         info.m_nFleshBorderTexture1D = FLESHBORDERTEXTURE1D;
@@ -74,47 +74,47 @@
         info.m_nflGlobalOpacity = FLESHGLOBALOPACITY;
         info.m_nflGlossBrightness = FLESHGLOSSBRIGHTNESS;
         info.m_nflScrollSpeed = FLESHSCROLLSPEED;
-      }
+    }
 
     In SHADER_INIT_PARAMS()
-      // Flesh Interior Pass
-      if ( !params[FLESHINTERIORENABLED]->IsDefined() )
-      {
+    // Flesh Interior Pass
+    if ( !params[FLESHINTERIORENABLED]->IsDefined() )
+    {
         params[FLESHINTERIORENABLED]->SetIntValue( 0 );
-      }
-      else if ( params[FLESHINTERIORENABLED]->GetIntValue() )
-      {
+    }
+    else if ( params[FLESHINTERIORENABLED]->GetIntValue() )
+    {
         FleshInteriorBlendedPassVars_t info;
         SetupVarsFleshInteriorBlendedPass( info );
         InitParamsFleshInteriorBlendedPass( this, params, pMaterialName, info );
-      }
+    }
 
     In SHADER_INIT
-      // Flesh Interior Pass
-      if ( params[FLESHINTERIORENABLED]->GetIntValue() )
-      {
+    // Flesh Interior Pass
+    if ( params[FLESHINTERIORENABLED]->GetIntValue() )
+    {
         FleshInteriorBlendedPassVars_t info;
         SetupVarsFleshInteriorBlendedPass( info );
         InitFleshInteriorBlendedPass( this, params, info );
-      }
+    }
 
     At the very end of SHADER_DRAW
-      // Flesh Interior Pass
-      if ( params[FLESHINTERIORENABLED]->GetIntValue() )
-      {
+    // Flesh Interior Pass
+    if ( params[FLESHINTERIORENABLED]->GetIntValue() )
+    {
         // If ( snapshotting ) or ( we need to draw this frame )
         if ( ( pShaderShadow != NULL ) || ( true ) )
         {
-          FleshInteriorBlendedPassVars_t info;
-          SetupVarsFleshInteriorBlendedPass( info );
-          DrawFleshInteriorBlendedPass( this, params, pShaderAPI, pShaderShadow, info );
+        FleshInteriorBlendedPassVars_t info;
+        SetupVarsFleshInteriorBlendedPass( info );
+        DrawFleshInteriorBlendedPass( this, params, pShaderAPI, pShaderShadow, info );
         }
         else // We're not snapshotting and we don't need to draw this frame
         {
-          // Skip this pass!
-          Draw( false );
+        // Skip this pass!
+        Draw( false );
         }
-      }
+    }
 
 ==================================================================================================== */
 

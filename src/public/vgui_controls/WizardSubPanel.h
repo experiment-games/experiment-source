@@ -24,7 +24,7 @@ class WizardSubPanel : public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( WizardSubPanel, EditablePanel );
 
-   public:
+    public:
     // constructor
     WizardSubPanel( Panel *parent, const char *panelName );
     ~WizardSubPanel();
@@ -101,13 +101,13 @@ class WizardSubPanel : public EditablePanel
     // returns true if it has a desired size
     virtual bool GetDesiredSize( int &wide, int &tall );
 
-   protected:
+    protected:
     virtual void ApplySettings( KeyValues *inResourceData );
     virtual void GetSettings( KeyValues *outResourceData );
     virtual void ApplySchemeSettings( IScheme *pScheme );
     virtual const char *GetDescription();
 
-   private:
+    private:
     WizardPanel *_wizardPanel;
     int m_iDesiredWide, m_iDesiredTall;
 };

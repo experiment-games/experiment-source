@@ -46,7 +46,7 @@ namespace {
 class TestPartResultTest : public Test {
  protected:
   TestPartResultTest()
-      : r1_(TestPartResult::kSuccess, "foo/bar.cc", 10, "Success!"),
+    : r1_(TestPartResult::kSuccess, "foo/bar.cc", 10, "Success!"),
         r2_(TestPartResult::kNonFatalFailure, "foo/bar.cc", -1, "Failure!"),
         r3_(TestPartResult::kFatalFailure, NULL, -1, "Failure!") {}
 
@@ -110,7 +110,7 @@ TEST_F(TestPartResultTest, NonfatallyFailed) {
 class TestPartResultArrayTest : public Test {
  protected:
   TestPartResultArrayTest()
-      : r1_(TestPartResult::kNonFatalFailure, "foo/bar.cc", -1, "Failure 1"),
+    : r1_(TestPartResult::kNonFatalFailure, "foo/bar.cc", -1, "Failure 1"),
         r2_(TestPartResult::kFatalFailure, "foo/bar.cc", -1, "Failure 2") {}
 
   const TestPartResult r1_, r2_;

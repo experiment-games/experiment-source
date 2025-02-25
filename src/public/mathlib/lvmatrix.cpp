@@ -154,24 +154,24 @@ LUA_BINDING_BEGIN( Matrix, Init, "class", "Initializes the matrix." )
         matrix.Init( LUA_BINDING_ARGUMENT( luaL_checkmatrix, 2, "Matrix3x4" ) );
     else
         matrix.Init( LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "m11" ),
-                     LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "m12" ),
-                     LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "m13" ),
-                     LUA_BINDING_ARGUMENT( luaL_checknumber, 5, "m14" ),
+                    LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "m12" ),
+                    LUA_BINDING_ARGUMENT( luaL_checknumber, 4, "m13" ),
+                    LUA_BINDING_ARGUMENT( luaL_checknumber, 5, "m14" ),
 
-                     LUA_BINDING_ARGUMENT( luaL_checknumber, 6, "m21" ),
-                     LUA_BINDING_ARGUMENT( luaL_checknumber, 7, "m22" ),
-                     LUA_BINDING_ARGUMENT( luaL_checknumber, 8, "m23" ),
-                     LUA_BINDING_ARGUMENT( luaL_checknumber, 9, "m24" ),
+                    LUA_BINDING_ARGUMENT( luaL_checknumber, 6, "m21" ),
+                    LUA_BINDING_ARGUMENT( luaL_checknumber, 7, "m22" ),
+                    LUA_BINDING_ARGUMENT( luaL_checknumber, 8, "m23" ),
+                    LUA_BINDING_ARGUMENT( luaL_checknumber, 9, "m24" ),
 
-                     LUA_BINDING_ARGUMENT( luaL_checknumber, 10, "m31" ),
-                     LUA_BINDING_ARGUMENT( luaL_checknumber, 11, "m32" ),
-                     LUA_BINDING_ARGUMENT( luaL_checknumber, 12, "m33" ),
-                     LUA_BINDING_ARGUMENT( luaL_checknumber, 13, "m34" ),
+                    LUA_BINDING_ARGUMENT( luaL_checknumber, 10, "m31" ),
+                    LUA_BINDING_ARGUMENT( luaL_checknumber, 11, "m32" ),
+                    LUA_BINDING_ARGUMENT( luaL_checknumber, 12, "m33" ),
+                    LUA_BINDING_ARGUMENT( luaL_checknumber, 13, "m34" ),
 
-                     LUA_BINDING_ARGUMENT( luaL_checknumber, 14, "m41" ),
-                     LUA_BINDING_ARGUMENT( luaL_checknumber, 15, "m42" ),
-                     LUA_BINDING_ARGUMENT( luaL_checknumber, 16, "m43" ),
-                     LUA_BINDING_ARGUMENT( luaL_checknumber, 17, "m44" ) );
+                    LUA_BINDING_ARGUMENT( luaL_checknumber, 14, "m41" ),
+                    LUA_BINDING_ARGUMENT( luaL_checknumber, 15, "m42" ),
+                    LUA_BINDING_ARGUMENT( luaL_checknumber, 16, "m43" ),
+                    LUA_BINDING_ARGUMENT( luaL_checknumber, 17, "m44" ) );
 
     return 0;
 }
@@ -217,7 +217,7 @@ LUA_BINDING_BEGIN( Matrix, MatrixMul, "class", "Multiplies two matrices." )
 {
     lua_VMatrix matrix = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
     matrix.MatrixMul( LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 2, "Matrix" ),
-                      LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 3, "Matrix" ) );
+                    LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 3, "Matrix" ) );
 
     return 0;
 }
@@ -319,7 +319,7 @@ LUA_BINDING_BEGIN( Matrix, SetupMatrixForOriginAndAngles, "class", "Sets the mat
 {
     lua_VMatrix matrix = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
     matrix.SetupMatrixOrgAngles( LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "vector" ),
-                                 LUA_BINDING_ARGUMENT( luaL_checkangle, 3, "angle" ) );
+                                LUA_BINDING_ARGUMENT( luaL_checkangle, 3, "angle" ) );
 
     return 0;
 }
@@ -347,7 +347,7 @@ LUA_BINDING_BEGIN( Matrix, MultiplyByVector, "class", "Multiplies a vector by th
 {
     lua_VMatrix matrix = LUA_BINDING_ARGUMENT( luaL_checkvmatrix, 1, "Matrix" );
     matrix.V3Mul( LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "vector" ),
-                  LUA_BINDING_ARGUMENT( luaL_checkvector, 3, "vector" ) );
+                LUA_BINDING_ARGUMENT( luaL_checkvector, 3, "vector" ) );
 
     return 0;
 }

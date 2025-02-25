@@ -21,7 +21,7 @@ class CEnvLaser : public CBeam
 {
     DECLARE_CLASS( CEnvLaser, CBeam );
 
-   public:
+    public:
     void Spawn( void );
     void Precache( void );
     bool KeyValue( const char *szKeyName, const char *szValue );

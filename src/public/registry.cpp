@@ -26,7 +26,7 @@
 //-----------------------------------------------------------------------------
 class CRegistry : public IRegistry
 {
-   public:
+    public:
     CRegistry( void );
     virtual ~CRegistry( void );
 
@@ -46,7 +46,7 @@ class CRegistry : public IRegistry
     virtual const char *ReadString( const char *pKeyBase, const char *key, const char *defaultValue );
     virtual void WriteString( const char *pKeyBase, const char *key, const char *value );
 
-   private:
+    private:
     bool m_bValid;
 #ifdef WIN32
     HKEY m_hKey;

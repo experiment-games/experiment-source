@@ -22,7 +22,7 @@ void luaL_register( lua_State *L, const char *libname, const luaL_Reg *l )
             lua_newtable( L );
             lua_pushvalue( L, -1 );
             lua_setfield( L, -3,
-                          libname );  // package.loaded[libname] = new table
+                        libname );  // package.loaded[libname] = new table
         }
         lua_remove( L, -2 );  // remove package.loaded
         lua_pushvalue( L, -1 );

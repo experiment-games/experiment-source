@@ -23,7 +23,7 @@ extern short g_sModelIndexSmoke;  // (in combatweapon.cpp) holds the index for t
 //-----------------------------------------------------------------------------
 class CTESpriteSpray : public CBaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTESpriteSpray, CBaseTempEntity );
 
     CTESpriteSpray( const char* name );
@@ -33,7 +33,7 @@ class CTESpriteSpray : public CBaseTempEntity
 
     DECLARE_SERVERCLASS();
 
-   public:
+    public:
     CNetworkVector( m_vecOrigin );
     CNetworkVector( m_vecDirection );
     CNetworkVar( int, m_nModelIndex );

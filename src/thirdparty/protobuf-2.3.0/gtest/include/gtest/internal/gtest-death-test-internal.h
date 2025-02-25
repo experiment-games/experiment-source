@@ -68,7 +68,7 @@ const char kInternalRunDeathTestFlag[] = "internal_run_death_test";
 //               returned from main()
 class DeathTest
 {
-   public:
+    public:
     // Create returns false if there was an error determining the
     // appropriate action to take for the current death test; for example,
     // if the gtest_death_test_style flag is set to an invalid value.
@@ -84,7 +84,7 @@ class DeathTest
     // A helper class that aborts a death test when it's deleted.
     class ReturnSentinel
     {
-       public:
+        public:
         explicit ReturnSentinel( DeathTest* test )
             : test_( test ) {}
         ~ReturnSentinel()
@@ -92,7 +92,7 @@ class DeathTest
             test_->Abort( TEST_ENCOUNTERED_RETURN_STATEMENT );
         }
 
-       private:
+        private:
         DeathTest* const test_;
         GTEST_DISALLOW_COPY_AND_ASSIGN_( ReturnSentinel );
     } GTEST_ATTRIBUTE_UNUSED_;
@@ -139,7 +139,7 @@ class DeathTest
 
     static void set_last_death_test_message( const String& message );
 
-   private:
+    private:
     // A string containing a description of the outcome of the last death test.
     static String last_death_test_message_;
 
@@ -149,7 +149,7 @@ class DeathTest
 // Factory interface for death tests.  May be mocked out for testing.
 class DeathTestFactory
 {
-   public:
+    public:
     virtual ~DeathTestFactory() {}
     virtual bool Create( const char* statement, const RE* regex, const char* file, int line, DeathTest** test ) = 0;
 };
@@ -157,7 +157,7 @@ class DeathTestFactory
 // A concrete DeathTestFactory implementation for normal use.
 class DefaultDeathTestFactory : public DeathTestFactory
 {
-   public:
+    public:
     virtual bool Create( const char* statement, const RE* regex, const char* file, int line, DeathTest** test );
 };
 
@@ -210,11 +210,11 @@ bool ExitedUnsuccessfully( int exit_status );
 // RUN_ALL_TESTS was called.
 class InternalRunDeathTestFlag
 {
-   public:
+    public:
     InternalRunDeathTestFlag( const String& file,
-                              int line,
-                              int index,
-                              int write_fd )
+                            int line,
+                            int index,
+                            int write_fd )
         : file_( file ), line_( line ), index_( index ), write_fd_( write_fd ) {}
 
     ~InternalRunDeathTestFlag()
@@ -240,7 +240,7 @@ class InternalRunDeathTestFlag
         return write_fd_;
     }
 
-   private:
+    private:
     String file_;
     int line_;
     int index_;

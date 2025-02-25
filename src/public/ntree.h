@@ -15,7 +15,7 @@
 template < class T >
 class NTreeNode
 {
-   public:
+    public:
     // constructor
     NTreeNode< T >( T data );
 
@@ -40,7 +40,7 @@ class NTreeNode
     NTreeNode< T > *ReentrantTraversalGetFirst( int maxTreeDepth );
     NTreeNode< T > *ReentrantTraversalGetNext( void );
 
-   protected:
+    protected:
     GList< NTreeNode< T > * > *list;
     T data;
     NTreeNode< T > *parent;

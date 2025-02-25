@@ -17,7 +17,7 @@ class CReplayBasePanel : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CReplayBasePanel, vgui::EditablePanel );
 
-   public:
+    public:
     CReplayBasePanel( Panel *pParent, const char *pName );
 
     void GetPosRelativeToAncestor( Panel *pAncestor, int &nXOut, int &nYOut );

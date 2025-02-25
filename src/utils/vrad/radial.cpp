@@ -152,12 +152,12 @@ void AddDirectToRadial( radial_t *rad,
 }
 
 void AddBouncedToRadial( radial_t *rad,
-                         Vector const &pnt,
-                         Vector2D const &coordmins,
-                         Vector2D const &coordmaxs,
-                         Vector const light[NUM_BUMP_VECTS + 1],
-                         bool hasBumpmap,
-                         bool neighborHasBumpmap )
+                        Vector const &pnt,
+                        Vector2D const &coordmins,
+                        Vector2D const &coordmaxs,
+                        Vector const light[NUM_BUMP_VECTS + 1],
+                        bool hasBumpmap,
+                        bool neighborHasBumpmap )
 {
     int s_min, s_max, t_min, t_max;
     Vector2D coord;
@@ -557,28 +557,28 @@ void GetRandomColor( unsigned char *color )
 // debugging! -- not accurate!
 void DumpLuxels( facelight_t *pFaceLight, Vector *luxelColors, int ndxFace )
 {
-	static FileHandle_t pFpLuxels = NULL;
+    static FileHandle_t pFpLuxels = NULL;
 
-	ThreadLock();
+    ThreadLock();
 
-	if( !pFpLuxels )
-	{
-		pFpLuxels = g_pFileSystem->Open( "luxels.txt", "w" );
-	}
+    if( !pFpLuxels )
+    {
+        pFpLuxels = g_pFileSystem->Open( "luxels.txt", "w" );
+    }
 
-	dface_t *pFace = &g_pFaces[ndxFace];
-	bool bDisp = ( pFace->dispinfo != -1 );
+    dface_t *pFace = &g_pFaces[ndxFace];
+    bool bDisp = ( pFace->dispinfo != -1 );
 
-	for( int ndx = 0; ndx < pFaceLight->numluxels; ndx++ )
-	{
-		WriteWinding( pFpLuxels, pFaceLight->sample[ndx].w, luxelColors[ndx] );
-		if( bDumpNormals && bDisp )
-		{
-			WriteNormal( pFpLuxels, pFaceLight->luxel[ndx], pFaceLight->luxelNormals[ndx], 15.0f, Vector( 255, 255, 0 ) );
-		}
-	}
+    for( int ndx = 0; ndx < pFaceLight->numluxels; ndx++ )
+    {
+        WriteWinding( pFpLuxels, pFaceLight->sample[ndx].w, luxelColors[ndx] );
+        if( bDumpNormals && bDisp )
+        {
+            WriteNormal( pFpLuxels, pFaceLight->luxel[ndx], pFaceLight->luxelNormals[ndx], 15.0f, Vector( 255, 255, 0 ) );
+        }
+    }
 
-	ThreadUnlock();
+    ThreadUnlock();
 }
 #endif
 

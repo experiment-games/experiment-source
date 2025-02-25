@@ -34,10 +34,10 @@ class CWeaponFrag : public CBaseHLCombatWeapon
 {
     DECLARE_CLASS( CWeaponFrag, CBaseHLCombatWeapon );
 
-   public:
+    public:
     DECLARE_SERVERCLASS();
 
-   public:
+    public:
     CWeaponFrag();
 
     void Precache( void );
@@ -62,7 +62,7 @@ class CWeaponFrag : public CBaseHLCombatWeapon
         return true;
     }
 
-   private:
+    private:
     void ThrowGrenade( CBasePlayer *pPlayer );
     void RollGrenade( CBasePlayer *pPlayer );
     void LobGrenade( CBasePlayer *pPlayer );
@@ -100,7 +100,7 @@ PRECACHE_WEAPON_REGISTER( weapon_frag );
 
 CWeaponFrag::CWeaponFrag()
     : CBaseHLCombatWeapon(),
-      m_bRedraw( false )
+    m_bRedraw( false )
 {
     NULL;
 }

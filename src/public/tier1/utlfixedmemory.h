@@ -44,7 +44,7 @@
 template < class T >
 class CUtlFixedMemory
 {
-   public:
+    public:
     // constructor, destructor
     CUtlFixedMemory( int nGrowSize = 0, int nInitSize = 0 );
     ~CUtlFixedMemory();
@@ -62,13 +62,13 @@ class CUtlFixedMemory
         return NULL;
     }
 
-   protected:
+    protected:
     struct BlockHeader_t;
 
-   public:
+    public:
     class Iterator_t
     {
-       public:
+        public:
         Iterator_t( BlockHeader_t* p, int i )
             : m_pBlockHeader( p ), m_nIndex( i ) {}
         BlockHeader_t* m_pBlockHeader;
@@ -164,7 +164,7 @@ class CUtlFixedMemory
     // Memory deallocation
     void Purge();
 
-   protected:
+    protected:
     // Fast swap - WARNING: Swap invalidates all ptr-based indices!!!
     void Swap( CUtlFixedMemory< T >& mem );
 

@@ -14,7 +14,7 @@
 
 class CFuncSmokeVolume : public CBaseParticleEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CFuncSmokeVolume, CBaseParticleEntity );
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
@@ -26,7 +26,7 @@ class CFuncSmokeVolume : public CBaseParticleEntity
     // Set the times it fades out at.
     void SetDensity( float density );
 
-   private:
+    private:
     CNetworkVar( color32, m_Color1 );
     CNetworkVar( color32, m_Color2 );
     CNetworkString( m_MaterialName, 255 );

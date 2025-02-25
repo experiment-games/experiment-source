@@ -41,7 +41,7 @@ class ListViewItem : public Label
 {
     DECLARE_CLASS_SIMPLE( ListViewItem, Label );
 
-   public:
+    public:
     ListViewItem( Panel *parent )
         : Label( parent, NULL, "" )
     {
@@ -196,7 +196,7 @@ class ListViewItem : public Label
         }
     }
 
-   private:
+    private:
     Color m_FgColor1;
     Color m_FgColor2;
     Color m_BgColor;

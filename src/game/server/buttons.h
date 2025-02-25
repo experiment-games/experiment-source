@@ -12,7 +12,7 @@
 
 class CBaseButton : public CBaseToggle
 {
-   public:
+    public:
     DECLARE_CLASS( CBaseButton, CBaseToggle );
 
     void Spawn( void );
@@ -22,7 +22,7 @@ class CBaseButton : public CBaseToggle
     bool KeyValue( const char *szKeyName, const char *szValue );
     int DrawDebugTextOverlays();
 
-   protected:
+    protected:
     void ButtonActivate();
     void SparkSoundCache( void );
 
@@ -95,7 +95,7 @@ class CBaseButton : public CBaseToggle
 //
 class CRotButton : public CBaseButton
 {
-   public:
+    public:
     DECLARE_CLASS( CRotButton, CBaseButton );
 
     void Spawn( void );
@@ -106,7 +106,7 @@ class CMomentaryRotButton : public CRotButton
 {
     DECLARE_CLASS( CMomentaryRotButton, CRotButton );
 
-   public:
+    public:
     void Spawn( void );
     bool CreateVPhysics( void );
     virtual int ObjectCaps( void );
@@ -166,7 +166,7 @@ class CMomentaryRotButton : public CRotButton
     float m_returnSpeed;
     float m_flStartPosition;
 
-   protected:
+    protected:
     void UpdateThink( void );
 };
 

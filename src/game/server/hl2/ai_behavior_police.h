@@ -21,7 +21,7 @@ class CAI_PolicingBehavior : public CAI_SimpleBehavior
 {
     DECLARE_CLASS( CAI_PolicingBehavior, CAI_SimpleBehavior );
 
-   public:
+    public:
     DECLARE_DATADESC();
     CAI_PolicingBehavior();
 
@@ -72,7 +72,7 @@ class CAI_PolicingBehavior : public CAI_SimpleBehavior
 
     CBaseEntity *GetGoalTarget( void );
 
-   private:
+    private:
     void HostSpeakSentence( const char *pSentence, SentencePriority_t nSoundPriority, SentenceCriteria_t nCriteria );
 
     int TranslateSchedule( int scheduleType );
@@ -94,7 +94,7 @@ class CAI_PolicingBehavior : public CAI_SimpleBehavior
     void SetTargetHostileDuration( float time );
     bool MaintainGoalPosition( void );
 
-   protected:
+    protected:
     bool m_bEnabled;
     bool m_bStartPolicing;
     float m_flNextHarassTime;

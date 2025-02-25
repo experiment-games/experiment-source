@@ -22,7 +22,7 @@
 //-----------------------------------------------------------------------------
 class CShower : public CPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CShower, CPointEntity );
 
     void Spawn( void );
@@ -91,7 +91,7 @@ void CShower::Touch( CBaseEntity *pOther )
 
 class CEnvExplosion : public CPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CEnvExplosion, CPointEntity );
 
     CEnvExplosion( void )
@@ -187,7 +187,7 @@ void CEnvExplosion::Spawn( void )
     /*
     if ( m_iMagnitude > 250 )
     {
-      m_iMagnitude = 250;
+    m_iMagnitude = 250;
     }
     */
 

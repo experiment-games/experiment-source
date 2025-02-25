@@ -29,7 +29,7 @@ extern IPhysicsSurfaceProps *physprops;
 
 class CAntlionDustEmitter : public CSimpleEmitter
 {
-   public:
+    public:
     static CAntlionDustEmitter *Create( const char *debugname )
     {
         return new CAntlionDustEmitter( debugname );
@@ -41,7 +41,7 @@ class CAntlionDustEmitter : public CSimpleEmitter
         pParticle->m_vecVelocity *= 0.9f;
     }
 
-   private:
+    private:
     CAntlionDustEmitter( const char *pDebugName )
         : CSimpleEmitter( pDebugName ) {}
     CAntlionDustEmitter( const CAntlionDustEmitter & );  // not defined, not accessible
@@ -53,7 +53,7 @@ class CAntlionDustEmitter : public CSimpleEmitter
 
 class C_TEAntlionDust : public C_TEParticleSystem
 {
-   public:
+    public:
     DECLARE_CLASS( C_TEAntlionDust, C_TEParticleSystem );
     DECLARE_CLIENTCLASS();
 
@@ -61,7 +61,7 @@ class C_TEAntlionDust : public C_TEParticleSystem
     virtual ~C_TEAntlionDust();
 
     // C_BaseEntity
-   public:
+    public:
     virtual void PostDataUpdate( DataUpdateType_t updateType );
     virtual bool ShouldDraw()
     {
@@ -69,18 +69,18 @@ class C_TEAntlionDust : public C_TEParticleSystem
     }
 
     // IParticleEffect
-   public:
+    public:
     virtual void RenderParticles( CParticleRenderIterator *pIterator );
     virtual void SimulateParticles( CParticleSimulateIterator *pIterator );
 
-   public:
+    public:
     PMaterialHandle m_MaterialHandle;
 
     Vector m_vecOrigin;
     QAngle m_vecAngles;
     bool m_bBlockedSpawner;
 
-   protected:
+    protected:
     void GetDustColor( Vector &color );
 };
 
@@ -121,7 +121,7 @@ void C_TEAntlionDust::PostDataUpdate( DataUpdateType_t updateType )
     CSmartPtr<CAntlionDustEmitter> pDustEmitter = CAntlionDustEmitter::Create( "TEAntlionDust" );
     Assert( pDustEmitter );
     if ( pDustEmitter == NULL )
-      return;
+    return;
 
     pDustEmitter->SetSortOrigin( m_vecOrigin );
     pDustEmitter->SetNearClip( 32, 64 );

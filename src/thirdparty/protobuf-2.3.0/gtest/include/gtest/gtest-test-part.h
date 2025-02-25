@@ -46,7 +46,7 @@ namespace testing
 // Don't inherit from TestPartResult as its destructor is not virtual.
 class TestPartResult
 {
-   public:
+    public:
     // The possible outcomes of a test part (i.e. an assertion or an
     // explicit SUCCEED(), FAIL(), or ADD_FAILURE()).
     enum Type
@@ -64,10 +64,10 @@ class TestPartResult
                     int line_number,
                     const char* message )
         : type_( type ),
-          file_name_( file_name ),
-          line_number_( line_number ),
-          summary_( ExtractSummary( message ) ),
-          message_( message )
+        file_name_( file_name ),
+        line_number_( line_number ),
+        summary_( ExtractSummary( message ) ),
+        message_( message )
     {
     }
 
@@ -127,7 +127,7 @@ class TestPartResult
         return type_ == kFatalFailure;
     }
 
-   private:
+    private:
     Type type_;
 
     // Gets the summary of the failure message by omitting the stack
@@ -156,7 +156,7 @@ std::ostream& operator<<( std::ostream& os, const TestPartResult& result );
 // virtual.
 class TestPartResultArray
 {
-   public:
+    public:
     TestPartResultArray();
     ~TestPartResultArray();
 
@@ -169,7 +169,7 @@ class TestPartResultArray
     // Returns the number of TestPartResult objects in the array.
     int size() const;
 
-   private:
+    private:
     // Internally we use a Vector to implement the array.
     internal::Vector< TestPartResult >* const array_;
 
@@ -179,7 +179,7 @@ class TestPartResultArray
 // This interface knows how to report a test part result.
 class TestPartResultReporterInterface
 {
-   public:
+    public:
     virtual ~TestPartResultReporterInterface() {}
 
     virtual void ReportTestPartResult( const TestPartResult& result ) = 0;
@@ -196,7 +196,7 @@ namespace internal
 // INTERNAL IMPLEMENTATION - DO NOT USE IN A USER PROGRAM.
 class HasNewFatalFailureHelper : public TestPartResultReporterInterface
 {
-   public:
+    public:
     HasNewFatalFailureHelper();
     virtual ~HasNewFatalFailureHelper();
     virtual void ReportTestPartResult( const TestPartResult& result );
@@ -205,7 +205,7 @@ class HasNewFatalFailureHelper : public TestPartResultReporterInterface
         return has_new_fatal_failure_;
     }
 
-   private:
+    private:
     bool has_new_fatal_failure_;
     TestPartResultReporterInterface* original_reporter_;
 

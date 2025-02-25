@@ -17,20 +17,20 @@ def PromptForAddress(person):
   while True:
     number = raw_input("Enter a phone number (or leave blank to finish): ")
     if number == "":
-      break
+    break
 
     phone_number = person.phone.add()
     phone_number.number = number
 
     type = raw_input("Is this a mobile, home, or work phone? ")
     if type == "mobile":
-      phone_number.type = addressbook_pb2.Person.MOBILE
+    phone_number.type = addressbook_pb2.Person.MOBILE
     elif type == "home":
-      phone_number.type = addressbook_pb2.Person.HOME
+    phone_number.type = addressbook_pb2.Person.HOME
     elif type == "work":
-      phone_number.type = addressbook_pb2.Person.WORK
+    phone_number.type = addressbook_pb2.Person.WORK
     else:
-      print "Unknown phone type; leaving as default value."
+    print "Unknown phone type; leaving as default value."
 
 # Main procedure:  Reads the entire address book from a file,
 #   adds one person based on user input, then writes it back out to the same

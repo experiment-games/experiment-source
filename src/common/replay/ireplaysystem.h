@@ -22,7 +22,7 @@ class IGameEvent;
 
 abstract_class IReplaySystem : public IAppSystem
 {
-   public:
+    public:
     // IAppSystem:
     virtual bool Connect( CreateInterfaceFn fnFactory ) = 0;
     virtual void Disconnect() = 0;

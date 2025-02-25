@@ -61,7 +61,7 @@ PLATFORM_INTERFACE bool GetModuleNameFromAddress( const void *pAddress, tchar *p
 
 class PLATFORM_CLASS CCallStackStorage  // a helper class to grab a stack trace as close to the leaf code surface as possible, then pass it on to deeper functions intact with less unpredictable inlining pollution
 {
-   public:
+    public:
     CCallStackStorage( FN_GetCallStack GetStackFunction = GetCallStack, uint32 iSkipCalls = 0 );
     CCallStackStorage( const CCallStackStorage &copyFrom )
     {
@@ -76,7 +76,7 @@ class PLATFORM_CLASS CCallStackStorage  // a helper class to grab a stack trace 
 // Hold onto one of these to denote the top of a functional stack trace. Also allows us to string together threads to their parents
 class PLATFORM_CLASS CStackTop_Base
 {
-   protected:
+    protected:
 #if defined( ENABLE_RUNTIME_STACK_TRANSLATION )
     CStackTop_Base *m_pPrevTop;
     void *m_pStackBase;
@@ -90,7 +90,7 @@ class PLATFORM_CLASS CStackTop_Base
 // makes a copy of the parent stack
 class PLATFORM_CLASS CStackTop_CopyParentStack : public CStackTop_Base
 {
-   public:
+    public:
     CStackTop_CopyParentStack( void *const *pParentStackTrace, int iParentStackTraceLength );
     ~CStackTop_CopyParentStack( void );
 };
@@ -98,7 +98,7 @@ class PLATFORM_CLASS CStackTop_CopyParentStack : public CStackTop_Base
 // just references the parent stack. Assuming that you'll keep that memory around as long as you're keeping this Stack Top marker.
 class PLATFORM_CLASS CStackTop_ReferenceParentStack : public CStackTop_Base
 {
-   public:
+    public:
     CStackTop_ReferenceParentStack( void *const *pParentStackTrace = NULL, int iParentStackTraceLength = 0 );
     ~CStackTop_ReferenceParentStack( void );
     void ReleaseParentStackReferences( void );  // in case you need to delete the parent stack trace before this class goes out of scope

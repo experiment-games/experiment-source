@@ -22,7 +22,7 @@
 template < typename T >
 class CDefOps
 {
-   public:
+    public:
     static bool LessFunc( const T &lhs, const T &rhs )
     {
         return ( lhs < rhs );
@@ -34,7 +34,7 @@ class CDefOps
 template < typename T >
 class CDefLess
 {
-   public:
+    public:
     CDefLess() {}
     CDefLess( int i ) {}
     inline bool operator()( const T &lhs, const T &rhs ) const
@@ -149,7 +149,7 @@ struct UtlRBTreeNode_t : public UtlRBTreeLinks_t< I >
 template < class T, class I = unsigned short, typename L = bool ( * )( const T &, const T & ), class M = CUtlMemory< UtlRBTreeNode_t< T, I >, I > >
 class CUtlRBTree
 {
-   public:
+    public:
     typedef T KeyType_t;
     typedef T ElemType_t;
     typedef I IndexType_t;
@@ -263,11 +263,11 @@ class CUtlRBTree
     // swap in place
     void Swap( CUtlRBTree< T, I, L > &that );
 
-   private:
+    private:
     // Can't copy the tree this way!
     CUtlRBTree< T, I, L, M > &operator=( const CUtlRBTree< T, I, L, M > &other );
 
-   protected:
+    protected:
     enum NodeColor_t
     {
         RED = 0,
@@ -340,7 +340,7 @@ class CUtlRBTree
 template < class T, class I = int, typename L = bool ( * )( const T &, const T & ) >
 class CUtlFixedRBTree : public CUtlRBTree< T, I, L, CUtlFixedMemory< UtlRBTreeNode_t< T, I > > >
 {
-   public:
+    public:
     typedef L LessFunc_t;
 
     CUtlFixedRBTree( int growSize = 0, int initSize = 0, const LessFunc_t &lessfunc = 0 )
@@ -365,10 +365,10 @@ class CUtlFixedRBTree : public CUtlRBTree< T, I, L, CUtlFixedMemory< UtlRBTreeNo
         return LeftChild( i ) != i;
     }
 
-   protected:
+    protected:
     void ResetDbgInfo() {}
 
-   private:
+    private:
     // this doesn't make sense for fixed rbtrees, since there's no useful max pointer, and the index space isn't contiguous anyways
     I MaxElement() const;
 };
@@ -377,14 +377,14 @@ class CUtlFixedRBTree : public CUtlRBTree< T, I, L, CUtlFixedMemory< UtlRBTreeNo
 template < class T, class I = unsigned short, typename L = bool ( * )( const T &, const T & ) >
 class CUtlBlockRBTree : public CUtlRBTree< T, I, L, CUtlBlockMemory< UtlRBTreeNode_t< T, I >, I > >
 {
-   public:
+    public:
     typedef L LessFunc_t;
     CUtlBlockRBTree( int growSize = 0, int initSize = 0, const LessFunc_t &lessfunc = 0 )
         : CUtlRBTree< T, I, L, CUtlBlockMemory< UtlRBTreeNode_t< T, I >, I > >( growSize, initSize, lessfunc ) {}
     CUtlBlockRBTree( const LessFunc_t &lessfunc )
         : CUtlRBTree< T, I, L, CUtlBlockMemory< UtlRBTreeNode_t< T, I >, I > >( lessfunc ) {}
 
-   protected:
+    protected:
     void ResetDbgInfo() {}
 };
 
@@ -395,11 +395,11 @@ class CUtlBlockRBTree : public CUtlRBTree< T, I, L, CUtlBlockMemory< UtlRBTreeNo
 template < class T, class I, typename L, class M >
 inline CUtlRBTree< T, I, L, M >::CUtlRBTree( int growSize, int initSize, const LessFunc_t &lessfunc )
     : m_Elements( growSize, initSize ),
-      m_LessFunc( lessfunc ),
-      m_Root( InvalidIndex() ),
-      m_NumElements( 0 ),
-      m_FirstFree( InvalidIndex() ),
-      m_LastAlloc( m_Elements.InvalidIterator() )
+    m_LessFunc( lessfunc ),
+    m_Root( InvalidIndex() ),
+    m_NumElements( 0 ),
+    m_FirstFree( InvalidIndex() ),
+    m_LastAlloc( m_Elements.InvalidIterator() )
 {
     ResetDbgInfo();
 }
@@ -407,11 +407,11 @@ inline CUtlRBTree< T, I, L, M >::CUtlRBTree( int growSize, int initSize, const L
 template < class T, class I, typename L, class M >
 inline CUtlRBTree< T, I, L, M >::CUtlRBTree( const LessFunc_t &lessfunc )
     : m_Elements( 0, 0 ),
-      m_LessFunc( lessfunc ),
-      m_Root( InvalidIndex() ),
-      m_NumElements( 0 ),
-      m_FirstFree( InvalidIndex() ),
-      m_LastAlloc( m_Elements.InvalidIterator() )
+    m_LessFunc( lessfunc ),
+    m_Root( InvalidIndex() ),
+    m_NumElements( 0 ),
+    m_FirstFree( InvalidIndex() ),
+    m_LastAlloc( m_Elements.InvalidIterator() )
 {
     ResetDbgInfo();
 }
@@ -1007,7 +1007,7 @@ void CUtlRBTree< T, I, L, M >::Unlink( I elem )
         I x, y;
 
         if ( ( LeftChild( elem ) == InvalidIndex() ) ||
-             ( RightChild( elem ) == InvalidIndex() ) )
+            ( RightChild( elem ) == InvalidIndex() ) )
         {
             /* y has a NIL node as a child */
             y = elem;

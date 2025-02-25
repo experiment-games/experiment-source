@@ -48,7 +48,7 @@ enum PrettyFormatOptions
 template < typename OutputStream, typename SourceEncoding = UTF8<>, typename TargetEncoding = UTF8<>, typename StackAllocator = CrtAllocator, unsigned writeFlags = kWriteDefaultFlags >
 class PrettyWriter : public Writer< OutputStream, SourceEncoding, TargetEncoding, StackAllocator, writeFlags >
 {
-   public:
+    public:
     typedef Writer< OutputStream, SourceEncoding, TargetEncoding, StackAllocator, writeFlags > Base;
     typedef typename Base::Ch Ch;
 
@@ -83,7 +83,7 @@ class PrettyWriter : public Writer< OutputStream, SourceEncoding, TargetEncoding
 
     //! Set pretty writer formatting options.
     /*! \param options Formatting options.
-     */
+    */
     PrettyWriter& SetFormatOptions( PrettyFormatOptions options )
     {
         formatOptions_ = options;
@@ -255,7 +255,7 @@ class PrettyWriter : public Writer< OutputStream, SourceEncoding, TargetEncoding
         return Base::EndValue( Base::WriteRawValue( json, length ) );
     }
 
-   protected:
+    protected:
     void PrettyPrefix( Type type )
     {
         ( void )type;
@@ -320,7 +320,7 @@ class PrettyWriter : public Writer< OutputStream, SourceEncoding, TargetEncoding
     unsigned indentCharCount_;
     PrettyFormatOptions formatOptions_;
 
-   private:
+    private:
     // Prohibit copy constructor & assignment operator.
     PrettyWriter( const PrettyWriter& );
     PrettyWriter& operator=( const PrettyWriter& );

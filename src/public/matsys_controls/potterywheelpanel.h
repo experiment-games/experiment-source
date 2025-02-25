@@ -36,7 +36,7 @@ class CPotteryWheelPanel : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CPotteryWheelPanel, vgui::EditablePanel );
 
-   public:
+    public:
     // constructor, destructor
     CPotteryWheelPanel( vgui::Panel *pParent, const char *pName );
     virtual ~CPotteryWheelPanel();
@@ -80,11 +80,11 @@ class CPotteryWheelPanel : public vgui::EditablePanel
     void ComputeCameraTransform( matrix3x4_t *pWorldToCamera );
     void UpdateCameraTransform();
 
-   private:
+    private:
     // Inherited classes must implement this
     virtual void OnPaint3D() = 0;
 
-   protected:
+    protected:
     enum
     {
         MAX_LIGHT_COUNT = 4
@@ -129,7 +129,7 @@ class CPotteryWheelPanel : public vgui::EditablePanel
 
     virtual void SetupRenderState( int nDisplayWidth, int nDisplayHeight );
 
-   private:
+    private:
     void CreateDefaultLights();
     void DestroyLights();
     void ParseLightsFromKV( KeyValues *pLightsKV );

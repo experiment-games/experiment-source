@@ -33,7 +33,7 @@ class CHL2GameMovement : public CGameMovement
 {
     typedef CGameMovement BaseClass;
 
-   public:
+    public:
     CHL2GameMovement();
 
     // Overrides
@@ -44,7 +44,7 @@ class CHL2GameMovement : public CGameMovement
     virtual void SetGroundEntity( trace_t *pm );
     virtual bool CanAccelerate( void );
 
-   private:
+    private:
     // See if we are pressing use near a ladder "mount" point and if so, latch us onto the ladder
     bool CheckLadderAutoMount( CFuncLadder *ladder, const Vector &bestOrigin );
 

@@ -112,8 +112,8 @@ int CTeamControlPointRound::CheckWinConditions( void )
 {
     int iWinners = TeamOwnsAllPoints();
     if ( ( m_iInvalidCapWinner != 1 ) &&
-         ( iWinners >= FIRST_GAME_TEAM ) &&
-         ( iWinners != m_iInvalidCapWinner ) )
+        ( iWinners >= FIRST_GAME_TEAM ) &&
+        ( iWinners != m_iInvalidCapWinner ) )
     {
         bool bWinner = true;
 
@@ -345,7 +345,7 @@ bool CTeamControlPointRound::IsPlayable( void )
     }
 
     if ( ( iWinners >= FIRST_GAME_TEAM ) &&
-         ( iWinners != m_iInvalidCapWinner ) )
+        ( iWinners != m_iInvalidCapWinner ) )
     {
         return false;  // someone has already won this round
     }
@@ -369,7 +369,7 @@ bool CTeamControlPointRound::MakePlayable( void )
                 for ( int iControlPoint = 0; iControlPoint < m_ControlPoints.Count(); iControlPoint++ )
                 {
                     if ( ( !pMaster->IsBaseControlPoint( m_ControlPoints[iControlPoint]->GetPointIndex() ) ) &&  // this is NOT the base point for one of the teams (we don't want to assign the base to the wrong team)
-                         ( !WouldNewCPOwnerWinGame( m_ControlPoints[iControlPoint], iTeam ) ) )                  // making this change would make this round playable
+                        ( !WouldNewCPOwnerWinGame( m_ControlPoints[iControlPoint], iTeam ) ) )                  // making this change would make this round playable
                     {
                         // need to find the trigger area associated with this point
                         for ( int iObj = 0; iObj < ITriggerAreaCaptureAutoList::AutoList().Count(); ++iObj )

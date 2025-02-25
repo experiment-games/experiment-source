@@ -1078,7 +1078,7 @@ void C_SceneEntity::QueueStartEvent( float starttime, CChoreoScene *scene, CChor
     {
         const QueuedEvents_t &check = m_QueuedEvents[i];
         if ( check.scene == scene &&
-             check.event == event )
+            check.event == event )
             return;
     }
 

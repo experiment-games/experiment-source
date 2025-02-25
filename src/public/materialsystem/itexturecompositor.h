@@ -33,7 +33,7 @@ enum TextureCompositeCreateFlags_t
 
 abstract_class ITextureCompositor
 {
-   public:
+    public:
     virtual int AddRef() = 0;
     virtual int Release() = 0;
     virtual int GetRefCount() const = 0;
@@ -43,7 +43,7 @@ abstract_class ITextureCompositor
     virtual ECompositeResolveStatus GetResolveStatus() const = 0;
     virtual void ScheduleResolve() = 0;
 
-   protected:
+    protected:
     virtual ~ITextureCompositor() {}
 };
 

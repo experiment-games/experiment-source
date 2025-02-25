@@ -66,7 +66,7 @@ class ZeroCopyOutputStream;  // zero_copy_stream.h
 // debugging code which uses it.
 class LIBPROTOBUF_EXPORT Printer
 {
-   public:
+    public:
     // Create a printer that writes text to the given output stream.  Use the
     // given character as the delimiter for variables.
     Printer( ZeroCopyOutputStream* output, char variable_delimiter );
@@ -117,7 +117,7 @@ class LIBPROTOBUF_EXPORT Printer
         return failed_;
     }
 
-   private:
+    private:
     const char variable_delimiter_;
 
     ZeroCopyOutputStream* const output_;

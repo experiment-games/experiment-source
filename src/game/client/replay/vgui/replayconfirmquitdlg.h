@@ -24,7 +24,7 @@ class CReplayConfirmQuitDialog : public CReplayBasePanel
 {
     DECLARE_CLASS_SIMPLE( CReplayConfirmQuitDialog, CReplayBasePanel );
 
-   public:
+    public:
     CReplayConfirmQuitDialog( Panel *pParent );
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
@@ -32,7 +32,7 @@ class CReplayConfirmQuitDialog : public CReplayBasePanel
     virtual void OnKeyCodeTyped( vgui::KeyCode code );
     virtual void OnKeyCodePressed( vgui::KeyCode code );
 
-   private:
+    private:
     vgui::CheckButton *m_pDontShowAgain;
     CExButton *m_pQuitButton;
 };

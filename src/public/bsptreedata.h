@@ -48,7 +48,7 @@ enum
 
 abstract_class ISpatialLeafEnumerator
 {
-   public:
+    public:
     // call back with a leaf and a context
     // The context is completely user defined; it's passed into the enumeration
     // function of ISpatialQuery.
@@ -61,7 +61,7 @@ abstract_class ISpatialLeafEnumerator
 
 abstract_class ISpatialQuery
 {
-   public:
+    public:
     // Returns the number of leaves
     virtual int LeafCount() const = 0;
 
@@ -82,14 +82,14 @@ abstract_class ISpatialQuery
 
 abstract_class IBSPTreeDataEnumerator
 {
-   public:
+    public:
     // call back with a userId and a context
     virtual bool FASTCALL EnumerateElement( int userId, int context ) = 0;
 };
 
 abstract_class IBSPTreeData
 {
-   public:
+    public:
     // Add a virtual destructor so that the derived class destructors will
     // be called.
     virtual ~IBSPTreeData() {}

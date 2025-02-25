@@ -357,13 +357,13 @@ bool OBBHasFullyContainedIntersectionWithQuad( const Vector &vOBBExtent1_Scaled,
 // outside the quad's extents
 //-----------------------------------------------------------------------------
 bool RayHasFullyContainedIntersectionWithQuad( const Ray_t &ray,
-                                               const Vector &vQuadNormal,
-                                               float fQuadPlaneDist,
-                                               const Vector &ptQuadCenter,
-                                               const Vector &vQuadExtent1_Normalized,
-                                               float fQuadExtent1Length,
-                                               const Vector &vQuadExtent2_Normalized,
-                                               float fQuadExtent2Length );
+                                                const Vector &vQuadNormal,
+                                                float fQuadPlaneDist,
+                                                const Vector &ptQuadCenter,
+                                                const Vector &vQuadExtent1_Normalized,
+                                                float fQuadExtent1Length,
+                                                const Vector &vQuadExtent2_Normalized,
+                                                float fQuadExtent2Length );
 
 //-----------------------------------------------------------------------------
 // INLINES

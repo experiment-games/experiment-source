@@ -48,7 +48,7 @@ class CCrossbowBolt : public CBaseCombatCharacter
 {
     DECLARE_CLASS( CCrossbowBolt, CBaseCombatCharacter );
 
-   public:
+    public:
     CCrossbowBolt(){};
     ~CCrossbowBolt();
 
@@ -57,7 +57,7 @@ class CCrossbowBolt : public CBaseCombatCharacter
         return CLASS_NONE;
     }
 
-   public:
+    public:
     void Spawn( void );
     void Precache( void );
     void BubbleThink( void );
@@ -65,11 +65,11 @@ class CCrossbowBolt : public CBaseCombatCharacter
     bool CreateVPhysics( void );
     unsigned int PhysicsSolidMaskForEntity() const;
     static CCrossbowBolt *BoltCreate( const Vector &vecOrigin,
-                                      const QAngle &angAngles,
-                                      int iDamage,
-                                      CBasePlayer *pentOwner = NULL );
+                                    const QAngle &angAngles,
+                                    int iDamage,
+                                    CBasePlayer *pentOwner = NULL );
 
-   protected:
+    protected:
     bool CreateSprites( void );
 
     CHandle< CSprite > m_pGlowSprite;
@@ -93,12 +93,12 @@ DEFINE_FUNCTION( BubbleThink ), DEFINE_FUNCTION( BoltTouch ),
     END_DATADESC()
 
         IMPLEMENT_SERVERCLASS_ST( CCrossbowBolt,
-                                  DT_CrossbowBolt ) END_SEND_TABLE()
+                                DT_CrossbowBolt ) END_SEND_TABLE()
 
             CCrossbowBolt *CCrossbowBolt::BoltCreate( const Vector &vecOrigin,
-                                                      const QAngle &angAngles,
-                                                      int iDamage,
-                                                      CBasePlayer *pentOwner )
+                                                    const QAngle &angAngles,
+                                                    int iDamage,
+                                                    CBasePlayer *pentOwner )
 {
     // Create a new entity with CCrossbowBolt private data
     CCrossbowBolt *pBolt = ( CCrossbowBolt * )CreateEntityByName( "crossbow_bolt" );
@@ -140,7 +140,7 @@ bool CCrossbowBolt::CreateVPhysics( void )
 unsigned int CCrossbowBolt::PhysicsSolidMaskForEntity() const
 {
     return ( BaseClass::PhysicsSolidMaskForEntity() | CONTENTS_HITBOX ) &
-           ~CONTENTS_GRATE;
+            ~CONTENTS_GRATE;
 }
 
 //-----------------------------------------------------------------------------
@@ -151,8 +151,8 @@ bool CCrossbowBolt::CreateSprites( void )
 {
     // Start up the eye glow
     m_pGlowSprite = CSprite::SpriteCreate( "sprites/light_glow02_noz.vmt",
-                                           GetLocalOrigin(),
-                                           false );
+                                            GetLocalOrigin(),
+                                            false );
 
     if ( m_pGlowSprite != NULL )
     {
@@ -221,7 +221,7 @@ void CCrossbowBolt::BoltTouch( CBaseEntity *pOther )
         VectorNormalize( vecNormalizedVel );
 
         if ( GetOwnerEntity() && GetOwnerEntity()->IsPlayer() &&
-             pOther->IsNPC() )
+            pOther->IsNPC() )
         {
             CTakeDamageInfo dmgInfo( this, GetOwnerEntity(), m_iDamage, DMG_NEVERGIB );
             dmgInfo.AdjustPlayerDamageInflictedForSkillLevel();
@@ -263,7 +263,7 @@ void CCrossbowBolt::BoltTouch( CBaseEntity *pOther )
             //-16, -16 ), Vector( 16, 16, 16 ), 0, 0, 255, 0, 10 );
 
             if ( tr2.m_pEnt == NULL ||
-                 ( tr2.m_pEnt && tr2.m_pEnt->GetMoveType() == MOVETYPE_NONE ) )
+                ( tr2.m_pEnt && tr2.m_pEnt->GetMoveType() == MOVETYPE_NONE ) )
             {
                 CEffectData data;
 
@@ -287,7 +287,7 @@ void CCrossbowBolt::BoltTouch( CBaseEntity *pOther )
 
         // See if we struck the world
         if ( pOther->GetMoveType() == MOVETYPE_NONE &&
-             !( tr.surface.flags & SURF_SKY ) )
+            !( tr.surface.flags & SURF_SKY ) )
         {
             EmitSound( "Weapon_Crossbow.BoltHitWorld" );
 
@@ -407,7 +407,7 @@ class CWeaponCrossbow : public CBaseExperimentCombatWeapon
 {
     DECLARE_CLASS( CWeaponCrossbow, CBaseExperimentCombatWeapon );
 
-   public:
+    public:
     CWeaponCrossbow( void );
 
     virtual void Precache( void );
@@ -422,13 +422,13 @@ class CWeaponCrossbow : public CBaseExperimentCombatWeapon
 
 #ifndef CLIENT_DLL
     virtual void Operator_HandleAnimEvent( animevent_t *pEvent,
-                                           CBaseCombatCharacter *pOperator );
+                                            CBaseCombatCharacter *pOperator );
 #endif
 
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
 
-   private:
+    private:
     void SetSkin( int skinNum );
     void CheckZoomToggle( void );
     void FireBolt( void );
@@ -450,7 +450,7 @@ class CWeaponCrossbow : public CBaseExperimentCombatWeapon
 
     DECLARE_ACTTABLE();
 
-   private:
+    private:
     // Charger effects
     ChargerState_t m_nChargeState;
 
@@ -555,7 +555,7 @@ void CWeaponCrossbow::PrimaryAttack( void )
     m_bMustReload = true;
 
     SetWeaponIdleTime( gpGlobals->curtime +
-                       SequenceDuration( ACT_VM_PRIMARYATTACK ) );
+                        SequenceDuration( ACT_VM_PRIMARYATTACK ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -767,7 +767,7 @@ void CWeaponCrossbow::CreateChargerEffects( void )
     if ( m_hChargerSprite )
     {
         m_hChargerSprite->SetAttachment( pOwner->GetViewModel(),
-                                         BOLT_TIP_ATTACHMENT );
+                                        BOLT_TIP_ATTACHMENT );
         m_hChargerSprite->SetTransparency( kRenderTransAdd, 255, 128, 0, 255, kRenderFxNoDissipation );
         m_hChargerSprite->SetBrightness( 0 );
         m_hChargerSprite->SetScale( 0.1f );

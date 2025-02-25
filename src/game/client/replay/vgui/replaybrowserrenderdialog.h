@@ -30,7 +30,7 @@ class CReplayRenderDialog : public CReplayBasePanel
 {
     DECLARE_CLASS_SIMPLE( CReplayRenderDialog, CReplayBasePanel );
 
-   public:
+    public:
     CReplayRenderDialog( Panel *pParent, ReplayHandle_t hReplay, bool bSetQuit, int iPerformance );
 
     virtual void ApplySchemeSettings( IScheme *pScheme );
@@ -42,7 +42,7 @@ class CReplayRenderDialog : public CReplayBasePanel
     MESSAGE_FUNC_PARAMS( OnTextChanged, "TextChanged", data );
     MESSAGE_FUNC_PTR( OnCheckButtonChecked, "CheckButtonChecked", panel );
 
-   private:
+    private:
     MESSAGE_FUNC( OnSetFocus, "SetFocus" );
 
     void Close();

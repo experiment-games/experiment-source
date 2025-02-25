@@ -20,7 +20,7 @@
 
 class CPMCData
 {
-   public:
+    public:
     CPMCData();
     ~CPMCData(){};
 
@@ -49,11 +49,11 @@ class CPMCData
 
     /*
     #ifdef DBGFLAG_VALIDATE
-      void Validate( CValidator &validator, tchar *pchName );		// Validate our internal structures
+    void Validate( CValidator &validator, tchar *pchName );		// Validate our internal structures
     #endif // DBGFLAG_VALIDATE
     */
 
-   private:
+    private:
     /// represents saved numbers from the counters we are interested in
     struct PMCounters
     {

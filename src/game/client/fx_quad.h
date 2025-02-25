@@ -104,7 +104,7 @@ struct FXQuadData_t
 
 class CFXQuad : public CClientSideEffect
 {
-   public:
+    public:
     CFXQuad( const FXQuadData_t &data );
 
     ~CFXQuad( void );

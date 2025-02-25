@@ -26,7 +26,7 @@ class IQueryableReplayItem;
 
 abstract_class IReplayMovieManager : public IBaseInterface
 {
-   public:
+    public:
     virtual int GetMovieCount() = 0;
     virtual void GetMovieList( CUtlLinkedList< IReplayMovie * > & list ) = 0;  // Fills the list with all movies
     virtual IReplayMovie *GetMovie( ReplayHandle_t hMovie ) = 0;

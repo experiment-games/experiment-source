@@ -29,7 +29,7 @@ enum EColumnType
 //-----------------------------------------------------------------------------
 class ISQLTable
 {
-   public:
+    public:
     virtual int GetCSQLColumn() const = 0;
     virtual const char *PchColumnName( int iSQLColumn ) const = 0;
     virtual EColumnType GetEColumnType( int iSQLColumn ) const = 0;
@@ -41,7 +41,7 @@ class ISQLTable
 //-----------------------------------------------------------------------------
 class ISQLTableSet
 {
-   public:
+    public:
     virtual int GetCSQLTable() const = 0;
     virtual const ISQLTable *PSQLTable( int iSQLTable ) const = 0;
 };
@@ -51,7 +51,7 @@ class ISQLTableSet
 //-----------------------------------------------------------------------------
 class ISQLRow
 {
-   public:
+    public:
     virtual int GetCSQLRowData() const = 0;
     virtual const char *PchData( int iSQLColumn ) const = 0;
     virtual int NData( int iSQLColumn ) const = 0;
@@ -69,7 +69,7 @@ class ISQLRow
 //-----------------------------------------------------------------------------
 class IResultSet
 {
-   public:
+    public:
     virtual int GetCSQLRow() const = 0;
     virtual const ISQLRow *PSQLRowNextResult() = 0;  // note, not const on the class because it makes a new row object
 };
@@ -81,7 +81,7 @@ class IResultSet
 //-----------------------------------------------------------------------------
 class ISQLWrapper
 {
-   public:
+    public:
     // run a SQL statement against the DB, typically an insert statement as no data is returned
     virtual bool BInsert( const char *pchQueryString ) = 0;
     // get a description of the tables associated with the db you connected to
@@ -98,7 +98,7 @@ class ISQLWrapper
 //-----------------------------------------------------------------------------
 class ISQLWrapperFactory
 {
-   public:
+    public:
     // setup details about this db connection
     virtual ISQLWrapper *Create( const char *pchDB, const char *pchHost, const char *pchUsername, const char *pchPassword ) = 0;
     virtual void Free( ISQLWrapper *pSQLWrapper ) = 0;

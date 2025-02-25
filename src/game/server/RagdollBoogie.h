@@ -25,14 +25,14 @@ class CRagdollBoogie : public CBaseEntity
     DECLARE_DATADESC();
     DECLARE_CLASS( CRagdollBoogie, CBaseEntity );
 
-   public:
+    public:
     static CRagdollBoogie *Create( CBaseEntity *pTarget, float flMagnitude, float flStartTime, float flLengthTime = 0.0f, int nSpawnFlags = 0 );
     static void IncrementSuppressionCount( CBaseEntity *pTarget );
     static void DecrementSuppressionCount( CBaseEntity *pTarget );
 
     void Spawn();
 
-   private:
+    private:
     void AttachToEntity( CBaseEntity *pTarget );
     void SetBoogieTime( float flStartTime, float flLengthTime );
     void SetMagnitude( float flMagnitude );

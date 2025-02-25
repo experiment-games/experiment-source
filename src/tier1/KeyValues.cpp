@@ -50,7 +50,7 @@ static char s_pTokenBuf[KEYVALUES_TOKEN_SIZE];
 const int MAX_ERROR_STACK = 64;
 class CKeyValuesErrorStack
 {
-   public:
+    public:
     CKeyValuesErrorStack()
         : m_pFilename( "NULL" ), m_errorIndex( 0 ), m_maxErrorIndex( 0 ) {}
 
@@ -116,7 +116,7 @@ class CKeyValuesErrorStack
             Warning( "\n" );
     }
 
-   private:
+    private:
     int m_errorStack[MAX_ERROR_STACK];
     const char *m_pFilename;
     int m_errorIndex;
@@ -126,7 +126,7 @@ class CKeyValuesErrorStack
 // a simple helper that creates stack entries as it goes in & out of scope
 class CKeyErrorContext
 {
-   public:
+    public:
     CKeyErrorContext( KeyValues *pKv )
     {
         Init( pKv->GetNameSymbol() );
@@ -149,7 +149,7 @@ class CKeyErrorContext
         return m_stackLevel;
     }
 
-   private:
+    private:
     void Init( int symName )
     {
         m_stackLevel = g_KeyValuesErrorStack.Push( symName );
@@ -165,7 +165,7 @@ class CKeyErrorContext
 
 class CLeakTrack
 {
-   public:
+    public:
     CLeakTrack()
     {
     }
@@ -230,17 +230,17 @@ static CLeakTrack track;
 //-----------------------------------------------------------------------------
 class CKeyValuesGrowableStringTable
 {
-   public:
+    public:
     // Constructor
     CKeyValuesGrowableStringTable()
         :
 #ifdef PLATFORM_64BITS
-          m_vecStrings( 0, 4 * 512 * 1024 )
+        m_vecStrings( 0, 4 * 512 * 1024 )
 #else
-          m_vecStrings( 0, 512 * 1024 )
+        m_vecStrings( 0, 512 * 1024 )
 #endif
-          ,
-          m_hashLookup( 2048, 0, 0, m_Functor, m_Functor )
+        ,
+        m_hashLookup( 2048, 0, 0, m_Functor, m_Functor )
     {
         m_vecStrings.AddToTail( '\0' );
     }
@@ -282,12 +282,12 @@ class CKeyValuesGrowableStringTable
         return ( const char * )m_vecStrings.Base() + symbol;
     }
 
-   private:
+    private:
     // A class plugged into CUtlHash that allows us to change the behavior of the table
     // and store only the index in the table.
     class CLookupFunctor
     {
-       public:
+        public:
         CLookupFunctor()
             : m_pchCurString( NULL ), m_pchCurBase( NULL ) {}
 
@@ -316,7 +316,7 @@ class CKeyValuesGrowableStringTable
             return HashStringCaseless( m_pchCurString );
         }
 
-       private:
+        private:
         const char *m_pchCurString;
         const char *m_pchCurBase;
     };
@@ -2091,7 +2091,7 @@ void KeyValues::ParseIncludedKeys( char const *resourceName, const char *filetoi
         }
 
         if ( fullpath[len - 1] == '\\' ||
-             fullpath[len - 1] == '/' )
+            fullpath[len - 1] == '/' )
         {
             break;
         }
@@ -2841,7 +2841,7 @@ void KeyValues::UnpackIntoStructure( KeyValuesUnpackStructure const *pUnpackTabl
                 char const *src_string =
                     GetString( pUnpackTable->m_pKeyName, pUnpackTable->m_pKeyDefault );
                 if ( ( !src_string ) ||
-                     ( sscanf( src_string, "%f %f %f", &( dest_v->x ), &( dest_v->y ), &( dest_v->z ) ) != 3 ) )
+                    ( sscanf( src_string, "%f %f %f", &( dest_v->x ), &( dest_v->y ), &( dest_v->z ) ) != 3 ) )
                     dest_v->Init( 0, 0, 0 );
             }
             break;
@@ -2854,7 +2854,7 @@ void KeyValues::UnpackIntoStructure( KeyValuesUnpackStructure const *pUnpackTabl
                 char const *src_string =
                     GetString( pUnpackTable->m_pKeyName, pUnpackTable->m_pKeyDefault );
                 if ( ( !src_string ) ||
-                     ( sscanf( src_string, "%f %f %f %f", dest_f, dest_f + 1, dest_f + 2, dest_f + 3 ) ) != 4 )
+                    ( sscanf( src_string, "%f %f %f %f", dest_f, dest_f + 1, dest_f + 2, dest_f + 3 ) ) != 4 )
                     memset( dest_f, 0, 4 * sizeof( float ) );
             }
             break;
@@ -2867,7 +2867,7 @@ void KeyValues::UnpackIntoStructure( KeyValuesUnpackStructure const *pUnpackTabl
                 char const *src_string =
                     GetString( pUnpackTable->m_pKeyName, pUnpackTable->m_pKeyDefault );
                 if ( ( !src_string ) ||
-                     ( sscanf( src_string, "%f %f", dest_f, dest_f + 1 ) ) != 2 )
+                    ( sscanf( src_string, "%f %f", dest_f, dest_f + 1 ) ) != 2 )
                     memset( dest_f, 0, 2 * sizeof( float ) );
             }
             break;
@@ -3004,13 +3004,13 @@ bool IKeyValuesDumpContextAsText::KvBeginKey( KeyValues *pKey, int nIndentLevel 
     if ( pKey )
     {
         return KvWriteIndent( nIndentLevel ) &&
-               KvWriteText( pKey->GetName() ) &&
-               KvWriteText( " {\n" );
+                KvWriteText( pKey->GetName() ) &&
+                KvWriteText( " {\n" );
     }
     else
     {
         return KvWriteIndent( nIndentLevel ) &&
-               KvWriteText( "<< NULL >>\n" );
+                KvWriteText( "<< NULL >>\n" );
     }
 }
 
@@ -3019,7 +3019,7 @@ bool IKeyValuesDumpContextAsText::KvWriteValue( KeyValues *val, int nIndentLevel
     if ( !val )
     {
         return KvWriteIndent( nIndentLevel ) &&
-               KvWriteText( "<< NULL >>\n" );
+                KvWriteText( "<< NULL >>\n" );
     }
 
     if ( !KvWriteIndent( nIndentLevel ) )
@@ -3112,7 +3112,7 @@ bool IKeyValuesDumpContextAsText::KvEndKey( KeyValues *pKey, int nIndentLevel )
     if ( pKey )
     {
         return KvWriteIndent( nIndentLevel ) &&
-               KvWriteText( "}\n" );
+                KvWriteText( "}\n" );
     }
     else
     {

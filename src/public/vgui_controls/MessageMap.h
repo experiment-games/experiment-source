@@ -79,7 +79,7 @@ struct MessageMapItem_t
     static void AddToMap( char const *scriptname, vgui::MessageFunc_t function, int paramCount, int p1type, const char *p1name, int p2type, const char *p2name ) \
     {                                                                                                                                                            \
         vgui::PanelMessageMap *map = vgui::FindOrAddPanelMessageMap( GetPanelClassName() );                                                                      \
-                                                                                                                                                                 \
+                                                                                                                                                                \
         vgui::MessageMapItem_t entry;                                                                                                                            \
         entry.name = scriptname;                                                                                                                                 \
         entry.func = function;                                                                                                                                   \
@@ -91,10 +91,10 @@ struct MessageMapItem_t
         entry.nameSymbol = 0;                                                                                                                                    \
         entry.firstParamSymbol = 0;                                                                                                                              \
         entry.secondParamSymbol = 0;                                                                                                                             \
-                                                                                                                                                                 \
+                                                                                                                                                                \
         map->entries.AddToTail( entry );                                                                                                                         \
     }                                                                                                                                                            \
-                                                                                                                                                                 \
+                                                                                                                                                                \
     static void ChainToMap( void )                                                                                                                               \
     {                                                                                                                                                            \
         static bool chained = false;                                                                                                                             \
@@ -108,19 +108,19 @@ struct MessageMapItem_t
             map->baseMap = vgui::FindOrAddPanelMessageMap( GetPanelBaseClassName() );                                                                            \
         }                                                                                                                                                        \
     }                                                                                                                                                            \
-                                                                                                                                                                 \
+                                                                                                                                                                \
     class className##_RegisterMap;                                                                                                                               \
     friend class className##_RegisterMap;                                                                                                                        \
     class className##_RegisterMap                                                                                                                                \
     {                                                                                                                                                            \
-       public:                                                                                                                                                   \
+        public:                                                                                                                                                   \
         className##_RegisterMap()                                                                                                                                \
         {                                                                                                                                                        \
             className::ChainToMap();                                                                                                                             \
         }                                                                                                                                                        \
     };                                                                                                                                                           \
     className##_RegisterMap m_RegisterClass;                                                                                                                     \
-                                                                                                                                                                 \
+                                                                                                                                                                \
     virtual vgui::PanelMessageMap *GetMessageMap()                                                                                                               \
     {                                                                                                                                                            \
         static vgui::PanelMessageMap *s_pMap = vgui::FindOrAddPanelMessageMap( GetPanelClassName() );                                                            \
@@ -136,8 +136,8 @@ struct MessageMapItem_t
 #define DECLARE_CLASS_SIMPLE( className, baseClassName ) \
     typedef baseClassName BaseClass;                     \
     typedef className ThisClass;                         \
-                                                         \
-   public:                                               \
+                                                        \
+    public:                                               \
     DECLARE_PANELMESSAGEMAP( className );                \
     DECLARE_PANELANIMATION( className );                 \
     DECLARE_KEYBINDINGMAP( className );                  \
@@ -152,8 +152,8 @@ struct MessageMapItem_t
 
 #define DECLARE_CLASS_SIMPLE_NOBASE( className ) \
     typedef className ThisClass;                 \
-                                                 \
-   public:                                       \
+                                                \
+    public:                                       \
     DECLARE_PANELMESSAGEMAP( className );        \
     DECLARE_PANELANIMATION( className );         \
     DECLARE_KEYBINDINGMAP( className );          \
@@ -171,8 +171,8 @@ struct MessageMapItem_t
 #define DECLARE_CLASS_SIMPLE( className, baseClassName ) \
     typedef baseClassName BaseClass;                     \
     typedef className ThisClass;                         \
-                                                         \
-   public:                                               \
+                                                        \
+    public:                                               \
     DECLARE_PANELMESSAGEMAP( className );                \
     DECLARE_PANELANIMATION( className );                 \
     static char const *GetPanelClassName()               \
@@ -186,8 +186,8 @@ struct MessageMapItem_t
 
 #define DECLARE_CLASS_SIMPLE_NOBASE( className ) \
     typedef className ThisClass;                 \
-                                                 \
-   public:                                       \
+                                                \
+    public:                                       \
     DECLARE_PANELMESSAGEMAP( className );        \
     DECLARE_PANELANIMATION( className );         \
     static char const *GetPanelClassName()       \
@@ -206,7 +206,7 @@ struct MessageMapItem_t
     friend class PanelMessageFunc_##name;                                                                                      \
     class PanelMessageFunc_##name                                                                                              \
     {                                                                                                                          \
-       public:                                                                                                                 \
+        public:                                                                                                                 \
         static void InitVar()                                                                                                  \
         {                                                                                                                      \
             static bool bAdded = false;                                                                                        \
@@ -435,11 +435,11 @@ typedef vgui::Panel *( *PANELCREATEFUNC )( void );
 //-----------------------------------------------------------------------------
 class CBuildFactoryHelper
 {
-   public:
+    public:
     // Static list of helpers
     static CBuildFactoryHelper *m_sHelpers;
 
-   public:
+    public:
     // Construction
     CBuildFactoryHelper( char const *className, PANELCREATEFUNC func );
 
@@ -453,7 +453,7 @@ class CBuildFactoryHelper
     static vgui::Panel *InstancePanel( char const *className );
     static void GetFactoryNames( CUtlVector< char const * > &list );
 
-   private:
+    private:
     static bool HasFactory( char const *className );
 
     // Next factory in list

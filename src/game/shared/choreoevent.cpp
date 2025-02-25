@@ -1104,7 +1104,7 @@ void CFlexAnimationTrack::RemoveOutOfRangeSamples( int type )
     {
         CExpressionSample src = m_Samples[type][i];
         if ( src.time < 0 ||
-             src.time > duration )
+            src.time > duration )
         {
             m_Samples[type].Remove( i );
         }
@@ -1340,7 +1340,7 @@ void CChoreoEvent::SetType( EVENTTYPE type )
     m_fType = type;
 
     if ( m_fType == SPEAK ||
-         m_fType == SUBSCENE )
+        m_fType == SUBSCENE )
     {
         m_bFixedLength = true;
     }
@@ -2049,14 +2049,14 @@ static EventNameMap_t g_NameMap[] =
 //-----------------------------------------------------------------------------
 class CCheckEventNames
 {
-   public:
+    public:
     CCheckEventNames()
     {
         if ( ARRAYSIZE( g_NameMap ) != CChoreoEvent::NUM_TYPES )
         {
             Error( "g_NameMap contains %llu entries, CChoreoEvent::NUM_TYPES == %i!",
-                   ( uint64 )( ARRAYSIZE( g_NameMap ) ),
-                   CChoreoEvent::NUM_TYPES );
+                    ( uint64 )( ARRAYSIZE( g_NameMap ) ),
+                    CChoreoEvent::NUM_TYPES );
         }
         for ( int i = 0; i < CChoreoEvent::NUM_TYPES; ++i )
         {
@@ -2069,8 +2069,8 @@ class CCheckEventNames
                 continue;
 
             Error( "g_NameMap:  Event type at %i has wrong value (%i)!",
-                   i,
-                   ( int )g_NameMap[i].type );
+                    i,
+                    ( int )g_NameMap[i].type );
         }
     }
 };
@@ -2133,14 +2133,14 @@ static CCNameMap_t g_CCNameMap[] =
 //-----------------------------------------------------------------------------
 class CCheckCCNames
 {
-   public:
+    public:
     CCheckCCNames()
     {
         if ( ARRAYSIZE( g_CCNameMap ) != CChoreoEvent::NUM_CC_TYPES )
         {
             Error( "g_CCNameMap contains %llu entries, CChoreoEvent::NUM_CC_TYPES == %i!",
-                   ( uint64 )( ARRAYSIZE( g_CCNameMap ) ),
-                   CChoreoEvent::NUM_CC_TYPES );
+                    ( uint64 )( ARRAYSIZE( g_CCNameMap ) ),
+                    CChoreoEvent::NUM_CC_TYPES );
         }
         for ( int i = 0; i < CChoreoEvent::NUM_CC_TYPES; ++i )
         {
@@ -2153,8 +2153,8 @@ class CCheckCCNames
                 continue;
 
             Error( "g_CCNameMap:  Event type at %i has wrong value (%i)!",
-                   i,
-                   ( int )g_CCNameMap[i].type );
+                    i,
+                    ( int )g_CCNameMap[i].type );
         }
     }
 };
@@ -3042,9 +3042,9 @@ float CChoreoEvent::GetBoundedAbsoluteTagPercentage( AbsTagType type, int tagnum
         /*
         if (GetNumAbsoluteTags( type ) >= 1)
         {
-          CEventAbsoluteTag *tag = GetAbsoluteTag( type, 0 );
-          Assert( tag );
-          return -tag->GetTime();
+        CEventAbsoluteTag *tag = GetAbsoluteTag( type, 0 );
+        Assert( tag );
+        return -tag->GetTime();
         }
         */
         return 0.0f;  // -0.5f;
@@ -3062,9 +3062,9 @@ float CChoreoEvent::GetBoundedAbsoluteTagPercentage( AbsTagType type, int tagnum
         /*
         if (GetNumAbsoluteTags( type ) >= 1)
         {
-          CEventAbsoluteTag *tag = GetAbsoluteTag( type, tagnum - 2 );
-          Assert( tag );
-          return 2.0 - tag->GetTime();
+        CEventAbsoluteTag *tag = GetAbsoluteTag( type, tagnum - 2 );
+        Assert( tag );
+        return 2.0 - tag->GetTime();
         }
         */
         return 1.0;  // 1.5;
@@ -3072,15 +3072,15 @@ float CChoreoEvent::GetBoundedAbsoluteTagPercentage( AbsTagType type, int tagnum
 
     /*
     {
-      float duration = GetDuration();
+    float duration = GetDuration();
 
-      if ( type == SHIFTED )
-      {
+    if ( type == SHIFTED )
+    {
         float seqduration;
         GetGestureSequenceDuration( seqduration );
         return seqduration;
-      }
-      return duration;
+    }
+    return duration;
     }
     */
 
@@ -3559,7 +3559,7 @@ void CCurveData::RemoveOutOfRangeSamples( ICurveDataAccessor *data )
     {
         CExpressionSample src = m_Ramp[i];
         if ( src.time < 0 ||
-             src.time > duration + 0.01 )
+            src.time > duration + 0.01 )
         {
             m_Ramp.Remove( i );
         }
@@ -3576,7 +3576,7 @@ void CChoreoEvent::RescaleGestureTimes( float newstart, float newend, bool bMain
 
     // Did it actually change
     if ( newstart == GetStartTime() &&
-         newend == GetEndTime() )
+        newend == GetEndTime() )
     {
         return;
     }
@@ -3886,7 +3886,7 @@ static void CleanupTokenName( char const *in, char *dest, int destlen )
     while ( *in && ( out - dest ) < destlen )
     {
         if ( V_isalnum( *in ) ||  // lowercase, uppercase, digits and underscore are valid
-             *in == '_' )
+            *in == '_' )
         {
             *out++ = *in;
         }
@@ -4179,7 +4179,7 @@ void CChoreoEvent::SaveToBuffer( CUtlBuffer &buf, CChoreoScene *pScene, IChoreoS
         flags = 0;
 
         if ( GetCloseCaptionType() != CChoreoEvent::CC_DISABLED &&
-             IsUsingCombinedFile() )
+            IsUsingCombinedFile() )
         {
             flags |= ( 1 << 0 );
         }

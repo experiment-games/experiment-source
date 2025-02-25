@@ -24,7 +24,7 @@ extern ServerClass *g_pServerClassHead;
 
 class ServerClass
 {
-   public:
+    public:
     ServerClass( const char *pNetworkName, SendTable *pTable )
     {
         m_pNetworkName = pNetworkName;
@@ -68,7 +68,7 @@ class ServerClass
         return m_pNetworkName;
     }
 
-   public:
+    public:
     const char *m_pNetworkName;
     SendTable *m_pTable;
     ServerClass *m_pNext;
@@ -82,7 +82,7 @@ class CBaseNetworkable;
 
 // If you do a DECLARE_SERVERCLASS, you need to do this inside the class definition.
 #define DECLARE_SERVERCLASS()              \
-   public:                                 \
+    public:                                 \
     virtual ServerClass *GetServerClass(); \
     static SendTable *m_pClassSendTable;   \
     template < typename T >                \
@@ -90,7 +90,7 @@ class CBaseNetworkable;
     virtual int YouForgotToImplementOrDeclareServerClass();
 
 #define DECLARE_SERVERCLASS_NOBASE() \
-   public:                           \
+    public:                           \
     template < typename T >          \
     friend int ServerClassInit( T * );
 
@@ -134,7 +134,7 @@ class CBaseNetworkable;
     static ServerClass g_##DLLClassName##_ClassReg(                       \
         #DLLClassName,                                                    \
         &sendTable::g_SendTable );                                        \
-                                                                          \
+                                                                        \
     ServerClass *DLLClassName::GetServerClass()                           \
     {                                                                     \
         return &g_##DLLClassName##_ClassReg;                              \

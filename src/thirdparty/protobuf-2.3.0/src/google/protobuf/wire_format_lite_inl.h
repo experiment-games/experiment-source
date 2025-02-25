@@ -252,9 +252,9 @@ inline const uint8* WireFormatLite::ReadPrimitiveFromArray<
 
 template < typename CType, enum WireFormatLite::FieldType DeclaredType >
 inline bool WireFormatLite::ReadRepeatedPrimitive( int tag_size,
-                                                   uint32 tag,
-                                                   io::CodedInputStream* input,
-                                                   RepeatedField< CType >* values )
+                                                    uint32 tag,
+                                                    io::CodedInputStream* input,
+                                                    RepeatedField< CType >* values )
 {
     CType value;
     if ( !ReadPrimitive< CType, DeclaredType >( input, &value ) ) return false;
@@ -301,11 +301,11 @@ inline bool WireFormatLite::ReadRepeatedFixedSizePrimitive(
         const int per_value_size = tag_size + sizeof( value );
 
         int elements_available = min( values->Capacity() - values->size(),
-                                      size / per_value_size );
+                                    size / per_value_size );
         int num_read = 0;
         while ( num_read < elements_available &&
                 ( buffer = io::CodedInputStream::ExpectTagFromArray(
-                      buffer, tag ) ) != NULL )
+                    buffer, tag ) ) != NULL )
         {
             buffer = ReadPrimitiveFromArray< CType, DeclaredType >( buffer, &value );
             values->AddAlreadyReserved( value );
@@ -360,7 +360,7 @@ bool WireFormatLite::ReadRepeatedPrimitiveNoInline(
 
 template < typename CType, enum WireFormatLite::FieldType DeclaredType >
 inline bool WireFormatLite::ReadPackedPrimitive( io::CodedInputStream* input,
-                                                 RepeatedField< CType >* values )
+                                                RepeatedField< CType >* values )
 {
     uint32 length;
     if ( !input->ReadVarint32( &length ) ) return false;
@@ -377,14 +377,14 @@ inline bool WireFormatLite::ReadPackedPrimitive( io::CodedInputStream* input,
 
 template < typename CType, enum WireFormatLite::FieldType DeclaredType >
 bool WireFormatLite::ReadPackedPrimitiveNoInline( io::CodedInputStream* input,
-                                                  RepeatedField< CType >* values )
+                                                RepeatedField< CType >* values )
 {
     return ReadPackedPrimitive< CType, DeclaredType >( input, values );
 }
 
 inline bool WireFormatLite::ReadGroup( int field_number,
-                                       io::CodedInputStream* input,
-                                       MessageLite* value )
+                                        io::CodedInputStream* input,
+                                        MessageLite* value )
 {
     if ( !input->IncrementRecursionDepth() ) return false;
     if ( !value->MergePartialFromCodedStream( input ) ) return false;
@@ -397,7 +397,7 @@ inline bool WireFormatLite::ReadGroup( int field_number,
     return true;
 }
 inline bool WireFormatLite::ReadMessage( io::CodedInputStream* input,
-                                         MessageLite* value )
+                                        MessageLite* value )
 {
     uint32 length;
     if ( !input->ReadVarint32( &length ) ) return false;
@@ -429,7 +429,7 @@ inline bool WireFormatLite::ReadGroupNoVirtual( int field_number,
 }
 template < typename MessageType >
 inline bool WireFormatLite::ReadMessageNoVirtual( io::CodedInputStream* input,
-                                                  MessageType* value )
+                                                MessageType* value )
 {
     uint32 length;
     if ( !input->ReadVarint32( &length ) ) return false;
@@ -452,42 +452,42 @@ inline void WireFormatLite::WriteTag( int field_number, WireType type, io::Coded
 }
 
 inline void WireFormatLite::WriteInt32NoTag( int32 value,
-                                             io::CodedOutputStream* output )
+                                            io::CodedOutputStream* output )
 {
     output->WriteVarint32SignExtended( value );
 }
 inline void WireFormatLite::WriteInt64NoTag( int64 value,
-                                             io::CodedOutputStream* output )
+                                            io::CodedOutputStream* output )
 {
     output->WriteVarint64( static_cast< uint64 >( value ) );
 }
 inline void WireFormatLite::WriteUInt32NoTag( uint32 value,
-                                              io::CodedOutputStream* output )
+                                            io::CodedOutputStream* output )
 {
     output->WriteVarint32( value );
 }
 inline void WireFormatLite::WriteUInt64NoTag( uint64 value,
-                                              io::CodedOutputStream* output )
+                                            io::CodedOutputStream* output )
 {
     output->WriteVarint64( value );
 }
 inline void WireFormatLite::WriteSInt32NoTag( int32 value,
-                                              io::CodedOutputStream* output )
+                                            io::CodedOutputStream* output )
 {
     output->WriteVarint32( ZigZagEncode32( value ) );
 }
 inline void WireFormatLite::WriteSInt64NoTag( int64 value,
-                                              io::CodedOutputStream* output )
+                                            io::CodedOutputStream* output )
 {
     output->WriteVarint64( ZigZagEncode64( value ) );
 }
 inline void WireFormatLite::WriteFixed32NoTag( uint32 value,
-                                               io::CodedOutputStream* output )
+                                                io::CodedOutputStream* output )
 {
     output->WriteLittleEndian32( value );
 }
 inline void WireFormatLite::WriteFixed64NoTag( uint64 value,
-                                               io::CodedOutputStream* output )
+                                                io::CodedOutputStream* output )
 {
     output->WriteLittleEndian64( value );
 }
@@ -502,12 +502,12 @@ inline void WireFormatLite::WriteSFixed64NoTag( int64 value,
     output->WriteLittleEndian64( static_cast< uint64 >( value ) );
 }
 inline void WireFormatLite::WriteFloatNoTag( float value,
-                                             io::CodedOutputStream* output )
+                                            io::CodedOutputStream* output )
 {
     output->WriteLittleEndian32( EncodeFloat( value ) );
 }
 inline void WireFormatLite::WriteDoubleNoTag( double value,
-                                              io::CodedOutputStream* output )
+                                            io::CodedOutputStream* output )
 {
     output->WriteLittleEndian64( EncodeDouble( value ) );
 }
@@ -524,8 +524,8 @@ inline void WireFormatLite::WriteEnumNoTag( int value,
 
 template < typename MessageType >
 inline void WireFormatLite::WriteGroupNoVirtual( int field_number,
-                                                 const MessageType& value,
-                                                 io::CodedOutputStream* output )
+                                                const MessageType& value,
+                                                io::CodedOutputStream* output )
 {
     WriteTag( field_number, WIRETYPE_START_GROUP, output );
     value.MessageType::SerializeWithCachedSizes( output );
@@ -533,8 +533,8 @@ inline void WireFormatLite::WriteGroupNoVirtual( int field_number,
 }
 template < typename MessageType >
 inline void WireFormatLite::WriteMessageNoVirtual( int field_number,
-                                                   const MessageType& value,
-                                                   io::CodedOutputStream* output )
+                                                    const MessageType& value,
+                                                    io::CodedOutputStream* output )
 {
     WriteTag( field_number, WIRETYPE_LENGTH_DELIMITED, output );
     output->WriteVarint32( value.MessageType::GetCachedSize() );
@@ -544,42 +544,42 @@ inline void WireFormatLite::WriteMessageNoVirtual( int field_number,
 // ===================================================================
 
 inline uint8* WireFormatLite::WriteTagToArray( int field_number,
-                                               WireType type,
-                                               uint8* target )
+                                                WireType type,
+                                                uint8* target )
 {
     return io::CodedOutputStream::WriteTagToArray( MakeTag( field_number, type ),
-                                                   target );
+                                                    target );
 }
 
 inline uint8* WireFormatLite::WriteInt32NoTagToArray( int32 value,
-                                                      uint8* target )
+                                                    uint8* target )
 {
     return io::CodedOutputStream::WriteVarint32SignExtendedToArray( value, target );
 }
 inline uint8* WireFormatLite::WriteInt64NoTagToArray( int64 value,
-                                                      uint8* target )
+                                                    uint8* target )
 {
     return io::CodedOutputStream::WriteVarint64ToArray(
         static_cast< uint64 >( value ), target );
 }
 inline uint8* WireFormatLite::WriteUInt32NoTagToArray( uint32 value,
-                                                       uint8* target )
+                                                        uint8* target )
 {
     return io::CodedOutputStream::WriteVarint32ToArray( value, target );
 }
 inline uint8* WireFormatLite::WriteUInt64NoTagToArray( uint64 value,
-                                                       uint8* target )
+                                                        uint8* target )
 {
     return io::CodedOutputStream::WriteVarint64ToArray( value, target );
 }
 inline uint8* WireFormatLite::WriteSInt32NoTagToArray( int32 value,
-                                                       uint8* target )
+                                                        uint8* target )
 {
     return io::CodedOutputStream::WriteVarint32ToArray( ZigZagEncode32( value ),
                                                         target );
 }
 inline uint8* WireFormatLite::WriteSInt64NoTagToArray( int64 value,
-                                                       uint8* target )
+                                                        uint8* target )
 {
     return io::CodedOutputStream::WriteVarint64ToArray( ZigZagEncode64( value ),
                                                         target );
@@ -595,92 +595,92 @@ inline uint8* WireFormatLite::WriteFixed64NoTagToArray( uint64 value,
     return io::CodedOutputStream::WriteLittleEndian64ToArray( value, target );
 }
 inline uint8* WireFormatLite::WriteSFixed32NoTagToArray( int32 value,
-                                                         uint8* target )
+                                                        uint8* target )
 {
     return io::CodedOutputStream::WriteLittleEndian32ToArray(
         static_cast< uint32 >( value ), target );
 }
 inline uint8* WireFormatLite::WriteSFixed64NoTagToArray( int64 value,
-                                                         uint8* target )
+                                                        uint8* target )
 {
     return io::CodedOutputStream::WriteLittleEndian64ToArray(
         static_cast< uint64 >( value ), target );
 }
 inline uint8* WireFormatLite::WriteFloatNoTagToArray( float value,
-                                                      uint8* target )
+                                                    uint8* target )
 {
     return io::CodedOutputStream::WriteLittleEndian32ToArray( EncodeFloat( value ),
-                                                              target );
+                                                            target );
 }
 inline uint8* WireFormatLite::WriteDoubleNoTagToArray( double value,
-                                                       uint8* target )
+                                                        uint8* target )
 {
     return io::CodedOutputStream::WriteLittleEndian64ToArray( EncodeDouble( value ),
-                                                              target );
+                                                            target );
 }
 inline uint8* WireFormatLite::WriteBoolNoTagToArray( bool value,
-                                                     uint8* target )
+                                                    uint8* target )
 {
     return io::CodedOutputStream::WriteVarint32ToArray( value ? 1 : 0, target );
 }
 inline uint8* WireFormatLite::WriteEnumNoTagToArray( int value,
-                                                     uint8* target )
+                                                    uint8* target )
 {
     return io::CodedOutputStream::WriteVarint32SignExtendedToArray( value, target );
 }
 
 inline uint8* WireFormatLite::WriteInt32ToArray( int field_number,
-                                                 int32 value,
-                                                 uint8* target )
+                                                int32 value,
+                                                uint8* target )
 {
     target = WriteTagToArray( field_number, WIRETYPE_VARINT, target );
     return WriteInt32NoTagToArray( value, target );
 }
 inline uint8* WireFormatLite::WriteInt64ToArray( int field_number,
-                                                 int64 value,
-                                                 uint8* target )
+                                                int64 value,
+                                                uint8* target )
 {
     target = WriteTagToArray( field_number, WIRETYPE_VARINT, target );
     return WriteInt64NoTagToArray( value, target );
 }
 inline uint8* WireFormatLite::WriteUInt32ToArray( int field_number,
-                                                  uint32 value,
-                                                  uint8* target )
+                                                uint32 value,
+                                                uint8* target )
 {
     target = WriteTagToArray( field_number, WIRETYPE_VARINT, target );
     return WriteUInt32NoTagToArray( value, target );
 }
 inline uint8* WireFormatLite::WriteUInt64ToArray( int field_number,
-                                                  uint64 value,
-                                                  uint8* target )
+                                                uint64 value,
+                                                uint8* target )
 {
     target = WriteTagToArray( field_number, WIRETYPE_VARINT, target );
     return WriteUInt64NoTagToArray( value, target );
 }
 inline uint8* WireFormatLite::WriteSInt32ToArray( int field_number,
-                                                  int32 value,
-                                                  uint8* target )
+                                                int32 value,
+                                                uint8* target )
 {
     target = WriteTagToArray( field_number, WIRETYPE_VARINT, target );
     return WriteSInt32NoTagToArray( value, target );
 }
 inline uint8* WireFormatLite::WriteSInt64ToArray( int field_number,
-                                                  int64 value,
-                                                  uint8* target )
+                                                int64 value,
+                                                uint8* target )
 {
     target = WriteTagToArray( field_number, WIRETYPE_VARINT, target );
     return WriteSInt64NoTagToArray( value, target );
 }
 inline uint8* WireFormatLite::WriteFixed32ToArray( int field_number,
-                                                   uint32 value,
-                                                   uint8* target )
+                                                    uint32 value,
+                                                    uint8* target )
 {
     target = WriteTagToArray( field_number, WIRETYPE_FIXED32, target );
     return WriteFixed32NoTagToArray( value, target );
 }
 inline uint8* WireFormatLite::WriteFixed64ToArray( int field_number,
-                                                   uint64 value,
-                                                   uint8* target )
+                                                    uint64 value,
+                                                    uint8* target )
 {
     target = WriteTagToArray( field_number, WIRETYPE_FIXED64, target );
     return WriteFixed64NoTagToArray( value, target );
@@ -700,15 +700,15 @@ inline uint8* WireFormatLite::WriteSFixed64ToArray( int field_number,
     return WriteSFixed64NoTagToArray( value, target );
 }
 inline uint8* WireFormatLite::WriteFloatToArray( int field_number,
-                                                 float value,
-                                                 uint8* target )
+                                                float value,
+                                                uint8* target )
 {
     target = WriteTagToArray( field_number, WIRETYPE_FIXED32, target );
     return WriteFloatNoTagToArray( value, target );
 }
 inline uint8* WireFormatLite::WriteDoubleToArray( int field_number,
-                                                  double value,
-                                                  uint8* target )
+                                                double value,
+                                                uint8* target )
 {
     target = WriteTagToArray( field_number, WIRETYPE_FIXED64, target );
     return WriteDoubleNoTagToArray( value, target );
@@ -729,8 +729,8 @@ inline uint8* WireFormatLite::WriteEnumToArray( int field_number,
 }
 
 inline uint8* WireFormatLite::WriteStringToArray( int field_number,
-                                                  const string& value,
-                                                  uint8* target )
+                                                const string& value,
+                                                uint8* target )
 {
     // String is for UTF-8 text only
     // WARNING:  In wire_format.cc, both strings and bytes are handled by
@@ -741,8 +741,8 @@ inline uint8* WireFormatLite::WriteStringToArray( int field_number,
     return io::CodedOutputStream::WriteStringToArray( value, target );
 }
 inline uint8* WireFormatLite::WriteBytesToArray( int field_number,
-                                                 const string& value,
-                                                 uint8* target )
+                                                const string& value,
+                                                uint8* target )
 {
     target = WriteTagToArray( field_number, WIRETYPE_LENGTH_DELIMITED, target );
     target = io::CodedOutputStream::WriteVarint32ToArray( value.size(), target );
@@ -750,16 +750,16 @@ inline uint8* WireFormatLite::WriteBytesToArray( int field_number,
 }
 
 inline uint8* WireFormatLite::WriteGroupToArray( int field_number,
-                                                 const MessageLite& value,
-                                                 uint8* target )
+                                                const MessageLite& value,
+                                                uint8* target )
 {
     target = WriteTagToArray( field_number, WIRETYPE_START_GROUP, target );
     target = value.SerializeWithCachedSizesToArray( target );
     return WriteTagToArray( field_number, WIRETYPE_END_GROUP, target );
 }
 inline uint8* WireFormatLite::WriteMessageToArray( int field_number,
-                                                   const MessageLite& value,
-                                                   uint8* target )
+                                                    const MessageLite& value,
+                                                    uint8* target )
 {
     target = WriteTagToArray( field_number, WIRETYPE_LENGTH_DELIMITED, target );
     target = io::CodedOutputStream::WriteVarint32ToArray(
@@ -823,12 +823,12 @@ inline int WireFormatLite::EnumSize( int value )
 inline int WireFormatLite::StringSize( const string& value )
 {
     return io::CodedOutputStream::VarintSize32( value.size() ) +
-           value.size();
+            value.size();
 }
 inline int WireFormatLite::BytesSize( const string& value )
 {
     return io::CodedOutputStream::VarintSize32( value.size() ) +
-           value.size();
+            value.size();
 }
 
 inline int WireFormatLite::GroupSize( const MessageLite& value )

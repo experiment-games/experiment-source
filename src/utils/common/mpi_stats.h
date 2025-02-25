@@ -33,7 +33,7 @@ void VMPI_Stats_AddEventText( const char *pText );
 
 class CDBInfo
 {
-   public:
+    public:
     char m_HostName[128];
     char m_DBName[128];
     char m_UserName[128];

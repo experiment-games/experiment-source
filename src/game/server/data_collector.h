@@ -21,7 +21,7 @@
  */
 class CDataCollector : public IGameEventListener
 {
-   public:
+    public:
     CDataCollector( void );
     ~CDataCollector();
 

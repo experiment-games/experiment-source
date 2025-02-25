@@ -26,11 +26,11 @@
 //-----------------------------------------------------------------------------
 class CImagePacker
 {
-   public:
+    public:
     bool Reset( int maxLightmapWidth, int maxLightmapHeight );
     bool AddBlock( int width, int height, int *returnX, int *returnY );
 
-   protected:
+    protected:
     int GetMaxYIndex( int firstX, int width );
 
     int m_MaxLightmapWidth;

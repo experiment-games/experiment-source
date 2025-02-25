@@ -22,7 +22,7 @@ class CAPCFourWheelServerVehicle : public CFourWheelServerVehicle
 {
     typedef CFourWheelServerVehicle BaseClass;
     // IServerVehicle
-   public:
+    public:
     bool NPC_HasPrimaryWeapon( void )
     {
         return true;
@@ -48,7 +48,7 @@ class CPropAPC : public CPropVehicleDriveable
 {
     DECLARE_CLASS( CPropAPC, CPropVehicleDriveable );
 
-   public:
+    public:
     // CBaseEntity
     virtual void Precache( void );
     void Think( void );
@@ -93,7 +93,7 @@ class CPropAPC : public CPropVehicleDriveable
 
     virtual void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
 
-   private:
+    private:
     enum
     {
         MAX_SMOKE_TRAILS = 4,
@@ -134,7 +134,7 @@ class CPropAPC : public CPropVehicleDriveable
 
     virtual bool ShouldAttractAutoAim( CBaseEntity *pAimingEnt );
 
-   private:
+    private:
     // Danger sounds made by the APC
     float m_flDangerSoundTime;
 

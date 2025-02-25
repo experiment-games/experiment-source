@@ -9,7 +9,7 @@
 
 abstract_class CNetworkPeerBase : public IConnectionlessPacketHandler, public INetworkMessageHandler, public ILookupChannel
 {
-   public:
+    public:
     virtual bool Init( int nServerPort ) = 0;
     virtual void Shutdown() = 0;
 
@@ -33,22 +33,22 @@ abstract_class CNetworkPeerBase : public IConnectionlessPacketHandler, public IN
 };
 
 #define NETWORK_PEER_DECLARATION( TcpImplementationClass )                               \
-   public:                                                                               \
+    public:                                                                               \
     bool Init( int nServerPort ) override;                                               \
     void Shutdown() override;                                                            \
-                                                                                         \
+                                                                                        \
     bool ProcessHandshakePacket( CNetPacket *packet ) override;                          \
-                                                                                         \
+                                                                                        \
     void OnConnectionClosing( INetServerChannel *channel, char const *reason ) override; \
     void OnConnectionStarted( INetServerChannel *channel ) override;                     \
-                                                                                         \
+                                                                                        \
     void OnPacketStarted( int inseq, int outseq ) override;                              \
     void OnPacketFinished() override;                                                    \
-                                                                                         \
+                                                                                        \
     INetServerChannel *FindNetChannel( const netadr_t &from ) override;                  \
-                                                                                         \
+                                                                                        \
     void ReadPackets() override;                                                         \
-                                                                                         \
+                                                                                        \
     TcpImplementationClass *GetStreamSocket() const                                      \
     {                                                                                    \
         return dynamic_cast< TcpImplementationClass * >( m_pStreamSocket );              \

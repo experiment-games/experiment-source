@@ -64,9 +64,9 @@ void CNPCSimpleTalker::Precache( void )
     /*
     // FIXME:  Need to figure out how to hook these...
     if ( m_iszUse != NULL_STRING )
-      GetExpresser()->ModifyConcept( TLK_STARTFOLLOW, STRING( m_iszUse ) );
+    GetExpresser()->ModifyConcept( TLK_STARTFOLLOW, STRING( m_iszUse ) );
     if ( m_iszUnUse != NULL_STRING )
-      GetExpresser()->ModifyConcept( TLK_STOPFOLLOW, STRING( m_iszUnUse ) );
+    GetExpresser()->ModifyConcept( TLK_STOPFOLLOW, STRING( m_iszUnUse ) );
 
     */
     BaseClass::Precache();
@@ -280,13 +280,13 @@ void CNPCSimpleTalker::RunTask( const Task_t *pTask )
 Activity CNPCSimpleTalker::NPC_TranslateActivity( Activity eNewActivity )
 {
     if ( ( eNewActivity == ACT_IDLE ) &&
-         ( GetExpresser()->IsSpeaking() ) &&
-         ( SelectWeightedSequence( ACT_SIGNAL3 ) != ACTIVITY_NOT_AVAILABLE ) )
+        ( GetExpresser()->IsSpeaking() ) &&
+        ( SelectWeightedSequence( ACT_SIGNAL3 ) != ACTIVITY_NOT_AVAILABLE ) )
     {
         return ACT_SIGNAL3;
     }
     else if ( ( eNewActivity == ACT_SIGNAL3 ) &&
-              ( SelectWeightedSequence( ACT_SIGNAL3 ) == ACTIVITY_NOT_AVAILABLE ) )
+            ( SelectWeightedSequence( ACT_SIGNAL3 ) == ACTIVITY_NOT_AVAILABLE ) )
     {
         return ACT_IDLE;
     }
@@ -618,19 +618,19 @@ int CNPCSimpleTalker::FIdleSpeak( void )
             {
                 SetSpeechTarget( GetTarget() );
                 if ( GetExpresser()->CanSpeakConcept( TLK_PLHURT3 ) &&
-                     ( GetTarget()->m_iHealth <= GetTarget()->m_iMaxHealth / 8 ) )
+                    ( GetTarget()->m_iHealth <= GetTarget()->m_iMaxHealth / 8 ) )
                 {
                     Speak( TLK_PLHURT3 );
                     return true;
                 }
                 else if ( GetExpresser()->CanSpeakConcept( TLK_PLHURT2 ) &&
-                          ( GetTarget()->m_iHealth <= GetTarget()->m_iMaxHealth / 4 ) )
+                        ( GetTarget()->m_iHealth <= GetTarget()->m_iMaxHealth / 4 ) )
                 {
                     Speak( TLK_PLHURT2 );
                     return true;
                 }
                 else if ( GetExpresser()->CanSpeakConcept( TLK_PLHURT1 ) &&
-                          ( GetTarget()->m_iHealth <= GetTarget()->m_iMaxHealth / 2 ) )
+                        ( GetTarget()->m_iHealth <= GetTarget()->m_iMaxHealth / 2 ) )
                 {
                     Speak( TLK_PLHURT1 );
                     return true;
@@ -653,23 +653,23 @@ int CNPCSimpleTalker::FIdleSpeak( void )
     // 75% chance of talking to another citizen if one is available.
     if (pFriend && !(pFriend->IsMoving()) && random->RandomInt( 0, 3 ) != 0 )
     {
-      if ( SpeakQuestionFriend( pFriend ) )
-      {
+    if ( SpeakQuestionFriend( pFriend ) )
+    {
         // force friend to answer
         CAI_PlayerAlly *pTalkNPC = dynamic_cast<CAI_PlayerAlly *>(pFriend);
         if (pTalkNPC && !pTalkNPC->HasSpawnFlags(SF_NPC_GAG) && !pTalkNPC->IsInAScript() )
         {
-          SetSpeechTarget( pFriend );
-          pTalkNPC->SetAnswerQuestion( this );
-          pTalkNPC->GetExpresser()->BlockSpeechUntil( GetExpresser()->GetTimeSpeechComplete() );
+        SetSpeechTarget( pFriend );
+        pTalkNPC->SetAnswerQuestion( this );
+        pTalkNPC->GetExpresser()->BlockSpeechUntil( GetExpresser()->GetTimeSpeechComplete() );
 
-          m_nSpeak++;
+        m_nSpeak++;
         }
 
         // Don't let anyone else butt in.
         DeferAllIdleSpeech( random->RandomFloat( TALKER_DEFER_IDLE_SPEAK_MIN, TALKER_DEFER_IDLE_SPEAK_MAX ), pTalkNPC );
         return true;
-      }
+    }
     }
     */
 
@@ -827,7 +827,7 @@ int CNPCSimpleTalker::SelectNonCombatSpeechSchedule()
             Vector forward;
             AngleVectors( pPlayer->GetLocalAngles(), &forward );
             if ( ( pPlayer->GetAbsOrigin() - GetAbsOrigin() ).Length2D() < TALKER_STARE_DIST &&
-                 UTIL_DotPoints( pPlayer->GetAbsOrigin(), GetAbsOrigin(), forward ) >= m_flFieldOfView )
+                UTIL_DotPoints( pPlayer->GetAbsOrigin(), GetAbsOrigin(), forward ) >= m_flFieldOfView )
             {
                 // go into the special STARE schedule if the player is close, and looking at me too.
                 return SCHED_TALKER_IDLE_WATCH_CLIENT_STARE;

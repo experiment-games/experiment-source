@@ -20,7 +20,7 @@
 
 class AchievementsAndStatsInterface
 {
-   public:
+    public:
     AchievementsAndStatsInterface() {}
 
     virtual void CreatePanel( vgui::Panel* pParent ) {}
@@ -31,7 +31,7 @@ class AchievementsAndStatsInterface
         return 0;
     }
 
-   protected:
+    protected:
     //-----------------------------------------------------------------------------
     // Purpose: Positions a dialog on screen.
     //-----------------------------------------------------------------------------

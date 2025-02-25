@@ -32,7 +32,7 @@ class CConstantForceController : public IMotionEvent
 {
     DECLARE_SIMPLE_DATADESC();
 
-   public:
+    public:
     void Init( IMotionEvent::simresult_e controlType )
     {
         m_controlType = controlType;
@@ -87,7 +87,7 @@ IMotionEvent::simresult_e CConstantForceController::Simulate( IPhysicsMotionCont
 //-----------------------------------------------------------------------------
 abstract_class CPhysForce : public CPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CPhysForce, CPointEntity );
 
     CPhysForce();
@@ -117,7 +117,7 @@ abstract_class CPhysForce : public CPointEntity
     // optional
     virtual void OnActivate( void ) {}
 
-   protected:
+    protected:
     IPhysicsMotionController *m_pController;
 
     string_t m_nameAttach;
@@ -311,13 +311,13 @@ class CPhysThruster : public CPhysForce
 {
     DECLARE_CLASS( CPhysThruster, CPhysForce );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     virtual void OnActivate( void );
     virtual void SetupForces( IPhysicsObject *pPhys, Vector &linear, AngularImpulse &angular );
 
-   private:
+    private:
     Vector m_localOrigin;
 };
 
@@ -406,12 +406,12 @@ class CPhysTorque : public CPhysForce
 {
     DECLARE_CLASS( CPhysTorque, CPhysForce );
 
-   public:
+    public:
     DECLARE_DATADESC();
     void Spawn( void );
     virtual void SetupForces( IPhysicsObject *pPhys, Vector &linear, AngularImpulse &angular );
 
-   private:
+    private:
     Vector m_axis;
 };
 
@@ -459,7 +459,7 @@ class CMotorController : public IMotionEvent
 {
     DECLARE_SIMPLE_DATADESC();
 
-   public:
+    public:
     IMotionEvent::simresult_e Simulate( IPhysicsMotionController *pController, IPhysicsObject *pObject, float deltaTime, Vector &linear, AngularImpulse &angular );
     float m_speed;
     float m_maxTorque;
@@ -569,7 +569,7 @@ class CPhysMotor : public CLogicalEntity
 {
     DECLARE_CLASS( CPhysMotor, CLogicalEntity );
 
-   public:
+    public:
     ~CPhysMotor();
     DECLARE_DATADESC();
     void Spawn( void );
@@ -821,7 +821,7 @@ class CKeepUpright : public CPointEntity, public IMotionEvent
 {
     DECLARE_CLASS( CKeepUpright, CPointEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     CKeepUpright();
@@ -847,7 +847,7 @@ class CKeepUpright : public CPointEntity, public IMotionEvent
         m_angularLimit = inputdata.value.Float();
     }
 
-   private:
+    private:
     friend CBaseEntity *CreateKeepUpright( const Vector &vecOrigin, const QAngle &vecAngles, CBaseEntity *pOwner, float flAngularLimit, bool bActive );
 
     Vector m_worldGoalAxis;
@@ -1017,13 +1017,13 @@ IMotionEvent::simresult_e CKeepUpright::Simulate( IPhysicsMotionController *pCon
     angular *= invDeltaTime;
 
 #if 0
-	Vector position, out, worldAxis;
-	MatrixGetColumn( matrix, 3, position );
-	out = angular * 0.1;
-	VectorRotate( m_localTestAxis, matrix, worldAxis );
-	NDebugOverlay::Line( position, position + worldAxis * 100, 255, 0, 0, 0, 0 );
-	NDebugOverlay::Line( position, position + m_worldGoalAxis * 100, 255, 0, 0, 0, 0 );
-	NDebugOverlay::Line( position, position + out, 255, 255, 0, 0, 0 );
+    Vector position, out, worldAxis;
+    MatrixGetColumn( matrix, 3, position );
+    out = angular * 0.1;
+    VectorRotate( m_localTestAxis, matrix, worldAxis );
+    NDebugOverlay::Line( position, position + worldAxis * 100, 255, 0, 0, 0, 0 );
+    NDebugOverlay::Line( position, position + m_worldGoalAxis * 100, 255, 0, 0, 0, 0 );
+    NDebugOverlay::Line( position, position + out, 255, 255, 0, 0, 0 );
 #endif
 
     return SIM_LOCAL_ACCELERATION;

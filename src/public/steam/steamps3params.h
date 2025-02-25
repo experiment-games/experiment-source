@@ -98,7 +98,7 @@ struct SteamPS3Params_t
 struct SteamPS3Memory_t
 {
     bool m_bSingleAllocation;  // If true, Steam will request one 6MB allocation and use the returned memory for all future allocations
-                               // If false, Steam will make call malloc for each allocation
+                                // If false, Steam will make call malloc for each allocation
 
     // required function pointers
     void *( *m_pfMalloc )( size_t );

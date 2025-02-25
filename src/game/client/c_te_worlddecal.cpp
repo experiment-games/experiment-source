@@ -21,7 +21,7 @@
 //-----------------------------------------------------------------------------
 class C_TEWorldDecal : public C_BaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_TEWorldDecal, C_BaseTempEntity );
     DECLARE_CLIENTCLASS();
 
@@ -32,7 +32,7 @@ class C_TEWorldDecal : public C_BaseTempEntity
 
     virtual void Precache( void );
 
-   public:
+    public:
     Vector m_vecOrigin;
     int m_nIndex;
 };

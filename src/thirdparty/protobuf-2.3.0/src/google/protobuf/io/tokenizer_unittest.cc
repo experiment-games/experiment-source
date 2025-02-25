@@ -75,44 +75,44 @@ namespace {
 
 #define TEST_1D(FIXTURE, NAME, CASES)                                      \
   class FIXTURE##_##NAME##_DD : public FIXTURE {                           \
-   protected:                                                              \
+    protected:                                                              \
     template <typename CaseType>                                           \
     void DoSingleCase(const CaseType& CASES##_case);                       \
   };                                                                       \
-                                                                           \
+                                                                            \
   TEST_F(FIXTURE##_##NAME##_DD, NAME) {                                    \
     for (int i = 0; i < GOOGLE_ARRAYSIZE(CASES); i++) {                           \
-      SCOPED_TRACE(testing::Message()                                      \
+    SCOPED_TRACE(testing::Message()                                      \
         << #CASES " case #" << i << ": " << CASES[i]);                     \
-      DoSingleCase(CASES[i]);                                              \
+    DoSingleCase(CASES[i]);                                              \
     }                                                                      \
   }                                                                        \
-                                                                           \
+                                                                            \
   template <typename CaseType>                                             \
   void FIXTURE##_##NAME##_DD::DoSingleCase(const CaseType& CASES##_case)
 
 #define TEST_2D(FIXTURE, NAME, CASES1, CASES2)                             \
   class FIXTURE##_##NAME##_DD : public FIXTURE {                           \
-   protected:                                                              \
+    protected:                                                              \
     template <typename CaseType1, typename CaseType2>                      \
     void DoSingleCase(const CaseType1& CASES1##_case,                      \
-                      const CaseType2& CASES2##_case);                     \
+                    const CaseType2& CASES2##_case);                     \
   };                                                                       \
-                                                                           \
+                                                                            \
   TEST_F(FIXTURE##_##NAME##_DD, NAME) {                                    \
     for (int i = 0; i < GOOGLE_ARRAYSIZE(CASES1); i++) {                          \
-      for (int j = 0; j < GOOGLE_ARRAYSIZE(CASES2); j++) {                        \
+    for (int j = 0; j < GOOGLE_ARRAYSIZE(CASES2); j++) {                        \
         SCOPED_TRACE(testing::Message()                                    \
-          << #CASES1 " case #" << i << ": " << CASES1[i] << ", "           \
-          << #CASES2 " case #" << j << ": " << CASES2[j]);                 \
+        << #CASES1 " case #" << i << ": " << CASES1[i] << ", "           \
+        << #CASES2 " case #" << j << ": " << CASES2[j]);                 \
         DoSingleCase(CASES1[i], CASES2[j]);                                \
-      }                                                                    \
+    }                                                                    \
     }                                                                      \
   }                                                                        \
-                                                                           \
+                                                                            \
   template <typename CaseType1, typename CaseType2>                        \
   void FIXTURE##_##NAME##_DD::DoSingleCase(const CaseType1& CASES1##_case, \
-                                           const CaseType2& CASES2##_case)
+                                            const CaseType2& CASES2##_case)
 
 // -------------------------------------------------------------------
 
@@ -129,13 +129,13 @@ class TestInputStream : public ZeroCopyInputStream {
     // We'll return empty buffers starting with the first buffer, and every
     // 3 and 5 buffers after that.
     if (counter_ % 3 == 0 || counter_ % 5 == 0) {
-      *data = NULL;
-      *size = 0;
-      ++counter_;
-      return true;
+    *data = NULL;
+    *size = 0;
+    ++counter_;
+    return true;
     } else {
-      ++counter_;
-      return array_stream_.Next(data, size);
+    ++counter_;
+    return array_stream_.Next(data, size);
     }
   }
 
@@ -162,7 +162,7 @@ class TestErrorCollector : public ErrorCollector {
   // implements ErrorCollector ---------------------------------------
   void AddError(int line, int column, const string& message) {
     strings::SubstituteAndAppend(&text_, "$0:$1: $2\n",
-                                 line, column, message);
+                                line, column, message);
   }
 };
 
@@ -198,7 +198,7 @@ struct SimpleTokenCase {
 };
 
 inline ostream& operator<<(ostream& out,
-                           const SimpleTokenCase& test_case) {
+                            const SimpleTokenCase& test_case) {
   return out << CEscape(test_case.input);
 }
 
@@ -327,7 +327,7 @@ struct MultiTokenCase {
 };
 
 inline ostream& operator<<(ostream& out,
-                           const MultiTokenCase& test_case) {
+                            const MultiTokenCase& test_case) {
   return out << CEscape(test_case.input);
 }
 
@@ -436,9 +436,9 @@ TEST_2D(TokenizerTest, MultipleTokens, kMultiTokenCases, kBlockSizes) {
 
     // Next() should only return false when it hits the end token.
     if (token.type != Tokenizer::TYPE_END) {
-      ASSERT_TRUE(tokenizer.Next());
+    ASSERT_TRUE(tokenizer.Next());
     } else {
-      ASSERT_FALSE(tokenizer.Next());
+    ASSERT_FALSE(tokenizer.Next());
     }
 
     // Check that the token matches the expected one.
@@ -461,13 +461,13 @@ TEST_1D(TokenizerTest, ShCommentStyle, kBlockSizes) {
   // Test the "comment_style" option.
 
   const char* text = "foo # bar\n"
-                     "baz // qux\n"
-                     "corge /* grault */\n"
-                     "garply";
+                    "baz // qux\n"
+                    "corge /* grault */\n"
+                    "garply";
   const char* const kTokens[] = {"foo",  // "# bar" is ignored
-                                 "baz", "/", "/", "qux",
-                                 "corge", "/", "*", "grault", "*", "/",
-                                 "garply"};
+                                "baz", "/", "/", "qux",
+                                "corge", "/", "*", "grault", "*", "/",
+                                "garply"};
 
   // Set up the tokenizer.
   TestInputStream input(text, strlen(text), kBlockSizes_case);
@@ -614,14 +614,14 @@ TEST_F(TokenizerTest, ParseStringAppend) {
 struct ErrorCase {
   string input;
   bool recoverable;  // True if the tokenizer should be able to recover and
-                     // parse more tokens after seeing this error.  Cases
-                     // for which this is true must end with "foo" as
-                     // the last token, which the test will check for.
+                    // parse more tokens after seeing this error.  Cases
+                    // for which this is true must end with "foo" as
+                    // the last token, which the test will check for.
   const char* errors;
 };
 
 inline ostream& operator<<(ostream& out,
-                           const ErrorCase& test_case) {
+                            const ErrorCase& test_case) {
   return out << CEscape(test_case.input);
 }
 

@@ -24,7 +24,7 @@ class Divider : public Panel
 {
     DECLARE_CLASS_SIMPLE( Divider, Panel );
 
-   public:
+    public:
     Divider( Panel *parent, const char *name );
     ~Divider();
 

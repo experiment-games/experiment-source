@@ -29,7 +29,7 @@ EXPOSE_SINGLE_INTERFACE_GLOBALVAR( CVRadDLL, ILaunchableDLL, LAUNCHABLE_DLL_INTE
 
 class dat
 {
-   public:
+    public:
     char *name;
     int size;
 };

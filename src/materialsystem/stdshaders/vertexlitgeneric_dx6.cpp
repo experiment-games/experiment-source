@@ -14,7 +14,7 @@
 DEFINE_FALLBACK_SHADER( VertexLitGeneric, VertexLitGeneric_DX6 )
 
 BEGIN_SHADER( VertexLitGeneric_DX6,
-              "Help for VertexLitGeneric_DX6" )
+            "Help for VertexLitGeneric_DX6" )
 
 BEGIN_SHADER_PARAMS
 SHADER_PARAM( DETAIL, SHADER_PARAM_TYPE_TEXTURE, "shadertest/detail", "detail texture" )
@@ -48,7 +48,7 @@ SHADER_INIT_PARAMS()
     // No envmap uses mode 0, it's one less pass
     // Also, if multipass = 0, then go to mode 0 also
     if ( ( !params[ENVMAP]->IsDefined() ) ||
-         ( !IS_FLAG_SET( MATERIAL_VAR_MULTIPASS ) ) )
+        ( !IS_FLAG_SET( MATERIAL_VAR_MULTIPASS ) ) )
     {
         CLEAR_FLAGS( MATERIAL_VAR_ENVMAPMODE );
     }
@@ -179,17 +179,17 @@ void MultiplyByVertexLighting( IMaterialVar** params, IShaderDynamicAPI* pShader
 
         // This here will perform color = vertex light * (cc alpha) + 1 * (1 - cc alpha)
         pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
-                                               SHADER_TEXCHANNEL_COLOR,
-                                               SHADER_TEXOP_BLEND_CONSTANTALPHA,
-                                               SHADER_TEXARG_VERTEXCOLOR,
-                                               SHADER_TEXARG_CONSTANTCOLOR );
+                                                SHADER_TEXCHANNEL_COLOR,
+                                                SHADER_TEXOP_BLEND_CONSTANTALPHA,
+                                                SHADER_TEXARG_VERTEXCOLOR,
+                                                SHADER_TEXARG_CONSTANTCOLOR );
 
         // Alpha isn't used, it doesn't matter what we set it to.
         pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
-                                               SHADER_TEXCHANNEL_ALPHA,
-                                               SHADER_TEXOP_SELECTARG1,
-                                               SHADER_TEXARG_NONE,
-                                               SHADER_TEXARG_NONE );
+                                                SHADER_TEXCHANNEL_ALPHA,
+                                                SHADER_TEXOP_SELECTARG1,
+                                                SHADER_TEXARG_NONE,
+                                                SHADER_TEXARG_NONE );
 
         pShaderShadow->DrawFlags( SHADER_DRAW_POSITION | SHADER_DRAW_COLOR );
         FogToOOOverbright();
@@ -322,7 +322,7 @@ void DrawMode1( IMaterialVar** params, IShaderDynamicAPI* pShaderAPI, IShaderSha
 
     // Special case, can do in one pass
     if ( !hasEnvMapTint && !texDefined && !IS_FLAG_SET( MATERIAL_VAR_VERTEXCOLOR ) &&
-         !IsColorModulating() )
+        !IsColorModulating() )
     {
         DrawEnvmapTimesVertexLighting( params, pShaderAPI, pShaderShadow );
         return;
@@ -390,7 +390,7 @@ void DrawMode0( IMaterialVar** params, IShaderDynamicAPI* pShaderAPI, IShaderSha
 
     // Pass 2 : Masked environment map
     if ( params[ENVMAP]->IsTexture() &&
-         ( IS_FLAG_SET( MATERIAL_VAR_MULTIPASS ) ) )
+        ( IS_FLAG_SET( MATERIAL_VAR_MULTIPASS ) ) )
     {
         FixedFunctionAdditiveMaskedEnvmapPass(
             ENVMAP, ENVMAPMASK, BASETEXTURE, ENVMAPFRAME, ENVMAPMASKFRAME, FRAME, BASETEXTURETRANSFORM, ENVMAPMASKSCALE, ENVMAPTINT );

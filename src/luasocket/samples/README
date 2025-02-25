@@ -5,7 +5,7 @@ LuaSocket. This code is not supported.
     talker.lua              -- stdin to socket
 
 listener.lua and talker.lua are about  the simplest
-applications you can write  using  LuaSocket.  Run   
+applications you can write  using  LuaSocket.  Run
 
 	'lua listener.lua'  and  'lua talker.lua'
 
@@ -23,7 +23,7 @@ queue=<printername>' and the file will print!
     cddb.lua                -- CDDB client
 
 This is the first try on a simple CDDB client. Not really
-useful, but one day it might become a module. 
+useful, but one day it might become a module.
 
     daytimeclnt.lua         -- day time client
 

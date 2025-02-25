@@ -17,7 +17,7 @@
 
 class CEntInfo
 {
-   public:
+    public:
     IHandleEntity *m_pEntity;
     int m_SerialNumber;
     CEntInfo *m_pPrev;
@@ -28,7 +28,7 @@ class CEntInfo
 
 class CBaseEntityList
 {
-   public:
+    public:
     CBaseEntityList();
     ~CBaseEntityList();
 
@@ -58,7 +58,7 @@ class CBaseEntityList
     const CEntInfo *GetEntInfoPtrByIndex( int index ) const;
 
     // Overridables.
-   protected:
+    protected:
     // These are notifications to the derived class. It can cache info here if it wants.
     virtual void OnAddEntity( IHandleEntity *pEnt, CBaseHandle handle );
 
@@ -66,14 +66,14 @@ class CBaseEntityList
     // calling OnRemoveEntity.
     virtual void OnRemoveEntity( IHandleEntity *pEnt, CBaseHandle handle );
 
-   private:
+    private:
     CBaseHandle AddEntityAtSlot( IHandleEntity *pEnt, int iSlot, int iForcedSerialNum );
     void RemoveEntityAtSlot( int iSlot );
 
-   private:
+    private:
     class CEntInfoList
     {
-       public:
+        public:
         CEntInfoList();
 
         const CEntInfo *Head() const
@@ -106,7 +106,7 @@ class CBaseEntityList
         void Unlink( CEntInfo *pElement );
         bool IsInList( CEntInfo *pElement );
 
-       private:
+        private:
         CEntInfo *m_pHead;
         CEntInfo *m_pTail;
     };

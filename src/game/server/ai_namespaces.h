@@ -50,7 +50,7 @@ inline int AI_MakeGlobal( int id )
 
 class CAI_GlobalNamespace
 {
-   public:
+    public:
     CAI_GlobalNamespace();
     ~CAI_GlobalNamespace();
 
@@ -62,7 +62,7 @@ class CAI_GlobalNamespace
     const char *IdToSymbol( int symbolID ) const;
     int SymbolToId( const char *pszSymbol ) const;
 
-   private:
+    private:
     CStringRegistry *m_pSymbols;
     int m_NextGlobalBase;
 };
@@ -77,7 +77,7 @@ class CAI_GlobalNamespace
 
 class CAI_LocalIdSpace
 {
-   public:
+    public:
     CAI_LocalIdSpace( bool fIsRoot = false );
 
     bool Init( CAI_GlobalNamespace *pGlobalNamespace, CAI_LocalIdSpace *pParentIDSpace = NULL );
@@ -100,7 +100,7 @@ class CAI_LocalIdSpace
         return m_pGlobalNamespace;
     }
 
-   private:
+    private:
     bool IsLocalBaseSet() const
     {
         return ( m_localBase != MAX_STRING_INDEX );
@@ -143,7 +143,7 @@ class CAI_LocalIdSpace
 
 class CAI_GlobalScheduleNamespace
 {
-   public:
+    public:
     void Clear()
     {
         m_ScheduleNamespace.Clear();
@@ -164,7 +164,7 @@ class CAI_GlobalScheduleNamespace
     int ConditionSymbolToId( const char *pszCondition ) const;
     int NumConditions() const;
 
-   private:
+    private:
     friend class CAI_ClassScheduleIdSpace;
 
     CAI_GlobalNamespace m_ScheduleNamespace;
@@ -176,11 +176,11 @@ class CAI_GlobalScheduleNamespace
 
 class CAI_ClassScheduleIdSpace
 {
-   public:
+    public:
     CAI_ClassScheduleIdSpace( bool fIsRoot = false )
         : m_ScheduleIds( fIsRoot ),
-          m_TaskIds( fIsRoot ),
-          m_ConditionIds( fIsRoot )
+        m_TaskIds( fIsRoot ),
+        m_ConditionIds( fIsRoot )
     {
     }
 
@@ -205,7 +205,7 @@ class CAI_ClassScheduleIdSpace
     int ConditionGlobalToLocal( int globalID ) const;
     int ConditionLocalToGlobal( int localID ) const;
 
-   private:
+    private:
     const char *m_pszClassName;
     CAI_LocalIdSpace m_ScheduleIds;
     CAI_LocalIdSpace m_TaskIds;
@@ -268,8 +268,8 @@ inline bool CAI_ClassScheduleIdSpace::Init( const char *pszClassName, CAI_Global
 {
     m_pszClassName = pszClassName;
     return ( m_ScheduleIds.Init( &pGlobalNamespace->m_ScheduleNamespace, ( pParentIDSpace ) ? &pParentIDSpace->m_ScheduleIds : NULL ) &&
-             m_TaskIds.Init( &pGlobalNamespace->m_TaskNamespace, ( pParentIDSpace ) ? &pParentIDSpace->m_TaskIds : NULL ) &&
-             m_ConditionIds.Init( &pGlobalNamespace->m_ConditionNamespace, ( pParentIDSpace ) ? &pParentIDSpace->m_ConditionIds : NULL ) );
+            m_TaskIds.Init( &pGlobalNamespace->m_TaskNamespace, ( pParentIDSpace ) ? &pParentIDSpace->m_TaskIds : NULL ) &&
+            m_ConditionIds.Init( &pGlobalNamespace->m_ConditionNamespace, ( pParentIDSpace ) ? &pParentIDSpace->m_ConditionIds : NULL ) );
 }
 
 //-----------------------------------------------------------------------------

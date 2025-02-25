@@ -149,7 +149,7 @@ enum ThreadPoolMessages_t
 
 abstract_class IThreadPool : public IRefCounted
 {
-   public:
+    public:
     virtual ~IThreadPool(){};
 
     //-----------------------------------------------------
@@ -245,7 +245,7 @@ abstract_class IThreadPool : public IRefCounted
         {                                                                                                              \
             AddFunctorInternal( CreateFunctor( pfnProxied FUNC_FUNCTOR_CALL_ARGS_##N ), &pJob );                       \
         }                                                                                                              \
-                                                                                                                       \
+                                                                                                                        \
         return pJob;                                                                                                   \
     }
 
@@ -265,7 +265,7 @@ abstract_class IThreadPool : public IRefCounted
         {                                                                                                                                                    \
             AddFunctorInternal( CreateFunctor( pObject, pfnProxied FUNC_FUNCTOR_CALL_ARGS_##N ), &pJob );                                                    \
         }                                                                                                                                                    \
-                                                                                                                                                             \
+                                                                                                                                                            \
         return pJob;                                                                                                                                         \
     }
 
@@ -285,7 +285,7 @@ abstract_class IThreadPool : public IRefCounted
         {                                                                                                                                                          \
             AddFunctorInternal( CreateFunctor( pObject, pfnProxied FUNC_FUNCTOR_CALL_ARGS_##N ), &pJob );                                                          \
         }                                                                                                                                                          \
-                                                                                                                                                                   \
+                                                                                                                                                                    \
         return pJob;                                                                                                                                               \
     }
 
@@ -325,7 +325,7 @@ abstract_class IThreadPool : public IRefCounted
         {                                                                                                                                                             \
             AddFunctorInternal( CreateRefCountingFunctor( pObject, pfnProxied FUNC_FUNCTOR_CALL_ARGS_##N ), &pJob );                                                  \
         }                                                                                                                                                             \
-                                                                                                                                                                      \
+                                                                                                                                                                    \
         return pJob;                                                                                                                                                  \
     }
 
@@ -407,7 +407,7 @@ abstract_class IThreadPool : public IRefCounted
 #undef DEFINE_REF_COUNTING_MEMBER_QUEUE_CALL
 #undef DEFINE_REF_COUNTING_CONST_MEMBER_QUEUE_CALL
 
-   private:
+    private:
     virtual void AddFunctorInternal( CFunctor *, CJob ** = NULL, const char *pszDescription = NULL, unsigned flags = 0 ) = 0;
 
     //-----------------------------------------------------
@@ -417,7 +417,7 @@ abstract_class IThreadPool : public IRefCounted
 
     virtual CJob *GetDummyJob() = 0;
 
-   public:
+    public:
     virtual void Distribute( bool bDistribute = true, int *pAffinityTable = NULL ) = 0;
 
     virtual bool Start( const ThreadPoolStartParams_t &startParams, const char *pszNameOverride ) = 0;
@@ -445,15 +445,15 @@ DECLARE_POINTER_HANDLE( ThreadPoolData_t );
 
 class CJob : public CRefCounted1< IRefCounted, CRefCountServiceMT >
 {
-   public:
+    public:
     CJob( JobPriority_t priority = JP_NORMAL )
         : m_status( JOB_STATUS_UNSERVICED ),
-          m_ThreadPoolData( JOB_NO_DATA ),
-          m_priority( priority ),
-          m_flags( 0 ),
-          m_pThreadPool( NULL ),
-          m_CompleteEvent( true ),
-          m_iServicingThread( -1 )
+        m_ThreadPoolData( JOB_NO_DATA ),
+        m_priority( priority ),
+        m_flags( 0 ),
+        m_pThreadPool( NULL ),
+        m_CompleteEvent( true ),
+        m_iServicingThread( -1 )
     {
         m_szDescription[0] = 0;
     }
@@ -599,7 +599,7 @@ class CJob : public CRefCounted1< IRefCounted, CRefCountServiceMT >
         }
     }
 
-   private:
+    private:
     //-----------------------------------------------------
     friend class CThreadPool;
 
@@ -614,7 +614,7 @@ class CJob : public CRefCounted1< IRefCounted, CRefCountServiceMT >
     CThreadEvent m_CompleteEvent;
     char m_szDescription[32];
 
-   private:
+    private:
     //-----------------------------------------------------
     CJob( const CJob &fromRequest );
     void operator=( const CJob &fromRequest );
@@ -631,7 +631,7 @@ class CJob : public CRefCounted1< IRefCounted, CRefCountServiceMT >
 
 class CFunctorJob : public CJob
 {
-   public:
+    public:
     CFunctorJob( CFunctor *pFunctor, const char *pszDescription = NULL )
         : m_pFunctor( pFunctor )
     {
@@ -656,7 +656,7 @@ class CFunctorJob : public CJob
         return m_szDescription;
     }
 
-   private:
+    private:
     CRefPtr< CFunctor > m_pFunctor;
     char m_szDescription[16];
 };
@@ -667,7 +667,7 @@ class CFunctorJob : public CJob
 
 class CJobSet
 {
-   public:
+    public:
     CJobSet( CJob *pJob = NULL )
     {
         if ( pJob )
@@ -768,7 +768,7 @@ class CJobSet
         }
     }
 
-   private:
+    private:
     CUtlVectorFixed< CJob *, 16 > m_jobs;
 };
 
@@ -821,7 +821,7 @@ class CJobSet
         else                                                                                                                                                                                       \
         {                                                                                                                                                                                          \
             ITERTYPE1 nIncrement = range / nThreads;                                                                                                                                               \
-                                                                                                                                                                                                   \
+                                                                                                                                                                                                    \
             CJobSet jobSet;                                                                                                                                                                        \
             while ( --nThreads )                                                                                                                                                                   \
             {                                                                                                                                                                                      \
@@ -855,7 +855,7 @@ FUNC_GENERATE_ALL( DEFINE_NON_MEMBER_ITER_RANGE_PARALLEL );
         else                                                                                                                                                                                                             \
         {                                                                                                                                                                                                                \
             ITERTYPE1 nIncrement = range / nThreads;                                                                                                                                                                     \
-                                                                                                                                                                                                                         \
+                                                                                                                                                                                                                        \
             CJobSet jobSet;                                                                                                                                                                                              \
             while ( --nThreads )                                                                                                                                                                                         \
             {                                                                                                                                                                                                            \
@@ -877,7 +877,7 @@ FUNC_GENERATE_ALL( DEFINE_MEMBER_ITER_RANGE_PARALLEL );
 template < typename T >
 class CJobItemProcessor
 {
-   public:
+    public:
     typedef T ItemType_t;
     void Begin() {}
     // void Process( ItemType_t & ) {}
@@ -887,7 +887,7 @@ class CJobItemProcessor
 template < typename T >
 class CFuncJobItemProcessor : public CJobItemProcessor< T >
 {
-   public:
+    public:
     void Init( void ( *pfnProcess )( T & ), void ( *pfnBegin )() = NULL, void ( *pfnEnd )() = NULL )
     {
         m_pfnProcess = pfnProcess;
@@ -909,7 +909,7 @@ class CFuncJobItemProcessor : public CJobItemProcessor< T >
         if ( m_pfnEnd ) ( *m_pfnEnd )();
     }
 
-   protected:
+    protected:
     void ( *m_pfnProcess )( T & );
     void ( *m_pfnBegin )();
     void ( *m_pfnEnd )();
@@ -918,7 +918,7 @@ class CFuncJobItemProcessor : public CJobItemProcessor< T >
 template < typename T, class OBJECT_TYPE, class FUNCTION_CLASS = OBJECT_TYPE >
 class CMemberFuncJobItemProcessor : public CJobItemProcessor< T >
 {
-   public:
+    public:
     void Init( OBJECT_TYPE *pObject, void ( FUNCTION_CLASS::*pfnProcess )( T & ), void ( FUNCTION_CLASS::*pfnBegin )() = NULL, void ( FUNCTION_CLASS::*pfnEnd )() = NULL )
     {
         m_pObject = pObject;
@@ -940,7 +940,7 @@ class CMemberFuncJobItemProcessor : public CJobItemProcessor< T >
         if ( m_pfnEnd ) ( ( *m_pObject ).*m_pfnEnd )();
     }
 
-   protected:
+    protected:
     OBJECT_TYPE *m_pObject;
     void ( FUNCTION_CLASS::*m_pfnProcess )( T & );
     void ( FUNCTION_CLASS::*m_pfnBegin )();
@@ -950,7 +950,7 @@ class CMemberFuncJobItemProcessor : public CJobItemProcessor< T >
 template < typename ITEM_TYPE, class ITEM_PROCESSOR_TYPE >
 class CParallelProcessor
 {
-   public:
+    public:
     CParallelProcessor( const char *pszDescription )
     {
         m_pItems = m_pLimit = 0;
@@ -1018,7 +1018,7 @@ class CParallelProcessor
 
     ITEM_PROCESSOR_TYPE m_ItemProcessor;
 
-   private:
+    private:
     void DoExecute()
     {
         tmZone( TELEMETRY_LEVEL0, TMZF_NONE, "DoExecute %s", m_szDescription );
@@ -1078,7 +1078,7 @@ inline void ParallelProcess( const char *pszDescription, IThreadPool *pPool, ITE
 template < class ITEM_PROCESSOR_TYPE >
 class CParallelLoopProcessor
 {
-   public:
+    public:
     CParallelLoopProcessor( const char *pszDescription )
     {
         m_lIndex = m_lLimit = 0;
@@ -1117,7 +1117,7 @@ class CParallelLoopProcessor
 
     ITEM_PROCESSOR_TYPE m_ItemProcessor;
 
-   private:
+    private:
     void DoExecute()
     {
         tmZone( TELEMETRY_LEVEL0, TMZF_NONE, "DoExecute %s", m_szDescription );
@@ -1167,11 +1167,11 @@ inline void ParallelLoopProcess( const char *szDescription, long lBegin, unsigne
 template < class Derived >
 class CParallelProcessorBase
 {
-   protected:
+    protected:
     typedef CParallelProcessorBase< Derived > ThisParallelProcessorBase_t;
     typedef Derived ThisParallelProcessorDerived_t;
 
-   public:
+    public:
     CParallelProcessorBase()
     {
         m_nActive = 0;
@@ -1182,7 +1182,7 @@ class CParallelProcessorBase
         m_szDescription = pszDescription;
     }
 
-   protected:
+    protected:
     void Run( int nMaxParallel = INT_MAX, int threadOverride = -1 )
     {
         int i = g_pThreadPool->NumIdleThreads();
@@ -1213,7 +1213,7 @@ class CParallelProcessorBase
         }
     }
 
-   protected:
+    protected:
     void OnBegin() {}
     bool OnProcess()
     {
@@ -1221,7 +1221,7 @@ class CParallelProcessorBase
     }
     void OnEnd() {}
 
-   private:
+    private:
     void DoExecute()
     {
         tmZone( TELEMETRY_LEVEL0, TMZF_NONE, "DoExecute %s", m_szDescription );

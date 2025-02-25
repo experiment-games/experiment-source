@@ -261,8 +261,8 @@ int main( int argc, char **argv )
                     if ( !ImageLoader::ConvertImageFormat( pSrcImage, srcFormat, pDstImage, dstFormat, iWidth, iHeight, 0, 0 ) )
                     {
                         Error( "Error converting from %s to %s\n",
-                               ImageLoader::GetName( srcFormat ),
-                               ImageLoader::GetName( dstFormat ) );
+                                ImageLoader::GetName( srcFormat ),
+                                ImageLoader::GetName( dstFormat ) );
                         exit( -1 );
                     }
 
@@ -275,8 +275,8 @@ int main( int argc, char **argv )
                             if ( !ImageLoader::ConvertImageFormat( tmpImage, dstFormat, pDstImage, IMAGE_FORMAT_RGBA8888, iWidth, iHeight, 0, 0 ) )
                             {
                                 Error( "Error converting from %s to %s\n",
-                                       ImageLoader::GetName( dstFormat ),
-                                       ImageLoader::GetName( IMAGE_FORMAT_RGBA8888 ) );
+                                        ImageLoader::GetName( dstFormat ),
+                                        ImageLoader::GetName( IMAGE_FORMAT_RGBA8888 ) );
                             }
                             dstFormat = IMAGE_FORMAT_RGBA8888;
                         }
@@ -287,8 +287,8 @@ int main( int argc, char **argv )
                             if ( !ImageLoader::ConvertImageFormat( tmpImage, dstFormat, pDstImage, IMAGE_FORMAT_RGB888, iWidth, iHeight, 0, 0 ) )
                             {
                                 Error( "Error converting from %s to %s\n",
-                                       ImageLoader::GetName( dstFormat ),
-                                       ImageLoader::GetName( IMAGE_FORMAT_RGB888 ) );
+                                        ImageLoader::GetName( dstFormat ),
+                                        ImageLoader::GetName( IMAGE_FORMAT_RGB888 ) );
                             }
                             dstFormat = IMAGE_FORMAT_RGB888;
                         }

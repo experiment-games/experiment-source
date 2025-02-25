@@ -262,7 +262,7 @@ static const uint64 kuint64max = GOOGLE_ULONGLONG( 0xFFFFFFFFFFFFFFFF );
 #undef GOOGLE_ARRAYSIZE
 #define GOOGLE_ARRAYSIZE( a )              \
     ( ( sizeof( a ) / sizeof( *( a ) ) ) / \
-      static_cast< size_t >( !( sizeof( a ) % sizeof( *( a ) ) ) ) )
+    static_cast< size_t >( !( sizeof( a ) % sizeof( *( a ) ) ) ) )
 
 namespace internal
 {
@@ -429,7 +429,7 @@ class scoped_array;
 template < class C >
 class scoped_ptr
 {
-   public:
+    public:
     // The element type
     typedef C element_type;
 
@@ -515,7 +515,7 @@ class scoped_ptr
         return retVal;
     }
 
-   private:
+    private:
     C* ptr_;
 
     // Forbid comparison of scoped_ptr types.  If C2 != C, it totally doesn't
@@ -541,7 +541,7 @@ class scoped_ptr
 template < class C >
 class scoped_array
 {
-   public:
+    public:
     // The element type
     typedef C element_type;
 
@@ -626,7 +626,7 @@ class scoped_array
         return retVal;
     }
 
-   private:
+    private:
     C* array_;
 
     // Forbid comparison of different scoped_array types.
@@ -653,17 +653,17 @@ using internal::scoped_ptr;
 enum LogLevel
 {
     LOGLEVEL_INFO,     // Informational.  This is never actually used by
-                       // libprotobuf.
+                        // libprotobuf.
     LOGLEVEL_WARNING,  // Warns about issues that, although not technically a
-                       // problem now, could cause problems in the future.  For
-                       // example, a // warning will be printed when parsing a
-                       // message that is near the message size limit.
+                        // problem now, could cause problems in the future.  For
+                        // example, a // warning will be printed when parsing a
+                        // message that is near the message size limit.
     LOGLEVEL_ERROR,    // An error occurred which should never happen during
-                       // normal use.
+                        // normal use.
     LOGLEVEL_FATAL,    // An error occurred from which the library cannot
-                       // recover.  This usually indicates a programming error
-                       // in the code which calls the library, especially when
-                       // compiled in debug mode.
+                        // recover.  This usually indicates a programming error
+                        // in the code which calls the library, especially when
+                        // compiled in debug mode.
 
 #ifdef NDEBUG
     LOGLEVEL_DFATAL = LOGLEVEL_ERROR
@@ -679,7 +679,7 @@ class LogFinisher;
 
 class LIBPROTOBUF_EXPORT LogMessage
 {
-   public:
+    public:
     LogMessage( LogLevel level, const char* filename, int line );
     ~LogMessage();
 
@@ -692,7 +692,7 @@ class LIBPROTOBUF_EXPORT LogMessage
     LogMessage& operator<<( unsigned long value );
     LogMessage& operator<<( double value );
 
-   private:
+    private:
     friend class LogFinisher;
     void Finish();
 
@@ -706,7 +706,7 @@ class LIBPROTOBUF_EXPORT LogMessage
 // type and print a newline after each message.
 class LIBPROTOBUF_EXPORT LogFinisher
 {
-   public:
+    public:
     void operator=( LogMessage& other );
 };
 
@@ -805,7 +805,7 @@ LIBPROTOBUF_EXPORT LogHandler* SetLogHandler( LogHandler* new_func );
 // a big deal.  If you want to intercept log messages, use SetLogHandler().
 class LIBPROTOBUF_EXPORT LogSilencer
 {
-   public:
+    public:
     LogSilencer();
     ~LogSilencer();
 };
@@ -872,13 +872,13 @@ class LIBPROTOBUF_EXPORT LogSilencer
 // However, correctly-typed pointers will work just fine.
 class LIBPROTOBUF_EXPORT Closure
 {
-   public:
+    public:
     Closure() {}
     virtual ~Closure();
 
     virtual void Run() = 0;
 
-   private:
+    private:
     GOOGLE_DISALLOW_EVIL_CONSTRUCTORS( Closure );
 };
 
@@ -887,7 +887,7 @@ namespace internal
 
 class LIBPROTOBUF_EXPORT FunctionClosure0 : public Closure
 {
-   public:
+    public:
     typedef void ( *FunctionType )();
 
     FunctionClosure0( FunctionType function, bool self_deleting )
@@ -900,7 +900,7 @@ class LIBPROTOBUF_EXPORT FunctionClosure0 : public Closure
         if ( self_deleting_ ) delete this;
     }
 
-   private:
+    private:
     FunctionType function_;
     bool self_deleting_;
 };
@@ -908,7 +908,7 @@ class LIBPROTOBUF_EXPORT FunctionClosure0 : public Closure
 template < typename Class >
 class MethodClosure0 : public Closure
 {
-   public:
+    public:
     typedef void ( Class::*MethodType )();
 
     MethodClosure0( Class* object, MethodType method, bool self_deleting )
@@ -921,7 +921,7 @@ class MethodClosure0 : public Closure
         if ( self_deleting_ ) delete this;
     }
 
-   private:
+    private:
     Class* object_;
     MethodType method_;
     bool self_deleting_;
@@ -930,7 +930,7 @@ class MethodClosure0 : public Closure
 template < typename Arg1 >
 class FunctionClosure1 : public Closure
 {
-   public:
+    public:
     typedef void ( *FunctionType )( Arg1 arg1 );
 
     FunctionClosure1( FunctionType function, bool self_deleting, Arg1 arg1 )
@@ -943,7 +943,7 @@ class FunctionClosure1 : public Closure
         if ( self_deleting_ ) delete this;
     }
 
-   private:
+    private:
     FunctionType function_;
     bool self_deleting_;
     Arg1 arg1_;
@@ -952,7 +952,7 @@ class FunctionClosure1 : public Closure
 template < typename Class, typename Arg1 >
 class MethodClosure1 : public Closure
 {
-   public:
+    public:
     typedef void ( Class::*MethodType )( Arg1 arg1 );
 
     MethodClosure1( Class* object, MethodType method, bool self_deleting, Arg1 arg1 )
@@ -965,7 +965,7 @@ class MethodClosure1 : public Closure
         if ( self_deleting_ ) delete this;
     }
 
-   private:
+    private:
     Class* object_;
     MethodType method_;
     bool self_deleting_;
@@ -975,7 +975,7 @@ class MethodClosure1 : public Closure
 template < typename Arg1, typename Arg2 >
 class FunctionClosure2 : public Closure
 {
-   public:
+    public:
     typedef void ( *FunctionType )( Arg1 arg1, Arg2 arg2 );
 
     FunctionClosure2( FunctionType function, bool self_deleting, Arg1 arg1, Arg2 arg2 )
@@ -988,7 +988,7 @@ class FunctionClosure2 : public Closure
         if ( self_deleting_ ) delete this;
     }
 
-   private:
+    private:
     FunctionType function_;
     bool self_deleting_;
     Arg1 arg1_;
@@ -998,7 +998,7 @@ class FunctionClosure2 : public Closure
 template < typename Class, typename Arg1, typename Arg2 >
 class MethodClosure2 : public Closure
 {
-   public:
+    public:
     typedef void ( Class::*MethodType )( Arg1 arg1, Arg2 arg2 );
 
     MethodClosure2( Class* object, MethodType method, bool self_deleting, Arg1 arg1, Arg2 arg2 )
@@ -1011,7 +1011,7 @@ class MethodClosure2 : public Closure
         if ( self_deleting_ ) delete this;
     }
 
-   private:
+    private:
     Class* object_;
     MethodType method_;
     bool self_deleting_;
@@ -1050,7 +1050,7 @@ inline Closure* NewPermanentCallback( Class* object, void ( Class::*method )() )
 // See Closure.
 template < typename Arg1 >
 inline Closure* NewCallback( void ( *function )( Arg1 ),
-                             Arg1 arg1 )
+                            Arg1 arg1 )
 {
     return new internal::FunctionClosure1< Arg1 >( function, true, arg1 );
 }
@@ -1058,7 +1058,7 @@ inline Closure* NewCallback( void ( *function )( Arg1 ),
 // See Closure.
 template < typename Arg1 >
 inline Closure* NewPermanentCallback( void ( *function )( Arg1 ),
-                                      Arg1 arg1 )
+                                    Arg1 arg1 )
 {
     return new internal::FunctionClosure1< Arg1 >( function, false, arg1 );
 }
@@ -1080,8 +1080,8 @@ inline Closure* NewPermanentCallback( Class* object, void ( Class::*method )( Ar
 // See Closure.
 template < typename Arg1, typename Arg2 >
 inline Closure* NewCallback( void ( *function )( Arg1, Arg2 ),
-                             Arg1 arg1,
-                             Arg2 arg2 )
+                            Arg1 arg1,
+                            Arg2 arg2 )
 {
     return new internal::FunctionClosure2< Arg1, Arg2 >(
         function, true, arg1, arg2 );
@@ -1090,8 +1090,8 @@ inline Closure* NewCallback( void ( *function )( Arg1, Arg2 ),
 // See Closure.
 template < typename Arg1, typename Arg2 >
 inline Closure* NewPermanentCallback( void ( *function )( Arg1, Arg2 ),
-                                      Arg1 arg1,
-                                      Arg2 arg2 )
+                                    Arg1 arg1,
+                                    Arg2 arg2 )
 {
     return new internal::FunctionClosure2< Arg1, Arg2 >(
         function, false, arg1, arg2 );
@@ -1132,7 +1132,7 @@ namespace internal
 // while holding it, T will deadlock.
 class LIBPROTOBUF_EXPORT Mutex
 {
-   public:
+    public:
     // Create a Mutex that is not held by anybody.
     Mutex();
 
@@ -1149,7 +1149,7 @@ class LIBPROTOBUF_EXPORT Mutex
     // May fail to crash when it should; will never crash when it should not.
     void AssertHeld();
 
-   private:
+    private:
     struct Internal;
     Internal* mInternal;
 
@@ -1159,7 +1159,7 @@ class LIBPROTOBUF_EXPORT Mutex
 // MutexLock(mu) acquires mu when constructed and releases it when destroyed.
 class LIBPROTOBUF_EXPORT MutexLock
 {
-   public:
+    public:
     explicit MutexLock( Mutex* mu )
         : mu_( mu )
     {
@@ -1170,7 +1170,7 @@ class LIBPROTOBUF_EXPORT MutexLock
         this->mu_->Unlock();
     }
 
-   private:
+    private:
     Mutex* const mu_;
     GOOGLE_DISALLOW_EVIL_CONSTRUCTORS( MutexLock );
 };
@@ -1182,7 +1182,7 @@ typedef MutexLock WriterMutexLock;
 // MutexLockMaybe is like MutexLock, but is a no-op when mu is NULL.
 class LIBPROTOBUF_EXPORT MutexLockMaybe
 {
-   public:
+    public:
     explicit MutexLockMaybe( Mutex* mu )
         : mu_( mu )
     {
@@ -1199,7 +1199,7 @@ class LIBPROTOBUF_EXPORT MutexLockMaybe
         }
     }
 
-   private:
+    private:
     Mutex* const mu_;
     GOOGLE_DISALLOW_EVIL_CONSTRUCTORS( MutexLockMaybe );
 };

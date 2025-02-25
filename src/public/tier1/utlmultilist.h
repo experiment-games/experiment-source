@@ -28,7 +28,7 @@
 template < class T, class I >
 class CUtlMultiList
 {
-   protected:
+    protected:
     // What the linked list element looks like
     struct ListElem_t
     {
@@ -45,7 +45,7 @@ class CUtlMultiList
     };
 
     typedef CUtlMemory< ListElem_t > M;  // Keep naming similar to CUtlLinkedList
-   public:
+    public:
     typedef I ListHandle_t;
 
     // constructor, destructor
@@ -129,7 +129,7 @@ class CUtlMultiList
     bool IsValidIndex( I i ) const;
     bool IsInList( I i ) const;
 
-   protected:
+    protected:
     // constructs the class
     void ConstructList();
 
@@ -354,7 +354,7 @@ inline bool CUtlMultiList< T, I >::IsValidIndex( I i ) const
     long x = i;
 
     return ( i < m_MaxElementIndex ) && ( x >= 0 ) &&
-           ( ( m_Memory[i].m_Previous != i ) || ( m_Memory[i].m_Next == i ) );
+            ( ( m_Memory[i].m_Previous != i ) || ( m_Memory[i].m_Next == i ) );
 }
 
 template < class T, class I >

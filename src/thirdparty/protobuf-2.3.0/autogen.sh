@@ -32,7 +32,7 @@ set -ex
 #   One of these mappings converts the debug configuration and the other
 #   converts the release configuration.  I don't know which is which.
 sed -i -e 's/RuntimeLibrary="5"/RuntimeLibrary="3"/g;
-           s/RuntimeLibrary="4"/RuntimeLibrary="2"/g;' gtest/msvc/*.vcproj
+            s/RuntimeLibrary="4"/RuntimeLibrary="2"/g;' gtest/msvc/*.vcproj
 
 # TODO(kenton):  Remove the ",no-obsolete" part and fix the resulting warnings.
 autoreconf -f -i -Wall,no-obsolete

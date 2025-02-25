@@ -35,7 +35,7 @@ struct Polyhedron_IndexedPolygon_t
 
 class CPolyhedron  // made into a class because it's going virtual to support distinctions between temp and permanent versions
 {
-   public:
+    public:
     Vector *pVertices;
     Polyhedron_IndexedLine_t *pLines;
     Polyhedron_IndexedLineReference_t *pIndices;
@@ -53,11 +53,11 @@ class CPolyhedron  // made into a class because it's going virtual to support di
 
 class CPolyhedron_AllocByNew : public CPolyhedron
 {
-   public:
+    public:
     virtual void Release( void );
     static CPolyhedron_AllocByNew *Allocate( unsigned short iVertices, unsigned short iLines, unsigned short iIndices, unsigned short iPolygons );  // creates the polyhedron along with enough memory to hold all it's data in a single allocation
 
-   private:
+    private:
     CPolyhedron_AllocByNew( void ){};  // CPolyhedron_AllocByNew::Allocate() is the only way to create one of these.
 };
 

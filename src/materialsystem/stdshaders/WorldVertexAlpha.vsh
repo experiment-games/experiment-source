@@ -34,4 +34,3 @@ mov oT0, $vTexCoord0
 mov oT1, $vTexCoord1
 
 &FreeRegister( \$worldPos ); # garymcthack
-

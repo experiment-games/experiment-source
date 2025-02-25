@@ -19,14 +19,14 @@
 // ##################################################################
 class C_SpotlightEnd : public C_BaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_SpotlightEnd, C_BaseEntity );
     DECLARE_CLIENTCLASS();
     DECLARE_INTERPOLATION();
 
     C_SpotlightEnd();
 
-   public:
+    public:
     void OnDataChanged( DataUpdateType_t updateType );
     bool ShouldDraw();
     void ClientThink( void );
@@ -38,7 +38,7 @@ class C_SpotlightEnd : public C_BaseEntity
     float m_flLightScale;
     float m_Radius;
 
-   private:
+    private:
     dlight_t* m_pDynamicLight;
 
     // dlight_t*	m_pModelLight;
@@ -128,8 +128,8 @@ void C_SpotlightEnd::ClientThink( void )
     // Deal with the model light
     if ( !m_pModelLight || (m_pModelLight->key != -index) )
     {
-      m_pModelLight = effects->CL_AllocDlight( -index );
-      assert (m_pModelLight);
+    m_pModelLight = effects->CL_AllocDlight( -index );
+    assert (m_pModelLight);
     }
 
     m_pModelLight->radius = m_Radius;

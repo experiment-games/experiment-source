@@ -20,7 +20,7 @@
 
 class CItemAntidote : public CItem
 {
-   public:
+    public:
     DECLARE_CLASS( CItemAntidote, CItem );
 
     void Spawn( void )

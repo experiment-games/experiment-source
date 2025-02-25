@@ -27,7 +27,7 @@ struct SpatializationInfo_t;
 //-----------------------------------------------------------------------------
 abstract_class IClientEntity : public IClientUnknown, public IClientRenderable, public IClientNetworkable, public IClientThinkable
 {
-   public:
+    public:
     // Delete yourself.
     virtual void Release( void ) = 0;
 

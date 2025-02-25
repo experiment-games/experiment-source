@@ -21,7 +21,7 @@
 //-----------------------------------------------------------------------------
 class CTESprite : public CBaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTESprite, CBaseTempEntity );
 
     CTESprite( const char* name );
@@ -33,7 +33,7 @@ class CTESprite : public CBaseTempEntity
 
     DECLARE_SERVERCLASS();
 
-   public:
+    public:
     CNetworkVector( m_vecOrigin );
     CNetworkVar( int, m_nModelIndex );
     CNetworkVar( float, m_fScale );

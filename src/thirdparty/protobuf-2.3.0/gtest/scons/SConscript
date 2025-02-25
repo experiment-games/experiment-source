@@ -137,7 +137,7 @@ def GtestObject(build_env, source):
   object_name = os.path.basename(source).rstrip('.cc') + build_env['OBJ_SUFFIX']
   if object_name not in _all_objects:
     _all_objects[object_name] = build_env.Object(target=object_name,
-                                                 source=source)
+                                                source=source)
   return _all_objects[object_name]
 
 
@@ -155,9 +155,9 @@ def GtestStaticLibraries(build_env):
   gtest_main_object = GtestObject(build_env, '../src/gtest_main.cc')
 
   return (build_env.StaticLibrary(target='gtest' + build_env['OBJ_SUFFIX'],
-                                  source=[gtest_object]),
-          build_env.StaticLibrary(target='gtest_main' + build_env['OBJ_SUFFIX'],
-                                  source=[gtest_object, gtest_main_object]))
+                                source=[gtest_object]),
+        build_env.StaticLibrary(target='gtest_main' + build_env['OBJ_SUFFIX'],
+                                source=[gtest_object, gtest_main_object]))
 
 
 def GtestBinary(build_env, target, gtest_libs, sources):
@@ -173,9 +173,9 @@ def GtestBinary(build_env, target, gtest_libs, sources):
   srcs = []  # The object targets corresponding to sources.
   for src in sources:
     if type(src) is str:
-      srcs.append(GtestObject(build_env, src))
+    srcs.append(GtestObject(build_env, src))
     else:
-      srcs.append(src)
+    srcs.append(src)
 
   if not gtest_libs:
     gtest_libs = []
@@ -197,7 +197,7 @@ def GtestTest(build_env, target, gtest_libs, additional_sources=None):
   """
 
   GtestBinary(build_env, target, gtest_libs,
-              ['../test/%s.cc' % target] + (additional_sources or []))
+            ['../test/%s.cc' % target] + (additional_sources or []))
 
 
 def GtestSample(build_env, target, additional_sources=None):
@@ -210,7 +210,7 @@ def GtestSample(build_env, target, additional_sources=None):
     additional_sources: A list of additional source files in the target.
   """
   GtestBinary(build_env, target, gtest_main,
-              ['../samples/%s.cc' % target] + (additional_sources or []))
+            ['../samples/%s.cc' % target] + (additional_sources or []))
 
 
 ############################################################
@@ -228,10 +228,10 @@ gtest_use_own_tuple, gtest_use_own_tuple_main = GtestStaticLibraries(
 # Install the libraries if needed.
 if 'LIB_OUTPUT' in env.Dictionary():
   env.Install('$LIB_OUTPUT', source=[gtest, gtest_main,
-                                     gtest_ex, gtest_main_ex,
-                                     gtest_no_rtti, gtest_main_no_rtti,
-                                     gtest_use_own_tuple,
-                                     gtest_use_own_tuple_main])
+                                    gtest_ex, gtest_main_ex,
+                                    gtest_no_rtti, gtest_main_no_rtti,
+                                    gtest_use_own_tuple,
+                                    gtest_use_own_tuple_main])
 
 ############################################################
 # Test targets using the standard environment.
@@ -244,14 +244,14 @@ GtestTest(env, 'gtest_main_unittest', gtest_main)
 GtestTest(env, 'gtest_no_test_unittest', gtest)
 GtestTest(env, 'gtest_pred_impl_unittest', gtest_main)
 GtestTest(env, 'gtest_prod_test', gtest_main,
-          additional_sources=['../test/production.cc'])
+        additional_sources=['../test/production.cc'])
 GtestTest(env, 'gtest_repeat_test', gtest)
 GtestTest(env, 'gtest_sole_header_test', gtest_main)
 GtestTest(env, 'gtest-test-part_test', gtest_main)
 GtestTest(env, 'gtest-typed-test_test', gtest_main,
-          additional_sources=['../test/gtest-typed-test2_test.cc'])
+        additional_sources=['../test/gtest-typed-test2_test.cc'])
 GtestTest(env, 'gtest-param-test_test', gtest,
-          additional_sources=['../test/gtest-param-test2_test.cc'])
+        additional_sources=['../test/gtest-param-test2_test.cc'])
 GtestTest(env, 'gtest_color_test_', gtest)
 GtestTest(env, 'gtest-linked_ptr_test', gtest_main)
 GtestTest(env, 'gtest-port_test', gtest_main)
@@ -281,7 +281,7 @@ GtestBinary(env_use_own_tuple,
             'gtest_use_own_tuple_test',
             gtest_use_own_tuple_main,
             ['../test/gtest-param-test_test.cc',
-             '../test/gtest-param-test2_test.cc'])
+            '../test/gtest-param-test2_test.cc'])
 GtestBinary(env_with_exceptions, 'gtest_ex_unittest', gtest_main_ex,
             ['../test/gtest_unittest.cc'])
 GtestBinary(env_without_rtti, 'gtest_no_rtti_test', gtest_main_no_rtti,
@@ -298,14 +298,14 @@ GtestBinary(env_without_rtti, 'gtest_no_rtti_test', gtest_main_no_rtti,
 # Then, in the command line use GTEST_BUILD_SAMPLES=true to enable them.
 if env.get('GTEST_BUILD_SAMPLES', False):
   GtestSample(env, 'sample1_unittest',
-              additional_sources=['../samples/sample1.cc'])
+            additional_sources=['../samples/sample1.cc'])
   GtestSample(env, 'sample2_unittest',
-              additional_sources=['../samples/sample2.cc'])
+            additional_sources=['../samples/sample2.cc'])
   GtestSample(env, 'sample3_unittest')
   GtestSample(env, 'sample4_unittest',
-              additional_sources=['../samples/sample4.cc'])
+            additional_sources=['../samples/sample4.cc'])
   GtestSample(env, 'sample5_unittest',
-              additional_sources=['../samples/sample1.cc'])
+            additional_sources=['../samples/sample1.cc'])
   GtestSample(env, 'sample6_unittest')
   GtestSample(env, 'sample7_unittest')
   GtestSample(env, 'sample8_unittest')
@@ -314,12 +314,12 @@ if env.get('GTEST_BUILD_SAMPLES', False):
 
 # These exports are used by Google Mock.
 gtest_exports = {'gtest': gtest,
-                 'gtest_ex': gtest_ex,
-                 'gtest_no_rtti': gtest_no_rtti,
-                 'gtest_use_own_tuple': gtest_use_own_tuple,
-                 'EnvCreator': EnvCreator,
-                 'GtestObject': GtestObject,
-                 'GtestBinary': GtestBinary,
-                 'GtestTest': GtestTest}
+                'gtest_ex': gtest_ex,
+                'gtest_no_rtti': gtest_no_rtti,
+                'gtest_use_own_tuple': gtest_use_own_tuple,
+                'EnvCreator': EnvCreator,
+                'GtestObject': GtestObject,
+                'GtestBinary': GtestBinary,
+                'GtestTest': GtestTest}
 # Makes the gtest_exports dictionary available to the invoking SConstruct.
 Return('gtest_exports')

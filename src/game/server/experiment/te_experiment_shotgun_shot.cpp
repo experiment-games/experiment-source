@@ -20,14 +20,14 @@
 //-----------------------------------------------------------------------------
 class CTEExperimentFireBullets : public CBaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTEExperimentFireBullets, CBaseTempEntity );
     DECLARE_SERVERCLASS();
 
     CTEExperimentFireBullets( const char *name );
     virtual ~CTEExperimentFireBullets( void );
 
-   public:
+    public:
     CNetworkVar( int, m_iPlayer );
     CNetworkVector( m_vecOrigin );
     CNetworkVector( m_vecDir );

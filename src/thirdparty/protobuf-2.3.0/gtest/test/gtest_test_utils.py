@@ -63,7 +63,7 @@ TestCase = _test_module.TestCase  # pylint: disable-msg=C6409
 # Initially maps a flag to its default value. After
 # _ParseAndStripGTestFlags() is called, maps a flag to its actual value.
 _flag_map = {'gtest_source_dir': os.path.dirname(sys.argv[0]),
-             'gtest_build_dir': os.path.dirname(sys.argv[0])}
+            'gtest_build_dir': os.path.dirname(sys.argv[0])}
 _gtest_flags_are_parsed = False
 
 
@@ -80,17 +80,17 @@ def _ParseAndStripGTestFlags(argv):
   for flag in _flag_map:
     # The environment variable overrides the default value.
     if flag.upper() in os.environ:
-      _flag_map[flag] = os.environ[flag.upper()]
+    _flag_map[flag] = os.environ[flag.upper()]
 
     # The command line flag overrides the environment variable.
     i = 1  # Skips the program name.
     while i < len(argv):
-      prefix = '--' + flag + '='
-      if argv[i].startswith(prefix):
+    prefix = '--' + flag + '='
+    if argv[i].startswith(prefix):
         _flag_map[flag] = argv[i][len(prefix):]
         del argv[i]
         break
-      else:
+    else:
         # We don't increment i in case we just found a --gtest_* flag
         # and removed it from argv.
         i += 1
@@ -184,9 +184,9 @@ def GetExitStatus(exit_code):
     # On Unix, os.WEXITSTATUS() must be used to extract the exit status
     # from the result of os.system().
     if os.WIFEXITED(exit_code):
-      return os.WEXITSTATUS(exit_code)
+    return os.WEXITSTATUS(exit_code)
     else:
-      return -1
+    return -1
 
 
 class Subprocess:
@@ -194,19 +194,19 @@ class Subprocess:
     """Changes into a specified directory, if provided, and executes a command.
     Restores the old directory afterwards. Execution results are returned
     via the following attributes:
-      terminated_by_sygnal   True iff the child process has been terminated
-                             by a signal.
-      signal                 Sygnal that terminated the child process.
-      exited                 True iff the child process exited normally.
-      exit_code              The code with which the child proces exited.
-      output                 Child process's stdout and stderr output
-                             combined in a string.
+    terminated_by_sygnal   True iff the child process has been terminated
+                            by a signal.
+    signal                 Sygnal that terminated the child process.
+    exited                 True iff the child process exited normally.
+    exit_code              The code with which the child proces exited.
+    output                 Child process's stdout and stderr output
+                            combined in a string.
 
     Args:
-      command:        The command to run, in the form of sys.argv.
-      working_dir:    The directory to change into.
-      capture_stderr: Determines whether to capture stderr in the output member
-                      or to discard it.
+    command:        The command to run, in the form of sys.argv.
+    working_dir:    The directory to change into.
+    capture_stderr: Determines whether to capture stderr in the output member
+                    or to discard it.
     """
 
     # The subprocess module is the preferrable way of running programs
@@ -217,47 +217,47 @@ class Subprocess:
     # functionality (Popen4) under Windows. This allows us to support Mac
     # OS X 10.4 Tiger, which has python 2.3 installed.
     if _SUBPROCESS_MODULE_AVAILABLE:
-      if capture_stderr:
+    if capture_stderr:
         stderr = subprocess.STDOUT
-      else:
+    else:
         stderr = subprocess.PIPE
 
-      p = subprocess.Popen(command,
-                           stdout=subprocess.PIPE, stderr=stderr,
-                           cwd=working_dir, universal_newlines=True)
-      # communicate returns a tuple with the file obect for the child's
-      # output.
-      self.output = p.communicate()[0]
-      self._return_code = p.returncode
+    p = subprocess.Popen(command,
+                            stdout=subprocess.PIPE, stderr=stderr,
+                            cwd=working_dir, universal_newlines=True)
+    # communicate returns a tuple with the file obect for the child's
+    # output.
+    self.output = p.communicate()[0]
+    self._return_code = p.returncode
     else:
-      old_dir = os.getcwd()
-      try:
+    old_dir = os.getcwd()
+    try:
         if working_dir is not None:
-          os.chdir(working_dir)
+        os.chdir(working_dir)
         if capture_stderr:
-          p = popen2.Popen4(command)
+        p = popen2.Popen4(command)
         else:
-          p = popen2.Popen3(command)
+        p = popen2.Popen3(command)
         p.tochild.close()
         self.output = p.fromchild.read()
         ret_code = p.wait()
-      finally:
+    finally:
         os.chdir(old_dir)
-      # Converts ret_code to match the semantics of
-      # subprocess.Popen.returncode.
-      if os.WIFSIGNALED(ret_code):
+    # Converts ret_code to match the semantics of
+    # subprocess.Popen.returncode.
+    if os.WIFSIGNALED(ret_code):
         self._return_code = -os.WTERMSIG(ret_code)
-      else:  # os.WIFEXITED(ret_code) should return True here.
+    else:  # os.WIFEXITED(ret_code) should return True here.
         self._return_code = os.WEXITSTATUS(ret_code)
 
     if self._return_code < 0:
-      self.terminated_by_signal = True
-      self.exited = False
-      self.signal = -self._return_code
+    self.terminated_by_signal = True
+    self.exited = False
+    self.signal = -self._return_code
     else:
-      self.terminated_by_signal = False
-      self.exited = True
-      self.exit_code = self._return_code
+    self.terminated_by_signal = False
+    self.exited = True
+    self.exit_code = self._return_code
 
 
 def Main():

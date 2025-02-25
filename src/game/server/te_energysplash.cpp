@@ -23,7 +23,7 @@ class CTEEnergySplash : public CBaseTempEntity
 {
     DECLARE_CLASS( CTEEnergySplash, CBaseTempEntity );
 
-   public:
+    public:
     CTEEnergySplash( const char* name );
     virtual ~CTEEnergySplash( void );
 
@@ -31,7 +31,7 @@ class CTEEnergySplash : public CBaseTempEntity
 
     DECLARE_SERVERCLASS();
 
-   public:
+    public:
     CNetworkVector( m_vecPos );
     CNetworkVector( m_vecDir );
     CNetworkVar( bool, m_bExplosive );

@@ -74,7 +74,7 @@ typedef unsigned int UInt32;
 #ifdef _SZ_NO_INT_64
 
 /* define _SZ_NO_INT_64, if your compiler doesn't support 64-bit integers.
-   NOTES: Some code will work incorrectly in that case! */
+    NOTES: Some code will work incorrectly in that case! */
 
 typedef long Int64;
 typedef unsigned long UInt64;
@@ -144,7 +144,7 @@ typedef struct
 {
     SRes ( *Read )( void *p, void *buf, size_t *size );
     /* if (input(*size) != 0 && output(*size) == 0) means end_of_stream.
-       (output(*size) < input(*size)) is allowed */
+        (output(*size) < input(*size)) is allowed */
 } ISeqInStream;
 
 /* it can return SZ_ERROR_INPUT_EOF */
@@ -156,7 +156,7 @@ typedef struct
 {
     size_t ( *Write )( void *p, const void *buf, size_t size );
     /* Returns: result - the number of actually written bytes.
-       (result < size) means error */
+        (result < size) means error */
 } ISeqOutStream;
 
 typedef enum
@@ -176,8 +176,8 @@ typedef struct
 {
     SRes ( *Look )( void *p, const void **buf, size_t *size );
     /* if (input(*size) != 0 && output(*size) == 0) means end_of_stream.
-       (output(*size) > input(*size)) is not allowed
-       (output(*size) < input(*size)) is allowed */
+        (output(*size) > input(*size)) is not allowed
+        (output(*size) < input(*size)) is allowed */
     SRes ( *Skip )( void *p, size_t offset );
     /* offset must be <= output(*size) of Look */
 
@@ -227,7 +227,7 @@ typedef struct
 {
     SRes ( *Progress )( void *p, UInt64 inSize, UInt64 outSize );
     /* Returns: result. (result != SZ_OK) means break.
-       Value (UInt64)(Int64)-1 for size means unknown value. */
+        Value (UInt64)(Int64)-1 for size means unknown value. */
 } ICompressProgress;
 
 typedef struct

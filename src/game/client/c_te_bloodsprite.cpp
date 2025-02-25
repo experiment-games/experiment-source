@@ -25,7 +25,7 @@ extern short g_sModelIndexBloodSpray;
 //-----------------------------------------------------------------------------
 class C_TEBloodSprite : public C_BaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_TEBloodSprite, C_BaseTempEntity );
     DECLARE_CLIENTCLASS();
 
@@ -34,7 +34,7 @@ class C_TEBloodSprite : public C_BaseTempEntity
 
     virtual void PostDataUpdate( DataUpdateType_t updateType );
 
-   public:
+    public:
     Vector m_vecOrigin;
     Vector m_vecDirection;
     int r, g, b, a;

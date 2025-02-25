@@ -39,7 +39,7 @@ class CGrenadeFrag : public CBaseGrenade
 
     ~CGrenadeFrag( void );
 
-   public:
+    public:
     void Spawn( void );
     void OnRestore( void );
     void Precache( void );
@@ -79,7 +79,7 @@ class CGrenadeFrag : public CBaseGrenade
 
     void InputSetTimer( inputdata_t &inputdata );
 
-   protected:
+    protected:
     CHandle< CSprite > m_pMainGlow;
     CHandle< CSpriteTrail > m_pGlowTrail;
 
@@ -206,7 +206,7 @@ bool CGrenadeFrag::CreateVPhysics()
 // this will hit only things that are in newCollisionGroup, but NOT in collisionGroupAlreadyChecked
 class CTraceFilterCollisionGroupDelta : public CTraceFilterEntitiesOnly
 {
-   public:
+    public:
     // It does have a base, but we'll never network anything below here..
     DECLARE_CLASS_NOBASE( CTraceFilterCollisionGroupDelta );
 
@@ -232,7 +232,7 @@ class CTraceFilterCollisionGroupDelta : public CTraceFilterEntitiesOnly
         return false;
     }
 
-   protected:
+    protected:
     const IHandleEntity *m_pPassEnt;
     int m_collisionGroupAlreadyChecked;
     int m_newCollisionGroup;
@@ -252,7 +252,7 @@ void CGrenadeFrag::VPhysicsUpdate( IPhysicsObject *pPhysics )
 
     // UNDONE: Hull won't work with hitboxes - hits outer hull.  But the whole point of this test is to hit hitboxes.
 #if 0
-	UTIL_TraceHull( start, start + vel * gpGlobals->frametime, CollisionProp()->OBBMins(), CollisionProp()->OBBMaxs(), CONTENTS_HITBOX|CONTENTS_MONSTER|CONTENTS_SOLID, &filter, &tr );
+    UTIL_TraceHull( start, start + vel * gpGlobals->frametime, CollisionProp()->OBBMins(), CollisionProp()->OBBMaxs(), CONTENTS_HITBOX|CONTENTS_MONSTER|CONTENTS_SOLID, &filter, &tr );
 #else
     UTIL_TraceLine( start, start + vel * gpGlobals->frametime, CONTENTS_HITBOX | CONTENTS_MONSTER | CONTENTS_SOLID, &filter, &tr );
 #endif

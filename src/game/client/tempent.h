@@ -61,7 +61,7 @@ typedef int ( *pfnDrawHelper )( C_LocalTempEntity *entity, int flags );
 //-----------------------------------------------------------------------------
 class C_LocalTempEntity : public C_BaseAnimating, public C_SpriteRenderer
 {
-   public:
+    public:
     DECLARE_CLASS( C_LocalTempEntity, C_BaseAnimating );
 
     C_LocalTempEntity();
@@ -104,10 +104,10 @@ class C_LocalTempEntity : public C_BaseAnimating, public C_SpriteRenderer
         m_pszParticleEffect = pszParticleEffect;
     }
 
-   protected:
+    protected:
     pfnDrawHelper m_pfnDrawHelper;
 
-   public:
+    public:
     int flags;
     float die;
     float m_flFrameMax;
@@ -146,7 +146,7 @@ class C_LocalTempEntity : public C_BaseAnimating, public C_SpriteRenderer
     int m_iLastCollisionFrame;
     Vector m_vLastCollisionOrigin;
 
-   private:
+    private:
     C_LocalTempEntity( const C_LocalTempEntity & );
 
     Vector m_vecTempEntVelocity;

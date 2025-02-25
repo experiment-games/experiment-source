@@ -30,7 +30,7 @@ class CHudAnimationInfo : public CHudElement, public vgui::Panel
 {
     DECLARE_CLASS_SIMPLE( CHudAnimationInfo, vgui::Panel );
 
-   public:
+    public:
     CHudAnimationInfo( const char *pElementName );
 
     virtual bool ShouldDraw();
@@ -45,7 +45,7 @@ class CHudAnimationInfo : public CHudElement, public vgui::Panel
         m_pWatch = element;
     }
 
-   protected:
+    protected:
     void PaintMappingInfo( int &x, int &y, Panel *element, PanelAnimationMap *map );
     void PaintString( int &x, int &y, const char *sz, Color *pLegendColor );
 

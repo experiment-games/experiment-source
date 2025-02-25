@@ -26,7 +26,7 @@ class CKeyBindingHelpDialog : public Frame
 {
     DECLARE_CLASS_SIMPLE( CKeyBindingHelpDialog, Frame );
 
-   public:
+    public:
     CKeyBindingHelpDialog( Panel *parent, Panel *panelToView, KeyBindingContextHandle_t handle, KeyCode code, int modifiers );
     ~CKeyBindingHelpDialog();
 
@@ -36,7 +36,7 @@ class CKeyBindingHelpDialog : public Frame
     // The key originally bound to help was pressed
     void HelpKeyPressed();
 
-   private:
+    private:
     virtual void OnTick();
 
     bool IsHelpKeyStillBeingHeld();

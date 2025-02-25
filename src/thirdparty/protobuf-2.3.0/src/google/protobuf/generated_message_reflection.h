@@ -91,7 +91,7 @@ class ExtensionSet;  // extension_set.h
 //    RepeatedFields.
 class LIBPROTOBUF_EXPORT GeneratedMessageReflection : public Reflection
 {
-   public:
+    public:
     // Constructs a GeneratedMessageReflection.
     // Parameters:
     //   descriptor:    The descriptor for the message type being implemented.
@@ -148,39 +148,39 @@ class LIBPROTOBUF_EXPORT GeneratedMessageReflection : public Reflection
     void Swap( Message* message1, Message* message2 ) const;
     void SwapElements( Message* message, const FieldDescriptor* field, int index1, int index2 ) const;
     void ListFields( const Message& message,
-                     vector< const FieldDescriptor* >* output ) const;
+                    vector< const FieldDescriptor* >* output ) const;
 
     int32 GetInt32( const Message& message,
                     const FieldDescriptor* field ) const;
     int64 GetInt64( const Message& message,
                     const FieldDescriptor* field ) const;
     uint32 GetUInt32( const Message& message,
-                      const FieldDescriptor* field ) const;
+                    const FieldDescriptor* field ) const;
     uint64 GetUInt64( const Message& message,
-                      const FieldDescriptor* field ) const;
+                    const FieldDescriptor* field ) const;
     float GetFloat( const Message& message,
                     const FieldDescriptor* field ) const;
     double GetDouble( const Message& message,
-                      const FieldDescriptor* field ) const;
+                    const FieldDescriptor* field ) const;
     bool GetBool( const Message& message,
-                  const FieldDescriptor* field ) const;
+                const FieldDescriptor* field ) const;
     string GetString( const Message& message,
-                      const FieldDescriptor* field ) const;
+                    const FieldDescriptor* field ) const;
     const string& GetStringReference( const Message& message,
-                                      const FieldDescriptor* field,
-                                      string* scratch ) const;
+                                    const FieldDescriptor* field,
+                                    string* scratch ) const;
     const EnumValueDescriptor* GetEnum( const Message& message,
                                         const FieldDescriptor* field ) const;
     const Message& GetMessage( const Message& message,
-                               const FieldDescriptor* field,
-                               MessageFactory* factory = NULL ) const;
+                                const FieldDescriptor* field,
+                                MessageFactory* factory = NULL ) const;
 
     void SetInt32( Message* message,
-                   const FieldDescriptor* field,
-                   int32 value ) const;
+                    const FieldDescriptor* field,
+                    int32 value ) const;
     void SetInt64( Message* message,
-                   const FieldDescriptor* field,
-                   int64 value ) const;
+                    const FieldDescriptor* field,
+                    int64 value ) const;
     void SetUInt32( Message* message,
                     const FieldDescriptor* field,
                     uint32 value ) const;
@@ -188,14 +188,14 @@ class LIBPROTOBUF_EXPORT GeneratedMessageReflection : public Reflection
                     const FieldDescriptor* field,
                     uint64 value ) const;
     void SetFloat( Message* message,
-                   const FieldDescriptor* field,
-                   float value ) const;
+                    const FieldDescriptor* field,
+                    float value ) const;
     void SetDouble( Message* message,
                     const FieldDescriptor* field,
                     double value ) const;
     void SetBool( Message* message,
-                  const FieldDescriptor* field,
-                  bool value ) const;
+                const FieldDescriptor* field,
+                bool value ) const;
     void SetString( Message* message,
                     const FieldDescriptor* field,
                     const string& value ) const;
@@ -209,43 +209,43 @@ class LIBPROTOBUF_EXPORT GeneratedMessageReflection : public Reflection
                             const FieldDescriptor* field,
                             int index ) const;
     uint32 GetRepeatedUInt32( const Message& message,
-                              const FieldDescriptor* field,
-                              int index ) const;
+                            const FieldDescriptor* field,
+                            int index ) const;
     uint64 GetRepeatedUInt64( const Message& message,
-                              const FieldDescriptor* field,
-                              int index ) const;
+                            const FieldDescriptor* field,
+                            int index ) const;
     float GetRepeatedFloat( const Message& message,
                             const FieldDescriptor* field,
                             int index ) const;
     double GetRepeatedDouble( const Message& message,
-                              const FieldDescriptor* field,
-                              int index ) const;
+                            const FieldDescriptor* field,
+                            int index ) const;
     bool GetRepeatedBool( const Message& message,
-                          const FieldDescriptor* field,
-                          int index ) const;
+                        const FieldDescriptor* field,
+                        int index ) const;
     string GetRepeatedString( const Message& message,
-                              const FieldDescriptor* field,
-                              int index ) const;
+                            const FieldDescriptor* field,
+                            int index ) const;
     const string& GetRepeatedStringReference( const Message& message,
-                                              const FieldDescriptor* field,
-                                              int index,
-                                              string* scratch ) const;
+                                            const FieldDescriptor* field,
+                                            int index,
+                                            string* scratch ) const;
     const EnumValueDescriptor* GetRepeatedEnum( const Message& message,
                                                 const FieldDescriptor* field,
                                                 int index ) const;
     const Message& GetRepeatedMessage( const Message& message,
-                                       const FieldDescriptor* field,
-                                       int index ) const;
+                                        const FieldDescriptor* field,
+                                        int index ) const;
 
     // Set the value of a field.
     void SetRepeatedInt32( Message* message,
-                           const FieldDescriptor* field,
-                           int index,
-                           int32 value ) const;
+                            const FieldDescriptor* field,
+                            int index,
+                            int32 value ) const;
     void SetRepeatedInt64( Message* message,
-                           const FieldDescriptor* field,
-                           int index,
-                           int64 value ) const;
+                            const FieldDescriptor* field,
+                            int index,
+                            int64 value ) const;
     void SetRepeatedUInt32( Message* message,
                             const FieldDescriptor* field,
                             int index,
@@ -255,17 +255,17 @@ class LIBPROTOBUF_EXPORT GeneratedMessageReflection : public Reflection
                             int index,
                             uint64 value ) const;
     void SetRepeatedFloat( Message* message,
-                           const FieldDescriptor* field,
-                           int index,
-                           float value ) const;
+                            const FieldDescriptor* field,
+                            int index,
+                            float value ) const;
     void SetRepeatedDouble( Message* message,
                             const FieldDescriptor* field,
                             int index,
                             double value ) const;
     void SetRepeatedBool( Message* message,
-                          const FieldDescriptor* field,
-                          int index,
-                          bool value ) const;
+                        const FieldDescriptor* field,
+                        int index,
+                        bool value ) const;
     void SetRepeatedString( Message* message,
                             const FieldDescriptor* field,
                             int index,
@@ -273,15 +273,15 @@ class LIBPROTOBUF_EXPORT GeneratedMessageReflection : public Reflection
     void SetRepeatedEnum( Message* message, const FieldDescriptor* field, int index, const EnumValueDescriptor* value ) const;
     // Get a mutable pointer to a field with a message type.
     Message* MutableRepeatedMessage( Message* message,
-                                     const FieldDescriptor* field,
-                                     int index ) const;
+                                    const FieldDescriptor* field,
+                                    int index ) const;
 
     void AddInt32( Message* message,
-                   const FieldDescriptor* field,
-                   int32 value ) const;
+                    const FieldDescriptor* field,
+                    int32 value ) const;
     void AddInt64( Message* message,
-                   const FieldDescriptor* field,
-                   int64 value ) const;
+                    const FieldDescriptor* field,
+                    int64 value ) const;
     void AddUInt32( Message* message,
                     const FieldDescriptor* field,
                     uint32 value ) const;
@@ -289,26 +289,26 @@ class LIBPROTOBUF_EXPORT GeneratedMessageReflection : public Reflection
                     const FieldDescriptor* field,
                     uint64 value ) const;
     void AddFloat( Message* message,
-                   const FieldDescriptor* field,
-                   float value ) const;
+                    const FieldDescriptor* field,
+                    float value ) const;
     void AddDouble( Message* message,
                     const FieldDescriptor* field,
                     double value ) const;
     void AddBool( Message* message,
-                  const FieldDescriptor* field,
-                  bool value ) const;
+                const FieldDescriptor* field,
+                bool value ) const;
     void AddString( Message* message,
                     const FieldDescriptor* field,
                     const string& value ) const;
     void AddEnum( Message* message,
-                  const FieldDescriptor* field,
-                  const EnumValueDescriptor* value ) const;
+                const FieldDescriptor* field,
+                const EnumValueDescriptor* value ) const;
     Message* AddMessage( Message* message, const FieldDescriptor* field, MessageFactory* factory = NULL ) const;
 
     const FieldDescriptor* FindKnownExtensionByName( const string& name ) const;
     const FieldDescriptor* FindKnownExtensionByNumber( int number ) const;
 
-   private:
+    private:
     friend class GeneratedMessage;
 
     const Descriptor* descriptor_;
@@ -325,10 +325,10 @@ class LIBPROTOBUF_EXPORT GeneratedMessageReflection : public Reflection
 
     template < typename Type >
     inline const Type& GetRaw( const Message& message,
-                               const FieldDescriptor* field ) const;
+                                const FieldDescriptor* field ) const;
     template < typename Type >
     inline Type* MutableRaw( Message* message,
-                             const FieldDescriptor* field ) const;
+                            const FieldDescriptor* field ) const;
     template < typename Type >
     inline const Type& DefaultRaw( const FieldDescriptor* field ) const;
     inline const Message* GetMessagePrototype( const FieldDescriptor* field ) const;
@@ -343,42 +343,42 @@ class LIBPROTOBUF_EXPORT GeneratedMessageReflection : public Reflection
     inline void SetBit( Message* message,
                         const FieldDescriptor* field ) const;
     inline void ClearBit( Message* message,
-                          const FieldDescriptor* field ) const;
+                        const FieldDescriptor* field ) const;
 
     template < typename Type >
     inline const Type& GetField( const Message& message,
-                                 const FieldDescriptor* field ) const;
+                                const FieldDescriptor* field ) const;
     template < typename Type >
     inline void SetField( Message* message,
-                          const FieldDescriptor* field,
-                          const Type& value ) const;
+                        const FieldDescriptor* field,
+                        const Type& value ) const;
     template < typename Type >
     inline Type* MutableField( Message* message,
-                               const FieldDescriptor* field ) const;
+                                const FieldDescriptor* field ) const;
     template < typename Type >
     inline const Type& GetRepeatedField( const Message& message,
-                                         const FieldDescriptor* field,
-                                         int index ) const;
+                                        const FieldDescriptor* field,
+                                        int index ) const;
     template < typename Type >
     inline const Type& GetRepeatedPtrField( const Message& message,
                                             const FieldDescriptor* field,
                                             int index ) const;
     template < typename Type >
     inline void SetRepeatedField( Message* message,
-                                  const FieldDescriptor* field,
-                                  int index,
-                                  Type value ) const;
+                                const FieldDescriptor* field,
+                                int index,
+                                Type value ) const;
     template < typename Type >
     inline Type* MutableRepeatedField( Message* message,
-                                       const FieldDescriptor* field,
-                                       int index ) const;
+                                        const FieldDescriptor* field,
+                                        int index ) const;
     template < typename Type >
     inline void AddField( Message* message,
-                          const FieldDescriptor* field,
-                          const Type& value ) const;
+                        const FieldDescriptor* field,
+                        const Type& value ) const;
     template < typename Type >
     inline Type* AddField( Message* message,
-                           const FieldDescriptor* field ) const;
+                            const FieldDescriptor* field ) const;
 
     int GetExtensionNumberOrDie( const Descriptor* type ) const;
 
@@ -446,8 +446,8 @@ LIBPROTOBUF_EXPORT bool ParseNamedEnum( const EnumDescriptor* descriptor,
 
 template < typename EnumType >
 bool ParseNamedEnum( const EnumDescriptor* descriptor,
-                     const string& name,
-                     EnumType* value )
+                    const string& name,
+                    EnumType* value )
 {
     int tmp;
     if ( !ParseNamedEnum( descriptor, name, &tmp ) ) return false;

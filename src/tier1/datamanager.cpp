@@ -386,8 +386,8 @@ void *CDataManagerBase::GetForFreeByIndex( unsigned short memoryIndex )
 void CDataManagerBase::GetLRUHandleList( CUtlVector< memhandle_t > &list )
 {
     for ( int node = m_memoryLists.Tail( m_lruList );
-          node != m_memoryLists.InvalidIndex();
-          node = m_memoryLists.Previous( node ) )
+        node != m_memoryLists.InvalidIndex();
+        node = m_memoryLists.Previous( node ) )
     {
         list.AddToTail( ToHandle( node ) );
     }
@@ -397,8 +397,8 @@ void CDataManagerBase::GetLRUHandleList( CUtlVector< memhandle_t > &list )
 void CDataManagerBase::GetLockHandleList( CUtlVector< memhandle_t > &list )
 {
     for ( int node = m_memoryLists.Head( m_lockList );
-          node != m_memoryLists.InvalidIndex();
-          node = m_memoryLists.Next( node ) )
+        node != m_memoryLists.InvalidIndex();
+        node = m_memoryLists.Next( node ) )
     {
         list.AddToTail( ToHandle( node ) );
     }

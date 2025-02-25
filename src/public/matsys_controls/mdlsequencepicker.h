@@ -33,7 +33,7 @@ class CMDLSequencePicker : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CMDLSequencePicker, vgui::EditablePanel );
 
-   public:
+    public:
     CMDLSequencePicker( vgui::Panel *pParent );
     virtual ~CMDLSequencePicker();
 
@@ -47,7 +47,7 @@ class CMDLSequencePicker : public vgui::EditablePanel
     char const *GetSequenceName();
     int GetSequenceNumber();
 
-   private:
+    private:
     void SelectMDL( const char *pMDLName );
     void RefreshFileList();
     void RefreshActivitiesAndSequencesList();
@@ -93,19 +93,19 @@ class CMDLSequencePickerFrame : public vgui::Frame
 {
     DECLARE_CLASS_SIMPLE( CMDLSequencePickerFrame, vgui::Frame );
 
-   public:
+    public:
     CMDLSequencePickerFrame( vgui::Panel *parent, char const *title );
     virtual ~CMDLSequencePickerFrame();
 
     virtual void PerformLayout();
 
-   protected:
+    protected:
     virtual void OnTick();
 
     MESSAGE_FUNC( OnOK, "OnOK" );
     MESSAGE_FUNC( OnCancel, "OnCancel" );
 
-   private:
+    private:
     CMDLSequencePicker *m_pMDLSequencePicker;
 
     vgui::Button *m_pOK;

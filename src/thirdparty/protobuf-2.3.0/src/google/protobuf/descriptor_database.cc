@@ -107,7 +107,7 @@ bool SimpleDescriptorDatabase::DescriptorIndex<Value>::AddSymbol(
 
   if (IsSubSymbol(iter->first, name)) {
     GOOGLE_LOG(ERROR) << "Symbol name \"" << name << "\" conflicts with the existing "
-                  "symbol \"" << iter->first << "\".";
+                "symbol \"" << iter->first << "\".";
     return false;
   }
 
@@ -120,7 +120,7 @@ bool SimpleDescriptorDatabase::DescriptorIndex<Value>::AddSymbol(
 
   if (iter != by_symbol_.end() && IsSubSymbol(name, iter->first)) {
     GOOGLE_LOG(ERROR) << "Symbol name \"" << name << "\" conflicts with the existing "
-                  "symbol \"" << iter->first << "\".";
+                "symbol \"" << iter->first << "\".";
     return false;
   }
 
@@ -155,12 +155,12 @@ bool SimpleDescriptorDatabase::DescriptorIndex<Value>::AddExtension(
     // the by_symbol_ table.
     if (!InsertIfNotPresent(&by_extension_,
                             make_pair(field.extendee().substr(1),
-                                      field.number()),
+                                    field.number()),
                             value)) {
-      GOOGLE_LOG(ERROR) << "Extension conflicts with extension already in database: "
+    GOOGLE_LOG(ERROR) << "Extension conflicts with extension already in database: "
                     "extend " << field.extendee() << " { "
-                 << field.name() << " = " << field.number() << " }";
-      return false;
+                << field.name() << " = " << field.number() << " }";
+    return false;
     }
   } else {
     // Not fully-qualified.  We can't really do anything here, unfortunately.
@@ -182,7 +182,7 @@ Value SimpleDescriptorDatabase::DescriptorIndex<Value>::FindSymbol(
   typename map<string, Value>::iterator iter = FindLastLessOrEqual(name);
 
   return (iter != by_symbol_.end() && IsSubSymbol(iter->first, name)) ?
-         iter->second : Value();
+        iter->second : Value();
 }
 
 template <typename Value>
@@ -190,8 +190,8 @@ Value SimpleDescriptorDatabase::DescriptorIndex<Value>::FindExtension(
     const string& containing_type,
     int field_number) {
   return FindWithDefault(by_extension_,
-                         make_pair(containing_type, field_number),
-                         Value());
+                        make_pair(containing_type, field_number),
+                        Value());
 }
 
 template <typename Value>
@@ -199,11 +199,11 @@ bool SimpleDescriptorDatabase::DescriptorIndex<Value>::FindAllExtensionNumbers(
     const string& containing_type,
     vector<int>* output) {
   typename map<pair<string, int>, Value >::const_iterator it =
-      by_extension_.lower_bound(make_pair(containing_type, 0));
+    by_extension_.lower_bound(make_pair(containing_type, 0));
   bool success = false;
 
   for (; it != by_extension_.end() && it->first.first == containing_type;
-       ++it) {
+        ++it) {
     output->push_back(it->first.second);
     success = true;
   }
@@ -227,8 +227,8 @@ template <typename Value>
 bool SimpleDescriptorDatabase::DescriptorIndex<Value>::IsSubSymbol(
     const string& sub_symbol, const string& super_symbol) {
   return sub_symbol == super_symbol ||
-         (HasPrefixString(super_symbol, sub_symbol) &&
-             super_symbol[sub_symbol.size()] == '.');
+        (HasPrefixString(super_symbol, sub_symbol) &&
+            super_symbol[sub_symbol.size()] == '.');
 }
 
 template <typename Value>
@@ -240,7 +240,7 @@ bool SimpleDescriptorDatabase::DescriptorIndex<Value>::ValidateSymbolName(
         (name[i] < '0' || name[i] > '9') &&
         (name[i] < 'A' || name[i] > 'Z') &&
         (name[i] < 'a' || name[i] > 'z')) {
-      return false;
+    return false;
     }
   }
   return true;
@@ -290,7 +290,7 @@ bool SimpleDescriptorDatabase::FindAllExtensionNumbers(
 }
 
 bool SimpleDescriptorDatabase::MaybeCopy(const FileDescriptorProto* file,
-                                         FileDescriptorProto* output) {
+                                        FileDescriptorProto* output) {
   if (file == NULL) return false;
   output->CopyFrom(*file);
   return true;
@@ -312,7 +312,7 @@ bool EncodedDescriptorDatabase::Add(
     return index_.AddFile(file, make_pair(encoded_file_descriptor, size));
   } else {
     GOOGLE_LOG(ERROR) << "Invalid file descriptor data passed to "
-                  "EncodedDescriptorDatabase::Add().";
+                "EncodedDescriptorDatabase::Add().";
     return false;
   }
 }
@@ -346,11 +346,11 @@ bool EncodedDescriptorDatabase::FindNameOfFileContainingSymbol(
   // Optimization:  The name should be the first field in the encoded message.
   //   Try to just read it directly.
   io::CodedInputStream input(reinterpret_cast<const uint8*>(encoded_file.first),
-                             encoded_file.second);
+                            encoded_file.second);
 
   const uint32 kNameTag = internal::WireFormatLite::MakeTag(
-      FileDescriptorProto::kNameFieldNumber,
-      internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED);
+    FileDescriptorProto::kNameFieldNumber,
+    internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED);
 
   if (input.ReadTag() == kNameTag) {
     // Success!
@@ -359,7 +359,7 @@ bool EncodedDescriptorDatabase::FindNameOfFileContainingSymbol(
     // Slow path.  Parse whole message.
     FileDescriptorProto file_proto;
     if (!file_proto.ParseFromArray(encoded_file.first, encoded_file.second)) {
-      return false;
+    return false;
     }
     *output = file_proto.name();
     return true;
@@ -463,7 +463,7 @@ bool MergedDescriptorDatabase::FindFileByName(
     FileDescriptorProto* output) {
   for (int i = 0; i < sources_.size(); i++) {
     if (sources_[i]->FindFileByName(filename, output)) {
-      return true;
+    return true;
     }
   }
   return false;
@@ -474,18 +474,18 @@ bool MergedDescriptorDatabase::FindFileContainingSymbol(
     FileDescriptorProto* output) {
   for (int i = 0; i < sources_.size(); i++) {
     if (sources_[i]->FindFileContainingSymbol(symbol_name, output)) {
-      // The symbol was found in source i.  However, if one of the previous
-      // sources defines a file with the same name (which presumably doesn't
-      // contain the symbol, since it wasn't found in that source), then we
-      // must hide it from the caller.
-      FileDescriptorProto temp;
-      for (int j = 0; j < i; j++) {
+    // The symbol was found in source i.  However, if one of the previous
+    // sources defines a file with the same name (which presumably doesn't
+    // contain the symbol, since it wasn't found in that source), then we
+    // must hide it from the caller.
+    FileDescriptorProto temp;
+    for (int j = 0; j < i; j++) {
         if (sources_[j]->FindFileByName(output->name(), &temp)) {
-          // Found conflicting file in a previous source.
-          return false;
+        // Found conflicting file in a previous source.
+        return false;
         }
-      }
-      return true;
+    }
+    return true;
     }
   }
   return false;
@@ -497,19 +497,19 @@ bool MergedDescriptorDatabase::FindFileContainingExtension(
     FileDescriptorProto* output) {
   for (int i = 0; i < sources_.size(); i++) {
     if (sources_[i]->FindFileContainingExtension(
-          containing_type, field_number, output)) {
-      // The symbol was found in source i.  However, if one of the previous
-      // sources defines a file with the same name (which presumably doesn't
-      // contain the symbol, since it wasn't found in that source), then we
-      // must hide it from the caller.
-      FileDescriptorProto temp;
-      for (int j = 0; j < i; j++) {
+        containing_type, field_number, output)) {
+    // The symbol was found in source i.  However, if one of the previous
+    // sources defines a file with the same name (which presumably doesn't
+    // contain the symbol, since it wasn't found in that source), then we
+    // must hide it from the caller.
+    FileDescriptorProto temp;
+    for (int j = 0; j < i; j++) {
         if (sources_[j]->FindFileByName(output->name(), &temp)) {
-          // Found conflicting file in a previous source.
-          return false;
+        // Found conflicting file in a previous source.
+        return false;
         }
-      }
-      return true;
+    }
+    return true;
     }
   }
   return false;
@@ -524,15 +524,15 @@ bool MergedDescriptorDatabase::FindAllExtensionNumbers(
 
   for (int i = 0; i < sources_.size(); i++) {
     if (sources_[i]->FindAllExtensionNumbers(extendee_type, &results)) {
-      copy(results.begin(), results.end(),
-           insert_iterator<set<int> >(merged_results, merged_results.begin()));
-      success = true;
+    copy(results.begin(), results.end(),
+            insert_iterator<set<int> >(merged_results, merged_results.begin()));
+    success = true;
     }
     results.clear();
   }
 
   copy(merged_results.begin(), merged_results.end(),
-       insert_iterator<vector<int> >(*output, output->end()));
+        insert_iterator<vector<int> >(*output, output->end()));
 
   return success;
 }

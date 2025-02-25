@@ -26,7 +26,7 @@ class IMoveHelper;
 //-----------------------------------------------------------------------------
 abstract_class IPrediction
 {
-   public:
+    public:
     virtual ~IPrediction( void ){};
 
     virtual void Init( void ) = 0;

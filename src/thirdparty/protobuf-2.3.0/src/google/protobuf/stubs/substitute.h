@@ -90,7 +90,7 @@ namespace internal
 
 class SubstituteArg
 {
-   public:
+    public:
     inline SubstituteArg( const char* value )
         : text_( value ), size_( strlen( text_ ) ) {}
     inline SubstituteArg( const string& value )
@@ -143,7 +143,7 @@ class SubstituteArg
         return size_;
     }
 
-   private:
+    private:
     const char* text_;
     int size_;
     char scratch_[kFastToBufferSize];

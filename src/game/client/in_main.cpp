@@ -1088,21 +1088,21 @@ void CInput::ScaleMovements( CUserCmd *cmd )
     /*
     spd = engine->GetClientMaxspeed();
     if ( spd == 0.0 )
-      return;
+    return;
 
     // Scale the speed so that the total velocity is not > spd
     float fmov = sqrt( (cmd->forwardmove*cmd->forwardmove) + (cmd->sidemove*cmd->sidemove) + (cmd->upmove*cmd->upmove) );
 
     if ( fmov > spd && fmov > 0.0 )
     {
-      float fratio = spd / fmov;
+    float fratio = spd / fmov;
 
-      if ( !IsNoClipping() )
-      {
+    if ( !IsNoClipping() )
+    {
         cmd->forwardmove	*= fratio;
         cmd->sidemove		*= fratio;
         cmd->upmove			*= fratio;
-      }
+    }
     }
     */
 }
@@ -1567,9 +1567,9 @@ bool CInput::WriteUsercmdDeltaToBuffer( bf_write *buf, int from, int to, bool is
         int endbit = buf->GetNumBitsWritten();
 
         Msg( "WARNING! User command buffer overflow(%i %i), last cmd was %i bits long\n",
-             from,
-             to,
-             endbit - startbit );
+            from,
+            to,
+            endbit - startbit );
 
         return false;
     }

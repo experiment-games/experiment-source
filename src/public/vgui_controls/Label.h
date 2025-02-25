@@ -28,7 +28,7 @@ class Label : public Panel
 {
     DECLARE_CLASS_SIMPLE( Label, Panel );
 
-   public:
+    public:
     // Constructors
 #ifdef LUA_SDK
     Label( Panel *parent, const char *panelName, const char *text, lua_State *L = nullptr );
@@ -38,7 +38,7 @@ class Label : public Panel
     Label( Panel *parent, const char *panelName, const wchar_t *wszText );
     ~Label();
 
-   public:
+    public:
     // Take the string and looks it up in the localization file to convert it to unicode
     virtual void SetText( const char *tokenName );
 
@@ -135,13 +135,13 @@ class Label : public Panel
     // returns true on success in finding the requested value. false on failure.
     virtual bool RequestInfo( KeyValues *outputData );
     /* INFO HANDLING
-      "GetText"
+    "GetText"
         returns:
-          "text" - text contained in the label
+        "text" - text contained in the label
     */
 
     /* CUSTOM MESSAGE HANDLING
-      "SetText"
+    "SetText"
         input:	"text"	- label text is set to be this string
     */
 
@@ -163,9 +163,9 @@ class Label : public Panel
 #ifdef LUA_SDK
     virtual void PerformLayout();
 
-   protected:
+    protected:
 #else
-   protected:
+    protected:
     virtual void PerformLayout();
 #endif
     virtual wchar_t CalculateHotkey( const char *text );
@@ -192,7 +192,7 @@ class Label : public Panel
 
     void HandleAutoSizing( void );
 
-   private:
+    private:
     void Init();
 
     Alignment _contentAlignment;

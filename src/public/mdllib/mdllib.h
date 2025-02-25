@@ -31,7 +31,7 @@ abstract_class IMdlLib : public IAppSystem
     //
     // Stripping routines
     //
-   public:
+    public:
     //
     // StripModelBuffers
     //	The main function that strips the model buffers
@@ -54,7 +54,7 @@ abstract_class IMdlStripInfo
     //
     // Serialization
     //
-   public:
+    public:
     // Save the strip info to the buffer (appends to the end)
     virtual bool Serialize( CUtlBuffer & bufStorage ) const = 0;
 
@@ -64,7 +64,7 @@ abstract_class IMdlStripInfo
     //
     // Stripping info state
     //
-   public:
+    public:
     // Returns the checksums that the stripping info was generated for:
     //	plChecksumOriginal		if non-NULL will hold the checksum of the original model submitted for stripping
     //	plChecksumStripped		if non-NULL will hold the resulting checksum of the stripped model
@@ -73,7 +73,7 @@ abstract_class IMdlStripInfo
     //
     // Stripping
     //
-   public:
+    public:
     //
     // StripHardwareVertsBuffer
     //	The main function that strips the vhv buffer
@@ -105,7 +105,7 @@ abstract_class IMdlStripInfo
     //
     // Release the object with "delete this"
     //
-   public:
+    public:
     virtual void DeleteThis() = 0;
 };
 

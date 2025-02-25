@@ -14,7 +14,7 @@
 DEFINE_FALLBACK_SHADER( UnlitGeneric, UnlitGeneric_DX8 )
 
 BEGIN_VS_SHADER( UnlitGeneric_DX8,
-                 "Help for UnlitGeneric_DX8" )
+                "Help for UnlitGeneric_DX8" )
 
 BEGIN_SHADER_PARAMS
 SHADER_PARAM( DETAIL, SHADER_PARAM_TYPE_TEXTURE, "shadertest/detail", "detail texture" )

@@ -91,7 +91,7 @@ extern ConVar hl2_walkspeed;
 
 class CTraceFilterPhyscannon : public CTraceFilterSimple
 {
-   public:
+    public:
     DECLARE_CLASS( CTraceFilterPhyscannon, CTraceFilterSimple );
 
     CTraceFilterPhyscannon( const IHandleEntity *passentity, int collisionGroup )
@@ -178,14 +178,14 @@ class CTraceFilterPhyscannon : public CTraceFilterSimple
         return BaseClass::ShouldHitEntity( pHandleEntity, contentsMask );
     }
 
-   protected:
+    protected:
     const IHandleEntity *m_pTraceOwner;
 };
 
 // We want to test against brushes alone
 class CTraceFilterOnlyBrushes : public CTraceFilterSimple
 {
-   public:
+    public:
     DECLARE_CLASS( CTraceFilterOnlyBrushes, CTraceFilterSimple );
     CTraceFilterOnlyBrushes( int collisionGroup )
         : CTraceFilterSimple( NULL, collisionGroup ) {}
@@ -200,7 +200,7 @@ class CTraceFilterOnlyBrushes : public CTraceFilterSimple
 // (lets player grab own grenades)
 class CTraceFilterNoOwnerTest : public CTraceFilterSimple
 {
-   public:
+    public:
     DECLARE_CLASS( CTraceFilterNoOwnerTest, CTraceFilterSimple );
 
     CTraceFilterNoOwnerTest( const IHandleEntity *passentity, int collisionGroup )
@@ -216,7 +216,7 @@ class CTraceFilterNoOwnerTest : public CTraceFilterSimple
         return false;
     }
 
-   protected:
+    protected:
     const IHandleEntity *m_pPassNotOwner;
 };
 
@@ -466,7 +466,7 @@ DEFINE_FIELD( targetPosition, FIELD_POSITION_VECTOR ),
 {
     DECLARE_SIMPLE_DATADESC();
 
-   public:
+    public:
     CGrabController( void );
     ~CGrabController( void );
     void AttachEntity( CBasePlayer *pPlayer, CBaseEntity *pEntity, IPhysicsObject *pPhys, bool bIsMegaPhysCannon, const Vector &vGrabPosition, bool bUseGrabPosition );
@@ -502,7 +502,7 @@ DEFINE_FIELD( targetPosition, FIELD_POSITION_VECTOR ),
 
     bool IsObjectAllowedOverhead( CBaseEntity *pEntity );
 
-   private:
+    private:
     // Compute the max speed for an attached object
     void ComputeMaxSpeed( CBaseEntity *pEntity, IPhysicsObject *pPhysics );
 
@@ -984,7 +984,7 @@ class CPlayerPickupController : public CBaseEntity
     DECLARE_DATADESC();
     DECLARE_CLASS( CPlayerPickupController, CBaseEntity );
 
-   public:
+    public:
     void Init( CBasePlayer *pPlayer, CBaseEntity *pObject );
     void Shutdown( bool bThrown = false );
     bool OnControls( CBaseEntity *pControls )
@@ -1005,7 +1005,7 @@ class CPlayerPickupController : public CBaseEntity
         return m_grabController;
     }
 
-   private:
+    private:
     CGrabController m_grabController;
     CBasePlayer *m_pPlayer;
 };
@@ -1229,7 +1229,7 @@ DEFINE_FIELD( fTimeThrown, FIELD_TIME ),
 
         class CWeaponPhysCannon : public CBaseHLCombatWeapon
 {
-   public:
+    public:
     DECLARE_CLASS( CWeaponPhysCannon, CBaseHLCombatWeapon );
 
     DECLARE_SERVERCLASS();
@@ -1287,7 +1287,7 @@ DEFINE_FIELD( fTimeThrown, FIELD_TIME ),
         return true;
     }
 
-   protected:
+    protected:
     enum FindObjectResult_t
     {
         OBJECT_FOUND = 0,
@@ -1400,7 +1400,7 @@ DEFINE_FIELD( fTimeThrown, FIELD_TIME ),
 
     float m_flTimeNextObjectPurge;
 
-   protected:
+    protected:
     // Because the physcannon is a leaf class, we can use
     // static variables to store this information, and save some memory.
     // Should the physcannon end up having inheritors, their activate may
@@ -1701,8 +1701,8 @@ bool CWeaponPhysCannon::Holster( CBaseCombatWeapon *pSwitchingTo )
     if ( m_bActive )
     {
         if ( !pSwitchingTo ||
-             ( m_grabController.GetAttached() == pSwitchingTo &&
-               GetOwner()->Weapon_OwnsThisType( pSwitchingTo->GetClassname(), pSwitchingTo->GetSubType() ) ) )
+            ( m_grabController.GetAttached() == pSwitchingTo &&
+                GetOwner()->Weapon_OwnsThisType( pSwitchingTo->GetClassname(), pSwitchingTo->GetSubType() ) ) )
         {
         }
         else

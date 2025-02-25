@@ -50,7 +50,7 @@ namespace java
 
 class EnumFieldGenerator : public FieldGenerator
 {
-   public:
+    public:
     explicit EnumFieldGenerator( const FieldDescriptor* descriptor );
     ~EnumFieldGenerator();
 
@@ -66,7 +66,7 @@ class EnumFieldGenerator : public FieldGenerator
 
     string GetBoxedType() const;
 
-   private:
+    private:
     const FieldDescriptor* descriptor_;
     map< string, string > variables_;
 
@@ -75,7 +75,7 @@ class EnumFieldGenerator : public FieldGenerator
 
 class RepeatedEnumFieldGenerator : public FieldGenerator
 {
-   public:
+    public:
     explicit RepeatedEnumFieldGenerator( const FieldDescriptor* descriptor );
     ~RepeatedEnumFieldGenerator();
 
@@ -92,7 +92,7 @@ class RepeatedEnumFieldGenerator : public FieldGenerator
 
     string GetBoxedType() const;
 
-   private:
+    private:
     const FieldDescriptor* descriptor_;
     map< string, string > variables_;
 

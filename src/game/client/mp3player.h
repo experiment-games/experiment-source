@@ -75,7 +75,7 @@ struct MP3Dir_t
 {
     MP3Dir_t()
         : m_DirName( UTL_INVAL_SYMBOL ),
-          m_FullDirPath( UTL_INVAL_SYMBOL )
+        m_FullDirPath( UTL_INVAL_SYMBOL )
     {
     }
 
@@ -169,9 +169,9 @@ struct SoundDirectory_t
 {
     explicit SoundDirectory_t( int index )
         : m_nIndex( index ),
-          m_Root( UTL_INVAL_SYMBOL ),
-          m_pTree( 0 ),
-          m_bGameSound( false )
+        m_Root( UTL_INVAL_SYMBOL ),
+        m_pTree( 0 ),
+        m_bGameSound( false )
     {
     }
 
@@ -207,7 +207,7 @@ class CMP3Player : public vgui::Frame
 {
     DECLARE_CLASS_SIMPLE( CMP3Player, vgui::Frame );
 
-   public:
+    public:
     // Construction
     CMP3Player( vgui::VPANEL parent, char const *panelName );
     ~CMP3Player();
@@ -242,7 +242,7 @@ class CMP3Player : public vgui::Frame
 
     void EnableAutoAdvance( bool state );
 
-   protected:
+    protected:
     virtual void OnCommand( char const *cmd );
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
     virtual void OnTick();
@@ -317,7 +317,7 @@ class CMP3Player : public vgui::Frame
     void GoToNextSong( int skip );
 
     // Data
-   private:
+    private:
     // UI elements
     vgui::MenuButton *m_pOptions;
     CMP3TreeControl *m_pTree;

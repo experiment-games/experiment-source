@@ -19,7 +19,7 @@ void ToolFramework_RecordMaterialParams( IMaterial *pMaterial );
 
 class CWorldDimsProxy : public IMaterialProxy
 {
-   public:
+    public:
     CWorldDimsProxy();
     virtual ~CWorldDimsProxy();
     virtual bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
@@ -30,7 +30,7 @@ class CWorldDimsProxy : public IMaterialProxy
     }
     virtual IMaterial *GetMaterial();
 
-   public:
+    public:
     IMaterialVar *m_pMinsVar;
     IMaterialVar *m_pMaxsVar;
 };

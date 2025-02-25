@@ -109,10 +109,10 @@ HALF AvgColor( HALF3 color )
 /*
 // unused
 HALF4 DiffuseBump( sampler lightmapSampler,
-                   float2  lightmapTexCoord1,
-                   float2  lightmapTexCoord2,
-                   float2  lightmapTexCoord3,
-                   HALF3   normal )
+                    float2  lightmapTexCoord1,
+                    float2  lightmapTexCoord2,
+                    float2  lightmapTexCoord3,
+                    HALF3   normal )
 {
   HALF3 lightmapColor1 = tex2D( lightmapSampler, lightmapTexCoord1 );
   HALF3 lightmapColor2 = tex2D( lightmapSampler, lightmapTexCoord2 );
@@ -130,8 +130,8 @@ HALF4 DiffuseBump( sampler lightmapSampler,
 /*
 // unused
 HALF Fresnel( HALF3 normal,
-              HALF3 eye,
-              HALF2 scaleBias )
+            HALF3 eye,
+            HALF2 scaleBias )
 {
   HALF fresnel = HALF_CONSTANT(1.0f) - dot( normal, eye );
   fresnel = pow( fresnel, HALF_CONSTANT(5.0f) );
@@ -143,7 +143,7 @@ HALF Fresnel( HALF3 normal,
 /*
 // unused
 HALF4 GetNormal( sampler normalSampler,
-                 float2 normalTexCoord )
+                float2 normalTexCoord )
 {
   HALF4 normal = tex2D( normalSampler, normalTexCoord );
   normal.rgb = HALF_CONSTANT(2.0f) * normal.rgb - HALF_CONSTANT(1.0f);
@@ -195,10 +195,10 @@ HALF3 NormalizeWithCubemap( sampler normalizeSampler, HALF3 input )
 
 /*
 HALF4 EnvReflect( sampler envmapSampler,
-         sampler normalizeSampler,
-         HALF3 normal,
-         float3 eye,
-         HALF2 fresnelScaleBias )
+        sampler normalizeSampler,
+        HALF3 normal,
+        float3 eye,
+        HALF2 fresnelScaleBias )
 {
   HALF3 normEye = NormalizeWithCubemap( normalizeSampler, eye );
   HALF fresnel = Fresnel( normal, normEye, fresnelScaleBias );
@@ -490,47 +490,47 @@ float2 CalcParallaxedTexCoord( float2 inTexCoord, float2 vParallax, float3 vNorm
     return texSampleBase;
 
 #if 0
-   cResultColor.rgb = ComputeDiffuseColor( texSampleBase, vLight );
-        
-   float fBound = 1.0 - fStepSize * nStepIndex;
-   if ( fNextHeight < fCurrentBound )
-//    if( 0 )
-   {
-      //void DoIteration( in float2 vParallaxJittered, in float3 vLight, inout float4 cResultColor )
-      //cResultColor.rgb = float3(1,0,0);
-      DoIteration( vParallax + vPixelSize, vLight, fStepSize, inTexCoord, nStepIndex, dx, dy, fBound, cResultColor );
-      DoIteration( vParallax - vPixelSize, vLight, fStepSize, inTexCoord, nStepIndex, dx, dy, fBound, cResultColor );
-      DoIteration( vParallax + float2( -vPixelSize.x, vPixelSize.y ), vLight, fStepSize, inTexCoord, nStepIndex, dx, dy, fBound, cResultColor );
-      DoIteration( vParallax + float2( vPixelSize.x, -vPixelSize.y ), vLight, fStepSize, inTexCoord, nStepIndex, dx, dy, fBound, cResultColor );
+    cResultColor.rgb = ComputeDiffuseColor( texSampleBase, vLight );
 
-      cResultColor.rgb /= 5;
+    float fBound = 1.0 - fStepSize * nStepIndex;
+    if ( fNextHeight < fCurrentBound )
+//    if( 0 )
+    {
+    //void DoIteration( in float2 vParallaxJittered, in float3 vLight, inout float4 cResultColor )
+    //cResultColor.rgb = float3(1,0,0);
+    DoIteration( vParallax + vPixelSize, vLight, fStepSize, inTexCoord, nStepIndex, dx, dy, fBound, cResultColor );
+    DoIteration( vParallax - vPixelSize, vLight, fStepSize, inTexCoord, nStepIndex, dx, dy, fBound, cResultColor );
+    DoIteration( vParallax + float2( -vPixelSize.x, vPixelSize.y ), vLight, fStepSize, inTexCoord, nStepIndex, dx, dy, fBound, cResultColor );
+    DoIteration( vParallax + float2( vPixelSize.x, -vPixelSize.y ), vLight, fStepSize, inTexCoord, nStepIndex, dx, dy, fBound, cResultColor );
+
+    cResultColor.rgb /= 5;
 //      cResultColor.rgb = float3( 1.0f, 0.0f, 0.0f );
-   }   // End of if ( fNextHeight < fCurrentBound )
+    }   // End of if ( fNextHeight < fCurrentBound )
 
 #if DOSHADOWS
-   {
-      //============================================//
-      // Soft shadow and self-occlusion computation //
-      //============================================//
-      // Compute the blurry shadows (note that this computation takes into 
-      // account self-occlusion for shadow computation):
-      float sh0 =  tex2D( sNormalMap, texSampleBase).w;
-      float shA = (tex2D( sNormalMap, texSampleBase + inXY * 0.88 ).w - sh0 - 0.88 ) *  1 * fShadowSoftening;
-      float sh9 = (tex2D( sNormalMap, texSampleBase + inXY * 0.77 ).w - sh0 - 0.77 ) *  2 * fShadowSoftening;
-      float sh8 = (tex2D( sNormalMap, texSampleBase + inXY * 0.66 ).w - sh0 - 0.66 ) *  4 * fShadowSoftening;
-      float sh7 = (tex2D( sNormalMap, texSampleBase + inXY * 0.55 ).w - sh0 - 0.55 ) *  6 * fShadowSoftening;
-      float sh6 = (tex2D( sNormalMap, texSampleBase + inXY * 0.44 ).w - sh0 - 0.44 ) *  8 * fShadowSoftening;
-      float sh5 = (tex2D( sNormalMap, texSampleBase + inXY * 0.33 ).w - sh0 - 0.33 ) * 10 * fShadowSoftening;
-      float sh4 = (tex2D( sNormalMap, texSampleBase + inXY * 0.22 ).w - sh0 - 0.22 ) * 12 * fShadowSoftening;
-      
-      // Compute the actual shadow strength:
-      float fShadow = 1 - max( max( max( max( max( max( shA, sh9 ), sh8 ), sh7 ), sh6 ), sh5 ), sh4 );
+    {
+    //============================================//
+    // Soft shadow and self-occlusion computation //
+    //============================================//
+    // Compute the blurry shadows (note that this computation takes into
+    // account self-occlusion for shadow computation):
+    float sh0 =  tex2D( sNormalMap, texSampleBase).w;
+    float shA = (tex2D( sNormalMap, texSampleBase + inXY * 0.88 ).w - sh0 - 0.88 ) *  1 * fShadowSoftening;
+    float sh9 = (tex2D( sNormalMap, texSampleBase + inXY * 0.77 ).w - sh0 - 0.77 ) *  2 * fShadowSoftening;
+    float sh8 = (tex2D( sNormalMap, texSampleBase + inXY * 0.66 ).w - sh0 - 0.66 ) *  4 * fShadowSoftening;
+    float sh7 = (tex2D( sNormalMap, texSampleBase + inXY * 0.55 ).w - sh0 - 0.55 ) *  6 * fShadowSoftening;
+    float sh6 = (tex2D( sNormalMap, texSampleBase + inXY * 0.44 ).w - sh0 - 0.44 ) *  8 * fShadowSoftening;
+    float sh5 = (tex2D( sNormalMap, texSampleBase + inXY * 0.33 ).w - sh0 - 0.33 ) * 10 * fShadowSoftening;
+    float sh4 = (tex2D( sNormalMap, texSampleBase + inXY * 0.22 ).w - sh0 - 0.22 ) * 12 * fShadowSoftening;
 
-      cResultColor.rgb *= fShadow * 0.6 + 0.4;
-   }
+    // Compute the actual shadow strength:
+    float fShadow = 1 - max( max( max( max( max( max( shA, sh9 ), sh8 ), sh7 ), sh6 ), sh5 ), sh4 );
+
+    cResultColor.rgb *= fShadow * 0.6 + 0.4;
+    }
 #endif
-   
-   return cResultColor;
+
+    return cResultColor;
 #endif
 }
 
@@ -745,7 +745,7 @@ float DepthFeathering( sampler DepthSampler, const float2 vScreenPos, float fPro
         {
             // Get depth from the depth texture. Need to sample with the offset of (0.5, 0.5) to fix rounding errors
             asm {
-				tfetch2D flDepths.x___, vScreenPos, DepthSampler, OffsetX=0.5, OffsetY=0.5, MinFilter=point, MagFilter=point, MipFilter=point
+                tfetch2D flDepths.x___, vScreenPos, DepthSampler, OffsetX=0.5, OffsetY=0.5, MinFilter=point, MagFilter=point, MipFilter=point
             }
             ;
 

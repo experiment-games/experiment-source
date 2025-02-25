@@ -197,8 +197,8 @@ void CHudMenu::Paint()
 
         bool canblur = false;
         if ( line->menuitem != 0 &&
-             m_nSelectedItem >= 0 &&
-             ( line->menuitem == m_nSelectedItem ) )
+            m_nSelectedItem >= 0 &&
+            ( line->menuitem == m_nSelectedItem ) )
         {
             canblur = true;
         }
@@ -278,7 +278,7 @@ void CHudMenu::ProcessText( void )
             break;
 
         if ( i == startpos &&
-             ( ch == L'-' && g_szMenuString[i + 1] == L'>' ) )
+            ( ch == L'-' && g_szMenuString[i + 1] == L'>' ) )
         {
             // Special handling for menu item specifiers
             swscanf( &g_szMenuString[i + 2], L"%d", &menuitem );

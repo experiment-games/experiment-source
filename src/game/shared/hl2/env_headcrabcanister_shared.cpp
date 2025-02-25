@@ -109,11 +109,11 @@ DEFINE_FIELD( m_vecStartPosition, FIELD_POSITION_VECTOR ),
 // Creates a headcrab canister in the world
 //-----------------------------------------------------------------------------
 void CEnvHeadcrabCanisterShared::InitInWorld( float flLaunchTime,
-                                              const Vector &vecStartPosition,
-                                              const QAngle &vecStartAngles,
-                                              const Vector &vecDirection,
-                                              const Vector &vecImpactPosition,
-                                              bool bLaunchedFromWithinWorld )
+                                            const Vector &vecStartPosition,
+                                            const QAngle &vecStartAngles,
+                                            const Vector &vecDirection,
+                                            const Vector &vecImpactPosition,
+                                            bool bLaunchedFromWithinWorld )
 {
     Vector vecActualStartPosition = vecStartPosition;
     if ( !bLaunchedFromWithinWorld )
@@ -162,12 +162,12 @@ void CEnvHeadcrabCanisterShared::InitInWorld( float flLaunchTime,
 // Creates a headcrab canister in the skybox
 //-----------------------------------------------------------------------------
 void CEnvHeadcrabCanisterShared::InitInSkybox( float flLaunchTime,
-                                               const Vector &vecStartPosition,
-                                               const QAngle &vecStartAngles,
-                                               const Vector &vecDirection,
-                                               const Vector &vecImpactPosition,
-                                               const Vector &vecSkyboxOrigin,
-                                               float flSkyboxScale )
+                                                const Vector &vecStartPosition,
+                                                const QAngle &vecStartAngles,
+                                                const Vector &vecDirection,
+                                                const Vector &vecImpactPosition,
+                                                const Vector &vecSkyboxOrigin,
+                                                float flSkyboxScale )
 {
     // Compute a horizontal speed (constant)
     m_vecParabolaDirection.Init( vecDirection.x, vecDirection.y, 0.0f );
@@ -320,66 +320,66 @@ void CEnvHeadcrabCanisterShared::CalcEnterTime( const Vector &vecTriggerMins,
     float flFrac, flDistStart, flDistEnd;
     for( int iAxis = 0; iAxis < 3; iAxis++ )
     {
-      // Negative Axis
-      flDistStart = -m_vecStartPosition[iAxis] + vecTriggerMins[iAxis];
-      flDistEnd = -vecEndPosition[iAxis] + vecTriggerMins[iAxis];
+    // Negative Axis
+    flDistStart = -m_vecStartPosition[iAxis] + vecTriggerMins[iAxis];
+    flDistEnd = -vecEndPosition[iAxis] + vecTriggerMins[iAxis];
 
-      if ( ( flDistStart > 0.0f ) && ( flDistEnd < 0.0f ) )
-      {
+    if ( ( flDistStart > 0.0f ) && ( flDistEnd < 0.0f ) )
+    {
         flFrac = ( flDistStart - HEADCRABCANISTER_TRIGGER_EPSILON ) / ( flDistStart - flDistEnd );
         if ( flFrac > flEnterFrac ) { flEnterFrac = flFrac; }
-      }
+    }
 
-      if ( ( flDistStart < 0.0f ) && ( flDistEnd > 0.0f ) )
-      {
+    if ( ( flDistStart < 0.0f ) && ( flDistEnd > 0.0f ) )
+    {
         flFrac = ( flDistStart + HEADCRABCANISTER_TRIGGER_EPSILON ) / ( flDistStart - flDistEnd );
         if( flFrac < flExitFrac ) { flExitFrac = flFrac; }
-      }
+    }
 
-      if ( ( flDistStart > 0.0f ) && ( flDistEnd > 0.0f ) )
+    if ( ( flDistStart > 0.0f ) && ( flDistEnd > 0.0f ) )
         return;
 
-      // Positive Axis
-      flDistStart = m_vecStartPosition[iAxis] - vecTriggerMaxs[iAxis];
-      flDistEnd = vecEndPosition[iAxis] - vecTriggerMaxs[iAxis];
+    // Positive Axis
+    flDistStart = m_vecStartPosition[iAxis] - vecTriggerMaxs[iAxis];
+    flDistEnd = vecEndPosition[iAxis] - vecTriggerMaxs[iAxis];
 
-      if ( ( flDistStart > 0.0f ) && ( flDistEnd < 0.0f ) )
-      {
+    if ( ( flDistStart > 0.0f ) && ( flDistEnd < 0.0f ) )
+    {
         flFrac = ( flDistStart - HEADCRABCANISTER_TRIGGER_EPSILON ) / ( flDistStart - flDistEnd );
         if ( flFrac > flEnterFrac ) { flEnterFrac = flFrac; }
-      }
+    }
 
-      if ( ( flDistStart < 0.0f ) && ( flDistEnd > 0.0f ) )
-      {
+    if ( ( flDistStart < 0.0f ) && ( flDistEnd > 0.0f ) )
+    {
         flFrac = ( flDistStart + HEADCRABCANISTER_TRIGGER_EPSILON ) / ( flDistStart - flDistEnd );
         if( flFrac < flExitFrac ) { flExitFrac = flFrac; }
-      }
+    }
 
-      if ( ( flDistStart > 0.0f ) && ( flDistEnd > 0.0f ) )
+    if ( ( flDistStart > 0.0f ) && ( flDistEnd > 0.0f ) )
         return;
     }
 
     // Check for intersection.
     if ( flExitFrac >= flEnterFrac )
     {
-      // Check to see if we start in the world or the skybox!
-      if ( flEnterFrac == 0.0f )
-      {
+    // Check to see if we start in the world or the skybox!
+    if ( flEnterFrac == 0.0f )
+    {
         m_nLocation = HEADCRABCANISTER_LOCATION_WORLD;
-      }
-      else
-      {
+    }
+    else
+    {
         m_nLocation = HEADCRABCANISTER_LOCATION_SKYBOX;
-      }
+    }
 
-      // Calculate the enter/exit times.
-      Vector vecEnterPoint, vecExitPoint, vecDeltaPosition;
-      VectorSubtract( vecEndPosition, m_vecStartPosition, vecDeltaPosition );
-      VectorScale( vecDeltaPosition, flEnterFrac, vecEnterPoint );
-      VectorScale( vecDeltaPosition, flExitFrac, vecExitPoint );
+    // Calculate the enter/exit times.
+    Vector vecEnterPoint, vecExitPoint, vecDeltaPosition;
+    VectorSubtract( vecEndPosition, m_vecStartPosition, vecDeltaPosition );
+    VectorScale( vecDeltaPosition, flEnterFrac, vecEnterPoint );
+    VectorScale( vecDeltaPosition, flExitFrac, vecExitPoint );
 
-      m_flWorldEnterTime = vecEnterPoint.Length() / m_flFlightSpeed;
-      m_flWorldEnterTime += m_flLaunchTime;
+    m_flWorldEnterTime = vecEnterPoint.Length() / m_flFlightSpeed;
+    m_flWorldEnterTime += m_flLaunchTime;
     }
     */
 

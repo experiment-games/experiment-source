@@ -46,7 +46,7 @@ enum
 //-----------------------------------------------------------------------------
 class CVehicleWaypoint
 {
-   public:
+    public:
     CVehicleWaypoint( Vector &pPrevPoint, Vector &pCurPoint, Vector &pNextPoint, Vector &pNextNextPoint )
     {
         splinePoints[0] = pPrevPoint;
@@ -100,7 +100,7 @@ class CVehicleWaypoint
         return flSplineLength;
     }
 
-   public:
+    public:
     int iInitialPlaneSide;
     float flSplineLength;
     Vector splinePoints[4];
@@ -114,7 +114,7 @@ class CNPC_VehicleDriver : public CAI_BaseNPC
 {
     DECLARE_CLASS( CNPC_VehicleDriver, CAI_BaseNPC );
 
-   public:
+    public:
     DECLARE_DATADESC();
     DEFINE_CUSTOM_AI;
 
@@ -181,7 +181,7 @@ class CNPC_VehicleDriver : public CAI_BaseNPC
     void InputStopFiring( inputdata_t &inputdata );
     void InputGotoPathCorner( inputdata_t &inputdata );
 
-   public:
+    public:
     string_t m_iszVehicleName;
     IServerVehicle *m_pVehicleInterface;
     EHANDLE m_hVehicleEntity;

@@ -15,7 +15,7 @@ class CMapLoadBG : public vgui::EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CMapLoadBG, vgui::EditablePanel );
 
-   public:
+    public:
     CMapLoadBG( char const *panelName );
     ~CMapLoadBG();
 
@@ -23,10 +23,10 @@ class CMapLoadBG : public vgui::EditablePanel
     void OnMessage( const KeyValues *params, vgui::VPANEL fromPanel );
     void OnFileReceived( const char *fileName, unsigned int transferID );
 
-   protected:
+    protected:
     void ApplySchemeSettings( vgui::IScheme *pScheme );
 
-   private:
+    private:
     vgui::ImagePanel *m_pBackground;
 };
 

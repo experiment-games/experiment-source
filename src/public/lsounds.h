@@ -25,7 +25,7 @@ LUALIB_API lua_IAudioChannel *( luaL_checkaudiochannel )( lua_State *L, int narg
 
 class CPlayUrlCallbackData : public IBassManagerCallbackData
 {
-   public:
+    public:
     virtual void Release() OVERRIDE;
 
     lua_State *L;

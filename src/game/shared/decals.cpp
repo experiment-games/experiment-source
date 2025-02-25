@@ -27,7 +27,7 @@
 //-----------------------------------------------------------------------------
 class CDecalEmitterSystem : public IDecalEmitterSystem, public CAutoGameSystem
 {
-   public:
+    public:
     CDecalEmitterSystem( char const *name )
         : CAutoGameSystem( name )
     {
@@ -42,7 +42,7 @@ class CDecalEmitterSystem : public IDecalEmitterSystem, public CAutoGameSystem
     virtual const char *GetDecalNameForIndex( int nIndex );
     virtual char const *TranslateDecalForGameMaterial( char const *decalName, unsigned char gamematerial );
 
-   private:
+    private:
     char const *ImpactDecalForGameMaterial( int gamematerial );
     void LoadDecalsFromScript( char const *filename );
     void Clear();
@@ -251,8 +251,8 @@ void CDecalEmitterSystem::LoadDecalsFromScript( char const *filename )
         if ( !translation )
         {
             Msg( "CDecalEmitterSystem::LoadDecalsFromScript:  Script '%s' missing section '%s'\n",
-                 filename,
-                 TRANSLATION_DATA_SECTION );
+                filename,
+                TRANSLATION_DATA_SECTION );
         }
         else
         {
@@ -271,8 +271,8 @@ void CDecalEmitterSystem::LoadDecalsFromScript( char const *filename )
                 else
                 {
                     Msg( "CDecalEmitterSystem::LoadDecalsFromScript:  Translation for game material type '%s' references unknown decal '%s'\n",
-                         sub->GetName(),
-                         sub->GetString() );
+                        sub->GetName(),
+                        sub->GetString() );
                 }
             }
         }

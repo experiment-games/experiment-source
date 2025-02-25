@@ -16,7 +16,7 @@
 //-----------------------------------------------------------------------------
 class MouseOverHTMLButton : public vgui::Button
 {
-   public:
+    public:
     MouseOverHTMLButton( vgui::Panel *parent, const char *panelName, vgui::HTML *html, const char *page )
         : Button( parent, panelName, "MouseOverHTMLButton" )
     {
@@ -66,7 +66,7 @@ class MouseOverHTMLButton : public vgui::Button
         m_pHTML = html;
     }
 
-   private:
+    private:
     virtual void OnCursorEntered()
     {
         Button::OnCursorEntered();

@@ -27,7 +27,7 @@ class CDmeHandle;
 //-----------------------------------------------------------------------------
 class CDmaColor : public CDmaVar< Color >
 {
-   public:
+    public:
     // Set methods
     void SetColor( int r, int g, int b, int a = 0 );
     void SetRed( int r );
@@ -51,7 +51,7 @@ class CDmaColor : public CDmaVar< Color >
 //-----------------------------------------------------------------------------
 class CDmaObjectId : public CDmaVar< DmObjectId_t >
 {
-   public:
+    public:
     void CreateObjectId();
     void Invalidate();
     bool IsValid() const;
@@ -66,7 +66,7 @@ class CDmaObjectId : public CDmaVar< DmObjectId_t >
 //-----------------------------------------------------------------------------
 class CDmaBinaryBlock : public CDmaVar< CUtlBinaryBlock >
 {
-   public:
+    public:
     void Get( void *pValue, int nMaxLen ) const;
     void Set( const void *pValue, int nLen );
     const void *Get() const;
@@ -84,7 +84,7 @@ class CDmaElement : public CDmaVar< DmElementHandle_t >
 {
     typedef CDmaVar< DmElementHandle_t > BaseClass;
 
-   public:
+    public:
     // Used to initialize the attribute in an element's OnConstruction method
     void InitAndCreate( CDmElement *pOwner, const char *pAttributeName, const char *pElementName = NULL, int flags = 0 );
     void Init( CDmElement *pOwner, const char *pAttributeName, int flags = 0 );
@@ -137,7 +137,7 @@ class CDmaElement : public CDmaVar< DmElementHandle_t >
 //-----------------------------------------------------------------------------
 class CDmrGenericArrayConst
 {
-   public:
+    public:
     CDmrGenericArrayConst( const CDmAttribute *pAttribute );
     CDmrGenericArrayConst( const CDmElement *pElement, const char *pAttributeName );
 
@@ -153,7 +153,7 @@ class CDmrGenericArrayConst
     const CDmAttribute *GetAttribute() const;
     bool IsValid() const;
 
-   protected:
+    protected:
     CDmrGenericArrayConst();
     void Init( const CDmAttribute *pAttribute );
     void Init( const CDmElement *pElement, const char *pAttributeName );
@@ -163,7 +163,7 @@ class CDmrGenericArrayConst
 
 class CDmrGenericArray : public CDmrGenericArrayConst
 {
-   public:
+    public:
     CDmrGenericArray( CDmAttribute *pAttribute );
     CDmrGenericArray( CDmElement *pElement, const char *pAttributeName );
 
@@ -196,7 +196,7 @@ class CDmrGenericArray : public CDmrGenericArrayConst
 template < class T, class B >
 class CDmaArrayConstBase : public B
 {
-   public:
+    public:
     // Accessors
     const CUtlVector< T > &Get() const;
     const T *Base() const;
@@ -218,7 +218,7 @@ class CDmaArrayConstBase : public B
     CDmElement *GetOwner();
     bool IsDirty() const;
 
-   protected:
+    protected:
     CDmaArrayConstBase();
 
     CDmAttribute *m_pAttribute;
@@ -227,7 +227,7 @@ class CDmaArrayConstBase : public B
 template < class T, class B >
 class CDmaArrayBase : public CDmaArrayConstBase< T, B >
 {
-   public:
+    public:
     // Insertion
     int AddToTail();
     int InsertBefore( int elem );
@@ -274,7 +274,7 @@ class CDmaArrayBase : public CDmaArrayConstBase< T, B >
 template < class BaseClass >
 class CDmaStringArrayConstBase : public BaseClass
 {
-   public:
+    public:
     const char *operator[]( int i ) const;
     const char *Element( int i ) const;
     const char *Get( int i ) const;
@@ -289,7 +289,7 @@ class CDmaStringArrayBase : public CDmaStringArrayConstBase< CDmaArrayBase< CUtl
 {
     typedef CDmaStringArrayConstBase< CDmaArrayBase< CUtlString, B > > BaseClass;
 
-   public:
+    public:
     // Sets an element in the array
     void Set( int i, const char *pValue );
 
@@ -308,7 +308,7 @@ class CDmaStringArrayBase : public CDmaStringArrayConstBase< CDmaArrayBase< CUtl
 template < class E, class BaseClass >
 class CDmaElementArrayConstBase : public BaseClass
 {
-   public:
+    public:
     // Returns the element type
     UtlSymId_t GetElementType() const;
 
@@ -329,7 +329,7 @@ class CDmaElementArrayBase : public CDmaElementArrayConstBase< E, CDmaArrayBase<
 {
     typedef CDmaElementArrayConstBase< E, CDmaArrayBase< DmElementHandle_t, B > > BaseClass;
 
-   public:
+    public:
     void SetHandle( int i, DmElementHandle_t h );
     void Set( int i, E *pElement );
 
@@ -362,7 +362,7 @@ class CDmaElementArrayBase : public CDmaElementArrayConstBase< E, CDmaArrayBase<
 template < typename T >
 class CDmaDataInternal
 {
-   protected:
+    protected:
     typedef typename CDmAttributeInfo< T >::StorageType_t D;
 
     const T &Value() const
@@ -382,14 +382,14 @@ class CDmaDataInternal
         return m_Storage;
     }
 
-   private:
+    private:
     D m_Storage;
 };
 
 template < typename T >
 class CDmaDataExternal
 {
-   protected:
+    protected:
     typedef typename CDmAttributeInfo< T >::StorageType_t D;
 
     CDmaDataExternal()
@@ -415,7 +415,7 @@ class CDmaDataExternal
         return *m_pStorage;
     }
 
-   private:
+    private:
     D *m_pStorage;
 };
 
@@ -425,14 +425,14 @@ class CDmaDataExternal
 template < class T, class B >
 class CDmaDecorator : public B
 {
-   public:
+    public:
     void Init( CDmElement *pOwner, const char *pAttributeName, int flags = 0 );
 };
 
 template < class T, class BaseClass >
 class CDmrDecoratorConst : public BaseClass
 {
-   public:
+    public:
     void Init( const CDmAttribute *pAttribute );
     void Init( const CDmElement *pElement, const char *pAttributeName );
 
@@ -442,7 +442,7 @@ class CDmrDecoratorConst : public BaseClass
 template < class T, class BaseClass >
 class CDmrDecorator : public BaseClass
 {
-   public:
+    public:
     void Init( CDmAttribute *pAttribute );
     void Init( CDmElement *pElement, const char *pAttributeName, bool bAddAttribute = false );
 
@@ -450,11 +450,11 @@ class CDmrDecorator : public BaseClass
 };
 
 #define DECLARE_ATTRIBUTE_ARRAY_VARIABLE( _className, _elementType ) \
-   public:                                                           \
+    public:                                                           \
     _className() {}
 
 #define DECLARE_ATTRIBUTE_ARRAY_REFERENCE( _className, _elementType )                          \
-   public:                                                                                     \
+    public:                                                                                     \
     _className() {}                                                                            \
     _className( CDmAttribute *pAttribute )                                                     \
     {                                                                                          \
@@ -474,7 +474,7 @@ class CDmrDecorator : public BaseClass
     }
 
 #define DECLARE_ATTRIBUTE_ARRAY_CONST_REFERENCE( _className, _elementType ) \
-   public:                                                                  \
+    public:                                                                  \
     _className() {}                                                         \
     _className( const CDmAttribute *pAttribute )                            \
     {                                                                       \
@@ -512,7 +512,7 @@ class CDmaArray : public CDmaDecorator< T, CDmaArrayBase< T, CDmaDataInternal< C
 {
     DECLARE_ATTRIBUTE_ARRAY_VARIABLE( CDmaArray, T );
 
-   public:
+    public:
     const CDmaArray< T > &operator=( const CDmaArray< T > &val )
     {
         CopyArray( val.Base(), val.Count() );
@@ -526,7 +526,7 @@ class CDmaArray : public CDmaDecorator< T, CDmaArrayBase< T, CDmaDataInternal< C
         return *this;
     }
 
-   private:
+    private:
     CDmaArray( const CDmaArray &array ) {}
 };
 
@@ -543,7 +543,7 @@ class CDmrArray : public CDmrDecorator< T, CDmaArrayBase< T, CDmaDataExternal< C
     typedef CDmrDecorator< T, CDmaArrayBase< T, CDmaDataExternal< CUtlVector< T > > > > BaseClass;
     DECLARE_ATTRIBUTE_ARRAY_REFERENCE( CDmrArray, T );
 
-   public:
+    public:
     const CDmrArray< T > &operator=( const CDmrArray< T > &val )
     {
         CopyArray( val.Base(), val.Count() );
@@ -564,7 +564,7 @@ class CDmaStringArray : public CDmaDecorator< CUtlString, CDmaStringArrayBase< C
 {
     DECLARE_ATTRIBUTE_ARRAY_VARIABLE( CDmaStringArray, CUtlString );
 
-   public:
+    public:
     const CDmaStringArray &operator=( const CDmaStringArray &val )
     {
         CopyArray( val.Base(), val.Count() );
@@ -578,7 +578,7 @@ class CDmaStringArray : public CDmaDecorator< CUtlString, CDmaStringArrayBase< C
         return *this;
     }
 
-   private:
+    private:
     CDmaStringArray( const CDmaStringArray &array ) {}
 };
 
@@ -587,7 +587,7 @@ class CDmrStringArray : public CDmrDecorator< CUtlString, CDmaStringArrayBase< C
     typedef CDmrDecorator< CUtlString, CDmaStringArrayBase< CDmaDataExternal< CUtlVector< CUtlString > > > > BaseClass;
     DECLARE_ATTRIBUTE_ARRAY_REFERENCE( CDmrStringArray, CUtlString );
 
-   public:
+    public:
     CDmrStringArray( CDmaStringArray &var )
     {
         Init( var.GetAttribute() );
@@ -616,7 +616,7 @@ class CDmrStringArrayConst : public CDmrDecoratorConst< CUtlString, CDmaStringAr
     typedef CDmrDecoratorConst< CUtlString, CDmaStringArrayConstBase< CDmaArrayConstBase< CUtlString, CDmaDataExternal< CUtlVector< CUtlString > > > > > BaseClass;
     DECLARE_ATTRIBUTE_ARRAY_CONST_REFERENCE( CDmrStringArrayConst, CUtlString );
 
-   public:
+    public:
     CDmrStringArrayConst( const CDmaStringArray &var )
     {
         Init( var.GetAttribute() );
@@ -637,7 +637,7 @@ class CDmrStringArrayConst : public CDmrDecoratorConst< CUtlString, CDmaStringAr
 template <>
 class CDmaArray< DmElementHandle_t >
 {
-   private:
+    private:
     CDmaArray();
 };
 
@@ -649,7 +649,7 @@ class CDmaElementArray : public CDmaElementArrayBase< E, CDmaDataInternal< CUtlV
 {
     DECLARE_ATTRIBUTE_ARRAY_VARIABLE( CDmaElementArray, DmElementHandle_t );
 
-   public:
+    public:
     void Init( CDmElement *pOwner, const char *pAttributeName, int flags = 0 )
     {
         Assert( pOwner );
@@ -675,7 +675,7 @@ class CDmaElementArray : public CDmaElementArrayBase< E, CDmaDataInternal< CUtlV
         return *this;
     }
 
-   private:
+    private:
     template < class C >
     CDmaElementArray( const CDmaElementArray< C > &var );
 };
@@ -683,7 +683,7 @@ class CDmaElementArray : public CDmaElementArrayBase< E, CDmaDataInternal< CUtlV
 template < class E = CDmElement >
 class CDmrElementArrayConst : public CDmaElementArrayConstBase< E, CDmaArrayConstBase< DmElementHandle_t, CDmaDataExternal< CUtlVector< DmElementHandle_t > > > >
 {
-   public:
+    public:
     CDmrElementArrayConst()
     {
         this->m_pAttribute = NULL;
@@ -750,7 +750,7 @@ class CDmrElementArrayConst : public CDmaElementArrayConstBase< E, CDmaArrayCons
 template < class T = CDmElement >
 class CDmrElementArray : public CDmaElementArrayBase< T, CDmaDataExternal< CUtlVector< DmElementHandle_t > > >
 {
-   public:
+    public:
     CDmrElementArray()
     {
         this->m_pAttribute = NULL;

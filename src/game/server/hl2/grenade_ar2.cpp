@@ -142,7 +142,7 @@ void CGrenadeAR2::GrenadeAR2Think( void )
     if ( m_bIsLive )
     {
         if ( GetAbsVelocity().Length() == 0.0 ||
-             GetGroundEntity() != NULL )
+            GetGroundEntity() != NULL )
         {
             Detonate();
         }

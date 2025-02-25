@@ -22,7 +22,7 @@
 
 class CSIMDVectorMatrix
 {
-   public:
+    public:
     int m_nWidth;  // in actual vectors
     int m_nHeight;
 
@@ -30,7 +30,7 @@ class CSIMDVectorMatrix
 
     FourVectors *m_pData;
 
-   protected:
+    protected:
     void Init( void )
     {
         m_pData = NULL;
@@ -44,7 +44,7 @@ class CSIMDVectorMatrix
         return m_nHeight * m_nPaddedWidth;
     }
 
-   public:
+    public:
     // constructors and destructors
     CSIMDVectorMatrix( void )
     {
@@ -98,9 +98,9 @@ class CSIMDVectorMatrix
 
     // create from 3 fields in a csoa
     void CreateFromCSOAAttributes( CSOAContainer const *pSrc,
-                                   int nAttrIdx0,
-                                   int nAttrIdx1,
-                                   int nAttrIdx2 );
+                                    int nAttrIdx0,
+                                    int nAttrIdx1,
+                                    int nAttrIdx2 );
 
     // Element access. If you are calling this a lot, you don't want to use this class, because
     // you're not getting the sse advantage

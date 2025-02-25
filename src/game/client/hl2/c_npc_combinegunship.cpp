@@ -36,7 +36,7 @@ CLIENTEFFECT_REGISTER_END()
 
 class C_GunshipFX : public C_EnvelopeFX
 {
-   public:
+    public:
     typedef C_EnvelopeFX BaseClass;
 
     C_GunshipFX();
@@ -90,7 +90,7 @@ enum
 
 class CGunshipFXEnvelope
 {
-   public:
+    public:
     CGunshipFXEnvelope();
 
     void AddKey( int parameterIndex, const CSimpleKeyInterp &key )
@@ -362,7 +362,7 @@ class C_CombineGunship : public C_BaseHelicopter
 {
     DECLARE_CLASS( C_CombineGunship, C_BaseHelicopter );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
 
     C_CombineGunship( void ) {}
@@ -439,7 +439,7 @@ class C_CombineGunship : public C_BaseHelicopter
         }
     }
 
-   private:
+    private:
     C_CombineGunship( const C_CombineGunship & ) {}
 };
 

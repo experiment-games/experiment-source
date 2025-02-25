@@ -24,8 +24,8 @@
 
 CReplayPreviewPanelBase::CReplayPreviewPanelBase( Panel *pParent, QueryableReplayItemHandle_t hItem, IReplayItemManager *pItemManager )
     : EditablePanel( pParent, "PreviewPanel" ),
-      m_hItem( hItem ),
-      m_pItemManager( pItemManager )
+    m_hItem( hItem ),
+    m_pItemManager( pItemManager )
 {
     CGenericClassBasedReplay *pReplay = GetReplay();
     IQueryableReplayItem *pItem = pItemManager->GetItem( hItem );
@@ -152,7 +152,7 @@ ReplayHandle_t CReplayPreviewPanelBase::GetReplayHandle()
 
 CReplayPreviewPanelSlideshow::CReplayPreviewPanelSlideshow( Panel *pParent, QueryableReplayItemHandle_t hReplay, IReplayItemManager *pItemManager )
     : BaseClass( pParent, hReplay, pItemManager ),
-      m_pScreenshotPanel( NULL )
+    m_pScreenshotPanel( NULL )
 {
     // Setup screenshot slideshow panel
     CGenericClassBasedReplay *pReplay = GetReplay();
@@ -228,7 +228,7 @@ void CReplayPreviewPanelSlideshow::LayoutView( int &nWide, int &nTall, int &nCur
 
 CReplayPreviewPanelMovie::CReplayPreviewPanelMovie( Panel *pParent, QueryableReplayItemHandle_t hItem, IReplayItemManager *pItemManager )
     : BaseClass( pParent, hItem, pItemManager ),
-      m_pMoviePlayerPanel( NULL )
+    m_pMoviePlayerPanel( NULL )
 {
     m_flCreateTime = gpGlobals->realtime;
 

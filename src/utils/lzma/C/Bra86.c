@@ -21,62 +21,62 @@ SizeT x86_Convert(Byte *data, SizeT size, UInt32 ip, UInt32 *state, int encoding
     Byte *p = data + pos;
     const Byte *limit = data + size;
     for (; p < limit; p++)
-      if ((*p & 0xFE) == 0xE8)
+    if ((*p & 0xFE) == 0xE8)
         break;
 
     {
-      SizeT d = (SizeT)(p - data - pos);
-      pos = (SizeT)(p - data);
-      if (p >= limit)
-      {
+    SizeT d = (SizeT)(p - data - pos);
+    pos = (SizeT)(p - data);
+    if (p >= limit)
+    {
         *state = (d > 2 ? 0 : mask >> (unsigned)d);
         return pos;
-      }
-      if (d > 2)
+    }
+    if (d > 2)
         mask = 0;
-      else
-      {
+    else
+    {
         mask >>= (unsigned)d;
         if (mask != 0 && (mask > 4 || mask == 3 || Test86MSByte(p[(mask >> 1) + 1])))
         {
-          mask = (mask >> 1) | 4;
-          pos++;
-          continue;
+        mask = (mask >> 1) | 4;
+        pos++;
+        continue;
         }
-      }
+    }
     }
 
     if (Test86MSByte(p[4]))
     {
-      UInt32 v = ((UInt32)p[4] << 24) | ((UInt32)p[3] << 16) | ((UInt32)p[2] << 8) | ((UInt32)p[1]);
-      UInt32 cur = ip + (UInt32)pos;
-      pos += 5;
-      if (encoding)
+    UInt32 v = ((UInt32)p[4] << 24) | ((UInt32)p[3] << 16) | ((UInt32)p[2] << 8) | ((UInt32)p[1]);
+    UInt32 cur = ip + (UInt32)pos;
+    pos += 5;
+    if (encoding)
         v += cur;
-      else
+    else
         v -= cur;
-      if (mask != 0)
-      {
+    if (mask != 0)
+    {
         unsigned sh = (mask & 6) << 2;
         if (Test86MSByte((Byte)(v >> sh)))
         {
-          v ^= (((UInt32)0x100 << sh) - 1);
-          if (encoding)
+        v ^= (((UInt32)0x100 << sh) - 1);
+        if (encoding)
             v += cur;
-          else
+        else
             v -= cur;
         }
         mask = 0;
-      }
-      p[1] = (Byte)v;
-      p[2] = (Byte)(v >> 8);
-      p[3] = (Byte)(v >> 16);
-      p[4] = (Byte)(0 - ((v >> 24) & 1));
+    }
+    p[1] = (Byte)v;
+    p[2] = (Byte)(v >> 8);
+    p[3] = (Byte)(v >> 16);
+    p[4] = (Byte)(0 - ((v >> 24) & 1));
     }
     else
     {
-      mask = (mask >> 1) | 4;
-      pos++;
+    mask = (mask >> 1) | 4;
+    pos++;
     }
   }
 }

@@ -15,7 +15,7 @@
 DEFINE_FALLBACK_SHADER( WorldVertexTransition, WorldVertexTransition_DX6 )
 
 BEGIN_SHADER( WorldVertexTransition_DX6,
-              "Help for WorldVertexTransition_dx6" )
+            "Help for WorldVertexTransition_dx6" )
 
 BEGIN_SHADER_PARAMS
 SHADER_PARAM( BASETEXTURE2, SHADER_PARAM_TYPE_TEXTURE, "shadertest/BaseTexture2", "base texture2 help" )

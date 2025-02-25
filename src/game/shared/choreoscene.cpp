@@ -1196,8 +1196,8 @@ CChoreoEvent *CChoreoScene::ParseEvent( CChoreoActor *actor, CChoreoChannel *cha
     {
         // Only retrofit if something was changed by user
         if ( attack != 1.0f ||
-             sustain != 1.0f ||
-             decay != 1.0f )
+            sustain != 1.0f ||
+            decay != 1.0f )
         {
             float attacktime = ( 1.0f - attack ) * e->GetDuration();
             float decaytime = decay * e->GetDuration();
@@ -1756,8 +1756,8 @@ void CCurveData::FileSave( CUtlBuffer &buf, int level, const char *name )
     // Nothing to save?
     int c = GetCount();
     if ( c <= 0 &&
-         !IsEdgeActive( true ) &&
-         !IsEdgeActive( false ) )
+        !IsEdgeActive( true ) &&
+        !IsEdgeActive( false ) )
         return;
 
     char line[1024];
@@ -2094,7 +2094,7 @@ void CChoreoScene::FileSaveEvent( CUtlBuffer &buf, int level, CChoreoEvent *e )
         FilePrintf( buf, level + 1, "cctype \"%s\"\n", CChoreoEvent::NameForCCType( e->GetCloseCaptionType() ) );
         FilePrintf( buf, level + 1, "cctoken \"%s\"\n", e->GetCloseCaptionToken() );
         if ( e->GetCloseCaptionType() != CChoreoEvent::CC_DISABLED &&
-             e->IsUsingCombinedFile() )
+            e->IsUsingCombinedFile() )
         {
             FilePrintf( buf, level + 1, "cc_usingcombinedfile\n" );
         }
@@ -2419,7 +2419,7 @@ int CChoreoScene::EventThink( CChoreoEvent *e, float frame_start_time, float fra
                     //  adjusted start time, but make sure that the pause event hasn't already triggered...
                     CChoreoEvent *pauseEvent = FindPauseBetweenTimes( starttime, starttime + m_flSoundSystemLatency );
                     if ( pauseEvent &&
-                         ( frame_start_time <= pauseEvent->GetStartTime() ) )
+                        ( frame_start_time <= pauseEvent->GetStartTime() ) )
                     {
                         pauseEvent->AddEventDependency( e );
 
@@ -2430,17 +2430,17 @@ int CChoreoScene::EventThink( CChoreoEvent *e, float frame_start_time, float fra
                 else
                 // Don't bother if playing backward!!!
                 {
-                  endtime += m_flSoundSystemLatency;
+                endtime += m_flSoundSystemLatency;
 
-                  // Search for pause condition in between the original time and the
-                  //  adjusted start time
-                  CChoreoEvent *pauseEvent = FindPauseBetweenTimes( endtime - m_flSoundSystemLatency, endtime );
-                  if ( pauseEvent )
-                  {
+                // Search for pause condition in between the original time and the
+                //  adjusted start time
+                CChoreoEvent *pauseEvent = FindPauseBetweenTimes( endtime - m_flSoundSystemLatency, endtime );
+                if ( pauseEvent )
+                {
                     pauseEvent->AddEventDependency( e );
 
                     suppressed = true;
-                  }
+                }
                 }
                 */
 
@@ -2742,11 +2742,11 @@ void CChoreoScene::ProcessActiveListEntry( ActiveList *entry )
     if ( dump )
     {
         Msg( "%f == %s starting at %f (actor %p channel %p)\n",
-             m_flCurrentTime,
-             entry->e->GetName(),
-             entry->e->GetStartTime(),
-             entry->e->GetActor(),
-             entry->e->GetChannel() );
+            m_flCurrentTime,
+            entry->e->GetName(),
+            entry->e->GetStartTime(),
+            entry->e->GetActor(),
+            entry->e->GetChannel() );
     }
 
     switch ( entry->pt )
@@ -2985,7 +2985,7 @@ void CChoreoScene::ResumeSimulation( void )
 {
     // If the thing that paused us was a SECTION pause event, then this will be set
     if ( m_nLastPauseEvent >= 0 &&
-         m_nLastPauseEvent < m_PauseEvents.Count() )
+        m_nLastPauseEvent < m_PauseEvents.Count() )
     {
         // Start any suppressed dependencies immediately, should only be .wav files!!!
         // These are .wav files which are placed at or just after the SECTION pause event
@@ -3504,9 +3504,9 @@ bool CChoreoScene::Merge( CChoreoScene *other )
     }
 
     Msg( "Merged in (%i) actors, (%i) channels, and (%i) events\n",
-         acount,
-         ccount,
-         ecount );
+        acount,
+        ccount,
+        ecount );
 
     return ( ecount || acount || ccount );
 }
@@ -3640,7 +3640,7 @@ bool CChoreoScene::SaveBinary( char const *pszBinaryFileName, char const *pPathI
     SaveToBinaryBuffer( buf, nTextVersionCRC, pStringPool );
 
     if ( g_pFullFileSystem->FileExists( pszBinaryFileName, pPathID ) &&
-         !g_pFullFileSystem->IsFileWritable( pszBinaryFileName, pPathID ) )
+        !g_pFullFileSystem->IsFileWritable( pszBinaryFileName, pPathID ) )
     {
         Warning( "Forcing '%s' to be writable!!!\n", pszBinaryFileName );
         g_pFullFileSystem->SetFileWritable( pszBinaryFileName, true, pPathID );
@@ -3714,7 +3714,7 @@ void CChoreoScene::SaveToBinaryBuffer( CUtlBuffer &buf, unsigned int nTextVersio
     // compiled version strips out map name, only used by editor
     if ( m_szMapname[ 0 ] )
     {
-      FilePrintf( buf, 0, "mapname \"%s\"\n", m_szMapname );
+    FilePrintf( buf, 0, "mapname \"%s\"\n", m_szMapname );
     }
     */
 

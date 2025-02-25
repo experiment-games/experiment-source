@@ -33,7 +33,7 @@ class IReplayRenderQueue;
 
 class IClientReplayContext : public IReplayContext
 {
-   public:
+    public:
     virtual CReplay *GetReplay( ReplayHandle_t hReplay ) = 0;  // Shorthand to GetReplayManager()->GetReplay()
     virtual IReplayManager *GetReplayManager() = 0;
     virtual IReplayMovieRenderer *GetMovieRenderer() = 0;

@@ -444,8 +444,8 @@ bool RotateImage180( const unsigned char *src, unsigned char *dst, int widthHeig
 bool FlipImageVertically( void *pSrc, void *pDst, int nWidth, int nHeight, ImageFormat imageFormat, int nDstStride = 0 );
 bool FlipImageHorizontally( void *pSrc, void *pDst, int nWidth, int nHeight, ImageFormat imageFormat, int nDstStride = 0 );
 bool SwapAxes( unsigned char *src,
-               int widthHeight,
-               ImageFormat imageFormat );
+                int widthHeight,
+                ImageFormat imageFormat );
 
 //-----------------------------------------------------------------------------
 // Returns info about each image format

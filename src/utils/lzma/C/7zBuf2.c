@@ -28,7 +28,7 @@ int DynBuf_Write(CDynBuf *p, const Byte *buf, size_t size, ISzAlloc *alloc)
     newSize += newSize / 4;
     data = (Byte *)alloc->Alloc(alloc, newSize);
     if (data == 0)
-      return 0;
+    return 0;
     p->size = newSize;
     memcpy(data, p->data, p->pos);
     alloc->Free(alloc, p->data);

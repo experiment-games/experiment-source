@@ -205,7 +205,7 @@ TEST(ReflectionOpsTest, ClearExtensions) {
             &message.GetExtension(unittest::optional_nested_message_extension));
   EXPECT_NE(&unittest::ForeignMessage::default_instance(),
             &message.GetExtension(
-              unittest::optional_foreign_message_extension));
+            unittest::optional_foreign_message_extension));
   EXPECT_NE(&unittest_import::ImportMessage::default_instance(),
             &message.GetExtension(unittest::optional_import_message_extension));
 }
@@ -236,9 +236,9 @@ TEST(ReflectionOpsTest, DiscardUnknownFields) {
 
   EXPECT_EQ(1, message.unknown_fields().field_count());
   EXPECT_EQ(1, message.optional_nested_message()
-                      .unknown_fields().field_count());
+                    .unknown_fields().field_count());
   EXPECT_EQ(1, message.repeated_nested_message(0)
-                      .unknown_fields().field_count());
+                    .unknown_fields().field_count());
 
   // Discard them.
   ReflectionOps::DiscardUnknownFields(&message);
@@ -246,9 +246,9 @@ TEST(ReflectionOpsTest, DiscardUnknownFields) {
 
   EXPECT_EQ(0, message.unknown_fields().field_count());
   EXPECT_EQ(0, message.optional_nested_message()
-                      .unknown_fields().field_count());
+                    .unknown_fields().field_count());
   EXPECT_EQ(0, message.repeated_nested_message(0)
-                      .unknown_fields().field_count());
+                    .unknown_fields().field_count());
 }
 
 TEST(ReflectionOpsTest, DiscardUnknownExtensions) {
@@ -268,10 +268,10 @@ TEST(ReflectionOpsTest, DiscardUnknownExtensions) {
   EXPECT_EQ(1, message.unknown_fields().field_count());
   EXPECT_EQ(1,
     message.GetExtension(unittest::optional_nested_message_extension)
-           .unknown_fields().field_count());
+            .unknown_fields().field_count());
   EXPECT_EQ(1,
     message.GetExtension(unittest::repeated_nested_message_extension, 0)
-           .unknown_fields().field_count());
+            .unknown_fields().field_count());
 
   // Discard them.
   ReflectionOps::DiscardUnknownFields(&message);
@@ -280,10 +280,10 @@ TEST(ReflectionOpsTest, DiscardUnknownExtensions) {
   EXPECT_EQ(0, message.unknown_fields().field_count());
   EXPECT_EQ(0,
     message.GetExtension(unittest::optional_nested_message_extension)
-           .unknown_fields().field_count());
+            .unknown_fields().field_count());
   EXPECT_EQ(0,
     message.GetExtension(unittest::repeated_nested_message_extension, 0)
-           .unknown_fields().field_count());
+            .unknown_fields().field_count());
 }
 
 TEST(ReflectionOpsTest, IsInitialized) {

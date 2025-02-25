@@ -20,15 +20,15 @@ using namespace vgui;
 
 CMoviePlayerPanel::CMoviePlayerPanel( Panel *pParent, const char *pName, const char *pMovieFilename )
     : CReplayBasePanel( pParent, pName ),
-      m_flCurFrame( 0.0f ),
-      m_flLastTime( 0.0f ),
-      m_nLastMouseXPos( 0 ),
-      m_bPlaying( false ),
-      m_bLooping( false ),
-      m_bFullscreen( false ),
-      m_bMouseOverScrub( false ),
-      m_pOldParent( NULL ),
-      m_pVideoMaterial( NULL )
+    m_flCurFrame( 0.0f ),
+    m_flLastTime( 0.0f ),
+    m_nLastMouseXPos( 0 ),
+    m_bPlaying( false ),
+    m_bLooping( false ),
+    m_bFullscreen( false ),
+    m_bMouseOverScrub( false ),
+    m_pOldParent( NULL ),
+    m_pVideoMaterial( NULL )
 {
     if ( g_pVideo )
     {
@@ -129,7 +129,7 @@ void CMoviePlayerPanel::OnTick()
         int nMouseX, nMouseY;
         input()->GetCursorPos( nMouseX, nMouseY );
         if ( IsWithin( nMouseX, nMouseY ) &&
-             nMouseX != m_nLastMouseXPos )
+            nMouseX != m_nLastMouseXPos )
         {
             float flPercent = ( float )( nMouseX - m_nGlobalPos[0] ) / GetWide();
             m_flCurFrame = flPercent * ( m_nNumFrames - 1 );

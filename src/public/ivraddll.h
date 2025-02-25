@@ -18,13 +18,13 @@
 
 class CBSPInfo
 {
-   public:
+    public:
     byte *dlightdata;
     int lightdatasize;
 
     dface_t *dfaces;
     unsigned char *m_pFacesTouched;  // If non-null, then this has 1 byte for each face and
-                                     // tells which faces had their lightmaps updated.
+                                    // tells which faces had their lightmaps updated.
     int numfaces;
 
     dvertex_t *dvertexes;
@@ -55,7 +55,7 @@ class CBSPInfo
 // This is the DLL interface to VRAD.
 class IVRadDLL
 {
-   public:
+    public:
     // All vrad.exe does is load the VRAD DLL and run this.
     virtual int main( int argc, char **argv ) = 0;
 

@@ -45,7 +45,7 @@ typedef void ( *FN_FIELD_COMPARE )( const char *classname, const char *fieldname
 
 class CPredictionCopy
 {
-   public:
+    public:
     typedef enum
     {
         DIFFERS = 0,
@@ -79,7 +79,7 @@ class CPredictionCopy
 
     int TransferData( const char *operation, int entindex, datamap_t *dmap );
 
-   private:
+    private:
     void TransferData_R( int chaincount, datamap_t *dmap );
 
     void DetermineWatchField( const char *operation, int entindex, datamap_t *dmap );
@@ -130,7 +130,7 @@ class CPredictionCopy
 
     void CopyFields( int chaincount, datamap_t *pMap, typedescription_t *pFields, int fieldCount );
 
-   private:
+    private:
     int m_nType;
     void *m_pDest;
     void const *m_pSrc;
@@ -161,7 +161,7 @@ typedef void ( *FN_FIELD_DESCRIPTION )( const char *classname, const char *field
 //-----------------------------------------------------------------------------
 class CPredictionDescribeData
 {
-   public:
+    public:
     CPredictionDescribeData( void const *src, bool src_packed, FN_FIELD_DESCRIPTION func = 0 );
 
     void DescribeShort( const short *invalue, int count );
@@ -178,7 +178,7 @@ class CPredictionDescribeData
 
     void DumpDescription( datamap_t *pMap );
 
-   private:
+    private:
     void DescribeFields_R( int chain_count, datamap_t *pMap, typedescription_t *pFields, int fieldCount );
 
     void const *m_pSrc;
@@ -198,7 +198,7 @@ class CPredictionDescribeData
 #if defined( CLIENT_DLL )
 class CValueChangeTracker
 {
-   public:
+    public:
     CValueChangeTracker();
 
     void Reset();
@@ -215,7 +215,7 @@ class CValueChangeTracker
 
     C_BaseEntity *GetEntity();
 
-   private:
+    private:
     enum
     {
         eChangeTrackerBufSize = 128,
@@ -239,7 +239,7 @@ extern CValueChangeTracker *g_pChangeTracker;
 
 class CValueChangeTrackerScope
 {
-   public:
+    public:
     CValueChangeTrackerScope( char const *pchContext )
     {
         m_bCallEndTrack = true;
@@ -264,7 +264,7 @@ class CValueChangeTrackerScope
         }
     }
 
-   private:
+    private:
     bool m_bCallEndTrack;
 };
 

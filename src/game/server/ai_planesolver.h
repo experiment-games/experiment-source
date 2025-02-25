@@ -42,7 +42,7 @@ enum AI_SuggestorResult_t
 
 class CAI_PlaneSolver
 {
-   public:
+    public:
     // constructor
     CAI_PlaneSolver( CAI_BaseNPC *pNpc );
 
@@ -60,7 +60,7 @@ class CAI_PlaneSolver
         return ( m_Obstacles.Count() != 0 );
     }
 
-   private:
+    private:
     enum
     {
         DEGREES_POSITIVE_ARC = 270,
@@ -102,11 +102,11 @@ class CAI_PlaneSolver
     AI_SuggestorResult_t GenerateObstacleSuggestions( const AILocalMoveGoal_t &goal, const AIMoveTrace_t &directTrace, float distClear, float probeDist, float degreesToProbe, int nProbes );
     AI_SuggestorResult_t GenerateObstacleSuggestion( const AILocalMoveGoal_t &goal, float yawScanCenter, float probeDist, float spanPerProbe, int probeOffset );
     void GenerateSuggestionFromTrace( const AILocalMoveGoal_t &goal,
-                                      const AIMoveTrace_t &moveTrace,
-                                      float probeDist,
-                                      float arcCenter,
-                                      float arcSpan,
-                                      int probeOffset );
+                                    const AIMoveTrace_t &moveTrace,
+                                    float probeDist,
+                                    float arcCenter,
+                                    float arcSpan,
+                                    int probeOffset );
     bool GenerateCircleObstacleSuggestions( const AILocalMoveGoal_t &moveGoal, float probeDist );
 
     void CalcYawsFromOffset( float yawScanCenter, float spanPerProbe, int probeOffset, float *pYawTest, float *pYawCenter );
@@ -140,9 +140,9 @@ class CAI_PlaneSolver
     {
         CircleObstacles_t( const Vector &center, float radius, CBaseEntity *pEntity, AI_MoveSuggType_t type )
             : center( center ),
-              radius( radius ),
-              hEntity( pEntity ),
-              type( type )
+            radius( radius ),
+            hEntity( pEntity ),
+            type( type )
         {
         }
 

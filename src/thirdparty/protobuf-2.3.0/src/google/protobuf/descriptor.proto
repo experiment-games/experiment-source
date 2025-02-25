@@ -96,12 +96,12 @@ message FieldDescriptorProto {
     TYPE_DOUBLE         = 1;
     TYPE_FLOAT          = 2;
     TYPE_INT64          = 3;   // Not ZigZag encoded.  Negative numbers
-                               // take 10 bytes.  Use TYPE_SINT64 if negative
-                               // values are likely.
+                                // take 10 bytes.  Use TYPE_SINT64 if negative
+                                // values are likely.
     TYPE_UINT64         = 4;
     TYPE_INT32          = 5;   // Not ZigZag encoded.  Negative numbers
-                               // take 10 bytes.  Use TYPE_SINT32 if negative
-                               // values are likely.
+                                // take 10 bytes.  Use TYPE_SINT32 if negative
+                                // values are likely.
     TYPE_FIXED64        = 6;
     TYPE_FIXED32        = 7;
     TYPE_BOOL           = 8;
@@ -248,7 +248,7 @@ message FileOptions {
   // Generated classes can be optimized for speed or code size.
   enum OptimizeMode {
     SPEED = 1;        // Generate complete code for parsing, serialization,
-                      // etc.
+                    // etc.
     CODE_SIZE = 2;    // Use ReflectionOps to implement these methods.
     LITE_RUNTIME = 3; // Generate code using MessageLite and the lite runtime.
   }

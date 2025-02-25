@@ -24,7 +24,7 @@ class CEnvTonemapController : public CPointEntity
 {
     DECLARE_CLASS( CEnvTonemapController, CPointEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
     DECLARE_SERVERCLASS();
 
@@ -43,7 +43,7 @@ class CEnvTonemapController : public CPointEntity
     void InputUseDefaultBloomScale( inputdata_t &inputdata );
     void InputSetBloomScaleRange( inputdata_t &inputdata );
 
-   private:
+    private:
     float m_flBlendTonemapStart;  // HDR Tonemap at the start of the blend
     float m_flBlendTonemapEnd;    // Target HDR Tonemap at the end of the blend
     float m_flBlendEndTime;       // Time at which the blend ends

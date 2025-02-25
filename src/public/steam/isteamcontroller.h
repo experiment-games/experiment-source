@@ -290,7 +290,7 @@ enum EControllerActionOrigin
     k_EControllerActionOrigin_Switch_ProGyro_Pitch,    // Primary Gyro in Pro Controller, or Right JoyCon
     k_EControllerActionOrigin_Switch_ProGyro_Yaw,      // Primary Gyro in Pro Controller, or Right JoyCon
     k_EControllerActionOrigin_Switch_ProGyro_Roll,     // Primary Gyro in Pro Controller, or Right JoyCon
-                                                       // Switch JoyCon Specific
+                                                        // Switch JoyCon Specific
     k_EControllerActionOrigin_Switch_RightGyro_Move,   // Right JoyCon Gyro generally should correspond to Pro's single gyro
     k_EControllerActionOrigin_Switch_RightGyro_Pitch,  // Right JoyCon Gyro generally should correspond to Pro's single gyro
     k_EControllerActionOrigin_Switch_RightGyro_Yaw,    // Right JoyCon Gyro generally should correspond to Pro's single gyro
@@ -586,7 +586,7 @@ struct ControllerMotionData_t
 //-----------------------------------------------------------------------------
 class ISteamController
 {
-   public:
+    public:
     // Init and Shutdown must be called when starting/ending use of this interface
     virtual bool Init() = 0;
     virtual bool Shutdown() = 0;

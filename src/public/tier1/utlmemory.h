@@ -46,7 +46,7 @@
 template < class T, class I = int >
 class CUtlMemory
 {
-   public:
+    public:
     // constructor, destructor
     CUtlMemory( int nGrowSize = 0, int nInitSize = 0 );
     CUtlMemory( T* pMemory, int numElements );
@@ -58,7 +58,7 @@ class CUtlMemory
 
     class Iterator_t
     {
-       public:
+        public:
         Iterator_t( I i )
             : index( i ) {}
         I index;
@@ -155,7 +155,7 @@ class CUtlMemory
     // Set the size by which the memory grows
     void SetGrowSize( int size );
 
-   protected:
+    protected:
     void ValidateGrowSize()
     {
 #ifdef _X360
@@ -191,7 +191,7 @@ class CUtlMemoryFixedGrowable : public CUtlMemory< T, I >
 {
     typedef CUtlMemory< T, I > BaseClass;
 
-   public:
+    public:
     CUtlMemoryFixedGrowable( int nGrowSize = 0, int nInitSize = SIZE )
         : BaseClass( m_pFixedMemory, SIZE )
     {
@@ -222,7 +222,7 @@ class CUtlMemoryFixedGrowable : public CUtlMemory< T, I >
         BaseClass::EnsureCapacity( num );
     }
 
-   private:
+    private:
     int m_nMallocGrowSize;
     T m_pFixedMemory[SIZE];
 };
@@ -234,7 +234,7 @@ class CUtlMemoryFixedGrowable : public CUtlMemory< T, I >
 template < typename T, size_t SIZE, int nAlignment = 0 >
 class CUtlMemoryFixed
 {
-   public:
+    public:
     // constructor, destructor
     CUtlMemoryFixed( int nGrowSize = 0, int nInitSize = 0 )
     {
@@ -346,7 +346,7 @@ class CUtlMemoryFixed
 
     class Iterator_t
     {
-       public:
+        public:
         Iterator_t( int i )
             : index( i ) {}
         int index;
@@ -384,7 +384,7 @@ class CUtlMemoryFixed
         return Iterator_t( InvalidIndex() );
     }
 
-   private:
+    private:
     char m_Memory[SIZE * sizeof( T ) + nAlignment];
 };
 
@@ -404,7 +404,7 @@ class CUtlMemoryFixed
 template < typename T >
 class CUtlMemoryConservative
 {
-   public:
+    public:
     // constructor, destructor
     CUtlMemoryConservative( int nGrowSize = 0, int nInitSize = 0 )
         : m_pMemory( NULL )
@@ -540,7 +540,7 @@ class CUtlMemoryConservative
 
     class Iterator_t
     {
-       public:
+        public:
         Iterator_t( int i, int _limit )
             : index( i ), limit( _limit ) {}
         int index;
@@ -580,7 +580,7 @@ class CUtlMemoryConservative
         return Iterator_t( InvalidIndex(), 0 );
     }
 
-   private:
+    private:
     T* m_pMemory;
 #ifdef REMEMBER_ALLOC_SIZE_FOR_VALGRIND
     size_t m_nCurAllocSize;
@@ -594,8 +594,8 @@ class CUtlMemoryConservative
 template < class T, class I >
 CUtlMemory< T, I >::CUtlMemory( int nGrowSize, int nInitAllocationCount )
     : m_pMemory( 0 ),
-      m_nAllocationCount( nInitAllocationCount ),
-      m_nGrowSize( nGrowSize )
+    m_nAllocationCount( nInitAllocationCount ),
+    m_nGrowSize( nGrowSize )
 {
     ValidateGrowSize();
     Assert( nGrowSize >= 0 );
@@ -610,7 +610,7 @@ CUtlMemory< T, I >::CUtlMemory( int nGrowSize, int nInitAllocationCount )
 template < class T, class I >
 CUtlMemory< T, I >::CUtlMemory( T* pMemory, int numElements )
     : m_pMemory( pMemory ),
-      m_nAllocationCount( numElements )
+    m_nAllocationCount( numElements )
 {
     // Special marker indicating externally supplied modifyable memory
     m_nGrowSize = EXTERNAL_BUFFER_MARKER;
@@ -619,7 +619,7 @@ CUtlMemory< T, I >::CUtlMemory( T* pMemory, int numElements )
 template < class T, class I >
 CUtlMemory< T, I >::CUtlMemory( const T* pMemory, int numElements )
     : m_pMemory( ( T* )pMemory ),
-      m_nAllocationCount( numElements )
+    m_nAllocationCount( numElements )
 {
     // Special marker indicating externally supplied modifyable memory
     m_nGrowSize = EXTERNAL_CONST_BUFFER_MARKER;
@@ -1034,7 +1034,7 @@ void CUtlMemory< T, I >::Purge( int numElements )
 template < class T, int nAlignment >
 class CUtlMemoryAligned : public CUtlMemory< T >
 {
-   public:
+    public:
     // constructor, destructor
     CUtlMemoryAligned( int nGrowSize = 0, int nInitSize = 0 );
     CUtlMemoryAligned( T* pMemory, int numElements );
@@ -1060,7 +1060,7 @@ class CUtlMemoryAligned : public CUtlMemory< T >
         Assert( 0 );
     }
 
-   private:
+    private:
     void* Align( const void* pAddr );
 };
 

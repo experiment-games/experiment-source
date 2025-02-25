@@ -35,7 +35,7 @@ class CEnvMicrophone : public CPointEntity
 {
     DECLARE_CLASS( CEnvMicrophone, CPointEntity );
 
-   public:
+    public:
     ~CEnvMicrophone();
 
     void Spawn( void );
@@ -58,7 +58,7 @@ class CEnvMicrophone : public CPointEntity
     // Hook for the sound system to tell us when a sound's been played. Returns true if it's to swallow the passed in sound.
     static bool OnSoundPlayed( int entindex, const char *soundname, soundlevel_t soundlevel, float flVolume, int iFlags, int iPitch, const Vector *pOrigin, float soundtime, CUtlVector< Vector > &soundorigins );
 
-   private:
+    private:
     // Per-microphone notification that a sound has played.
     MicrophoneResult_t SoundPlayed( int entindex, const char *soundname, soundlevel_t soundlevel, float flVolume, int iFlags, int iPitch, const Vector *pOrigin, float soundtime, CUtlVector< Vector > &soundorigins );
 

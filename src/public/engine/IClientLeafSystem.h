@@ -55,7 +55,7 @@ enum RenderGroup_t
 //-----------------------------------------------------------------------------
 abstract_class IClientLeafSystemEngine
 {
-   public:
+    public:
     // Adds and removes renderables from the leaf lists
     // CreateRenderableHandle stores the handle inside pRenderable.
     virtual void CreateRenderableHandle( IClientRenderable * pRenderable, bool bIsStaticProp = false ) = 0;

@@ -29,7 +29,7 @@ class CAI_AntlionFollowBehavior : public CAI_FollowBehavior
 {
     typedef CAI_FollowBehavior BaseClass;
 
-   public:
+    public:
     CAI_AntlionFollowBehavior()
         : BaseClass( AIF_ANTLION )
     {
@@ -71,7 +71,7 @@ typedef CAI_BlendingHost< CAI_BehaviorHost< CAI_BlendedNPC > > CAI_BaseAntlionBa
 
 class CNPC_Antlion : public CAI_BaseAntlionBase
 {
-   public:
+    public:
     DECLARE_CLASS( CNPC_Antlion, CAI_BaseAntlionBase );
 
     CNPC_Antlion( void );
@@ -203,7 +203,7 @@ class CNPC_Antlion : public CAI_BaseAntlionBase
 
     virtual void NotifyDeadFriend( CBaseEntity *pFriend );
 
-   private:
+    private:
     inline CBaseEntity *EntityToWatch( void );
     void UpdateHead( void );
 
@@ -317,11 +317,11 @@ class CNPC_Antlion : public CAI_BaseAntlionBase
     float m_flLastDamageTime;
     float m_flZapDuration;
 
-   protected:
+    protected:
     int m_poseHead_Yaw, m_poseHead_Pitch;
     virtual void PopulatePoseParameters( void );
 
-   private:
+    private:
     HSOUNDSCRIPTHANDLE m_hFootstep;
 
     DEFINE_CUSTOM_AI;
@@ -413,11 +413,11 @@ class CAntlionRepellant : public CPointEntity
 {
     DECLARE_DATADESC();
 
-   public:
+    public:
     DECLARE_CLASS( CAntlionRepellant, CPointEntity );
     ~CAntlionRepellant();
 
-   public:
+    public:
     void Spawn( void );
     void InputEnable( inputdata_t &inputdata );
     void InputDisable( inputdata_t &inputdata );
@@ -431,7 +431,7 @@ class CAntlionRepellant : public CPointEntity
 
     void OnRestore( void );
 
-   private:
+    private:
     float m_flRepelRadius;
     bool m_bEnabled;
 };

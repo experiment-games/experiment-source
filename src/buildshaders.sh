@@ -84,4 +84,3 @@ else
   echo Finished dynamic buildallshaders "$@"
   :
 fi
-

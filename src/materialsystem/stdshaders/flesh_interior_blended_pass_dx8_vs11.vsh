@@ -4,7 +4,7 @@ vs.1.1
 #include "macros.vsh"
 
 ;------------------------------------------------------------------------------
-; Vertex blending 
+; Vertex blending
 ;------------------------------------------------------------------------------
 &AllocateRegister( \$worldPos );
 &AllocateRegister( \$worldNormal );
@@ -14,7 +14,7 @@ vs.1.1
 
 if( $SKINNING == 1 )
 {
-	&Normalize( $worldNormal );
+    &Normalize( $worldNormal );
 }
 
 ;------------------------------------------------------------------------------

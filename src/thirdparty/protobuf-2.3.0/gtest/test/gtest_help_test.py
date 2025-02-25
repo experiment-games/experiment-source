@@ -32,9 +32,9 @@
 """Tests the --help flag of Google C++ Testing Framework.
 
 SYNOPSIS
-       gtest_help_test.py --gtest_build_dir=BUILD/DIR
-         # where BUILD/DIR contains the built gtest_help_test_ file.
-       gtest_help_test.py
+        gtest_help_test.py --gtest_build_dir=BUILD/DIR
+        # where BUILD/DIR contains the built gtest_help_test_ file.
+        gtest_help_test.py
 """
 
 __author__ = 'wan@google.com (Zhanyong Wan)'
@@ -95,11 +95,11 @@ class GTestHelpTest(gtest_test_utils.TestCase):
     self.assertEquals(0, exit_code)
     self.assert_(HELP_REGEX.search(output), output)
     if IS_WINDOWS:
-      self.assert_(CATCH_EXCEPTIONS_FLAG in output, output)
-      self.assert_(DEATH_TEST_STYLE_FLAG not in output, output)
+    self.assert_(CATCH_EXCEPTIONS_FLAG in output, output)
+    self.assert_(DEATH_TEST_STYLE_FLAG not in output, output)
     else:
-      self.assert_(CATCH_EXCEPTIONS_FLAG not in output, output)
-      self.assert_(DEATH_TEST_STYLE_FLAG in output, output)
+    self.assert_(CATCH_EXCEPTIONS_FLAG not in output, output)
+    self.assert_(DEATH_TEST_STYLE_FLAG in output, output)
 
   def testPrintsHelpWithFullFlag(self):
     self.TestHelpFlag('--help')

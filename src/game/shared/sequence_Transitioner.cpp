@@ -36,7 +36,7 @@ void CSequenceTransitioner::CheckForSequenceChange(
     CAnimationLayer *currentblend = &m_animationQueue[m_animationQueue.Count() - 1];
 
     if ( currentblend->m_flLayerAnimtime &&
-         ( currentblend->m_nSequence != nCurSequence || bForceNewSequence ) )
+        ( currentblend->m_nSequence != nCurSequence || bForceNewSequence ) )
     {
         mstudioseqdesc_t &seqdesc = hdr->pSeqdesc( nCurSequence );
         // sequence changed
@@ -53,9 +53,9 @@ void CSequenceTransitioner::CheckForSequenceChange(
             // clip blends to time remaining
             if ( !IsSequenceLooping(hdr, currentblend->m_nSequence) )
             {
-              float length = Studio_Duration( hdr, currentblend->m_nSequence, flPoseParameter ) / currentblend->m_flPlaybackRate;
-              float timeLeft = (1.0 - currentblend->m_flCycle) * length;
-              if (timeLeft < currentblend->m_flLayerFadeOuttime)
+            float length = Studio_Duration( hdr, currentblend->m_nSequence, flPoseParameter ) / currentblend->m_flPlaybackRate;
+            float timeLeft = (1.0 - currentblend->m_flCycle) * length;
+            if (timeLeft < currentblend->m_flLayerFadeOuttime)
                 currentblend->m_flLayerFadeOuttime = timeLeft;
             }
             */

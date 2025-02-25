@@ -48,8 +48,8 @@
 #define GTEST_DECLARE_TUPLE_AS_FRIEND_    \
     template < GTEST_10_TYPENAMES_( U ) > \
     friend class tuple;                   \
-                                          \
-   private:
+                                        \
+    private:
 #endif
 
 // GTEST_n_TUPLE_(T) is the type of an n-tuple.
@@ -84,8 +84,8 @@
                                 typename T##3, typename T##4, typename T##5, typename T##6, \
                                 typename T##7, typename T##8
 #define GTEST_10_TYPENAMES_( T ) typename T##0, typename T##1, typename T##2,                \
-                                 typename T##3, typename T##4, typename T##5, typename T##6, \
-                                 typename T##7, typename T##8, typename T##9
+                                typename T##3, typename T##4, typename T##5, typename T##6, \
+                                typename T##7, typename T##8, typename T##9
 
 // In theory, defining stuff in the ::std namespace is undefined
 // behavior.  We can do this as we are playing the role of a standard
@@ -208,7 +208,7 @@ struct TupleElement< true, 9, GTEST_10_TUPLE_( T ) >
 template <>
 class tuple<>
 {
-   public:
+    public:
     tuple() {}
     tuple( const tuple& /* t */ ) {}
     tuple& operator=( const tuple& /* t */ )
@@ -220,7 +220,7 @@ class tuple<>
 template < GTEST_1_TYPENAMES_( T ) >
 class GTEST_1_TUPLE_( T )
 {
-   public:
+    public:
     template < int k >
     friend class gtest_internal::Get;
 
@@ -264,7 +264,7 @@ class GTEST_1_TUPLE_( T )
 template < GTEST_2_TYPENAMES_( T ) >
 class GTEST_2_TUPLE_( T )
 {
-   public:
+    public:
     template < int k >
     friend class gtest_internal::Get;
 
@@ -272,7 +272,7 @@ class GTEST_2_TUPLE_( T )
 
     explicit tuple( GTEST_BY_REF_( T0 ) f0, GTEST_BY_REF_( T1 ) f1 )
         : f0_( f0 ),
-          f1_( f1 ) {}
+        f1_( f1 ) {}
 
     tuple( const tuple& t )
         : f0_( t.f0_ ), f1_( t.f1_ ) {}
@@ -323,7 +323,7 @@ class GTEST_2_TUPLE_( T )
 template < GTEST_3_TYPENAMES_( T ) >
 class GTEST_3_TUPLE_( T )
 {
-   public:
+    public:
     template < int k >
     friend class gtest_internal::Get;
 
@@ -371,7 +371,7 @@ class GTEST_3_TUPLE_( T )
 template < GTEST_4_TYPENAMES_( T ) >
 class GTEST_4_TUPLE_( T )
 {
-   public:
+    public:
     template < int k >
     friend class gtest_internal::Get;
 
@@ -421,7 +421,7 @@ class GTEST_4_TUPLE_( T )
 template < GTEST_5_TYPENAMES_( T ) >
 class GTEST_5_TUPLE_( T )
 {
-   public:
+    public:
     template < int k >
     friend class gtest_internal::Get;
 
@@ -473,7 +473,7 @@ class GTEST_5_TUPLE_( T )
 template < GTEST_6_TYPENAMES_( T ) >
 class GTEST_6_TUPLE_( T )
 {
-   public:
+    public:
     template < int k >
     friend class gtest_internal::Get;
 
@@ -527,7 +527,7 @@ class GTEST_6_TUPLE_( T )
 template < GTEST_7_TYPENAMES_( T ) >
 class GTEST_7_TUPLE_( T )
 {
-   public:
+    public:
     template < int k >
     friend class gtest_internal::Get;
 
@@ -583,7 +583,7 @@ class GTEST_7_TUPLE_( T )
 template < GTEST_8_TYPENAMES_( T ) >
 class GTEST_8_TUPLE_( T )
 {
-   public:
+    public:
     template < int k >
     friend class gtest_internal::Get;
 
@@ -641,7 +641,7 @@ class GTEST_8_TUPLE_( T )
 template < GTEST_9_TYPENAMES_( T ) >
 class GTEST_9_TUPLE_( T )
 {
-   public:
+    public:
     template < int k >
     friend class gtest_internal::Get;
 
@@ -701,7 +701,7 @@ class GTEST_9_TUPLE_( T )
 template < GTEST_10_TYPENAMES_( T ) >
 class tuple
 {
-   public:
+    public:
     template < int k >
     friend class gtest_internal::Get;
 
@@ -919,7 +919,7 @@ namespace gtest_internal
 template <>
 class Get< 0 >
 {
-   public:
+    public:
     template < class Tuple >
     static GTEST_ADD_REF_( GTEST_TUPLE_ELEMENT_( 0, Tuple ) )
         Field( Tuple& t )
@@ -938,7 +938,7 @@ class Get< 0 >
 template <>
 class Get< 1 >
 {
-   public:
+    public:
     template < class Tuple >
     static GTEST_ADD_REF_( GTEST_TUPLE_ELEMENT_( 1, Tuple ) )
         Field( Tuple& t )
@@ -957,7 +957,7 @@ class Get< 1 >
 template <>
 class Get< 2 >
 {
-   public:
+    public:
     template < class Tuple >
     static GTEST_ADD_REF_( GTEST_TUPLE_ELEMENT_( 2, Tuple ) )
         Field( Tuple& t )
@@ -976,7 +976,7 @@ class Get< 2 >
 template <>
 class Get< 3 >
 {
-   public:
+    public:
     template < class Tuple >
     static GTEST_ADD_REF_( GTEST_TUPLE_ELEMENT_( 3, Tuple ) )
         Field( Tuple& t )
@@ -995,7 +995,7 @@ class Get< 3 >
 template <>
 class Get< 4 >
 {
-   public:
+    public:
     template < class Tuple >
     static GTEST_ADD_REF_( GTEST_TUPLE_ELEMENT_( 4, Tuple ) )
         Field( Tuple& t )
@@ -1014,7 +1014,7 @@ class Get< 4 >
 template <>
 class Get< 5 >
 {
-   public:
+    public:
     template < class Tuple >
     static GTEST_ADD_REF_( GTEST_TUPLE_ELEMENT_( 5, Tuple ) )
         Field( Tuple& t )
@@ -1033,7 +1033,7 @@ class Get< 5 >
 template <>
 class Get< 6 >
 {
-   public:
+    public:
     template < class Tuple >
     static GTEST_ADD_REF_( GTEST_TUPLE_ELEMENT_( 6, Tuple ) )
         Field( Tuple& t )
@@ -1052,7 +1052,7 @@ class Get< 6 >
 template <>
 class Get< 7 >
 {
-   public:
+    public:
     template < class Tuple >
     static GTEST_ADD_REF_( GTEST_TUPLE_ELEMENT_( 7, Tuple ) )
         Field( Tuple& t )
@@ -1071,7 +1071,7 @@ class Get< 7 >
 template <>
 class Get< 8 >
 {
-   public:
+    public:
     template < class Tuple >
     static GTEST_ADD_REF_( GTEST_TUPLE_ELEMENT_( 8, Tuple ) )
         Field( Tuple& t )
@@ -1090,7 +1090,7 @@ class Get< 8 >
 template <>
 class Get< 9 >
 {
-   public:
+    public:
     template < class Tuple >
     static GTEST_ADD_REF_( GTEST_TUPLE_ELEMENT_( 9, Tuple ) )
         Field( Tuple& t )
@@ -1153,7 +1153,7 @@ struct SameSizeTuplePrefixComparator< k, k >
     static bool Eq( const Tuple1& t1, const Tuple2& t2 )
     {
         return SameSizeTuplePrefixComparator< k - 1, k - 1 >::Eq( t1, t2 ) &&
-               ::std::tr1::get< k - 1 >( t1 ) == ::std::tr1::get< k - 1 >( t2 );
+                ::std::tr1::get< k - 1 >( t1 ) == ::std::tr1::get< k - 1 >( t2 );
     }
 };
 

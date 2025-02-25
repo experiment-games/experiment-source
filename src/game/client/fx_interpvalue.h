@@ -19,7 +19,7 @@ enum InterpType_t
 
 class CInterpolatedValue
 {
-   public:
+    public:
     CInterpolatedValue( void );
     CInterpolatedValue( float startTime, float endTime, float startValue, float endValue, InterpType_t type );
 
@@ -39,7 +39,7 @@ class CInterpolatedValue
     // Find our interpolated value at the given point in time
     float Interp( float curTime );
 
-   private:
+    private:
     float m_flStartTime;
     float m_flEndTime;
     float m_flStartValue;

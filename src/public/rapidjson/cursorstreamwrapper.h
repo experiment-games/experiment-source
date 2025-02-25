@@ -37,7 +37,7 @@ RAPIDJSON_NAMESPACE_BEGIN
 template < typename InputStream, typename Encoding = UTF8<> >
 class CursorStreamWrapper : public GenericStreamWrapper< InputStream, Encoding >
 {
-   public:
+    public:
     typedef typename Encoding::Ch Ch;
 
     CursorStreamWrapper( InputStream& is )
@@ -70,7 +70,7 @@ class CursorStreamWrapper : public GenericStreamWrapper< InputStream, Encoding >
         return col_;
     }
 
-   private:
+    private:
     size_t line_;  //!< Current Line
     size_t col_;   //!< Current Column
 };

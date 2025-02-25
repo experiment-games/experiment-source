@@ -58,7 +58,7 @@ namespace java
 
 class MessageGenerator
 {
-   public:
+    public:
     explicit MessageGenerator( const Descriptor* descriptor );
     ~MessageGenerator();
 
@@ -78,7 +78,7 @@ class MessageGenerator
     // ExtensionRegistry.
     void GenerateExtensionRegistrationCode( io::Printer* printer );
 
-   private:
+    private:
     void GenerateMessageSerializationMethods( io::Printer* printer );
     void GenerateParseFromMethods( io::Printer* printer );
     void GenerateSerializeOneField( io::Printer* printer,

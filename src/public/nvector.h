@@ -20,7 +20,7 @@
 template < int N >
 class NVector
 {
-   public:
+    public:
     NVectorN() {}
 
     float &operator[]( int i );
@@ -38,10 +38,10 @@ class NVector
     NVectorN operator*( float val ) const;
 
     // Static helpers.
-   public:
+    public:
     static NVectorN SetupNVectorNull();  // Returns a vector of all zeros.
 
-   public:
+    public:
     float v[N];
 };
 

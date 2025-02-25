@@ -102,7 +102,7 @@ DECLARE_ACHIEVEMENT( CAchievementHLXKillWithManhack, ACHIEVEMENT_HLX_KILL_ENEMIE
 
 class CAchievementHLXKillSoldierWithOwnGrenade : public CBaseAchievement
 {
-   protected:
+    protected:
     void Init()
     {
         SetFlags( ACH_LISTEN_KILL_ENEMY_EVENTS | ACH_SAVE_WITH_GAME );
@@ -137,7 +137,7 @@ DECLARE_ACHIEVEMENT( CAchievementHLXKillSoldierWithOwnGrenade, ACHIEVEMENT_HLX_K
 
 class CAchievementHLXKillWithOneEnergyBall : public CBaseAchievement
 {
-   protected:
+    protected:
     virtual void Init()
     {
         SetFlags( ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS | ACH_SAVE_WITH_GAME );
@@ -180,7 +180,7 @@ DECLARE_ACHIEVEMENT( CAchievementHLXKillWithOneEnergyBall, ACHIEVEMENT_HLX_KILL_
 
 class CAchievementHLXKillEliteSoldierWithOwnEnergyBall : public CBaseAchievement
 {
-   protected:
+    protected:
     virtual void Init()
     {
         SetFlags( ACH_LISTEN_PLAYER_KILL_ENEMY_EVENTS | ACH_SAVE_WITH_GAME );

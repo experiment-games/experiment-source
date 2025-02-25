@@ -24,13 +24,13 @@ static void Physics_TraceHull( C_BaseEntity *pBaseEntity, const Vector &vecStart
     // through shields which do not block that damage type. It will also
     // send messages to the shields that they've been hit.
 #if 0
-	if (pBaseEntity->GetDamageType() != DMG_GENERIC)
-	{
-		GameRules()->WeaponTraceHull( vecStart, vecEnd, hullMin, hullMax, 
-			mask, pBaseEntity, pBaseEntity->GetCollisionGroup(), 
-			pBaseEntity, ptr );
-	}
-	else
+    if (pBaseEntity->GetDamageType() != DMG_GENERIC)
+    {
+        GameRules()->WeaponTraceHull( vecStart, vecEnd, hullMin, hullMax,
+            mask, pBaseEntity, pBaseEntity->GetCollisionGroup(),
+            pBaseEntity, ptr );
+    }
+    else
 #endif
     {
         UTIL_TraceHull( vecStart, vecEnd, hullMin, hullMax, mask, pBaseEntity, pBaseEntity->GetCollisionGroup(), ptr );
@@ -67,11 +67,11 @@ void C_BaseEntity::PhysicsCheckSweep( const Vector &vecAbsStart, const Vector &v
 void C_BaseEntity::PhysicsPushEntity( const Vector &push, trace_t *pTrace )
 {
     /*
-      if ( m_pMoveParent )
-      {
+    if ( m_pMoveParent )
+    {
         Warning( "pushing entity (%s) that has m_pMoveParent!\n", STRING( pev->classname ) );
         Assert(0);
-      }
+    }
     */
 
     // NOTE: absorigin and origin must be equal because there is no moveparent
@@ -295,8 +295,8 @@ void C_BaseEntity::PhysicsDispatchThink( BASEPTR thinkFunc )
     // This doesn't apply on the client, really
     if ( IsDormant() )
     {
-      Warning( "Dormant entity %s is thinking!!\n", GetClassname() );
-      Assert(0);
+    Warning( "Dormant entity %s is thinking!!\n", GetClassname() );
+    Assert(0);
     }
     */
 
@@ -317,13 +317,13 @@ void C_BaseEntity::PhysicsDispatchThink( BASEPTR thinkFunc )
         if ( time > thinkLimit )
         {
 #if 0
-			// If its an NPC print out the shedule/task that took so long
-			CAI_BaseNPC *pNPC = MyNPCPointer();
-			if (pNPC && pNPC->GetCurSchedule())
-			{
-				pNPC->ReportOverThinkLimit( time );
-			}
-			else
+            // If its an NPC print out the shedule/task that took so long
+            CAI_BaseNPC *pNPC = MyNPCPointer();
+            if (pNPC && pNPC->GetCurSchedule())
+            {
+                pNPC->ReportOverThinkLimit( time );
+            }
+            else
 #endif
             {
 #ifdef WIN32

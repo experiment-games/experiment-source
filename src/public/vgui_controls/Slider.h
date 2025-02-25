@@ -25,7 +25,7 @@ class Slider : public Panel
 {
     DECLARE_CLASS_SIMPLE( Slider, Panel );
 
-   public:
+    public:
     Slider( Panel *parent, const char *panelName );
 
     // interface
@@ -60,7 +60,7 @@ class Slider : public Panel
     // This allows the slider to behave like it's larger than what's actually being drawn
     virtual void SetSliderThumbSubRange( bool bEnable, int nMin = 0, int nMax = 100 );
 
-   protected:
+    protected:
     virtual void OnSizeChanged( int wide, int tall );
     virtual void Paint();
     virtual void PaintBackground();
@@ -80,7 +80,7 @@ class Slider : public Panel
 
     virtual void GetTrackRect( int &x, int &y, int &w, int &h );
 
-   protected:
+    protected:
     virtual void RecomputeNobPosFromValue();
     virtual void RecomputeValueFromNobPos();
 

@@ -54,7 +54,7 @@ class DescriptorPoolExtensionFinder : public ExtensionFinder {
   DescriptorPoolExtensionFinder(const DescriptorPool* pool,
                                 MessageFactory* factory,
                                 const Descriptor* containing_type)
-      : pool_(pool), factory_(factory), containing_type_(containing_type) {}
+    : pool_(pool), factory_(factory), containing_type_(containing_type) {}
   virtual ~DescriptorPoolExtensionFinder() {}
 
   virtual bool Find(int number, ExtensionInfo* output);
@@ -69,26 +69,26 @@ void ExtensionSet::AppendToList(const Descriptor* containing_type,
                                 const DescriptorPool* pool,
                                 vector<const FieldDescriptor*>* output) const {
   for (map<int, Extension>::const_iterator iter = extensions_.begin();
-       iter != extensions_.end(); ++iter) {
+        iter != extensions_.end(); ++iter) {
     bool has = false;
     if (iter->second.is_repeated) {
-      has = iter->second.GetSize() > 0;
+    has = iter->second.GetSize() > 0;
     } else {
-      has = !iter->second.is_cleared;
+    has = !iter->second.is_cleared;
     }
 
     if (has) {
-      // TODO(kenton): Looking up each field by number is somewhat unfortunate.
-      //   Is there a better way?  The problem is that descriptors are lazily-
-      //   initialized, so they might not even be constructed until
-      //   AppendToList() is called.
+    // TODO(kenton): Looking up each field by number is somewhat unfortunate.
+    //   Is there a better way?  The problem is that descriptors are lazily-
+    //   initialized, so they might not even be constructed until
+    //   AppendToList() is called.
 
-      if (iter->second.descriptor == NULL) {
+    if (iter->second.descriptor == NULL) {
         output->push_back(pool->FindExtensionByNumber(
             containing_type, iter->first));
-      } else {
+    } else {
         output->push_back(iter->second.descriptor);
-      }
+    }
     }
   }
 }
@@ -100,12 +100,12 @@ inline FieldDescriptor::Type real_type(FieldType type) {
 
 inline FieldDescriptor::CppType cpp_type(FieldType type) {
   return FieldDescriptor::TypeToCppType(
-      static_cast<FieldDescriptor::Type>(type));
+    static_cast<FieldDescriptor::Type>(type));
 }
 
 #define GOOGLE_DCHECK_TYPE(EXTENSION, LABEL, CPPTYPE)                            \
   GOOGLE_DCHECK_EQ((EXTENSION).is_repeated ? FieldDescriptor::LABEL_REPEATED     \
-                                  : FieldDescriptor::LABEL_OPTIONAL,      \
+                                : FieldDescriptor::LABEL_OPTIONAL,      \
             FieldDescriptor::LABEL_##LABEL);                              \
   GOOGLE_DCHECK_EQ(cpp_type((EXTENSION).type), FieldDescriptor::CPPTYPE_##CPPTYPE)
 
@@ -123,7 +123,7 @@ const MessageLite& ExtensionSet::GetMessage(int number,
 }
 
 MessageLite* ExtensionSet::MutableMessage(const FieldDescriptor* descriptor,
-                                          MessageFactory* factory) {
+                                        MessageFactory* factory) {
   Extension* extension;
   if (MaybeNewExtension(descriptor->number(), descriptor, &extension)) {
     extension->type = descriptor->type();
@@ -142,14 +142,14 @@ MessageLite* ExtensionSet::MutableMessage(const FieldDescriptor* descriptor,
 }
 
 MessageLite* ExtensionSet::AddMessage(const FieldDescriptor* descriptor,
-                                      MessageFactory* factory) {
+                                    MessageFactory* factory) {
   Extension* extension;
   if (MaybeNewExtension(descriptor->number(), descriptor, &extension)) {
     extension->type = descriptor->type();
     GOOGLE_DCHECK_EQ(cpp_type(extension->type), FieldDescriptor::CPPTYPE_MESSAGE);
     extension->is_repeated = true;
     extension->repeated_message_value =
-      new RepeatedPtrField<MessageLite>();
+    new RepeatedPtrField<MessageLite>();
   } else {
     GOOGLE_DCHECK_TYPE(*extension, REPEATED, MESSAGE);
   }
@@ -157,14 +157,14 @@ MessageLite* ExtensionSet::AddMessage(const FieldDescriptor* descriptor,
   // RepeatedPtrField<Message> does not know how to Add() since it cannot
   // allocate an abstract object, so we have to be tricky.
   MessageLite* result = extension->repeated_message_value
-      ->AddFromCleared<internal::GenericTypeHandler<MessageLite> >();
+    ->AddFromCleared<internal::GenericTypeHandler<MessageLite> >();
   if (result == NULL) {
     const MessageLite* prototype;
     if (extension->repeated_message_value->size() == 0) {
-      prototype = factory->GetPrototype(descriptor->message_type());
-      GOOGLE_CHECK(prototype != NULL);
+    prototype = factory->GetPrototype(descriptor->message_type());
+    GOOGLE_CHECK(prototype != NULL);
     } else {
-      prototype = &extension->repeated_message_value->Get(0);
+    prototype = &extension->repeated_message_value->Get(0);
     }
     result = prototype->New();
     extension->repeated_message_value->AddAllocated(result);
@@ -174,12 +174,12 @@ MessageLite* ExtensionSet::AddMessage(const FieldDescriptor* descriptor,
 
 static bool ValidateEnumUsingDescriptor(const void* arg, int number) {
   return reinterpret_cast<const EnumDescriptor*>(arg)
-      ->FindValueByNumber(number) != NULL;
+    ->FindValueByNumber(number) != NULL;
 }
 
 bool DescriptorPoolExtensionFinder::Find(int number, ExtensionInfo* output) {
   const FieldDescriptor* extension =
-      pool_->FindExtensionByNumber(containing_type_, number);
+    pool_->FindExtensionByNumber(containing_type_, number);
   if (extension == NULL) {
     return false;
   } else {
@@ -188,14 +188,14 @@ bool DescriptorPoolExtensionFinder::Find(int number, ExtensionInfo* output) {
     output->is_packed = extension->options().packed();
     output->descriptor = extension;
     if (extension->cpp_type() == FieldDescriptor::CPPTYPE_MESSAGE) {
-      output->message_prototype =
-          factory_->GetPrototype(extension->message_type());
-      GOOGLE_CHECK(output->message_prototype != NULL)
-          << "Extension factory's GetPrototype() returned NULL for extension: "
-          << extension->full_name();
+    output->message_prototype =
+        factory_->GetPrototype(extension->message_type());
+    GOOGLE_CHECK(output->message_prototype != NULL)
+        << "Extension factory's GetPrototype() returned NULL for extension: "
+        << extension->full_name();
     } else if (extension->cpp_type() == FieldDescriptor::CPPTYPE_ENUM) {
-      output->enum_validity_check.func = ValidateEnumUsingDescriptor;
-      output->enum_validity_check.arg = extension->enum_type();
+    output->enum_validity_check.func = ValidateEnumUsingDescriptor;
+    output->enum_validity_check.arg = extension->enum_type();
     }
 
     return true;
@@ -203,42 +203,42 @@ bool DescriptorPoolExtensionFinder::Find(int number, ExtensionInfo* output) {
 }
 
 bool ExtensionSet::ParseField(uint32 tag, io::CodedInputStream* input,
-                              const Message* containing_type,
-                              UnknownFieldSet* unknown_fields) {
+                            const Message* containing_type,
+                            UnknownFieldSet* unknown_fields) {
   UnknownFieldSetFieldSkipper skipper(unknown_fields);
   if (input->GetExtensionPool() == NULL) {
     GeneratedExtensionFinder finder(containing_type);
     return ParseField(tag, input, &finder, &skipper);
   } else {
     DescriptorPoolExtensionFinder finder(input->GetExtensionPool(),
-                                         input->GetExtensionFactory(),
-                                         containing_type->GetDescriptor());
+                                        input->GetExtensionFactory(),
+                                        containing_type->GetDescriptor());
     return ParseField(tag, input, &finder, &skipper);
   }
 }
 
 bool ExtensionSet::ParseMessageSet(io::CodedInputStream* input,
-                                   const Message* containing_type,
-                                   UnknownFieldSet* unknown_fields) {
+                                    const Message* containing_type,
+                                    UnknownFieldSet* unknown_fields) {
   UnknownFieldSetFieldSkipper skipper(unknown_fields);
   if (input->GetExtensionPool() == NULL) {
     GeneratedExtensionFinder finder(containing_type);
     return ParseMessageSet(input, &finder, &skipper);
   } else {
     DescriptorPoolExtensionFinder finder(input->GetExtensionPool(),
-                                         input->GetExtensionFactory(),
-                                         containing_type->GetDescriptor());
+                                        input->GetExtensionFactory(),
+                                        containing_type->GetDescriptor());
     return ParseMessageSet(input, &finder, &skipper);
   }
 }
 
 int ExtensionSet::SpaceUsedExcludingSelf() const {
   int total_size =
-      extensions_.size() * sizeof(map<int, Extension>::value_type);
+    extensions_.size() * sizeof(map<int, Extension>::value_type);
   for (map<int, Extension>::const_iterator iter = extensions_.begin(),
-       end = extensions_.end();
-       iter != end;
-       ++iter) {
+        end = extensions_.end();
+        iter != end;
+        ++iter) {
     total_size += iter->second.SpaceUsedExcludingSelf();
   }
   return total_size;
@@ -254,23 +254,23 @@ int ExtensionSet::Extension::SpaceUsedExcludingSelf() const {
   if (is_repeated) {
     switch (cpp_type(type)) {
 #define HANDLE_TYPE(UPPERCASE, LOWERCASE)                          \
-      case FieldDescriptor::CPPTYPE_##UPPERCASE:                   \
+    case FieldDescriptor::CPPTYPE_##UPPERCASE:                   \
         total_size += sizeof(*repeated_##LOWERCASE##_value) +      \
             repeated_##LOWERCASE##_value->SpaceUsedExcludingSelf();\
         break
 
-      HANDLE_TYPE(  INT32,   int32);
-      HANDLE_TYPE(  INT64,   int64);
-      HANDLE_TYPE( UINT32,  uint32);
-      HANDLE_TYPE( UINT64,  uint64);
-      HANDLE_TYPE(  FLOAT,   float);
-      HANDLE_TYPE( DOUBLE,  double);
-      HANDLE_TYPE(   BOOL,    bool);
-      HANDLE_TYPE(   ENUM,    enum);
-      HANDLE_TYPE( STRING,  string);
+    HANDLE_TYPE(  INT32,   int32);
+    HANDLE_TYPE(  INT64,   int64);
+    HANDLE_TYPE( UINT32,  uint32);
+    HANDLE_TYPE( UINT64,  uint64);
+    HANDLE_TYPE(  FLOAT,   float);
+    HANDLE_TYPE( DOUBLE,  double);
+    HANDLE_TYPE(   BOOL,    bool);
+    HANDLE_TYPE(   ENUM,    enum);
+    HANDLE_TYPE( STRING,  string);
 #undef HANDLE_TYPE
 
-      case FieldDescriptor::CPPTYPE_MESSAGE:
+    case FieldDescriptor::CPPTYPE_MESSAGE:
         // repeated_message_value is actually a RepeatedPtrField<MessageLite>,
         // but MessageLite has no SpaceUsed(), so we must directly call
         // RepeatedPtrFieldBase::SpaceUsedExcludingSelf() with a different type
@@ -281,14 +281,14 @@ int ExtensionSet::Extension::SpaceUsedExcludingSelf() const {
     }
   } else {
     switch (cpp_type(type)) {
-      case FieldDescriptor::CPPTYPE_STRING:
+    case FieldDescriptor::CPPTYPE_STRING:
         total_size += sizeof(*string_value) +
-                      StringSpaceUsedExcludingSelf(*string_value);
+                    StringSpaceUsedExcludingSelf(*string_value);
         break;
-      case FieldDescriptor::CPPTYPE_MESSAGE:
+    case FieldDescriptor::CPPTYPE_MESSAGE:
         total_size += down_cast<Message*>(message_value)->SpaceUsed();
         break;
-      default:
+    default:
         // No extra storage costs for primitive types.
         break;
     }
@@ -303,10 +303,10 @@ uint8* ExtensionSet::SerializeWithCachedSizesToArray(
     uint8* target) const {
   map<int, Extension>::const_iterator iter;
   for (iter = extensions_.lower_bound(start_field_number);
-       iter != extensions_.end() && iter->first < end_field_number;
-       ++iter) {
+        iter != extensions_.end() && iter->first < end_field_number;
+        ++iter) {
     target = iter->second.SerializeFieldWithCachedSizesToArray(iter->first,
-                                                               target);
+                                                                target);
   }
   return target;
 }
@@ -325,20 +325,20 @@ uint8* ExtensionSet::Extension::SerializeFieldWithCachedSizesToArray(
     int number, uint8* target) const {
   if (is_repeated) {
     if (is_packed) {
-      if (cached_size == 0) return target;
+    if (cached_size == 0) return target;
 
-      target = WireFormatLite::WriteTagToArray(number,
-          WireFormatLite::WIRETYPE_LENGTH_DELIMITED, target);
-      target = WireFormatLite::WriteInt32NoTagToArray(cached_size, target);
+    target = WireFormatLite::WriteTagToArray(number,
+        WireFormatLite::WIRETYPE_LENGTH_DELIMITED, target);
+    target = WireFormatLite::WriteInt32NoTagToArray(cached_size, target);
 
-      switch (real_type(type)) {
+    switch (real_type(type)) {
 #define HANDLE_TYPE(UPPERCASE, CAMELCASE, LOWERCASE)                        \
         case FieldDescriptor::TYPE_##UPPERCASE:                             \
-          for (int i = 0; i < repeated_##LOWERCASE##_value->size(); i++) {  \
+        for (int i = 0; i < repeated_##LOWERCASE##_value->size(); i++) {  \
             target = WireFormatLite::Write##CAMELCASE##NoTagToArray(        \
-              repeated_##LOWERCASE##_value->Get(i), target);                \
-          }                                                                 \
-          break
+            repeated_##LOWERCASE##_value->Get(i), target);                \
+        }                                                                 \
+        break
 
         HANDLE_TYPE(   INT32,    Int32,   int32);
         HANDLE_TYPE(   INT64,    Int64,   int64);
@@ -360,18 +360,18 @@ uint8* ExtensionSet::Extension::SerializeFieldWithCachedSizesToArray(
         case WireFormatLite::TYPE_BYTES:
         case WireFormatLite::TYPE_GROUP:
         case WireFormatLite::TYPE_MESSAGE:
-          GOOGLE_LOG(FATAL) << "Non-primitive types can't be packed.";
-          break;
-      }
+        GOOGLE_LOG(FATAL) << "Non-primitive types can't be packed.";
+        break;
+    }
     } else {
-      switch (real_type(type)) {
+    switch (real_type(type)) {
 #define HANDLE_TYPE(UPPERCASE, CAMELCASE, LOWERCASE)                        \
         case FieldDescriptor::TYPE_##UPPERCASE:                             \
-          for (int i = 0; i < repeated_##LOWERCASE##_value->size(); i++) {  \
+        for (int i = 0; i < repeated_##LOWERCASE##_value->size(); i++) {  \
             target = WireFormatLite::Write##CAMELCASE##ToArray(number,      \
-              repeated_##LOWERCASE##_value->Get(i), target);                \
-          }                                                                 \
-          break
+            repeated_##LOWERCASE##_value->Get(i), target);                \
+        }                                                                 \
+        break
 
         HANDLE_TYPE(   INT32,    Int32,   int32);
         HANDLE_TYPE(   INT64,    Int64,   int64);
@@ -392,34 +392,34 @@ uint8* ExtensionSet::Extension::SerializeFieldWithCachedSizesToArray(
         HANDLE_TYPE(   GROUP,    Group, message);
         HANDLE_TYPE( MESSAGE,  Message, message);
 #undef HANDLE_TYPE
-      }
+    }
     }
   } else if (!is_cleared) {
     switch (real_type(type)) {
 #define HANDLE_TYPE(UPPERCASE, CAMELCASE, VALUE)                 \
-      case FieldDescriptor::TYPE_##UPPERCASE:                    \
+    case FieldDescriptor::TYPE_##UPPERCASE:                    \
         target = WireFormatLite::Write##CAMELCASE##ToArray(      \
             number, VALUE, target); \
         break
 
-      HANDLE_TYPE(   INT32,    Int32,    int32_value);
-      HANDLE_TYPE(   INT64,    Int64,    int64_value);
-      HANDLE_TYPE(  UINT32,   UInt32,   uint32_value);
-      HANDLE_TYPE(  UINT64,   UInt64,   uint64_value);
-      HANDLE_TYPE(  SINT32,   SInt32,    int32_value);
-      HANDLE_TYPE(  SINT64,   SInt64,    int64_value);
-      HANDLE_TYPE( FIXED32,  Fixed32,   uint32_value);
-      HANDLE_TYPE( FIXED64,  Fixed64,   uint64_value);
-      HANDLE_TYPE(SFIXED32, SFixed32,    int32_value);
-      HANDLE_TYPE(SFIXED64, SFixed64,    int64_value);
-      HANDLE_TYPE(   FLOAT,    Float,    float_value);
-      HANDLE_TYPE(  DOUBLE,   Double,   double_value);
-      HANDLE_TYPE(    BOOL,     Bool,     bool_value);
-      HANDLE_TYPE(  STRING,   String,  *string_value);
-      HANDLE_TYPE(   BYTES,    Bytes,  *string_value);
-      HANDLE_TYPE(    ENUM,     Enum,     enum_value);
-      HANDLE_TYPE(   GROUP,    Group, *message_value);
-      HANDLE_TYPE( MESSAGE,  Message, *message_value);
+    HANDLE_TYPE(   INT32,    Int32,    int32_value);
+    HANDLE_TYPE(   INT64,    Int64,    int64_value);
+    HANDLE_TYPE(  UINT32,   UInt32,   uint32_value);
+    HANDLE_TYPE(  UINT64,   UInt64,   uint64_value);
+    HANDLE_TYPE(  SINT32,   SInt32,    int32_value);
+    HANDLE_TYPE(  SINT64,   SInt64,    int64_value);
+    HANDLE_TYPE( FIXED32,  Fixed32,   uint32_value);
+    HANDLE_TYPE( FIXED64,  Fixed64,   uint64_value);
+    HANDLE_TYPE(SFIXED32, SFixed32,    int32_value);
+    HANDLE_TYPE(SFIXED64, SFixed64,    int64_value);
+    HANDLE_TYPE(   FLOAT,    Float,    float_value);
+    HANDLE_TYPE(  DOUBLE,   Double,   double_value);
+    HANDLE_TYPE(    BOOL,     Bool,     bool_value);
+    HANDLE_TYPE(  STRING,   String,  *string_value);
+    HANDLE_TYPE(   BYTES,    Bytes,  *string_value);
+    HANDLE_TYPE(    ENUM,     Enum,     enum_value);
+    HANDLE_TYPE(   GROUP,    Group, *message_value);
+    HANDLE_TYPE( MESSAGE,  Message, *message_value);
 #undef HANDLE_TYPE
     }
   }
@@ -439,16 +439,16 @@ uint8* ExtensionSet::Extension::SerializeMessageSetItemWithCachedSizesToArray(
 
   // Start group.
   target = io::CodedOutputStream::WriteTagToArray(
-      WireFormatLite::kMessageSetItemStartTag, target);
+    WireFormatLite::kMessageSetItemStartTag, target);
   // Write type ID.
   target = WireFormatLite::WriteUInt32ToArray(
-      WireFormatLite::kMessageSetTypeIdNumber, number, target);
+    WireFormatLite::kMessageSetTypeIdNumber, number, target);
   // Write message.
   target = WireFormatLite::WriteMessageToArray(
-      WireFormatLite::kMessageSetMessageNumber, *message_value, target);
+    WireFormatLite::kMessageSetMessageNumber, *message_value, target);
   // End group.
   target = io::CodedOutputStream::WriteTagToArray(
-      WireFormatLite::kMessageSetItemEndTag, target);
+    WireFormatLite::kMessageSetItemEndTag, target);
   return target;
 }
 

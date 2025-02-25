@@ -2,7 +2,7 @@
 
 class CJsonToKeyValues
 {
-   public:
+    public:
     CJsonToKeyValues(){};
     ~CJsonToKeyValues(){};
 

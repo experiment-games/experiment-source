@@ -52,10 +52,10 @@ typedef void *( *SendTableProxyFn )(
 
 class CNonModifiedPointerProxy
 {
-   public:
+    public:
     CNonModifiedPointerProxy( SendTableProxyFn fn );
 
-   public:
+    public:
     SendTableProxyFn m_Fn;
     CNonModifiedPointerProxy *m_pNext;
 };
@@ -68,7 +68,7 @@ class CNonModifiedPointerProxy
 
 class CStandardSendProxiesV1
 {
-   public:
+    public:
     CStandardSendProxiesV1();
 
     SendVarProxyFn m_Int8ToInt32;
@@ -90,7 +90,7 @@ class CStandardSendProxiesV1
 
 class CStandardSendProxies : public CStandardSendProxiesV1
 {
-   public:
+    public:
     CStandardSendProxies();
 
     SendTableProxyFn m_DataTableToDataTable;
@@ -112,7 +112,7 @@ extern CStandardSendProxies g_StandardSendProxies;
 // ------------------------------------------------------------------------ //
 class CSendProxyRecipients
 {
-   public:
+    public:
     void SetAllRecipients();  // Note: recipients are all set by default when each proxy is called.
     void ClearAllRecipients();
 
@@ -122,7 +122,7 @@ class CSendProxyRecipients
     // Clear all recipients and set only the specified one.
     void SetOnly( int iClient );
 
-   public:
+    public:
     // Make sure we have enough room for the max possible player count
     CBitVec< ABSOLUTE_PLAYER_LIMIT > m_Bits;
 };
@@ -174,7 +174,7 @@ class CSendTablePrecalc;
 
 class SendProp
 {
-   public:
+    public:
     SendProp();
     virtual ~SendProp();
 
@@ -233,7 +233,7 @@ class SendProp
     const void *GetExtraData() const;
     void SetExtraData( const void *pData );
 
-   public:
+    public:
     RecvProp *m_pMatchingRecvProp;  // This is temporary and only used while precalculating
                                     // data for the decoders.
 
@@ -254,7 +254,7 @@ class SendProp
     const char *m_pVarName;
     float m_fHighLowMul;
 
-   private:
+    private:
     int m_Flags;  // SPROP_ flags.
 
     SendVarProxyFn m_ProxyFn;             // NULL for DPT_DataTable.
@@ -421,7 +421,7 @@ inline void SendProp::SetExtraData( const void *pData )
 
 class SendTable
 {
-   public:
+    public:
     typedef SendProp PropType;
 
     SendTable();
@@ -446,7 +446,7 @@ class SendTable
     bool HasPropsEncodedAgainstTickCount() const;
     void SetHasPropsEncodedAgainstTickcount( bool bState );
 
-   public:
+    public:
     SendProp *m_pProps;
     int m_nProps;
 
@@ -455,7 +455,7 @@ class SendTable
     // The engine hooks the SendTable here.
     CSendTablePrecalc *m_pPrecalc;
 
-   protected:
+    protected:
     bool m_bInitialized : 1;
     bool m_bHasBeenWritten : 1;
     bool m_bHasPropsEncodedAgainstCurrentTickCount : 1;  // m_flSimulationTime and m_flAnimTime, e.g.
@@ -646,15 +646,15 @@ SendProp SendPropVectorXY(
 
 #if 0  // We can't ship this since it changes the size of DTVariant to be 20 bytes instead of 16 and that breaks MODs!!!
 SendProp SendPropQuaternion(
-	const char *pVarName,
-	int offset,
-	int sizeofVar=SIZEOF_IGNORE,
-	int nBits=32,					// Number of bits (for each floating-point component) to use when encoding.
-	int flags=SPROP_NOSCALE,
-	float fLowValue=0.0f,			// For floating point, low and high values.
-	float fHighValue=HIGH_DEFAULT,	// High value. If HIGH_DEFAULT, it's (1<<nBits).
-	SendVarProxyFn varProxy=SendProxy_QuaternionToQuaternion
-	);
+    const char *pVarName,
+    int offset,
+    int sizeofVar=SIZEOF_IGNORE,
+    int nBits=32,					// Number of bits (for each floating-point component) to use when encoding.
+    int flags=SPROP_NOSCALE,
+    float fLowValue=0.0f,			// For floating point, low and high values.
+    float fHighValue=HIGH_DEFAULT,	// High value. If HIGH_DEFAULT, it's (1<<nBits).
+    SendVarProxyFn varProxy=SendProxy_QuaternionToQuaternion
+    );
 #endif
 
 SendProp SendPropAngle(

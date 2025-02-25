@@ -19,11 +19,11 @@ void ToolFramework_RecordMaterialParams( IMaterial *pMaterial );
 //-----------------------------------------------------------------------------
 class CProxyIsNPC : public CResultProxy
 {
-   public:
+    public:
     bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
     void OnBind( void *pC_BaseEntity );
 
-   private:
+    private:
     CFloatInput m_Factor;
 };
 

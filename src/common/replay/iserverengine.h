@@ -16,7 +16,7 @@
 
 class IReplayServerEngine : public IBaseInterface
 {
-   public:
+    public:
     virtual void EndReplayRecordingSession() = 0;
     virtual bool IsReplayRecording() = 0;
     virtual bool IsReplay() = 0;

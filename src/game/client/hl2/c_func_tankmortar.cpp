@@ -10,7 +10,7 @@
 
 class C_MortarShell : public C_BaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_MortarShell, C_BaseEntity );
     DECLARE_CLIENTCLASS();
 
@@ -22,7 +22,7 @@ class C_MortarShell : public C_BaseEntity
         return RENDER_GROUP_TRANSLUCENT_ENTITY;
     }
 
-   private:
+    private:
     void AddRisingParticles( float flPerc );
     void AddExplodingParticles( float flPerc );
 

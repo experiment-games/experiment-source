@@ -19,19 +19,19 @@
 //-----------------------------------------------------------------------------
 class C_TEBaseBeam : public C_BaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_TEBaseBeam, C_BaseTempEntity );
     DECLARE_CLIENTCLASS();
 
-   private:
-   public:
+    private:
+    public:
     C_TEBaseBeam( void );
     virtual ~C_TEBaseBeam( void );
 
     virtual void PreDataUpdate( DataUpdateType_t updateType );
     virtual void PostDataUpdate( DataUpdateType_t updateType );
 
-   public:
+    public:
     int m_nModelIndex;
     int m_nHaloIndex;
     int m_nStartFrame;

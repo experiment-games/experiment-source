@@ -178,9 +178,9 @@ inline void IncrementalCopyFastPath( const char* src, char* op, ssize_t len )
 }  // namespace
 
 static inline char* EmitLiteral( char* op,
-                                 const char* literal,
-                                 int len,
-                                 bool allow_fast_path )
+                                const char* literal,
+                                int len,
+                                bool allow_fast_path )
 {
     int n = len - 1;  // Zero-length literals are disallowed
     if ( n < 60 )
@@ -840,8 +840,8 @@ static const uint16 char_table[256] = {
 DEFINE_bool( snappy_dump_decompression_table, false, "If true, we print the decompression table at startup." );
 
 static uint16 MakeEntry( unsigned int extra,
-                         unsigned int len,
-                         unsigned int copy_offset )
+                        unsigned int len,
+                        unsigned int copy_offset )
 {
     // Check that all of the fields fit within the allocated space
     assert( extra == ( extra & 0x7 ) );              // At most 3 bits
@@ -953,7 +953,7 @@ static void ComputeTable()
 // Helper class for decompression
 class SnappyDecompressor
 {
-   private:
+    private:
     Source* reader_;                   // Underlying source of bytes to decompress
     const char* ip_;                   // Points to next buffered byte
     const char* ip_limit_;             // Points just past buffered bytes
@@ -968,13 +968,13 @@ class SnappyDecompressor
     // Returns true on success, false on error or end of input.
     bool RefillTag();
 
-   public:
+    public:
     explicit SnappyDecompressor( Source* reader )
         : reader_( reader ),
-          ip_( NULL ),
-          ip_limit_( NULL ),
-          peeked_( 0 ),
-          eof_( false )
+        ip_( NULL ),
+        ip_limit_( NULL ),
+        peeked_( 0 ),
+        eof_( false )
     {
     }
 
@@ -1185,8 +1185,8 @@ static bool InternalUncompress( Source* r, Writer* writer )
 
 template < typename Writer >
 static bool InternalUncompressAllTags( SnappyDecompressor* decompressor,
-                                       Writer* writer,
-                                       uint32 uncompressed_len )
+                                        Writer* writer,
+                                        uint32 uncompressed_len )
 {
     writer->SetExpectedLength( uncompressed_len );
 
@@ -1300,7 +1300,7 @@ size_t Compress( Source* reader, Sink* writer )
 // Writer template argument to SnappyDecompressor::DecompressAllTags().
 class SnappyIOVecWriter
 {
-   private:
+    private:
     const struct iovec* output_iov_;
     const size_t output_iov_count_;
 
@@ -1319,19 +1319,19 @@ class SnappyIOVecWriter
     inline char* GetIOVecPointer( int index, size_t offset )
     {
         return reinterpret_cast< char* >( output_iov_[index].iov_base ) +
-               offset;
+                offset;
     }
 
-   public:
+    public:
     // Does not take ownership of iov. iov must be valid during the
     // entire lifetime of the SnappyIOVecWriter.
     inline SnappyIOVecWriter( const struct iovec* iov, size_t iov_count )
         : output_iov_( iov ),
-          output_iov_count_( iov_count ),
-          curr_iov_index_( 0 ),
-          curr_iov_written_( 0 ),
-          total_written_( 0 ),
-          output_limit_( ( size_t )-1 )
+        output_iov_count_( iov_count ),
+        curr_iov_index_( 0 ),
+        curr_iov_written_( 0 ),
+        total_written_( 0 ),
+        output_limit_( ( size_t )-1 )
     {
     }
 
@@ -1384,7 +1384,7 @@ class SnappyIOVecWriter
     {
         const size_t space_left = output_limit_ - total_written_;
         if ( len <= 16 && available >= 16 + kMaximumTagLength && space_left >= 16 &&
-             output_iov_[curr_iov_index_].iov_len - curr_iov_written_ >= 16 )
+            output_iov_[curr_iov_index_].iov_len - curr_iov_written_ >= 16 )
         {
             // Fast path, used for the majority (about 95%) of invocations.
             char* ptr = GetIOVecPointer( curr_iov_index_, curr_iov_written_ );
@@ -1449,8 +1449,8 @@ class SnappyIOVecWriter
             {
                 assert( curr_iov_written_ <= output_iov_[curr_iov_index_].iov_len );
                 size_t to_copy = Min( output_iov_[curr_iov_index_].iov_len -
-                                          curr_iov_written_,
-                                      len );
+                                        curr_iov_written_,
+                                    len );
                 if ( to_copy == 0 )
                 {
                     // This iovec is full. Go to the next one.
@@ -1467,8 +1467,8 @@ class SnappyIOVecWriter
                     to_copy = len;
                 }
                 IncrementalCopy( GetIOVecPointer( from_iov_index, from_iov_offset ),
-                                 GetIOVecPointer( curr_iov_index_, curr_iov_written_ ),
-                                 to_copy );
+                                GetIOVecPointer( curr_iov_index_, curr_iov_written_ ),
+                                to_copy );
                 curr_iov_written_ += to_copy;
                 from_iov_offset += to_copy;
                 total_written_ += to_copy;
@@ -1501,15 +1501,15 @@ bool RawUncompressToIOVec( Source* compressed, const struct iovec* iov, size_t i
 // Writer template argument to SnappyDecompressor::DecompressAllTags().
 class SnappyArrayWriter
 {
-   private:
+    private:
     char* base_;
     char* op_;
     char* op_limit_;
 
-   public:
+    public:
     inline explicit SnappyArrayWriter( char* dst )
         : base_( dst ),
-          op_( dst )
+        op_( dst )
     {
     }
 
@@ -1631,11 +1631,11 @@ bool Uncompress( const char* compressed, size_t n, string* uncompressed )
 // A Writer that drops everything on the floor and just does validation
 class SnappyDecompressionValidator
 {
-   private:
+    private:
     size_t expected_;
     size_t produced_;
 
-   public:
+    public:
     inline SnappyDecompressionValidator()
         : produced_( 0 ) {}
     inline void SetExpectedLength( size_t len )
@@ -1673,9 +1673,9 @@ bool IsValidCompressedBuffer( const char* compressed, size_t n )
 }
 
 void RawCompress( const char* input,
-                  size_t input_length,
-                  char* compressed,
-                  size_t* compressed_length )
+                size_t input_length,
+                char* compressed,
+                size_t* compressed_length )
 {
     ByteArraySource reader( input, input_length );
     UncheckedByteArraySink writer( compressed );

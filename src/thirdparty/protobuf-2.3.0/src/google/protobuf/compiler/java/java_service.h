@@ -57,13 +57,13 @@ namespace java
 
 class ServiceGenerator
 {
-   public:
+    public:
     explicit ServiceGenerator( const ServiceDescriptor* descriptor );
     ~ServiceGenerator();
 
     void Generate( io::Printer* printer );
 
-   private:
+    private:
     // Generate the getDescriptorForType() method.
     void GenerateGetDescriptorForType( io::Printer* printer );
 
@@ -104,15 +104,15 @@ class ServiceGenerator
         IS_CONCRETE
     };
     void GenerateMethodSignature( io::Printer* printer,
-                                  const MethodDescriptor* method,
-                                  IsAbstract is_abstract );
+                                const MethodDescriptor* method,
+                                IsAbstract is_abstract );
 
     // Generate a blocking stub interface and implementation of the service.
     void GenerateBlockingStub( io::Printer* printer );
 
     // Generate the method signature for one method of a blocking stub.
     void GenerateBlockingMethodSignature( io::Printer* printer,
-                                          const MethodDescriptor* method );
+                                        const MethodDescriptor* method );
 
     const ServiceDescriptor* descriptor_;
 

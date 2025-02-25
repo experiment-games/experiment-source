@@ -16,7 +16,7 @@
 template < int FIELD_TYPE >
 class CTypedescDeducer
 {
-   public:
+    public:
     template < class UTLCLASS >
     static datamap_t *Deduce( UTLCLASS *p )
     {
@@ -27,7 +27,7 @@ class CTypedescDeducer
 template <>
 class CTypedescDeducer< FIELD_EMBEDDED >
 {
-   public:
+    public:
     template < class UTLCLASS >
     static datamap_t *Deduce( UTLCLASS *p )
     {

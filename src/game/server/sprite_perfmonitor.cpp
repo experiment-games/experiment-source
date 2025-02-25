@@ -19,7 +19,7 @@ class CParticlePerformanceMonitor : public CPointEntity
 {
     DECLARE_CLASS( CParticlePerformanceMonitor, CPointEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
     DECLARE_SERVERCLASS();
 
@@ -32,7 +32,7 @@ class CParticlePerformanceMonitor : public CPointEntity
     void InputStartMeasuring( inputdata_t &inputdata );
     void InputStopMeasuring( inputdata_t &inputdata );
 
-   private:
+    private:
     CNetworkVar( bool, m_bDisplayPerf );
     CNetworkVar( bool, m_bMeasurePerf );
 };

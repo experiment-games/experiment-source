@@ -23,7 +23,7 @@ class CAI_HolsterBehavior : public CAI_SimpleBehavior
 {
     DECLARE_CLASS( CAI_HolsterBehavior, CAI_SimpleBehavior );
 
-   public:
+    public:
     CAI_HolsterBehavior();
 
     virtual const char *GetName()
@@ -61,8 +61,8 @@ class CAI_HolsterBehavior : public CAI_SimpleBehavior
 
     DEFINE_CUSTOM_SCHEDULE_PROVIDER;
 
-   public:
-   private:
+    public:
+    private:
     virtual int SelectSchedule();
 
     bool m_bWeaponOut;

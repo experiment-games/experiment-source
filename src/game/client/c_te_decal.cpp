@@ -22,7 +22,7 @@
 //-----------------------------------------------------------------------------
 class C_TEDecal : public C_BaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_TEDecal, C_BaseTempEntity );
     DECLARE_CLIENTCLASS();
 
@@ -33,7 +33,7 @@ class C_TEDecal : public C_BaseTempEntity
 
     virtual void Precache( void );
 
-   public:
+    public:
     Vector m_vecOrigin;
     Vector m_vecStart;
     int m_nEntity;

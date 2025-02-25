@@ -37,7 +37,7 @@ struct interval_t;
 
 class CSave : public ISave
 {
-   public:
+    public:
     CSave( CSaveRestoreData *pdata );
 
     //---------------------------------
@@ -143,7 +143,7 @@ class CSave : public ISave
         return m_pGameInfo;
     }
 
-   private:
+    private:
     //---------------------------------
     bool IsLogging( void );
     void Log( const char *pName, fieldtype_t fieldType, void *value, int count );
@@ -194,7 +194,7 @@ class CSave : public ISave
 
 class CRestore : public IRestore
 {
-   public:
+    public:
     CRestore( CSaveRestoreData *pdata );
 
     int GetReadPos() const;
@@ -290,7 +290,7 @@ class CRestore : public IRestore
         return m_pGameInfo;
     }
 
-   private:
+    private:
     //---------------------------------
     // Read primitives
     //
@@ -356,7 +356,7 @@ class CRestore : public IRestore
 //-----------------------------------------------------------------------------
 abstract_class IEntitySaveUtils
 {
-   public:
+    public:
     // Adds a level transition save dependency
     virtual void AddLevelTransitionSaveDependency( CBaseEntity * pEntity1, CBaseEntity * pEntity2 ) = 0;
 

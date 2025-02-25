@@ -31,7 +31,7 @@ const int GD_MAX_VARIABLES = 128;
 
 class GDclass
 {
-   public:
+    public:
     GDclass( void );
     ~GDclass( void );
 
@@ -182,7 +182,7 @@ class GDclass
     }
     CHelperInfo *GetHelper( int nIndex );
 
-   protected:
+    protected:
     //
     // Parsing the game data file:
     //
@@ -191,7 +191,7 @@ class GDclass
     bool ParseOutput( TokenReader &tr );
     bool ParseVariable( TokenReader &tr );
 
-   private:
+    private:
     bool ParseBase( TokenReader &tr );
     bool ParseColor( TokenReader &tr );
     bool ParseHelper( TokenReader &tr, char *pszHelperName );

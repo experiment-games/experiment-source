@@ -13,7 +13,7 @@
 // wrapper for IMaterial
 class IVguiMatInfo
 {
-   public:
+    public:
     // Add a virtual destructor to silence the clang warning.
     // This is harmless but not important since the only derived class
     // doesn't have a destructor.

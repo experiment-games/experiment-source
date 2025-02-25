@@ -1010,15 +1010,15 @@ void CFourWheelVehiclePhysics::SteeringTurnAnalog( float carSpeed, const vehicle
 {
     // OLD Code
 #if 0
-	float flSteeringRate = STEERING_BASE_RATE;
+    float flSteeringRate = STEERING_BASE_RATE;
 
-	float factor = clamp( fabs( sidemove ) / STICK_EXTENTS, 0.0f, 1.0f );
+    float factor = clamp( fabs( sidemove ) / STICK_EXTENTS, 0.0f, 1.0f );
 
-	factor *= 30;
-	flSteeringRate *= log( factor );
-	flSteeringRate *= gpGlobals->frametime;
+    factor *= 30;
+    flSteeringRate *= log( factor );
+    flSteeringRate *= gpGlobals->frametime;
 
-	SetSteering( sidemove < 0.0f ? -1 : 1, flSteeringRate );
+    SetSteering( sidemove < 0.0f ? -1 : 1, flSteeringRate );
 #else
     // This is tested with gamepads with analog sticks.  It gives full analog control allowing the player to hold shallow turns.
     float steering = ( sidemove / STICK_EXTENTS );

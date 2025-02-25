@@ -51,7 +51,7 @@ typedef int string_t;
 
 struct string_t
 {
-   public:
+    public:
     bool operator!() const
     {
         return ( pszValue == NULL );
@@ -74,7 +74,7 @@ struct string_t
         return ( pszValue ) ? pszValue : "";
     }
 
-   protected:
+    protected:
     const char *pszValue;
 };
 

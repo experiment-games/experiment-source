@@ -22,7 +22,7 @@ class C_EnvHeadcrabCanister : public C_BaseAnimating
     DECLARE_CLASS( C_EnvHeadcrabCanister, C_BaseAnimating );
     DECLARE_CLIENTCLASS();
 
-   public:
+    public:
     //-------------------------------------------------------------------------
     // Initialization/Destruction
     //-------------------------------------------------------------------------
@@ -32,7 +32,7 @@ class C_EnvHeadcrabCanister : public C_BaseAnimating
     virtual void OnDataChanged( DataUpdateType_t updateType );
     virtual void ClientThink();
 
-   private:
+    private:
     C_EnvHeadcrabCanister( const C_EnvHeadcrabCanister& );
 
     CEnvHeadcrabCanisterShared m_Shared;

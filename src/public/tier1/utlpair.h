@@ -15,7 +15,7 @@
 template < typename T1, typename T2 >
 class CUtlPair
 {
-   public:
+    public:
     CUtlPair() {}
     CUtlPair( T1 t1, T2 t2 )
         : first( t1 ), second( t2 ) {}

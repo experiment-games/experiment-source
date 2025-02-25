@@ -39,7 +39,7 @@ const char *g_ppszPlayerSoundPrefixNames[PLAYER_SOUNDS_MAX] = {
 // Experiment; copied from NEO:
 // https://github.com/AdamTadeusz/neo/blob/master/mp/src/game/server/neo/neo_player_shared.cpp
 bool PlayerAnimToPlayerAnimEvent( const PLAYER_ANIM playerAnim,
-                                  PlayerAnimEvent_t &outAnimEvent )
+                                PlayerAnimEvent_t &outAnimEvent )
 {
     bool success = true;
 

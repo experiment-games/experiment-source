@@ -27,7 +27,7 @@ class CHudSquadStatus : public CHudElement, public vgui::Panel
 {
     DECLARE_CLASS_SIMPLE( CHudSquadStatus, vgui::Panel );
 
-   public:
+    public:
     CHudSquadStatus( const char *pElementName );
     virtual void Init( void );
     virtual void Reset( void );
@@ -36,10 +36,10 @@ class CHudSquadStatus : public CHudElement, public vgui::Panel
 
     void MsgFunc_SquadMemberDied( bf_read &msg );
 
-   protected:
+    protected:
     virtual void Paint();
 
-   private:
+    private:
     CPanelAnimationVar( vgui::HFont, m_hTextFont, "TextFont", "Default" );
     CPanelAnimationVarAliasType( float, text_xpos, "text_xpos", "8", "proportional_float" );
     CPanelAnimationVarAliasType( float, text_ypos, "text_ypos", "20", "proportional_float" );
@@ -113,10 +113,10 @@ bool CHudSquadStatus::ShouldDraw( void )
         return false;
 
     bNeedsDraw = ( pPlayer->m_HL2Local.m_iSquadMemberCount > 0 ||
-                   ( pPlayer->m_HL2Local.m_iSquadMemberCount != m_iSquadMembers ) ||
-                   ( pPlayer->m_HL2Local.m_fSquadInFollowMode != m_bSquadMembersFollowing ) ||
-                   ( m_iSquadMembers > 0 ) ||
-                   ( m_LastMemberColor[3] > 0 ) );
+                    ( pPlayer->m_HL2Local.m_iSquadMemberCount != m_iSquadMembers ) ||
+                    ( pPlayer->m_HL2Local.m_fSquadInFollowMode != m_bSquadMembersFollowing ) ||
+                    ( m_iSquadMembers > 0 ) ||
+                    ( m_LastMemberColor[3] > 0 ) );
 
     return ( bNeedsDraw && CHudElement::ShouldDraw() );
 }

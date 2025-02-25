@@ -186,19 +186,19 @@ def StringByteSize(field_number, string):
 
 def BytesByteSize(field_number, b):
   return (TagByteSize(field_number)
-          + _VarUInt64ByteSizeNoTag(len(b))
-          + len(b))
+        + _VarUInt64ByteSizeNoTag(len(b))
+        + len(b))
 
 
 def GroupByteSize(field_number, message):
   return (2 * TagByteSize(field_number)  # START and END group.
-          + message.ByteSize())
+        + message.ByteSize())
 
 
 def MessageByteSize(field_number, message):
   return (TagByteSize(field_number)
-          + _VarUInt64ByteSizeNoTag(message.ByteSize())
-          + message.ByteSize())
+        + _VarUInt64ByteSizeNoTag(message.ByteSize())
+        + message.ByteSize())
 
 
 def MessageSetItemByteSize(field_number, msg):

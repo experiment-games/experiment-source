@@ -19,7 +19,7 @@
 //------------------------------------------------------------------------------
 class C_WaterLODControl : public C_BaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_WaterLODControl, C_BaseEntity );
 
     DECLARE_CLIENTCLASS();
@@ -27,7 +27,7 @@ class C_WaterLODControl : public C_BaseEntity
     void OnDataChanged( DataUpdateType_t updateType );
     bool ShouldDraw();
 
-   private:
+    private:
     float m_flCheapWaterStartDistance;
     float m_flCheapWaterEndDistance;
 };

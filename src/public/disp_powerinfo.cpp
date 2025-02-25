@@ -19,7 +19,7 @@
 // These point at the vertices connecting to each of the [north,south,east,west] vertices.
 class CVertCorners
 {
-   public:
+    public:
     short m_Corner1[2];
     short m_Corner2[2];
 };
@@ -62,16 +62,16 @@ static CVertIndex g_ChildNodeDependencies[4][2] =
 static int g_OrientationRotations[4][2][2] =
     {
         { { 1, 0 },  // CCW_0
-          { 0, 1 } },
+        { 0, 1 } },
 
         { { 0, 1 },  // CCW_90
-          { -1, 0 } },
+        { -1, 0 } },
 
         { { -1, 0 },  // CCW_180
-          { 0, -1 } },
+        { 0, -1 } },
 
         { { 0, -1 },  // CCW_270
-          { 1, 0 } } };
+        { 1, 0 } } };
 
 // ------------------------------------------------------------------------ //
 // Helper functions.
@@ -414,17 +414,17 @@ static void InitPowerInfo_R(
             pPowerInfo->m_pChildVerts[iNodeIndex].m_Verts[iChild] = childVert;
 
             InitPowerInfo_R( pPowerInfo,
-                             iMaxPower,
-                             childVert,
+                            iMaxPower,
+                            childVert,
 
-                             CVertIndex( nodeIndex.x + g_ChildNodeDependencies[iChild][0].x * vertInc, nodeIndex.y + g_ChildNodeDependencies[iChild][0].y * vertInc ),
-                             CVertIndex( nodeIndex.x + g_ChildNodeDependencies[iChild][1].x * vertInc, nodeIndex.y + g_ChildNodeDependencies[iChild][1].y * vertInc ),
+                            CVertIndex( nodeIndex.x + g_ChildNodeDependencies[iChild][0].x * vertInc, nodeIndex.y + g_ChildNodeDependencies[iChild][0].y * vertInc ),
+                            CVertIndex( nodeIndex.x + g_ChildNodeDependencies[iChild][1].x * vertInc, nodeIndex.y + g_ChildNodeDependencies[iChild][1].y * vertInc ),
 
-                             nodeIndex,
-                             CVertIndex( nodeIndex.x + g_ChildNodeIndexMul[iChild].x * vertInc, nodeIndex.y + g_ChildNodeIndexMul[iChild].y * vertInc ),
+                            nodeIndex,
+                            CVertIndex( nodeIndex.x + g_ChildNodeIndexMul[iChild].x * vertInc, nodeIndex.y + g_ChildNodeIndexMul[iChild].y * vertInc ),
 
-                             nodeIndex,
-                             iLevel + 1 );
+                            nodeIndex,
+                            iLevel + 1 );
         }
     }
 }
@@ -517,7 +517,7 @@ void InitPowerInfo( CPowerInfo *pInfo, int iMaxPower )
 
 class CPowerInfoInitializer
 {
-   public:
+    public:
     CPowerInfoInitializer()
     {
         Assert( MAX_MAP_DISP_POWER + 1 == NUM_POWERINFOS );

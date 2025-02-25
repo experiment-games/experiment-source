@@ -39,16 +39,16 @@ enum
 
 class CLCDItem
 {
-   public:
+    public:
     CLCDItem()
         : m_bActive( true ),
-          m_nSubPage( 0 ),
-          m_Type( LCDITEM_UNKNOWN ),
-          m_Handle( 0 ),
-          x( 0 ),
-          y( 0 ),
-          w( 0 ),
-          h( 0 )
+        m_nSubPage( 0 ),
+        m_Type( LCDITEM_UNKNOWN ),
+        m_Handle( 0 ),
+        x( 0 ),
+        y( 0 ),
+        w( 0 ),
+        h( 0 )
     {
     }
 
@@ -71,11 +71,11 @@ class CLCDItemText : public CLCDItem
 {
     typedef CLCDItem BaseClass;
 
-   public:
+    public:
     CLCDItemText()
         : m_bHasWildcard( false ),
-          m_iSize( 0 ),
-          m_iAlign( 0 )
+        m_iSize( 0 ),
+        m_iAlign( 0 )
     {
         m_Type = LCDITEM_TEXT;
     }
@@ -92,7 +92,7 @@ class CLCDItemIcon : public CLCDItem
 {
     typedef CLCDItem BaseClass;
 
-   public:
+    public:
     CLCDItemIcon()
         : m_icon( NULL )
     {
@@ -109,11 +109,11 @@ class CLCDItemAggregate : public CLCDItem
 {
     typedef CLCDItem BaseClass;
 
-   public:
+    public:
     CLCDItemAggregate()
         : m_AggType( AGGTYPE_UNKNOWN ),
-          m_dwNextUpdateTime( 0 ),
-          m_yincrement( 0 )
+        m_dwNextUpdateTime( 0 ),
+        m_yincrement( 0 )
     {
         m_Type = LCDITEM_AGGREGATE;
     }
@@ -134,12 +134,12 @@ class CLCDItemAggregate : public CLCDItem
 
 class CLCDPage : public CLCDItem
 {
-   public:
+    public:
     CLCDPage()
         : m_bSubItem( false ),
-          m_bTitlePage( false ),
-          m_bRequiresPlayer( false ),
-          m_nSubPageCount( 1 )
+        m_bTitlePage( false ),
+        m_bRequiresPlayer( false ),
+        m_nSubPageCount( 1 )
     {
         m_Type = LCDITEM_PAGE;
     }
@@ -196,7 +196,7 @@ class CLCDPage : public CLCDItem
 //-----------------------------------------------------------------------------
 class CLCD : public IHudLCD
 {
-   public:
+    public:
     CLCD();
     ~CLCD();
 
@@ -208,14 +208,14 @@ class CLCD : public IHudLCD
     void Reload();
     void DumpPlayer();
 
-   public:
+    public:
     // Init's called when the HUD's created at DLL load
     void Init( void );
     void Shutdown();
     void Update( void );
     bool IsConnected() const;
 
-   private:
+    private:
     CLCDItemIcon *ParseItemIcon( CLCDPage *page, bool bCreateHandles, KeyValues *sub );
     CLCDItemText *ParseItemText( CLCDPage *page, bool bCreateHandles, KeyValues *sub );
     void ParseItems_R( CLCDPage *page, bool bCreateHandles, KeyValues *kv, CUtlVector< CLCDItem * > &list );

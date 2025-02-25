@@ -71,9 +71,9 @@ string TestSourceDir() {
 
   while (!File::Exists(prefix + "/src/google/protobuf")) {
     if (!File::Exists(prefix)) {
-      GOOGLE_LOG(FATAL)
+    GOOGLE_LOG(FATAL)
         << "Could not find protobuf source code.  Please run tests from "
-           "somewhere within the protobuf source package.";
+            "somewhere within the protobuf source package.";
     }
     prefix += "/..";
   }
@@ -115,18 +115,18 @@ class TempDirDeleter {
   TempDirDeleter() {}
   ~TempDirDeleter() {
     if (!name_.empty()) {
-      File::DeleteRecursively(name_, NULL, NULL);
+    File::DeleteRecursively(name_, NULL, NULL);
     }
   }
 
   string GetTempDir() {
     if (name_.empty()) {
-      name_ = GetTemporaryDirectoryName();
-      GOOGLE_CHECK(mkdir(name_.c_str(), 0777) == 0) << strerror(errno);
+    name_ = GetTemporaryDirectoryName();
+    GOOGLE_CHECK(mkdir(name_.c_str(), 0777) == 0) << strerror(errno);
 
-      // Stick a file in the directory that tells people what this is, in case
-      // we abort and don't get a chance to delete it.
-      File::WriteStringToFileOrDie("", name_ + "/TEMP_DIR_FOR_PROTOBUF_TESTS");
+    // Stick a file in the directory that tells people what this is, in case
+    // we abort and don't get a chance to delete it.
+    File::WriteStringToFileOrDie("", name_ + "/TEMP_DIR_FOR_PROTOBUF_TESTS");
     }
     return name_;
   }

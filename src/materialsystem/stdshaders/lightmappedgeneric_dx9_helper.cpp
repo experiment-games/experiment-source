@@ -24,7 +24,7 @@ extern ConVar r_flashlight_version2;
 
 class CLightmappedGeneric_DX9_Context : public CBasePerMaterialContextData
 {
-   public:
+    public:
     uint8 *m_pStaticCmds;
     CCommandBufferBuilder< CFixedCommandStorageBuffer< 1000 > > m_SemiStaticCmdsOut;
 
@@ -67,8 +67,8 @@ void InitParamsLightmappedGeneric_DX9( CBaseVSShader *pShader, IMaterialVar **pa
 
     // Write over $basetexture with $albedo if we are going to be using diffuse normal mapping.
     if ( g_pConfig->UseBumpmapping() && params[info.m_nBumpmap]->IsDefined() && params[info.m_nAlbedo]->IsDefined() &&
-         params[info.m_nBaseTexture]->IsDefined() &&
-         !( params[info.m_nNoDiffuseBumpLighting]->IsDefined() && params[info.m_nNoDiffuseBumpLighting]->GetIntValue() ) )
+        params[info.m_nBaseTexture]->IsDefined() &&
+        !( params[info.m_nNoDiffuseBumpLighting]->IsDefined() && params[info.m_nNoDiffuseBumpLighting]->GetIntValue() ) )
     {
         params[info.m_nBaseTexture]->SetStringValue( params[info.m_nAlbedo]->GetStringValue() );
     }
@@ -83,12 +83,12 @@ void InitParamsLightmappedGeneric_DX9( CBaseVSShader *pShader, IMaterialVar **pa
     }
 
     if ( ( mat_disable_lightwarp.GetBool() ) &&
-         ( info.m_nLightWarpTexture != -1 ) )
+        ( info.m_nLightWarpTexture != -1 ) )
     {
         params[info.m_nLightWarpTexture]->SetUndefined();
     }
     if ( ( mat_disable_fancy_blending.GetBool() ) &&
-         ( info.m_nBlendModulateTexture != -1 ) )
+        ( info.m_nBlendModulateTexture != -1 ) )
     {
         params[info.m_nBlendModulateTexture]->SetUndefined();
     }
@@ -174,7 +174,7 @@ void InitParamsLightmappedGeneric_DX9( CBaseVSShader *pShader, IMaterialVar **pa
     }
 
     if ( ( info.m_nSelfShadowedBumpFlag != -1 ) &&
-         ( !params[info.m_nSelfShadowedBumpFlag]->IsDefined() ) )
+        ( !params[info.m_nSelfShadowedBumpFlag]->IsDefined() ) )
     {
         params[info.m_nSelfShadowedBumpFlag]->SetIntValue( 0 );
     }
@@ -223,7 +223,7 @@ void InitLightmappedGeneric_DX9( CBaseVSShader *pShader, IMaterialVar **params, 
     }
 
     if ( ( info.m_nBlendModulateTexture != -1 ) &&
-         ( params[info.m_nBlendModulateTexture]->IsDefined() ) )
+        ( params[info.m_nBlendModulateTexture]->IsDefined() ) )
     {
         pShader->LoadTexture( info.m_nBlendModulateTexture );
     }
@@ -301,7 +301,7 @@ void DrawLightmappedGeneric_DX9_Internal( CBaseVSShader *pShader, IMaterialVar *
         bool hasDetailTexture = params[info.m_nDetail]->IsTexture();
         bool hasSelfIllum = IS_FLAG_SET( MATERIAL_VAR_SELFILLUM );
         bool hasBumpMask = hasBump && hasBump2 && params[info.m_nBumpMask]->IsTexture() && !hasSelfIllum &&
-                           !hasDetailTexture && !hasBaseTexture2 && ( params[info.m_nBaseTextureNoEnvmap]->GetIntValue() == 0 );
+                            !hasDetailTexture && !hasBaseTexture2 && ( params[info.m_nBaseTextureNoEnvmap]->GetIntValue() == 0 );
         bool bHasBlendModulateTexture =
             ( info.m_nBlendModulateTexture != -1 ) &&
             ( params[info.m_nBlendModulateTexture]->IsTexture() );
@@ -388,7 +388,7 @@ void DrawLightmappedGeneric_DX9_Internal( CBaseVSShader *pShader, IMaterialVar *
             bool hasEnvmap = params[info.m_nEnvmap]->IsTexture();
 
             bool bSeamlessMapping = ( ( info.m_nSeamlessMappingScale != -1 ) &&
-                                      ( params[info.m_nSeamlessMappingScale]->GetFloatValue() != 0.0 ) );
+                                    ( params[info.m_nSeamlessMappingScale]->GetFloatValue() != 0.0 ) );
 
             if ( bNeedRegenStaticCmds )
             {
@@ -561,7 +561,7 @@ void DrawLightmappedGeneric_DX9_Internal( CBaseVSShader *pShader, IMaterialVar *
 
                 int bumpmap_variant = ( hasSSBump ) ? 2 : hasBump;
                 bool bMaskedBlending = ( ( info.m_nMaskedBlending != -1 ) &&
-                                         ( params[info.m_nMaskedBlending]->GetIntValue() != 0 ) );
+                                        ( params[info.m_nMaskedBlending]->GetIntValue() != 0 ) );
 
                 DECLARE_STATIC_VERTEX_SHADER( lightmappedgeneric_vs20 );
                 SET_STATIC_VERTEX_SHADER_COMBO( ENVMAP_MASK, hasEnvmapMask );
@@ -665,9 +665,9 @@ void DrawLightmappedGeneric_DX9_Internal( CBaseVSShader *pShader, IMaterialVar *
             // for the texture transform.
             bool bHasTextureTransform =
                 !( params[info.m_nBaseTextureTransform]->MatrixIsIdentity() &&
-                   params[info.m_nBumpTransform]->MatrixIsIdentity() &&
-                   params[info.m_nBumpTransform2]->MatrixIsIdentity() &&
-                   params[info.m_nEnvmapMaskTransform]->MatrixIsIdentity() );
+                    params[info.m_nBumpTransform]->MatrixIsIdentity() &&
+                    params[info.m_nBumpTransform2]->MatrixIsIdentity() &&
+                    params[info.m_nEnvmapMaskTransform]->MatrixIsIdentity() );
 
             bHasTextureTransform |= bHasBlendMaskTransform;
 
@@ -686,7 +686,7 @@ void DrawLightmappedGeneric_DX9_Internal( CBaseVSShader *pShader, IMaterialVar *
             if ( !pContextData->m_bVertexShaderFastPath )
             {
                 bool bSeamlessMapping = ( ( info.m_nSeamlessMappingScale != -1 ) &&
-                                          ( params[info.m_nSeamlessMappingScale]->GetFloatValue() != 0.0 ) );
+                                        ( params[info.m_nSeamlessMappingScale]->GetFloatValue() != 0.0 ) );
                 bool hasEnvmapMask = params[info.m_nEnvmapMask]->IsTexture();
                 if ( !bSeamlessMapping )
                     pContextData->m_SemiStaticCmdsOut.SetVertexShaderTextureTransform( VERTEX_SHADER_SHADER_SPECIFIC_CONST_0, info.m_nBaseTextureTransform );

@@ -17,7 +17,7 @@ class KeyValues;
 
 abstract_class IDebugTextureInfo
 {
-   public:
+    public:
     // Use this to turn on the mode where it builds the debug texture list.
     // At the end of the next frame, GetDebugTextureList() will return a valid list of the textures.
     virtual void EnableDebugTextureList( bool bEnable ) = 0;

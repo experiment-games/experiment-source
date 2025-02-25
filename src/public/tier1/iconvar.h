@@ -72,7 +72,7 @@ class CCommand;
 #define FCVAR_SERVER_CAN_EXECUTE ( 1 << 28 )     // the server is allowed to execute this command on clients via ClientCommand/NET_StringCmd/CBaseClientState::ProcessStringCmd.
 #define FCVAR_SERVER_CANNOT_QUERY ( 1 << 29 )    // If this is set, then the server is not allowed to query this cvar's value (via IServerPluginHelpers::StartQueryCvarValue).
 #define FCVAR_CLIENTCMD_CAN_EXECUTE ( 1 << 30 )  // IVEngineClient::ClientCmd is allowed to execute this command.
-                                                 // Note: IVEngineClient::ClientCmd_Unrestricted can run any client command.
+                                                // Note: IVEngineClient::ClientCmd_Unrestricted can run any client command.
 
 // #define FCVAR_AVAILABLE			(1<<15)
 // #define FCVAR_AVAILABLE			(1<<18)
@@ -97,7 +97,7 @@ typedef void ( *FnChangeCallback_t )( IConVar *var, const char *pOldValue, float
 //-----------------------------------------------------------------------------
 abstract_class IConVar
 {
-   public:
+    public:
     // Value set
     virtual void SetValue( const char *pValue ) = 0;
     virtual void SetValue( float flValue ) = 0;

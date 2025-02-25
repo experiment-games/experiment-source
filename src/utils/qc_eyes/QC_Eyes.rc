@@ -27,18 +27,18 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE 
+1 TEXTINCLUDE
 BEGIN
     "resource.h\0"
 END
 
-2 TEXTINCLUDE 
+2 TEXTINCLUDE
 BEGIN
     "#include ""afxres.h""\r\n"
     "\0"
 END
 
-3 TEXTINCLUDE 
+3 TEXTINCLUDE
 BEGIN
     "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
     "#define _AFX_NO_OLE_RESOURCES\r\n"
@@ -74,7 +74,7 @@ IDR_MAINFRAME           ICON                    "res\\QC_Eyes.ico"
 //
 
 IDD_QC_EYES_DIALOG DIALOGEX 0, 0, 695, 510
-STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | 
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION |
     WS_SYSMENU
 EXSTYLE WS_EX_APPWINDOW
 CAPTION "QC Eyes"
@@ -105,7 +105,7 @@ BEGIN
     PUSHBUTTON      "Create QC Text",IDC_CREATE_QC_TEXT,7,243,93,19
     PUSHBUTTON      "Copy Text To Clipboard",IDC_COPY_TEXT_TO_CLIPBOARD,109,
                     243,93,19
-    EDITTEXT        IDC_OUTPUT_TEXT,7,271,681,232,ES_MULTILINE | 
+    EDITTEXT        IDC_OUTPUT_TEXT,7,271,681,232,ES_MULTILINE |
                     ES_AUTOHSCROLL
     CONTROL         "Y Axis Up (XSI, Maya)",IDC_Y_AXIS_UP,"Button",
                     BS_AUTORADIOBUTTON | WS_GROUP,228,21,92,10
@@ -153,7 +153,7 @@ BEGIN
     RTEXT           "Eyeball Size:",IDC_EYEBALL_SIZE_LABEL,417,47,48,8
     CTEXT           "",IDC_PICTURE_LABEL,375,162,285,8
     CONTROL         "Enable Independent Left Lid Control",
-                    IDC_LEFT_LID_CONTROL,"Button",BS_AUTOCHECKBOX | 
+                    IDC_LEFT_LID_CONTROL,"Button",BS_AUTOCHECKBOX |
                     WS_TABSTOP,421,62,128,10
     GROUPBOX        "Upper Left Lid Positions",IDC_UPPER_LEFT_LID_PANEL,562,
                     7,126,60
@@ -218,7 +218,7 @@ END
 //
 
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO 
+GUIDELINES DESIGNINFO
 BEGIN
     IDD_QC_EYES_DIALOG, DIALOG
     BEGIN
@@ -273,4 +273,3 @@ LANGUAGE 9, 1
 
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED
-

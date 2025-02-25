@@ -31,7 +31,7 @@ struct JeepWaterData_t
 //-----------------------------------------------------------------------------
 class CPropJeep : public CPropVehicleDriveable
 {
-   public:
+    public:
     DECLARE_CLASS( CPropJeep, CPropVehicleDriveable );
 
     DECLARE_SERVERCLASS();
@@ -114,7 +114,7 @@ class CPropJeep : public CPropVehicleDriveable
         m_bHeadlightIsOn = false;
     }
 
-   private:
+    private:
     void FireCannon( void );
     void ChargeCannon( void );
     void FireChargedCannon( void );
@@ -142,7 +142,7 @@ class CPropJeep : public CPropVehicleDriveable
     void InputStartRemoveTauCannon( inputdata_t &inputdata );
     void InputFinishRemoveTauCannon( inputdata_t &inputdata );
 
-   protected:
+    protected:
     virtual void HandleWater( void );
     bool CheckWater( void );
 

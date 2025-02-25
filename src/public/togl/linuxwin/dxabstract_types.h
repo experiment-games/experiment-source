@@ -293,7 +293,7 @@ typedef enum _D3DSHADER_COMPARISON
 #define D3DENUM_WHQL_LEVEL 0x00000002L
 
 #define D3DPTEXTURECAPS_NOPROJECTEDBUMPENV 0x00200000L /* Device does not support projected bump env lookup operation \
-                                                          in programmable and fixed function pixel shaders */
+                                                        in programmable and fixed function pixel shaders */
 #define D3DDEVCAPS2_STREAMOFFSET 0x00000001L           /* Device supports offsets in streams. Must be set by DX9 drivers */
 
 #define D3DDEVCAPS_PUREDEVICE 0x00100000L /* Device supports D3DCREATE_PUREDEVICE */
@@ -386,11 +386,11 @@ typedef enum _D3DSHADER_COMPARISON
 #define D3DSP_DSTMOD_SHIFT 20
 #define D3DSP_DSTMOD_MASK 0x00F00000
 #define D3DSPDM_MSAMPCENTROID ( 4 << D3DSP_DSTMOD_SHIFT )  // Relevant to multisampling only:
-                                                           //      When the pixel center is not covered, sample
-                                                           //      attribute or compute gradients/LOD
-                                                           //      using multisample "centroid" location.
-                                                           //      "Centroid" is some location within the covered
-                                                           //      region of the pixel.
+                                                            //      When the pixel center is not covered, sample
+                                                            //      attribute or compute gradients/LOD
+                                                            //      using multisample "centroid" location.
+                                                            //      "Centroid" is some location within the covered
+                                                            //      region of the pixel.
 
 #define D3DXSHADER_DEBUG ( 1 << 0 )
 #define D3DXSHADER_AVOID_FLOW_CONTROL ( 1 << 9 )
@@ -427,11 +427,11 @@ typedef enum _D3DSHADER_COMPARISON
 #define D3DSPDM_SATURATE ( 1 << D3DSP_DSTMOD_SHIFT )          // clamp to 0. to 1. range
 #define D3DSPDM_PARTIALPRECISION ( 2 << D3DSP_DSTMOD_SHIFT )  // Partial precision hint
 #define D3DSPDM_MSAMPCENTROID ( 4 << D3DSP_DSTMOD_SHIFT )     // Relevant to multisampling only:
-                                                              //      When the pixel center is not covered, sample
-                                                              //      attribute or compute gradients/LOD
-                                                              //      using multisample "centroid" location.
-                                                              //      "Centroid" is some location within the covered
-                                                              //      region of the pixel.
+                                                            //      When the pixel center is not covered, sample
+                                                            //      attribute or compute gradients/LOD
+                                                            //      using multisample "centroid" location.
+                                                            //      "Centroid" is some location within the covered
+                                                            //      region of the pixel.
 
 // Value when there is no swizzle (X is taken from X, Y is taken from Y,
 // Z is taken from Z, W is taken from W
@@ -679,15 +679,15 @@ typedef enum _D3DPATCHEDGESTYLE
 
 /* Debug monitor tokens (DEBUG only)
 
-   Note that if D3DRS_DEBUGMONITORTOKEN is set, the call is treated as
-   passing a token to the debug monitor.  For example, if, after passing
-   D3DDMT_ENABLE/DISABLE to D3DRS_DEBUGMONITORTOKEN other token values
-   are passed in, the enabled/disabled state of the debug
-   monitor will still persist.
+    Note that if D3DRS_DEBUGMONITORTOKEN is set, the call is treated as
+    passing a token to the debug monitor.  For example, if, after passing
+    D3DDMT_ENABLE/DISABLE to D3DRS_DEBUGMONITORTOKEN other token values
+    are passed in, the enabled/disabled state of the debug
+    monitor will still persist.
 
-   The debug monitor defaults to enabled.
+    The debug monitor defaults to enabled.
 
-   Calling GetRenderState on D3DRS_DEBUGMONITORTOKEN is not of any use.
+    Calling GetRenderState on D3DRS_DEBUGMONITORTOKEN is not of any use.
 */
 typedef enum _D3DDEBUGMONITORTOKENS
 {
@@ -1061,7 +1061,7 @@ typedef struct _D3DVERTEXBUFFER_DESC
 
 class TOGL_CLASS D3DXMATRIX : public D3DMATRIX
 {
-   public:
+    public:
     D3DXMATRIX operator*( const D3DXMATRIX& o ) const;
     operator FLOAT*();
     float& operator()( int row, int column );
@@ -1097,7 +1097,7 @@ typedef enum _D3DDECLTYPE
     D3DDECLTYPE_FLOAT3 = 2,    // 3D float expanded to (value, value, value, 1.)
     D3DDECLTYPE_FLOAT4 = 3,    // 4D float
     D3DDECLTYPE_D3DCOLOR = 4,  // 4D packed unsigned bytes mapped to 0. to 1. range
-                               // Input is in D3DCOLOR format (ARGB) expanded to (R, G, B, A)
+                                // Input is in D3DCOLOR format (ARGB) expanded to (R, G, B, A)
     D3DDECLTYPE_UBYTE4 = 5,    // 4D unsigned byte
     D3DDECLTYPE_SHORT2 = 6,    // 2D signed short expanded to (value, value, 0., 1.)
     D3DDECLTYPE_SHORT4 = 7,    // 4D signed short
@@ -1428,7 +1428,7 @@ typedef struct TOGL_CLASS _D3DVECTOR
 
 class TOGL_CLASS D3DXVECTOR2
 {
-   public:
+    public:
     operator FLOAT*();
     operator CONST FLOAT*() const;
 
@@ -1437,7 +1437,7 @@ class TOGL_CLASS D3DXVECTOR2
 
 class TOGL_CLASS D3DXVECTOR3 : public D3DVECTOR
 {
-   public:
+    public:
     D3DXVECTOR3() {}
     D3DXVECTOR3( float a, float b, float c );
     operator FLOAT*();
@@ -1472,7 +1472,7 @@ typedef struct _D3DLIGHT9
 
 class TOGL_CLASS D3DXVECTOR4
 {
-   public:
+    public:
     D3DXVECTOR4() {}
     D3DXVECTOR4( float a, float b, float c, float d );
 
@@ -1532,8 +1532,8 @@ typedef enum _D3DTEXTUREOP
     D3DTOP_ADDSIGNED2X = 9,  // as above but left  1 bit
     D3DTOP_SUBTRACT = 10,    // Arg1 - Arg2, with no saturation
     D3DTOP_ADDSMOOTH = 11,   // add 2 args, subtract product
-                             // Arg1 + Arg2 - Arg1*Arg2
-                             // = Arg1 + (1-Arg1)*Arg2
+                            // Arg1 + Arg2 - Arg1*Arg2
+                            // = Arg1 + (1-Arg1)*Arg2
 
     // Linear alpha blend: Arg1*(Alpha) + Arg2*(1-Alpha)
     D3DTOP_BLENDDIFFUSEALPHA = 12,  // iterated alpha

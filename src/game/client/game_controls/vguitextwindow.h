@@ -29,10 +29,10 @@ class TextEntry;
 
 class CTextWindow : public vgui::Frame, public IViewPortPanel
 {
-   private:
+    private:
     DECLARE_CLASS_SIMPLE( CTextWindow, vgui::Frame );
 
-   public:
+    public:
     CTextWindow( IViewPort *pViewPort );
     virtual ~CTextWindow();
 
@@ -67,7 +67,7 @@ class CTextWindow : public vgui::Frame, public IViewPortPanel
         BaseClass::SetParent( parent );
     }
 
-   public:
+    public:
     virtual void SetData( int type, const char *title, const char *message, const char *message_fallback, int command, bool bUnload );
     virtual void ShowFile( const char *filename );
     virtual void ShowText( const char *text );
@@ -76,7 +76,7 @@ class CTextWindow : public vgui::Frame, public IViewPortPanel
 
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
 
-   protected:
+    protected:
     // vgui overrides
     virtual void OnCommand( const char *command );
 
@@ -104,10 +104,10 @@ class CTextWindow : public vgui::Frame, public IViewPortPanel
 
     class CMOTDHTML : public vgui::HTML
     {
-       private:
+        private:
         DECLARE_CLASS_SIMPLE( CMOTDHTML, vgui::HTML );
 
-       public:
+        public:
         CMOTDHTML( Panel *parent, const char *pchName )
             : vgui::HTML( parent, pchName ) {}
         virtual bool OnStartRequest( const char *url, const char *target, const char *pchPostData, bool bIsRedirect ) OVERRIDE;

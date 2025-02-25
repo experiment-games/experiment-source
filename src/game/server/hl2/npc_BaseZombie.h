@@ -109,7 +109,7 @@ abstract_class CNPC_BaseZombie : public CAI_BaseZombieBase
 {
     DECLARE_CLASS( CNPC_BaseZombie, CAI_BaseZombieBase );
 
-   public:
+    public:
     CNPC_BaseZombie( void );
     ~CNPC_BaseZombie( void );
 
@@ -258,10 +258,10 @@ abstract_class CNPC_BaseZombie : public CAI_BaseZombieBase
         return true;
     }
 
-   public:
+    public:
     CAI_ActBusyBehavior m_ActBusyBehavior;
 
-   protected:
+    protected:
     CSoundPatch *m_pMoanSound;
 
     bool m_fIsTorso;     // is this is a half-zombie?
@@ -302,7 +302,7 @@ abstract_class CNPC_BaseZombie : public CAI_BaseZombieBase
 
     DEFINE_CUSTOM_AI;
 
-   private:
+    private:
     bool m_bIsSlumped;
 };
 

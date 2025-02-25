@@ -22,7 +22,7 @@ class CAI_InjuredFollowGoal : public CAI_FollowGoal
 {
     DECLARE_CLASS( CAI_InjuredFollowGoal, CAI_FollowGoal );
 
-   public:
+    public:
     virtual void EnableGoal( CAI_BaseNPC *pAI );
     virtual void DisableGoal( CAI_BaseNPC *pAI );
 
@@ -38,7 +38,7 @@ class CAI_BehaviorAlyxInjured : public CAI_FollowBehavior
     DECLARE_CLASS( CAI_BehaviorAlyxInjured, CAI_FollowBehavior );
     DECLARE_DATADESC();
 
-   public:
+    public:
     CAI_BehaviorAlyxInjured( void );
 
     virtual const char *GetName( void )
@@ -78,7 +78,7 @@ class CAI_BehaviorAlyxInjured : public CAI_FollowBehavior
     }  // Never use the readiness system when injured
     bool IsInjured( void ) const;
 
-   private:
+    private:
     void SpeakIfAllowed( AIConcept_t concept );
     bool ShouldRunToCover( void );
     bool ShouldRunToFollowGoal( void );
@@ -91,7 +91,7 @@ class CAI_BehaviorAlyxInjured : public CAI_FollowBehavior
 
     float m_flNextWarnTime;
 
-   protected:
+    protected:
     DEFINE_CUSTOM_SCHEDULE_PROVIDER;
 };
 

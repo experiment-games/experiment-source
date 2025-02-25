@@ -10,7 +10,7 @@
 // NOTE: Defaults to all indices disabled
 class IPhysicsCollisionSet
 {
-   public:
+    public:
     ~IPhysicsCollisionSet() {}
 
     virtual void EnableCollisions( int index0, int index1 ) = 0;

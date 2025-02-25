@@ -28,7 +28,7 @@ class CEnvEntityMaker : public CPointEntity
 {
     DECLARE_CLASS( CEnvEntityMaker, CPointEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     virtual void Spawn( void );
@@ -39,7 +39,7 @@ class CEnvEntityMaker : public CPointEntity
     void InputForceSpawn( inputdata_t &inputdata );
     void InputForceSpawnAtEntityOrigin( inputdata_t &inputdata );
 
-   private:
+    private:
     CPointTemplate *FindTemplate();
 
     bool HasRoomToSpawn();

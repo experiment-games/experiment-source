@@ -9,10 +9,10 @@ class CHandViewModel : public CBaseViewModel
 {
     DECLARE_CLASS( CHandViewModel, CBaseViewModel );
 
-   public:
+    public:
     DECLARE_NETWORKCLASS();
 
-   private:
+    private:
 };
 
 LINK_ENTITY_TO_CLASS( hand_viewmodel, CHandViewModel );

@@ -392,7 +392,7 @@ void MCThreadCleanupFn()
 
 class CVisDistributeWorkCallbacks : public IWorkUnitDistributorCallbacks
 {
-   public:
+    public:
     CVisDistributeWorkCallbacks()
     {
         m_bExitedEarly = false;
@@ -463,7 +463,7 @@ class CVisDistributeWorkCallbacks : public IWorkUnitDistributorCallbacks
         return false;
     }
 
-   public:
+    public:
     enum
     {
         STATE_NONE,

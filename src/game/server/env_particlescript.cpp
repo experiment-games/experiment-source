@@ -21,7 +21,7 @@
 //-----------------------------------------------------------------------------
 class CEnvParticleScript : public CBaseAnimating
 {
-   public:
+    public:
     DECLARE_CLASS( CEnvParticleScript, CBaseAnimating );
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
@@ -35,7 +35,7 @@ class CEnvParticleScript : public CBaseAnimating
 
     void InputSetSequence( inputdata_t &inputdata );
 
-   private:
+    private:
     void PrecacheAnimationEventMaterials();
 
     CNetworkVar( float, m_flSequenceScale );

@@ -18,7 +18,7 @@
 //-----------------------------------------------------------------------------
 abstract_class IScorer
 {
-   public:
+    public:
     // Return the entity that should receive the score
     virtual CBasePlayer *GetScorer( void ) = 0;
     // Return the entity that should get assistance credit

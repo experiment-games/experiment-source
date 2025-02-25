@@ -66,7 +66,7 @@ class OutputDirectory;
 // be registered with CommandLineInterface to support various languages.
 class LIBPROTOC_EXPORT CodeGenerator
 {
-   public:
+    public:
     inline CodeGenerator() {}
     virtual ~CodeGenerator();
 
@@ -82,11 +82,11 @@ class LIBPROTOC_EXPORT CodeGenerator
     // Returns true if successful.  Otherwise, sets *error to a description of
     // the problem (e.g. "invalid parameter") and returns false.
     virtual bool Generate( const FileDescriptor* file,
-                           const string& parameter,
-                           OutputDirectory* output_directory,
-                           string* error ) const = 0;
+                            const string& parameter,
+                            OutputDirectory* output_directory,
+                            string* error ) const = 0;
 
-   private:
+    private:
     GOOGLE_DISALLOW_EVIL_CONSTRUCTORS( CodeGenerator );
 };
 
@@ -95,7 +95,7 @@ class LIBPROTOC_EXPORT CodeGenerator
 // to write.
 class LIBPROTOC_EXPORT OutputDirectory
 {
-   public:
+    public:
     inline OutputDirectory() {}
     virtual ~OutputDirectory();
 
@@ -121,7 +121,7 @@ class LIBPROTOC_EXPORT OutputDirectory
         const string& filename,
         const string& insertion_point );
 
-   private:
+    private:
     GOOGLE_DISALLOW_EVIL_CONSTRUCTORS( OutputDirectory );
 };
 
@@ -132,7 +132,7 @@ class LIBPROTOC_EXPORT OutputDirectory
 // parses to the pairs:
 //   ("foo", "bar"), ("baz", ""), ("qux", "corge")
 extern void ParseGeneratorParameter( const string&,
-                                     vector< pair< string, string > >* );
+                                    vector< pair< string, string > >* );
 
 }  // namespace compiler
 }  // namespace protobuf

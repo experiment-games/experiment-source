@@ -40,7 +40,7 @@ enum EVRScreenshotType
 //-----------------------------------------------------------------------------
 class ISteamScreenshots
 {
-   public:
+    public:
     // Writes a screenshot to the user's screenshot library given the raw image data, which must be in RGB format.
     // The return value is a handle that is valid for the duration of the game process and can be used to apply tags.
     virtual ScreenshotHandle WriteScreenshot( void *pubRGB, uint32 cubRGB, int nWidth, int nHeight ) = 0;

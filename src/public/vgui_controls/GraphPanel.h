@@ -24,7 +24,7 @@ class GraphPanel : public Panel
 {
     DECLARE_CLASS_SIMPLE( GraphPanel, Panel );
 
-   public:
+    public:
     GraphPanel( Panel *parent, const char *name );
 
     // domain settings (x-axis settings)
@@ -46,12 +46,12 @@ class GraphPanel : public Panel
     // assumes that the samples are fairly evenly spaced (not much more work to do to fix this though)
     void AddItem( float sampleEnd, float sampleValue );
 
-   protected:
+    protected:
     virtual void Paint();
     virtual void PerformLayout();
     virtual void ApplySchemeSettings( IScheme *pScheme );
 
-   private:
+    private:
     int GetVisibleItemCount();
 
     struct Sample_t

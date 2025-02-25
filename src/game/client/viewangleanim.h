@@ -20,7 +20,7 @@
 
 class CViewAngleKeyFrame
 {
-   public:
+    public:
     CViewAngleKeyFrame( QAngle vecAngles, float flTime, int iFlags )
     {
         m_vecAngles = vecAngles;
@@ -41,7 +41,7 @@ typedef void ( *ViewAnimCompleteCallback )( void );
 
 class CViewAngleAnimation : public C_BaseEntity
 {
-   public:
+    public:
     CViewAngleAnimation();
     ~CViewAngleAnimation();
 
@@ -62,7 +62,7 @@ class CViewAngleAnimation : public C_BaseEntity
         m_pAnimCompleteCallback = pFunc;
     }
 
-   private:
+    private:
     void SetAngles( QAngle vecCalculatedAngles );
 
     float m_flAnimStartTime;  // time this animation started

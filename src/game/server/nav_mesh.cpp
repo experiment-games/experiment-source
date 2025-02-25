@@ -351,7 +351,7 @@ void CNavMesh::Update( void )
  */
 class CheckAreasOverlappingBreakable
 {
-   public:
+    public:
     CheckAreasOverlappingBreakable( CBaseEntity *breakable )
     {
         m_breakable = breakable;
@@ -374,7 +374,7 @@ class CheckAreasOverlappingBreakable
         return true;
     }
 
-   private:
+    private:
     Extent m_breakableExtent;
     CBaseEntity *m_breakable;
 };
@@ -382,7 +382,7 @@ class CheckAreasOverlappingBreakable
 //--------------------------------------------------------------------------------------------------------------
 class NavRoundRestart
 {
-   public:
+    public:
     bool operator()( CNavArea *area )
     {
         area->OnRoundRestart();
@@ -572,7 +572,7 @@ void CNavMesh::OnServerActivate( void )
 //--------------------------------------------------------------------------------------------------------------
 class CRegisterPrerequisite
 {
-   public:
+    public:
     CRegisterPrerequisite( CFuncNavPrerequisite *prereq )
     {
         m_prereq = prereq;
@@ -881,9 +881,9 @@ CNavArea *CNavMesh::GetNearestNavArea( const Vector &pos, bool anyZ, float maxDi
 
                 // only check these areas if we're on the outer edge of our spiral
                 if ( x > originX - shift &&
-                     x < originX + shift &&
-                     y > originY - shift &&
-                     y < originY + shift )
+                    x < originX + shift &&
+                    y > originY - shift &&
+                    y < originY + shift )
                     continue;
 
                 NavAreaVector *areaVector = &m_grid[x + y * m_gridSizeX];
@@ -1277,7 +1277,7 @@ class CTraceFilterGroundEntities : public CTraceFilterWalkableEntities
 {
     typedef CTraceFilterWalkableEntities BaseClass;
 
-   public:
+    public:
     CTraceFilterGroundEntities( const IHandleEntity *passentity, int collisionGroup, unsigned int flags )
         : BaseClass( passentity, collisionGroup, flags )
     {
@@ -1287,8 +1287,8 @@ class CTraceFilterGroundEntities : public CTraceFilterWalkableEntities
     {
         CBaseEntity *pEntity = EntityFromEntityHandle( pServerEntity );
         if ( FClassnameIs( pEntity, "prop_door" ) ||
-             FClassnameIs( pEntity, "prop_door_rotating" ) ||
-             FClassnameIs( pEntity, "func_breakable" ) )
+            FClassnameIs( pEntity, "prop_door_rotating" ) ||
+            FClassnameIs( pEntity, "func_breakable" ) )
         {
             return false;
         }

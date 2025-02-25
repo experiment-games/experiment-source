@@ -38,10 +38,10 @@ enum MapLoadType_t
 //-----------------------------------------------------------------------------
 class CGlobalVars : public CGlobalVarsBase
 {
-   public:
+    public:
     CGlobalVars( bool bIsClient );
 
-   public:
+    public:
     // Current map
     string_t mapname;
     int mapversion;
@@ -70,7 +70,7 @@ class IServerNetworkable;
 class IServerEntity;
 
 #define FL_EDICT_CHANGED ( 1 << 0 )  // Game DLL sets this when the entity state changes
-                                     // Mutually exclusive with FL_EDICT_PARTIAL_CHANGE.
+                                    // Mutually exclusive with FL_EDICT_PARTIAL_CHANGE.
 
 #define FL_EDICT_FREE ( 1 << 1 )  // this edict if free for reuse
 #define FL_EDICT_FULL ( 1 << 2 )  // this is a full server entity
@@ -98,7 +98,7 @@ class IServerEntity;
 
 class CEdictChangeInfo
 {
-   public:
+    public:
     // Edicts remember the offsets of properties that change
     unsigned short m_ChangeOffsets[MAX_CHANGE_OFFSETS];
     unsigned short m_nChangeOffsets;
@@ -107,7 +107,7 @@ class CEdictChangeInfo
 // Shared between engine and game DLL.
 class CSharedEdictChangeInfo
 {
-   public:
+    public:
     CSharedEdictChangeInfo()
     {
         m_iSerialNumber = 1;
@@ -124,7 +124,7 @@ extern CSharedEdictChangeInfo *g_pSharedChangeInfo;
 
 class IChangeInfoAccessor
 {
-   public:
+    public:
     inline void SetChangeInfo( unsigned short info )
     {
         m_iChangeInfo = info;
@@ -145,7 +145,7 @@ class IChangeInfoAccessor
         return m_iChangeInfoSerialNumber;
     }
 
-   private:
+    private:
     unsigned short m_iChangeInfo;
     unsigned short m_iChangeInfoSerialNumber;
 };
@@ -156,7 +156,7 @@ class IChangeInfoAccessor
 // NOTE: YOU CAN'T CHANGE THE LAYOUT OR SIZE OF CBASEEDICT AND REMAIN COMPATIBLE WITH HL2_VC6!!!!!
 class CBaseEdict
 {
-   public:
+    public:
     // Returns an IServerEntity if FL_FULLEDICT is set or NULL if this
     // is a lightweight networking entity.
     IServerEntity *GetIServerEntity();
@@ -187,7 +187,7 @@ class CBaseEdict
     unsigned short GetChangeInfo() const;
     unsigned short GetChangeInfoSerialNumber() const;
 
-   public:
+    public:
     // NOTE: this is in the edict instead of being accessed by a virtual because the engine needs fast access to it.
     // NOTE: YOU CAN'T CHANGE THE LAYOUT OR SIZE OF CBASEEDICT AND REMAIN COMPATIBLE WITH HL2_VC6!!!!!
 #ifdef _XBOX
@@ -216,10 +216,10 @@ class CBaseEdict
     // NOTE: this is in the edict instead of being accessed by a virtual because the engine needs fast access to it.
     IServerNetworkable *m_pNetworkable;
 
-   protected:
+    protected:
     IServerUnknown *m_pUnk;
 
-   public:
+    public:
     IChangeInfoAccessor *GetChangeAccessor();              // The engine implements this and the game .dll implements as
     const IChangeInfoAccessor *GetChangeAccessor() const;  // The engine implements this and the game .dll implements as
     // as callback through to the engine!!!
@@ -411,7 +411,7 @@ inline unsigned short CBaseEdict::GetChangeInfoSerialNumber() const
 //-----------------------------------------------------------------------------
 struct edict_t : public CBaseEdict
 {
-   public:
+    public:
     ICollideable *GetCollideable();
 
     // The server timestampe at which the edict was freed (so we can try to use other edicts before reallocating this one)

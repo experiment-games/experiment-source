@@ -25,7 +25,7 @@
 //-----------------------------------------------------------------------------
 class C_TEProjectedDecal : public C_BaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_TEProjectedDecal, C_BaseTempEntity );
     DECLARE_CLIENTCLASS();
 
@@ -36,7 +36,7 @@ class C_TEProjectedDecal : public C_BaseTempEntity
 
     virtual void Precache( void );
 
-   public:
+    public:
     Vector m_vecOrigin;
     QAngle m_angRotation;
     float m_flDistance;

@@ -222,11 +222,11 @@ float CSprite::GlowBlend( CEngineSprite *psprite, const Vector &entorigin, int r
 //			up -
 //-----------------------------------------------------------------------------
 void C_SpriteRenderer::GetSpriteAxes( SPRITETYPE type,
-                                      const Vector &origin,
-                                      const QAngle &angles,
-                                      Vector &forward,
-                                      Vector &right,
-                                      Vector &up )
+                                    const Vector &origin,
+                                    const QAngle &angles,
+                                    Vector &forward,
+                                    Vector &right,
+                                    Vector &up )
 {
     int i;
     float dot, angle, sr, cr;

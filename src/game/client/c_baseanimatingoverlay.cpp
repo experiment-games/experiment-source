@@ -118,22 +118,22 @@ RecvPropUtlVector(
                     BEGIN_PREDICTION_DATA( C_BaseAnimatingOverlay )
 
     /*
-      DEFINE_FIELD( C_BaseAnimatingOverlay, m_Layer[0][2].m_nSequence, FIELD_INTEGER ),
-      DEFINE_FIELD( C_BaseAnimatingOverlay, m_Layer[0][2].m_flCycle, FIELD_FLOAT ),
-      DEFINE_FIELD( C_BaseAnimatingOverlay, m_Layer[0][2].m_flPlaybackRate, FIELD_FLOAT),
-      DEFINE_FIELD( C_BaseAnimatingOverlay, m_Layer[0][2].m_flWeight, FIELD_FLOAT),
-      DEFINE_FIELD( C_BaseAnimatingOverlay, m_Layer[1][2].m_nSequence, FIELD_INTEGER ),
-      DEFINE_FIELD( C_BaseAnimatingOverlay, m_Layer[1][2].m_flCycle, FIELD_FLOAT ),
-      DEFINE_FIELD( C_BaseAnimatingOverlay, m_Layer[1][2].m_flPlaybackRate, FIELD_FLOAT),
-      DEFINE_FIELD( C_BaseAnimatingOverlay, m_Layer[1][2].m_flWeight, FIELD_FLOAT),
-      DEFINE_FIELD( C_BaseAnimatingOverlay, m_Layer[2][2].m_nSequence, FIELD_INTEGER ),
-      DEFINE_FIELD( C_BaseAnimatingOverlay, m_Layer[2][2].m_flCycle, FIELD_FLOAT ),
-      DEFINE_FIELD( C_BaseAnimatingOverlay, m_Layer[2][2].m_flPlaybackRate, FIELD_FLOAT),
-      DEFINE_FIELD( C_BaseAnimatingOverlay, m_Layer[2][2].m_flWeight, FIELD_FLOAT),
-      DEFINE_FIELD( C_BaseAnimatingOverlay, m_Layer[3][2].m_nSequence, FIELD_INTEGER ),
-      DEFINE_FIELD( C_BaseAnimatingOverlay, m_Layer[3][2].m_flCycle, FIELD_FLOAT ),
-      DEFINE_FIELD( C_BaseAnimatingOverlay, m_Layer[3][2].m_flPlaybackRate, FIELD_FLOAT),
-      DEFINE_FIELD( C_BaseAnimatingOverlay, m_Layer[3][2].m_flWeight, FIELD_FLOAT),
+    DEFINE_FIELD( C_BaseAnimatingOverlay, m_Layer[0][2].m_nSequence, FIELD_INTEGER ),
+    DEFINE_FIELD( C_BaseAnimatingOverlay, m_Layer[0][2].m_flCycle, FIELD_FLOAT ),
+    DEFINE_FIELD( C_BaseAnimatingOverlay, m_Layer[0][2].m_flPlaybackRate, FIELD_FLOAT),
+    DEFINE_FIELD( C_BaseAnimatingOverlay, m_Layer[0][2].m_flWeight, FIELD_FLOAT),
+    DEFINE_FIELD( C_BaseAnimatingOverlay, m_Layer[1][2].m_nSequence, FIELD_INTEGER ),
+    DEFINE_FIELD( C_BaseAnimatingOverlay, m_Layer[1][2].m_flCycle, FIELD_FLOAT ),
+    DEFINE_FIELD( C_BaseAnimatingOverlay, m_Layer[1][2].m_flPlaybackRate, FIELD_FLOAT),
+    DEFINE_FIELD( C_BaseAnimatingOverlay, m_Layer[1][2].m_flWeight, FIELD_FLOAT),
+    DEFINE_FIELD( C_BaseAnimatingOverlay, m_Layer[2][2].m_nSequence, FIELD_INTEGER ),
+    DEFINE_FIELD( C_BaseAnimatingOverlay, m_Layer[2][2].m_flCycle, FIELD_FLOAT ),
+    DEFINE_FIELD( C_BaseAnimatingOverlay, m_Layer[2][2].m_flPlaybackRate, FIELD_FLOAT),
+    DEFINE_FIELD( C_BaseAnimatingOverlay, m_Layer[2][2].m_flWeight, FIELD_FLOAT),
+    DEFINE_FIELD( C_BaseAnimatingOverlay, m_Layer[3][2].m_nSequence, FIELD_INTEGER ),
+    DEFINE_FIELD( C_BaseAnimatingOverlay, m_Layer[3][2].m_flCycle, FIELD_FLOAT ),
+    DEFINE_FIELD( C_BaseAnimatingOverlay, m_Layer[3][2].m_flPlaybackRate, FIELD_FLOAT),
+    DEFINE_FIELD( C_BaseAnimatingOverlay, m_Layer[3][2].m_flWeight, FIELD_FLOAT),
     */
 
     END_PREDICTION_DATA()
@@ -259,7 +259,7 @@ void C_BaseAnimatingOverlay::CheckForLayerChanges( CStudioHdr *hdr, float curren
             /*
             if (stricmp( r_seq_overlay_debug.GetString(), hdr->name ) == 0)
             {
-              DevMsgRT( "(%30s %6.2f : %6.2f : %6.2f)\n", hdr->pSeqdesc( pHead->nSequence ).pszLabel(), (float)pPrev2->m_flCycle, (float)pPrev1->m_flCycle, (float)pHead->m_flCycle );
+            DevMsgRT( "(%30s %6.2f : %6.2f : %6.2f)\n", hdr->pSeqdesc( pHead->nSequence ).pszLabel(), (float)pPrev2->m_flCycle, (float)pPrev1->m_flCycle, (float)pHead->m_flCycle );
             }
             */
 
@@ -328,7 +328,7 @@ void C_BaseAnimatingOverlay::AccumulateLayers( IBoneSetup &boneSetup, Vector pos
             /*
             DevMsgRT( 1 , "%.3f  %.3f  %.3f\n", currentTime, fWeight, dadt );
             debugoverlay->AddTextOverlay( GetAbsOrigin() + Vector( 0, 0, 64 ), -j - 1, 0,
-              "%2d(%s) : %6.2f : %6.2f",
+            "%2d(%s) : %6.2f : %6.2f",
                 m_AnimOverlay[i].m_nSequence,
                 hdr->pSeqdesc( m_AnimOverlay[i].m_nSequence )->pszLabel(),
                 m_AnimOverlay[i].m_flCycle,
@@ -445,8 +445,8 @@ void C_BaseAnimatingOverlay::DoAnimationEvents( CStudioHdr *pStudioHdr )
 
         // in client code, m_flOverlayPrevEventCycle is set to -1 when we first start an overlay, looping or not
         if ( bLoopingSequence &&
-             m_flOverlayPrevEventCycle[j] > 0.0f &&
-             m_AnimOverlay[j].m_flCycle <= m_flOverlayPrevEventCycle[j] )
+            m_flOverlayPrevEventCycle[j] > 0.0f &&
+            m_AnimOverlay[j].m_flCycle <= m_flOverlayPrevEventCycle[j] )
         {
             if ( m_flOverlayPrevEventCycle[j] - m_AnimOverlay[j].m_flCycle > 0.5 )
             {
@@ -483,12 +483,12 @@ void C_BaseAnimatingOverlay::DoAnimationEvents( CStudioHdr *pStudioHdr )
                 if ( watch )
                 {
                     Msg( "%i FE %i Looped cycle %f, prev %f ev %f (time %.3f)\n",
-                         gpGlobals->tickcount,
-                         pevent[i].event,
-                         pevent[i].cycle,
-                         m_flOverlayPrevEventCycle[j],
-                         ( float )m_AnimOverlay[j].m_flCycle,
-                         gpGlobals->curtime );
+                        gpGlobals->tickcount,
+                        pevent[i].event,
+                        pevent[i].cycle,
+                        m_flOverlayPrevEventCycle[j],
+                        ( float )m_AnimOverlay[j].m_flCycle,
+                        gpGlobals->curtime );
                 }
 
                 FireEvent( GetAbsOrigin(), GetAbsAngles(), pevent[i].event, pevent[i].pszOptions() );
@@ -513,13 +513,13 @@ void C_BaseAnimatingOverlay::DoAnimationEvents( CStudioHdr *pStudioHdr )
                 if ( watch )
                 {
                     Msg( "%i (seq: %d) FE %i Normal cycle %f, prev %f ev %f (time %.3f)\n",
-                         gpGlobals->tickcount,
-                         m_AnimOverlay[j].m_nSequence.GetRaw(),
-                         pevent[i].event,
-                         pevent[i].cycle,
-                         m_flOverlayPrevEventCycle[j],
-                         ( float )m_AnimOverlay[j].m_flCycle,
-                         gpGlobals->curtime );
+                        gpGlobals->tickcount,
+                        m_AnimOverlay[j].m_nSequence.GetRaw(),
+                        pevent[i].event,
+                        pevent[i].cycle,
+                        m_flOverlayPrevEventCycle[j],
+                        ( float )m_AnimOverlay[j].m_flCycle,
+                        gpGlobals->curtime );
                 }
 
                 FireEvent( GetAbsOrigin(), GetAbsAngles(), pevent[i].event, pevent[i].pszOptions() );

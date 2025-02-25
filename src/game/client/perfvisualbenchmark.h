@@ -22,11 +22,11 @@
 
 class CPerfVisualBenchmark : public CBaseGameSystemPerFrame
 {
-   public:
+    public:
     CPerfVisualBenchmark();
     virtual ~CPerfVisualBenchmark();
 
-   public:  // CBaseGameSystem overrides
+    public:  // CBaseGameSystem overrides
     virtual char const *Name()
     {
         return "CPerfVisualBenchmark";
@@ -38,7 +38,7 @@ class CPerfVisualBenchmark : public CBaseGameSystemPerFrame
     void Start();
     void Stop();
 
-   private:
+    private:
     void Print();
     struct RunInfo_t
     {
@@ -50,7 +50,7 @@ class CPerfVisualBenchmark : public CBaseGameSystemPerFrame
         float m_flFPS;
     };
 
-   private:
+    private:
     CUtlVector< RunInfo_t > m_RunInfo;
     bool m_bIsOn;     // is this thing on?
     int m_iCurVar;    // what convar are we at?

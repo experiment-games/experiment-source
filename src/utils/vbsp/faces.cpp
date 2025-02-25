@@ -337,10 +337,10 @@ void FindEdgeVerts( Vector &v1, Vector &v2 )
 
 #if 0
 {
-	int		i;
-	num_edge_verts = numvertexes-1;
-	for (i=0 ; i<numvertexes-1 ; i++)
-		edge_verts[i] = i+1;
+    int		i;
+    num_edge_verts = numvertexes-1;
+    for (i=0 ; i<numvertexes-1 ; i++)
+        edge_verts[i] = i+1;
 }
 #endif
 
@@ -362,18 +362,18 @@ void FindEdgeVerts( Vector &v1, Vector &v2 )
         y2 = t;
     }
 #if 0
-	x1--;
-	x2++;
-	y1--;
-	y2++;
-	if (x1 < 0)
-		x1 = 0;
-	if (x2 >= HASH_SIZE)
-		x2 = HASH_SIZE;
-	if (y1 < 0)
-		y1 = 0;
-	if (y2 >= HASH_SIZE)
-		y2 = HASH_SIZE;
+    x1--;
+    x2++;
+    y1--;
+    y2++;
+    if (x1 < 0)
+        x1 = 0;
+    if (x2 >= HASH_SIZE)
+        x2 = HASH_SIZE;
+    if (y1 < 0)
+        y1 = 0;
+    if (y2 >= HASH_SIZE)
+        y2 = HASH_SIZE;
 #endif
     num_edge_verts = 0;
     for ( x = x1; x <= x2; x++ )
@@ -1183,8 +1183,8 @@ void SubdivideFace( face_t **pFaceList, face_t *f )
                     maxs = v;
             }
 #if 0
-			if (maxs - mins <= 0)
-				Error ("zero extents");
+            if (maxs - mins <= 0)
+                Error ("zero extents");
 #endif
             if ( maxs - mins <= g_maxLightmapDimension )
                 break;
@@ -1330,7 +1330,7 @@ face_t *FaceFromPortal( portal_t *p, int pside )
 
     // don't show insides of windows or grates
     if ( ( ( p->nodes[pside]->contents & CONTENTS_WINDOW ) && deltaContents == CONTENTS_WINDOW ) ||
-         ( ( p->nodes[pside]->contents & CONTENTS_GRATE ) && deltaContents == CONTENTS_GRATE ) )
+        ( ( p->nodes[pside]->contents & CONTENTS_GRATE ) && deltaContents == CONTENTS_GRATE ) )
     {
         FreeFace( f );
         return NULL;
@@ -1472,8 +1472,8 @@ int AddWindingToPrimverts( const winding_t *w, unsigned short *pIndices, int ver
             if ( g_numprimverts > MAX_MAP_PRIMVERTS )
             {
                 Error( "Exceeded max water verts.\nIncrease surface subdivision size or lower your subdivision size in vmt files! (%d>%d)\n",
-                       ( int )g_numprimverts,
-                       ( int )MAX_MAP_PRIMVERTS );
+                        ( int )g_numprimverts,
+                        ( int )MAX_MAP_PRIMVERTS );
             }
         }
     }
@@ -1511,8 +1511,8 @@ static void SubdivideFaceBySubdivSize( face_t *f, float subdivsize )
     WindingBounds( w, min, max );
 
 #if 0
-	Msg( "START WINDING: \n" );
-	PrintWinding( w );
+    Msg( "START WINDING: \n" );
+    PrintWinding( w );
 #endif
     int xStart, yStart, xEnd, yEnd, xSteps, ySteps;
     xStart = ( int )subdivsize * ( int )( ( min[0] - subdivsize ) / subdivsize );
@@ -1602,8 +1602,8 @@ static void SubdivideFaceBySubdivSize( face_t *f, float subdivsize )
             }
 
 #if 0
-			Msg( "output winding:\n" );
-			PrintWinding( frontWinding );
+            Msg( "output winding:\n" );
+            PrintWinding( frontWinding );
 #endif
 
             if ( frontWinding )

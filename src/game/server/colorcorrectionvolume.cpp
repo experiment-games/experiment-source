@@ -24,7 +24,7 @@ class CColorCorrectionVolume : public CBaseTrigger
 {
     DECLARE_CLASS( CColorCorrectionVolume, CBaseTrigger );
 
-   public:
+    public:
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
 
@@ -49,7 +49,7 @@ class CColorCorrectionVolume : public CBaseTrigger
     void InputEnable( inputdata_t &inputdata );
     void InputDisable( inputdata_t &inputdata );
 
-   private:
+    private:
     bool m_bEnabled;
     bool m_bStartDisabled;
 

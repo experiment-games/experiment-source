@@ -139,8 +139,8 @@ inline bool HasDescriptorMethods( const FileDescriptor* file )
 inline bool HasGenericServices( const FileDescriptor* file )
 {
     return file->service_count() > 0 &&
-           file->options().optimize_for() != FileOptions::LITE_RUNTIME &&
-           file->options().cc_generic_services();
+            file->options().optimize_for() != FileOptions::LITE_RUNTIME &&
+            file->options().cc_generic_services();
 }
 
 // Should string fields in this file verify that their contents are UTF-8?

@@ -208,7 +208,7 @@ class CSavingDialog : public CGenericWaitingDialog
 {
     DECLARE_CLASS_SIMPLE( CSavingDialog, CGenericWaitingDialog );
 
-   public:
+    public:
     CSavingDialog( CReplayPerformanceEditorPanel *pEditorPanel )
         : CGenericWaitingDialog( pEditorPanel )
     {
@@ -238,7 +238,7 @@ class CSavingDialog : public CGenericWaitingDialog
         }
     }
 
-   private:
+    private:
     CConfirmDialog *m_pLoginDialog;
     vgui::DHANDLE< CReplayPerformanceEditorPanel > m_pEditorPanel;
 };
@@ -249,7 +249,7 @@ class CReplayTipLabel : public Label
 {
     DECLARE_CLASS_SIMPLE( CReplayTipLabel, Label );
 
-   public:
+    public:
     CReplayTipLabel( Panel *pParent, const char *pName, const char *pText )
         : BaseClass( pParent, pName, pText )
     {
@@ -270,7 +270,7 @@ class CPerformanceTip : public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CPerformanceTip, EditablePanel );
 
-   public:
+    public:
     static DHANDLE< CPerformanceTip > s_pTip;
 
     static CPerformanceTip *CreateInstance( const char *pText )
@@ -289,9 +289,9 @@ class CPerformanceTip : public EditablePanel
 
     CPerformanceTip( const char *pText )
         : BaseClass( g_pClientMode->GetViewport(), "Tip" ),
-          m_flBornTime( gpGlobals->realtime ),
-          m_flAge( 0.0f ),
-          m_flShowDuration( 15.0f )
+        m_flBornTime( gpGlobals->realtime ),
+        m_flAge( 0.0f ),
+        m_flShowDuration( 15.0f )
     {
         m_pTextLabel = new CReplayTipLabel( this, "TextLabel", pText );
     }
@@ -410,11 +410,11 @@ class CPlayerCell : public CExImageButton
 {
     DECLARE_CLASS_SIMPLE( CPlayerCell, CExImageButton );
 
-   public:
+    public:
     CPlayerCell( Panel *pParent, const char *pName, int *pCurTargetPlayerIndex )
         : CExImageButton( pParent, pName, "" ),
-          m_iPlayerIndex( -1 ),
-          m_pCurTargetPlayerIndex( pCurTargetPlayerIndex )
+        m_iPlayerIndex( -1 ),
+        m_pCurTargetPlayerIndex( pCurTargetPlayerIndex )
     {
     }
 
@@ -472,10 +472,10 @@ class CCameraOptionsPanel : public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CCameraOptionsPanel, EditablePanel );
 
-   public:
+    public:
     CCameraOptionsPanel( Panel *pParent, const char *pName, const char *pTitle )
         : EditablePanel( pParent, pName ),
-          m_bControlsAdded( false )
+        m_bControlsAdded( false )
     {
         m_pTitleLabel = new CExLabel( this, "TitleLabel", pTitle );
 
@@ -663,7 +663,7 @@ class CCameraOptionsPanel : public EditablePanel
         return pButton;
     }
 
-   protected:
+    protected:
     MESSAGE_FUNC_PARAMS( OnSliderMoved, "SliderMoved", pParams )
     {
         Panel *pSlider = ( Panel * )pParams->GetPtr( "panel" );
@@ -740,11 +740,11 @@ class CTimeScaleOptionsPanel : public CCameraOptionsPanel
 {
     DECLARE_CLASS_SIMPLE( CTimeScaleOptionsPanel, CCameraOptionsPanel );
 
-   public:
+    public:
     CTimeScaleOptionsPanel( Panel *pParent, float *pTimeScaleProxy )
         : BaseClass( pParent, "TimeScaleSettings", "#Replay_TimeScale" ),
-          m_pTimeScaleSlider( NULL ),
-          m_pTimeScaleProxy( pTimeScaleProxy )
+        m_pTimeScaleSlider( NULL ),
+        m_pTimeScaleProxy( pTimeScaleProxy )
     {
     }
 
@@ -774,15 +774,15 @@ class CCameraOptionsPanel_Free : public CCameraOptionsPanel
 {
     DECLARE_CLASS_SIMPLE( CCameraOptionsPanel_Free, CCameraOptionsPanel );
 
-   public:
+    public:
     CCameraOptionsPanel_Free( Panel *pParent )
         : BaseClass( pParent, "FreeCameraSettings", "#Replay_FreeCam" ),
-          m_pAccelSlider( NULL ),
-          m_pSpeedSlider( NULL ),
-          m_pFovSlider( NULL ),
-          m_pRotFilterSlider( NULL ),
-          m_pShakeSpeedSlider( NULL ),
-          m_pShakeAmountSlider( NULL )
+        m_pAccelSlider( NULL ),
+        m_pSpeedSlider( NULL ),
+        m_pFovSlider( NULL ),
+        m_pRotFilterSlider( NULL ),
+        m_pShakeSpeedSlider( NULL ),
+        m_pShakeAmountSlider( NULL )
     {
     }
 
@@ -836,10 +836,10 @@ class CReplayButton : public CExImageButton
 {
     DECLARE_CLASS_SIMPLE( CReplayButton, CExImageButton );
 
-   public:
+    public:
     CReplayButton( Panel *pParent, const char *pName, const char *pText )
         : BaseClass( pParent, pName, pText ),
-          m_pTipText( NULL )
+        m_pTipText( NULL )
     {
     }
 
@@ -884,7 +884,7 @@ class CReplayButton : public CExImageButton
         }
     }
 
-   private:
+    private:
     wchar_t *m_pTipText;
 };
 
@@ -898,10 +898,10 @@ class CReplayEditorFastForwardButton : public CReplayButton
 {
     DECLARE_CLASS_SIMPLE( CReplayEditorFastForwardButton, CReplayButton );
 
-   public:
+    public:
     CReplayEditorFastForwardButton( Panel *pParent, const char *pName, const char *pText )
         : BaseClass( pParent, pName, pText ),
-          m_flPressTime( 0.0f )
+        m_flPressTime( 0.0f )
     {
         m_pHostTimescale = cvar->FindVar( "host_timescale" );
         AssertMsg( m_pHostTimescale, "host_timescale lookup failed!" );
@@ -979,7 +979,7 @@ class CReplayEditorFastForwardButton : public CReplayButton
         }
     }
 
-   private:
+    private:
     float m_flPressTime;
     ConVar *m_pHostTimescale;
 };
@@ -992,12 +992,12 @@ class CRecLightPanel : public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CRecLightPanel, vgui::EditablePanel );
 
-   public:
+    public:
     CRecLightPanel( Panel *pParent )
         : EditablePanel( pParent, "RecLightPanel" ),
-          m_flPlayPauseTime( 0.0f ),
-          m_bPaused( false ),
-          m_bPerforming( false )
+        m_flPlayPauseTime( 0.0f ),
+        m_bPaused( false ),
+        m_bPerforming( false )
     {
         m_pRecLights[0] = NULL;
         m_pRecLights[1] = NULL;
@@ -1076,8 +1076,8 @@ class CRecLightPanel : public EditablePanel
     {
         const float flTime = gpGlobals->realtime;
         bool bPauseAnimating = m_flPlayPauseTime > 0.0f &&
-                               flTime >= m_flPlayPauseTime &&
-                               flTime < ( m_flPlayPauseTime + m_flAnimTime );
+                                flTime >= m_flPlayPauseTime &&
+                                flTime < ( m_flPlayPauseTime + m_flAnimTime );
 
         // Setup light visibility
         int nOnOff = fmod( flTime * 2.0f, 2.0f );
@@ -1150,37 +1150,37 @@ class CRecLightPanel : public EditablePanel
 
 CReplayPerformanceEditorPanel::CReplayPerformanceEditorPanel( Panel *parent, ReplayHandle_t hReplay )
     : EditablePanel( parent, "ReplayPerformanceEditor" ),
-      m_hReplay( hReplay ),
-      m_flLastTime( -1 ),
-      m_nRedBlueLabelRightX( 0 ),
-      m_nBottomPanelStartY( 0 ),
-      m_nBottomPanelHeight( 0 ),
-      m_nLastRoundedTime( -1 ),
-      m_flSpaceDownStart( 0.0f ),
-      m_flOldFps( -1.0f ),
-      m_flLastTimeSpaceBarPressed( 0.0f ),
-      m_flActiveTimeInEditor( 0.0f ),
-      m_flTimeScaleProxy( 1.0f ),
-      m_iCameraSelection( CAM_FIRST ),
-      m_bMousePressed( false ),
-      m_bMouseDown( false ),
-      m_nMouseClickedOverCameraSettingsPanel( CAM_INVALID ),
-      m_bShownAtLeastOnce( false ),
-      m_bAchievementAwarded( false ),
-      m_pImageList( NULL ),
-      m_pCurTimeLabel( NULL ),
-      m_pTotalTimeLabel( NULL ),
-      m_pPlayerNameLabel( NULL ),
-      m_pMouseTargetPanel( NULL ),
-      m_pSlowMoButton( NULL ),
-      m_pRecLightPanel( NULL ),
-      m_pPlayerCellData( NULL ),
-      m_pBottom( NULL ),
-      m_pMenuButton( NULL ),
-      m_pMenu( NULL ),
-      m_pPlayerCellsPanel( NULL ),
-      m_pButtonTip( NULL ),
-      m_pSavingDlg( NULL )
+    m_hReplay( hReplay ),
+    m_flLastTime( -1 ),
+    m_nRedBlueLabelRightX( 0 ),
+    m_nBottomPanelStartY( 0 ),
+    m_nBottomPanelHeight( 0 ),
+    m_nLastRoundedTime( -1 ),
+    m_flSpaceDownStart( 0.0f ),
+    m_flOldFps( -1.0f ),
+    m_flLastTimeSpaceBarPressed( 0.0f ),
+    m_flActiveTimeInEditor( 0.0f ),
+    m_flTimeScaleProxy( 1.0f ),
+    m_iCameraSelection( CAM_FIRST ),
+    m_bMousePressed( false ),
+    m_bMouseDown( false ),
+    m_nMouseClickedOverCameraSettingsPanel( CAM_INVALID ),
+    m_bShownAtLeastOnce( false ),
+    m_bAchievementAwarded( false ),
+    m_pImageList( NULL ),
+    m_pCurTimeLabel( NULL ),
+    m_pTotalTimeLabel( NULL ),
+    m_pPlayerNameLabel( NULL ),
+    m_pMouseTargetPanel( NULL ),
+    m_pSlowMoButton( NULL ),
+    m_pRecLightPanel( NULL ),
+    m_pPlayerCellData( NULL ),
+    m_pBottom( NULL ),
+    m_pMenuButton( NULL ),
+    m_pMenu( NULL ),
+    m_pPlayerCellsPanel( NULL ),
+    m_pButtonTip( NULL ),
+    m_pSavingDlg( NULL )
 {
     V_memset( m_pCameraButtons, 0, sizeof( m_pCameraButtons ) );
     V_memset( m_pCtrlButtons, 0, sizeof( m_pCtrlButtons ) );
@@ -1517,7 +1517,7 @@ void CReplayPerformanceEditorPanel::OnTick()
             ToggleMenu();
         }
         else if ( bInAControllableCameraMode && !bMouseCursorOverPerfEditor && !bMouseOverMenuButton &&
-                  !bMouseOverMenu && bNoDialogsUp )
+                !bMouseOverMenu && bNoDialogsUp )
         {
             if ( bRecording )
             {
@@ -1647,8 +1647,8 @@ void CReplayPerformanceEditorPanel::OnTick()
         char szClassImg[64];
         extern const char *g_aPlayerClassNames_NonLocalized[REPLAY_NUM_CLASSES];
         char const *pClassName = iPlayerClass == TF_CLASS_DEMOMAN
-                                     ? "demo"
-                                     : g_aPlayerClassNames_NonLocalized[iPlayerClass];
+                                    ? "demo"
+                                    : g_aPlayerClassNames_NonLocalized[iPlayerClass];
         V_snprintf( szClassImg, sizeof( szClassImg ), "../HUD/leaderboard_class_%s", pClassName );
 
         // Show dead icon instead?
@@ -1693,7 +1693,7 @@ void CReplayPerformanceEditorPanel::OnTick()
             bool bInCameraModeThatMouseIsOver = ReplayCamera()->GetMode() == GetCameraModeFromButtonIndex( ( CameraMode_t )i );
             bool bDontCareAboutCameraMode = i == COMPONENT_TIMESCALE;
             bool bActivate = ( i == m_nMouseClickedOverCameraSettingsPanel ) ||
-                             ( ( ( bInCameraModeThatMouseIsOver || bDontCareAboutCameraMode ) && bMouseOverButton ) || ( bMouseOverOptionsPanel && pCurOptionsPanel->IsVisible() ) );
+                            ( ( ( bInCameraModeThatMouseIsOver || bDontCareAboutCameraMode ) && bMouseOverButton ) || ( bMouseOverOptionsPanel && pCurOptionsPanel->IsVisible() ) );
             pCurOptionsPanel->SetVisible( bActivate );
         }
     }

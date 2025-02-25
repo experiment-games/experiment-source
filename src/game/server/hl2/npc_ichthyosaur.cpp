@@ -65,7 +65,7 @@ enum IchthyosaurMoveType_t
 
 class CNPC_Ichthyosaur : public CAI_BaseNPC
 {
-   public:
+    public:
     DECLARE_CLASS( CNPC_Ichthyosaur, CAI_BaseNPC );
     DECLARE_DATADESC();
 
@@ -96,7 +96,7 @@ class CNPC_Ichthyosaur : public CAI_BaseNPC
 
     bool FVisible( CBaseEntity *pEntity, int traceMask = MASK_BLOCKLOS, CBaseEntity **ppBlocker = NULL );
 
-   private:
+    private:
     bool SteerAvoidObstacles( Vector &Steer, const Vector &Velocity, const Vector &Forward, const Vector &Right, const Vector &Up );
     bool Beached( void );
 
@@ -1139,14 +1139,14 @@ void CNPC_Ichthyosaur::PrescheduleThink( void )
     /*
     if ( random->RandomInt( 0, 20 ) == 10 )
     {
-      if ( random->RandomInt( 0, 1 ) )
-      {
+    if ( random->RandomInt( 0, 1 ) )
+    {
         ENVELOPE_CONTROLLER.SoundChangeVolume( m_pSwimSound, random->RandomFloat( 0.0f, 0.5f ), 1.0f );
-      }
-      else
-      {
+    }
+    else
+    {
         ENVELOPE_CONTROLLER.SoundChangeVolume( m_pVoiceSound, random->RandomFloat( 0.0f, 0.5f ), 1.0f );
-      }
+    }
     }
     */
 

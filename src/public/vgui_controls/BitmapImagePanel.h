@@ -18,7 +18,7 @@ namespace vgui
 
 class CBitmapImagePanel : public vgui::Panel
 {
-   public:
+    public:
     CBitmapImagePanel( vgui::Panel *parent, char const *panelName, char const *filename = NULL );
     ~CBitmapImagePanel();
 
@@ -34,14 +34,14 @@ class CBitmapImagePanel : public vgui::Panel
     // Set how the image aligns itself within the panel
     virtual void SetContentAlignment( Label::Alignment alignment );
 
-   protected:
+    protected:
     virtual void GetSettings( KeyValues *outResourceData );
     virtual void ApplySettings( KeyValues *inResourceData );
     virtual const char *GetDescription();
     virtual void ApplySchemeSettings( IScheme *pScheme );
     virtual void PaintBorder();
 
-   private:
+    private:
     typedef vgui::Panel BaseClass;
 
     virtual void ComputeImagePosition( int &x, int &y, int &w, int &h );

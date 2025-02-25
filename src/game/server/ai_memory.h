@@ -56,7 +56,7 @@ struct AI_EnemyInfo_t
 //-----------------------------------------------------------------------------
 class CAI_Enemies
 {
-   public:
+    public:
     CAI_Enemies( void );
     ~CAI_Enemies();
 
@@ -112,7 +112,7 @@ class CAI_Enemies
 
     typedef CUtlMap< CBaseEntity *, AI_EnemyInfo_t *, unsigned char > CMemMap;
 
-   private:
+    private:
     bool ShouldDiscardMemory( AI_EnemyInfo_t *pMemory );
 
     CMemMap m_Map;

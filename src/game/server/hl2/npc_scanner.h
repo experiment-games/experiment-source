@@ -30,7 +30,7 @@ class CNPC_CScanner : public CNPC_BaseScanner
 {
     DECLARE_CLASS( CNPC_CScanner, CNPC_BaseScanner );
 
-   public:
+    public:
     CNPC_CScanner();
 
     int GetSoundInterests( void )
@@ -83,7 +83,7 @@ class CNPC_CScanner : public CNPC_BaseScanner
 
     virtual float GetHeadTurnRate( void );
 
-   public:
+    public:
     bool HandleInteraction( int interactionType, void *data, CBaseCombatCharacter *sourceEnt );
 
     // ------------------------------
@@ -142,13 +142,13 @@ class CNPC_CScanner : public CNPC_BaseScanner
     void SpotlightCreate( void );
     void SpotlightDestroy( void );
 
-   protected:
+    protected:
     void BecomeClawScanner( void )
     {
         m_bIsClawScanner = true;
     }
 
-   private:
+    private:
     bool MovingToInspectTarget( void );
     virtual float GetGoalDistance( void );
 

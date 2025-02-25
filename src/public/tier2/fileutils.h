@@ -69,7 +69,7 @@ FORCEINLINE const char *AdjustFileExtensionForPlatform( const char *pSourceName,
 
 class CBaseFile
 {
-   public:
+    public:
     FileHandle_t m_FileHandle;
 
     CBaseFile( void )
@@ -156,7 +156,7 @@ class CBaseFile
     bool IsOk( void )
     {
         return ( m_FileHandle != FILESYSTEM_INVALID_HANDLE ) &&
-               ( g_pFullFileSystem->IsOk( m_FileHandle ) );
+                ( g_pFullFileSystem->IsOk( m_FileHandle ) );
     }
 
     void Seek( int pos, FileSystemSeek_t nSeekType = FILESYSTEM_SEEK_HEAD )
@@ -180,7 +180,7 @@ class CBaseFile
 
 class COutputFile : public CBaseFile
 {
-   public:
+    public:
     void Open( char const *pFname )
     {
         CBaseFile::Open( pFname, "wb" );
@@ -200,7 +200,7 @@ class COutputFile : public CBaseFile
 
 class COutputTextFile : public CBaseFile
 {
-   public:
+    public:
     void Open( char const *pFname )
     {
         CBaseFile::Open( pFname, "w" );
@@ -220,7 +220,7 @@ class COutputTextFile : public CBaseFile
 
 class CAppendTextFile : public CBaseFile
 {
-   public:
+    public:
     void Open( char const *pFname )
     {
         CBaseFile::Open( pFname, "a+" );
@@ -240,7 +240,7 @@ class CAppendTextFile : public CBaseFile
 
 class CInputFile : public CBaseFile
 {
-   public:
+    public:
     void Open( char const *pFname )
     {
         CBaseFile::Open( pFname, "rb" );
@@ -259,7 +259,7 @@ class CInputFile : public CBaseFile
 
 class CInputTextFile : public CBaseFile
 {
-   public:
+    public:
     void Open( char const *pFname )
     {
         CBaseFile::Open( pFname, "r" );
@@ -278,7 +278,7 @@ class CInputTextFile : public CBaseFile
 
 class CRequiredInputTextFile : public CBaseFile
 {
-   public:
+    public:
     void Open( char const *pFname )
     {
         CBaseFile::Open( pFname, "r" );
@@ -301,7 +301,7 @@ class CRequiredInputTextFile : public CBaseFile
 
 class CRequiredInputFile : public CBaseFile
 {
-   public:
+    public:
     void Open( char const *pFname )
     {
         CBaseFile::Open( pFname, "rb" );

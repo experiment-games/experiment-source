@@ -28,7 +28,7 @@
 
 class CBaseSimpleCollision
 {
-   public:
+    public:
     CBaseSimpleCollision( void );
 
     static CBaseSimpleCollision *Create( void )
@@ -41,7 +41,7 @@ class CBaseSimpleCollision
 
     void ClearActivePlanes( void );
 
-   protected:
+    protected:
     virtual void TestForPlane( const Vector &start, const Vector &dir, float speed, float gravity );
     virtual void ConsiderPlane( cplane_t *plane );
 
@@ -55,7 +55,7 @@ class CBaseSimpleCollision
 
 class CParticleCollision : public CBaseSimpleCollision
 {
-   public:
+    public:
     CParticleCollision( void );
 
     static CParticleCollision *Create( void )
@@ -79,7 +79,7 @@ class CParticleCollision : public CBaseSimpleCollision
         m_flAngularCollisionDampen = dampen;
     }
 
-   protected:
+    protected:
     float m_flGravity;
     float m_flCollisionDampen;
     float m_flAngularCollisionDampen;

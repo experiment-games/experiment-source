@@ -26,7 +26,7 @@ class BuildModeDialog : public Frame
 {
     DECLARE_CLASS_SIMPLE( BuildModeDialog, Frame );
 
-   public:
+    public:
     BuildModeDialog( BuildGroup *buildGroup );
     ~BuildModeDialog();
 
@@ -43,20 +43,20 @@ class BuildModeDialog : public Frame
     MESSAGE_FUNC( StoreUndoSettings, "StoreUndo" );
 
     /* CUSTOM MESSAGE HANDLING
-      "SetActiveControl"
+    "SetActiveControl"
         input:	"PanelPtr"	- panel to set active control to edit to
     */
 
     MESSAGE_FUNC( OnShowNewControlMenu, "ShowNewControlMenu" );
 
-   protected:
+    protected:
     virtual void PerformLayout();
     virtual void OnClose();
     virtual void OnCommand( const char *command );
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
     virtual bool IsBuildGroupEnabled();
 
-   private:
+    private:
     void CreateControls();
 
     void OnKeyCodeTyped( KeyCode code );

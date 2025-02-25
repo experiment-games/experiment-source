@@ -25,7 +25,7 @@ static short ACHIEVEMENT_SAVE_RESTORE_VERSION = 2;
 
 class CAchievementSaveRestoreBlockHandler : public CDefSaveRestoreBlockHandler
 {
-   public:
+    public:
     const char *GetBlockName()
     {
         return "Achievement";
@@ -93,7 +93,7 @@ class CAchievementSaveRestoreBlockHandler : public CDefSaveRestoreBlockHandler
         pRestore->ReadShort( &version );
         // only load if version matches and if we are loading a game, not a transition
         m_fDoLoad = ( ( version == ACHIEVEMENT_SAVE_RESTORE_VERSION ) &&
-                      ( ( MapLoad_LoadGame == gpGlobals->eLoadType ) || ( MapLoad_NewGame == gpGlobals->eLoadType ) ) );
+                    ( ( MapLoad_LoadGame == gpGlobals->eLoadType ) || ( MapLoad_NewGame == gpGlobals->eLoadType ) ) );
     }
 
     //---------------------------------
@@ -137,7 +137,7 @@ class CAchievementSaveRestoreBlockHandler : public CDefSaveRestoreBlockHandler
         }
     }
 
-   private:
+    private:
     bool m_fDoLoad;
 };
 

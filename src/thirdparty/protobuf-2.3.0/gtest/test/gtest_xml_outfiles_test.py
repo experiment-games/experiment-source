@@ -77,17 +77,17 @@ class GTestXMLOutFilesTest(gtest_xml_test_utils.GTestXMLTestCase):
 
   def DeleteFilesAndDir(self):
     try:
-      os.remove(os.path.join(self.output_dir_, GTEST_OUTPUT_1_TEST + ".xml"))
+    os.remove(os.path.join(self.output_dir_, GTEST_OUTPUT_1_TEST + ".xml"))
     except os.error:
-      pass
+    pass
     try:
-      os.remove(os.path.join(self.output_dir_, GTEST_OUTPUT_2_TEST + ".xml"))
+    os.remove(os.path.join(self.output_dir_, GTEST_OUTPUT_2_TEST + ".xml"))
     except os.error:
-      pass
+    pass
     try:
-      os.rmdir(self.output_dir_)
+    os.rmdir(self.output_dir_)
     except os.error:
-      pass
+    pass
 
   def testOutfile1(self):
     self._TestOutFile(GTEST_OUTPUT_1_TEST, EXPECTED_XML_1)
@@ -113,16 +113,16 @@ class GTestXMLOutFilesTest(gtest_xml_test_utils.GTestXMLTestCase):
     output_file_name2 = 'lt-' + output_file_name1
     output_file2 = os.path.join(self.output_dir_, output_file_name2)
     self.assert_(os.path.isfile(output_file1) or os.path.isfile(output_file2),
-                 output_file1)
+                output_file1)
 
     expected = minidom.parseString(expected_xml)
     if os.path.isfile(output_file1):
-      actual = minidom.parse(output_file1)
+    actual = minidom.parse(output_file1)
     else:
-      actual = minidom.parse(output_file2)
+    actual = minidom.parse(output_file2)
     self.NormalizeXml(actual.documentElement)
     self.AssertEquivalentNodes(expected.documentElement,
-                               actual.documentElement)
+                                actual.documentElement)
     expected.unlink()
     actual.unlink()
 

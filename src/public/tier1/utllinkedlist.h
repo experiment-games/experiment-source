@@ -44,7 +44,7 @@ struct UtlLinkedListElem_t
     I m_Previous;
     I m_Next;
 
-   private:
+    private:
     // No copy constructor for these...
     UtlLinkedListElem_t( const UtlLinkedListElem_t& );
 };
@@ -59,7 +59,7 @@ struct UtlLinkedListElem_t
 template < class T, class S = unsigned short, bool ML = false, class I = S, class M = CUtlMemory< UtlLinkedListElem_t< T, S >, I > >
 class CUtlLinkedList
 {
-   public:
+    public:
     typedef T ElemType_t;
     typedef S IndexType_t;  // should really be called IndexStorageType_t, but that would be a huge change
     typedef I IndexLocalType_t;
@@ -153,7 +153,7 @@ class CUtlLinkedList
     template < typename List_t >
     class _CUtlLinkedList_constiterator_t
     {
-       public:
+        public:
         typedef typename List_t::ElemType_t ElemType_t;
         typedef typename List_t::IndexType_t IndexType_t;
 
@@ -234,7 +234,7 @@ class CUtlLinkedList
             return ( &**this );
         }
 
-       protected:
+        protected:
         // Use a pointer rather than a reference so that we can support
         // assignment of iterators.
         const List_t* m_list;
@@ -246,7 +246,7 @@ class CUtlLinkedList
     template < typename List_t >
     class _CUtlLinkedList_iterator_t : public _CUtlLinkedList_constiterator_t< List_t >
     {
-       public:
+        public:
         typedef typename List_t::ElemType_t ElemType_t;
         typedef typename List_t::IndexType_t IndexType_t;
         typedef _CUtlLinkedList_constiterator_t< List_t > Base;
@@ -343,7 +343,7 @@ class CUtlLinkedList
     bool IsValidIndex( I i ) const;
     bool IsInList( I i ) const;
 
-   protected:
+    protected:
     // What the linked list element looks like
     typedef UtlLinkedListElem_t< T, S > ListElem_t;
 
@@ -389,7 +389,7 @@ class CUtlLinkedList
         m_pElements = m_Memory.Base();
     }
 
-   private:
+    private:
     // Faster version of Next that can only be used from tested code internal
     // to this class, such as Find(). It avoids the cost of checking the index
     // validity, which is a big win on debug builds.
@@ -400,7 +400,7 @@ class CUtlLinkedList
 template < class T >
 class CUtlFixedLinkedList : public CUtlLinkedList< T, int, true, int, CUtlFixedMemory< UtlLinkedListElem_t< T, int > > >
 {
-   public:
+    public:
     CUtlFixedLinkedList( int growSize = 0, int initSize = 0 )
         : CUtlLinkedList< T, int, true, int, CUtlFixedMemory< UtlLinkedListElem_t< T, int > > >( growSize, initSize ) {}
 
@@ -421,7 +421,7 @@ class CUtlFixedLinkedList : public CUtlLinkedList< T, int, true, int, CUtlFixedM
         return ( BaseClass::Memory()[i].m_Previous != i ) || ( BaseClass::Memory()[i].m_Next == i );
     }
 
-   private:
+    private:
     int MaxElementIndex() const
     {
         Assert( 0 );
@@ -434,11 +434,11 @@ class CUtlFixedLinkedList : public CUtlLinkedList< T, int, true, int, CUtlFixedM
 template < class T, class I = unsigned short >
 class CUtlBlockLinkedList : public CUtlLinkedList< T, I, true, I, CUtlBlockMemory< UtlLinkedListElem_t< T, I >, I > >
 {
-   public:
+    public:
     CUtlBlockLinkedList( int growSize = 0, int initSize = 0 )
         : CUtlLinkedList< T, I, true, I, CUtlBlockMemory< UtlLinkedListElem_t< T, I >, I > >( growSize, initSize ) {}
 
-   protected:
+    protected:
     void ResetDbgInfo() {}
 };
 
@@ -967,8 +967,8 @@ void CUtlLinkedList< T, S, ML, I, M >::LinkBefore( I before, I elem )
     pNewElem->m_Next = before;
 
     S newElem_mPrevious;  // we need to hang on to this for the compairson against InvalidIndex()
-                          // below; otherwise we get a a load-hit-store on pNewElem->m_Previous, even
-                          // with RESTRICT
+                        // below; otherwise we get a a load-hit-store on pNewElem->m_Previous, even
+                        // with RESTRICT
     if ( before == InvalidIndex() )
     {
         // In this case, we're linking to the end of the list, so reset the tail
@@ -1095,10 +1095,10 @@ DECLARE_POINTER_HANDLE( UtlPtrLinkedListIndex_t );  // to enforce correct usage
 template < typename T >
 class CUtlPtrLinkedList
 {
-   public:
+    public:
     CUtlPtrLinkedList()
         : m_pFirst( NULL ),
-          m_nElems( 0 )
+        m_nElems( 0 )
     {
         COMPILE_TIME_ASSERT( sizeof( IndexType_t ) == sizeof( Node_t* ) );
     }
@@ -1236,7 +1236,7 @@ class CUtlPtrLinkedList
         return NULL;
     }
 
-   private:
+    private:
     struct Node_t
     {
         Node_t() {}

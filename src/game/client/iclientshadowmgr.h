@@ -39,7 +39,7 @@ enum ShadowReceiver_t
 //-----------------------------------------------------------------------------
 abstract_class IClientShadowMgr : public IGameSystemPerFrame
 {
-   public:
+    public:
     // Create, destroy shadows
     virtual ClientShadowHandle_t CreateShadow( ClientEntityHandle_t entity, int flags ) = 0;
     virtual void DestroyShadow( ClientShadowHandle_t handle ) = 0;
@@ -60,8 +60,8 @@ abstract_class IClientShadowMgr : public IGameSystemPerFrame
 
     // deals with shadows being added to shadow receivers
     virtual void AddShadowToReceiver( ClientShadowHandle_t handle,
-                                      IClientRenderable * pRenderable,
-                                      ShadowReceiver_t type ) = 0;
+                                    IClientRenderable * pRenderable,
+                                    ShadowReceiver_t type ) = 0;
 
     virtual void RemoveAllShadowsFromReceiver(
         IClientRenderable * pRenderable, ShadowReceiver_t type ) = 0;

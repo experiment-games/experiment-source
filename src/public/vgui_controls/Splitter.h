@@ -33,7 +33,7 @@ class Splitter : public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( Splitter, EditablePanel );
 
-   public:
+    public:
     // nCount is the number of splitters to create.
     // NOTE: The constructor here will create (nCount+1) EditablePanel children
     // and name them child0...childN for .res file purposes.
@@ -68,7 +68,7 @@ class Splitter : public EditablePanel
     void LockChildSize( int nChildIndex, int nSize );
     void UnlockChildSize( int nChildIndex );
 
-   private:
+    private:
     void RecreateSplitters( int nCount );
 
     struct SplitterInfo_t

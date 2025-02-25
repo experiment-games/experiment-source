@@ -176,7 +176,7 @@ int ZEXPORT inflateReset2(z_streamp strm, int windowBits) {
 }
 
 int ZEXPORT inflateInit2_(z_streamp strm, int windowBits,
-                          const char *version, int stream_size) {
+                        const char *version, int stream_size) {
     int ret;
     struct inflate_state FAR *state;
 
@@ -216,7 +216,7 @@ int ZEXPORT inflateInit2_(z_streamp strm, int windowBits,
 }
 
 int ZEXPORT inflateInit_(z_streamp strm, const char *version,
-                         int stream_size) {
+                        int stream_size) {
     return inflateInit2_(strm, DEF_WBITS, version, stream_size);
 }
 
@@ -240,14 +240,14 @@ int ZEXPORT inflatePrime(z_streamp strm, int bits, int value) {
 }
 
 /*
-   Return state with length and distance decoding tables and index sizes set to
-   fixed code decoding.  Normally this returns fixed tables from inffixed.h.
-   If BUILDFIXED is defined, then instead this routine builds the tables the
-   first time it's called, and returns those tables the first time and
-   thereafter.  This reduces the size of the code by about 2K bytes, in
-   exchange for a little execution time.  However, BUILDFIXED should not be
-   used for threaded applications, since the rewriting of the tables and virgin
-   may not be thread-safe.
+    Return state with length and distance decoding tables and index sizes set to
+    fixed code decoding.  Normally this returns fixed tables from inffixed.h.
+    If BUILDFIXED is defined, then instead this routine builds the tables the
+    first time it's called, and returns those tables the first time and
+    thereafter.  This reduces the size of the code by about 2K bytes, in
+    exchange for a little execution time.  However, BUILDFIXED should not be
+    used for threaded applications, since the rewriting of the tables and virgin
+    may not be thread-safe.
  */
 local void fixedtables(struct inflate_state FAR *state) {
 #ifdef BUILDFIXED
@@ -294,10 +294,10 @@ local void fixedtables(struct inflate_state FAR *state) {
 #include <stdio.h>
 
 /*
-   Write out the inffixed.h that is #include'd above.  Defining MAKEFIXED also
-   defines BUILDFIXED, so the tables are built on the fly.  makefixed() writes
-   those tables to stdout, which would be piped to inffixed.h.  A small program
-   can simply call makefixed to do this:
+    Write out the inffixed.h that is #include'd above.  Defining MAKEFIXED also
+    defines BUILDFIXED, so the tables are built on the fly.  makefixed() writes
+    those tables to stdout, which would be piped to inffixed.h.  A small program
+    can simply call makefixed to do this:
 
     void makefixed(void);
 
@@ -307,7 +307,7 @@ local void fixedtables(struct inflate_state FAR *state) {
         return 0;
     }
 
-   Then that can be linked with zlib built with MAKEFIXED defined and run:
+    Then that can be linked with zlib built with MAKEFIXED defined and run:
 
     a.out > inffixed.h
  */
@@ -332,7 +332,7 @@ void makefixed(void)
     for (;;) {
         if ((low % 7) == 0) printf("\n        ");
         printf("{%u,%u,%d}", (low & 127) == 99 ? 64 : state.lencode[low].op,
-               state.lencode[low].bits, state.lencode[low].val);
+                state.lencode[low].bits, state.lencode[low].val);
         if (++low == size) break;
         putchar(',');
     }
@@ -343,7 +343,7 @@ void makefixed(void)
     for (;;) {
         if ((low % 6) == 0) printf("\n        ");
         printf("{%u,%u,%d}", state.distcode[low].op, state.distcode[low].bits,
-               state.distcode[low].val);
+                state.distcode[low].val);
         if (++low == size) break;
         putchar(',');
     }
@@ -352,18 +352,18 @@ void makefixed(void)
 #endif /* MAKEFIXED */
 
 /*
-   Update the window with the last wsize (normally 32K) bytes written before
-   returning.  If window does not exist yet, create it.  This is only called
-   when a window is already in use, or when output has been written during this
-   inflate call, but the end of the deflate stream has not been reached yet.
-   It is also called to create a window for dictionary data when a dictionary
-   is loaded.
+    Update the window with the last wsize (normally 32K) bytes written before
+    returning.  If window does not exist yet, create it.  This is only called
+    when a window is already in use, or when output has been written during this
+    inflate call, but the end of the deflate stream has not been reached yet.
+    It is also called to create a window for dictionary data when a dictionary
+    is loaded.
 
-   Providing output buffers larger than 32K to inflate() should provide a speed
-   advantage, since only the last 32K of output is copied to the sliding window
-   upon return from inflate(), and since all distances after the first 32K of
-   output will fall in the output data, making match copies simpler and faster.
-   The advantage may be dependent on the size of the processor's data caches.
+    Providing output buffers larger than 32K to inflate() should provide a speed
+    advantage, since only the last 32K of output is copied to the sliding window
+    upon return from inflate(), and since all distances after the first 32K of
+    output will fall in the output data, making match copies simpler and faster.
+    The advantage may be dependent on the size of the processor's data caches.
  */
 local int updatewindow(z_streamp strm, const Bytef *end, unsigned copy) {
     struct inflate_state FAR *state;
@@ -375,7 +375,7 @@ local int updatewindow(z_streamp strm, const Bytef *end, unsigned copy) {
     if (state->window == Z_NULL) {
         state->window = (unsigned char FAR *)
                         ZALLOC(strm, 1U << state->wbits,
-                               sizeof(unsigned char));
+                                sizeof(unsigned char));
         if (state->window == Z_NULL) return 1;
     }
 
@@ -470,7 +470,7 @@ local int updatewindow(z_streamp strm, const Bytef *end, unsigned copy) {
     } while (0)
 
 /* Get a byte of input into the bit accumulator, or return from inflate()
-   if there is no input available. */
+    if there is no input available. */
 #define PULLBYTE() \
     do { \
         if (have == 0) goto inf_leave; \
@@ -480,7 +480,7 @@ local int updatewindow(z_streamp strm, const Bytef *end, unsigned copy) {
     } while (0)
 
 /* Assure that there are at least n bits in the bit accumulator.  If there is
-   not enough available input to do that, then return from inflate(). */
+    not enough available input to do that, then return from inflate(). */
 #define NEEDBITS(n) \
     do { \
         while (bits < (unsigned)(n)) \
@@ -506,9 +506,9 @@ local int updatewindow(z_streamp strm, const Bytef *end, unsigned copy) {
     } while (0)
 
 /*
-   inflate() uses a state machine to process as much input data and generate as
-   much output data as possible before returning.  The state machine is
-   structured roughly as follows:
+    inflate() uses a state machine to process as much input data and generate as
+    much output data as possible before returning.  The state machine is
+    structured roughly as follows:
 
     for (;;) switch (state) {
     ...
@@ -521,35 +521,35 @@ local int updatewindow(z_streamp strm, const Bytef *end, unsigned copy) {
     ...
     }
 
-   so when inflate() is called again, the same case is attempted again, and
-   if the appropriate resources are provided, the machine proceeds to the
-   next state.  The NEEDBITS() macro is usually the way the state evaluates
-   whether it can proceed or should return.  NEEDBITS() does the return if
-   the requested bits are not available.  The typical use of the BITS macros
-   is:
+    so when inflate() is called again, the same case is attempted again, and
+    if the appropriate resources are provided, the machine proceeds to the
+    next state.  The NEEDBITS() macro is usually the way the state evaluates
+    whether it can proceed or should return.  NEEDBITS() does the return if
+    the requested bits are not available.  The typical use of the BITS macros
+    is:
 
         NEEDBITS(n);
         ... do something with BITS(n) ...
         DROPBITS(n);
 
-   where NEEDBITS(n) either returns from inflate() if there isn't enough
-   input left to load n bits into the accumulator, or it continues.  BITS(n)
-   gives the low n bits in the accumulator.  When done, DROPBITS(n) drops
-   the low n bits off the accumulator.  INITBITS() clears the accumulator
-   and sets the number of available bits to zero.  BYTEBITS() discards just
-   enough bits to put the accumulator on a byte boundary.  After BYTEBITS()
-   and a NEEDBITS(8), then BITS(8) would return the next byte in the stream.
+    where NEEDBITS(n) either returns from inflate() if there isn't enough
+    input left to load n bits into the accumulator, or it continues.  BITS(n)
+    gives the low n bits in the accumulator.  When done, DROPBITS(n) drops
+    the low n bits off the accumulator.  INITBITS() clears the accumulator
+    and sets the number of available bits to zero.  BYTEBITS() discards just
+    enough bits to put the accumulator on a byte boundary.  After BYTEBITS()
+    and a NEEDBITS(8), then BITS(8) would return the next byte in the stream.
 
-   NEEDBITS(n) uses PULLBYTE() to get an available byte of input, or to return
-   if there is no input available.  The decoding of variable length codes uses
-   PULLBYTE() directly in order to pull just enough bytes to decode the next
-   code, and no more.
+    NEEDBITS(n) uses PULLBYTE() to get an available byte of input, or to return
+    if there is no input available.  The decoding of variable length codes uses
+    PULLBYTE() directly in order to pull just enough bytes to decode the next
+    code, and no more.
 
-   Some states loop until they get enough input, making sure that enough
-   state information is maintained to continue the loop where it left off
-   if NEEDBITS() returns in the loop.  For example, want, need, and keep
-   would all have to actually be part of the saved state in case NEEDBITS()
-   returns:
+    Some states loop until they get enough input, making sure that enough
+    state information is maintained to continue the loop where it left off
+    if NEEDBITS() returns in the loop.  For example, want, need, and keep
+    would all have to actually be part of the saved state in case NEEDBITS()
+    returns:
 
     case STATEw:
         while (want < need) {
@@ -560,31 +560,31 @@ local int updatewindow(z_streamp strm, const Bytef *end, unsigned copy) {
         state = STATEx;
     case STATEx:
 
-   As shown above, if the next state is also the next case, then the break
-   is omitted.
+    As shown above, if the next state is also the next case, then the break
+    is omitted.
 
-   A state may also return if there is not enough output space available to
-   complete that state.  Those states are copying stored data, writing a
-   literal byte, and copying a matching string.
+    A state may also return if there is not enough output space available to
+    complete that state.  Those states are copying stored data, writing a
+    literal byte, and copying a matching string.
 
-   When returning, a "goto inf_leave" is used to update the total counters,
-   update the check value, and determine whether any progress has been made
-   during that inflate() call in order to return the proper return code.
-   Progress is defined as a change in either strm->avail_in or strm->avail_out.
-   When there is a window, goto inf_leave will update the window with the last
-   output written.  If a goto inf_leave occurs in the middle of decompression
-   and there is no window currently, goto inf_leave will create one and copy
-   output to the window for the next call of inflate().
+    When returning, a "goto inf_leave" is used to update the total counters,
+    update the check value, and determine whether any progress has been made
+    during that inflate() call in order to return the proper return code.
+    Progress is defined as a change in either strm->avail_in or strm->avail_out.
+    When there is a window, goto inf_leave will update the window with the last
+    output written.  If a goto inf_leave occurs in the middle of decompression
+    and there is no window currently, goto inf_leave will create one and copy
+    output to the window for the next call of inflate().
 
-   In this implementation, the flush parameter of inflate() only affects the
-   return code (per zlib.h).  inflate() always writes as much as possible to
-   strm->next_out, given the space available and the provided input--the effect
-   documented in zlib.h of Z_SYNC_FLUSH.  Furthermore, inflate() always defers
-   the allocation of and copying into a sliding window until necessary, which
-   provides the effect documented in zlib.h for Z_FINISH when the entire input
-   stream available.  So the only thing the flush parameter actually does is:
-   when flush is set to Z_FINISH, inflate() cannot return Z_OK.  Instead it
-   will return Z_BUF_ERROR if it has not reached the end of the stream.
+    In this implementation, the flush parameter of inflate() only affects the
+    return code (per zlib.h).  inflate() always writes as much as possible to
+    strm->next_out, given the space available and the provided input--the effect
+    documented in zlib.h of Z_SYNC_FLUSH.  Furthermore, inflate() always defers
+    the allocation of and copying into a sliding window until necessary, which
+    provides the effect documented in zlib.h for Z_FINISH when the entire input
+    stream available.  So the only thing the flush parameter actually does is:
+    when flush is set to Z_FINISH, inflate() cannot return Z_OK.  Instead it
+    will return Z_BUF_ERROR if it has not reached the end of the stream.
  */
 
 int ZEXPORT inflate(z_streamp strm, int flush) {
@@ -995,8 +995,8 @@ int ZEXPORT inflate(z_streamp strm, int flush) {
             }
 
             /* build code tables -- note: do not change the lenbits or distbits
-               values here (9 and 6) without reading the comments in inftrees.h
-               concerning the ENOUGH constants, which depend on those values */
+                values here (9 and 6) without reading the comments in inftrees.h
+                concerning the ENOUGH constants, which depend on those values */
             state->next = state->codes;
             state->lencode = (const code FAR *)(state->next);
             state->lenbits = 9;
@@ -1192,9 +1192,9 @@ int ZEXPORT inflate(z_streamp strm, int flush) {
                 out = left;
                 if ((state->wrap & 4) && (
 #ifdef GUNZIP
-                     state->flags ? hold :
+                    state->flags ? hold :
 #endif
-                     ZSWAP32(hold)) != state->check) {
+                    ZSWAP32(hold)) != state->check) {
                     strm->msg = (char *)"incorrect data check";
                     state->mode = BAD;
                     break;
@@ -1234,11 +1234,11 @@ int ZEXPORT inflate(z_streamp strm, int flush) {
         }
 
     /*
-       Return from inflate(), updating the total counts and the check value.
-       If there was no progress during the inflate() call, return a buffer
-       error.  Call updatewindow() to create and/or update the window state.
-       Note: a memory error from inflate() is non-recoverable.
-     */
+        Return from inflate(), updating the total counts and the check value.
+        If there was no progress during the inflate() call, return a buffer
+        error.  Call updatewindow() to create and/or update the window state.
+        Note: a memory error from inflate() is non-recoverable.
+    */
   inf_leave:
     RESTORE();
     if (state->wsize || (out != strm->avail_out && state->mode < BAD &&
@@ -1256,8 +1256,8 @@ int ZEXPORT inflate(z_streamp strm, int flush) {
         strm->adler = state->check =
             UPDATE_CHECK(state->check, strm->next_out - out, out);
     strm->data_type = (int)state->bits + (state->last ? 64 : 0) +
-                      (state->mode == TYPE ? 128 : 0) +
-                      (state->mode == LEN_ || state->mode == COPY_ ? 256 : 0);
+                    (state->mode == TYPE ? 128 : 0) +
+                    (state->mode == LEN_ || state->mode == COPY_ ? 256 : 0);
     if (((in == 0 && out == 0) || flush == Z_FINISH) && ret == Z_OK)
         ret = Z_BUF_ERROR;
     return ret;
@@ -1276,7 +1276,7 @@ int ZEXPORT inflateEnd(z_streamp strm) {
 }
 
 int ZEXPORT inflateGetDictionary(z_streamp strm, Bytef *dictionary,
-                                 uInt *dictLength) {
+                                uInt *dictLength) {
     struct inflate_state FAR *state;
 
     /* check state */
@@ -1296,7 +1296,7 @@ int ZEXPORT inflateGetDictionary(z_streamp strm, Bytef *dictionary,
 }
 
 int ZEXPORT inflateSetDictionary(z_streamp strm, const Bytef *dictionary,
-                                 uInt dictLength) {
+                                uInt dictLength) {
     struct inflate_state FAR *state;
     unsigned long dictid;
     int ret;
@@ -1316,7 +1316,7 @@ int ZEXPORT inflateSetDictionary(z_streamp strm, const Bytef *dictionary,
     }
 
     /* copy dictionary to window using updatewindow(), which will amend the
-       existing dictionary if appropriate */
+        existing dictionary if appropriate */
     ret = updatewindow(strm, dictionary + dictLength, dictLength);
     if (ret) {
         state->mode = MEM;
@@ -1342,18 +1342,18 @@ int ZEXPORT inflateGetHeader(z_streamp strm, gz_headerp head) {
 }
 
 /*
-   Search buf[0..len-1] for the pattern: 0, 0, 0xff, 0xff.  Return when found
-   or when out of input.  When called, *have is the number of pattern bytes
-   found in order so far, in 0..3.  On return *have is updated to the new
-   state.  If on return *have equals four, then the pattern was found and the
-   return value is how many bytes were read including the last byte of the
-   pattern.  If *have is less than four, then the pattern has not been found
-   yet and the return value is len.  In the latter case, syncsearch() can be
-   called again with more data and the *have state.  *have is initialized to
-   zero for the first call.
+    Search buf[0..len-1] for the pattern: 0, 0, 0xff, 0xff.  Return when found
+    or when out of input.  When called, *have is the number of pattern bytes
+    found in order so far, in 0..3.  On return *have is updated to the new
+    state.  If on return *have equals four, then the pattern was found and the
+    return value is how many bytes were read including the last byte of the
+    pattern.  If *have is less than four, then the pattern has not been found
+    yet and the return value is len.  In the latter case, syncsearch() can be
+    called again with more data and the *have state.  *have is initialized to
+    zero for the first call.
  */
 local unsigned syncsearch(unsigned FAR *have, const unsigned char FAR *buf,
-                          unsigned len) {
+                        unsigned len) {
     unsigned got;
     unsigned next;
 
@@ -1421,12 +1421,12 @@ int ZEXPORT inflateSync(z_streamp strm) {
 }
 
 /*
-   Returns true if inflate is currently at the end of a block generated by
-   Z_SYNC_FLUSH or Z_FULL_FLUSH. This function is used by one PPP
-   implementation to provide an additional safety check. PPP uses
-   Z_SYNC_FLUSH but removes the length bytes of the resulting empty stored
-   block. When decompressing, PPP checks that at the end of input packet,
-   inflate is waiting for these length bytes.
+    Returns true if inflate is currently at the end of a block generated by
+    Z_SYNC_FLUSH or Z_FULL_FLUSH. This function is used by one PPP
+    implementation to provide an additional safety check. PPP uses
+    Z_SYNC_FLUSH but removes the length bytes of the resulting empty stored
+    block. When decompressing, PPP checks that at the end of input packet,
+    inflate is waiting for these length bytes.
  */
 int ZEXPORT inflateSyncPoint(z_streamp strm) {
     struct inflate_state FAR *state;
@@ -1449,12 +1449,12 @@ int ZEXPORT inflateCopy(z_streamp dest, z_streamp source) {
 
     /* allocate space */
     copy = (struct inflate_state FAR *)
-           ZALLOC(source, 1, sizeof(struct inflate_state));
+            ZALLOC(source, 1, sizeof(struct inflate_state));
     if (copy == Z_NULL) return Z_MEM_ERROR;
     window = Z_NULL;
     if (state->window != Z_NULL) {
         window = (unsigned char FAR *)
-                 ZALLOC(source, 1U << state->wbits, sizeof(unsigned char));
+                ZALLOC(source, 1U << state->wbits, sizeof(unsigned char));
         if (window == Z_NULL) {
             ZFREE(source, copy);
             return Z_MEM_ERROR;

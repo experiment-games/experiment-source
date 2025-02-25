@@ -31,10 +31,10 @@ class TextEntry;
 //-----------------------------------------------------------------------------
 class CClassMenu : public vgui::Frame, public IViewPortPanel
 {
-   private:
+    private:
     DECLARE_CLASS_SIMPLE( CClassMenu, vgui::Frame );
 
-   public:
+    public:
     CClassMenu( IViewPort *pViewPort );
     CClassMenu( IViewPort *pViewPort, const char *panelName );
     virtual ~CClassMenu();
@@ -70,7 +70,7 @@ class CClassMenu : public vgui::Frame, public IViewPortPanel
         BaseClass::SetParent( parent );
     }
 
-   protected:
+    protected:
     virtual vgui::Panel *CreateControlByName( const char *controlName );
     virtual MouseOverPanelButton *CreateNewMouseOverPanelButton( vgui::EditablePanel *panel );
 

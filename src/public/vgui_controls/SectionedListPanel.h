@@ -36,7 +36,7 @@ class SectionedListPanel : public Panel
 {
     DECLARE_CLASS_SIMPLE( SectionedListPanel, Panel );
 
-   public:
+    public:
     SectionedListPanel( vgui::Panel *parent, const char *name );
     ~SectionedListPanel();
 
@@ -106,13 +106,13 @@ class SectionedListPanel : public Panel
     virtual void SetItemEnabled( int itemID, bool bEnabled );
 
     /* MESSAGES SENT:
-      "RowSelected"
+    "RowSelected"
         "itemID" - the selected item id, -1 if nothing selected
 
-      // when an item has been clicked on
-      "RowContextMenu"		"itemID"
-      "RowLeftClick"			"itemID"
-      "RowDoubleLeftClick"	"itemID"
+    // when an item has been clicked on
+    "RowContextMenu"		"itemID"
+    "RowLeftClick"			"itemID"
+    "RowDoubleLeftClick"	"itemID"
     */
 
     // returns the number of columns in a section
@@ -233,7 +233,7 @@ class SectionedListPanel : public Panel
         return m_pScrollBar;
     }
 
-   protected:
+    protected:
     virtual void PerformLayout();
     virtual void ApplySchemeSettings( IScheme *pScheme );
     virtual void ApplySettings( KeyValues *inResourceData );
@@ -244,10 +244,10 @@ class SectionedListPanel : public Panel
     virtual void OnKeyCodePressed( KeyCode code );
     virtual void OnSetFocus();  // called after the panel receives the keyboard focus
 
-   public:
+    public:
     virtual void SetFontSection( int sectionID, HFont font );
 
-   private:
+    private:
     MESSAGE_FUNC( OnSliderMoved, "ScrollBarSliderMoved" );
 
     int GetSectionTall();
@@ -319,7 +319,7 @@ class SectionedListPanelHeader : public Label
 {
     DECLARE_CLASS_SIMPLE( SectionedListPanelHeader, Label );
 
-   public:
+    public:
     SectionedListPanelHeader( SectionedListPanel *parent, const char *name, int sectionID );
     SectionedListPanelHeader( SectionedListPanel *parent, const wchar_t *name, int sectionID );
 
@@ -330,7 +330,7 @@ class SectionedListPanelHeader : public Label
     void SetColor( Color col );
     void SetDividerColor( Color col );
 
-   protected:
+    protected:
     int m_iSectionID;
     Color m_SectionDividerColor;
     SectionedListPanel *m_pListPanel;

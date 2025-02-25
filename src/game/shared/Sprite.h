@@ -28,7 +28,7 @@ class CEngineSprite;
 
 class C_SpriteRenderer
 {
-   public:
+    public:
     //-----------------------------------------------------------------------------
     // Purpose: Sprite orientations
     // WARNING!  Change these in common/MaterialSystem/Sprite.cpp if you change them here!
@@ -44,11 +44,11 @@ class C_SpriteRenderer
 
     // Determine sprite orientation
     static void GetSpriteAxes( SPRITETYPE type,
-                               const Vector &origin,
-                               const QAngle &angles,
-                               Vector &forward,
-                               Vector &right,
-                               Vector &up );
+                                const Vector &origin,
+                                const QAngle &angles,
+                                Vector &forward,
+                                Vector &right,
+                                Vector &up );
 
     // Sprites can alter blending amount
     virtual float GlowBlend( CEngineSprite *psprite, const Vector &entorigin, int rendermode, int renderfx, int alpha, float *scale );
@@ -71,7 +71,7 @@ class C_SpriteRenderer
         float scale,
         float flHDRColorScale = 1.0f );
 
-   protected:
+    protected:
     pixelvis_handle_t m_queryHandle;
     float m_flGlowProxySize;
     float m_flHDRColorScale;
@@ -87,7 +87,7 @@ class CSprite : public CBaseEntity
 {
     DECLARE_CLASS( CSprite, CBaseEntity );
 
-   public:
+    public:
     DECLARE_PREDICTABLE();
     DECLARE_NETWORKCLASS();
 
@@ -271,7 +271,7 @@ class CSprite : public CBaseEntity
     virtual void OnDataChanged( DataUpdateType_t updateType );
 
 #endif
-   public:
+    public:
     CNetworkHandle( CBaseEntity, m_hAttachedToEntity );
     CNetworkVar( int, m_nAttachment );
     CNetworkVar( float, m_flSpriteFramerate );
@@ -283,7 +283,7 @@ class CSprite : public CBaseEntity
 
     float m_flDieTime;
 
-   private:
+    private:
     CNetworkVar( int, m_nBrightness );
     CNetworkVar( float, m_flBrightnessTime );
 
@@ -306,7 +306,7 @@ class CSprite : public CBaseEntity
 
 class CSpriteOriented : public CSprite
 {
-   public:
+    public:
     DECLARE_CLASS( CSpriteOriented, CSprite );
 #if !defined( CLIENT_DLL )
     DECLARE_SERVERCLASS();

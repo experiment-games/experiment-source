@@ -19,7 +19,7 @@ extern CMoveData* g_pMoveData;
 
 class CMoveHelperClient : public IMoveHelper
 {
-   public:
+    public:
     CMoveHelperClient( void );
     virtual ~CMoveHelperClient( void );
 
@@ -44,7 +44,7 @@ class CMoveHelperClient : public IMoveHelper
 
     virtual bool IsWorldEntity( const CBaseHandle& handle );
 
-   private:
+    private:
     // results, tallied on client and server, but only used by server to run SV_Impact.
     // we store off our velocity in the trace_t structure so that we can determine results
     // of shoving boxes etc. around.
@@ -55,7 +55,7 @@ class CMoveHelperClient : public IMoveHelper
 
         touchlist_t() {}
 
-       private:
+        private:
         touchlist_t( const touchlist_t& src );
     };
 

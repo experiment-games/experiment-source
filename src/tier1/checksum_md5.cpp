@@ -200,7 +200,7 @@ void MD5Final( unsigned char digest[MD5_DIGEST_LENGTH], MD5Context_t *ctx )
     count = ( ctx->bits[0] >> 3 ) & 0x3F;
 
     /* Set the first char of padding to 0x80.  This is safe since there is
-       always at least one byte free */
+        always at least one byte free */
     p = ctx->in + count;
     *p++ = 0x80;
 

@@ -308,10 +308,10 @@ enum
     LUMP_DISP_LIGHTMAP_ALPHAS = 32,
     LUMP_DISP_VERTS = 33,                      // CDispVerts
     LUMP_DISP_LIGHTMAP_SAMPLE_POSITIONS = 34,  // For each displacement
-                                               //     For each lightmap sample
-                                               //         byte for index
-                                               //         if 255, then index = next byte + 255
-                                               //         3 bytes for barycentric coordinates
+                                                //     For each lightmap sample
+                                                //         byte for index
+                                                //         if 255, then index = next byte + 255
+                                                //         3 bytes for barycentric coordinates
     // The game lump is a method of adding game-specific lumps
     // FIXME: Eventually, all lumps could use the game lump system
     LUMP_GAME_LUMP = 35,
@@ -485,7 +485,7 @@ struct dnode_t
     unsigned short firstface;
     unsigned short numfaces;  // counting both sides
     short area;               // If all leaves below this node are in the same area, then
-                              // this is the area index. If not, this is -1.
+                            // this is the area index. If not, this is -1.
 };
 
 typedef struct texinfo_s
@@ -548,7 +548,7 @@ struct doccluderpolydata_t
 // NOTE: see the section above titled "displacement neighbor rules".
 struct CDispSubNeighbor
 {
-   public:
+    public:
     DECLARE_BYTESWAP_DATADESC();
     unsigned short GetNeighborIndex() const
     {
@@ -576,9 +576,9 @@ struct CDispSubNeighbor
         m_iNeighbor = 0xFFFF;
     }
 
-   public:
+    public:
     unsigned short m_iNeighbor;  // This indexes into ddispinfos.
-                                 // 0xFFFF if there is no neighbor here.
+                                // 0xFFFF if there is no neighbor here.
 
     unsigned char m_NeighborOrientation;  // (CCW) rotation of the neighbor wrt this displacement.
 
@@ -590,7 +590,7 @@ struct CDispSubNeighbor
 // NOTE: see the section above titled "displacement neighbor rules".
 class CDispNeighbor
 {
-   public:
+    public:
     DECLARE_BYTESWAP_DATADESC();
     void SetInvalid()
     {
@@ -604,7 +604,7 @@ class CDispNeighbor
         return m_SubNeighbors[0].IsValid() || m_SubNeighbors[1].IsValid();
     }
 
-   public:
+    public:
     // Note: if there is a neighbor that fills the whole side (CORNER_TO_CORNER),
     //       then it will always be in CDispNeighbor::m_Neighbors[0]
     CDispSubNeighbor m_SubNeighbors[2];
@@ -612,21 +612,21 @@ class CDispNeighbor
 
 class CDispCornerNeighbors
 {
-   public:
+    public:
     DECLARE_BYTESWAP_DATADESC();
     void SetInvalid()
     {
         m_nNeighbors = 0;
     }
 
-   public:
+    public:
     unsigned short m_Neighbors[MAX_DISP_CORNER_NEIGHBORS];  // indices of neighbors.
     unsigned char m_nNeighbors;
 };
 
 class CDispVert
 {
-   public:
+    public:
     DECLARE_BYTESWAP_DATADESC();
     Vector m_vVector;  // Vector field defining displacement volume.
     float m_flDist;    // Displacement distances.
@@ -642,14 +642,14 @@ class CDispVert
 
 class CDispTri
 {
-   public:
+    public:
     DECLARE_BYTESWAP_DATADESC();
     unsigned short m_uiTags;  // Displacement triangle tags.
 };
 
 class ddispinfo_t
 {
-   public:
+    public:
     DECLARE_BYTESWAP_DATADESC();
     int NumVerts() const
     {
@@ -660,7 +660,7 @@ class ddispinfo_t
         return NUM_DISP_POWER_TRIS( power );
     }
 
-   public:
+    public:
     Vector startPosition;  // start position used for orientation -- (added BSPVERSION 6)
     int m_iDispVertStart;  // Index into LUMP_DISP_VERTS.
     int m_iDispTriStart;   // Index into LUMP_DISP_TRIS.
@@ -685,7 +685,7 @@ class ddispinfo_t
         ALLOWEDVERTS_SIZE = PAD_NUMBER( MAX_DISPVERTS, 32 ) / 32
     };
     unsigned long m_AllowedVerts[ALLOWEDVERTS_SIZE];  // This is built based on the layout and sizes of our neighbors
-                                                      // and tells us which vertices are allowed to be active.
+                                                    // and tells us which vertices are allowed to be active.
 };
 
 // note that edge 0 is never used, because negative edge nums are used for
@@ -755,17 +755,17 @@ struct dface_t
 
     int origFace;  // reference the original face this face was derived from
 
-   public:
+    public:
     unsigned short GetNumPrims() const;
     void SetNumPrims( unsigned short nPrims );
     bool AreDynamicShadowsEnabled();
     void SetDynamicShadowsEnabled( bool bEnabled );
 
     // non-polygon primitives (strips and lists)
-   private:
+    private:
     unsigned short m_NumPrims;  // Top bit, if set, disables shadows on this surface (this is why there are accessors).
 
-   public:
+    public:
     unsigned short firstPrimID;
 
     unsigned int smoothingGroups;
@@ -928,8 +928,8 @@ struct dareaportal_t
 {
     DECLARE_BYTESWAP_DATADESC();
     unsigned short m_PortalKey;  // Entities have a key called portalnumber (and in vbsp a variable
-                                 // called areaportalnum) which is used
-                                 // to bind them to the area portals by comparing with this value.
+                                // called areaportalnum) which is used
+                                // to bind them to the area portals by comparing with this value.
 
     unsigned short otherarea;  // The area this portal looks into.
 
@@ -956,7 +956,7 @@ struct dleafwaterdata_t
 
 class CFaceMacroTextureInfo
 {
-   public:
+    public:
     DECLARE_BYTESWAP_DATADESC();
     // This looks up into g_TexDataStringTable, which looks up into g_TexDataStringData.
     // 0xFFFF if the face has no macro texture.
@@ -1004,9 +1004,9 @@ struct dcubemapsample_t
 {
     DECLARE_BYTESWAP_DATADESC();
     int origin[3];       // position of light snapped to the nearest integer
-                         // the filename for the vtf file is derived from the position
+                        // the filename for the vtf file is derived from the position
     unsigned char size;  // 0 - default
-                         // otherwise, 1<<(size-1)
+                        // otherwise, 1<<(size-1)
 };
 
 #define OVERLAY_BSP_FACE_COUNT 64
@@ -1028,10 +1028,10 @@ struct doverlay_t
     void SetRenderOrder( unsigned short order );
     unsigned short GetRenderOrder() const;
 
-   private:
+    private:
     unsigned short m_nFaceCountAndRenderOrder;
 
-   public:
+    public:
     int aFaces[OVERLAY_BSP_FACE_COUNT];
     float flU[2];
     float flV[2];
@@ -1086,10 +1086,10 @@ struct dwateroverlay_t
     void SetRenderOrder( unsigned short order );
     unsigned short GetRenderOrder() const;
 
-   private:
+    private:
     unsigned short m_nFaceCountAndRenderOrder;
 
-   public:
+    public:
     int aFaces[WATEROVERLAY_BSP_FACE_COUNT];
     float flU[2];
     float flV[2];

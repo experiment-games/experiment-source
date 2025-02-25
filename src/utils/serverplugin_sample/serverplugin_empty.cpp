@@ -67,7 +67,7 @@ inline bool FStrEq( const char *sz1, const char *sz2 )
 //---------------------------------------------------------------------------------
 class CEmptyServerPlugin : public IServerPluginCallbacks, public IGameEventListener
 {
-   public:
+    public:
     CEmptyServerPlugin();
     ~CEmptyServerPlugin();
 
@@ -101,7 +101,7 @@ class CEmptyServerPlugin : public IServerPluginCallbacks, public IGameEventListe
         return m_iClientCommandIndex;
     }
 
-   private:
+    private:
     int m_iClientCommandIndex;
 };
 
@@ -307,8 +307,8 @@ void CEmptyServerPlugin::ClientSettingsChanged( edict_t *pEdict )
 
         // CAN'T use Q_stricmp here, this dll is made by 3rd parties and may not link to tier0/vstdlib
         if ( playerinfo && name && playerinfo->GetName() &&
-             stricmp( name, playerinfo->GetName() ) )  // playerinfo may be NULL if the MOD doesn't support access to player data
-                                                       // OR if you are accessing the player before they are fully connected
+            stricmp( name, playerinfo->GetName() ) )  // playerinfo may be NULL if the MOD doesn't support access to player data
+                                                        // OR if you are accessing the player before they are fully connected
         {
             ClientPrint( pEdict, "Your name changed to \"%s\" (from \"%s\"\n", name, playerinfo->GetName() );
             // this is the bad way to check this, the better option it to listen for the "player_changename" event in FireGameEvent()

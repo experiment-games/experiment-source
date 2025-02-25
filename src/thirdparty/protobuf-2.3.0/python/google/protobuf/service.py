@@ -63,7 +63,7 @@ class Service(object):
     raise NotImplementedError
 
   def CallMethod(self, method_descriptor, rpc_controller,
-                 request, done):
+                request, done):
     """Calls a method of the service specified by method_descriptor.
 
     If "done" is None then the call is blocking and the response
@@ -75,18 +75,18 @@ class Service(object):
     Preconditions:
     * method_descriptor.service == GetDescriptor
     * request is of the exact same classes as returned by
-      GetRequestClass(method).
+    GetRequestClass(method).
     * After the call has started, the request must not be modified.
     * "rpc_controller" is of the correct type for the RPC implementation being
-      used by this Service.  For stubs, the "correct type" depends on the
-      RpcChannel which the stub is using.
+    used by this Service.  For stubs, the "correct type" depends on the
+    RpcChannel which the stub is using.
 
     Postconditions:
     * "done" will be called when the method is complete.  This may be
-      before CallMethod() returns or it may be at some point in the future.
+    before CallMethod() returns or it may be at some point in the future.
     * If the RPC failed, the response value passed to "done" will be None.
-      Further details about the failure can be found by querying the
-      RpcController.
+    Further details about the failure can be found by querying the
+    RpcController.
     """
     raise NotImplementedError
 
@@ -98,10 +98,10 @@ class Service(object):
     type.
 
     Example:
-      method = service.GetDescriptor().FindMethodByName("Foo")
-      request = stub.GetRequestClass(method)()
-      request.ParseFromString(input)
-      service.CallMethod(method, request, callback)
+    method = service.GetDescriptor().FindMethodByName("Foo")
+    request = stub.GetRequestClass(method)()
+    request.ParseFromString(input)
+    service.CallMethod(method, request, callback)
     """
     raise NotImplementedError
 
@@ -215,7 +215,7 @@ class RpcChannel(object):
   """
 
   def CallMethod(self, method_descriptor, rpc_controller,
-                 request, response_class, done):
+                request, response_class, done):
     """Calls the method identified by the descriptor.
 
     Call the given method of the remote service.  The signature of this

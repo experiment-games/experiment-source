@@ -29,7 +29,7 @@
 template < class Data, typename I = uint32 >
 class CTHash
 {
-   private:
+    private:
     // RecHdr
     // We insert one of these at the beginning of every record.  It's used for
     // keeping the records in a linked list.
@@ -40,7 +40,7 @@ class CTHash
         I m_unKey;                // Key of this item
         int m_iBucket;            // The bucket we're in
         int m_nRunRatio;          // We want to run 1 cycle out of every m_nRunRatio
-                                  // cycles (not at all if 0).
+                                // cycles (not at all if 0).
 #ifdef DBGFLAG_THASH
         uint m_iCycleLast;  // Last cycle we were visited (whether or not we ran)
 #endif
@@ -54,7 +54,7 @@ class CTHash
         RecHdr_t *m_pRecHdrFirst;  // First record in our list
     } Bucket_t;
 
-   public:
+    public:
     // Constructors & destructors
     CTHash( int cFramesPerCycle );
     ~CTHash();
@@ -106,7 +106,7 @@ class CTHash
     virtual void Validate( CValidator &validator, const char *pchName );
 #endif  // DBGFLAG_VALIDATE
 
-   private:
+    private:
     // Insert a record into the table
     Data *PvRecordInsertInternal( RecHdr_t *pRecHdr, I unKey );
 
@@ -267,12 +267,12 @@ Data *CTHash< Data, I >::PvRecordInsertInternal( RecHdr_t *pRecHdr, I unKey )
         AssertMsg( false, "Performance warning: too many items, not enough buckets" );
         Msg( "not enough buckets in thash class %s (%d records, %d buckets)\n",
 #ifdef _WIN32
-             typeid( *this ).raw_name(),
+            typeid( *this ).raw_name(),
 #else
-             typeid( *this ).name(),
+            typeid( *this ).name(),
 #endif
-             Count(),
-             m_cBucket );
+            Count(),
+            m_cBucket );
     }
 
     // Construct ourselves
@@ -354,8 +354,8 @@ Data *CTHash< Data, I >::PvRecordFind( I unKey ) const
 
     // Walk the bucket's list looking for an exact match
     for ( RecHdr_t *pRecHdr = m_pBucket[iBucket].m_pRecHdrFirst;
-          NULL != pRecHdr && pRecHdr->m_iBucket == iBucket;
-          pRecHdr = pRecHdr->m_pRecHdrNext )
+        NULL != pRecHdr && pRecHdr->m_iBucket == iBucket;
+        pRecHdr = pRecHdr->m_pRecHdrNext )
     {
         if ( unKey == pRecHdr->m_unKey )
             return PvRecordFromPRecHdr( pRecHdr );

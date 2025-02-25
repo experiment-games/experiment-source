@@ -33,7 +33,7 @@ class CNPC_MetroPolice : public CAI_BaseActor
     DECLARE_CLASS( CNPC_MetroPolice, CAI_BaseActor );
     DECLARE_DATADESC();
 
-   public:
+    public:
     CNPC_MetroPolice();
 
     virtual bool CreateComponents();
@@ -122,7 +122,7 @@ class CNPC_MetroPolice : public CAI_BaseActor
 
     void PlayFlinchGesture( void );
 
-   protected:
+    protected:
     // Determines the best type of flinch anim to play.
     virtual Activity GetFlinchActivity( bool bHeavyDamage, bool bGesture );
 
@@ -130,7 +130,7 @@ class CNPC_MetroPolice : public CAI_BaseActor
     virtual bool OnBeginMoveAndShoot();
     virtual void OnEndMoveAndShoot();
 
-   private:
+    private:
     bool PlayerIsCriminal( void );
     void ReleaseManhack( void );
 
@@ -320,7 +320,7 @@ class CNPC_MetroPolice : public CAI_BaseActor
         m_RappelBehavior.BeginRappel();
     }
 
-   private:
+    private:
     enum
     {
         BURST_NOT_ACTIVE = 0,
@@ -413,7 +413,7 @@ class CNPC_MetroPolice : public CAI_BaseActor
         TASK_METROPOLICE_CLEAR_PRECHASE,
     };
 
-   private:
+    private:
     int m_iPistolClips;   // How many clips the cop has in reserve
     int m_iManhacks;      // How many manhacks the cop has
     bool m_fWeaponDrawn;  // Is my weapon drawn? (ready to use)
@@ -486,7 +486,7 @@ class CNPC_MetroPolice : public CAI_BaseActor
 
     static float gm_flTimeLastSpokePeek;
 
-   public:
+    public:
     DEFINE_CUSTOM_AI;
 };
 

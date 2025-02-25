@@ -18,7 +18,7 @@
 
 class FourRays
 {
-   public:
+    public:
     FourVectors origin;
     FourVectors direction;
 
@@ -65,10 +65,10 @@ struct TriIntersectData_t
                                         // edges.
 
     uint8 m_nCoordSelect0, m_nCoordSelect1;  // the triangle is projected onto a 2d
-                                             // plane for edge testing. These are
-                                             // the indices (0..2) of the
-                                             // coordinates preserved in the
-                                             // projection
+                                            // plane for edge testing. These are
+                                            // the indices (0..2) of the
+                                            // coordinates preserved in the
+                                            // projection
 
     uint8 m_nFlags;   // triangle flags
     uint8 m_unused0;  // no longer used
@@ -179,7 +179,7 @@ struct CacheOptimizedKDNode
         *( ( int32 * )&SplittingPlaneValue ) = n;
     }
 
-   protected:
+    protected:
 };
 
 struct RayTracingSingleResult
@@ -199,7 +199,7 @@ struct RayTracingResult
 
 class RayTraceLight
 {
-   public:
+    public:
     FourVectors Position;
     FourVectors Intensity;
 };
@@ -223,7 +223,7 @@ class RayStream
     int n_in_stream[8];
     FourRays PendingRays[8];
 
-   public:
+    public:
     RayStream( void )
     {
         memset( n_in_stream, 0, sizeof( n_in_stream ) );
@@ -236,13 +236,13 @@ class RayStream
 // Also for efficiency FourRays really needs some kind of active mask for the cases where rays get unbundled
 class ITransparentTriangleCallback
 {
-   public:
+    public:
     virtual bool VisitTriangle_ShouldContinue( const TriIntersectData_t &triangle, const FourRays &rays, fltx4 *hitMask, fltx4 *b0, fltx4 *b1, fltx4 *b2, int32 hitID ) = 0;
 };
 
 class RayTracingEnvironment
 {
-   public:
+    public:
     uint32 Flags;  // RTE_FLAGS_xxx above
     Vector m_MinBound;
     Vector m_MaxBound;
@@ -255,7 +255,7 @@ class RayTracingEnvironment
     CUtlVector< Vector > TriangleColors;                              //< color of tries
     CUtlVector< int32 > TriangleMaterials;                            //< material index of tries
 
-   public:
+    public:
     RayTracingEnvironment()
         : OptimizedTriangleList( 1024 )
     {
@@ -270,8 +270,8 @@ class RayTracingEnvironment
     void AddTriangle( int32 id, const Vector &v1, const Vector &v2, const Vector &v3, const Vector &color, uint16 flags, int32 materialIndex );
 
     void AddQuad( int32 id, const Vector &v1, const Vector &v2, const Vector &v3,
-                  const Vector &v4,  // specify vertices in cw or ccw order
-                  const Vector &color );
+                const Vector &v4,  // specify vertices in cw or ccw order
+                const Vector &color );
 
     // for ease of testing.
     void AddAxisAlignedRectangularSolid( int id, Vector mincoord, Vector Maxcoord, const Vector &color );
@@ -293,24 +293,24 @@ class RayTracingEnvironment
     // high level interface - pass viewing parameters, rendering flags, and a destination frame
     // buffer, and get a ray traced scene in 32-bit rgba format
     void RenderScene( int width, int height,  // width and height of desired rendering
-                      int stride,             // actual width in pixels of target buffer
-                      uint32 *output_buffer,  // pointer to destination
-                      Vector CameraOrigin,    // eye position
-                      Vector ULCorner,        // word space coordinates of upper left
-                                              // monitor corner
-                      Vector URCorner,        // top right corner
-                      Vector LLCorner,        // lower left
-                      Vector LRCorner,        // lower right
-                      RayTraceLightingMode_t lightmode = DIRECT_LIGHTING );
+                    int stride,             // actual width in pixels of target buffer
+                    uint32 *output_buffer,  // pointer to destination
+                    Vector CameraOrigin,    // eye position
+                    Vector ULCorner,        // word space coordinates of upper left
+                                            // monitor corner
+                    Vector URCorner,        // top right corner
+                    Vector LLCorner,        // lower left
+                    Vector LRCorner,        // lower right
+                    RayTraceLightingMode_t lightmode = DIRECT_LIGHTING );
 
     /// raytracing stream - lets you trace an array of rays by feeding them to this function.
     /// results will not be returned until FinishStream is called. This function handles sorting
     /// the rays by direction, tracing them 4 at a time, and de-interleaving the results.
 
     void AddToRayStream( RayStream &s,
-                         Vector const &start,
-                         Vector const &end,
-                         RayTracingSingleResult *rslt_out );
+                        Vector const &start,
+                        Vector const &end,
+                        RayTracingSingleResult *rslt_out );
 
     inline void FlushStreamEntry( RayStream &s, int msk );
 

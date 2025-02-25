@@ -15,9 +15,9 @@ udp = assert(socket.udp())
 assert(udp:setpeername(host, port))
 print("Using remote host '" ..host.. "' and port " .. port .. "...")
 while 1 do
-	line = io.read()
-	if not line or line == "" then os.exit() end
-	assert(udp:send(line))
-	dgram = assert(udp:receive())
-	print(dgram)
+    line = io.read()
+    if not line or line == "" then os.exit() end
+    assert(udp:send(line))
+    dgram = assert(udp:receive())
+    print(dgram)
 end

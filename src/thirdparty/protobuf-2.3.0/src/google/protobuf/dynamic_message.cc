@@ -95,40 +95,40 @@ int FieldSpaceUsed(const FieldDescriptor* field) {
   typedef FieldDescriptor FD;  // avoid line wrapping
   if (field->label() == FD::LABEL_REPEATED) {
     switch (field->cpp_type()) {
-      case FD::CPPTYPE_INT32  : return sizeof(RepeatedField<int32   >);
-      case FD::CPPTYPE_INT64  : return sizeof(RepeatedField<int64   >);
-      case FD::CPPTYPE_UINT32 : return sizeof(RepeatedField<uint32  >);
-      case FD::CPPTYPE_UINT64 : return sizeof(RepeatedField<uint64  >);
-      case FD::CPPTYPE_DOUBLE : return sizeof(RepeatedField<double  >);
-      case FD::CPPTYPE_FLOAT  : return sizeof(RepeatedField<float   >);
-      case FD::CPPTYPE_BOOL   : return sizeof(RepeatedField<bool    >);
-      case FD::CPPTYPE_ENUM   : return sizeof(RepeatedField<int     >);
-      case FD::CPPTYPE_MESSAGE: return sizeof(RepeatedPtrField<Message>);
+    case FD::CPPTYPE_INT32  : return sizeof(RepeatedField<int32   >);
+    case FD::CPPTYPE_INT64  : return sizeof(RepeatedField<int64   >);
+    case FD::CPPTYPE_UINT32 : return sizeof(RepeatedField<uint32  >);
+    case FD::CPPTYPE_UINT64 : return sizeof(RepeatedField<uint64  >);
+    case FD::CPPTYPE_DOUBLE : return sizeof(RepeatedField<double  >);
+    case FD::CPPTYPE_FLOAT  : return sizeof(RepeatedField<float   >);
+    case FD::CPPTYPE_BOOL   : return sizeof(RepeatedField<bool    >);
+    case FD::CPPTYPE_ENUM   : return sizeof(RepeatedField<int     >);
+    case FD::CPPTYPE_MESSAGE: return sizeof(RepeatedPtrField<Message>);
 
-      case FD::CPPTYPE_STRING:
+    case FD::CPPTYPE_STRING:
         switch (field->options().ctype()) {
-          default:  // TODO(kenton):  Support other string reps.
-          case FieldOptions::STRING:
+        default:  // TODO(kenton):  Support other string reps.
+        case FieldOptions::STRING:
             return sizeof(RepeatedPtrField<string>);
         }
         break;
     }
   } else {
     switch (field->cpp_type()) {
-      case FD::CPPTYPE_INT32  : return sizeof(int32   );
-      case FD::CPPTYPE_INT64  : return sizeof(int64   );
-      case FD::CPPTYPE_UINT32 : return sizeof(uint32  );
-      case FD::CPPTYPE_UINT64 : return sizeof(uint64  );
-      case FD::CPPTYPE_DOUBLE : return sizeof(double  );
-      case FD::CPPTYPE_FLOAT  : return sizeof(float   );
-      case FD::CPPTYPE_BOOL   : return sizeof(bool    );
-      case FD::CPPTYPE_ENUM   : return sizeof(int     );
-      case FD::CPPTYPE_MESSAGE: return sizeof(Message*);
+    case FD::CPPTYPE_INT32  : return sizeof(int32   );
+    case FD::CPPTYPE_INT64  : return sizeof(int64   );
+    case FD::CPPTYPE_UINT32 : return sizeof(uint32  );
+    case FD::CPPTYPE_UINT64 : return sizeof(uint64  );
+    case FD::CPPTYPE_DOUBLE : return sizeof(double  );
+    case FD::CPPTYPE_FLOAT  : return sizeof(float   );
+    case FD::CPPTYPE_BOOL   : return sizeof(bool    );
+    case FD::CPPTYPE_ENUM   : return sizeof(int     );
+    case FD::CPPTYPE_MESSAGE: return sizeof(Message*);
 
-      case FD::CPPTYPE_STRING:
+    case FD::CPPTYPE_STRING:
         switch (field->options().ctype()) {
-          default:  // TODO(kenton):  Support other string reps.
-          case FieldOptions::STRING:
+        default:  // TODO(kenton):  Support other string reps.
+        case FieldOptions::STRING:
             return sizeof(string*);
         }
         break;
@@ -201,9 +201,9 @@ class DynamicMessage : public Message {
 
   inline bool is_prototype() const {
     return type_info_->prototype == this ||
-           // If type_info_->prototype is NULL, then we must be constructing
-           // the prototype now, which means we must be the prototype.
-           type_info_->prototype == NULL;
+            // If type_info_->prototype is NULL, then we must be constructing
+            // the prototype now, which means we must be the prototype.
+            type_info_->prototype == NULL;
   }
 
   inline void* OffsetToPointer(int offset) {
@@ -244,60 +244,60 @@ DynamicMessage::DynamicMessage(const TypeInfo* type_info)
     void* field_ptr = OffsetToPointer(type_info_->offsets[i]);
     switch (field->cpp_type()) {
 #define HANDLE_TYPE(CPPTYPE, TYPE)                                           \
-      case FieldDescriptor::CPPTYPE_##CPPTYPE:                               \
+    case FieldDescriptor::CPPTYPE_##CPPTYPE:                               \
         if (!field->is_repeated()) {                                         \
-          new(field_ptr) TYPE(field->default_value_##TYPE());                \
+        new(field_ptr) TYPE(field->default_value_##TYPE());                \
         } else {                                                             \
-          new(field_ptr) RepeatedField<TYPE>();                              \
+        new(field_ptr) RepeatedField<TYPE>();                              \
         }                                                                    \
         break;
 
-      HANDLE_TYPE(INT32 , int32 );
-      HANDLE_TYPE(INT64 , int64 );
-      HANDLE_TYPE(UINT32, uint32);
-      HANDLE_TYPE(UINT64, uint64);
-      HANDLE_TYPE(DOUBLE, double);
-      HANDLE_TYPE(FLOAT , float );
-      HANDLE_TYPE(BOOL  , bool  );
+    HANDLE_TYPE(INT32 , int32 );
+    HANDLE_TYPE(INT64 , int64 );
+    HANDLE_TYPE(UINT32, uint32);
+    HANDLE_TYPE(UINT64, uint64);
+    HANDLE_TYPE(DOUBLE, double);
+    HANDLE_TYPE(FLOAT , float );
+    HANDLE_TYPE(BOOL  , bool  );
 #undef HANDLE_TYPE
 
-      case FieldDescriptor::CPPTYPE_ENUM:
+    case FieldDescriptor::CPPTYPE_ENUM:
         if (!field->is_repeated()) {
-          new(field_ptr) int(field->default_value_enum()->number());
+        new(field_ptr) int(field->default_value_enum()->number());
         } else {
-          new(field_ptr) RepeatedField<int>();
+        new(field_ptr) RepeatedField<int>();
         }
         break;
 
-      case FieldDescriptor::CPPTYPE_STRING:
+    case FieldDescriptor::CPPTYPE_STRING:
         switch (field->options().ctype()) {
-          default:  // TODO(kenton):  Support other string reps.
-          case FieldOptions::STRING:
+        default:  // TODO(kenton):  Support other string reps.
+        case FieldOptions::STRING:
             if (!field->is_repeated()) {
-              if (is_prototype()) {
+            if (is_prototype()) {
                 new(field_ptr) const string*(&field->default_value_string());
-              } else {
-                string* default_value =
-                  *reinterpret_cast<string* const*>(
-                    type_info_->prototype->OffsetToPointer(
-                      type_info_->offsets[i]));
-                new(field_ptr) string*(default_value);
-              }
             } else {
-              new(field_ptr) RepeatedPtrField<string>();
+                string* default_value =
+                *reinterpret_cast<string* const*>(
+                    type_info_->prototype->OffsetToPointer(
+                    type_info_->offsets[i]));
+                new(field_ptr) string*(default_value);
+            }
+            } else {
+            new(field_ptr) RepeatedPtrField<string>();
             }
             break;
         }
         break;
 
-      case FieldDescriptor::CPPTYPE_MESSAGE: {
+    case FieldDescriptor::CPPTYPE_MESSAGE: {
         if (!field->is_repeated()) {
-          new(field_ptr) Message*(NULL);
+        new(field_ptr) Message*(NULL);
         } else {
-          new(field_ptr) RepeatedPtrField<Message>();
+        new(field_ptr) RepeatedPtrField<Message>();
         }
         break;
-      }
+    }
     }
   }
 }
@@ -310,7 +310,7 @@ DynamicMessage::~DynamicMessage() {
 
   if (type_info_->extensions_offset != -1) {
     reinterpret_cast<ExtensionSet*>(
-      OffsetToPointer(type_info_->extensions_offset))->~ExtensionSet();
+    OffsetToPointer(type_info_->extensions_offset))->~ExtensionSet();
   }
 
   // We need to manually run the destructors for repeated fields and strings,
@@ -324,12 +324,12 @@ DynamicMessage::~DynamicMessage() {
     void* field_ptr = OffsetToPointer(type_info_->offsets[i]);
 
     if (field->is_repeated()) {
-      switch (field->cpp_type()) {
+    switch (field->cpp_type()) {
 #define HANDLE_TYPE(UPPERCASE, LOWERCASE)                                     \
         case FieldDescriptor::CPPTYPE_##UPPERCASE :                           \
-          reinterpret_cast<RepeatedField<LOWERCASE>*>(field_ptr)              \
-              ->~RepeatedField<LOWERCASE>();                                  \
-          break
+        reinterpret_cast<RepeatedField<LOWERCASE>*>(field_ptr)              \
+            ->~RepeatedField<LOWERCASE>();                                  \
+        break
 
         HANDLE_TYPE( INT32,  int32);
         HANDLE_TYPE( INT64,  int64);
@@ -342,38 +342,38 @@ DynamicMessage::~DynamicMessage() {
 #undef HANDLE_TYPE
 
         case FieldDescriptor::CPPTYPE_STRING:
-          switch (field->options().ctype()) {
+        switch (field->options().ctype()) {
             default:  // TODO(kenton):  Support other string reps.
             case FieldOptions::STRING:
-              reinterpret_cast<RepeatedPtrField<string>*>(field_ptr)
-                  ->~RepeatedPtrField<string>();
-              break;
-          }
-          break;
+            reinterpret_cast<RepeatedPtrField<string>*>(field_ptr)
+                ->~RepeatedPtrField<string>();
+            break;
+        }
+        break;
 
         case FieldDescriptor::CPPTYPE_MESSAGE:
-          reinterpret_cast<RepeatedPtrField<Message>*>(field_ptr)
-              ->~RepeatedPtrField<Message>();
-          break;
-      }
+        reinterpret_cast<RepeatedPtrField<Message>*>(field_ptr)
+            ->~RepeatedPtrField<Message>();
+        break;
+    }
 
     } else if (field->cpp_type() == FieldDescriptor::CPPTYPE_STRING) {
-      switch (field->options().ctype()) {
+    switch (field->options().ctype()) {
         default:  // TODO(kenton):  Support other string reps.
         case FieldOptions::STRING: {
-          string* ptr = *reinterpret_cast<string**>(field_ptr);
-          if (ptr != &field->default_value_string()) {
+        string* ptr = *reinterpret_cast<string**>(field_ptr);
+        if (ptr != &field->default_value_string()) {
             delete ptr;
-          }
-          break;
         }
-      }
+        break;
+        }
+    }
     } else if ((field->cpp_type() == FieldDescriptor::CPPTYPE_MESSAGE) &&
-               !is_prototype()) {
-      Message* message = *reinterpret_cast<Message**>(field_ptr);
-      if (message != NULL) {
+                !is_prototype()) {
+    Message* message = *reinterpret_cast<Message**>(field_ptr);
+    if (message != NULL) {
         delete message;
-      }
+    }
     }
   }
 }
@@ -392,11 +392,11 @@ void DynamicMessage::CrossLinkPrototypes() {
 
     if (field->cpp_type() == FieldDescriptor::CPPTYPE_MESSAGE &&
         !field->is_repeated()) {
-      // For fields with message types, we need to cross-link with the
-      // prototype for the field's type.
-      // For singular fields, the field is just a pointer which should
-      // point to the prototype.
-      *reinterpret_cast<const Message**>(field_ptr) =
+    // For fields with message types, we need to cross-link with the
+    // prototype for the field's type.
+    // For singular fields, the field is just a pointer which should
+    // point to the prototype.
+    *reinterpret_cast<const Message**>(field_ptr) =
         factory->GetPrototypeNoLock(field->message_type());
     }
   }
@@ -445,7 +445,7 @@ DynamicMessageFactory::DynamicMessageFactory(const DescriptorPool* pool)
 
 DynamicMessageFactory::~DynamicMessageFactory() {
   for (PrototypeMap::Map::iterator iter = prototypes_->map_.begin();
-       iter != prototypes_->map_.end(); ++iter) {
+        iter != prototypes_->map_.end(); ++iter) {
     delete iter->second;
   }
 }
@@ -458,7 +458,7 @@ const Message* DynamicMessageFactory::GetPrototype(const Descriptor* type) {
 const Message* DynamicMessageFactory::GetPrototypeNoLock(
     const Descriptor* type) {
   if (delegate_to_generated_factory_ &&
-      type->file()->pool() == DescriptorPool::generated_pool()) {
+    type->file()->pool() == DescriptorPool::generated_pool()) {
     return MessageFactory::generated_factory()->GetPrototype(type);
   }
 
@@ -538,15 +538,15 @@ const Message* DynamicMessageFactory::GetPrototypeNoLock(
   // Construct the reflection object.
   type_info->reflection.reset(
     new GeneratedMessageReflection(
-      type_info->type,
-      type_info->prototype.get(),
-      type_info->offsets.get(),
-      type_info->has_bits_offset,
-      type_info->unknown_fields_offset,
-      type_info->extensions_offset,
-      type_info->pool,
-      this,
-      type_info->size));
+    type_info->type,
+    type_info->prototype.get(),
+    type_info->offsets.get(),
+    type_info->has_bits_offset,
+    type_info->unknown_fields_offset,
+    type_info->extensions_offset,
+    type_info->pool,
+    this,
+    type_info->size));
 
   // Cross link prototypes.
   prototype->CrossLinkPrototypes();

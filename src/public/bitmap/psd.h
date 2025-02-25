@@ -22,7 +22,7 @@ struct Bitmap_t;
 
 class PSDImageResources
 {
-   public:
+    public:
     enum Resource
     {
         eResFileInfo = 0x0404
@@ -36,21 +36,21 @@ class PSDImageResources
         unsigned char const *m_pvData;
     };
 
-   public:
+    public:
     explicit PSDImageResources( unsigned int numBytes, unsigned char const *pvBuffer )
         : m_numBytes( numBytes ), m_pvBuffer( pvBuffer ) {}
 
-   public:
+    public:
     ResElement FindElement( Resource eType ) const;
 
-   protected:
+    protected:
     unsigned int m_numBytes;
     unsigned char const *m_pvBuffer;
 };
 
 class PSDResFileInfo
 {
-   public:
+    public:
     enum ResFileInfo
     {
         eTitle = 0x05,
@@ -69,14 +69,14 @@ class PSDResFileInfo
         unsigned char const *m_pvData;
     };
 
-   public:
+    public:
     explicit PSDResFileInfo( PSDImageResources::ResElement res )
         : m_res( res ) {}
 
-   public:
+    public:
     ResFileInfoElement FindElement( ResFileInfo eType ) const;
 
-   protected:
+    protected:
     PSDImageResources::ResElement m_res;
 };
 

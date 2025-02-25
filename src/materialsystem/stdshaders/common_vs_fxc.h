@@ -212,8 +212,8 @@ void _DecompressShort2NormalTangent( float2 inputNormal, float2 inputTangent, ou
 // We expect this data to come from an unsigned UBYTE4 stream in the range of 0..255
 // The final vTangent.w contains the sign to use in the cross product when generating a binormal
 void _DecompressUByte4NormalTangent( float4 inputNormal,
-                                     out float3 outputNormal,    // {nX, nY, nZ}
-                                     out float4 outputTangent )  // {tX, tY, tZ, sign of binormal}
+                                    out float3 outputNormal,    // {nX, nY, nZ}
+                                    out float4 outputTangent )  // {tX, tY, tZ, sign of binormal}
 {
     float fOne = 1.0f;
 
@@ -244,7 +244,7 @@ void _DecompressUByte4NormalTangent( float4 inputNormal,
 // We expect this data to come from an unsigned UBYTE4 stream in the range of 0..255
 // [ When compiled, this works out to approximately 17 asm instructions ]
 void _DecompressUByte4Normal( float4 inputNormal,
-                              out float3 outputNormal )  // {nX, nY, nZ}
+                            out float3 outputNormal )  // {nX, nY, nZ}
 {
     float fOne = 1.0f;
 
@@ -716,8 +716,8 @@ float3 AmbientLight( const float3 worldNormal )
     int3 isNegative = ( worldNormal < 0.0 );
     float3 linearColor;
     linearColor = nSquared.x * cAmbientCubeX[isNegative.x] +
-                  nSquared.y * cAmbientCubeY[isNegative.y] +
-                  nSquared.z * cAmbientCubeZ[isNegative.z];
+                nSquared.y * cAmbientCubeY[isNegative.y] +
+                nSquared.z * cAmbientCubeZ[isNegative.z];
     return linearColor;
 }
 
@@ -819,8 +819,8 @@ float GetVertexAttenForLight( const float3 worldPos, int lightNum, bool bUseStat
 float3 DoLightInternal( const float3 worldPos, const float3 worldNormal, int lightNum, bool bHalfLambert )
 {
     return cLightInfo[lightNum].color *
-           CosineTermInternal( worldPos, worldNormal, lightNum, bHalfLambert ) *
-           VertexAttenInternal( worldPos, lightNum );
+            CosineTermInternal( worldPos, worldNormal, lightNum, bHalfLambert ) *
+            VertexAttenInternal( worldPos, lightNum );
 }
 
 float3 DoLighting( const float3 worldPos, const float3 worldNormal, const float3 staticLightingColor, const bool bStaticLight, const bool bDynamicLight, bool bHalfLambert )

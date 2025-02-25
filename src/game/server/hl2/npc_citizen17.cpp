@@ -166,7 +166,7 @@ class CCommandPoint : public CPointEntity
 {
     DECLARE_CLASS( CCommandPoint, CPointEntity );
 
-   public:
+    public:
     CCommandPoint()
         : m_bNotInTransition( false )
     {
@@ -217,7 +217,7 @@ class CCommandPoint : public CPointEntity
     }
     DECLARE_DATADESC();
 
-   private:
+    private:
     bool m_bNotInTransition;  // does not need to be saved. If this is ever not default, the object is not being saved.
     static int gm_nCommandPoints;
 };
@@ -627,7 +627,7 @@ void CNPC_Citizen::SelectModel()
     {
         Assert( m_iHead == -1 );
         char gender = ( HasSpawnFlags( SF_CITIZEN_RANDOM_HEAD_MALE ) ) ? 'm' : ( HasSpawnFlags( SF_CITIZEN_RANDOM_HEAD_FEMALE ) ) ? 'f'
-                                                                                                                                  : 0;
+                                                                                                                                : 0;
 
         RemoveSpawnFlags( SF_CITIZEN_RANDOM_HEAD | SF_CITIZEN_RANDOM_HEAD_MALE | SF_CITIZEN_RANDOM_HEAD_FEMALE );
         if ( HasSpawnFlags( SF_NPC_START_EFFICIENT ) )
@@ -802,9 +802,9 @@ string_t CNPC_Citizen::GetModelName() const
     // so that we pick the new default model.
     //
     if ( !Q_strnicmp( STRING( iszModelName ), "models/c17_", 11 ) ||
-         !Q_strnicmp( STRING( iszModelName ), "models/male", 11 ) ||
-         !Q_strnicmp( STRING( iszModelName ), "models/female", 13 ) ||
-         !Q_strnicmp( STRING( iszModelName ), "models/citizen", 14 ) )
+        !Q_strnicmp( STRING( iszModelName ), "models/male", 11 ) ||
+        !Q_strnicmp( STRING( iszModelName ), "models/female", 13 ) ||
+        !Q_strnicmp( STRING( iszModelName ), "models/citizen", 14 ) )
     {
         return NULL_STRING;
     }
@@ -995,7 +995,7 @@ void CNPC_Citizen::PredictPlayerPush()
 
     CBasePlayer *pPlayer = UTIL_GetLocalPlayer();
     if ( !bHadPlayerPush && HasCondition( COND_PLAYER_PUSHING ) &&
-         pPlayer->FInViewCone( this ) && CanHeal() )
+        pPlayer->FInViewCone( this ) && CanHeal() )
     {
         if ( ShouldHealTarget( pPlayer, true ) )
         {
@@ -1123,11 +1123,11 @@ void CNPC_Citizen::BuildScheduleTestBits()
 bool CNPC_Citizen::FInViewCone( CBaseEntity *pEntity )
 {
 #if 0
-	if ( IsMortar( pEntity ) )
-	{
-		// @TODO (toml 11-20-03): do this only if have heard mortar shell recently and it's active
-		return true;
-	}
+    if ( IsMortar( pEntity ) )
+    {
+        // @TODO (toml 11-20-03): do this only if have heard mortar shell recently and it's active
+        return true;
+    }
 #endif
     return BaseClass::FInViewCone( pEntity );
 }
@@ -1396,7 +1396,7 @@ int CNPC_Citizen::SelectScheduleManhackCombat()
         {
             float distSqEnemy = ( GetEnemy()->GetAbsOrigin() - EyePosition() ).LengthSqr();
             if ( distSqEnemy < 48.0 * 48.0 &&
-                 ( ( GetEnemy()->GetAbsOrigin() + GetEnemy()->GetSmoothedVelocity() * .1 ) - EyePosition() ).LengthSqr() < distSqEnemy )
+                ( ( GetEnemy()->GetAbsOrigin() + GetEnemy()->GetSmoothedVelocity() * .1 ) - EyePosition() ).LengthSqr() < distSqEnemy )
                 return SCHED_COWER;
 
             int iRoll = random->RandomInt( 1, 4 );
@@ -1426,8 +1426,8 @@ int CNPC_Citizen::SelectScheduleCombat()
 bool CNPC_Citizen::ShouldDeferToFollowBehavior()
 {
 #if 0
-	if ( HaveCommandGoal() )
-		return false;
+    if ( HaveCommandGoal() )
+        return false;
 #endif
 
     return BaseClass::ShouldDeferToFollowBehavior();
@@ -2062,23 +2062,23 @@ void CNPC_Citizen::OnEndMoveAndShoot()
 void CNPC_Citizen::LocateEnemySound()
 {
 #if 0
-	if ( !GetEnemy() )
-		return;
+    if ( !GetEnemy() )
+        return;
 
-	float flZDiff = GetLocalOrigin().z - GetEnemy()->GetLocalOrigin().z;
+    float flZDiff = GetLocalOrigin().z - GetEnemy()->GetLocalOrigin().z;
 
-	if( flZDiff < -128 )
-	{
-		EmitSound( "NPC_Citizen.UpThere" );
-	}
-	else if( flZDiff > 128 )
-	{
-		EmitSound( "NPC_Citizen.DownThere" );
-	}
-	else
-	{
-		EmitSound( "NPC_Citizen.OverHere" );
-	}
+    if( flZDiff < -128 )
+    {
+        EmitSound( "NPC_Citizen.UpThere" );
+    }
+    else if( flZDiff > 128 )
+    {
+        EmitSound( "NPC_Citizen.DownThere" );
+    }
+    else
+    {
+        EmitSound( "NPC_Citizen.OverHere" );
+    }
 #endif
 }
 
@@ -2357,7 +2357,7 @@ bool CNPC_Citizen::IsCommandMoving()
     if ( AI_IsSinglePlayer() && IsInPlayerSquad() )
     {
         if ( m_FollowBehavior.GetFollowTarget() == UTIL_GetLocalPlayer() ||
-             IsFollowingCommandPoint() )
+            IsFollowingCommandPoint() )
         {
             return ( m_FollowBehavior.IsMovingToFollowTarget() );
         }
@@ -2407,7 +2407,7 @@ bool CNPC_Citizen::ShouldAutoSummon()
             {
                 float closenessTolerance = player_squad_autosummon_player_tolerance.GetFloat() * 12;
                 if ( ( pPlayer->GetAbsOrigin() - vCommandGoal ).LengthSqr() < Square( closenessTolerance ) &&
-                     ( ( m_vAutoSummonAnchor - vCommandGoal ).LengthSqr() > Square( closenessTolerance ) ) )
+                    ( ( m_vAutoSummonAnchor - vCommandGoal ).LengthSqr() > Square( closenessTolerance ) ) )
                 {
                     bSetFollow = true;
                     if ( player_squad_autosummon_debug.GetBool() )
@@ -2448,7 +2448,7 @@ bool CNPC_Citizen::ShouldAutoSummon()
                 if ( pNpc->IsInPlayerSquad() )
                 {
                     if ( gpGlobals->curtime - pNpc->GetLastAttackTime() > timeSinceCombatTolerance ||
-                         gpGlobals->curtime - pNpc->GetLastDamageTime() > timeSinceCombatTolerance )
+                        gpGlobals->curtime - pNpc->GetLastDamageTime() > timeSinceCombatTolerance )
                         continue;
                 }
                 else if ( pNpc->GetEnemy() )
@@ -2497,7 +2497,7 @@ bool CNPC_Citizen::IsValidCommandTarget( CBaseEntity *pTarget )
 bool CNPC_Citizen::SpeakCommandResponse( AIConcept_t concept, const char *modifiers )
 {
     return SpeakIfAllowed( concept,
-                           CFmtStr( "numselected:%d,"
+                            CFmtStr( "numselected:%d,"
                                     "useradio:%d%s",
                                     ( GetSquad() ) ? GetSquad()->NumMembers() : 1,
                                     ShouldSpeakRadio( AI_GetSinglePlayer() ),
@@ -2592,14 +2592,14 @@ void CNPC_Citizen::MoveOrder( const Vector &vecDest, CAI_BaseNPC **Allies, int n
     {
         ClearFollowTarget();
 #if 0
-		if ( ( pPlayer->GetAbsOrigin() - GetAbsOrigin() ).LengthSqr() < Square( 180 ) &&
-			 ( ( vecDest - pPlayer->GetAbsOrigin() ).LengthSqr() < Square( 120 ) ||
-			   ( vecDest - GetAbsOrigin() ).LengthSqr() < Square( 120 ) ) )
-		{
-			if ( pClosest == this )
-				SpeakIfAllowed( TLK_STOPFOLLOW );
-			spoke = true;
-		}
+        if ( ( pPlayer->GetAbsOrigin() - GetAbsOrigin() ).LengthSqr() < Square( 180 ) &&
+            ( ( vecDest - pPlayer->GetAbsOrigin() ).LengthSqr() < Square( 120 ) ||
+                ( vecDest - GetAbsOrigin() ).LengthSqr() < Square( 120 ) ) )
+        {
+            if ( pClosest == this )
+                SpeakIfAllowed( TLK_STOPFOLLOW );
+            spoke = true;
+        }
 #endif
     }
 
@@ -2806,12 +2806,12 @@ void CNPC_Citizen::UpdatePlayerSquad()
             CNPC_Citizen *pCitizen = assert_cast< CNPC_Citizen * >( pPlayerSquadMember );
 
             if ( !pCitizen->m_bNeverLeavePlayerSquad &&
-                 pCitizen->m_FollowBehavior.GetFollowTarget() &&
-                 !pCitizen->m_FollowBehavior.FollowTargetVisible() &&
-                 pCitizen->m_FollowBehavior.GetNumFailedFollowAttempts() > 0 &&
-                 gpGlobals->curtime - pCitizen->m_FollowBehavior.GetTimeFailFollowStarted() > 20 &&
-                 ( fabsf( ( pCitizen->m_FollowBehavior.GetFollowTarget()->GetAbsOrigin().z - pCitizen->GetAbsOrigin().z ) ) > 196 ||
-                   ( pCitizen->m_FollowBehavior.GetFollowTarget()->GetAbsOrigin().AsVector2D() - pCitizen->GetAbsOrigin().AsVector2D() ).LengthSqr() > Square( 50 * 12 ) ) )
+                pCitizen->m_FollowBehavior.GetFollowTarget() &&
+                !pCitizen->m_FollowBehavior.FollowTargetVisible() &&
+                pCitizen->m_FollowBehavior.GetNumFailedFollowAttempts() > 0 &&
+                gpGlobals->curtime - pCitizen->m_FollowBehavior.GetTimeFailFollowStarted() > 20 &&
+                ( fabsf( ( pCitizen->m_FollowBehavior.GetFollowTarget()->GetAbsOrigin().z - pCitizen->GetAbsOrigin().z ) ) > 196 ||
+                    ( pCitizen->m_FollowBehavior.GetFollowTarget()->GetAbsOrigin().AsVector2D() - pCitizen->GetAbsOrigin().AsVector2D() ).LengthSqr() > Square( 50 * 12 ) ) )
             {
                 if ( DebuggingCommanderMode() )
                 {
@@ -2867,8 +2867,8 @@ void CNPC_Citizen::UpdatePlayerSquad()
             {
                 float distSq = ( vPlayerPos.AsVector2D() - pCitizen->GetAbsOrigin().AsVector2D() ).LengthSqr();
                 if ( distSq > JOIN_PLAYER_XY_TOLERANCE_SQ &&
-                     ( pCitizen->m_flTimeJoinedPlayerSquad == 0 || gpGlobals->curtime - pCitizen->m_flTimeJoinedPlayerSquad > 60.0 ) &&
-                     ( pCitizen->m_flTimeLastCloseToPlayer == 0 || gpGlobals->curtime - pCitizen->m_flTimeLastCloseToPlayer > 15.0 ) )
+                    ( pCitizen->m_flTimeJoinedPlayerSquad == 0 || gpGlobals->curtime - pCitizen->m_flTimeJoinedPlayerSquad > 60.0 ) &&
+                    ( pCitizen->m_flTimeLastCloseToPlayer == 0 || gpGlobals->curtime - pCitizen->m_flTimeLastCloseToPlayer > 15.0 ) )
                     continue;
 
                 if ( !pCitizen->CanJoinPlayerSquad() )
@@ -3424,7 +3424,7 @@ bool CNPC_Citizen::ShouldHealTarget( CBaseEntity *pTarget, bool bActiveUse )
         Vector toPlayer = ( pTarget->GetAbsOrigin() - GetAbsOrigin() );
         if ( ( bActiveUse || !HaveCommandGoal() || toPlayer.Length() < HEAL_TARGET_RANGE )
 #ifdef HL2_EPISODIC
-             && fabs( toPlayer.z ) < HEAL_TARGET_RANGE_Z
+            && fabs( toPlayer.z ) < HEAL_TARGET_RANGE_Z
 #endif
         )
         {
@@ -3447,7 +3447,7 @@ bool CNPC_Citizen::ShouldHealTarget( CBaseEntity *pTarget, bool bActiveUse )
 
                 // Are we ready to heal again?
                 bool bReadyToHeal = ( ( bTargetIsPlayer && m_flPlayerHealTime <= gpGlobals->curtime ) ||
-                                      ( !bTargetIsPlayer && m_flAllyHealTime <= gpGlobals->curtime ) );
+                                    ( !bTargetIsPlayer && m_flAllyHealTime <= gpGlobals->curtime ) );
 
                 // Only heal if we're ready
                 if ( bReadyToHeal )
@@ -3541,7 +3541,7 @@ bool CNPC_Citizen::ShouldHealTossTarget( CBaseEntity *pTarget, bool bActiveUse )
 
             // Are we ready to heal again?
             bool bReadyToHeal = ( ( bTargetIsPlayer && m_flPlayerHealTime <= gpGlobals->curtime ) ||
-                                  ( !bTargetIsPlayer && m_flAllyHealTime <= gpGlobals->curtime ) );
+                                ( !bTargetIsPlayer && m_flAllyHealTime <= gpGlobals->curtime ) );
 
             // Only heal if we're ready
             if ( bReadyToHeal )

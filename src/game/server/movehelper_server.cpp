@@ -39,7 +39,7 @@ extern IPhysicsCollision* physcollision;
 
 class CMoveHelperServer : public IMoveHelperServer
 {
-   public:
+    public:
     CMoveHelperServer( void );
     virtual ~CMoveHelperServer();
 
@@ -68,7 +68,7 @@ class CMoveHelperServer : public IMoveHelperServer
 
     virtual bool IsWorldEntity( const CBaseHandle& handle );
 
-   private:
+    private:
     CBasePlayer* m_pHostPlayer;
 
     // results, tallied on client and server, but only used by server to run SV_Impact.

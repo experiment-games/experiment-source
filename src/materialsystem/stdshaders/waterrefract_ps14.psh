@@ -1,7 +1,7 @@
 ps.1.4
 
 ; non-fresnel version
-; t0: 
+; t0:
 ;		texture: dudv map
 ;		texcoords: coords for normal map
 ; t1:
@@ -10,7 +10,7 @@ ps.1.4
 ;		texture: renderable texture that we are going to perturb
 ;		texcoords: uvw for second dp3
 ;tex t0				; sample dudv map
-;texm3x2pad t1, t0	; 
+;texm3x2pad t1, t0	;
 ;texm3x2tex t2, t0	; sample renderabletexture
 
 ;mul r0, t2, c1
@@ -18,6 +18,6 @@ ps.1.4
 
 texld r0, t0		; sample dudv map
 
-phase 
+phase
 
 texld r0, t2_dw.xyw

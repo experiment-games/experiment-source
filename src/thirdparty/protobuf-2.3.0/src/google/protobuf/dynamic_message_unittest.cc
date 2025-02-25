@@ -76,7 +76,7 @@ class DynamicMessageTest : public testing::Test {
 
     unittest::TestAllTypes::descriptor()->file()->CopyTo(&unittest_file);
     unittest_import::ImportMessage::descriptor()->file()->CopyTo(
-      &unittest_import_file);
+    &unittest_import_file);
 
     ASSERT_TRUE(pool_.BuildFile(unittest_import_file) != NULL);
     ASSERT_TRUE(pool_.BuildFile(unittest_file) != NULL);
@@ -86,12 +86,12 @@ class DynamicMessageTest : public testing::Test {
     prototype_ = factory_.GetPrototype(descriptor_);
 
     extensions_descriptor_ =
-      pool_.FindMessageTypeByName("protobuf_unittest.TestAllExtensions");
+    pool_.FindMessageTypeByName("protobuf_unittest.TestAllExtensions");
     ASSERT_TRUE(extensions_descriptor_ != NULL);
     extensions_prototype_ = factory_.GetPrototype(extensions_descriptor_);
 
     packed_descriptor_ =
-      pool_.FindMessageTypeByName("protobuf_unittest.TestPackedTypes");
+    pool_.FindMessageTypeByName("protobuf_unittest.TestPackedTypes");
     ASSERT_TRUE(packed_descriptor_ != NULL);
     packed_prototype_ = factory_.GetPrototype(packed_descriptor_);
   }

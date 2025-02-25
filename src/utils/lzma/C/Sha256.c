@@ -135,7 +135,7 @@ static void Sha256_Transform(UInt32 *state, const UInt32 *data)
   for (j = 0; j < 8; j++)
     state[j] += T[j];
   #endif
-  
+
   /* Wipe variables */
   /* memset(W, 0, sizeof(W)); */
   /* memset(T, 0, sizeof(T)); */
@@ -152,10 +152,10 @@ static void Sha256_WriteByteBlock(CSha256 *p)
   unsigned i;
   for (i = 0; i < 16; i++)
     data32[i] =
-      ((UInt32)(p->buffer[i * 4    ]) << 24) +
-      ((UInt32)(p->buffer[i * 4 + 1]) << 16) +
-      ((UInt32)(p->buffer[i * 4 + 2]) <<  8) +
-      ((UInt32)(p->buffer[i * 4 + 3]));
+    ((UInt32)(p->buffer[i * 4    ]) << 24) +
+    ((UInt32)(p->buffer[i * 4 + 1]) << 16) +
+    ((UInt32)(p->buffer[i * 4 + 2]) <<  8) +
+    ((UInt32)(p->buffer[i * 4 + 3]));
   Sha256_Transform(p->state, data32);
 }
 
@@ -169,8 +169,8 @@ void Sha256_Update(CSha256 *p, const Byte *data, size_t size)
     size--;
     if (curBufferPos == 64)
     {
-      curBufferPos = 0;
-      Sha256_WriteByteBlock(p);
+    curBufferPos = 0;
+    Sha256_WriteByteBlock(p);
     }
   }
 }
@@ -185,7 +185,7 @@ void Sha256_Final(CSha256 *p, Byte *digest)
   {
     curBufferPos &= 0x3F;
     if (curBufferPos == 0)
-      Sha256_WriteByteBlock(p);
+    Sha256_WriteByteBlock(p);
     p->buffer[curBufferPos++] = 0;
   }
   for (i = 0; i < 8; i++)

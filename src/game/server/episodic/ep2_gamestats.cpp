@@ -363,7 +363,7 @@ void CEP2GameStats::Event_PlayerTraveled( CBasePlayer *pBasePlayer, float distan
     Ep2LevelStats_t::SaveGameInfoRecord2_t *rec = map->m_SaveGameInfo.m_pCurrentRecord;
 
     if ( rec &&
-         rec->m_nSaveHealth == -1 )
+        rec->m_nSaveHealth == -1 )
     {
         Vector pos = pBasePlayer->GetAbsOrigin();
         rec->m_nSavePos[0] = ( short )pos.x;
@@ -432,10 +432,10 @@ void CEP2GameStats::Event_SaveGame( void )
         rec->m_SaveType = Q_stristr( pchSaveFile, "autosave" ) ? Ep2LevelStats_t::SaveGameInfoRecord2_t::TYPE_AUTOSAVE : Ep2LevelStats_t::SaveGameInfoRecord2_t::TYPE_USERSAVE;
 
         StatsLog( "save pos %i %i %i w/ health %d\n",
-                  rec->m_nSavePos[0],
-                  rec->m_nSavePos[1],
-                  rec->m_nSavePos[2],
-                  rec->m_nSaveHealth );
+                rec->m_nSavePos[0],
+                rec->m_nSavePos[1],
+                rec->m_nSavePos[2],
+                rec->m_nSaveHealth );
     }
 }
 
@@ -463,7 +463,7 @@ void CEP2GameStats::Event_LoadGame( void )
     Ep2LevelStats_t::SaveGameInfo_t *pSaveGameInfo = &map->m_SaveGameInfo;
 
     if ( pSaveGameInfo->m_nCurrentSaveFileTime == 0 ||
-         pSaveGameInfo->m_sCurrentSaveFile != name )
+        pSaveGameInfo->m_sCurrentSaveFile != name )
     {
         unsigned int uFileTime = filesystem->GetFileTime( name, "GAME" );
 
@@ -562,12 +562,12 @@ static void CC_ListDeaths( const CCommand &args )
 
         /*
         Msg( "%s killed %s with %s at (%d,%d,%d)\n",
-          g_aClassNames[ map->m_aPlayerDeaths[ i ].iAttackClass ],
-          g_aClassNames[ map->m_aPlayerDeaths[ i ].iTargetClass ],
-          WeaponIdToAlias( map->m_aPlayerDeaths[ i ].iWeapon ),
-          map->m_aPlayerDeaths[ i ].nPosition[ 0 ],
-          map->m_aPlayerDeaths[ i ].nPosition[ 1 ],
-          map->m_aPlayerDeaths[ i ].nPosition[ 2 ] );
+        g_aClassNames[ map->m_aPlayerDeaths[ i ].iAttackClass ],
+        g_aClassNames[ map->m_aPlayerDeaths[ i ].iTargetClass ],
+        WeaponIdToAlias( map->m_aPlayerDeaths[ i ].iWeapon ),
+        map->m_aPlayerDeaths[ i ].nPosition[ 0 ],
+        map->m_aPlayerDeaths[ i ].nPosition[ 1 ],
+        map->m_aPlayerDeaths[ i ].nPosition[ 2 ] );
         */
 
         if ( nRendered > 150 )

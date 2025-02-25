@@ -16,7 +16,7 @@
 
 class C_Tesla : public C_BaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_Tesla, C_BaseEntity );
     DECLARE_CLIENTCLASS();
 
@@ -25,7 +25,7 @@ class C_Tesla : public C_BaseEntity
     virtual void ReceiveMessage( int classID, bf_read &msg );
     virtual void ClientThink();
 
-   public:
+    public:
     CUtlLinkedList< CTeslaInfo, int > m_QueuedCommands;
     char m_SoundName[64];
     char m_iszSpriteName[256];

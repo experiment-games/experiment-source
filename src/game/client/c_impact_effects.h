@@ -17,7 +17,7 @@
 //-----------------------------------------------------------------------------
 class CDustParticle : public CSimpleEmitter
 {
-   public:
+    public:
     CDustParticle( const char *pDebugName )
         : CSimpleEmitter( pDebugName ) {}
 
@@ -97,7 +97,7 @@ class CDustParticle : public CSimpleEmitter
         return ramp;
     }
 
-   private:
+    private:
     CDustParticle( const CDustParticle & );  // not defined, not accessible
 };
 

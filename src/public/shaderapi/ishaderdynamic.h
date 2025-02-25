@@ -153,7 +153,7 @@ struct ShaderViewport_t
 #define SHADERDYNAMIC_INTERFACE_VERSION "ShaderDynamic001"
 abstract_class IShaderDynamicAPI
 {
-   public:
+    public:
     virtual void SetViewports( int nCount, const ShaderViewport_t *pViewports ) = 0;
     virtual int GetViewports( ShaderViewport_t * pViewports, int nMax ) const = 0;
 
@@ -314,10 +314,10 @@ abstract_class IShaderDynamicAPI
     // for shaders to set vertex shader constants. returns a packed state which can be used to set
     // the dynamic combo. returns # of active deformations
     virtual int GetPackedDeformationInformation( int nMaskOfUnderstoodDeformations,
-                                                 float *pConstantValuesOut,
-                                                 int nBufferSize,
-                                                 int nMaximumDeformations,
-                                                 int *pNumDefsOut ) const = 0;
+                                                float *pConstantValuesOut,
+                                                int nBufferSize,
+                                                int nMaximumDeformations,
+                                                int *pNumDefsOut ) const = 0;
 
     // This lets the lower level system that certain vertex fields requested
     // in the shadow state aren't actually being read given particular state

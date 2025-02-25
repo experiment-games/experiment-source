@@ -235,7 +235,7 @@ LUA_BINDING_BEGIN( UserMessages, WriteEntity, "library", "Writes an entity.", "s
         EHANDLE hEnt = LUA_BINDING_ARGUMENT( lua_toentity, 1, "entity" );
 
         int iSerialNum = hEnt.GetSerialNumber() &
-                         ( ( 1 << NUM_NETWORKED_EHANDLE_SERIAL_NUMBER_BITS ) - 1 );
+                        ( ( 1 << NUM_NETWORKED_EHANDLE_SERIAL_NUMBER_BITS ) - 1 );
         iEncodedEHandle = hEnt.GetEntryIndex() | ( iSerialNum << MAX_EDICT_BITS );
     }
     else
@@ -427,9 +427,9 @@ LUA_BINDING_BEGIN( MessageReader, ReadLong, "class", "Reads a long integer." )
 {
     bf_read *bf = LUA_BINDING_ARGUMENT( luaL_checkbf_read, 1, "reader" );
     lua_pushinteger( L,
-                     bf->ReadBitLong(
-                         LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "numBits" ),
-                         LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 3, true, "isSigned" ) ) );
+                    bf->ReadBitLong(
+                        LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "numBits" ),
+                        LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 3, true, "isSigned" ) ) );
     return 1;
 }
 LUA_BINDING_END( "integer", "The long read." )

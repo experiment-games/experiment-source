@@ -47,7 +47,7 @@ struct AvatarImagePair_t
     bool operator<( const AvatarImagePair_t &rhs ) const
     {
         return m_SteamID.ConvertToUint64() < rhs.m_SteamID.ConvertToUint64() ||
-               ( m_SteamID.ConvertToUint64() == rhs.m_SteamID.ConvertToUint64() && m_iAvatar < rhs.m_iAvatar );
+                ( m_SteamID.ConvertToUint64() == rhs.m_SteamID.ConvertToUint64() && m_iAvatar < rhs.m_iAvatar );
     }
 
     CSteamID m_SteamID;
@@ -69,7 +69,7 @@ enum EAvatarSize
 //-----------------------------------------------------------------------------
 class CAvatarImage : public vgui::IImage
 {
-   public:
+    public:
     CAvatarImage( void );
 
     // Call this to set the steam ID associated with the avatar
@@ -169,10 +169,10 @@ class CAvatarImage : public vgui::IImage
         return;
     }
 
-   protected:
+    protected:
     void InitFromRGBA( int iAvatar, const byte *rgba, int width, int height );
 
-   private:
+    private:
     void LoadAvatarImage();
 
     Color m_Color;
@@ -216,7 +216,7 @@ class CAvatarImage : public vgui::IImage
 //-----------------------------------------------------------------------------
 class CAvatarImagePanel : public vgui::Panel
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CAvatarImagePanel, vgui::Panel );
 
     CAvatarImagePanel( vgui::Panel *parent, const char *name );
@@ -273,13 +273,13 @@ class CAvatarImagePanel : public vgui::Panel
         m_bClickable = bClickable;
     }
 
-   protected:
+    protected:
     CPanelAnimationVar( Color, m_clrOutline, "color_outline", "Black" );
     virtual void ApplySettings( KeyValues *inResourceData );
 
     void UpdateSize();
 
-   private:
+    private:
     CAvatarImage *m_pImage;
     bool m_bScaleImage;
     bool m_bSizeDirty;

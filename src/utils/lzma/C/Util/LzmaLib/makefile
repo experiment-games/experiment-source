@@ -26,9 +26,9 @@ OBJS = \
 !include "../../../CPP/Build.mak"
 
 $(SLIBPATH): $O $(OBJS)
-	lib -out:$(SLIBPATH) $(OBJS) $(LIBS)
+    lib -out:$(SLIBPATH) $(OBJS) $(LIBS)
 
 $(LIB_OBJS): $(*B).c
-	$(COMPL_O2)
+    $(COMPL_O2)
 $(C_OBJS): ../../$(*B).c
-	$(COMPL_O2)
+    $(COMPL_O2)

@@ -50,7 +50,7 @@ namespace cpp
 
 class MessageFieldGenerator : public FieldGenerator
 {
-   public:
+    public:
     explicit MessageFieldGenerator( const FieldDescriptor* descriptor );
     ~MessageFieldGenerator();
 
@@ -67,7 +67,7 @@ class MessageFieldGenerator : public FieldGenerator
     void GenerateSerializeWithCachedSizesToArray( io::Printer* printer ) const;
     void GenerateByteSize( io::Printer* printer ) const;
 
-   private:
+    private:
     const FieldDescriptor* descriptor_;
     map< string, string > variables_;
 
@@ -76,7 +76,7 @@ class MessageFieldGenerator : public FieldGenerator
 
 class RepeatedMessageFieldGenerator : public FieldGenerator
 {
-   public:
+    public:
     explicit RepeatedMessageFieldGenerator( const FieldDescriptor* descriptor );
     ~RepeatedMessageFieldGenerator();
 
@@ -93,7 +93,7 @@ class RepeatedMessageFieldGenerator : public FieldGenerator
     void GenerateSerializeWithCachedSizesToArray( io::Printer* printer ) const;
     void GenerateByteSize( io::Printer* printer ) const;
 
-   private:
+    private:
     const FieldDescriptor* descriptor_;
     map< string, string > variables_;
 

@@ -542,7 +542,7 @@ bool CXZip::ExtractFile( const char* FileName )
 int __cdecl xZipDirectoryEntry_t::xZipDirectoryEntrySortCompare( const void* left, const void* right )
 {
     xZipDirectoryEntry_t *l = ( xZipDirectoryEntry_t* )left,
-                         *r = ( xZipDirectoryEntry_t* )right;
+                        *r = ( xZipDirectoryEntry_t* )right;
 
     if ( l->FilenameCRC < r->FilenameCRC )
     {
@@ -582,7 +582,7 @@ int __cdecl xZipDirectoryEntry_t::xZipDirectoryEntrySortCompare( const void* lef
 int __cdecl xZipDirectoryEntry_t::xZipDirectoryEntryFindCompare( const void* left, const void* right )
 {
     xZipDirectoryEntry_t *l = ( xZipDirectoryEntry_t* )left,
-                         *r = ( xZipDirectoryEntry_t* )right;
+                        *r = ( xZipDirectoryEntry_t* )right;
 
     if ( l->FilenameCRC < r->FilenameCRC )
     {
@@ -1195,21 +1195,21 @@ unsigned xZipComputeXWVPreload( const char* filename )
 unsigned xZipComputeXTFPreload( const char* filename )
 {
 #if 0  // X360TBD: Not using XTF anymore
-	FILE* hFile = fopen( filename, "rb" );
-	if ( !hFile )
-	{
-		printf("Failed to open file: %s\n", filename);
-		return 0;
-	}
+    FILE* hFile = fopen( filename, "rb" );
+    if ( !hFile )
+    {
+        printf("Failed to open file: %s\n", filename);
+        return 0;
+    }
 
-	XTFFileHeader_t header;
-	memset( &header,0, sizeof( header ) );
-	fread( &header,1,sizeof(header),hFile);
+    XTFFileHeader_t header;
+    memset( &header,0, sizeof( header ) );
+    fread( &header,1,sizeof(header),hFile);
 
-	fclose(hFile);
+    fclose(hFile);
 
-	if ( !strncmp( header.fileTypeString, "XTF", 4 ) )
-		return header.preloadDataSize;
+    if ( !strncmp( header.fileTypeString, "XTF", 4 ) )
+        return header.preloadDataSize;
 #endif
     return 0;
 }

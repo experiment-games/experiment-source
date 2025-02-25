@@ -28,7 +28,7 @@ class BitmapImage;
 
 class CEntityImageHealthPanel : public CEntityPanel
 {
-   public:
+    public:
     DECLARE_CLASS( CEntityImageHealthPanel, CEntityPanel );
 
     // constructor
@@ -43,7 +43,7 @@ class CEntityImageHealthPanel : public CEntityPanel
     virtual bool ShouldDraw( void );
     virtual void ComputeAndSetSize( void );
 
-   private:
+    private:
     CHealthBarPanel *m_CommanderHealthBar;
     CHealthBarPanel *m_NormalHealthBar;
     CHealthBarPanel *m_ResourceLevelBar;

@@ -153,13 +153,13 @@ SendPropFloat( SENDINFO( m_flWaveHeight ), 8, SPROP_ROUNDUP, 0.0f, 8.0f ),
             int iprev = pls->iLockedSentence;
 
             pls->iLockedSentence = SENTENCEG_PlaySequentialSz( pEdict->edict(),
-                                                               STRING( pls->sLockedSentence ),
-                                                               0.85f,
-                                                               SNDLVL_NORM,
-                                                               0,
-                                                               100,
-                                                               pls->iLockedSentence,
-                                                               FALSE );
+                                                                STRING( pls->sLockedSentence ),
+                                                                0.85f,
+                                                                SNDLVL_NORM,
+                                                                0,
+                                                                100,
+                                                                pls->iLockedSentence,
+                                                                FALSE );
             pls->iUnlockedSentence = 0;
 
             // make sure we don't keep calling last sentence in list
@@ -1209,7 +1209,7 @@ void CBaseDoor::Blocked( CBaseEntity *pOther )
         // If block damage is set, but this object is a physics prop that can't be damaged, just
         // give up and disable collisions
         if ( ( m_bForceClosed || m_flWait < 0 ) && pOther->GetMoveType() == MOVETYPE_VPHYSICS &&
-             ( pOther->m_takedamage == DAMAGE_NO || pOther->m_takedamage == DAMAGE_EVENTS_ONLY ) )
+            ( pOther->m_takedamage == DAMAGE_NO || pOther->m_takedamage == DAMAGE_EVENTS_ONLY ) )
         {
             EntityPhysics_CreateSolver( this, pOther, true, 4.0f );
         }
@@ -1334,7 +1334,7 @@ button or trigger field activates the door.
 
 class CRotDoor : public CBaseDoor
 {
-   public:
+    public:
     DECLARE_CLASS( CRotDoor, CBaseDoor );
 
     void Spawn( void );

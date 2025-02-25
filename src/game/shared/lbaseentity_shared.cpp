@@ -2841,7 +2841,7 @@ LUA_BINDING_BEGIN( Entity, SetNetworkDataValue, "class", "Sets a data table vari
     int slot = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "slot" );
 
     if ( slot < 0 || ( networkVarType == TYPE_STRING && slot >= LUA_MAX_NETWORK_VARIABLES_STRING ) ||
-         ( networkVarType != TYPE_STRING && slot >= LUA_MAX_NETWORK_VARIABLES ) )
+        ( networkVarType != TYPE_STRING && slot >= LUA_MAX_NETWORK_VARIABLES ) )
     {
         luaL_argerror( L, 3, "Invalid slot index" );
         return 0;
@@ -2968,7 +2968,7 @@ LUA_BINDING_BEGIN( Entity, GetNetworkDataValue, "class", "Gets a data table vari
     int slot = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "slot" );
 
     if ( slot < 0 || ( networkVarType == TYPE_STRING && slot >= LUA_MAX_NETWORK_VARIABLES_STRING ) ||
-         ( networkVarType != TYPE_STRING && slot >= LUA_MAX_NETWORK_VARIABLES ) )
+        ( networkVarType != TYPE_STRING && slot >= LUA_MAX_NETWORK_VARIABLES ) )
     {
         luaL_argerror( L, 3, "Invalid slot index" );
         return 0;

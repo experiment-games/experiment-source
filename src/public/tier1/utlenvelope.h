@@ -19,7 +19,7 @@
 
 class CUtlDataEnvelope
 {
-   public:
+    public:
     CUtlDataEnvelope( const void *pData, int nBytes );
     CUtlDataEnvelope( const CUtlDataEnvelope &from );
     ~CUtlDataEnvelope();
@@ -29,7 +29,7 @@ class CUtlDataEnvelope
     operator void *();
     operator void *() const;
 
-   private:
+    private:
     void Assign( const void *pData, int nBytes );
     void Assign( const CUtlDataEnvelope &from );
     void Purge();
@@ -48,7 +48,7 @@ class CUtlDataEnvelope
 template < typename T >
 class CUtlEnvelope : protected CUtlDataEnvelope
 {
-   public:
+    public:
     CUtlEnvelope( const T *pData, int nElems = 1 );
     CUtlEnvelope( const CUtlEnvelope< T > &from );
 
@@ -66,7 +66,7 @@ class CUtlEnvelope : protected CUtlDataEnvelope
 template <>
 class CUtlEnvelope< const char * >
 {
-   public:
+    public:
     CUtlEnvelope( const char *pData )
     {
         m_string = pData;
@@ -103,7 +103,7 @@ class CUtlEnvelope< const char * >
         return ( void * )m_string.Get();
     }
 
-   private:
+    private:
     CUtlString m_string;
 };
 

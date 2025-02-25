@@ -27,7 +27,7 @@ typedef int QueryableReplayItemHandle_t;
 
 abstract_class IQueryableReplayItem : public IBaseInterface
 {
-   public:
+    public:
     virtual const CReplayTime &GetItemDate() const = 0;
     virtual bool IsItemRendered() const = 0;
     virtual CReplay *GetItemReplay() = 0;

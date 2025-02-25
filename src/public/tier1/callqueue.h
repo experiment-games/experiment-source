@@ -77,7 +77,7 @@
 template < typename QUEUE_TYPE = CTSQueue< CFunctor * > >
 class CCallQueueT
 {
-   public:
+    public:
     CCallQueueT()
         : m_bNoQueue( false )
     {
@@ -153,7 +153,7 @@ class CCallQueueT
 
     FUNC_GENERATE_QUEUE_METHODS();
 
-   private:
+    private:
     void QueueFunctorInternal( CFunctor *pFunctor )
     {
         if ( !m_bNoQueue )
@@ -186,7 +186,7 @@ class CCallQueue : public CCallQueueT<>
 
 class ICallQueue
 {
-   public:
+    public:
     void QueueFunctor( CFunctor *pFunctor )
     {
         QueueFunctorInternal( RetAddRef( pFunctor ) );
@@ -194,7 +194,7 @@ class ICallQueue
 
     FUNC_GENERATE_QUEUE_METHODS();
 
-   private:
+    private:
     virtual void QueueFunctorInternal( CFunctor *pFunctor ) = 0;
 };
 

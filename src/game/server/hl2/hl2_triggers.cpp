@@ -18,7 +18,7 @@ class CTriggerWeaponDissolve : public CTriggerMultiple
     DECLARE_CLASS( CTriggerWeaponDissolve, CTriggerMultiple );
     DECLARE_DATADESC();
 
-   public:
+    public:
     ~CTriggerWeaponDissolve( void );
 
     virtual void Spawn( void );
@@ -36,7 +36,7 @@ class CTriggerWeaponDissolve : public CTriggerMultiple
     void CreateBeam( const Vector &vecSource, CBaseEntity *pDest, float flLifetime );
     void DissolveThink( void );
 
-   private:
+    private:
     COutputEvent m_OnDissolveWeapon;
     COutputEvent m_OnChargingPhyscannon;
 
@@ -170,19 +170,19 @@ void CTriggerWeaponDissolve::CreateBeam( const Vector &vecSource, CBaseEntity *p
     CBroadcastRecipientFilter filter;
 
     te->BeamEntPoint( filter, 0.0, 0, &vecSource, pDest->entindex(), &( pDest->WorldSpaceCenter() ), m_spriteTexture,
-                      0,  // No halo
-                      1,  // Frame
-                      30,
-                      flLifetime,
-                      16.0f,  // Start width
-                      4.0f,   // End width
-                      0,      // No fade
-                      8,      // Amplitude
-                      255,
-                      255,
-                      255,
-                      255,
-                      16 );  // Speed
+                    0,  // No halo
+                    1,  // Frame
+                    30,
+                    flLifetime,
+                    16.0f,  // Start width
+                    4.0f,   // End width
+                    0,      // No fade
+                    8,      // Amplitude
+                    255,
+                    255,
+                    255,
+                    255,
+                    16 );  // Speed
 }
 
 //-----------------------------------------------------------------------------
@@ -290,11 +290,11 @@ class CTriggerWeaponStrip : public CTriggerMultiple
     DECLARE_CLASS( CTriggerWeaponStrip, CTriggerMultiple );
     DECLARE_DATADESC();
 
-   public:
+    public:
     void StartTouch( CBaseEntity *pOther );
     void EndTouch( CBaseEntity *pOther );
 
-   private:
+    private:
     bool m_bKillWeapons;
 };
 
@@ -374,10 +374,10 @@ class CTriggerPhysicsTrap : public CTriggerMultiple
     DECLARE_CLASS( CTriggerPhysicsTrap, CTriggerMultiple );
     DECLARE_DATADESC();
 
-   public:
+    public:
     void Touch( CBaseEntity *pOther );
 
-   private:
+    private:
     void InputEnable( inputdata_t &inputdata );
     void InputDisable( inputdata_t &inputdata );
     void InputToggle( inputdata_t &inputdata );
@@ -465,7 +465,7 @@ class CWateryDeathLeech : public CBaseAnimating
 {
     DECLARE_CLASS( CWateryDeathLeech, CBaseAnimating );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     void Spawn( void );
@@ -576,7 +576,7 @@ class CTriggerWateryDeath : public CBaseTrigger
 {
     DECLARE_CLASS( CTriggerWateryDeath, CBaseTrigger );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     void Spawn( void );
@@ -596,7 +596,7 @@ class CTriggerWateryDeath : public CBaseTrigger
     virtual void StartTouch( CBaseEntity *pOther );
     virtual void EndTouch( CBaseEntity *pOther );
 
-   private:
+    private:
     CUtlVector< EHANDLE > m_hLeeches;
 
     // Kill times for entities I'm touching
@@ -818,7 +818,7 @@ class CTriggerRPGFire : public CTriggerMultiple
 {
     DECLARE_CLASS( CTriggerRPGFire, CTriggerMultiple );
 
-   public:
+    public:
     ~CTriggerRPGFire();
 
     void Spawn( void );

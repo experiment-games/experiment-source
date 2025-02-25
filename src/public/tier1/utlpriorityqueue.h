@@ -19,7 +19,7 @@
 template < class T >
 class CUtlPriorityQueue
 {
-   public:
+    public:
     // Less func typedef
     // Returns true if the first parameter is "less priority" than the second
     // Items that are "less priority" sort toward the tail of the queue
@@ -75,7 +75,7 @@ class CUtlPriorityQueue
         return m_heap.Element( index );
     }
 
-   protected:
+    protected:
     CUtlVector< T > m_heap;
 
     void Swap( int index1, int index2 );

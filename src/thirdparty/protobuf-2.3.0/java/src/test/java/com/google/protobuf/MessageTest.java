@@ -50,46 +50,46 @@ public class MessageTest extends TestCase {
 
   static final TestAllTypes MERGE_SOURCE =
     TestAllTypes.newBuilder()
-      .setOptionalInt32(1)
-      .setOptionalString("foo")
-      .setOptionalForeignMessage(ForeignMessage.getDefaultInstance())
-      .addRepeatedString("bar")
-      .build();
+    .setOptionalInt32(1)
+    .setOptionalString("foo")
+    .setOptionalForeignMessage(ForeignMessage.getDefaultInstance())
+    .addRepeatedString("bar")
+    .build();
 
   static final TestAllTypes MERGE_DEST =
     TestAllTypes.newBuilder()
-      .setOptionalInt64(2)
-      .setOptionalString("baz")
-      .setOptionalForeignMessage(ForeignMessage.newBuilder().setC(3).build())
-      .addRepeatedString("qux")
-      .build();
+    .setOptionalInt64(2)
+    .setOptionalString("baz")
+    .setOptionalForeignMessage(ForeignMessage.newBuilder().setC(3).build())
+    .addRepeatedString("qux")
+    .build();
 
   static final String MERGE_RESULT_TEXT =
-      "optional_int32: 1\n" +
-      "optional_int64: 2\n" +
-      "optional_string: \"foo\"\n" +
-      "optional_foreign_message {\n" +
-      "  c: 3\n" +
-      "}\n" +
-      "repeated_string: \"qux\"\n" +
-      "repeated_string: \"bar\"\n";
+    "optional_int32: 1\n" +
+    "optional_int64: 2\n" +
+    "optional_string: \"foo\"\n" +
+    "optional_foreign_message {\n" +
+    "  c: 3\n" +
+    "}\n" +
+    "repeated_string: \"qux\"\n" +
+    "repeated_string: \"bar\"\n";
 
   public void testMergeFrom() throws Exception {
     TestAllTypes result =
-      TestAllTypes.newBuilder(MERGE_DEST)
+    TestAllTypes.newBuilder(MERGE_DEST)
         .mergeFrom(MERGE_SOURCE).build();
 
     assertEquals(MERGE_RESULT_TEXT, result.toString());
   }
 
   /**
-   * Test merging a DynamicMessage into a GeneratedMessage.  As long as they
-   * have the same descriptor, this should work, but it is an entirely different
-   * code path.
-   */
+    * Test merging a DynamicMessage into a GeneratedMessage.  As long as they
+    * have the same descriptor, this should work, but it is an entirely different
+    * code path.
+    */
   public void testMergeFromDynamic() throws Exception {
     TestAllTypes result =
-      TestAllTypes.newBuilder(MERGE_DEST)
+    TestAllTypes.newBuilder(MERGE_DEST)
         .mergeFrom(DynamicMessage.newBuilder(MERGE_SOURCE).build())
         .build();
 
@@ -99,7 +99,7 @@ public class MessageTest extends TestCase {
   /** Test merging two DynamicMessages. */
   public void testDynamicMergeFrom() throws Exception {
     DynamicMessage result =
-      DynamicMessage.newBuilder(MERGE_DEST)
+    DynamicMessage.newBuilder(MERGE_DEST)
         .mergeFrom(DynamicMessage.newBuilder(MERGE_SOURCE).build())
         .build();
 
@@ -182,28 +182,28 @@ public class MessageTest extends TestCase {
     assertTrue(builder.isInitialized());
 
     builder.setField(descriptor.findFieldByName("optional_message"),
-                     TEST_REQUIRED_UNINITIALIZED);
+                    TEST_REQUIRED_UNINITIALIZED);
     assertFalse(builder.isInitialized());
 
     builder.setField(descriptor.findFieldByName("optional_message"),
-                     TEST_REQUIRED_INITIALIZED);
+                    TEST_REQUIRED_INITIALIZED);
     assertTrue(builder.isInitialized());
 
     builder.addRepeatedField(descriptor.findFieldByName("repeated_message"),
-                             TEST_REQUIRED_UNINITIALIZED);
+                            TEST_REQUIRED_UNINITIALIZED);
     assertFalse(builder.isInitialized());
 
     builder.setRepeatedField(descriptor.findFieldByName("repeated_message"), 0,
-                             TEST_REQUIRED_INITIALIZED);
+                            TEST_REQUIRED_INITIALIZED);
     assertTrue(builder.isInitialized());
   }
 
   public void testUninitializedException() throws Exception {
     try {
-      TestRequired.newBuilder().build();
-      fail("Should have thrown an exception.");
+    TestRequired.newBuilder().build();
+    fail("Should have thrown an exception.");
     } catch (UninitializedMessageException e) {
-      assertEquals("Message missing required fields: a, b, c", e.getMessage());
+    assertEquals("Message missing required fields: a, b, c", e.getMessage());
     }
   }
 
@@ -215,14 +215,14 @@ public class MessageTest extends TestCase {
 
   public void testNestedUninitializedException() throws Exception {
     try {
-      TestRequiredForeign.newBuilder()
+    TestRequiredForeign.newBuilder()
         .setOptionalMessage(TEST_REQUIRED_UNINITIALIZED)
         .addRepeatedMessage(TEST_REQUIRED_UNINITIALIZED)
         .addRepeatedMessage(TEST_REQUIRED_UNINITIALIZED)
         .build();
-      fail("Should have thrown an exception.");
+    fail("Should have thrown an exception.");
     } catch (UninitializedMessageException e) {
-      assertEquals(
+    assertEquals(
         "Message missing required fields: " +
         "optional_message.a, " +
         "optional_message.b, " +
@@ -240,7 +240,7 @@ public class MessageTest extends TestCase {
   public void testBuildNestedPartial() throws Exception {
     // We're mostly testing that no exception is thrown.
     TestRequiredForeign message =
-      TestRequiredForeign.newBuilder()
+    TestRequiredForeign.newBuilder()
         .setOptionalMessage(TEST_REQUIRED_UNINITIALIZED)
         .addRepeatedMessage(TEST_REQUIRED_UNINITIALIZED)
         .addRepeatedMessage(TEST_REQUIRED_UNINITIALIZED)
@@ -250,26 +250,26 @@ public class MessageTest extends TestCase {
 
   public void testParseUnititialized() throws Exception {
     try {
-      TestRequired.parseFrom(ByteString.EMPTY);
-      fail("Should have thrown an exception.");
+    TestRequired.parseFrom(ByteString.EMPTY);
+    fail("Should have thrown an exception.");
     } catch (InvalidProtocolBufferException e) {
-      assertEquals("Message missing required fields: a, b, c", e.getMessage());
+    assertEquals("Message missing required fields: a, b, c", e.getMessage());
     }
   }
 
   public void testParseNestedUnititialized() throws Exception {
     ByteString data =
-      TestRequiredForeign.newBuilder()
+    TestRequiredForeign.newBuilder()
         .setOptionalMessage(TEST_REQUIRED_UNINITIALIZED)
         .addRepeatedMessage(TEST_REQUIRED_UNINITIALIZED)
         .addRepeatedMessage(TEST_REQUIRED_UNINITIALIZED)
         .buildPartial().toByteString();
 
     try {
-      TestRequiredForeign.parseFrom(data);
-      fail("Should have thrown an exception.");
+    TestRequiredForeign.parseFrom(data);
+    fail("Should have thrown an exception.");
     } catch (InvalidProtocolBufferException e) {
-      assertEquals(
+    assertEquals(
         "Message missing required fields: " +
         "optional_message.a, " +
         "optional_message.b, " +
@@ -286,28 +286,28 @@ public class MessageTest extends TestCase {
 
   public void testDynamicUninitializedException() throws Exception {
     try {
-      DynamicMessage.newBuilder(TestRequired.getDescriptor()).build();
-      fail("Should have thrown an exception.");
+    DynamicMessage.newBuilder(TestRequired.getDescriptor()).build();
+    fail("Should have thrown an exception.");
     } catch (UninitializedMessageException e) {
-      assertEquals("Message missing required fields: a, b, c", e.getMessage());
+    assertEquals("Message missing required fields: a, b, c", e.getMessage());
     }
   }
 
   public void testDynamicBuildPartial() throws Exception {
     // We're mostly testing that no exception is thrown.
     DynamicMessage message =
-      DynamicMessage.newBuilder(TestRequired.getDescriptor())
+    DynamicMessage.newBuilder(TestRequired.getDescriptor())
         .buildPartial();
     assertFalse(message.isInitialized());
   }
 
   public void testDynamicParseUnititialized() throws Exception {
     try {
-      Descriptors.Descriptor descriptor = TestRequired.getDescriptor();
-      DynamicMessage.parseFrom(descriptor, ByteString.EMPTY);
-      fail("Should have thrown an exception.");
+    Descriptors.Descriptor descriptor = TestRequired.getDescriptor();
+    DynamicMessage.parseFrom(descriptor, ByteString.EMPTY);
+    fail("Should have thrown an exception.");
     } catch (InvalidProtocolBufferException e) {
-      assertEquals("Message missing required fields: a, b, c", e.getMessage());
+    assertEquals("Message missing required fields: a, b, c", e.getMessage());
     }
   }
 }

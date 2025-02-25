@@ -18,9 +18,9 @@ float DoShadow( sampler DepthSampler, float4 texCoord )
     float2 voffset = float2( 0.0f, 0.5f / 512.f );
     float3 projTexCoord = texCoord.xyz / texCoord.w;
     float4 flashlightDepth = float4( tex2D( DepthSampler, projTexCoord + uoffset + voffset ).x,
-                                     tex2D( DepthSampler, projTexCoord + uoffset - voffset ).x,
-                                     tex2D( DepthSampler, projTexCoord - uoffset + voffset ).x,
-                                     tex2D( DepthSampler, projTexCoord - uoffset - voffset ).x );
+                                    tex2D( DepthSampler, projTexCoord + uoffset - voffset ).x,
+                                    tex2D( DepthSampler, projTexCoord - uoffset + voffset ).x,
+                                    tex2D( DepthSampler, projTexCoord - uoffset - voffset ).x );
 
 #if ( defined( REVERSE_DEPTH_ON_X360 ) )
     {
@@ -205,13 +205,13 @@ float DoShadowATICheap( sampler DepthSampler, const float4 shadowMapPos )
 float DoShadowPoisson16Sample( sampler DepthSampler, sampler RandomRotationSampler, const float3 vProjCoords, const float2 vScreenPos, const float4 vShadowTweaks, bool bNvidiaHardwarePCF, bool bFetch4 )
 {
     float2 vPoissonOffset[8] = { float2( 0.3475f, 0.0042f ),
-                                 float2( 0.8806f, 0.3430f ),
-                                 float2( -0.0041f, -0.6197f ),
-                                 float2( 0.0472f, 0.4964f ),
-                                 float2( -0.3730f, 0.0874f ),
-                                 float2( -0.9217f, -0.3177f ),
-                                 float2( -0.6289f, 0.7388f ),
-                                 float2( 0.5744f, -0.7741f ) };
+                                float2( 0.8806f, 0.3430f ),
+                                float2( -0.0041f, -0.6197f ),
+                                float2( 0.0472f, 0.4964f ),
+                                float2( -0.3730f, 0.0874f ),
+                                float2( -0.9217f, -0.3177f ),
+                                float2( -0.6289f, 0.7388f ),
+                                float2( 0.5744f, -0.7741f ) };
 
     float flScaleOverMapSize = vShadowTweaks.x * 2;  // Tweak parameters to shader
     float2 vNoiseOffset = vShadowTweaks.zw;
@@ -285,14 +285,14 @@ float DoShadowPoisson16Sample( sampler DepthSampler, sampler RandomRotationSampl
             // First, search for blockers
             for( int j=0; j<8; j++ )
             {
-              rotOffset.x = dot (RMatTop.xy,    vPoissonOffset[j].xy) + RMatTop.z;
-              rotOffset.y = dot (RMatBottom.xy, vPoissonOffset[j].xy) + RMatBottom.z;
-              vBlockerDepths = tex2D( DepthSampler, rotOffset.xy );
+            rotOffset.x = dot (RMatTop.xy,    vPoissonOffset[j].xy) + RMatTop.z;
+            rotOffset.y = dot (RMatBottom.xy, vPoissonOffset[j].xy) + RMatBottom.z;
+            vBlockerDepths = tex2D( DepthSampler, rotOffset.xy );
 
-              // Which samples are closer than the pixel we're rendering?
-              float4 vCloserSamples = (vBlockerDepths < objDepth.xxxx );				// Binary comparison results
-              flNumCloserSamples += dot( vCloserSamples, float4(1, 1, 1, 1) );		// How many samples are closer than receiver?
-              flAccumulatedCloserSamples += dot (vCloserSamples, vBlockerDepths );	// Total depths from samples closer than receiver
+            // Which samples are closer than the pixel we're rendering?
+            float4 vCloserSamples = (vBlockerDepths < objDepth.xxxx );				// Binary comparison results
+            flNumCloserSamples += dot( vCloserSamples, float4(1, 1, 1, 1) );		// How many samples are closer than receiver?
+            flAccumulatedCloserSamples += dot (vCloserSamples, vBlockerDepths );	// Total depths from samples closer than receiver
             }
 
             float flBlockerDepth = flAccumulatedCloserSamples / flNumCloserSamples;
@@ -358,15 +358,15 @@ float DoShadow360Simple( sampler DepthSampler, const float3 vProjCoords )
     float4 vSampledDepths, vWeights;
 
     asm {
-		getCompTexLOD2D fLOD.x, shadowMapCenter.xy, DepthSampler, AnisoFilter=max16to1
-			setTexLOD fLOD.x
+        getCompTexLOD2D fLOD.x, shadowMapCenter.xy, DepthSampler, AnisoFilter=max16to1
+            setTexLOD fLOD.x
 
-			tfetch2D vSampledDepths.x___, shadowMapCenter, DepthSampler, OffsetX = -0.5, OffsetY = -0.5, UseComputedLOD=false, UseRegisterLOD=true, MagFilter = point, MinFilter = point
-			tfetch2D vSampledDepths._x__, shadowMapCenter, DepthSampler, OffsetX =  0.5, OffsetY = -0.5, UseComputedLOD=false, UseRegisterLOD=true, MagFilter = point, MinFilter = point
-			tfetch2D vSampledDepths.__x_, shadowMapCenter, DepthSampler, OffsetX = -0.5, OffsetY =  0.5, UseComputedLOD=false, UseRegisterLOD=true, MagFilter = point, MinFilter = point
-			tfetch2D vSampledDepths.___x, shadowMapCenter, DepthSampler, OffsetX =  0.5, OffsetY =  0.5, UseComputedLOD=false, UseRegisterLOD=true, MagFilter = point, MinFilter = point
+            tfetch2D vSampledDepths.x___, shadowMapCenter, DepthSampler, OffsetX = -0.5, OffsetY = -0.5, UseComputedLOD=false, UseRegisterLOD=true, MagFilter = point, MinFilter = point
+            tfetch2D vSampledDepths._x__, shadowMapCenter, DepthSampler, OffsetX =  0.5, OffsetY = -0.5, UseComputedLOD=false, UseRegisterLOD=true, MagFilter = point, MinFilter = point
+            tfetch2D vSampledDepths.__x_, shadowMapCenter, DepthSampler, OffsetX = -0.5, OffsetY =  0.5, UseComputedLOD=false, UseRegisterLOD=true, MagFilter = point, MinFilter = point
+            tfetch2D vSampledDepths.___x, shadowMapCenter, DepthSampler, OffsetX =  0.5, OffsetY =  0.5, UseComputedLOD=false, UseRegisterLOD=true, MagFilter = point, MinFilter = point
 
-			getWeights2D vWeights, shadowMapCenter.xy, DepthSampler, MagFilter=linear, MinFilter=linear, UseComputedLOD=false, UseRegisterLOD=true
+            getWeights2D vWeights, shadowMapCenter.xy, DepthSampler, MagFilter=linear, MinFilter=linear, UseComputedLOD=false, UseRegisterLOD=true
     }
     ;
 
@@ -387,15 +387,15 @@ float Do360PCFFetch( sampler DepthSampler, float2 tc, float objDepth )
     float4 vSampledDepths, vWeights;
 
     asm {
-			getCompTexLOD2D fLOD.x, tc.xy, DepthSampler, AnisoFilter=max16to1
-			setTexLOD fLOD.x
+            getCompTexLOD2D fLOD.x, tc.xy, DepthSampler, AnisoFilter=max16to1
+            setTexLOD fLOD.x
 
-			tfetch2D vSampledDepths.x___, tc, DepthSampler, OffsetX = -0.5, OffsetY = -0.5, UseComputedLOD=false, UseRegisterLOD=true, MagFilter = point, MinFilter = point
-			tfetch2D vSampledDepths._x__, tc, DepthSampler, OffsetX =  0.5, OffsetY = -0.5, UseComputedLOD=false, UseRegisterLOD=true, MagFilter = point, MinFilter = point
-			tfetch2D vSampledDepths.__x_, tc, DepthSampler, OffsetX = -0.5, OffsetY =  0.5, UseComputedLOD=false, UseRegisterLOD=true, MagFilter = point, MinFilter = point
-			tfetch2D vSampledDepths.___x, tc, DepthSampler, OffsetX =  0.5, OffsetY =  0.5, UseComputedLOD=false, UseRegisterLOD=true, MagFilter = point, MinFilter = point
+            tfetch2D vSampledDepths.x___, tc, DepthSampler, OffsetX = -0.5, OffsetY = -0.5, UseComputedLOD=false, UseRegisterLOD=true, MagFilter = point, MinFilter = point
+            tfetch2D vSampledDepths._x__, tc, DepthSampler, OffsetX =  0.5, OffsetY = -0.5, UseComputedLOD=false, UseRegisterLOD=true, MagFilter = point, MinFilter = point
+            tfetch2D vSampledDepths.__x_, tc, DepthSampler, OffsetX = -0.5, OffsetY =  0.5, UseComputedLOD=false, UseRegisterLOD=true, MagFilter = point, MinFilter = point
+            tfetch2D vSampledDepths.___x, tc, DepthSampler, OffsetX =  0.5, OffsetY =  0.5, UseComputedLOD=false, UseRegisterLOD=true, MagFilter = point, MinFilter = point
 
-			getWeights2D vWeights, tc.xy, DepthSampler, MagFilter=linear, MinFilter=linear, UseComputedLOD=false, UseRegisterLOD=true
+            getWeights2D vWeights, tc.xy, DepthSampler, MagFilter=linear, MinFilter=linear, UseComputedLOD=false, UseRegisterLOD=true
     }
     ;
 
@@ -416,10 +416,10 @@ float Do360NearestFetch( sampler DepthSampler, float2 tc, float objDepth )
     float4 vSampledDepth;
 
     asm {
-		getCompTexLOD2D fLOD.x, tc.xy, DepthSampler, AnisoFilter=max16to1
-		setTexLOD fLOD.x
+        getCompTexLOD2D fLOD.x, tc.xy, DepthSampler, AnisoFilter=max16to1
+        setTexLOD fLOD.x
 
-		tfetch2D vSampledDepth.x___, tc, DepthSampler, UseComputedLOD=false, UseRegisterLOD=true, MagFilter = point, MinFilter = point
+        tfetch2D vSampledDepth.x___, tc, DepthSampler, UseComputedLOD=false, UseRegisterLOD=true, MagFilter = point, MinFilter = point
     }
     ;
 
@@ -457,18 +457,18 @@ float AmountShadowed_8Tap_360( sampler DepthSampler, float2 tc, float objDepth )
     //        +---+---+---+---+---+---+---+---+
     //
     asm {
-			getCompTexLOD2D fLOD.x, tc.xy, DepthSampler, AnisoFilter=max16to1
-			setTexLOD fLOD.x
+            getCompTexLOD2D fLOD.x, tc.xy, DepthSampler, AnisoFilter=max16to1
+            setTexLOD fLOD.x
 
-			tfetch2D vSampledDepthsA.x___, tc, DepthSampler, OffsetX = -2.0, OffsetY = -1.5, UseComputedLOD=false, UseRegisterLOD=true, MagFilter = point, MinFilter = point
-			tfetch2D vSampledDepthsA._x__, tc, DepthSampler, OffsetX = -1.5, OffsetY =  0.5, UseComputedLOD=false, UseRegisterLOD=true, MagFilter = point, MinFilter = point
-			tfetch2D vSampledDepthsA.__x_, tc, DepthSampler, OffsetX = -1.0, OffsetY =  2.0, UseComputedLOD=false, UseRegisterLOD=true, MagFilter = point, MinFilter = point
-			tfetch2D vSampledDepthsA.___x, tc, DepthSampler, OffsetX = -0.5, OffsetY = -1.0, UseComputedLOD=false, UseRegisterLOD=true, MagFilter = point, MinFilter = point
+            tfetch2D vSampledDepthsA.x___, tc, DepthSampler, OffsetX = -2.0, OffsetY = -1.5, UseComputedLOD=false, UseRegisterLOD=true, MagFilter = point, MinFilter = point
+            tfetch2D vSampledDepthsA._x__, tc, DepthSampler, OffsetX = -1.5, OffsetY =  0.5, UseComputedLOD=false, UseRegisterLOD=true, MagFilter = point, MinFilter = point
+            tfetch2D vSampledDepthsA.__x_, tc, DepthSampler, OffsetX = -1.0, OffsetY =  2.0, UseComputedLOD=false, UseRegisterLOD=true, MagFilter = point, MinFilter = point
+            tfetch2D vSampledDepthsA.___x, tc, DepthSampler, OffsetX = -0.5, OffsetY = -1.0, UseComputedLOD=false, UseRegisterLOD=true, MagFilter = point, MinFilter = point
 
-			tfetch2D vSampledDepthsB.x___, tc, DepthSampler, OffsetX =  0.5, OffsetY =  1.0, UseComputedLOD=false, UseRegisterLOD=true, MagFilter = point, MinFilter = point
-			tfetch2D vSampledDepthsB._x__, tc, DepthSampler, OffsetX =  1.0, OffsetY = -2.0, UseComputedLOD=false, UseRegisterLOD=true, MagFilter = point, MinFilter = point
-			tfetch2D vSampledDepthsB.__x_, tc, DepthSampler, OffsetX =  1.5, OffsetY = -0.5, UseComputedLOD=false, UseRegisterLOD=true, MagFilter = point, MinFilter = point
-			tfetch2D vSampledDepthsB.___x, tc, DepthSampler, OffsetX =  2.0, OffsetY =  1.5, UseComputedLOD=false, UseRegisterLOD=true, MagFilter = point, MinFilter = point
+            tfetch2D vSampledDepthsB.x___, tc, DepthSampler, OffsetX =  0.5, OffsetY =  1.0, UseComputedLOD=false, UseRegisterLOD=true, MagFilter = point, MinFilter = point
+            tfetch2D vSampledDepthsB._x__, tc, DepthSampler, OffsetX =  1.0, OffsetY = -2.0, UseComputedLOD=false, UseRegisterLOD=true, MagFilter = point, MinFilter = point
+            tfetch2D vSampledDepthsB.__x_, tc, DepthSampler, OffsetX =  1.5, OffsetY = -0.5, UseComputedLOD=false, UseRegisterLOD=true, MagFilter = point, MinFilter = point
+            tfetch2D vSampledDepthsB.___x, tc, DepthSampler, OffsetX =  2.0, OffsetY =  1.5, UseComputedLOD=false, UseRegisterLOD=true, MagFilter = point, MinFilter = point
     }
     ;
 
@@ -490,13 +490,13 @@ float AmountShadowed_4Tap_360( sampler DepthSampler, float2 tc, float objDepth )
 
     // Rotated grid pattern to get an idea about whether we're at a penumbra or not
     asm {
-		getCompTexLOD2D fLOD.x, tc.xy, DepthSampler, AnisoFilter=max16to1
-			setTexLOD fLOD.x
+        getCompTexLOD2D fLOD.x, tc.xy, DepthSampler, AnisoFilter=max16to1
+            setTexLOD fLOD.x
 
-			tfetch2D vSampledDepths.x___, tc, DepthSampler, OffsetX = -1.0, OffsetY =  0.5, UseComputedLOD=false, UseRegisterLOD=true, MagFilter = point, MinFilter = point
-			tfetch2D vSampledDepths._x__, tc, DepthSampler, OffsetX = -0.5, OffsetY = -1.0, UseComputedLOD=false, UseRegisterLOD=true, MagFilter = point, MinFilter = point
-			tfetch2D vSampledDepths.__x_, tc, DepthSampler, OffsetX =  0.5, OffsetY =  1.0, UseComputedLOD=false, UseRegisterLOD=true, MagFilter = point, MinFilter = point
-			tfetch2D vSampledDepths.___x, tc, DepthSampler, OffsetX =  1.0, OffsetY = -0.5, UseComputedLOD=false, UseRegisterLOD=true, MagFilter = point, MinFilter = point
+            tfetch2D vSampledDepths.x___, tc, DepthSampler, OffsetX = -1.0, OffsetY =  0.5, UseComputedLOD=false, UseRegisterLOD=true, MagFilter = point, MinFilter = point
+            tfetch2D vSampledDepths._x__, tc, DepthSampler, OffsetX = -0.5, OffsetY = -1.0, UseComputedLOD=false, UseRegisterLOD=true, MagFilter = point, MinFilter = point
+            tfetch2D vSampledDepths.__x_, tc, DepthSampler, OffsetX =  0.5, OffsetY =  1.0, UseComputedLOD=false, UseRegisterLOD=true, MagFilter = point, MinFilter = point
+            tfetch2D vSampledDepths.___x, tc, DepthSampler, OffsetX =  1.0, OffsetY = -0.5, UseComputedLOD=false, UseRegisterLOD=true, MagFilter = point, MinFilter = point
     }
     ;
 
@@ -639,9 +639,9 @@ float3 SpecularLight( const float3 vWorldNormal, const float3 vLightDir, const f
 
 void DoSpecularFlashlight( float3 flashlightPos, float3 worldPos, float4 flashlightSpacePosition, float3 worldNormal, float3 attenuationFactors, float farZ, sampler FlashlightSampler, sampler FlashlightDepthSampler, sampler RandomRotationSampler, int nShadowLevel, bool bDoShadows, bool bAllowHighQuality, const float2 vScreenPos, const float fSpecularExponent, const float3 vEyeDir, const bool bDoSpecularWarp, sampler specularWarpSampler, float fFresnel, float4 vShadowTweaks,
 
-                           // Outputs of this shader...separate shadowed diffuse and specular from the flashlight
-                           out float3 diffuseLighting,
-                           out float3 specularLighting )
+                            // Outputs of this shader...separate shadowed diffuse and specular from the flashlight
+                            out float3 diffuseLighting,
+                            out float3 specularLighting )
 {
     float3 vProjCoords = flashlightSpacePosition.xyz / flashlightSpacePosition.w;
     float3 flashlightColor = float3( 1, 1, 1 );

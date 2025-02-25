@@ -17,7 +17,7 @@
 
 class C_BaseHLPlayer : public C_BasePlayer
 {
-   public:
+    public:
     DECLARE_CLASS( C_BaseHLPlayer, C_BasePlayer );
     DECLARE_CLIENTCLASS();
     DECLARE_PREDICTABLE();
@@ -72,13 +72,13 @@ class C_BaseHLPlayer : public C_BasePlayer
         return m_HL2Local.m_bWeaponLowered;
     }
 
-   public:
+    public:
     C_HL2PlayerLocalData m_HL2Local;
     EHANDLE m_hClosestNPC;
     float m_flSpeedModTime;
     bool m_fIsSprinting;
 
-   private:
+    private:
     C_BaseHLPlayer( const C_BaseHLPlayer & );  // not defined, not accessible
 
     bool TestMove( const Vector &pos, float fVertDist, float radius, const Vector &objPos, const Vector &objDir );

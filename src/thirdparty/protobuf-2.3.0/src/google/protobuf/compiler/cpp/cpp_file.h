@@ -65,7 +65,7 @@ class ExtensionGenerator;  // extension.h
 
 class FileGenerator
 {
-   public:
+    public:
     // See generator.cc for the meaning of dllexport_decl.
     explicit FileGenerator( const FileDescriptor* file,
                             const string& dllexport_decl );
@@ -74,7 +74,7 @@ class FileGenerator
     void GenerateHeader( io::Printer* printer );
     void GenerateSource( io::Printer* printer );
 
-   private:
+    private:
     // Generate the BuildDescriptors() procedure, which builds all descriptors
     // for types defined in the file.
     void GenerateBuildDescriptors( io::Printer* printer );

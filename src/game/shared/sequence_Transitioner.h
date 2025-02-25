@@ -15,7 +15,7 @@
 // ------------------------------------------------------------------------------------------------ //
 class CSequenceTransitioner
 {
-   public:
+    public:
     void CheckForSequenceChange(
         // Describe the current animation state with these parameters.
         CStudioHdr *hdr,
@@ -41,7 +41,7 @@ class CSequenceTransitioner
         m_animationQueue.RemoveAll();
     };
 
-   public:
+    public:
     CUtlVector< CAnimationLayer > m_animationQueue;
 };
 

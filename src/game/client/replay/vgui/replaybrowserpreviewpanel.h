@@ -40,7 +40,7 @@ class CReplayPreviewPanelBase : public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CReplayPreviewPanelBase, EditablePanel );
 
-   public:
+    public:
     CReplayPreviewPanelBase( Panel *pParent, QueryableReplayItemHandle_t hItem, IReplayItemManager *pItemManager );
     ~CReplayPreviewPanelBase();
 
@@ -49,7 +49,7 @@ class CReplayPreviewPanelBase : public EditablePanel
 
     ReplayHandle_t GetReplayHandle();
 
-   protected:
+    protected:
     CGenericClassBasedReplay *GetReplay();
 
     virtual bool ShoudlUseLargeClassImage()
@@ -58,11 +58,11 @@ class CReplayPreviewPanelBase : public EditablePanel
     }
     virtual void LayoutView( int &nWide, int &nTall, int &nCurY );
 
-   protected:
+    protected:
     IReplayItemManager *m_pItemManager;
     QueryableReplayItemHandle_t m_hItem;
 
-   private:
+    private:
     ImagePanel *m_pClassImage;
     vgui::EditablePanel *m_pInfoPanel;
 
@@ -86,10 +86,10 @@ class CReplayPreviewPanelSlideshow : public CReplayPreviewPanelBase
 {
     DECLARE_CLASS_SIMPLE( CReplayPreviewPanelSlideshow, CReplayPreviewPanelBase );
 
-   public:
+    public:
     CReplayPreviewPanelSlideshow( Panel *pParent, QueryableReplayItemHandle_t hItem, IReplayItemManager *pItemManager );
 
-   private:
+    private:
     virtual void PerformLayout();
     virtual void LayoutView( int &nWide, int &nTall, int &nCurY );
 
@@ -107,11 +107,11 @@ class CReplayPreviewPanelMovie : public CReplayPreviewPanelBase
 {
     DECLARE_CLASS_SIMPLE( CReplayPreviewPanelMovie, CReplayPreviewPanelBase );
 
-   public:
+    public:
     CReplayPreviewPanelMovie( Panel *pParent, QueryableReplayItemHandle_t hItem, IReplayItemManager *pItemManager );
     ~CReplayPreviewPanelMovie();
 
-   private:
+    private:
     virtual void OnTick();
     virtual void LayoutView( int &nWide, int &nTall, int &nCurY );
 

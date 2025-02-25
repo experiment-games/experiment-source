@@ -14,7 +14,7 @@
 
 class CRagdollMagnet : public CPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CRagdollMagnet, CPointEntity );
     DECLARE_DATADESC();
 
@@ -50,7 +50,7 @@ class CRagdollMagnet : public CPointEntity
     void InputEnable( inputdata_t &inputdata );
     void InputDisable( inputdata_t &inputdata );
 
-   private:
+    private:
     bool m_bDisabled;
     float m_radius;
     float m_force;

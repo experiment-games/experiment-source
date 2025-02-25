@@ -21,7 +21,7 @@ void ToolFramework_RecordMaterialParams( IMaterial *pMaterial );
 
 class C_FuncConveyor : public C_BaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_FuncConveyor, C_BaseEntity );
     DECLARE_CLIENTCLASS();
 
@@ -32,7 +32,7 @@ class C_FuncConveyor : public C_BaseEntity
         return m_flConveyorSpeed;
     }
 
-   private:
+    private:
     float m_flConveyorSpeed;
 };
 
@@ -47,7 +47,7 @@ RecvPropFloat( RECVINFO( m_flConveyorSpeed ) ),
 
 class CConveyorMaterialProxy : public IMaterialProxy
 {
-   public:
+    public:
     CConveyorMaterialProxy();
     virtual ~CConveyorMaterialProxy();
 
@@ -59,7 +59,7 @@ class CConveyorMaterialProxy : public IMaterialProxy
     }
     virtual IMaterial *GetMaterial();
 
-   private:
+    private:
     C_BaseEntity *BindArgToEntity( void *pArg );
 
     IMaterialVar *m_pTextureScrollVar;

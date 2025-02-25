@@ -33,17 +33,17 @@ class CHudPoisonDamageIndicator : public CHudElement, public vgui::Panel
 {
     DECLARE_CLASS_SIMPLE( CHudPoisonDamageIndicator, vgui::Panel );
 
-   public:
+    public:
     CHudPoisonDamageIndicator( const char *pElementName );
     void Reset( void );
     virtual bool ShouldDraw( void );
 
-   private:
+    private:
     virtual void OnThink();
     virtual void Paint();
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme );
 
-   private:
+    private:
     CPanelAnimationVar( vgui::HFont, m_hTextFont, "TextFont", "Default" );
     CPanelAnimationVar( Color, m_TextColor, "TextColor", "FgColor" );
     CPanelAnimationVarAliasType( float, text_xpos, "text_xpos", "8", "proportional_float" );

@@ -82,11 +82,11 @@ class GeneratorTest(unittest.TestCase):
     # Python pre-2.6 does not have isinf() or isnan() functions, so we have
     # to provide our own.
     def isnan(val):
-      # NaN is never equal to itself.
-      return val != val
+    # NaN is never equal to itself.
+    return val != val
     def isinf(val):
-      # Infinity times zero equals NaN.
-      return not isnan(val) and isnan(val * 0)
+    # Infinity times zero equals NaN.
+    return not isnan(val) and isnan(val * 0)
 
     self.assertTrue(isinf(message.inf_double))
     self.assertTrue(message.inf_double > 0)
@@ -112,21 +112,21 @@ class GeneratorTest(unittest.TestCase):
 
     has_default_by_name = dict(
         [(f.name, f.has_default_value)
-         for f in desc.fields
-         if f.name in expected_has_default_by_name])
+        for f in desc.fields
+        if f.name in expected_has_default_by_name])
     self.assertEqual(expected_has_default_by_name, has_default_by_name)
 
   def testContainingTypeBehaviorForExtensions(self):
     self.assertEqual(unittest_pb2.optional_int32_extension.containing_type,
-                     unittest_pb2.TestAllExtensions.DESCRIPTOR)
+                    unittest_pb2.TestAllExtensions.DESCRIPTOR)
     self.assertEqual(unittest_pb2.TestRequired.single.containing_type,
-                     unittest_pb2.TestAllExtensions.DESCRIPTOR)
+                    unittest_pb2.TestAllExtensions.DESCRIPTOR)
 
   def testExtensionScope(self):
     self.assertEqual(unittest_pb2.optional_int32_extension.extension_scope,
-                     None)
+                    None)
     self.assertEqual(unittest_pb2.TestRequired.single.extension_scope,
-                     unittest_pb2.TestRequired.DESCRIPTOR)
+                    unittest_pb2.TestRequired.DESCRIPTOR)
 
   def testIsExtension(self):
     self.assertTrue(unittest_pb2.optional_int32_extension.is_extension)
@@ -170,7 +170,7 @@ class GeneratorTest(unittest.TestCase):
   def testContainingTypeInEnumDescriptor(self):
     self.assertTrue(unittest_pb2._FOREIGNENUM.containing_type is None)
     self.assertEqual(unittest_pb2._TESTALLTYPES_NESTEDENUM.containing_type,
-                     unittest_pb2.TestAllTypes.DESCRIPTOR)
+                    unittest_pb2.TestAllTypes.DESCRIPTOR)
 
   def testPackage(self):
     self.assertEqual(
@@ -203,7 +203,7 @@ class GeneratorTest(unittest.TestCase):
 
   def testFileDescriptor(self):
     self.assertEqual(unittest_pb2.DESCRIPTOR.name,
-                     'google/protobuf/unittest.proto')
+                    'google/protobuf/unittest.proto')
     self.assertEqual(unittest_pb2.DESCRIPTOR.package, 'protobuf_unittest')
     self.assertFalse(unittest_pb2.DESCRIPTOR.serialized_pb is None)
 

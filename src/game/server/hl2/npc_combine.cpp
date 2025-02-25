@@ -800,7 +800,7 @@ void CNPC_Combine::StartTask( const Task_t *pTask )
                 CBaseCombatCharacter *pBCC = GetEnemyCombatCharacterPointer();
 
                 if ( pBCC && pBCC->IsPlayer() && ( !pBCC->FInViewCone( this ) ) &&
-                     ( gpGlobals->curtime - m_flLastAttackTime > 3.0 ) )
+                    ( gpGlobals->curtime - m_flLastAttackTime > 3.0 ) )
                 {
                     m_flLastAttackTime = gpGlobals->curtime;
 
@@ -969,7 +969,7 @@ void CNPC_Combine::StartTask( const Task_t *pTask )
                     if ( pEntity->MyNPCPointer() )
                     {
                         if ( !( pEntity->MyNPCPointer()->CapabilitiesGet() & bits_CAP_WEAPON_RANGE_ATTACK1 ) &&
-                             !( pEntity->MyNPCPointer()->CapabilitiesGet() & bits_CAP_INNATE_RANGE_ATTACK1 ) )
+                            !( pEntity->MyNPCPointer()->CapabilitiesGet() & bits_CAP_INNATE_RANGE_ATTACK1 ) )
                         {
                             TaskComplete();
                             return;
@@ -1599,9 +1599,9 @@ int CNPC_Combine::SelectCombatSchedule()
     if ( IRelationType( GetEnemy() ) == D_FR )
     {
         if ( HasCondition( COND_SEE_ENEMY ) ||
-             HasCondition( COND_SEE_FEAR ) ||
-             HasCondition( COND_LIGHT_DAMAGE ) ||
-             HasCondition( COND_HEAVY_DAMAGE ) )
+            HasCondition( COND_SEE_FEAR ) ||
+            HasCondition( COND_LIGHT_DAMAGE ) ||
+            HasCondition( COND_HEAVY_DAMAGE ) )
         {
             FearSound();
             // ClearCommandGoal();
@@ -1958,17 +1958,17 @@ int CNPC_Combine::SelectScheduleAttack()
     {
         // JAY: HL1 behavior missing?
 #if 0
-		if ( m_pSquad )
-		{
-			// if the enemy has eluded the squad and a squad member has just located the enemy
-			// and the enemy does not see the squad member, issue a call to the squad to waste a 
-			// little time and give the player a chance to turn.
-			if ( MySquadLeader()->m_fEnemyEluded && !HasConditions ( bits_COND_ENEMY_FACING_ME ) )
-			{
-				MySquadLeader()->m_fEnemyEluded = FALSE;
-				return SCHED_GRUNT_FOUND_ENEMY;
-			}
-		}
+        if ( m_pSquad )
+        {
+            // if the enemy has eluded the squad and a squad member has just located the enemy
+            // and the enemy does not see the squad member, issue a call to the squad to waste a
+            // little time and give the player a chance to turn.
+            if ( MySquadLeader()->m_fEnemyEluded && !HasConditions ( bits_COND_ENEMY_FACING_ME ) )
+            {
+                MySquadLeader()->m_fEnemyEluded = FALSE;
+                return SCHED_GRUNT_FOUND_ENEMY;
+            }
+        }
 #endif
 
         // Engage if allowed
@@ -2037,8 +2037,8 @@ int CNPC_Combine::TranslateSchedule( int scheduleType )
             {
                 // Have to explicitly check innate range attack condition as may have weapon with range attack 2
                 if ( g_pGameRules->IsSkillLevel( SKILL_HARD ) &&
-                     HasCondition( COND_CAN_RANGE_ATTACK2 ) &&
-                     OccupyStrategySlot( SQUAD_SLOT_GRENADE1 ) )
+                    HasCondition( COND_CAN_RANGE_ATTACK2 ) &&
+                    OccupyStrategySlot( SQUAD_SLOT_GRENADE1 ) )
                 {
                     m_Sentences.Speak( "COMBINE_THROW_GRENADE" );
                     return SCHED_COMBINE_TOSS_GRENADE_COVER1;
@@ -2762,14 +2762,14 @@ bool CNPC_Combine::CanThrowGrenade( const Vector &vecTarget )
         return false;
 
 #if 0
-	Vector vecEnemyLKP = GetEnemyLKP();
-	if ( !( GetEnemy()->GetFlags() & FL_ONGROUND ) && GetEnemy()->GetWaterLevel() == 0 && vecEnemyLKP.z > (GetAbsOrigin().z + WorldAlignMaxs().z)  )
-	{
-		//!!!BUGBUG - we should make this check movetype and make sure it isn't FLY? Players who jump a lot are unlikely to 
-		// be grenaded.
-		// don't throw grenades at anything that isn't on the ground!
-		return COND_NONE;
-	}
+    Vector vecEnemyLKP = GetEnemyLKP();
+    if ( !( GetEnemy()->GetFlags() & FL_ONGROUND ) && GetEnemy()->GetWaterLevel() == 0 && vecEnemyLKP.z > (GetAbsOrigin().z + WorldAlignMaxs().z)  )
+    {
+        //!!!BUGBUG - we should make this check movetype and make sure it isn't FLY? Players who jump a lot are unlikely to
+        // be grenaded.
+        // don't throw grenades at anything that isn't on the ground!
+        return COND_NONE;
+    }
 #endif
 
     // ---------------------------------------------------------------------

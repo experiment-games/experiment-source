@@ -42,7 +42,7 @@ CLIENTEFFECT_REGISTER_END()
 
 class CExplosionParticle : public CSimpleEmitter
 {
-   public:
+    public:
     CExplosionParticle( const char *pDebugName )
         : CSimpleEmitter( pDebugName ) {}
 
@@ -119,7 +119,7 @@ class CExplosionParticle : public CSimpleEmitter
         return color;
     }
 
-   private:
+    private:
     CExplosionParticle( const CExplosionParticle & );
 };
 
@@ -809,7 +809,7 @@ DECLARE_CLIENT_EFFECT( "Explosion", ExplosionCallback );
 
 class CWaterExplosionParticle : public CSimpleEmitter
 {
-   public:
+    public:
     CWaterExplosionParticle( const char *pDebugName )
         : CSimpleEmitter( pDebugName ) {}
 
@@ -875,7 +875,7 @@ class CWaterExplosionParticle : public CSimpleEmitter
         return ramp;
     }
 
-   private:
+    private:
     CWaterExplosionParticle( const CWaterExplosionParticle & );
 };
 

@@ -32,8 +32,8 @@ OBJS = \
 !include "../../../CPP/Build.mak"
 
 $(7Z_OBJS): $(*B).c
-	$(CCOMPL_USE)
+    $(CCOMPL_USE)
 $(C_OBJS): ../../$(*B).c
-	$(CCOMPL_USE)
+    $(CCOMPL_USE)
 $O\Precomp.obj: Precomp.c
-	$(CCOMPL_PCH)
+    $(CCOMPL_PCH)

@@ -23,7 +23,7 @@ class CvarToggleCheckButton : public CheckButton
 {
     DECLARE_CLASS_SIMPLE( CvarToggleCheckButton, CheckButton );
 
-   public:
+    public:
     CvarToggleCheckButton( Panel *parent, const char *panelName, const char *text = "", char const *cvarname = NULL, bool ignoreMissingCvar = false );
     ~CvarToggleCheckButton();
 
@@ -36,7 +36,7 @@ class CvarToggleCheckButton : public CheckButton
     bool HasBeenModified();
     virtual void ApplySettings( KeyValues *inResourceData );
 
-   private:
+    private:
     // Called when the OK / Apply button is pressed.  Changed data should be written into cvar.
     MESSAGE_FUNC( OnApplyChanges, "ApplyChanges" );
     MESSAGE_FUNC( OnButtonChecked, "CheckButtonChecked" );

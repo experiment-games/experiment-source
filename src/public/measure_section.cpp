@@ -243,7 +243,7 @@ void ResetTimeMeasurements( void )
 
     // Time to redo sort?
     if ( measure_resort.GetFloat() > 0.0 &&
-         GetRealTime() >= CMeasureSection::m_dNextResort )
+        GetRealTime() >= CMeasureSection::m_dNextResort )
     {
         // Redo it
         CMeasureSection::SortSections();

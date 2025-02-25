@@ -20,7 +20,7 @@ class CBaseHLBludgeonWeapon : public CBaseHLCombatWeapon
 {
     DECLARE_CLASS( CBaseHLBludgeonWeapon, CBaseHLCombatWeapon );
 
-   public:
+    public:
     CBaseHLBludgeonWeapon();
 
     DECLARE_SERVERCLASS();
@@ -60,10 +60,10 @@ class CBaseHLBludgeonWeapon : public CBaseHLCombatWeapon
     virtual int CapabilitiesGet( void );
     virtual int WeaponMeleeAttack1Condition( float flDot, float flDist );
 
-   protected:
+    protected:
     virtual void ImpactEffect( trace_t &trace );
 
-   private:
+    private:
     bool ImpactWater( const Vector &start, const Vector &end );
     void Swing( int bIsSecondary );
     void Hit( trace_t &traceHit, Activity nHitActivity, bool bIsSecondary );

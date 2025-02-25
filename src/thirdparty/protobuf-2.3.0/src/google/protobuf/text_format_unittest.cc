@@ -98,12 +98,12 @@ class TextFormatExtensionsTest : public testing::Test {
     File::ReadFileToStringOrDie(
         TestSourceDir()
         + "/google/protobuf/testdata/"
-          "text_format_unittest_extensions_data.txt",
+        "text_format_unittest_extensions_data.txt",
         &static_proto_debug_string_);
   }
 
   TextFormatExtensionsTest()
-      : proto_debug_string_(static_proto_debug_string_) {}
+    : proto_debug_string_(static_proto_debug_string_) {}
 
  protected:
   // Debug string read from text_format_unittest_data.txt.
@@ -188,8 +188,8 @@ TEST_F(TextFormatTest, StringEscape) {
 
   // Hardcode a correct value to test against.
   string correct_string = "optional_string: "
-      + kEscapeTestStringEscaped
-       + "\n";
+    + kEscapeTestStringEscaped
+        + "\n";
 
   // Compare.
   EXPECT_EQ(correct_string, debug_string);
@@ -198,7 +198,7 @@ TEST_F(TextFormatTest, StringEscape) {
   EXPECT_EQ(correct_string, utf8_debug_string);
 
   string expected_short_debug_string = "optional_string: "
-      + kEscapeTestStringEscaped;
+    + kEscapeTestStringEscaped;
   EXPECT_EQ(expected_short_debug_string, proto_.ShortDebugString());
 }
 
@@ -212,11 +212,11 @@ TEST_F(TextFormatTest, Utf8DebugString) {
 
   // Hardcode a correct value to test against.
   string correct_utf8_string = "optional_string: "
-      "\"\350\260\267\346\255\214\""
-      "\n";
+    "\"\350\260\267\346\255\214\""
+    "\n";
   string correct_string = "optional_string: "
-      "\"\\350\\260\\267\\346\\255\\214\""
-      "\n";
+    "\"\\350\\260\\267\\346\\255\\214\""
+    "\n";
 
   // Compare.
   EXPECT_EQ(correct_utf8_string, utf8_debug_string);
@@ -356,8 +356,8 @@ TEST_F(TextFormatExtensionsTest, ParseExtensions) {
 TEST_F(TextFormatTest, ParseStringEscape) {
   // Create a parse string with escpaed characters in it.
   string parse_string = "optional_string: "
-      + kEscapeTestStringEscaped
-      + "\n";
+    + kEscapeTestStringEscaped
+    + "\n";
 
   io::ArrayInputStream input_stream(parse_string.data(),
                                     parse_string.size());
@@ -380,7 +380,7 @@ TEST_F(TextFormatTest, ParseConcatenatedString) {
 
   // Create a parse string with multiple parts on seperate lines.
   parse_string = "optional_string: \"foo\"\n"
-                 "\"bar\"\n";
+                "\"bar\"\n";
 
   io::ArrayInputStream input_stream2(parse_string.data(),
                                     parse_string.size());
@@ -661,30 +661,30 @@ TEST_F(TextFormatTest, ParseExotic) {
 class TextFormatParserTest : public testing::Test {
  protected:
   void ExpectFailure(const string& input, const string& message, int line,
-                     int col) {
+                    int col) {
     scoped_ptr<unittest::TestAllTypes> proto(new unittest::TestAllTypes);
     ExpectFailure(input, message, line, col, proto.get());
   }
 
   void ExpectFailure(const string& input, const string& message, int line,
-                     int col, Message* proto) {
+                    int col, Message* proto) {
     ExpectMessage(input, message, line, col, proto, false);
   }
 
   void ExpectMessage(const string& input, const string& message, int line,
-                     int col, Message* proto, bool expected_result) {
+                    int col, Message* proto, bool expected_result) {
     TextFormat::Parser parser;
     MockErrorCollector error_collector;
     parser.RecordErrorsTo(&error_collector);
     EXPECT_EQ(parser.ParseFromString(input, proto), expected_result);
     EXPECT_EQ(SimpleItoa(line) + ":" + SimpleItoa(col) + ": " + message + "\n",
-              error_collector.text_);
+            error_collector.text_);
   }
 
   // An error collector which simply concatenates all its errors into a big
   // block of text which can be checked.
   class MockErrorCollector : public io::ErrorCollector {
-   public:
+    public:
     MockErrorCollector() {}
     ~MockErrorCollector() {}
 
@@ -692,12 +692,12 @@ class TextFormatParserTest : public testing::Test {
 
     // implements ErrorCollector -------------------------------------
     void AddError(int line, int column, const string& message) {
-      strings::SubstituteAndAppend(&text_, "$0:$1: $2\n",
-                                   line + 1, column + 1, message);
+    strings::SubstituteAndAppend(&text_, "$0:$1: $2\n",
+                                    line + 1, column + 1, message);
     }
 
     void AddWarning(int line, int column, const string& message) {
-      AddError(line, column, "WARNING:" + message);
+    AddError(line, column, "WARNING:" + message);
     }
   };
 };
@@ -826,29 +826,29 @@ TEST_F(TextFormatParserTest, InvalidToken) {
 
 TEST_F(TextFormatParserTest, InvalidFieldName) {
   ExpectFailure(
-      "invalid_field: somevalue\n",
-      "Message type \"protobuf_unittest.TestAllTypes\" has no field named "
-      "\"invalid_field\".",
-      1, 14);
+    "invalid_field: somevalue\n",
+    "Message type \"protobuf_unittest.TestAllTypes\" has no field named "
+    "\"invalid_field\".",
+    1, 14);
 }
 
 TEST_F(TextFormatParserTest, InvalidCapitalization) {
   // We require that group names be exactly as they appear in the .proto.
   ExpectFailure(
-      "optionalgroup {\na: 15\n}\n",
-      "Message type \"protobuf_unittest.TestAllTypes\" has no field named "
-      "\"optionalgroup\".",
-      1, 15);
+    "optionalgroup {\na: 15\n}\n",
+    "Message type \"protobuf_unittest.TestAllTypes\" has no field named "
+    "\"optionalgroup\".",
+    1, 15);
   ExpectFailure(
-      "OPTIONALgroup {\na: 15\n}\n",
-      "Message type \"protobuf_unittest.TestAllTypes\" has no field named "
-      "\"OPTIONALgroup\".",
-      1, 15);
+    "OPTIONALgroup {\na: 15\n}\n",
+    "Message type \"protobuf_unittest.TestAllTypes\" has no field named "
+    "\"OPTIONALgroup\".",
+    1, 15);
   ExpectFailure(
-      "Optional_Double: 10.0\n",
-      "Message type \"protobuf_unittest.TestAllTypes\" has no field named "
-      "\"Optional_Double\".",
-      1, 16);
+    "Optional_Double: 10.0\n",
+    "Message type \"protobuf_unittest.TestAllTypes\" has no field named "
+    "\"Optional_Double\".",
+    1, 16);
 }
 
 TEST_F(TextFormatParserTest, InvalidFieldValues) {
@@ -895,9 +895,9 @@ TEST_F(TextFormatParserTest, InvalidFieldValues) {
   ExpectFailure("optional_bool: !\n", "Expected identifier.", 1, 16);
 
   ExpectFailure(
-      "optional_bool: meh\n",
-      "Invalid value for boolean field \"optional_bool\". Value: \"meh\".",
-      2, 1);
+    "optional_bool: meh\n",
+    "Invalid value for boolean field \"optional_bool\". Value: \"meh\".",
+    2, 1);
 
   ExpectFailure("optional_bool {\n \n}\n", "Expected \":\", found \"{\".",
                 1, 15);
@@ -919,13 +919,13 @@ TEST_F(TextFormatParserTest, InvalidFieldValues) {
   ExpectFailure("optional_nested_enum: !\n", "Expected identifier.", 1, 23);
 
   ExpectFailure(
-      "optional_nested_enum: grah\n",
-      "Unknown enumeration value of \"grah\" for field "
-      "\"optional_nested_enum\".", 2, 1);
+    "optional_nested_enum: grah\n",
+    "Unknown enumeration value of \"grah\" for field "
+    "\"optional_nested_enum\".", 2, 1);
 
   ExpectFailure(
-      "optional_nested_enum {\n \n}\n",
-      "Expected \":\", found \"{\".", 1, 22);
+    "optional_nested_enum {\n \n}\n",
+    "Expected \":\", found \"{\".", 1, 22);
 }
 
 TEST_F(TextFormatParserTest, MessageDelimeters) {
@@ -1045,11 +1045,11 @@ TEST_F(TextFormatMessageSetTest, Serialize) {
   protobuf_unittest::TestMessageSetContainer proto;
   protobuf_unittest::TestMessageSetExtension1* item_a =
     proto.mutable_message_set()->MutableExtension(
-      protobuf_unittest::TestMessageSetExtension1::message_set_extension);
+    protobuf_unittest::TestMessageSetExtension1::message_set_extension);
   item_a->set_i(23);
   protobuf_unittest::TestMessageSetExtension2* item_b =
     proto.mutable_message_set()->MutableExtension(
-      protobuf_unittest::TestMessageSetExtension2::message_set_extension);
+    protobuf_unittest::TestMessageSetExtension2::message_set_extension);
   item_b->set_str("foo");
   EXPECT_EQ(proto_debug_string_, proto.DebugString());
 }

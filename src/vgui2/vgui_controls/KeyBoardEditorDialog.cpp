@@ -52,7 +52,7 @@ class VControlsListPanel : public ListPanel
 {
     DECLARE_CLASS_SIMPLE( VControlsListPanel, ListPanel );
 
-   public:
+    public:
     // Construction
     VControlsListPanel( vgui::Panel *parent, const char *listName );
     virtual ~VControlsListPanel();
@@ -71,7 +71,7 @@ class VControlsListPanel : public ListPanel
 
     KEYBINDING_FUNC( clearbinding, KEY_DELETE, 0, OnClearBinding, 0, 0 );
 
-   private:
+    private:
     void ApplySchemeSettings( vgui::IScheme *pScheme );
 
     // Are we showing the prompt?
@@ -92,7 +92,7 @@ class CInlineEditPanel : public vgui::Panel
 {
     DECLARE_CLASS_SIMPLE( CInlineEditPanel, vgui::Panel );
 
-   public:
+    public:
     CInlineEditPanel()
         : vgui::Panel( NULL, "InlineEditPanel" )
     {
@@ -278,8 +278,8 @@ void VControlsListPanel::OnMouseDoublePressed( vgui::MouseCode code )
 
 CKeyBoardEditorPage::CKeyBoardEditorPage( Panel *parent, Panel *panelToEdit, KeyBindingContextHandle_t handle )
     : BaseClass( parent, "KeyBoardEditorPage" ),
-      m_pPanel( panelToEdit ),
-      m_Handle( handle )
+    m_pPanel( panelToEdit ),
+    m_Handle( handle )
 {
     Assert( m_pPanel );
 
@@ -426,8 +426,8 @@ void CKeyBoardEditorPage::BindKey( KeyCode code )
             {
                 // Key is already rebound!!!
                 Warning( "Can't bind to '%S', key is already bound to '%s'\n",
-                         Panel::KeyCodeToDisplayString( code ),
-                         binding->bindingname );
+                        Panel::KeyCodeToDisplayString( code ),
+                        binding->bindingname );
                 return;
             }
 
@@ -445,8 +445,8 @@ void CKeyBoardEditorPage::BindKey( KeyCode code )
             {
                 // Key is already rebound!!!
                 Warning( "Can't bind to '%S', key is already bound to '%s'\n",
-                         Panel::KeyCodeToDisplayString( code ),
-                         binding->bindingname );
+                        Panel::KeyCodeToDisplayString( code ),
+                        binding->bindingname );
                 return;
             }
 
@@ -614,7 +614,7 @@ void CKeyBoardEditorPage::PopulateList()
             // Find the binding
             KeyBindingMap_t *bindingMap = m_pPanel->LookupBinding( kbMap->bindingname );
             if ( bindingMap &&
-                 bindingMap->helpstring )
+                bindingMap->helpstring )
             {
                 AnsiText( bindingMap->helpstring, ansi, sizeof( ansi ) );
                 item->SetString( "Description", ansi );
@@ -698,10 +698,10 @@ void CKeyBoardEditorPage::OnClearBinding( int item )
 
 CKeyBoardEditorSheet::CKeyBoardEditorSheet( Panel *parent, Panel *panelToEdit, KeyBindingContextHandle_t handle )
     : BaseClass( parent, "KeyBoardEditorSheet" ),
-      m_bSaveToExternalFile( false ),
-      m_Handle( handle ),
-      m_SaveFileName( UTL_INVAL_SYMBOL ),
-      m_SaveFilePathID( UTL_INVAL_SYMBOL )
+    m_bSaveToExternalFile( false ),
+    m_Handle( handle ),
+    m_SaveFileName( UTL_INVAL_SYMBOL ),
+    m_SaveFilePathID( UTL_INVAL_SYMBOL )
 {
     m_hPanel = panelToEdit;
 
@@ -826,7 +826,7 @@ void CKeyBoardEditorDialog::OnCommand( char const *cmd )
         MarkForDeletion();
     }
     else if ( !Q_stricmp( cmd, "cancel" ) ||
-              !Q_stricmp( cmd, "Close" ) )
+            !Q_stricmp( cmd, "Close" ) )
     {
         m_pKBEditor->OnRevert();
         MarkForDeletion();

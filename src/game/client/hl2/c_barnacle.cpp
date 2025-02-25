@@ -25,7 +25,7 @@
 //-----------------------------------------------------------------------------
 class C_NPC_Barnacle : public C_AI_BaseNPC
 {
-   public:
+    public:
     DECLARE_CLASS( C_NPC_Barnacle, C_AI_BaseNPC );
     DECLARE_CLIENTCLASS();
 
@@ -63,13 +63,13 @@ class C_NPC_Barnacle : public C_AI_BaseNPC
     // Purpose:
     void ComputeVisualTipPoint( Vector *pTip );
 
-   protected:
+    protected:
     Vector m_vecTipPrevious;
     Vector m_vecRoot;
     Vector m_vecTip;
     Vector m_vecTipDrawOffset;
 
-   private:
+    private:
     // Tongue points
     float m_flAltitude;
     Vector m_vecTonguePoints[BARNACLE_TONGUE_POINTS];
@@ -78,7 +78,7 @@ class C_NPC_Barnacle : public C_AI_BaseNPC
     // Tongue physics delegate
     class CBarnaclePhysicsDelegate : public CSimplePhysics::IHelper
     {
-       public:
+        public:
         virtual void GetNodeForces( CSimplePhysics::CNode *pNodes, int iNode, Vector *pAccel );
         virtual void ApplyConstraints( CSimplePhysics::CNode *pNodes, int nNodes );
 
@@ -87,7 +87,7 @@ class C_NPC_Barnacle : public C_AI_BaseNPC
     friend class CBarnaclePhysicsDelegate;
     CBarnaclePhysicsDelegate m_PhysicsDelegate;
 
-   private:
+    private:
     C_NPC_Barnacle( const C_NPC_Barnacle & );  // not defined, not accessible
 };
 

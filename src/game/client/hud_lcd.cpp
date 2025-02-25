@@ -138,13 +138,13 @@ void CLCDItemText::Create( IG15 *lcd )
 ///-----------------------------------------------------------------------------
 CLCD::CLCD( void )
     : m_lcd( NULL ),
-      m_nCurrentPage( 0 ),
-      m_nSubPage( 0 ),
-      m_bHadPlayer( false ),
-      m_dwNextUpdateTime( 0u ),
-      m_nMaxChatHistory( G15_DEFAULT_MAX_CHAT_HISTORY ),
-      m_pG15Module( 0 ),
-      m_G15Factory( 0 )
+    m_nCurrentPage( 0 ),
+    m_nSubPage( 0 ),
+    m_bHadPlayer( false ),
+    m_dwNextUpdateTime( 0u ),
+    m_nMaxChatHistory( G15_DEFAULT_MAX_CHAT_HISTORY ),
+    m_pG15Module( 0 ),
+    m_G15Factory( 0 )
 {
     m_Size[0] = m_Size[1] = 0;
 }
@@ -692,7 +692,7 @@ void CLCD::ParseItems_R( CLCDPage *page, bool bCreateHandles, KeyValues *kv, CUt
     {
         char const *keyName = sub->GetName();
         if ( !Q_stricmp( keyName, "iterate_players" ) ||
-             !Q_stricmp( keyName, "iterate_team" ) )
+            !Q_stricmp( keyName, "iterate_team" ) )
         {
             int aggType = AGGTYPE_UNKNOWN;
             if ( !Q_stricmp( keyName, "iterate_players" ) )
@@ -784,7 +784,7 @@ void CLCD::ParseIconMappings( KeyValues *kv )
 //-----------------------------------------------------------------------------
 class CDescribeData
 {
-   public:
+    public:
     CDescribeData( void const *src );
 
     void DescribeShort( const short *invalue, int count );
@@ -799,7 +799,7 @@ class CDescribeData
 
     void GetValueForField( char const *fieldName, char *buf, size_t bufsize );
 
-   private:
+    private:
     void DescribeFields_R( int chain_count, datamap_t *pMap, typedescription_t *pFields, int fieldCount );
     bool BuildFieldPath( CUtlString &path );
 
@@ -906,15 +906,15 @@ void CDescribeData::Describe( const char *fmt, ... )
     if ( BuildFieldPath( fp ) )
     {
         Msg( "%s.%s%s",
-             fp.String(),
-             fieldname,
-             data );
+            fp.String(),
+            fieldname,
+            data );
     }
     else
     {
         Msg( "%s%s",
-             fieldname,
-             data );
+            fieldname,
+            data );
     }
 }
 
@@ -1026,17 +1026,17 @@ void CDescribeData::DescribeVector( const Vector *inValue, int count )
         if ( count == 1 )
         {
             Describe( " vector (%f %f %f)\n",
-                      inValue[i].x,
-                      inValue[i].y,
-                      inValue[i].z );
+                    inValue[i].x,
+                    inValue[i].y,
+                    inValue[i].z );
         }
         else
         {
             Describe( "[%i] vector (%f %f %f)\n",
-                      i,
-                      inValue[i].x,
-                      inValue[i].y,
-                      inValue[i].z );
+                    i,
+                    inValue[i].x,
+                    inValue[i].y,
+                    inValue[i].z );
         }
     }
 }

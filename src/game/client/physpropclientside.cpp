@@ -995,7 +995,7 @@ void C_FuncPhysicsRespawnZone::RespawnProps( void )
                     Vector vecMins, vecMaxs;
                     pEntity->CollisionProp()->WorldSpaceSurroundingBounds( &vecMins, &vecMaxs );
                     if ( !CanMovePropAt( m_PropList[i].vecOrigin, vecMins, vecMaxs ) ||
-                         !CanMovePropAt( pEntity->GetAbsOrigin(), vecMins, vecMaxs ) )
+                        !CanMovePropAt( pEntity->GetAbsOrigin(), vecMins, vecMaxs ) )
                         continue;
 
                     pEntity->SetAbsOrigin( m_PropList[i].vecOrigin );

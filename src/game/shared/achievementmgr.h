@@ -22,7 +22,7 @@
 
 class CAchievementMgr : public CAutoGameSystemPerFrame, public CGameEventListener, public IAchievementMgr
 {
-   public:
+    public:
     //=============================================================================
     // HPE_BEGIN
     // [dwenger] Steam Cloud Support
@@ -138,7 +138,7 @@ class CAchievementMgr : public CAutoGameSystemPerFrame, public CGameEventListene
 
     void SetAchievementThink( CBaseAchievement *pAchievement, float flThinkTime );
 
-   private:
+    private:
     void FireGameEvent( IGameEvent *event );
     void OnKillEvent( CBaseEntity *pVictim, CBaseEntity *pAttacker, CBaseEntity *pInflictor, IGameEvent *event );
     void ResetAchievement_Internal( CBaseAchievement *pAchievement );

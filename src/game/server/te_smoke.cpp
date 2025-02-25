@@ -23,7 +23,7 @@ extern short g_sModelIndexSmoke;  // (in combatweapon.cpp) holds the index for t
 //-----------------------------------------------------------------------------
 class CTESmoke : public CBaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTESmoke, CBaseTempEntity );
 
     CTESmoke( const char* name );
@@ -33,7 +33,7 @@ class CTESmoke : public CBaseTempEntity
 
     DECLARE_SERVERCLASS();
 
-   public:
+    public:
     CNetworkVector( m_vecOrigin );
     CNetworkVar( int, m_nModelIndex );
     CNetworkVar( float, m_fScale );

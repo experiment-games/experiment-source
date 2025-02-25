@@ -2052,14 +2052,14 @@ TestUtil::ReflectionTester::ReflectionTester(
 
   if (base_descriptor_->name() == "TestAllExtensions") {
     group_a_ =
-      pool->FindFieldByName("protobuf_unittest.OptionalGroup_extension.a");
+    pool->FindFieldByName("protobuf_unittest.OptionalGroup_extension.a");
     repeated_group_a_ =
-      pool->FindFieldByName("protobuf_unittest.RepeatedGroup_extension.a");
+    pool->FindFieldByName("protobuf_unittest.RepeatedGroup_extension.a");
   } else {
     group_a_ =
-      pool->FindFieldByName("protobuf_unittest.TestAllTypes.OptionalGroup.a");
+    pool->FindFieldByName("protobuf_unittest.TestAllTypes.OptionalGroup.a");
     repeated_group_a_ =
-      pool->FindFieldByName("protobuf_unittest.TestAllTypes.RepeatedGroup.a");
+    pool->FindFieldByName("protobuf_unittest.TestAllTypes.RepeatedGroup.a");
   }
 
   EXPECT_TRUE(group_a_          != NULL);
@@ -2082,7 +2082,7 @@ TestUtil::ReflectionTester::ReflectionTester(
 const FieldDescriptor* TestUtil::ReflectionTester::F(const string& name) {
   const FieldDescriptor* result = NULL;
   if (base_descriptor_->name() == "TestAllExtensions" ||
-      base_descriptor_->name() == "TestPackedExtensions") {
+    base_descriptor_->name() == "TestPackedExtensions") {
     result = base_descriptor_->file()->FindExtensionByName(name + "_extension");
   } else {
     result = base_descriptor_->FindFieldByName(name);
@@ -2441,9 +2441,9 @@ void TestUtil::ReflectionTester::ExpectAllFieldsSetViaReflection2(
   EXPECT_EQ("316", reflection->GetRepeatedString(message, F("repeated_bytes"   ), 1));
 
   EXPECT_EQ("315", reflection->GetRepeatedStringReference(message, F("repeated_string"),
-                                                          1, &scratch));
+                                                        1, &scratch));
   EXPECT_EQ("316", reflection->GetRepeatedStringReference(message, F("repeated_bytes"),
-                                                          1, &scratch));
+                                                        1, &scratch));
 
   sub_message = &reflection->GetRepeatedMessage(message, F("repeatedgroup"), 1);
   EXPECT_EQ(317, sub_message->GetReflection()->GetInt32(*sub_message, repeated_group_a_));
@@ -2522,7 +2522,7 @@ void TestUtil::ReflectionTester::ExpectAllFieldsSetViaReflection3(
 
   EXPECT_EQ("424", reflection->GetString(message, F("default_string_piece")));
   EXPECT_EQ("424", reflection->GetStringReference(message, F("default_string_piece"),
-                                                  &scratch));
+                                                &scratch));
 
   EXPECT_EQ("425", reflection->GetString(message, F("default_cord")));
   EXPECT_EQ("425", reflection->GetStringReference(message, F("default_cord"), &scratch));

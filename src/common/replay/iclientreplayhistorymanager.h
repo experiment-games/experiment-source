@@ -40,7 +40,7 @@ class IGameEvent;
 
 class IClientReplayHistoryManager : public IBaseInterface
 {
-   public:
+    public:
     virtual bool Init( CreateInterfaceFn fnCreateFactory ) = 0;
     virtual void Shutdown() = 0;
     virtual void Think() = 0;

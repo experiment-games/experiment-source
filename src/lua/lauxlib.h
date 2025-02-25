@@ -181,7 +181,7 @@ struct luaL_Buffer
 
 #define luaL_addchar( B, c )                                               \
     ( ( void )( ( B )->n < ( B )->size || luaL_prepbuffsize( ( B ), 1 ) ), \
-      ( ( B )->b[( B )->n++] = ( c ) ) )
+    ( ( B )->b[( B )->n++] = ( c ) ) )
 
 #define luaL_addsize( B, s ) ( ( B )->n += ( s ) )
 

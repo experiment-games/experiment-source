@@ -115,15 +115,15 @@ DEFINE_FIELD( type, FIELD_INTEGER ),
     //
 
     class CPhysSaveRestoreBlockHandler : public CDefSaveRestoreBlockHandler,
-                                         public IPhysSaveRestoreManager
+                                        public IPhysSaveRestoreManager
 #if !defined( CLIENT_DLL )
     ,
-                                         public IEntityListener
+                                        public IEntityListener
 #endif
 {
     struct QueuedItem_t;
 
-   public:
+    public:
     CPhysSaveRestoreBlockHandler()
     {
         m_QueuedSaves.SetLessFunc( SaveQueueFunc );
@@ -612,7 +612,7 @@ DEFINE_FIELD( type, FIELD_INTEGER ),
 
     //---------------------------------
 
-   private:
+    private:
     struct QueuedItem_t
     {
         PhysObjectHeader_t header;
@@ -621,7 +621,7 @@ DEFINE_FIELD( type, FIELD_INTEGER ),
 
     class CEntityRestoreSet : public CUtlVector< QueuedItem_t >
     {
-       public:
+        public:
         int Add( CBaseEntity *pOwner, typedescription_t *pTypeDesc, void **ppPhysObj, PhysInterfaceId_t type )
         {
             int i = AddToTail();
@@ -723,7 +723,7 @@ static bool IsValidEntityPointer( void *ptr )
 
 class CPhysObjSaveRestoreOps : public CDefSaveRestoreOps
 {
-   public:
+    public:
     virtual void Save( const SaveRestoreFieldInfo_t &fieldInfo, ISave *pSave )
     {
         CBaseEntity *pOwnerEntity = pSave->GetGameSaveRestoreInfo()->GetCurrentEntityContext();

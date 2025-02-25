@@ -19,7 +19,7 @@
 class CBaseMeshReader : protected MeshDesc_t
 {
     // Initialization.
-   public:
+    public:
     CBaseMeshReader();
     ~CBaseMeshReader();
 
@@ -40,7 +40,7 @@ class CBaseMeshReader : protected MeshDesc_t
     // Resets the mesh builder so it points to the start of everything again
     void Reset();
 
-   protected:
+    protected:
     IMesh *m_pMesh;
     int m_MaxVertices;
     int m_MaxIndices;
@@ -49,9 +49,9 @@ class CBaseMeshReader : protected MeshDesc_t
 // A bunch of accessors for the data that CBaseMeshReader sets up.
 class CMeshReader : public CBaseMeshReader
 {
-   public:
+    public:
     // Access to vertex data.
-   public:
+    public:
     int NumIndices() const;
     unsigned short Index( int index ) const;
 

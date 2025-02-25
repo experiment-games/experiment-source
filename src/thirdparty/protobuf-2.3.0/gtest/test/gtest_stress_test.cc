@@ -70,7 +70,7 @@ void ExpectKeyAndValueWereRecordedForId(const Vector<TestProperty>& properties,
   TestPropertyKeyIs matches_key(IdToKey(id, suffix).c_str());
   const TestProperty* property = properties.FindIf(matches_key);
   ASSERT_TRUE(property != NULL)
-      << "expecting " << suffix << " value for id " << id;
+    << "expecting " << suffix << " value for id " << id;
   EXPECT_STREQ(IdToString(id).c_str(), property->value());
 }
 

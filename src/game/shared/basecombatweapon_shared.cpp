@@ -1388,10 +1388,10 @@ bool CBaseCombatWeapon::ReloadOrSwitchWeapons( void )
     {
         // Weapon is useable. Reload if empty and weapon has waited as long as it has to after firing
         if ( UsesClipsForAmmo1() && !AutoFiresFullClip() &&
-             ( m_iClip1 == 0 ) &&
-             ( GetWeaponFlags() & ITEM_FLAG_NOAUTORELOAD ) == false &&
-             m_flNextPrimaryAttack < gpGlobals->curtime &&
-             m_flNextSecondaryAttack < gpGlobals->curtime )
+            ( m_iClip1 == 0 ) &&
+            ( GetWeaponFlags() & ITEM_FLAG_NOAUTORELOAD ) == false &&
+            m_flNextPrimaryAttack < gpGlobals->curtime &&
+            m_flNextSecondaryAttack < gpGlobals->curtime )
         {
             // if we're successfully reloading, we're done
             if ( Reload() )
@@ -1757,7 +1757,7 @@ void CBaseCombatWeapon::ItemPostFrame( void )
     {
         // Clip empty? Or out of ammo on a no-clip weapon?
         if ( !IsMeleeWeapon() &&
-             ( ( UsesClipsForAmmo1() && m_iClip1 <= 0 ) || ( !UsesClipsForAmmo1() && pOwner->GetAmmoCount( m_iPrimaryAmmoType ) <= 0 ) ) )
+            ( ( UsesClipsForAmmo1() && m_iClip1 <= 0 ) || ( !UsesClipsForAmmo1() && pOwner->GetAmmoCount( m_iPrimaryAmmoType ) <= 0 ) ) )
         {
             HandleFireOnEmpty();
         }

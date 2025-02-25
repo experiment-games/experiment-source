@@ -31,7 +31,7 @@ typedef void *XboxHandle_t;
 //-----------------------------------------------------------------------------
 abstract_class IXboxSystem
 {
-   public:
+    public:
     virtual AsyncHandle_t CreateAsyncHandle( void ) = 0;
     virtual void ReleaseAsyncHandle( AsyncHandle_t handle ) = 0;
     virtual int GetOverlappedResult( AsyncHandle_t handle, uint * pResultCode, bool bWait ) = 0;

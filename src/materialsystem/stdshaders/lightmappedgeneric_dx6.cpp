@@ -14,7 +14,7 @@
 DEFINE_FALLBACK_SHADER( LightmappedGeneric, LightmappedGeneric_DX6 )
 
 BEGIN_SHADER( LightmappedGeneric_DX6,
-              "Help for LightmappedGeneric_DX6" )
+            "Help for LightmappedGeneric_DX6" )
 
 BEGIN_SHADER_PARAMS
 SHADER_PARAM( SELFILLUMTINT, SHADER_PARAM_TYPE_COLOR, "[1 1 1]", "Self-illumination tint" )

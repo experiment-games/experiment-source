@@ -23,7 +23,7 @@ inline float CalcDistance( const Vector &a, const Vector &b )
 template < class T >
 class CDefaultCalcDistance
 {
-   public:
+    public:
     static inline float CalcDistance( const T &a, const T &b )
     {
         return ::CalcDistance( a, b );
@@ -32,7 +32,7 @@ class CDefaultCalcDistance
 
 class CCalcDistance2D
 {
-   public:
+    public:
     static inline float CalcDistance( const Vector &a, const Vector &b )
     {
         return ( a - b ).Length2D();
@@ -42,7 +42,7 @@ class CCalcDistance2D
 template < class T, class Functor = CDefaultCalcDistance< T > >
 class CApparentVelocity
 {
-   public:
+    public:
     CApparentVelocity( const T &t0 )
     {
         m_LastTime = -1;
@@ -63,7 +63,7 @@ class CApparentVelocity
         return flRet;
     }
 
-   private:
+    private:
     T m_LastValue;
     float m_LastTime;
 };

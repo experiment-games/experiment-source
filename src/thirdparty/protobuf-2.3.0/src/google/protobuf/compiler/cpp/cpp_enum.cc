@@ -46,7 +46,7 @@ namespace compiler {
 namespace cpp {
 
 EnumGenerator::EnumGenerator(const EnumDescriptor* descriptor,
-                             const string& dllexport_decl)
+                            const string& dllexport_decl)
   : descriptor_(descriptor),
     classname_(ClassName(descriptor, false)),
     dllexport_decl_(dllexport_decl) {
@@ -69,16 +69,16 @@ void EnumGenerator::GenerateDefinition(io::Printer* printer) {
     vars["name"] = descriptor_->value(i)->name();
     vars["number"] = SimpleItoa(descriptor_->value(i)->number());
     vars["prefix"] = (descriptor_->containing_type() == NULL) ?
-      "" : classname_ + "_";
+    "" : classname_ + "_";
 
     if (i > 0) printer->Print(",\n");
     printer->Print(vars, "$prefix$$name$ = $number$");
 
     if (descriptor_->value(i)->number() < min_value->number()) {
-      min_value = descriptor_->value(i);
+    min_value = descriptor_->value(i);
     }
     if (descriptor_->value(i)->number() > max_value->number()) {
-      max_value = descriptor_->value(i);
+    max_value = descriptor_->value(i);
     }
   }
 
@@ -103,19 +103,19 @@ void EnumGenerator::GenerateDefinition(io::Printer* printer) {
 
   if (HasDescriptorMethods(descriptor_->file())) {
     printer->Print(vars,
-      "$dllexport$const ::google::protobuf::EnumDescriptor* $classname$_descriptor();\n");
+    "$dllexport$const ::google::protobuf::EnumDescriptor* $classname$_descriptor();\n");
     // The _Name and _Parse methods
     printer->Print(vars,
-      "inline const ::std::string& $classname$_Name($classname$ value) {\n"
-      "  return ::google::protobuf::internal::NameOfEnum(\n"
-      "    $classname$_descriptor(), value);\n"
-      "}\n");
+    "inline const ::std::string& $classname$_Name($classname$ value) {\n"
+    "  return ::google::protobuf::internal::NameOfEnum(\n"
+    "    $classname$_descriptor(), value);\n"
+    "}\n");
     printer->Print(vars,
-      "inline bool $classname$_Parse(\n"
-      "    const ::std::string& name, $classname$* value) {\n"
-      "  return ::google::protobuf::internal::ParseNamedEnum<$classname$>(\n"
-      "    $classname$_descriptor(), name, value);\n"
-      "}\n");
+    "inline bool $classname$_Parse(\n"
+    "    const ::std::string& name, $classname$* value) {\n"
+    "  return ::google::protobuf::internal::ParseNamedEnum<$classname$>(\n"
+    "    $classname$_descriptor(), name, value);\n"
+    "}\n");
   }
 }
 
@@ -123,11 +123,11 @@ void EnumGenerator::
 GenerateGetEnumDescriptorSpecializations(io::Printer* printer) {
   if (HasDescriptorMethods(descriptor_->file())) {
     printer->Print(
-      "template <>\n"
-      "inline const EnumDescriptor* GetEnumDescriptor< $classname$>() {\n"
-      "  return $classname$_descriptor();\n"
-      "}\n",
-      "classname", ClassName(descriptor_, true));
+    "template <>\n"
+    "inline const EnumDescriptor* GetEnumDescriptor< $classname$>() {\n"
+    "  return $classname$_descriptor();\n"
+    "}\n",
+    "classname", ClassName(descriptor_, true));
   }
 }
 
@@ -140,7 +140,7 @@ void EnumGenerator::GenerateSymbolImports(io::Printer* printer) {
   for (int j = 0; j < descriptor_->value_count(); j++) {
     vars["tag"] = descriptor_->value(j)->name();
     printer->Print(vars,
-      "static const $nested_name$ $tag$ = $classname$_$tag$;\n");
+    "static const $nested_name$ $tag$ = $classname$_$tag$;\n");
   }
 
   printer->Print(vars,
@@ -156,19 +156,19 @@ void EnumGenerator::GenerateSymbolImports(io::Printer* printer) {
 
   if (HasDescriptorMethods(descriptor_->file())) {
     printer->Print(vars,
-      "static inline const ::google::protobuf::EnumDescriptor*\n"
-      "$nested_name$_descriptor() {\n"
-      "  return $classname$_descriptor();\n"
-      "}\n");
+    "static inline const ::google::protobuf::EnumDescriptor*\n"
+    "$nested_name$_descriptor() {\n"
+    "  return $classname$_descriptor();\n"
+    "}\n");
     printer->Print(vars,
-      "static inline const ::std::string& $nested_name$_Name($nested_name$ value) {\n"
-      "  return $classname$_Name(value);\n"
-      "}\n");
+    "static inline const ::std::string& $nested_name$_Name($nested_name$ value) {\n"
+    "  return $classname$_Name(value);\n"
+    "}\n");
     printer->Print(vars,
-      "static inline bool $nested_name$_Parse(const ::std::string& name,\n"
-      "    $nested_name$* value) {\n"
-      "  return $classname$_Parse(name, value);\n"
-      "}\n");
+    "static inline bool $nested_name$_Parse(const ::std::string& name,\n"
+    "    $nested_name$* value) {\n"
+    "  return $classname$_Parse(name, value);\n"
+    "}\n");
   }
 }
 
@@ -180,11 +180,11 @@ void EnumGenerator::GenerateDescriptorInitializer(
 
   if (descriptor_->containing_type() == NULL) {
     printer->Print(vars,
-      "$classname$_descriptor_ = file->enum_type($index$);\n");
+    "$classname$_descriptor_ = file->enum_type($index$);\n");
   } else {
     vars["parent"] = ClassName(descriptor_->containing_type(), false);
     printer->Print(vars,
-      "$classname$_descriptor_ = $parent$_descriptor_->enum_type($index$);\n");
+    "$classname$_descriptor_ = $parent$_descriptor_->enum_type($index$);\n");
   }
 }
 
@@ -194,10 +194,10 @@ void EnumGenerator::GenerateMethods(io::Printer* printer) {
 
   if (HasDescriptorMethods(descriptor_->file())) {
     printer->Print(vars,
-      "const ::google::protobuf::EnumDescriptor* $classname$_descriptor() {\n"
-      "  protobuf_AssignDescriptorsOnce();\n"
-      "  return $classname$_descriptor_;\n"
-      "}\n");
+    "const ::google::protobuf::EnumDescriptor* $classname$_descriptor() {\n"
+    "  protobuf_AssignDescriptorsOnce();\n"
+    "  return $classname$_descriptor_;\n"
+    "}\n");
   }
 
   printer->Print(vars,
@@ -215,10 +215,10 @@ void EnumGenerator::GenerateMethods(io::Printer* printer) {
   }
 
   for (set<int>::iterator iter = numbers.begin();
-       iter != numbers.end(); ++iter) {
+        iter != numbers.end(); ++iter) {
     printer->Print(
-      "    case $number$:\n",
-      "number", SimpleItoa(*iter));
+    "    case $number$:\n",
+    "number", SimpleItoa(*iter));
   }
 
   printer->Print(vars,
@@ -239,14 +239,14 @@ void EnumGenerator::GenerateMethods(io::Printer* printer) {
     vars["parent"] = ClassName(descriptor_->containing_type(), false);
     vars["nested_name"] = descriptor_->name();
     for (int i = 0; i < descriptor_->value_count(); i++) {
-      vars["value"] = descriptor_->value(i)->name();
-      printer->Print(vars,
+    vars["value"] = descriptor_->value(i)->name();
+    printer->Print(vars,
         "const $classname$ $parent$::$value$;\n");
     }
     printer->Print(vars,
-      "const $classname$ $parent$::$nested_name$_MIN;\n"
-      "const $classname$ $parent$::$nested_name$_MAX;\n"
-      "const int $parent$::$nested_name$_ARRAYSIZE;\n");
+    "const $classname$ $parent$::$nested_name$_MIN;\n"
+    "const $classname$ $parent$::$nested_name$_MAX;\n"
+    "const int $parent$::$nested_name$_ARRAYSIZE;\n");
 
     printer->Print("#endif  // _MSC_VER\n");
   }

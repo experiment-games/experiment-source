@@ -207,7 +207,7 @@ class CGrenadeHelicopter : public CBaseGrenade
 {
     DECLARE_DATADESC();
 
-   public:
+    public:
     DECLARE_CLASS( CGrenadeHelicopter, CBaseGrenade );
 
     virtual void Precache();
@@ -264,7 +264,7 @@ class CGrenadeHelicopter : public CBaseGrenade
     void InputExplodeIn( inputdata_t &inputdata );
 #endif  // HL2_EPISODIC
 
-   private:
+    private:
     // Pow!
     void DoExplosion( const Vector &vecOrigin, const Vector &vecVelocity );
     void ExplodeThink();
@@ -299,7 +299,7 @@ class CBombDropSensor : public CBaseEntity
 {
     DECLARE_DATADESC();
 
-   public:
+    public:
     DECLARE_CLASS( CBombDropSensor, CBaseEntity );
 
     void Spawn();
@@ -319,7 +319,7 @@ class CBombSuppressor : public CBaseEntity
 {
     DECLARE_DATADESC();
 
-   public:
+    public:
     DECLARE_CLASS( CBombSuppressor, CBaseEntity );
 
     virtual void Spawn();
@@ -328,7 +328,7 @@ class CBombSuppressor : public CBaseEntity
 
     static bool CanBomb( const Vector &vecPosition );
 
-   private:
+    private:
     typedef CHandle< CBombSuppressor > BombSuppressorHandle_t;
     static CUtlVector< BombSuppressorHandle_t > s_BombSuppressors;
 };
@@ -347,7 +347,7 @@ class CHelicopterChunk : public CBaseAnimating
 {
     DECLARE_DATADESC();
 
-   public:
+    public:
     DECLARE_CLASS( CHelicopterChunk, CBaseAnimating );
 
     virtual void Spawn( void );
@@ -361,7 +361,7 @@ class CHelicopterChunk : public CBaseAnimating
     IPhysicsConstraint *m_pTailConstraint;
     IPhysicsConstraint *m_pCockpitConstraint;
 
-   protected:
+    protected:
     void CollisionCallback( CHelicopterChunk *pCaller );
 
     void FallThink( void );
@@ -374,7 +374,7 @@ class CHelicopterChunk : public CBaseAnimating
 //-----------------------------------------------------------------------------
 class CNPC_AttackHelicopter : public CBaseHelicopter
 {
-   public:
+    public:
     DECLARE_CLASS( CNPC_AttackHelicopter, CBaseHelicopter );
     DECLARE_DATADESC();
     DEFINE_CUSTOM_AI;
@@ -441,11 +441,11 @@ class CNPC_AttackHelicopter : public CBaseHelicopter
         return true;
     }
 
-   protected:
+    protected:
     int m_poseWeapon_Pitch, m_poseWeapon_Yaw, m_poseRudder;
     virtual void PopulatePoseParameters( void );
 
-   private:
+    private:
     enum GunState_t
     {
         GUN_STATE_IDLE = 0,
@@ -672,7 +672,7 @@ class CNPC_AttackHelicopter : public CBaseHelicopter
         return m_hCrashPoint.Get();
     }
 
-   private:
+    private:
     enum
     {
         ATTACK_MODE_DEFAULT = 0,
@@ -918,8 +918,8 @@ DEFINE_ENTITYFUNC( FlyTouch ),
     //------------------------------------------------------------------------------
     CNPC_AttackHelicopter::CNPC_AttackHelicopter()
     : m_bNonCombat( false ),
-      m_flGracePeriod( 2.0f ),
-      m_bBombsExplodeOnContact( false )
+    m_flGracePeriod( 2.0f ),
+    m_bBombsExplodeOnContact( false )
 {
     m_flMaxSpeed = 0;
 }
@@ -1652,11 +1652,11 @@ class CTraceFilterChopper : public CTraceFilterSimple
 {
     DECLARE_CLASS( CTraceFilterChopper, CTraceFilterSimple );
 
-   public:
+    public:
     CTraceFilterChopper( const IHandleEntity *passentity, int collisionGroup );
     virtual bool ShouldHitEntity( IHandleEntity *pServerEntity, int contentsMask );
 
-   private:
+    private:
     const IHandleEntity *m_pPassEnt;
     int m_collisionGroup;
 };
@@ -1672,9 +1672,9 @@ bool CTraceFilterChopper::ShouldHitEntity( IHandleEntity *pServerEntity, int con
     if ( pEnt )
     {
         if ( FClassnameIs( pEnt, "func_breakable" ) ||
-             FClassnameIs( pEnt, "func_physbox" ) ||
-             FClassnameIs( pEnt, "prop_physics" ) ||
-             FClassnameIs( pEnt, "physics_prop" ) )
+            FClassnameIs( pEnt, "func_physbox" ) ||
+            FClassnameIs( pEnt, "prop_physics" ) ||
+            FClassnameIs( pEnt, "physics_prop" ) )
         {
             return false;
         }
@@ -1713,11 +1713,11 @@ bool CNPC_AttackHelicopter::FVisible( CBaseEntity *pEntity, int traceMask, CBase
         return false;
 
 #if 0
-	// FIXME: only block LOS through opaque water
-	// don't look through water
-	if ((m_nWaterLevel != 3 && pEntity->m_nWaterLevel == 3) 
-		|| (m_nWaterLevel == 3 && pEntity->m_nWaterLevel == 0))
-		return false;
+    // FIXME: only block LOS through opaque water
+    // don't look through water
+    if ((m_nWaterLevel != 3 && pEntity->m_nWaterLevel == 3)
+        || (m_nWaterLevel == 3 && pEntity->m_nWaterLevel == 0))
+        return false;
 #endif
 
     Vector vecLookerOrigin = EyePosition();  // look through the caller's 'eyes'
@@ -1790,8 +1790,8 @@ int CNPC_AttackHelicopter::BuildMissTargetList( int nCount, CBaseEntity **ppMiss
 
         // See if it's a good target candidate
         if ( FClassnameIs( pEnts[i], "prop_dynamic" ) ||
-             FClassnameIs( pEnts[i], "prop_physics" ) ||
-             FClassnameIs( pEnts[i], "physics_prop" ) )
+            FClassnameIs( pEnts[i], "prop_physics" ) ||
+            FClassnameIs( pEnts[i], "physics_prop" ) )
         {
             ppMissCandidates[numMissCandidates++] = pEnts[i];
         }
@@ -2247,7 +2247,7 @@ bool CNPC_AttackHelicopter::DoGunIdle( const Vector &vGunDir, const Vector &vTar
 {
     // When bullrushing, skip the idle
     if ( ( m_nAttackMode == ATTACK_MODE_BULLRUSH_VEHICLE ) &&
-         ( IsInSecondaryMode( BULLRUSH_MODE_SHOOT_GUN ) || IsInSecondaryMode( BULLRUSH_MODE_SHOOT_IDLE_PLAYER ) ) )
+        ( IsInSecondaryMode( BULLRUSH_MODE_SHOOT_GUN ) || IsInSecondaryMode( BULLRUSH_MODE_SHOOT_IDLE_PLAYER ) ) )
     {
         EmitSound( "NPC_AttackHelicopter.ChargeGun" );
         m_flChargeTime = gpGlobals->curtime + CHOPPER_GUN_CHARGE_TIME;
@@ -2495,12 +2495,12 @@ bool CNPC_AttackHelicopter::IsValidZapTarget( CBaseEntity *pTarget )
 
         // Is flesh or metal? Go for it!
         if ( pSurfaceData->game.material == CHAR_TEX_METAL ||
-             pSurfaceData->game.material == CHAR_TEX_FLESH ||
-             pSurfaceData->game.material == CHAR_TEX_VENT ||
-             pSurfaceData->game.material == CHAR_TEX_GRATE ||
-             pSurfaceData->game.material == CHAR_TEX_COMPUTER ||
-             pSurfaceData->game.material == CHAR_TEX_BLOODYFLESH ||
-             pSurfaceData->game.material == CHAR_TEX_ALIENFLESH )
+            pSurfaceData->game.material == CHAR_TEX_FLESH ||
+            pSurfaceData->game.material == CHAR_TEX_VENT ||
+            pSurfaceData->game.material == CHAR_TEX_GRATE ||
+            pSurfaceData->game.material == CHAR_TEX_COMPUTER ||
+            pSurfaceData->game.material == CHAR_TEX_BLOODYFLESH ||
+            pSurfaceData->game.material == CHAR_TEX_ALIENFLESH )
         {
             return true;
         }
@@ -3445,8 +3445,8 @@ void CNPC_AttackHelicopter::TraceAttack( const CTakeDamageInfo &info, const Vect
     // TraceAttack() as a means for delivering blast damage. Usually when the explosive penetrates
     // the target. (RPG missiles do this sometimes).
     if ( ( info.GetDamageType() & DMG_AIRBOAT ) ||
-         ( info.GetInflictor()->Classify() == CLASS_MISSILE ) ||
-         ( info.GetAttacker()->Classify() == CLASS_MISSILE ) )
+        ( info.GetInflictor()->Classify() == CLASS_MISSILE ) ||
+        ( info.GetAttacker()->Classify() == CLASS_MISSILE ) )
     {
         BaseClass::BaseClass::TraceAttack( info, vecDir, ptr, pAccumulator );
     }
@@ -3461,8 +3461,8 @@ int CNPC_AttackHelicopter::OnTakeDamage( const CTakeDamageInfo &info )
     if ( info.GetInflictor() != this )
     {
         if ( ( ( info.GetDamageType() & DMG_AIRBOAT ) == 0 ) &&
-             ( info.GetInflictor()->Classify() != CLASS_MISSILE ) &&
-             ( info.GetAttacker()->Classify() != CLASS_MISSILE ) )
+            ( info.GetInflictor()->Classify() != CLASS_MISSILE ) &&
+            ( info.GetAttacker()->Classify() != CLASS_MISSILE ) )
             return 0;
     }
 
@@ -3854,10 +3854,10 @@ void CNPC_AttackHelicopter::GetMaxSpeedAndAccel( float *pMaxSpeed, float *pAccel
 #define HELICOPTER_FORCE_BLEND_VEHICLE 0.2f
 
 void CNPC_AttackHelicopter::ComputeVelocity( const Vector &vecTargetPosition,
-                                             float flAdditionalHeight,
-                                             float flMinDistFromSegment,
-                                             float flMaxDistFromSegment,
-                                             Vector *pVecAccel )
+                                            float flAdditionalHeight,
+                                            float flMinDistFromSegment,
+                                            float flMaxDistFromSegment,
+                                            Vector *pVecAccel )
 {
     Vector deltaPos;
     VectorSubtract( vecTargetPosition, GetAbsOrigin(), deltaPos );
@@ -5125,8 +5125,8 @@ void CGrenadeHelicopter::WarningBlinkerThink()
 #endif
 
     /*
-      if( !m_hWarningSprite.Get() )
-      {
+    if( !m_hWarningSprite.Get() )
+    {
         Vector up;
         GetVectors( NULL, NULL, &up );
 
@@ -5136,16 +5136,16 @@ void CGrenadeHelicopter::WarningBlinkerThink()
 
         if( pSprite != NULL )
         {
-          pSprite->SetParent( this, LookupAttachment("top") );
-          pSprite->SetTransparency( kRenderTransAdd, 255, 255, 255, 255, kRenderFxNone );
-          pSprite->SetScale( 0.35, 0.0 );
+        pSprite->SetParent( this, LookupAttachment("top") );
+        pSprite->SetTransparency( kRenderTransAdd, 255, 255, 255, 255, kRenderFxNone );
+        pSprite->SetScale( 0.35, 0.0 );
         }
 
         m_bBlinkerAtTop = true;
 
         ResetSequence( LookupActivity( "ACT_ARM" ) );
-      }
-      else
+    }
+    else
     */
     {
         // Just flip it to the other attachment.

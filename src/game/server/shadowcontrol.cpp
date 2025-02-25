@@ -19,7 +19,7 @@
 //------------------------------------------------------------------------------
 class CShadowControl : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CShadowControl, CBaseEntity );
 
     CShadowControl();
@@ -37,7 +37,7 @@ class CShadowControl : public CBaseEntity
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
 
-   private:
+    private:
     CNetworkVector( m_shadowDirection );
     CNetworkColor32( m_shadowColor );
     CNetworkVar( float, m_flShadowMaxDist );

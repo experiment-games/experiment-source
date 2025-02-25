@@ -25,7 +25,7 @@ enum
 //-----------------------------------------------------------------------------
 class CTEBubbleTrail : public CBaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTEBubbleTrail, CBaseTempEntity );
 
     CTEBubbleTrail( const char* name );
@@ -35,7 +35,7 @@ class CTEBubbleTrail : public CBaseTempEntity
 
     DECLARE_SERVERCLASS();
 
-   public:
+    public:
     CNetworkVector( m_vecMins );
     CNetworkVector( m_vecMaxs );
     CNetworkVar( float, m_flWaterZ );

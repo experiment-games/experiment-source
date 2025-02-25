@@ -59,7 +59,7 @@ string Substitute(
     const SubstituteArg& arg8, const SubstituteArg& arg9) {
   string result;
   SubstituteAndAppend(&result, format, arg0, arg1, arg2, arg3, arg4,
-                                       arg5, arg6, arg7, arg8, arg9);
+                                        arg5, arg6, arg7, arg8, arg9);
   return result;
 }
 
@@ -78,29 +78,29 @@ void SubstituteAndAppend(
   int size = 0;
   for (int i = 0; format[i] != '\0'; i++) {
     if (format[i] == '$') {
-      if (ascii_isdigit(format[i+1])) {
+    if (ascii_isdigit(format[i+1])) {
         int index = format[i+1] - '0';
         if (args_array[index]->size() == -1) {
-          GOOGLE_LOG(DFATAL)
+        GOOGLE_LOG(DFATAL)
             << "strings::Substitute format string invalid: asked for \"$"
             << index << "\", but only " << CountSubstituteArgs(args_array)
             << " args were given.  Full format string was: \""
             << CEscape(format) << "\".";
-          return;
+        return;
         }
         size += args_array[index]->size();
         ++i;  // Skip next char.
-      } else if (format[i+1] == '$') {
+    } else if (format[i+1] == '$') {
         ++size;
         ++i;  // Skip next char.
-      } else {
-        GOOGLE_LOG(DFATAL)
-          << "Invalid strings::Substitute() format string: \""
-          << CEscape(format) << "\".";
-        return;
-      }
     } else {
-      ++size;
+        GOOGLE_LOG(DFATAL)
+        << "Invalid strings::Substitute() format string: \""
+        << CEscape(format) << "\".";
+        return;
+    }
+    } else {
+    ++size;
     }
   }
 
@@ -112,17 +112,17 @@ void SubstituteAndAppend(
   char* target = string_as_array(output) + original_size;
   for (int i = 0; format[i] != '\0'; i++) {
     if (format[i] == '$') {
-      if (ascii_isdigit(format[i+1])) {
+    if (ascii_isdigit(format[i+1])) {
         const SubstituteArg* src = args_array[format[i+1] - '0'];
         memcpy(target, src->data(), src->size());
         target += src->size();
         ++i;  // Skip next char.
-      } else if (format[i+1] == '$') {
+    } else if (format[i+1] == '$') {
         *target++ = '$';
         ++i;  // Skip next char.
-      }
+    }
     } else {
-      *target++ = format[i];
+    *target++ = format[i];
     }
   }
 

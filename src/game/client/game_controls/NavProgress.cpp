@@ -101,8 +101,8 @@ void CNavProgress::Init( const char *title, int numTicks, int startTick )
 void CNavProgress::SetData( KeyValues *data )
 {
     Init( data->GetString( "msg" ),
-          data->GetInt( "total" ),
-          data->GetInt( "current" ) );
+        data->GetInt( "total" ),
+        data->GetInt( "current" ) );
 }
 
 //--------------------------------------------------------------------------------------------------------------

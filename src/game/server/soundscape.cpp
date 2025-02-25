@@ -464,7 +464,7 @@ void CEnvSoundscapeTriggerable::Think()
 
 class CTriggerSoundscape : public CBaseTrigger
 {
-   public:
+    public:
     DECLARE_CLASS( CTriggerSoundscape, CBaseTrigger );
     DECLARE_DATADESC();
 
@@ -478,7 +478,7 @@ class CTriggerSoundscape : public CBaseTrigger
 
     void PlayerUpdateThink();
 
-   private:
+    private:
     CHandle< CEnvSoundscapeTriggerable > m_hSoundscape;
     string_t m_SoundscapeName;
 

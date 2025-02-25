@@ -16,16 +16,16 @@ extern CRenamedRecvTableInfo *g_pRenamedRecvTableInfoHead;
 //-----------------------------------------------------------------------------
 class CRenamedRecvTableInfo
 {
-   public:
+    public:
     CRenamedRecvTableInfo( const char *pOldName, const char *pNewName )
         : m_pOldName( pOldName ),
-          m_pNewName( pNewName )
+        m_pNewName( pNewName )
     {
         m_pNext = g_pRenamedRecvTableInfoHead;
         g_pRenamedRecvTableInfoHead = this;
     }
 
-   public:
+    public:
     const char *m_pOldName;
     const char *m_pNewName;
     CRenamedRecvTableInfo *m_pNext;

@@ -35,7 +35,7 @@ class CNPC_Monk : public CAI_PlayerAlly
 {
     DECLARE_CLASS( CNPC_Monk, CAI_PlayerAlly );
 
-   public:
+    public:
     CNPC_Monk() {}
     void Spawn();
     void Precache();
@@ -77,7 +77,7 @@ class CNPC_Monk : public CAI_PlayerAlly
 
     DECLARE_DATADESC();
 
-   private:
+    private:
     //-----------------------------------------------------
     // Conditions, Schedules, Tasks
     //-----------------------------------------------------
@@ -91,7 +91,7 @@ class CNPC_Monk : public CAI_PlayerAlly
 
     /*enum
     {
-      //TASK_MONK_FIRST_TASK = BaseClass::NEXT_TASK,
+    //TASK_MONK_FIRST_TASK = BaseClass::NEXT_TASK,
     };*/
 
     DEFINE_CUSTOM_AI;
@@ -139,9 +139,9 @@ bool CNPC_Monk::CreateBehaviors()
 int CNPC_Monk::GetSoundInterests()
 {
     return SOUND_WORLD |
-           SOUND_COMBAT |
-           SOUND_PLAYER |
-           SOUND_DANGER;
+            SOUND_COMBAT |
+            SOUND_PLAYER |
+            SOUND_DANGER;
 }
 
 //-----------------------------------------------------------------------------
@@ -151,13 +151,13 @@ void CNPC_Monk::BuildScheduleTestBits( void )
 {
     // FIXME: we need a way to make scenes non-interruptible
 #if 0
-	if ( IsCurSchedule( SCHED_RANGE_ATTACK1 ) || IsCurSchedule( SCHED_SCENE_GENERIC ) )
-	{
-		ClearCustomInterruptCondition( COND_LIGHT_DAMAGE );
-		ClearCustomInterruptCondition( COND_HEAVY_DAMAGE );
-		ClearCustomInterruptCondition( COND_NEW_ENEMY );
-		ClearCustomInterruptCondition( COND_HEAR_DANGER );
-	}
+    if ( IsCurSchedule( SCHED_RANGE_ATTACK1 ) || IsCurSchedule( SCHED_SCENE_GENERIC ) )
+    {
+        ClearCustomInterruptCondition( COND_LIGHT_DAMAGE );
+        ClearCustomInterruptCondition( COND_HEAVY_DAMAGE );
+        ClearCustomInterruptCondition( COND_NEW_ENEMY );
+        ClearCustomInterruptCondition( COND_HEAR_DANGER );
+    }
 #endif
 
     // Don't interrupt while shooting the gun

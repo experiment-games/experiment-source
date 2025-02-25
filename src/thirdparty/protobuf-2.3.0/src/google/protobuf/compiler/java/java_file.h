@@ -63,7 +63,7 @@ namespace java
 
 class FileGenerator
 {
-   public:
+    public:
     explicit FileGenerator( const FileDescriptor* file );
     ~FileGenerator();
 
@@ -78,8 +78,8 @@ class FileGenerator
     // files other than the outer file (i.e. one for each message, enum, and
     // service type).
     void GenerateSiblings( const string& package_dir,
-                           OutputDirectory* output_directory,
-                           vector< string >* file_list );
+                            OutputDirectory* output_directory,
+                            vector< string >* file_list );
 
     const string& java_package()
     {
@@ -90,7 +90,7 @@ class FileGenerator
         return classname_;
     }
 
-   private:
+    private:
     // Returns whether the dependency should be included in the output file.
     // Always returns true for opensource, but used internally at Google to help
     // improve compatibility with version 1 of protocol buffers.

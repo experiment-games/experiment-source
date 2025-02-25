@@ -18,7 +18,7 @@
 
 class CToolTrace : public CBaseTrace
 {
-   public:
+    public:
     CToolTrace() {}
 
     Vector mins;
@@ -29,7 +29,7 @@ class CToolTrace : public CBaseTrace
 
     qboolean ispoint;
 
-   private:
+    private:
     CToolTrace( const CToolTrace & );
 };
 
@@ -84,7 +84,7 @@ DispTested_t s_DispTested[MAX_TOOL_THREADS + 1];
 // this just uses the average coverage for the triangle
 class CCoverageCount : public ITransparentTriangleCallback
 {
-   public:
+    public:
     CCoverageCount()
     {
         m_coverage = Four_Zeros;
@@ -121,7 +121,7 @@ class CCoverageCount : public ITransparentTriangleCallback
 // this will sample the texture to get a coverage at the ray intersection point
 class CCoverageCountTexture : public CCoverageCount
 {
-   public:
+    public:
     virtual bool VisitTriangle_ShouldContinue( const TriIntersectData_t &triangle, const FourRays &rays, fltx4 *pHitMask, fltx4 *b0, fltx4 *b1, fltx4 *b2, int32 hitID )
     {
         int sign = TestSignSIMD( *pHitMask );
@@ -166,7 +166,7 @@ void TestLine( const FourVectors &start, const FourVectors &stop, fltx4 *pFracti
     {
         visibility[i] = 1.0f;
         if ( ( rt_result.HitIds[i] != -1 ) &&
-             ( rt_result.HitDistance.m128_f32[i] < len.m128_f32[i] ) )
+            ( rt_result.HitDistance.m128_f32[i] < len.m128_f32[i] ) )
         {
             visibility[i] = 0.0f;
         }
@@ -364,7 +364,7 @@ void TestLine_DoesHitSky( FourVectors const &start, FourVectors const &stop, flt
     {
         aOcclusion[i] = 0.0f;
         if ( ( rt_result.HitIds[i] != -1 ) &&
-             ( rt_result.HitDistance.m128_f32[i] < len.m128_f32[i] ) )
+            ( rt_result.HitDistance.m128_f32[i] < len.m128_f32[i] ) )
         {
             int id = g_RtEnv.OptimizedTriangleList[rt_result.HitIds[i]].m_Data.m_IntersectData.m_nTriangleID;
             if ( !( id & TRACE_ID_SKY ) )

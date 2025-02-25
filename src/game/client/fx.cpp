@@ -60,7 +60,7 @@ extern void FX_TracerSound( const Vector &start, const Vector &end, int iTracerT
 //===================================================================
 class CImpactOverlay : public CWarpOverlay
 {
-   public:
+    public:
     virtual bool Update( void )
     {
         m_flLifetime += gpGlobals->frametime;
@@ -85,7 +85,7 @@ class CImpactOverlay : public CWarpOverlay
         return false;
     }
 
-   public:
+    public:
     float m_flLifetime;
     Vector m_vBaseColors[MAX_SUN_LAYERS];
 };
@@ -254,33 +254,33 @@ void FX_MuzzleEffect(
     /*
     for ( i = 0; i < 4; i++ )
     {
-      pParticle = (SimpleParticle *) pSimple->AddParticle( sizeof( SimpleParticle ), pSimple->GetPMaterial( "particle/particle_smokegrenade" ), origin );
+    pParticle = (SimpleParticle *) pSimple->AddParticle( sizeof( SimpleParticle ), pSimple->GetPMaterial( "particle/particle_smokegrenade" ), origin );
 
-      if ( pParticle == NULL )
+    if ( pParticle == NULL )
         return;
 
-      alpha = random->RandomInt( 32, 84 );
-      color = random->RandomInt( 64, 164 );
+    alpha = random->RandomInt( 32, 84 );
+    color = random->RandomInt( 64, 164 );
 
-      pParticle->m_flLifetime		= 0.0f;
-      pParticle->m_flDieTime		= random->RandomFloat( 0.5f, 1.0f );
+    pParticle->m_flLifetime		= 0.0f;
+    pParticle->m_flDieTime		= random->RandomFloat( 0.5f, 1.0f );
 
-      pParticle->m_vecVelocity.Random( -0.5f, 0.5f );
-      pParticle->m_vecVelocity += forward;
-      VectorNormalize( pParticle->m_vecVelocity );
+    pParticle->m_vecVelocity.Random( -0.5f, 0.5f );
+    pParticle->m_vecVelocity += forward;
+    VectorNormalize( pParticle->m_vecVelocity );
 
-      pParticle->m_vecVelocity	*= random->RandomFloat( 16.0f, 32.0f );
-      pParticle->m_vecVelocity[2] += random->RandomFloat( 4.0f, 16.0f );
+    pParticle->m_vecVelocity	*= random->RandomFloat( 16.0f, 32.0f );
+    pParticle->m_vecVelocity[2] += random->RandomFloat( 4.0f, 16.0f );
 
-      pParticle->m_uchColor[0]	= color;
-      pParticle->m_uchColor[1]	= color;
-      pParticle->m_uchColor[2]	= color;
-      pParticle->m_uchStartAlpha	= alpha;
-      pParticle->m_uchEndAlpha	= 0;
-      pParticle->m_uchStartSize	= random->RandomInt( 4, 8 ) * flScale;
-      pParticle->m_uchEndSize		= pParticle->m_uchStartSize*2;
-      pParticle->m_flRoll			= random->RandomInt( 0, 360 );
-      pParticle->m_flRollDelta	= random->RandomFloat( -4.0f, 4.0f );
+    pParticle->m_uchColor[0]	= color;
+    pParticle->m_uchColor[1]	= color;
+    pParticle->m_uchColor[2]	= color;
+    pParticle->m_uchStartAlpha	= alpha;
+    pParticle->m_uchEndAlpha	= 0;
+    pParticle->m_uchStartSize	= random->RandomInt( 4, 8 ) * flScale;
+    pParticle->m_uchEndSize		= pParticle->m_uchStartSize*2;
+    pParticle->m_flRoll			= random->RandomInt( 0, 360 );
+    pParticle->m_flRollDelta	= random->RandomFloat( -4.0f, 4.0f );
     }
     */
 }
@@ -443,12 +443,12 @@ void FX_MuzzleEffectAttached(
     pSize->SetFloat( "maxRandomFactor", 9.0f );
 
     /*
-      KeyValues *pUpdaters = pEmitter->FindKey( "updaters", true );
+    KeyValues *pUpdaters = pEmitter->FindKey( "updaters", true );
 
-      pUpdaters->FindKey( "DmePositionVelocityUpdater", true );
-      pUpdaters->FindKey( "DmeRollUpdater", true );
-      pUpdaters->FindKey( "DmeAlphaLinearUpdater", true );
-      pUpdaters->FindKey( "DmeSizeUpdater", true );
+    pUpdaters->FindKey( "DmePositionVelocityUpdater", true );
+    pUpdaters->FindKey( "DmeRollUpdater", true );
+    pUpdaters->FindKey( "DmeAlphaLinearUpdater", true );
+    pUpdaters->FindKey( "DmeSizeUpdater", true );
     */
     ToolFramework_PostToolMessage( HTOOLHANDLE_INVALID, msg );
     msg->deleteThis();
@@ -595,7 +595,7 @@ class CSmokeEmitter : public CSimpleEmitter
 {
     typedef CSimpleEmitter BaseClass;
 
-   public:
+    public:
     CSmokeEmitter( ClientEntityHandle_t hEntity, int nAttachment, const char *pDebugName )
         : CSimpleEmitter( pDebugName )
     {
@@ -709,7 +709,7 @@ class CSmokeEmitter : public CSimpleEmitter
         BaseClass::SimulateParticles( pIterator );
     }
 
-   private:
+    private:
     float m_flDeathTime;
     float m_flLastParticleSpawnTime;
     float m_flSpawnRate;

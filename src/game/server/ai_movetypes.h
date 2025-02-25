@@ -89,13 +89,13 @@ struct AIMoveTrace_t
     CBaseEntity *pObstruction;  // The obstruction I bumped into (if any)
     float flTotalDist;
     float flDistObstructed;  // FIXME: This is a strange number. In the case
-                             // of calling MoveLimit with navtype NAV_GROUND,
-                             // it represents a 2D distance to the obstruction.
-                             // In the case of other navtypes, it represents a
-                             // 3D distance to the obstruction
+                            // of calling MoveLimit with navtype NAV_GROUND,
+                            // it represents a 2D distance to the obstruction.
+                            // In the case of other navtypes, it represents a
+                            // 3D distance to the obstruction
     Vector vJumpVelocity;    // FIXME: Remove this; it's bogus
-                             // It's only returned by JumpMoveLimit
-                             // which seems to be a bogus concept to begin with
+                            // It's only returned by JumpMoveLimit
+                            // which seems to be a bogus concept to begin with
     float flStepUpDistance;
 };
 
@@ -182,7 +182,7 @@ enum AIMotorMoveResult_t
 
 abstract_class IAI_MovementSink
 {
-   public:
+    public:
     //---------------------------------
     //
     // Queries
@@ -194,8 +194,8 @@ abstract_class IAI_MovementSink
     // Local navigation notifications, each allows services provider to overridde default result
     //
     virtual bool OnCalcBaseMove( AILocalMoveGoal_t * pMoveGoal,
-                                 float distClear,
-                                 AIMoveResult_t *pResult ) = 0;
+                                float distClear,
+                                AIMoveResult_t *pResult ) = 0;
 
     virtual bool OnObstructionPreSteer( AILocalMoveGoal_t * pMoveGoal,
                                         float distClear,
@@ -206,12 +206,12 @@ abstract_class IAI_MovementSink
                                 AIMoveResult_t *pResult ) = 0;
 
     virtual bool OnFailedLocalNavigation( AILocalMoveGoal_t * pMoveGoal,
-                                          float distClear,
-                                          AIMoveResult_t *pResult ) = 0;
+                                        float distClear,
+                                        AIMoveResult_t *pResult ) = 0;
 
     virtual bool OnInsufficientStopDist( AILocalMoveGoal_t * pMoveGoal,
-                                         float distClear,
-                                         AIMoveResult_t *pResult ) = 0;
+                                        float distClear,
+                                        AIMoveResult_t *pResult ) = 0;
 
     virtual bool OnMoveBlocked( AIMoveResult_t * pResult ) = 0;
 
@@ -221,9 +221,9 @@ abstract_class IAI_MovementSink
     //
     virtual bool OnMoveStalled( const AILocalMoveGoal_t &move ) = 0;
     virtual bool OnMoveExecuteFailed( const AILocalMoveGoal_t &move,
-                                      const AIMoveTrace_t &trace,
-                                      AIMotorMoveResult_t fMotorResult,
-                                      AIMoveResult_t *pResult ) = 0;
+                                    const AIMoveTrace_t &trace,
+                                    AIMotorMoveResult_t fMotorResult,
+                                    AIMoveResult_t *pResult ) = 0;
 };
 
 //-----------------------------------------------------------------------------
@@ -232,7 +232,7 @@ abstract_class IAI_MovementSink
 
 class CAI_DefMovementSink : public IAI_MovementSink
 {
-   public:
+    public:
     //---------------------------------
     //
     // Queries
@@ -289,7 +289,7 @@ class CAI_DefMovementSink : public IAI_MovementSink
 
 class CAI_ProxyMovementSink : public CAI_DefMovementSink
 {
-   public:
+    public:
     CAI_ProxyMovementSink()
         : m_pProxied( NULL )
     {
@@ -313,8 +313,8 @@ class CAI_ProxyMovementSink : public CAI_DefMovementSink
     // Local navigation notifications, each allows services provider to overridde default result
     //
     virtual bool OnCalcBaseMove( AILocalMoveGoal_t *pMoveGoal,
-                                 float distClear,
-                                 AIMoveResult_t *pResult );
+                                float distClear,
+                                AIMoveResult_t *pResult );
 
     virtual bool OnObstructionPreSteer( AILocalMoveGoal_t *pMoveGoal,
                                         float distClear,
@@ -323,11 +323,11 @@ class CAI_ProxyMovementSink : public CAI_DefMovementSink
                                 float distClear,
                                 AIMoveResult_t *pResult );
     virtual bool OnFailedLocalNavigation( AILocalMoveGoal_t *pMoveGoal,
-                                          float distClear,
-                                          AIMoveResult_t *pResult );
+                                        float distClear,
+                                        AIMoveResult_t *pResult );
     virtual bool OnInsufficientStopDist( AILocalMoveGoal_t *pMoveGoal,
-                                         float distClear,
-                                         AIMoveResult_t *pResult );
+                                        float distClear,
+                                        AIMoveResult_t *pResult );
     virtual bool OnMoveBlocked( AIMoveResult_t *pResult );
 
     //---------------------------------

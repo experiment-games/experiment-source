@@ -48,7 +48,7 @@
 #define STEAM_PRIVATE_API( ... )
 #else
 #define STEAM_PRIVATE_API( ... ) \
-   protected:                    \
+    protected:                    \
     __VA_ARGS__ public:
 #endif
 
@@ -141,7 +141,7 @@ S_API void S_CALLTYPE SteamGameServer_RunCallbacks();
 //-----------------------------------------------------------------------------
 class CCallbackBase
 {
-   public:
+    public:
     CCallbackBase()
     {
         m_nCallbackFlags = 0;
@@ -156,7 +156,7 @@ class CCallbackBase
     }
     virtual int GetCallbackSizeBytes() = 0;
 
-   protected:
+    protected:
     enum
     {
         k_ECallbackFlagsRegistered = 0x01,
@@ -166,7 +166,7 @@ class CCallbackBase
     int m_iCallback;
     friend class CCallbackMgr;
 
-   private:
+    private:
     CCallbackBase( const CCallbackBase & );
     CCallbackBase &operator=( const CCallbackBase & );
 };
@@ -177,7 +177,7 @@ class CCallbackBase
 template < int sizeof_P >
 class CCallbackImpl : protected CCallbackBase
 {
-   public:
+    public:
     virtual ~CCallbackImpl()
     {
         if ( m_nCallbackFlags & k_ECallbackFlagsRegistered ) SteamAPI_UnregisterCallback( this );
@@ -187,7 +187,7 @@ class CCallbackImpl : protected CCallbackBase
         m_nCallbackFlags |= k_ECallbackFlagsGameServer;
     }
 
-   protected:
+    protected:
     friend class CCallbackMgr;
     virtual void Run( void *pvParam ) S_OVERRIDE = 0;
     virtual void Run( void *pvParam, bool /*bIOFailure*/, SteamAPICall_t /*hSteamAPICall*/ ) S_OVERRIDE
@@ -207,7 +207,7 @@ class CCallbackImpl : protected CCallbackBase
 template < class T, class P >
 class CCallResult : private CCallbackBase
 {
-   public:
+    public:
     typedef void ( T::*func_t )( P *, bool );
 
     CCallResult();
@@ -222,7 +222,7 @@ class CCallResult : private CCallbackBase
         m_nCallbackFlags |= k_ECallbackFlagsGameServer;
     }
 
-   private:
+    private:
     virtual void Run( void *pvParam ) S_OVERRIDE;
     virtual void Run( void *pvParam, bool bIOFailure, SteamAPICall_t hSteamAPICall ) S_OVERRIDE;
     virtual int GetCallbackSizeBytes() S_OVERRIDE
@@ -243,7 +243,7 @@ class CCallResult : private CCallbackBase
 template < class T, class P, bool bGameserver = false >
 class CCallback : public CCallbackImpl< sizeof( P ) >
 {
-   public:
+    public:
     typedef void ( T::*func_t )( P * );
 
     // NOTE: If you can't provide the correct parameters at construction time, you should
@@ -253,7 +253,7 @@ class CCallback : public CCallbackImpl< sizeof( P ) >
     void Register( T *pObj, func_t func );
     void Unregister();
 
-   protected:
+    protected:
     virtual void Run( void *pvParam ) S_OVERRIDE;
 
     T *m_pObj;
@@ -267,7 +267,7 @@ class CCallback : public CCallbackImpl< sizeof( P ) >
 template < class T, class P, bool bGameServer = false >
 class CCallbackManual : public CCallback< T, P, bGameServer >
 {
-   public:
+    public:
     CCallbackManual()
         : CCallback< T, P, bGameServer >( nullptr, nullptr ) {}
 

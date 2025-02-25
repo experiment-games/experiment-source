@@ -29,7 +29,7 @@ struct AsyncCaption_t
 {
     AsyncCaption_t()
         : m_DataBaseFile( UTL_INVAL_SYMBOL ),
-          m_RequestedBlocks( 0, 0, BlockInfo_t::Less )
+        m_RequestedBlocks( 0, 0, BlockInfo_t::Less )
     {
         Q_memset( &m_Header, 0, sizeof( m_Header ) );
     }
@@ -80,7 +80,7 @@ class CHudCloseCaption : public CHudElement, public vgui::Panel
 {
     DECLARE_CLASS_SIMPLE( CHudCloseCaption, vgui::Panel );
 
-   public:
+    public:
     DECLARE_MULTIPLY_INHERITED();
 
     CHudCloseCaption( const char *pElementName );
@@ -134,14 +134,14 @@ class CHudCloseCaption : public CHudElement, public vgui::Panel
 
     void FindSound( char const *pchANSI );
 
-   public:
+    public:
     struct CaptionRepeat
     {
         CaptionRepeat()
             : m_nTokenIndex( 0 ),
-              m_flLastEmitTime( 0 ),
-              m_flInterval( 0 ),
-              m_nLastEmitTick( 0 )
+            m_flLastEmitTime( 0 ),
+            m_flInterval( 0 ),
+            m_nLastEmitTick( 0 )
         {
         }
         int m_nTokenIndex;
@@ -150,7 +150,7 @@ class CHudCloseCaption : public CHudElement, public vgui::Panel
         float m_flInterval;
     };
 
-   private:
+    private:
     void ClearAsyncWork();
     void ProcessAsyncWork();
     bool AddAsyncWork( char const *tokenstream, bool bIsStream, float duration, bool fromplayer, bool direct = false );
@@ -162,7 +162,7 @@ class CHudCloseCaption : public CHudElement, public vgui::Panel
 
     CUtlRBTree< CaptionRepeat, int > m_CloseCaptionRepeats;
 
-   private:
+    private:
     static bool CaptionTokenLessFunc( const CaptionRepeat &lhs, const CaptionRepeat &rhs );
 
     void DrawStream( wrect_t &rect, wrect_t &rcWindow, CCloseCaptionItem *item, int iFadeLine, float flFadeLineAlpha );

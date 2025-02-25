@@ -33,7 +33,7 @@ class CHudPosture : public CHudElement, public vgui::Panel
 {
     DECLARE_CLASS_SIMPLE( CHudPosture, vgui::Panel );
 
-   public:
+    public:
     CHudPosture( const char *pElementName );
     bool ShouldDraw( void );
 
@@ -42,19 +42,19 @@ class CHudPosture : public CHudElement, public vgui::Panel
     virtual void Reset( void );
     virtual void OnTick( void );
 
-   protected:
+    protected:
     virtual void Paint();
 
     float m_duckTimeout;  /// HUD_POSTURE_FADE_TIME after the last known time the player was ducking
 
-   private:
+    private:
     CPanelAnimationVar( vgui::HFont, m_hFont, "Font", "WeaponIconsSmall" );
     CPanelAnimationVarAliasType( float, m_IconX, "icon_xpos", "4", "proportional_float" );
     CPanelAnimationVarAliasType( float, m_IconY, "icon_ypos", "4", "proportional_float" );
 
     enum { NOT_FADING,
-           FADING_UP,
-           FADING_DOWN } m_kIsFading;
+            FADING_UP,
+            FADING_DOWN } m_kIsFading;
 #endif
 };
 
@@ -66,7 +66,7 @@ namespace
 inline bool PlayerIsDucking( C_BasePlayer *pPlayer )
 {
     return pPlayer->m_Local.m_bDucked &&        // crouching
-           pPlayer->GetGroundEntity() != NULL;  // but not jumping
+            pPlayer->GetGroundEntity() != NULL;  // but not jumping
 }
 }  // namespace
 
@@ -96,7 +96,7 @@ bool CHudPosture::ShouldDraw()
 {
 #ifdef _X360
     return ( m_duckTimeout >= gpGlobals->curtime &&
-             CHudElement::ShouldDraw() );
+            CHudElement::ShouldDraw() );
 #else
     return false;
 #endif

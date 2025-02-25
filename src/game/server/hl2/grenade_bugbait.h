@@ -30,7 +30,7 @@ extern ConVar bugbait_grenade_radius;
 
 class CBugBaitSensor : public CPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CBugBaitSensor, CPointEntity );
 
     DECLARE_DATADESC();
@@ -90,12 +90,12 @@ class CBugBaitSensor : public CPointEntity
         return !m_bEnabled;
     }
 
-   protected:
+    protected:
     float m_flRadius;
     bool m_bEnabled;
     COutputEvent m_OnBaited;
 
-   public:
+    public:
     CBugBaitSensor *m_pNext;
 };
 
@@ -107,7 +107,7 @@ class CGrenadeBugBait : public CBaseGrenade
 {
     DECLARE_CLASS( CGrenadeBugBait, CBaseGrenade );
 
-   public:
+    public:
     void Spawn( void );
     void Precache( void );
 
@@ -121,7 +121,7 @@ class CGrenadeBugBait : public CBaseGrenade
 
     DECLARE_DATADESC();
 
-   protected:
+    protected:
     void CreateTarget( const Vector &position, CBaseEntity *pOther );
 
     float m_flGracePeriodEndsAt;

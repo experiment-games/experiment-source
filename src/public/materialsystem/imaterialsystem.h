@@ -481,9 +481,9 @@ struct FlashlightState_t
     }
 
 #ifdef LUA_SDK
-   public:
+    public:
 #else
-   private:
+    private:
 #endif
 
     friend class CShadowMgr;
@@ -500,7 +500,7 @@ struct FlashlightState_t
 // results return.
 abstract_class IAsyncTextureOperationReceiver : public IRefCounted
 {
-   public:
+    public:
     virtual void OnAsyncCreateComplete( ITexture * pTex, void *pExtraArgs ) = 0;
     virtual void OnAsyncFindComplete( ITexture * pTex, void *pExtraArgs ) = 0;
     virtual void OnAsyncMapComplete( ITexture * pTex, void *pExtraArgs, void *pMemory, int nPitch ) = 0;
@@ -583,7 +583,7 @@ DECLARE_POINTER_HANDLE( MaterialLock_t );
 
 abstract_class IMaterialSystem : public IAppSystem
 {
-   public:
+    public:
     // Placeholder for API revision
     virtual bool Connect( CreateInterfaceFn factory ) = 0;
     virtual void Disconnect() = 0;
@@ -876,11 +876,11 @@ abstract_class IMaterialSystem : public IAppSystem
 
     // Creates a procedural texture
     virtual ITexture *CreateProceduralTexture( const char *pTextureName,
-                                               const char *pTextureGroupName,
-                                               int w,
-                                               int h,
-                                               ImageFormat fmt,
-                                               int nFlags ) = 0;
+                                                const char *pTextureGroupName,
+                                                int w,
+                                                int h,
+                                                ImageFormat fmt,
+                                                int nFlags ) = 0;
 
     //
     // Render targets
@@ -893,10 +893,10 @@ abstract_class IMaterialSystem : public IAppSystem
     // the screen's depth buffer is used.
     // Creates a texture for use as a render target
     virtual ITexture *CreateRenderTargetTexture( int w,
-                                                 int h,
-                                                 RenderTargetSizeMode_t sizeMode,  // Controls how size is generated (and regenerated on video mode change).
-                                                 ImageFormat format,
-                                                 MaterialRenderTargetDepth_t depth = MATERIAL_RT_DEPTH_SHARED ) = 0;
+                                                int h,
+                                                RenderTargetSizeMode_t sizeMode,  // Controls how size is generated (and regenerated on video mode change).
+                                                ImageFormat format,
+                                                MaterialRenderTargetDepth_t depth = MATERIAL_RT_DEPTH_SHARED ) = 0;
 
     virtual ITexture *CreateNamedRenderTargetTextureEx( const char *pRTName,  // Pass in NULL here for an unnamed render target.
                                                         int w,
@@ -908,23 +908,23 @@ abstract_class IMaterialSystem : public IAppSystem
                                                         unsigned int renderTargetFlags = 0 ) = 0;
 
     virtual ITexture *CreateNamedRenderTargetTexture( const char *pRTName,
-                                                      int w,
-                                                      int h,
-                                                      RenderTargetSizeMode_t sizeMode,  // Controls how size is generated (and regenerated on video mode change).
-                                                      ImageFormat format,
-                                                      MaterialRenderTargetDepth_t depth = MATERIAL_RT_DEPTH_SHARED,
-                                                      bool bClampTexCoords = true,
-                                                      bool bAutoMipMap = false ) = 0;
+                                                    int w,
+                                                    int h,
+                                                    RenderTargetSizeMode_t sizeMode,  // Controls how size is generated (and regenerated on video mode change).
+                                                    ImageFormat format,
+                                                    MaterialRenderTargetDepth_t depth = MATERIAL_RT_DEPTH_SHARED,
+                                                    bool bClampTexCoords = true,
+                                                    bool bAutoMipMap = false ) = 0;
 
     // Must be called between the above Begin-End calls!
     virtual ITexture *CreateNamedRenderTargetTextureEx2( const char *pRTName,  // Pass in NULL here for an unnamed render target.
-                                                         int w,
-                                                         int h,
-                                                         RenderTargetSizeMode_t sizeMode,  // Controls how size is generated (and regenerated on video mode change).
-                                                         ImageFormat format,
-                                                         MaterialRenderTargetDepth_t depth = MATERIAL_RT_DEPTH_SHARED,
-                                                         unsigned int textureFlags = TEXTUREFLAGS_CLAMPS | TEXTUREFLAGS_CLAMPT,
-                                                         unsigned int renderTargetFlags = 0 ) = 0;
+                                                        int w,
+                                                        int h,
+                                                        RenderTargetSizeMode_t sizeMode,  // Controls how size is generated (and regenerated on video mode change).
+                                                        ImageFormat format,
+                                                        MaterialRenderTargetDepth_t depth = MATERIAL_RT_DEPTH_SHARED,
+                                                        unsigned int textureFlags = TEXTUREFLAGS_CLAMPS | TEXTUREFLAGS_CLAMPT,
+                                                        unsigned int renderTargetFlags = 0 ) = 0;
 
     // -----------------------------------------------------------
     // Lightmaps
@@ -1079,7 +1079,7 @@ abstract_class IMaterialSystem : public IAppSystem
 //-----------------------------------------------------------------------------
 abstract_class IMatRenderContext : public IRefCounted
 {
-   public:
+    public:
     virtual void BeginRender() = 0;
     virtual void EndRender() = 0;
 
@@ -1561,14 +1561,14 @@ inline E *IMatRenderContext::LockRenderDataTyped( int nCount, const E *pSrcData 
 //-----------------------------------------------------------------------------
 class CMatRenderDataReference
 {
-   public:
+    public:
     CMatRenderDataReference();
     CMatRenderDataReference( IMatRenderContext *pRenderContext );
     ~CMatRenderDataReference();
     void Lock( IMatRenderContext *pRenderContext );
     void Release();
 
-   private:
+    private:
     IMatRenderContext *m_pRenderContext;
 };
 
@@ -1612,7 +1612,7 @@ inline void CMatRenderDataReference::Release()
 template < typename E >
 class CMatRenderData
 {
-   public:
+    public:
     CMatRenderData( IMatRenderContext *pRenderContext );
     CMatRenderData( IMatRenderContext *pRenderContext, int nCount, const E *pSrcData = NULL );
     ~CMatRenderData();
@@ -1624,7 +1624,7 @@ class CMatRenderData
     const E &operator[]( int i ) const;
     E &operator[]( int i );
 
-   private:
+    private:
     IMatRenderContext *m_pRenderContext;
     E *m_pRenderData;
     int m_nCount;
@@ -1731,7 +1731,7 @@ class CMatRenderContextPtr : public CRefPtr< IMatRenderContext >
 {
     typedef CRefPtr< IMatRenderContext > BaseClass;
 
-   public:
+    public:
     CMatRenderContextPtr() {}
     CMatRenderContextPtr( IMatRenderContext *pInit )
         : BaseClass( pInit )
@@ -1771,7 +1771,7 @@ class CMatRenderContextPtr : public CRefPtr< IMatRenderContext >
         AssignAddRef( pFrom->GetRenderContext() );
     }
 
-   private:
+    private:
     CMatRenderContextPtr( const CMatRenderContextPtr &from );
     void operator=( const CMatRenderContextPtr &from );
 };
@@ -1783,7 +1783,7 @@ class CMatRenderContextPtr : public CRefPtr< IMatRenderContext >
 
 class PIXEvent
 {
-   public:
+    public:
     PIXEvent( IMatRenderContext *pRenderContext, const char *szName, unsigned long color = PIX_VALVE_ORANGE )
     {
         m_pRenderContext = pRenderContext;
@@ -1796,7 +1796,7 @@ class PIXEvent
         m_pRenderContext->EndPIXEvent();
     }
 
-   private:
+    private:
     IMatRenderContext *m_pRenderContext;
 };
 

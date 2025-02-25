@@ -18,7 +18,7 @@ class C_SceneEntity : public C_BaseEntity, public IChoreoEventCallback
 {
     friend class CChoreoEventCallback;
 
-   public:
+    public:
     DECLARE_CLASS( C_SceneEntity, C_BaseEntity );
     DECLARE_CLIENTCLASS();
 
@@ -54,7 +54,7 @@ class C_SceneEntity : public C_BaseEntity, public IChoreoEventCallback
         return m_bClientOnly;
     }
 
-   private:
+    private:
     void ResetActorFlexesForScene();
 
     // Scene load/unload
@@ -86,7 +86,7 @@ class C_SceneEntity : public C_BaseEntity, public IChoreoEventCallback
 
     bool GetHWMorphSceneFileName( const char *pFilename, char *pHWMFilename );
 
-   private:
+    private:
     void CheckQueuedEvents();
     void WipeQueuedEvents();
     void QueueStartEvent( float starttime, CChoreoScene *scene, CChoreoEvent *event );
@@ -103,7 +103,7 @@ class C_SceneEntity : public C_BaseEntity, public IChoreoEventCallback
 
     CUtlVector< CHandle< C_BaseFlex > > m_hActorList;
 
-   private:
+    private:
     bool m_bWasPlaying;
 
     CChoreoScene *m_pScene;
@@ -123,7 +123,7 @@ class C_SceneEntity : public C_BaseEntity, public IChoreoEventCallback
 //-----------------------------------------------------------------------------
 class CChoreoStringPool : public IChoreoStringPool
 {
-   public:
+    public:
     short FindOrAddString( const char *pString )
     {
         // huh?, no compilation at run time, only fetches

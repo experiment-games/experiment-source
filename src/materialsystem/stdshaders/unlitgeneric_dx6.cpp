@@ -20,7 +20,7 @@ DEFINE_FALLBACK_SHADER( WindowImposter, WindowImposter_DX60 )
 DEFINE_FALLBACK_SHADER( WindowImposter_DX60, UnlitGeneric_DX6 )
 
 BEGIN_SHADER( UnlitGeneric_DX6,
-              "Help for UnlitGeneric_DX6" )
+            "Help for UnlitGeneric_DX6" )
 
 BEGIN_SHADER_PARAMS
 SHADER_PARAM( DETAIL, SHADER_PARAM_TYPE_TEXTURE, "shadertest/detail", "detail texture" )
@@ -291,7 +291,7 @@ SHADER_DRAW
 
     // Second pass...
     if ( params[ENVMAP]->IsTexture() &&
-         ( !doFirstPass || IS_FLAG_SET( MATERIAL_VAR_MULTIPASS ) ) )
+        ( !doFirstPass || IS_FLAG_SET( MATERIAL_VAR_MULTIPASS ) ) )
     {
         if ( doFirstPass || IS_FLAG_SET( MATERIAL_VAR_ADDITIVE ) )
         {

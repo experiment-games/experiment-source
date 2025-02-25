@@ -43,7 +43,7 @@ class CHudHealth : public CHudElement, public CHudNumericDisplay
 {
     DECLARE_CLASS_SIMPLE( CHudHealth, CHudNumericDisplay );
 
-   public:
+    public:
     CHudHealth( const char *pElementName );
     virtual void Init( void );
     virtual void VidInit( void );
@@ -51,7 +51,7 @@ class CHudHealth : public CHudElement, public CHudNumericDisplay
     virtual void OnThink();
     void MsgFunc_Damage( bf_read &msg );
 
-   private:
+    private:
     // old variables
     int m_iHealth;
 

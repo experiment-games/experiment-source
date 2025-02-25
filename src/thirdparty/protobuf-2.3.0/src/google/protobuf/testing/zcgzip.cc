@@ -60,18 +60,18 @@ int main(int argc, const char** argv) {
     int outlen;
     bool ok;
     do {
-      ok = out.Next(&outptr, &outlen);
-      if (!ok) {
+    ok = out.Next(&outptr, &outlen);
+    if (!ok) {
         break;
-      }
+    }
     } while (outlen <= 0);
     readlen = read(STDIN_FILENO, outptr, outlen);
     if (readlen <= 0) {
-      out.BackUp(outlen);
-      break;
+    out.BackUp(outlen);
+    break;
     }
     if (readlen < outlen) {
-      out.BackUp(outlen - readlen);
+    out.BackUp(outlen - readlen);
     }
   }
 

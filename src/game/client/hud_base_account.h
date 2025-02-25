@@ -18,7 +18,7 @@ using namespace vgui;
 
 class CHudBaseAccount : public CHudElement, public CHudNumericDisplay
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CHudBaseAccount, CHudNumericDisplay );
 
     CHudBaseAccount( const char *name );
@@ -45,7 +45,7 @@ class CHudBaseAccount : public CHudElement, public CHudNumericDisplay
         return NULL;
     }
 
-   private:
+    private:
     int m_iPreviousAccount;
     int m_iPreviousDelta;
     CHudTexture *m_pAccountIcon;

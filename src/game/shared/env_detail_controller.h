@@ -14,7 +14,7 @@
 //-----------------------------------------------------------------------------
 class CEnvDetailController : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CEnvDetailController, CBaseEntity );
     DECLARE_NETWORKCLASS();
 

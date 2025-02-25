@@ -21,7 +21,7 @@
 //-----------------------------------------------------------------------------
 class CTEBloodStream : public CTEParticleSystem
 {
-   public:
+    public:
     DECLARE_CLASS( CTEBloodStream, CTEParticleSystem );
 
     CTEBloodStream( const char* name );
@@ -31,7 +31,7 @@ class CTEBloodStream : public CTEParticleSystem
 
     DECLARE_SERVERCLASS();
 
-   public:
+    public:
     CNetworkVector( m_vecDirection );
     CNetworkVar( int, r );
     CNetworkVar( int, g );

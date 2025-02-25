@@ -72,11 +72,11 @@ class GTestColorTest(gtest_test_utils.TestCase):
     """Tests the case when there's neither GTEST_COLOR nor --gtest_color."""
 
     if not IS_WINDOWS:
-      self.assert_(not UsesColor('dumb', None, None))
-      self.assert_(not UsesColor('emacs', None, None))
-      self.assert_(not UsesColor('xterm-mono', None, None))
-      self.assert_(not UsesColor('unknown', None, None))
-      self.assert_(not UsesColor(None, None, None))
+    self.assert_(not UsesColor('dumb', None, None))
+    self.assert_(not UsesColor('emacs', None, None))
+    self.assert_(not UsesColor('xterm-mono', None, None))
+    self.assert_(not UsesColor('unknown', None, None))
+    self.assert_(not UsesColor(None, None, None))
     self.assert_(UsesColor('linux', None, None))
     self.assert_(UsesColor('cygwin', None, None))
     self.assert_(UsesColor('xterm', None, None))
@@ -89,7 +89,7 @@ class GTestColorTest(gtest_test_utils.TestCase):
     self.assert_(not UsesColor('dumb', None, 'no'))
     self.assert_(not UsesColor('xterm-color', None, 'no'))
     if not IS_WINDOWS:
-      self.assert_(not UsesColor('emacs', None, 'auto'))
+    self.assert_(not UsesColor('emacs', None, 'auto'))
     self.assert_(UsesColor('xterm', None, 'auto'))
     self.assert_(UsesColor('dumb', None, 'yes'))
     self.assert_(UsesColor('xterm', None, 'yes'))
@@ -100,7 +100,7 @@ class GTestColorTest(gtest_test_utils.TestCase):
     self.assert_(not UsesColor('dumb', 'no', None))
     self.assert_(not UsesColor('xterm-color', 'no', None))
     if not IS_WINDOWS:
-      self.assert_(not UsesColor('dumb', 'auto', None))
+    self.assert_(not UsesColor('dumb', 'auto', None))
     self.assert_(UsesColor('xterm-color', 'auto', None))
     self.assert_(UsesColor('dumb', 'yes', None))
     self.assert_(UsesColor('xterm-color', 'yes', None))

@@ -19,7 +19,7 @@ class C_PropVehicleDriveable : public C_BaseAnimating, public IClientVehicle
 {
     DECLARE_CLASS( C_PropVehicleDriveable, C_BaseAnimating );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
     DECLARE_INTERPOLATION();
     DECLARE_DATADESC();
@@ -28,7 +28,7 @@ class C_PropVehicleDriveable : public C_BaseAnimating, public IClientVehicle
     ~C_PropVehicleDriveable();
 
     // IVehicle overrides.
-   public:
+    public:
     virtual C_BaseCombatCharacter *GetPassenger( int nRole );
     virtual int GetPassengerRole( C_BaseCombatCharacter *pEnt );
     virtual bool IsPassengerUsingStandardWeapons( int nRole = VEHICLE_ROLE_DRIVER )
@@ -55,7 +55,7 @@ class C_PropVehicleDriveable : public C_BaseAnimating, public IClientVehicle
     virtual void ItemPostFrame( C_BasePlayer *pPlayer ) {}
 
     // IClientVehicle overrides.
-   public:
+    public:
     virtual void GetVehicleFOV( float &flFOV )
     {
         flFOV = m_flFOV;
@@ -91,7 +91,7 @@ class C_PropVehicleDriveable : public C_BaseAnimating, public IClientVehicle
     virtual int GetJoystickResponseCurve() const;
 
     // C_BaseEntity overrides.
-   public:
+    public:
     virtual IClientVehicle *GetClientVehicle()
     {
         return this;
@@ -115,7 +115,7 @@ class C_PropVehicleDriveable : public C_BaseAnimating, public IClientVehicle
     virtual void ClientThink( void );
 
     // C_PropVehicleDriveable
-   public:
+    public:
     bool IsRunningEnterExitAnim( void )
     {
         return m_bEnterAnimOn || m_bExitAnimOn;
@@ -126,7 +126,7 @@ class C_PropVehicleDriveable : public C_BaseAnimating, public IClientVehicle
         return m_bHasGun;
     }
 
-   protected:
+    protected:
     virtual void OnEnteredVehicle( C_BaseCombatCharacter *pPassenger );
     // NVNT added to notify haptics system of vehicle exit.
     virtual void OnExitedVehicle( C_BaseCombatCharacter *pPassenger );
@@ -137,7 +137,7 @@ class C_PropVehicleDriveable : public C_BaseAnimating, public IClientVehicle
         m_flFOV = flFOV;
     }
 
-   protected:
+    protected:
     CHandle< C_BasePlayer > m_hPlayer;
     int m_nSpeed;
     int m_nRPM;

@@ -19,7 +19,7 @@ struct SteamRelayNetworkStatus_t;
 /// and estimating pings.
 class ISteamNetworkingUtils
 {
-   public:
+    public:
     //
     // Efficient message sending
     //
@@ -348,7 +348,7 @@ class ISteamNetworkingUtils
     virtual void SteamNetworkingIdentity_ToString( const SteamNetworkingIdentity &identity, char *buf, size_t cbBuf ) = 0;
     virtual bool SteamNetworkingIdentity_ParseString( SteamNetworkingIdentity *pIdentity, const char *pszStr ) = 0;
 
-   protected:
+    protected:
     ~ISteamNetworkingUtils();  // Silence some warnings
 };
 #define STEAMNETWORKINGUTILS_INTERFACE_VERSION "SteamNetworkingUtils004"
@@ -376,11 +376,11 @@ inline ISteamNetworkingUtils *SteamNetworkingUtils()
 // Using Steamworks SDK
 #ifdef STEAMNETWORKINGSOCKETS_STEAMAPI
 STEAM_DEFINE_INTERFACE_ACCESSOR( ISteamNetworkingUtils *, SteamNetworkingUtils_SteamAPI,
-                                 /* Prefer user version of the interface.  But if it isn't found, then use
-                                 gameserver one.  Yes, this is a completely terrible hack */
-                                 SteamInternal_FindOrCreateUserInterface( 0, STEAMNETWORKINGUTILS_INTERFACE_VERSION ) ? SteamInternal_FindOrCreateUserInterface( 0, STEAMNETWORKINGUTILS_INTERFACE_VERSION ) : SteamInternal_FindOrCreateGameServerInterface( 0, STEAMNETWORKINGUTILS_INTERFACE_VERSION ),
-                                 "global",
-                                 STEAMNETWORKINGUTILS_INTERFACE_VERSION )
+                                /* Prefer user version of the interface.  But if it isn't found, then use
+                                gameserver one.  Yes, this is a completely terrible hack */
+                                SteamInternal_FindOrCreateUserInterface( 0, STEAMNETWORKINGUTILS_INTERFACE_VERSION ) ? SteamInternal_FindOrCreateUserInterface( 0, STEAMNETWORKINGUTILS_INTERFACE_VERSION ) : SteamInternal_FindOrCreateGameServerInterface( 0, STEAMNETWORKINGUTILS_INTERFACE_VERSION ),
+                                "global",
+                                STEAMNETWORKINGUTILS_INTERFACE_VERSION )
 
 #ifndef STEAMNETWORKINGSOCKETS_STANDALONELIB
 inline ISteamNetworkingUtils *SteamNetworkingUtils()
@@ -443,7 +443,7 @@ struct SteamNetworkingIdentityRender
         return buf;
     }
 
-   private:
+    private:
     char buf[SteamNetworkingIdentity::k_cchMaxString];
 };
 
@@ -459,7 +459,7 @@ struct SteamNetworkingIPAddrRender
         return buf;
     }
 
-   private:
+    private:
     char buf[SteamNetworkingIPAddr::k_cchMaxString];
 };
 

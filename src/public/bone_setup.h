@@ -24,14 +24,14 @@ class IPoseDebugger;
 // the entity is marked as changed.
 abstract_class IParameterAccess
 {
-   public:
+    public:
     virtual float GetParameter( int iParam ) = 0;
     virtual void SetParameter( int iParam, float flValue ) = 0;
 };
 
 class CBoneBitList : public CBitVec< MAXSTUDIOBONES >
 {
-   public:
+    public:
     inline void MarkBone( int iBone )
     {
         Set( iBone );
@@ -45,7 +45,7 @@ class CBoneBitList : public CBitVec< MAXSTUDIOBONES >
 class CBoneSetup;
 class IBoneSetup
 {
-   public:
+    public:
     IBoneSetup( const CStudioHdr *pStudioHdr, int boneMask, const float poseParameter[], IPoseDebugger *pPoseDebugger = NULL );
     ~IBoneSetup( void );
     void InitPose( Vector pos[], Quaternion[] );
@@ -54,7 +54,7 @@ class IBoneSetup
     void CalcBoneAdj( Vector pos[], Quaternion q[], const float controllers[] );
     CStudioHdr *GetStudioHdr();
 
-   private:
+    private:
     CBoneSetup *m_pBoneSetup;
 };
 
@@ -115,7 +115,7 @@ void BuildBoneChain(
 // ik info
 class CIKTarget
 {
-   public:
+    public:
     void SetOwner( int entindex, const Vector &pos, const QAngle &angles );
     void ClearOwner( void );
     int GetOwner( void );
@@ -133,7 +133,7 @@ class CIKTarget
     int type;
     void MoveReferenceFrame( Vector &deltaPos, QAngle &deltaAngles );
     // accumulated offset from ideal footplant location
-   public:
+    public:
     struct x2
     {
         char *pAttachmentName;
@@ -141,14 +141,14 @@ class CIKTarget
         Quaternion q;
     } offset;
 
-   private:
+    private:
     struct x3
     {
         Vector pos;
         Quaternion q;
     } ideal;
 
-   public:
+    public:
     struct x4
     {
         float latched;
@@ -174,7 +174,7 @@ class CIKTarget
         Vector lowest;     // lowest position directly below hip that the foot can drop to
     } trace;
 
-   private:
+    private:
     // internally latched footset, position
     struct x1
     {
@@ -250,7 +250,7 @@ struct ikcontextikrule_t
 
     ikcontextikrule_t() {}
 
-   private:
+    private:
     // No copy constructors allowed
     ikcontextikrule_t( const ikcontextikrule_t &vOther );
 };
@@ -263,7 +263,7 @@ bool Studio_SolveIK( int iThigh, int iKnee, int iFoot, Vector &targetFoot, Vecto
 
 class CIKContext
 {
-   public:
+    public:
     CIKContext();
     void Init( const CStudioHdr *pStudioHdr, const QAngle &angles, const Vector &pos, float flTime, int iFramecounter, int boneMask );
     void AddDependencies( mstudioseqdesc_t &seqdesc, int iSequence, float flCycle, const float poseParameters[], float flWeight = 1.0f );
@@ -286,7 +286,7 @@ class CIKContext
 
     CUtlVectorFixed< CIKTarget, 12 > m_target;
 
-   private:
+    private:
     CStudioHdr const *m_pStudioHdr;
 
     bool Estimate( int iSequence, float flCycle, int iTarget, const float poseParameter[], float flWeight = 1.0f );
@@ -380,7 +380,7 @@ struct bonecacheparams_t
 
 class CBoneCache
 {
-   public:
+    public:
     // you must implement these static functions for the ResourceManager
     // -----------------------------------------------------------
     static CBoneCache *CreateResource( const bonecacheparams_t &params );
@@ -410,11 +410,11 @@ class CBoneCache
 
     bool IsValid( float curtime, float dt = 0.1f );
 
-   public:
+    public:
     float m_timeValid;
     int m_boneMask;
 
-   private:
+    private:
     matrix3x4_t *BoneArray();
     short *StudioToCached();
     short *CachedToStudio();

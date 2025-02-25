@@ -24,7 +24,7 @@ class CGameWeaponManager : public CBaseEntity
     DECLARE_CLASS( CGameWeaponManager, CBaseEntity );
     DECLARE_DATADESC();
 
-   public:
+    public:
     void Spawn();
     CGameWeaponManager()
     {

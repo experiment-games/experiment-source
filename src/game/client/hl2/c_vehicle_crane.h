@@ -18,7 +18,7 @@ class C_PropCrane : public C_BaseAnimating, public IClientVehicle
 {
     DECLARE_CLASS( C_PropCrane, C_BaseAnimating );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
     DECLARE_DATADESC();
 
@@ -32,7 +32,7 @@ class C_PropCrane : public C_BaseAnimating, public IClientVehicle
         return m_bMagnetOn;
     }
 
-   public:
+    public:
     // IClientVehicle overrides.
     virtual void GetVehicleViewPosition( int nRole, Vector *pOrigin, QAngle *pAngles, float *pFOV = NULL );
     virtual void GetVehicleFOV( float &flFOV )
@@ -69,7 +69,7 @@ class C_PropCrane : public C_BaseAnimating, public IClientVehicle
         return 0;
     }
 
-   public:
+    public:
     // C_BaseEntity overrides.
     virtual IClientVehicle *GetClientVehicle()
     {
@@ -93,7 +93,7 @@ class C_PropCrane : public C_BaseAnimating, public IClientVehicle
     };
     virtual void GetRenderBounds( Vector &theMins, Vector &theMaxs );
 
-   private:
+    private:
     CHandle< C_BasePlayer > m_hPlayer;
     CHandle< C_BasePlayer > m_hPrevPlayer;
 

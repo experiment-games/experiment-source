@@ -35,7 +35,7 @@ AC_DEFUN([AM_AUTOMAKE_VERSION],
 dnl Some users find AM_AUTOMAKE_VERSION and mistake it for a way to
 dnl require some minimum version.  Point them to the right macro.
 m4_if([$1], [1.10.1], [],
-      [AC_FATAL([Do not call $0, use AM_INIT_AUTOMAKE([$1]).])])dnl
+    [AC_FATAL([Do not call $0, use AM_INIT_AUTOMAKE([$1]).])])dnl
 ])
 
 # _AM_AUTOCONF_VERSION(VERSION)
@@ -125,7 +125,7 @@ am_aux_dir=`cd $ac_aux_dir && pwd`
 AC_DEFUN([AM_CONDITIONAL],
 [AC_PREREQ(2.52)dnl
  ifelse([$1], [TRUE],  [AC_FATAL([$0: invalid condition: $1])],
-	[$1], [FALSE], [AC_FATAL([$0: invalid condition: $1])])dnl
+    [$1], [FALSE], [AC_FATAL([$0: invalid condition: $1])])dnl
 AC_SUBST([$1_TRUE])dnl
 AC_SUBST([$1_FALSE])dnl
 _AM_SUBST_NOTMAKE([$1_TRUE])dnl
@@ -176,14 +176,14 @@ AC_REQUIRE([AM_MAKE_INCLUDE])dnl
 AC_REQUIRE([AM_DEP_TRACK])dnl
 
 ifelse([$1], CC,   [depcc="$CC"   am_compiler_list=],
-       [$1], CXX,  [depcc="$CXX"  am_compiler_list=],
-       [$1], OBJC, [depcc="$OBJC" am_compiler_list='gcc3 gcc'],
-       [$1], UPC,  [depcc="$UPC"  am_compiler_list=],
-       [$1], GCJ,  [depcc="$GCJ"  am_compiler_list='gcc3 gcc'],
-                   [depcc="$$1"   am_compiler_list=])
+        [$1], CXX,  [depcc="$CXX"  am_compiler_list=],
+        [$1], OBJC, [depcc="$OBJC" am_compiler_list='gcc3 gcc'],
+        [$1], UPC,  [depcc="$UPC"  am_compiler_list=],
+        [$1], GCJ,  [depcc="$GCJ"  am_compiler_list='gcc3 gcc'],
+                    [depcc="$$1"   am_compiler_list=])
 
 AC_CACHE_CHECK([dependency style of $depcc],
-               [am_cv_$1_dependencies_compiler_type],
+                [am_cv_$1_dependencies_compiler_type],
 [if test -z "$AMDEP_TRUE" && test -f "$am_depcomp"; then
   # We make a subdir and do the tests there.  Otherwise we can end up
   # making bogus files that we don't know about and never remove.  For
@@ -205,7 +205,7 @@ AC_CACHE_CHECK([dependency style of $depcc],
 
   am_cv_$1_dependencies_compiler_type=none
   if test "$am_compiler_list" = ""; then
-     am_compiler_list=`sed -n ['s/^#*\([a-zA-Z0-9]*\))$/\1/p'] < ./depcomp`
+    am_compiler_list=`sed -n ['s/^#*\([a-zA-Z0-9]*\))$/\1/p'] < ./depcomp`
   fi
   for depmode in $am_compiler_list; do
     # Setup a source with many dependencies, because some compilers
@@ -217,49 +217,49 @@ AC_CACHE_CHECK([dependency style of $depcc],
     # This happens at least with the AIX C compiler.
     : > sub/conftest.c
     for i in 1 2 3 4 5 6; do
-      echo '#include "conftst'$i'.h"' >> sub/conftest.c
-      # Using `: > sub/conftst$i.h' creates only sub/conftst1.h with
-      # Solaris 8's {/usr,}/bin/sh.
-      touch sub/conftst$i.h
+    echo '#include "conftst'$i'.h"' >> sub/conftest.c
+    # Using `: > sub/conftst$i.h' creates only sub/conftst1.h with
+    # Solaris 8's {/usr,}/bin/sh.
+    touch sub/conftst$i.h
     done
     echo "${am__include} ${am__quote}sub/conftest.Po${am__quote}" > confmf
 
     case $depmode in
     nosideeffect)
-      # after this tag, mechanisms are not by side-effect, so they'll
-      # only be used when explicitly requested
-      if test "x$enable_dependency_tracking" = xyes; then
-	continue
-      else
-	break
-      fi
-      ;;
+    # after this tag, mechanisms are not by side-effect, so they'll
+    # only be used when explicitly requested
+    if test "x$enable_dependency_tracking" = xyes; then
+    continue
+    else
+    break
+    fi
+    ;;
     none) break ;;
     esac
     # We check with `-c' and `-o' for the sake of the "dashmstdout"
     # mode.  It turns out that the SunPro C++ compiler does not properly
     # handle `-M -o', and we need to detect this.
     if depmode=$depmode \
-       source=sub/conftest.c object=sub/conftest.${OBJEXT-o} \
-       depfile=sub/conftest.Po tmpdepfile=sub/conftest.TPo \
-       $SHELL ./depcomp $depcc -c -o sub/conftest.${OBJEXT-o} sub/conftest.c \
-         >/dev/null 2>conftest.err &&
-       grep sub/conftst1.h sub/conftest.Po > /dev/null 2>&1 &&
-       grep sub/conftst6.h sub/conftest.Po > /dev/null 2>&1 &&
-       grep sub/conftest.${OBJEXT-o} sub/conftest.Po > /dev/null 2>&1 &&
-       ${MAKE-make} -s -f confmf > /dev/null 2>&1; then
-      # icc doesn't choke on unknown options, it will just issue warnings
-      # or remarks (even with -Werror).  So we grep stderr for any message
-      # that says an option was ignored or not supported.
-      # When given -MP, icc 7.0 and 7.1 complain thusly:
-      #   icc: Command line warning: ignoring option '-M'; no argument required
-      # The diagnosis changed in icc 8.0:
-      #   icc: Command line remark: option '-MP' not supported
-      if (grep 'ignoring option' conftest.err ||
-          grep 'not supported' conftest.err) >/dev/null 2>&1; then :; else
+        source=sub/conftest.c object=sub/conftest.${OBJEXT-o} \
+        depfile=sub/conftest.Po tmpdepfile=sub/conftest.TPo \
+        $SHELL ./depcomp $depcc -c -o sub/conftest.${OBJEXT-o} sub/conftest.c \
+        >/dev/null 2>conftest.err &&
+        grep sub/conftst1.h sub/conftest.Po > /dev/null 2>&1 &&
+        grep sub/conftst6.h sub/conftest.Po > /dev/null 2>&1 &&
+        grep sub/conftest.${OBJEXT-o} sub/conftest.Po > /dev/null 2>&1 &&
+        ${MAKE-make} -s -f confmf > /dev/null 2>&1; then
+    # icc doesn't choke on unknown options, it will just issue warnings
+    # or remarks (even with -Werror).  So we grep stderr for any message
+    # that says an option was ignored or not supported.
+    # When given -MP, icc 7.0 and 7.1 complain thusly:
+    #   icc: Command line warning: ignoring option '-M'; no argument required
+    # The diagnosis changed in icc 8.0:
+    #   icc: Command line remark: option '-MP' not supported
+    if (grep 'ignoring option' conftest.err ||
+        grep 'not supported' conftest.err) >/dev/null 2>&1; then :; else
         am_cv_$1_dependencies_compiler_type=$depmode
         break
-      fi
+    fi
     fi
   done
 
@@ -345,7 +345,7 @@ AC_DEFUN([_AM_OUTPUT_DEPENDENCY_COMMANDS],
   # expansion.
   for file in `sed -n "
     s/^$am__include $am__quote\(.*(DEPDIR).*\)$am__quote"'$/\1/p' <"$mf" | \
-       sed -e 's/\$(DEPDIR)/'"$DEPDIR"'/g' -e 's/\$U/'"$U"'/g'`; do
+        sed -e 's/\$(DEPDIR)/'"$DEPDIR"'/g' -e 's/\$U/'"$U"'/g'`; do
     # Make sure the directory exists.
     test -f "$dirpart/$file" && continue
     fdir=`AS_DIRNAME(["$file"])`
@@ -366,8 +366,8 @@ done
 # need in order to bootstrap the dependency handling code.
 AC_DEFUN([AM_OUTPUT_DEPENDENCY_COMMANDS],
 [AC_CONFIG_COMMANDS([depfiles],
-     [test x"$AMDEP_TRUE" != x"" || _AM_OUTPUT_DEPENDENCY_COMMANDS],
-     [AMDEP_TRUE="$AMDEP_TRUE" ac_aux_dir="$ac_aux_dir"])
+    [test x"$AMDEP_TRUE" != x"" || _AM_OUTPUT_DEPENDENCY_COMMANDS],
+    [AMDEP_TRUE="$AMDEP_TRUE" ac_aux_dir="$ac_aux_dir"])
 ])
 
 # Do all the work for Automake.                             -*- Autoconf -*-
@@ -456,21 +456,21 @@ AC_REQUIRE([AC_PROG_AWK])dnl
 AC_REQUIRE([AC_PROG_MAKE_SET])dnl
 AC_REQUIRE([AM_SET_LEADING_DOT])dnl
 _AM_IF_OPTION([tar-ustar], [_AM_PROG_TAR([ustar])],
-              [_AM_IF_OPTION([tar-pax], [_AM_PROG_TAR([pax])],
-	      		     [_AM_PROG_TAR([v7])])])
+            [_AM_IF_OPTION([tar-pax], [_AM_PROG_TAR([pax])],
+                        [_AM_PROG_TAR([v7])])])
 _AM_IF_OPTION([no-dependencies],,
 [AC_PROVIDE_IFELSE([AC_PROG_CC],
-                  [_AM_DEPENDENCIES(CC)],
-                  [define([AC_PROG_CC],
-                          defn([AC_PROG_CC])[_AM_DEPENDENCIES(CC)])])dnl
+                [_AM_DEPENDENCIES(CC)],
+                [define([AC_PROG_CC],
+                        defn([AC_PROG_CC])[_AM_DEPENDENCIES(CC)])])dnl
 AC_PROVIDE_IFELSE([AC_PROG_CXX],
-                  [_AM_DEPENDENCIES(CXX)],
-                  [define([AC_PROG_CXX],
-                          defn([AC_PROG_CXX])[_AM_DEPENDENCIES(CXX)])])dnl
+                [_AM_DEPENDENCIES(CXX)],
+                [define([AC_PROG_CXX],
+                        defn([AC_PROG_CXX])[_AM_DEPENDENCIES(CXX)])])dnl
 AC_PROVIDE_IFELSE([AC_PROG_OBJC],
-                  [_AM_DEPENDENCIES(OBJC)],
-                  [define([AC_PROG_OBJC],
-                          defn([AC_PROG_OBJC])[_AM_DEPENDENCIES(OBJC)])])dnl
+                [_AM_DEPENDENCIES(OBJC)],
+                [define([AC_PROG_OBJC],
+                        defn([AC_PROG_OBJC])[_AM_DEPENDENCIES(OBJC)])])dnl
 ])
 ])
 
@@ -489,9 +489,9 @@ _am_stamp_count=1
 for _am_header in $config_headers :; do
   case $_am_header in
     $_am_arg | $_am_arg:* )
-      break ;;
+    break ;;
     * )
-      _am_stamp_count=`expr $_am_stamp_count + 1` ;;
+    _am_stamp_count=`expr $_am_stamp_count + 1` ;;
   esac
 done
 echo "timestamp for $_am_arg" >`AS_DIRNAME(["$_am_arg"])`/stamp-h[]$_am_stamp_count])
@@ -548,7 +548,7 @@ AC_DEFUN([AM_MAKE_INCLUDE],
 [am_make=${MAKE-make}
 cat > confinc << 'END'
 am__doit:
-	@echo done
+    @echo done
 .PHONY: am__doit
 END
 # If we don't find an include directive, just comment out the code.
@@ -564,18 +564,18 @@ echo "include confinc" > confmf
 # be invoked under some other name (usually "gmake"), in which
 # case it prints its new name instead of `make'.
 if test "`$am_make -s -f confmf 2> /dev/null | grep -v 'ing directory'`" = "done"; then
-   am__include=include
-   am__quote=
-   _am_result=GNU
+    am__include=include
+    am__quote=
+    _am_result=GNU
 fi
 # Now try BSD make style include.
 if test "$am__include" = "#"; then
-   echo '.include "confinc"' > confmf
-   if test "`$am_make -s -f confmf 2> /dev/null`" = "done"; then
-      am__include=.include
-      am__quote="\""
-      _am_result=BSD
-   fi
+    echo '.include "confinc"' > confmf
+    if test "`$am_make -s -f confmf 2> /dev/null`" = "done"; then
+    am__include=.include
+    am__quote="\""
+    _am_result=BSD
+    fi
 fi
 AC_SUBST([am__include])
 AC_SUBST([am__quote])
@@ -702,30 +702,30 @@ echo timestamp > conftest.file
 # (eg FreeBSD returns the mod time of the symlink's containing
 # directory).
 if (
-   set X `ls -Lt $srcdir/configure conftest.file 2> /dev/null`
-   if test "$[*]" = "X"; then
-      # -L didn't work.
-      set X `ls -t $srcdir/configure conftest.file`
-   fi
-   rm -f conftest.file
-   if test "$[*]" != "X $srcdir/configure conftest.file" \
-      && test "$[*]" != "X conftest.file $srcdir/configure"; then
+    set X `ls -Lt $srcdir/configure conftest.file 2> /dev/null`
+    if test "$[*]" = "X"; then
+    # -L didn't work.
+    set X `ls -t $srcdir/configure conftest.file`
+    fi
+    rm -f conftest.file
+    if test "$[*]" != "X $srcdir/configure conftest.file" \
+    && test "$[*]" != "X conftest.file $srcdir/configure"; then
 
-      # If neither matched, then we have a broken ls.  This can happen
-      # if, for instance, CONFIG_SHELL is bash and it inherits a
-      # broken ls alias from the environment.  This has actually
-      # happened.  Such a system could not be considered "sane".
-      AC_MSG_ERROR([ls -t appears to fail.  Make sure there is not a broken
+    # If neither matched, then we have a broken ls.  This can happen
+    # if, for instance, CONFIG_SHELL is bash and it inherits a
+    # broken ls alias from the environment.  This has actually
+    # happened.  Such a system could not be considered "sane".
+    AC_MSG_ERROR([ls -t appears to fail.  Make sure there is not a broken
 alias in your environment])
-   fi
+    fi
 
-   test "$[2]" = conftest.file
-   )
+    test "$[2]" = conftest.file
+    )
 then
-   # Ok.
-   :
+    # Ok.
+    :
 else
-   AC_MSG_ERROR([newly created file is older than distributed files!
+    AC_MSG_ERROR([newly created file is older than distributed files!
 Check your system clock])
 fi
 AC_MSG_RESULT(yes)])
@@ -797,9 +797,9 @@ AC_DEFUN([_AM_PROG_TAR],
 [# Always define AMTAR for backward compatibility.
 AM_MISSING_PROG([AMTAR], [tar])
 m4_if([$1], [v7],
-     [am__tar='${AMTAR} chof - "$$tardir"'; am__untar='${AMTAR} xf -'],
-     [m4_case([$1], [ustar],, [pax],,
-              [m4_fatal([Unknown tar format])])
+    [am__tar='${AMTAR} chof - "$$tardir"'; am__untar='${AMTAR} xf -'],
+    [m4_case([$1], [ustar],, [pax],,
+            [m4_fatal([Unknown tar format])])
 AC_MSG_CHECKING([how to create a $1 tar archive])
 # Loop over all known methods to create a tar archive until one works.
 _am_tools='gnutar m4_if([$1], [ustar], [plaintar]) pax cpio none'
@@ -812,7 +812,7 @@ do
   gnutar)
     for _am_tar in tar gnutar gtar;
     do
-      AM_RUN_LOG([$_am_tar --version]) && break
+    AM_RUN_LOG([$_am_tar --version]) && break
     done
     am__tar="$_am_tar --format=m4_if([$1], [pax], [posix], [$1]) -chf - "'"$$tardir"'
     am__tar_="$_am_tar --format=m4_if([$1], [pax], [posix], [$1]) -chf - "'"$tardir"'

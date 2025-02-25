@@ -154,7 +154,7 @@ int FixedSize(FieldDescriptor::Type type) {
 }
 
 void SetPrimitiveVariables(const FieldDescriptor* descriptor,
-                           map<string, string>* variables) {
+                            map<string, string>* variables) {
   (*variables)["name"] =
     UnderscoresToCamelCase(descriptor);
   (*variables)["capitalized_name"] =
@@ -166,7 +166,7 @@ void SetPrimitiveVariables(const FieldDescriptor* descriptor,
   (*variables)["capitalized_type"] = GetCapitalizedType(descriptor);
   (*variables)["tag"] = SimpleItoa(WireFormat::MakeTag(descriptor));
   (*variables)["tag_size"] = SimpleItoa(
-      WireFormat::TagSize(descriptor->number(), GetType(descriptor)));
+    WireFormat::TagSize(descriptor->number(), GetType(descriptor)));
   if (IsReferenceType(GetJavaType(descriptor))) {
     (*variables)["null_check"] =
         "  if (value == null) {\n"
@@ -223,10 +223,10 @@ GenerateBuilderMembers(io::Printer* printer) const {
     // The default value is not a simple literal so we want to avoid executing
     // it multiple times.  Instead, get the default out of the default instance.
     printer->Print(variables_,
-      "  result.$name$_ = getDefaultInstance().get$capitalized_name$();\n");
+    "  result.$name$_ = getDefaultInstance().get$capitalized_name$();\n");
   } else {
     printer->Print(variables_,
-      "  result.$name$_ = $default$;\n");
+    "  result.$name$_ = $default$;\n");
   }
   printer->Print(variables_,
     "  return this;\n"
@@ -302,9 +302,9 @@ GenerateMembers(io::Printer* printer) const {
     "}\n");
 
   if (descriptor_->options().packed() &&
-      HasGeneratedMethods(descriptor_->containing_type())) {
+    HasGeneratedMethods(descriptor_->containing_type())) {
     printer->Print(variables_,
-      "private int $name$MemoizedSerializedSize = -1;\n");
+    "private int $name$MemoizedSerializedSize = -1;\n");
   }
 }
 
@@ -397,18 +397,18 @@ void RepeatedPrimitiveFieldGenerator::
 GenerateSerializationCode(io::Printer* printer) const {
   if (descriptor_->options().packed()) {
     printer->Print(variables_,
-      "if (get$capitalized_name$List().size() > 0) {\n"
-      "  output.writeRawVarint32($tag$);\n"
-      "  output.writeRawVarint32($name$MemoizedSerializedSize);\n"
-      "}\n"
-      "for ($type$ element : get$capitalized_name$List()) {\n"
-      "  output.write$capitalized_type$NoTag(element);\n"
-      "}\n");
+    "if (get$capitalized_name$List().size() > 0) {\n"
+    "  output.writeRawVarint32($tag$);\n"
+    "  output.writeRawVarint32($name$MemoizedSerializedSize);\n"
+    "}\n"
+    "for ($type$ element : get$capitalized_name$List()) {\n"
+    "  output.write$capitalized_type$NoTag(element);\n"
+    "}\n");
   } else {
     printer->Print(variables_,
-      "for ($type$ element : get$capitalized_name$List()) {\n"
-      "  output.write$capitalized_type$($number$, element);\n"
-      "}\n");
+    "for ($type$ element : get$capitalized_name$List()) {\n"
+    "  output.write$capitalized_type$($number$, element);\n"
+    "}\n");
   }
 }
 
@@ -421,34 +421,34 @@ GenerateSerializedSizeCode(io::Printer* printer) const {
 
   if (FixedSize(GetType(descriptor_)) == -1) {
     printer->Print(variables_,
-      "for ($type$ element : get$capitalized_name$List()) {\n"
-      "  dataSize += com.google.protobuf.CodedOutputStream\n"
-      "    .compute$capitalized_type$SizeNoTag(element);\n"
-      "}\n");
+    "for ($type$ element : get$capitalized_name$List()) {\n"
+    "  dataSize += com.google.protobuf.CodedOutputStream\n"
+    "    .compute$capitalized_type$SizeNoTag(element);\n"
+    "}\n");
   } else {
     printer->Print(variables_,
-      "dataSize = $fixed_size$ * get$capitalized_name$List().size();\n");
+    "dataSize = $fixed_size$ * get$capitalized_name$List().size();\n");
   }
 
   printer->Print(
-      "size += dataSize;\n");
+    "size += dataSize;\n");
 
   if (descriptor_->options().packed()) {
     printer->Print(variables_,
-      "if (!get$capitalized_name$List().isEmpty()) {\n"
-      "  size += $tag_size$;\n"
-      "  size += com.google.protobuf.CodedOutputStream\n"
-      "      .computeInt32SizeNoTag(dataSize);\n"
-      "}\n");
+    "if (!get$capitalized_name$List().isEmpty()) {\n"
+    "  size += $tag_size$;\n"
+    "  size += com.google.protobuf.CodedOutputStream\n"
+    "      .computeInt32SizeNoTag(dataSize);\n"
+    "}\n");
   } else {
     printer->Print(variables_,
-      "size += $tag_size$ * get$capitalized_name$List().size();\n");
+    "size += $tag_size$ * get$capitalized_name$List().size();\n");
   }
 
   // cache the data size for packed fields.
   if (descriptor_->options().packed()) {
     printer->Print(variables_,
-      "$name$MemoizedSerializedSize = dataSize;\n");
+    "$name$MemoizedSerializedSize = dataSize;\n");
   }
 
   printer->Outdent();

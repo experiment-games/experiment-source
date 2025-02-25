@@ -18,7 +18,7 @@
 
 class CWeaponIFMSteadyCam : public CWeaponIFMBaseCamera
 {
-   public:
+    public:
     DECLARE_CLASS( CWeaponIFMSteadyCam, CWeaponIFMBaseCamera );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -27,23 +27,23 @@ class CWeaponIFMSteadyCam : public CWeaponIFMBaseCamera
     DECLARE_DATADESC();
 #endif
 
-   public:
+    public:
     // Shared code
     CWeaponIFMSteadyCam();
     virtual ~CWeaponIFMSteadyCam();
 
     virtual void ItemPostFrame();
 
-   private:
+    private:
 #ifdef CLIENT_DLL
 
-   public:
+    public:
     // Client code
     virtual void CreateMove( float flInputSampleTime, CUserCmd *pCmd, const QAngle &vecOldViewAngles );
     virtual void DrawCrosshair( void );
     virtual void GetToolRecordingState( KeyValues *msg );
 
-   private:
+    private:
     // Purpose: Draw the weapon's crosshair
     void DrawArmLength( int x, int y, int w, int h, Color clr );
     void DrawFOV( int x, int y, int w, int h, Color clrEdges, Color clrTriangle );
@@ -90,14 +90,14 @@ class CWeaponIFMSteadyCam : public CWeaponIFMBaseCamera
 #endif  // CLIENT_DLL
 
 #ifdef GAME_DLL
-   public:
+    public:
     // Server code
 #endif  // GAME_DLL
 
-   private:
+    private:
     EHANDLE m_hLockTarget;
 
-   private:
+    private:
     CWeaponIFMSteadyCam( const CWeaponIFMSteadyCam & );
 };
 

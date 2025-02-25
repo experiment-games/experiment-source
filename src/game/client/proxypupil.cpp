@@ -23,12 +23,12 @@
 //-----------------------------------------------------------------------------
 class CPupilProxy : public CEntityMaterialProxy
 {
-   public:
+    public:
     bool Init( IMaterial *pMaterial, KeyValues *pKeyValues );
     virtual void OnBind( C_BaseEntity *pBaseEntity );
     virtual IMaterial *GetMaterial();
 
-   private:
+    private:
     IMaterialVar *m_pAnimatedTextureVar;
     IMaterialVar *m_pAnimatedTextureFrameNumVar;
     IMaterialVar *m_pLightingVar;

@@ -32,7 +32,7 @@ enum HelicopterFlags_t
 //=========================================================
 class CBaseHelicopter : public CAI_BaseNPC
 {
-   public:
+    public:
     DECLARE_CLASS( CBaseHelicopter, CAI_BaseNPC );
 
     DECLARE_DATADESC();

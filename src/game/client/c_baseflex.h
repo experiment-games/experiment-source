@@ -22,7 +22,7 @@
 //-----------------------------------------------------------------------------
 class CFlexSceneFile
 {
-   public:
+    public:
     enum
     {
         MAX_FLEX_FILENAME = 128,
@@ -50,15 +50,15 @@ struct FS_LocalToGlobal_t
 {
     explicit FS_LocalToGlobal_t()
         : m_Key( 0 ),
-          m_nCount( 0 ),
-          m_Mapping( 0 )
+        m_nCount( 0 ),
+        m_Mapping( 0 )
     {
     }
 
     explicit FS_LocalToGlobal_t( const flexsettinghdr_t *key )
         : m_Key( key ),
-          m_nCount( 0 ),
-          m_Mapping( 0 )
+        m_nCount( 0 ),
+        m_Mapping( 0 )
     {
     }
 
@@ -97,7 +97,7 @@ bool FlexSettingLessFunc( const FS_LocalToGlobal_t &lhs, const FS_LocalToGlobal_
 
 class IHasLocalToGlobalFlexSettings
 {
-   public:
+    public:
     virtual void EnsureTranslations( const flexsettinghdr_t *pSettinghdr ) = 0;
 };
 
@@ -130,7 +130,7 @@ class C_BaseFlex : public C_BaseAnimatingOverlay, public IHasLocalToGlobalFlexSe
 
     DECLARE_CLASS( C_BaseFlex, C_BaseAnimatingOverlay );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
     DECLARE_PREDICTABLE();
     DECLARE_INTERPOLATION();
@@ -176,7 +176,7 @@ class C_BaseFlex : public C_BaseAnimatingOverlay, public IHasLocalToGlobalFlexSe
     // Look up flex controller index by global name
     LocalFlexController_t FindFlexController( const char *szName );
 
-   public:
+    public:
     Vector m_viewtarget;
     CInterpolatedVar< Vector > m_iv_viewtarget;
     // indexed by model local flexcontroller
@@ -191,7 +191,7 @@ class C_BaseFlex : public C_BaseAnimatingOverlay, public IHasLocalToGlobalFlexSe
 
     // bah, this should be unified with all prev/current stuff.
 
-   public:
+    public:
     // Keep track of what scenes are being played
     void StartChoreoScene( CChoreoScene *scene );
     void RemoveChoreoScene( CChoreoScene *scene );
@@ -237,7 +237,7 @@ class C_BaseFlex : public C_BaseAnimatingOverlay, public IHasLocalToGlobalFlexSe
     // For handling scene files
     void *FindSceneFile( const char *filename );
 
-   private:
+    private:
     bool RequestStartSequenceSceneEvent( CSceneEventInfo *info, CChoreoScene *scene, CChoreoEvent *event, CChoreoActor *actor, CBaseEntity *pTarget );
 
     bool ProcessFlexAnimationSceneEvent( CSceneEventInfo *info, CChoreoScene *scene, CChoreoEvent *event );
@@ -250,7 +250,7 @@ class C_BaseFlex : public C_BaseAnimatingOverlay, public IHasLocalToGlobalFlexSe
 
     bool HasSceneEvents() const;
 
-   private:
+    private:
     CUtlRBTree< FS_LocalToGlobal_t, unsigned short > m_LocalToGlobal;
 
     float m_blinktime;
@@ -271,10 +271,10 @@ class C_BaseFlex : public C_BaseAnimatingOverlay, public IHasLocalToGlobalFlexSe
     static char *g_flexcontroller[MAXSTUDIOFLEXCTRL * 4];  // room for global set of flexcontrollers
     static float g_flexweight[MAXSTUDIOFLEXDESC];
 
-   protected:
+    protected:
     Emphasized_Phoneme m_PhonemeClasses[NUM_PHONEME_CLASSES];
 
-   private:
+    private:
     C_BaseFlex( const C_BaseFlex & );  // not defined, not accessible
 
     const flexsetting_t *FindNamedSetting( const flexsettinghdr_t *pSettinghdr, const char *expr );
@@ -286,7 +286,7 @@ class C_BaseFlex : public C_BaseAnimatingOverlay, public IHasLocalToGlobalFlexSe
     void ComputeBlendedSetting( Emphasized_Phoneme *classes, float emphasis_intensity );
 
 #ifdef HL2_CLIENT_DLL
-   public:
+    public:
     Vector m_vecLean;
     CInterpolatedVar< Vector > m_iv_vecLean;
     Vector m_vecShift;
@@ -299,7 +299,7 @@ class C_BaseFlex : public C_BaseAnimatingOverlay, public IHasLocalToGlobalFlexSe
 //-----------------------------------------------------------------------------
 class CFlexSceneFileManager : CAutoGameSystem
 {
-   public:
+    public:
     CFlexSceneFileManager()
         : CAutoGameSystem( "CFlexSceneFileManager" )
     {
@@ -311,7 +311,7 @@ class CFlexSceneFileManager : CAutoGameSystem
     void EnsureTranslations( IHasLocalToGlobalFlexSettings *instance, const flexsettinghdr_t *pSettinghdr );
     void *FindSceneFile( IHasLocalToGlobalFlexSettings *instance, const char *filename, bool allowBlockingIO );
 
-   private:
+    private:
     void DeleteSceneFiles();
 
     CUtlVector< CFlexSceneFile * > m_FileList;

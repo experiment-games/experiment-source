@@ -7,7 +7,7 @@
 
 class LColor : public Color
 {
-   public:
+    public:
     LColor()
         : Color() {}
     LColor( int _r, int _g, int _b )

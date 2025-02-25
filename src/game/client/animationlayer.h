@@ -16,7 +16,7 @@
 
 class C_AnimationLayer
 {
-   public:
+    public:
     // This allows the datatables to access private members.
     ALLOW_DATATABLES_PRIVATE_ACCESS();
 
@@ -25,7 +25,7 @@ class C_AnimationLayer
 
     void SetOrder( int order );
 
-   public:
+    public:
     bool IsActive( void );
 
     CRangeCheckedVar< int, -1, 65535, 0 > m_nSequence;

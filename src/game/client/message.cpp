@@ -71,7 +71,7 @@ class CHudMessage : public CHudElement, public vgui::Panel, public ITextMessage
 {
     DECLARE_CLASS_SIMPLE( CHudMessage, vgui::Panel );
 
-   public:
+    public:
     enum
     {
         TYPE_UNKNOWN = 0,
@@ -114,7 +114,7 @@ class CHudMessage : public CHudElement, public vgui::Panel, public ITextMessage
 
     void SetFont( HScheme scheme, const char *pFontName );
 
-   public:  // ITextMessage
+    public:  // ITextMessage
     virtual void SetPosition( int x, int y );
     virtual void AddChar( int r, int g, int b, int a, wchar_t ch );
 
@@ -124,7 +124,7 @@ class CHudMessage : public CHudElement, public vgui::Panel, public ITextMessage
     virtual void SetFont( vgui::HFont hCustomFont );
     virtual void SetDefaultFont( void );
 
-   private:
+    private:
     message_t *AllocMessage( void );
     void ResetCharacters( void );
     void PaintCharacters();
@@ -379,10 +379,10 @@ void CHudMessage::MessageScanNextChar( void )
     m_parms.b = ( ( srcBlue * ( 255 - blend ) ) + ( destBlue * blend ) ) >> 8;
 
 #if 0
-	if ( m_parms.pMessage->effect == 1 && m_parms.charTime != 0 )
-	{
-		textmessage->AddChar( m_parms.pMessage->r2, m_parms.pMessage->g2, m_parms.pMessage->b2, 255, m_parms.text );
-	}
+    if ( m_parms.pMessage->effect == 1 && m_parms.charTime != 0 )
+    {
+        textmessage->AddChar( m_parms.pMessage->r2, m_parms.pMessage->g2, m_parms.pMessage->b2, 255, m_parms.text );
+    }
 #endif
 }
 
@@ -442,7 +442,7 @@ void CHudMessage::MessageScanStart( void )
     m_parms.font = g_hFontTrebuchet24;
 
     if ( m_parms.vguiFontName != NULL &&
-         m_parms.vguiFontName[0] )
+        m_parms.vguiFontName[0] )
     {
         SetFont( vgui::scheme()->GetDefaultScheme(), m_parms.vguiFontName );
     }
@@ -592,7 +592,7 @@ void CHudMessage::MessageDrawScan( client_textmessage_t *pMessage, float time )
 bool CHudMessage::ShouldDraw( void )
 {
     return ( CHudElement::ShouldDraw() &&
-             ( m_bHaveMessage || m_Messages.Count() ) );
+            ( m_bHaveMessage || m_Messages.Count() ) );
 }
 
 //-----------------------------------------------------------------------------

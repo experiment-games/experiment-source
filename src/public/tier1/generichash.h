@@ -51,7 +51,7 @@ inline unsigned HashIntConventional( const int n )  // faster but less effective
     return hash;
 
     /* this is the old version, which would cause a load-hit-store on every
-       line on a PowerPC, and therefore took hundreds of clocks to execute!
+        line on a PowerPC, and therefore took hundreds of clocks to execute!
 
     byte *p = (byte *)&n;
     unsigned hash = 0xAAAAAAAA + *p++;

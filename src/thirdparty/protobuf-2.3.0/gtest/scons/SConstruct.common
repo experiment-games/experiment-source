@@ -49,19 +49,19 @@ class SConstructHelper:
     test_env = Environment()
     platform = test_env['PLATFORM']
     if platform == 'win32':
-      if support_multiple_win_builds:
+    if support_multiple_win_builds:
         available_build_types = ['win-dbg8', 'win-opt8', 'win-dbg', 'win-opt']
-      else:
+    else:
         available_build_types = ['win-dbg', 'win-opt']
     elif platform == 'darwin':  # MacOSX
-      available_build_types = ['mac-dbg', 'mac-opt']
+    available_build_types = ['mac-dbg', 'mac-opt']
     else:
-      available_build_types = ['dbg', 'opt']  # Assuming POSIX-like environment
-                                              # with GCC by default.
+    available_build_types = ['dbg', 'opt']  # Assuming POSIX-like environment
+                                            # with GCC by default.
 
     vars = Variables()
     vars.Add(ListVariable('BUILD', 'Build type', available_build_types[0],
-                          available_build_types))
+                        available_build_types))
     vars.Add(BoolVariable('GTEST_BUILD_SAMPLES', 'Build samples', False))
 
     # Create base environment.
@@ -86,22 +86,22 @@ class SConstructHelper:
     """Creates new customized environments from a base one."""
 
     def _Remove(cls, env, attribute, value):
-      """Removes the given attribute value from the environment."""
+    """Removes the given attribute value from the environment."""
 
-      attribute_values = env[attribute]
-      if value in attribute_values:
+    attribute_values = env[attribute]
+    if value in attribute_values:
         attribute_values.remove(value)
     _Remove = classmethod(_Remove)
 
     def Create(cls, base_env, modifier=None):
-      # User should NOT create more than one environment with the same
-      # modifier (including None).
-      env = base_env.Clone()
-      if modifier:
+    # User should NOT create more than one environment with the same
+    # modifier (including None).
+    env = base_env.Clone()
+    if modifier:
         modifier(env)
-      else:
+    else:
         env['OBJ_SUFFIX'] = ''  # Default suffix for unchanged environment.
-      return env;
+    return env;
     Create = classmethod(Create)
 
     # Each of the following methods modifies the environment for a particular
@@ -111,61 +111,61 @@ class SConstructHelper:
     # complain about same target built with different settings.
 
     def UseOwnTuple(cls, env):
-      """Instructs Google Test to use its internal implementation of tuple."""
+    """Instructs Google Test to use its internal implementation of tuple."""
 
-      env['OBJ_SUFFIX'] = '_use_own_tuple'
-      env.Append(CPPDEFINES = 'GTEST_USE_OWN_TR1_TUPLE=1')
+    env['OBJ_SUFFIX'] = '_use_own_tuple'
+    env.Append(CPPDEFINES = 'GTEST_USE_OWN_TR1_TUPLE=1')
     UseOwnTuple = classmethod(UseOwnTuple)
 
     def WarningOk(cls, env):
-      """Does not treat warnings as errors.
+    """Does not treat warnings as errors.
 
-      Necessary for compiling gtest_unittest.cc, which triggers a gcc
-      warning when testing EXPECT_EQ(NULL, ptr)."""
+    Necessary for compiling gtest_unittest.cc, which triggers a gcc
+    warning when testing EXPECT_EQ(NULL, ptr)."""
 
-      env['OBJ_SUFFIX'] = '_warning_ok'
-      if env['PLATFORM'] == 'win32':
+    env['OBJ_SUFFIX'] = '_warning_ok'
+    if env['PLATFORM'] == 'win32':
         cls._Remove(env, 'CCFLAGS', '-WX')
-      else:
+    else:
         cls._Remove(env, 'CCFLAGS', '-Werror')
     WarningOk = classmethod(WarningOk)
 
     def WithExceptions(cls, env):
-      """Re-enables exceptions."""
+    """Re-enables exceptions."""
 
-      env['OBJ_SUFFIX'] = '_ex'
-      if env['PLATFORM'] == 'win32':
+    env['OBJ_SUFFIX'] = '_ex'
+    if env['PLATFORM'] == 'win32':
         env.Append(CCFLAGS=['/EHsc'])
         env.Append(CPPDEFINES='_HAS_EXCEPTIONS=1')
         # Undoes the _TYPEINFO_ hack, which is unnecessary and only creates
         # trouble when exceptions are enabled.
         cls._Remove(env, 'CPPDEFINES', '_TYPEINFO_')
         cls._Remove(env, 'CPPDEFINES', '_HAS_EXCEPTIONS=0')
-      else:
+    else:
         env.Append(CCFLAGS='-fexceptions')
         cls._Remove(env, 'CCFLAGS', '-fno-exceptions')
     WithExceptions = classmethod(WithExceptions)
 
     def LessOptimized(cls, env):
-      """Disables certain optimizations on Windows.
+    """Disables certain optimizations on Windows.
 
-      We need to disable some optimization flags for some tests on
-      Windows; otherwise the redirection of stdout does not work
-      (apparently because of a compiler bug)."""
+    We need to disable some optimization flags for some tests on
+    Windows; otherwise the redirection of stdout does not work
+    (apparently because of a compiler bug)."""
 
-      env['OBJ_SUFFIX'] = '_less_optimized'
-      if env['PLATFORM'] == 'win32':
+    env['OBJ_SUFFIX'] = '_less_optimized'
+    if env['PLATFORM'] == 'win32':
         for flag in ['/O1', '/Os', '/Og', '/Oy']:
-          cls._Remove(env, 'LINKFLAGS', flag)
+        cls._Remove(env, 'LINKFLAGS', flag)
     LessOptimized = classmethod(LessOptimized)
 
     def WithThreads(cls, env):
-      """Allows use of threads.
+    """Allows use of threads.
 
-      Currently only enables pthreads under GCC."""
+    Currently only enables pthreads under GCC."""
 
-      env['OBJ_SUFFIX'] = '_with_threads'
-      if env['PLATFORM'] != 'win32':
+    env['OBJ_SUFFIX'] = '_with_threads'
+    if env['PLATFORM'] != 'win32':
         # Assuming POSIX-like environment with GCC.
         # TODO(vladl@google.com): sniff presence of pthread_atfork instead of
         # selecting on a platform.
@@ -174,12 +174,12 @@ class SConstructHelper:
     WithThreads = classmethod(WithThreads)
 
     def NoRtti(cls, env):
-      """Disables RTTI support."""
+    """Disables RTTI support."""
 
-      env['OBJ_SUFFIX'] = '_no_rtti'
-      if env['PLATFORM'] == 'win32':
+    env['OBJ_SUFFIX'] = '_no_rtti'
+    if env['PLATFORM'] == 'win32':
         env.Append(CCFLAGS=['/GR-'])
-      else:
+    else:
         env.Append(CCFLAGS=['-fno-rtti'])
         env.Append(CPPDEFINES='GTEST_HAS_RTTI=0')
     NoRtti = classmethod(NoRtti)
@@ -187,31 +187,31 @@ class SConstructHelper:
   def AllowVc71StlWithoutExceptions(self, env):
     env.Append(
         CPPDEFINES = [# needed for using some parts of STL with exception
-                      # disabled.  The scoop is given here, with comments
-                      # from P.J. Plauger at
-                      # http://groups.google.com/group/microsoft.public.vc.stl/browse_thread/thread/5e719833c6bdb177?q=_HAS_EXCEPTIONS+using+namespace+std&pli=1
-                      '_TYPEINFO_'])
+                    # disabled.  The scoop is given here, with comments
+                    # from P.J. Plauger at
+                    # http://groups.google.com/group/microsoft.public.vc.stl/browse_thread/thread/5e719833c6bdb177?q=_HAS_EXCEPTIONS+using+namespace+std&pli=1
+                    '_TYPEINFO_'])
 
   def MakeWinBaseEnvironment(self):
     win_base = self.env_base.Clone(
         platform='win32',
         CCFLAGS=['-GS',             # Enable buffer security check
-                 '-W4',             # Warning level
+                '-W4',             # Warning level
 
-                 # Disables warnings that are either uninteresting or
-                 # hard to fix.
+                # Disables warnings that are either uninteresting or
+                # hard to fix.
 
-                 '-WX',             # Treat warning as errors
-                 #'-GR-',           # Disable runtime type information
-                 '-RTCs',           # Enable stack-frame run-time error checks
-                 '-RTCu',           # Report when variable used without init.
-                 #'-EHs',           # enable C++ EH (no SEH exceptions)
-                 '-nologo',         # Suppress logo line
-                 '-J',              # All chars unsigned
-                 #'-Wp64',          # Detect 64-bit portability issues.  This
+                '-WX',             # Treat warning as errors
+                #'-GR-',           # Disable runtime type information
+                '-RTCs',           # Enable stack-frame run-time error checks
+                '-RTCu',           # Report when variable used without init.
+                #'-EHs',           # enable C++ EH (no SEH exceptions)
+                '-nologo',         # Suppress logo line
+                '-J',              # All chars unsigned
+                #'-Wp64',          # Detect 64-bit portability issues.  This
                                     # flag has been deprecated by VS 2008.
-                 '-Zi',             # Produce debug information in PDB files.
-                 ],
+                '-Zi',             # Produce debug information in PDB files.
+                ],
         CCPDBFLAGS='',
         CPPDEFINES=['_UNICODE', 'UNICODE',
                     'WIN32', '_WIN32',
@@ -221,9 +221,9 @@ class SConstructHelper:
                     ],
         LIBPATH=['#/$MAIN_DIR/lib'],
         LINKFLAGS=['-MACHINE:x86',  # Enable safe SEH (not supp. on x64)
-                   '-DEBUG',        # Generate debug info
-                   '-NOLOGO',       # Suppress logo line
-                   ],
+                    '-DEBUG',        # Generate debug info
+                    '-NOLOGO',       # Suppress logo line
+                    ],
         # All strings in string tables zero terminated.
         RCFLAGS=['-n'])
 
@@ -240,17 +240,17 @@ class SConstructHelper:
     self.SetBuildNameAndDir(debug_env, name)
     debug_env.Append(
         CCFLAGS = ['-Od',             # Disable optimizations
-                   '-MTd',            # Multithreaded, static link (debug)
-                                      # Path for PDB files
-                   '-Fd%s\\' % debug_env.Dir(debug_env['BUILD_DIR']),
-                   ],
+                    '-MTd',            # Multithreaded, static link (debug)
+                                    # Path for PDB files
+                    '-Fd%s\\' % debug_env.Dir(debug_env['BUILD_DIR']),
+                    ],
         CPPDEFINES = ['DEBUG',
-                      '_DEBUG',
-                      ],
+                    '_DEBUG',
+                    ],
         LIBPATH = [],
         LINKFLAGS = ['-INCREMENTAL:yes',
-                     '/OPT:NOICF',
-                     ]
+                    '/OPT:NOICF',
+                    ]
         )
     return debug_env
 
@@ -260,32 +260,32 @@ class SConstructHelper:
     self.SetBuildNameAndDir(optimized_env, name)
     optimized_env.Append(
         CCFLAGS = ['-GL',             # Enable link-time code generation (/GL)
-                   '-GF',             # Enable String Pooling (/GF)
-                   '-MT',             # Multithreaded, static link
-                                      # Path for PDB files
-                   '-Fd%s\\' % optimized_env.Dir(optimized_env['BUILD_DIR']),
+                    '-GF',             # Enable String Pooling (/GF)
+                    '-MT',             # Multithreaded, static link
+                                    # Path for PDB files
+                    '-Fd%s\\' % optimized_env.Dir(optimized_env['BUILD_DIR']),
 
-                   # Favor small code (this is /O1 minus /Og)
-                   '-Os',
-                   '-Oy',
-                   '-Ob2',
-                   '-Gs',
-                   '-GF',
-                   '-Gy',
-                   ],
+                    # Favor small code (this is /O1 minus /Og)
+                    '-Os',
+                    '-Oy',
+                    '-Ob2',
+                    '-Gs',
+                    '-GF',
+                    '-Gy',
+                    ],
         CPPDEFINES = ['NDEBUG',
-                      '_NDEBUG',
-                      ],
+                    '_NDEBUG',
+                    ],
         LIBPATH = [],
         ARFLAGS = ['-LTCG'],            # Link-time Code Generation
         LINKFLAGS = ['-LTCG',           # Link-time Code Generation
-                     '-OPT:REF',        # Optimize by reference.
-                     '-OPT:ICF=32',     # Optimize by identical COMDAT folding
-                     '-OPT:NOWIN98',    # Optimize by not aligning section for
+                    '-OPT:REF',        # Optimize by reference.
+                    '-OPT:ICF=32',     # Optimize by identical COMDAT folding
+                    '-OPT:NOWIN98',    # Optimize by not aligning section for
                                         # Win98
-                     '-INCREMENTAL:NO', # No incremental linking as we don't
+                    '-INCREMENTAL:NO', # No incremental linking as we don't
                                         # want padding bytes in release build.
-                     ],
+                    ],
         )
     return optimized_env
 
@@ -293,11 +293,11 @@ class SConstructHelper:
     env.Append(CCFLAGS=['-fno-exceptions',
                         '-Wall',
                         '-Werror',
-                       ])
+                        ])
     if optimized:
-      env.Append(CCFLAGS=['-O2'], CPPDEFINES=['NDEBUG', '_NDEBUG'])
+    env.Append(CCFLAGS=['-O2'], CPPDEFINES=['NDEBUG', '_NDEBUG'])
     else:
-      env.Append(CCFLAGS=['-g'], CPPDEFINES=['DEBUG', '_DEBUG'])
+    env.Append(CCFLAGS=['-g'], CPPDEFINES=['DEBUG', '_DEBUG'])
 
   def ConfigureGccEnvironments(self):
     # Mac environments.
@@ -325,31 +325,31 @@ class SConstructHelper:
     Export('EnvCreator')
     # Build using whichever environments the 'BUILD' option selected
     for build_name in self.env_base['BUILD']:
-      print 'BUILDING %s' % build_name
-      env = self.env_dict[build_name]
+    print 'BUILDING %s' % build_name
+    env = self.env_dict[build_name]
 
-      # Make sure SConscript files can refer to base build dir
-      env['MAIN_DIR'] = env.Dir(env['BUILD_DIR'])
+    # Make sure SConscript files can refer to base build dir
+    env['MAIN_DIR'] = env.Dir(env['BUILD_DIR'])
 
-      #print 'CCFLAGS: %s' % env.subst('$CCFLAGS')
-      #print 'LINK: %s' % env.subst('$LINK')
-      #print 'AR: %s' % env.subst('$AR')
-      #print 'CC: %s' % env.subst('$CC')
-      #print 'CXX: %s' % env.subst('$CXX')
-      #print 'LIBPATH: %s' % env.subst('$LIBPATH')
-      #print 'ENV:PATH: %s' % env['ENV']['PATH']
-      #print 'ENV:INCLUDE: %s' % env['ENV']['INCLUDE']
-      #print 'ENV:LIB: %s' % env['ENV']['LIB']
-      #print 'ENV:TEMP: %s' % env['ENV']['TEMP']
+    #print 'CCFLAGS: %s' % env.subst('$CCFLAGS')
+    #print 'LINK: %s' % env.subst('$LINK')
+    #print 'AR: %s' % env.subst('$AR')
+    #print 'CC: %s' % env.subst('$CC')
+    #print 'CXX: %s' % env.subst('$CXX')
+    #print 'LIBPATH: %s' % env.subst('$LIBPATH')
+    #print 'ENV:PATH: %s' % env['ENV']['PATH']
+    #print 'ENV:INCLUDE: %s' % env['ENV']['INCLUDE']
+    #print 'ENV:LIB: %s' % env['ENV']['LIB']
+    #print 'ENV:TEMP: %s' % env['ENV']['TEMP']
 
-      Export('env')
-      # Invokes SConscript with variant_dir being build/<config name>.
-      # Counter-intuitively, src_dir is relative to the build dir and has
-      # to be '..' to point to the scons directory.
-      SConscript('SConscript',
-                 src_dir='..',
-                 variant_dir=env['BUILD_DIR'],
-                 duplicate=0)
+    Export('env')
+    # Invokes SConscript with variant_dir being build/<config name>.
+    # Counter-intuitively, src_dir is relative to the build dir and has
+    # to be '..' to point to the scons directory.
+    SConscript('SConscript',
+                src_dir='..',
+                variant_dir=env['BUILD_DIR'],
+                duplicate=0)
 
 
 sconstruct_helper = SConstructHelper()

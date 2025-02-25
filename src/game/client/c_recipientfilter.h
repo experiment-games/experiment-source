@@ -25,7 +25,7 @@ class C_Team;
 //-----------------------------------------------------------------------------
 class C_RecipientFilter : public IRecipientFilter
 {
-   public:
+    public:
     C_RecipientFilter();
     virtual ~C_RecipientFilter();
 
@@ -39,7 +39,7 @@ class C_RecipientFilter : public IRecipientFilter
         return false;
     };
 
-   public:
+    public:
     void CopyFrom( const C_RecipientFilter &src );
 
     void Reset( void );
@@ -79,7 +79,7 @@ class C_RecipientFilter : public IRecipientFilter
 //-----------------------------------------------------------------------------
 class CSingleUserRecipientFilter : public C_RecipientFilter
 {
-   public:
+    public:
     CSingleUserRecipientFilter( C_BasePlayer *player )
     {
         AddRecipient( player );
@@ -91,7 +91,7 @@ class CSingleUserRecipientFilter : public C_RecipientFilter
 //-----------------------------------------------------------------------------
 class CBroadcastRecipientFilter : public C_RecipientFilter
 {
-   public:
+    public:
     CBroadcastRecipientFilter( void )
     {
         AddAllPlayers();
@@ -103,7 +103,7 @@ class CBroadcastRecipientFilter : public C_RecipientFilter
 //-----------------------------------------------------------------------------
 class CReliableBroadcastRecipientFilter : public CBroadcastRecipientFilter
 {
-   public:
+    public:
     CReliableBroadcastRecipientFilter( void )
     {
         MakeReliable();
@@ -115,7 +115,7 @@ class CReliableBroadcastRecipientFilter : public CBroadcastRecipientFilter
 //-----------------------------------------------------------------------------
 class CPASFilter : public C_RecipientFilter
 {
-   public:
+    public:
     CPASFilter( const Vector &origin )
     {
         AddRecipientsByPAS( origin );
@@ -127,7 +127,7 @@ class CPASFilter : public C_RecipientFilter
 //-----------------------------------------------------------------------------
 class CPASAttenuationFilter : public CPASFilter
 {
-   public:
+    public:
     CPASAttenuationFilter( C_BaseEntity *entity, float attenuation = ATTN_NORM )
         : CPASFilter( entity->GetAbsOrigin() )
     {
@@ -164,7 +164,7 @@ class CPASAttenuationFilter : public CPASFilter
 //-----------------------------------------------------------------------------
 class CPVSFilter : public C_RecipientFilter
 {
-   public:
+    public:
     CPVSFilter( const Vector &origin )
     {
         AddRecipientsByPVS( origin );
@@ -173,13 +173,13 @@ class CPVSFilter : public C_RecipientFilter
 
 class CLocalPlayerFilter : public C_RecipientFilter
 {
-   public:
+    public:
     CLocalPlayerFilter( void );
 };
 
 class CUIFilter : public C_RecipientFilter
 {
-   public:
+    public:
     CUIFilter( void )
     {
         m_Recipients.AddToTail( 1 );

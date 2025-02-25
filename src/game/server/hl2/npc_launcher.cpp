@@ -32,7 +32,7 @@ class CNPC_Launcher : public CAI_BaseNPC
 {
     DECLARE_CLASS( CNPC_Launcher, CAI_BaseNPC );
 
-   public:
+    public:
     int m_nStartOn;
     string_t m_sMissileModel;
     string_t m_sLaunchSound;

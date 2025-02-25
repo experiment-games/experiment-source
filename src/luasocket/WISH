@@ -9,7 +9,7 @@ __tostring,__tonumber, __touserdata metamethods are checked
 and expected to push an object of correct type on stack
 
 lua_rawtostring, lua_rawtonumber, lua_rawtouserdata don't
-push anything on stack, return data of appropriate type, 
+push anything on stack, return data of appropriate type,
 skip metamethods and throw error if object not of exact type
 
 package.findfile exported

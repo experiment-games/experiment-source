@@ -372,7 +372,7 @@ inline int GetVertexElementSize( VertexElement_t element, VertexCompressionType_
             case VERTEX_ELEMENT_USERDATA4:
                 return ( 2 * sizeof( short ) );
 #else  //( COMPRESSED_NORMALS_TYPE == COMPRESSED_NORMALS_COMBINEDTANGENTS_UBYTE4 )
-       // Normals and tangents (userdata4) are combined into a single UBYTE4 vertex element
+        // Normals and tangents (userdata4) are combined into a single UBYTE4 vertex element
             case VERTEX_ELEMENT_NORMAL:
                 return ( 4 * sizeof( unsigned char ) );
             case VERTEX_ELEMENT_USERDATA4:
@@ -551,8 +551,8 @@ enum MaterialVarFlags2_t
     MATERIAL_VAR2_LIGHTING_BUMPED_LIGHTMAP = ( 1 << 3 ),
     MATERIAL_VAR2_LIGHTING_MASK =
         ( MATERIAL_VAR2_LIGHTING_VERTEX_LIT |
-          MATERIAL_VAR2_LIGHTING_LIGHTMAP |
-          MATERIAL_VAR2_LIGHTING_BUMPED_LIGHTMAP ),
+        MATERIAL_VAR2_LIGHTING_LIGHTMAP |
+        MATERIAL_VAR2_LIGHTING_BUMPED_LIGHTMAP ),
 
     // FIXME: Should this be a part of the above lighting enums?
     MATERIAL_VAR2_DIFFUSE_BUMPMAPPED_MODEL = ( 1 << 4 ),
@@ -589,7 +589,7 @@ enum PreviewImageRetVal_t
 //-----------------------------------------------------------------------------
 abstract_class IMaterial
 {
-   public:
+    public:
     // Get the name of the material.  This is a full path to
     // the vmt file starting from "hl2/materials" (or equivalent) without
     // a file extension.
@@ -606,9 +606,9 @@ abstract_class IMaterial
     // Will do resampling if necessary.(not yet!!! :) )
     // Will do color format conversion. (works now.)
     virtual PreviewImageRetVal_t GetPreviewImage( unsigned char *data,
-                                                  int width,
-                                                  int height,
-                                                  ImageFormat imageFormat ) const = 0;
+                                                int width,
+                                                int height,
+                                                ImageFormat imageFormat ) const = 0;
     //
     virtual int GetMappingWidth() = 0;
     virtual int GetMappingHeight() = 0;

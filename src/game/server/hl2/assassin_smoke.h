@@ -13,7 +13,7 @@
 
 class CAssassinSmoke : public CBaseParticleEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CAssassinSmoke, CBaseParticleEntity );
     DECLARE_SERVERCLASS();
 

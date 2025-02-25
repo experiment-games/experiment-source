@@ -18,7 +18,7 @@
 //-----------------------------------------------------------------------------
 class CPointCamera : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CPointCamera, CBaseEntity );
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
@@ -38,7 +38,7 @@ class CPointCamera : public CBaseEntity
     void InputSetOn( inputdata_t &inputdata );
     void InputSetOff( inputdata_t &inputdata );
 
-   private:
+    private:
     float m_TargetFOV;
     float m_DegreesPerSecond;
 
@@ -55,7 +55,7 @@ class CPointCamera : public CBaseEntity
     // Allows the mapmaker to control whether a camera is active or not
     bool m_bIsOn;
 
-   public:
+    public:
     CPointCamera *m_pNext;
 };
 

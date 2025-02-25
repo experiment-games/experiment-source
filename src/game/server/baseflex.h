@@ -25,7 +25,7 @@ class AI_Response;
 //-----------------------------------------------------------------------------
 class CFlexSceneFile
 {
-   public:
+    public:
     enum
     {
         MAX_FLEX_FILENAME = 128,
@@ -46,7 +46,7 @@ class CBaseFlex : public CBaseAnimatingOverlay
 
     DECLARE_CLASS( CBaseFlex, CBaseAnimatingOverlay );
 
-   public:
+    public:
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
     DECLARE_PREDICTABLE();
@@ -130,7 +130,7 @@ class CBaseFlex : public CBaseAnimatingOverlay
         return 0;
     }
 
-   protected:
+    protected:
     // For handling .vfe files
     // Search list, or add if not in list
     const void *FindSceneFile( const char *filename );
@@ -149,7 +149,7 @@ class CBaseFlex : public CBaseAnimatingOverlay
 
     LocalFlexController_t FlexControllerLocalToGlobal( const flexsettinghdr_t *pSettinghdr, int key );
 
-   private:
+    private:
     // Starting various expression types
 
     bool RequestStartSequenceSceneEvent( CSceneEventInfo *info, CChoreoScene *scene, CChoreoEvent *event, CChoreoActor *actor, CBaseEntity *pTarget );
@@ -170,13 +170,13 @@ class CBaseFlex : public CBaseAnimatingOverlay
     bool ProcessLookAtSceneEvent( CSceneEventInfo *info, CChoreoScene *scene, CChoreoEvent *event );
 
     // Set playing the scene sequence
-   public:
+    public:
     bool EnterSceneSequence( CChoreoScene *scene, CChoreoEvent *event, bool bRestart = false );
 
-   private:
+    private:
     bool ExitSceneSequence( void );
 
-   private:
+    private:
     CNetworkArray( float, m_flexWeight, MAXSTUDIOFLEXCTRL );  // indexed by model local flexcontroller
 
     // Vector from actor to eye target
@@ -193,15 +193,15 @@ class CBaseFlex : public CBaseAnimatingOverlay
     {
         explicit FS_LocalToGlobal_t()
             : m_Key( 0 ),
-              m_nCount( 0 ),
-              m_Mapping( 0 )
+            m_nCount( 0 ),
+            m_Mapping( 0 )
         {
         }
 
         explicit FS_LocalToGlobal_t( const flexsettinghdr_t *key )
             : m_Key( key ),
-              m_nCount( 0 ),
-              m_Mapping( 0 )
+            m_nCount( 0 ),
+            m_Mapping( 0 )
         {
         }
 
@@ -248,14 +248,14 @@ class CBaseFlex : public CBaseAnimatingOverlay
     CUtlVector< CChoreoScene * > m_ActiveChoreoScenes;
     bool m_bUpdateLayerPriorities;
 
-   public:
+    public:
     bool IsSuppressedFlexAnimation( CSceneEventInfo *info );
 
-   private:
+    private:
     // last time a foreground flex animation was played
     float m_flLastFlexAnimationTime;
 
-   public:
+    public:
     void DoBodyLean( void );
 
     virtual void Teleport( const Vector *newPosition, const QAngle *newAngles, const Vector *newVelocity );

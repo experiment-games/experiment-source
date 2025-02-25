@@ -748,9 +748,9 @@ LUA_BINDING_BEGIN( Player, IsUseableEntity, "class", "Check if the player can us
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     lua_pushboolean( L,
-                     player->IsUseableEntity(
-                         LUA_BINDING_ARGUMENT( luaL_checkentity, 2, "entity" ),
-                         LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "use type" ) ) );
+                    player->IsUseableEntity(
+                        LUA_BINDING_ARGUMENT( luaL_checkentity, 2, "entity" ),
+                        LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "use type" ) ) );
     return 1;
 }
 LUA_BINDING_END( "boolean", "Whether the player can use the entity." )
@@ -945,10 +945,10 @@ LUA_BINDING_BEGIN( Player, SetFov, "class", "Set the player's field of view." )
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
     lua_CBaseEntity *requester = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optentity, 4, PLAYER_THEMSELVES, "requester" );
     lua_pushboolean( L,
-                     player->SetFOV(
-                         requester ? requester : player,
-                         LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "fov" ),
-                         LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 3, 0, "transitionTime" ) ) );
+                    player->SetFOV(
+                        requester ? requester : player,
+                        LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "fov" ),
+                        LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 3, 0, "transitionTime" ) ) );
     return 1;
 }
 LUA_BINDING_END()
@@ -968,7 +968,7 @@ LUA_BINDING_BEGIN( Player, StartLagCompensation, "class", "Set the player's lag 
 
     // Move other players back to history positions based on local player's lag
     lagcompensation->StartLagCompensation( player,
-                                           player->GetCurrentCommand() );
+                                            player->GetCurrentCommand() );
 #endif
     return 0;
 }
@@ -1297,7 +1297,7 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( Player, SwitchToNextBestWeapon, "class", "Switch to the player's next best weapon." )
 {
     lua_pushboolean( L,
-                     LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" )->SwitchToNextBestWeapon( LUA_BINDING_ARGUMENT( luaL_checkweapon, 2, "weapon" ) ) );
+                    LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" )->SwitchToNextBestWeapon( LUA_BINDING_ARGUMENT( luaL_checkweapon, 2, "weapon" ) ) );
     return 1;
 }
 LUA_BINDING_END()
@@ -1448,10 +1448,10 @@ LUA_BINDING_END( "boolean", "Whether the player should select the weapon." )
 LUA_BINDING_BEGIN( Player, ShouldSetLastWeapon, "class", "Check if the player should set the last weapon." )
 {
     lua_pushboolean( L,
-                     LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" )
-                         ->Weapon_ShouldSetLast(
-                             LUA_BINDING_ARGUMENT( luaL_checkweapon, 2, "weapon" ),
-                             LUA_BINDING_ARGUMENT( luaL_checkweapon, 3, "last" ) ) );
+                    LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" )
+                        ->Weapon_ShouldSetLast(
+                            LUA_BINDING_ARGUMENT( luaL_checkweapon, 2, "weapon" ),
+                            LUA_BINDING_ARGUMENT( luaL_checkweapon, 3, "last" ) ) );
     return 1;
 }
 LUA_BINDING_END( "boolean", "Whether the player should set the last weapon." )
@@ -1459,10 +1459,10 @@ LUA_BINDING_END( "boolean", "Whether the player should set the last weapon." )
 LUA_BINDING_BEGIN( Player, SwitchWeapon, "class", "Switch the player's weapon." )
 {
     lua_pushboolean( L,
-                     LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" )
-                         ->Weapon_Switch(
-                             LUA_BINDING_ARGUMENT( luaL_checkweapon, 2, "weapon" ),
-                             LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 3, 0, "subType" ) ) );
+                    LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" )
+                        ->Weapon_Switch(
+                            LUA_BINDING_ARGUMENT( luaL_checkweapon, 2, "weapon" ),
+                            LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 3, 0, "subType" ) ) );
     return 1;
 }
 LUA_BINDING_END( "boolean", "Whether the weapon was switched." )
@@ -1786,9 +1786,9 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( Players, IsTeamEqual, "library", "Check if two teams are equal." )
 {
     lua_pushboolean( L,
-                     UTIL_TeamsMatch(
-                         LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "team 1" ),
-                         LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "team 2" ) ) );
+                    UTIL_TeamsMatch(
+                        LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "team 1" ),
+                        LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "team 2" ) ) );
 
     return 1;
 }

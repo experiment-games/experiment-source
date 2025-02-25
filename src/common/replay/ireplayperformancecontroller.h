@@ -33,12 +33,12 @@ struct SetViewParams_t
     }
     SetViewParams_t( float flTime, Vector *pOrigin, QAngle *pAngles, float flFov, float flAccel, float flSpeed, float flRotFilter )
         : m_flTime( flTime ),
-          m_pOrigin( pOrigin ),
-          m_pAngles( pAngles ),
-          m_flFov( flFov ),
-          m_flAccel( flAccel ),
-          m_flSpeed( flSpeed ),
-          m_flRotationFilter( flRotFilter )
+        m_pOrigin( pOrigin ),
+        m_pAngles( pAngles ),
+        m_flFov( flFov ),
+        m_flAccel( flAccel ),
+        m_flSpeed( flSpeed ),
+        m_flRotationFilter( flRotFilter )
     {
     }
 
@@ -57,7 +57,7 @@ struct SetViewParams_t
 
 class IReplayPerformanceController : public IBaseInterface
 {
-   public:
+    public:
     virtual void SetEditor( IReplayPerformanceEditor *pEditor ) = 0;
 
     virtual bool IsPlaybackDataLeft() = 0;

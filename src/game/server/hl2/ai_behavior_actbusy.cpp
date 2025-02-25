@@ -28,7 +28,7 @@
 
 ConVar ai_actbusy_search_time( "ai_actbusy_search_time", "10.0" );
 ConVar ai_debug_actbusy( "ai_debug_actbusy", "0", FCVAR_CHEAT,
-                         "Used to debug actbusy behavior. Usage:\n\
+                        "Used to debug actbusy behavior. Usage:\n\
 1: Constantly draw lines from NPCs to the actbusy nodes they've chosen to actbusy at.\n\
 2: Whenever an NPC makes a decision to use an actbusy, show which actbusy they've chosen.\n\
 3: Selected NPCs (with npc_select) will report why they're not choosing actbusy nodes.\n\
@@ -82,7 +82,7 @@ enum
 //-----------------------------------------------------------------------------
 class CActBusyAnimData : public CAutoGameSystem
 {
-   public:
+    public:
     CActBusyAnimData( void )
         : CAutoGameSystem( "CActBusyAnimData" )
     {
@@ -106,7 +106,7 @@ class CActBusyAnimData : public CAutoGameSystem
         return &m_ActBusyAnims[iIndex];
     }
 
-   protected:
+    protected:
     CUtlVector< busyanim_t > m_ActBusyAnims;
 };
 
@@ -690,7 +690,7 @@ bool CAI_ActBusyBehavior::ShouldIgnoreSound( CSound *pSound )
             VectorNormalize( vecToSound );
             Vector facingDir = GetOuter()->EyeDirection2D();
             if ( DotProduct( vecToSound, facingDir ) > 0 )
-              return true;
+            return true;
             */
 
             // Ignore sounds that aren't visible
@@ -1586,12 +1586,12 @@ bool CAI_ActBusyBehavior::IsInSafeZone( CBaseEntity *pEntity )
         busysafezone_t *pSafeZone = &m_SafeZones[i];
 
         if ( vecLocation.x > pSafeZone->vecMins.x &&
-             vecLocation.y > pSafeZone->vecMins.y &&
-             vecLocation.z > pSafeZone->vecMins.z &&
+            vecLocation.y > pSafeZone->vecMins.y &&
+            vecLocation.z > pSafeZone->vecMins.z &&
 
-             vecLocation.x < pSafeZone->vecMaxs.x &&
-             vecLocation.y < pSafeZone->vecMaxs.y &&
-             vecLocation.z < pSafeZone->vecMaxs.z )
+            vecLocation.x < pSafeZone->vecMaxs.x &&
+            vecLocation.y < pSafeZone->vecMaxs.y &&
+            vecLocation.z < pSafeZone->vecMaxs.z )
         {
             return true;
         }
@@ -2859,22 +2859,22 @@ void CAI_ActBusyQueueGoal::InputPlayerStartedBlocking( inputdata_t &inputdata )
     // First, find all NPCs heading to points in front of the player's blocked spot
     for ( int i = 0; i < iNode; i++ )
     {
-      CAI_BaseNPC *pNPC = GetNPCOnNode(i);
-      if ( !pNPC )
+    CAI_BaseNPC *pNPC = GetNPCOnNode(i);
+    if ( !pNPC )
         continue;
 
-      CAI_ActBusyBehavior *pBehavior = GetQueueBehaviorForNPC( pNPC );
-      if ( pBehavior->IsMovingToBusy() )
-      {
+    CAI_ActBusyBehavior *pBehavior = GetQueueBehaviorForNPC( pNPC );
+    if ( pBehavior->IsMovingToBusy() )
+    {
         // We may be ahead of the player in the queue, which means we can safely
         // be left alone to reach the node. Make sure we're not closer to it than the player is
         float flPlayerDistToNode = (inputdata.pActivator->GetAbsOrigin() - m_hNodes[i]->GetAbsOrigin()).LengthSqr();
         if ( (pNPC->GetAbsOrigin() - m_hNodes[i]->GetAbsOrigin()).LengthSqr() < flPlayerDistToNode )
-          continue;
+        continue;
 
         // We're an NPC heading to a node past the player, and yet the player's in our way.
         pBehavior->StopBusying();
-      }
+    }
     }
     */
 

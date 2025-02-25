@@ -25,7 +25,7 @@ class KeyValues;
 //-----------------------------------------------------------------------------
 class CEntityPanel : public CBasePanel
 {
-   public:
+    public:
     DECLARE_CLASS( CEntityPanel, CBasePanel );
 
     // constructor
@@ -59,7 +59,7 @@ class CEntityPanel : public CBasePanel
     // Attach to a new entity
     void SetEntity( C_BaseEntity* pEntity );
 
-   public:
+    public:
     enum
     {
         MAX_ENTITY_MOUSEOVER = 256
@@ -78,7 +78,7 @@ class CEntityPanel : public CBasePanel
     int m_iOrgOffsetY;
     float m_flScale;
 
-   private:
+    private:
     // This is the entity to which we're attached
     EHANDLE m_pBaseEntity;
 };

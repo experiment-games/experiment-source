@@ -22,7 +22,7 @@ class CBaseEntity;
 // mechanism if this gets big.
 class IServerUnknown : public IHandleEntity
 {
-   public:
+    public:
     // Gets the interface to the collideable + networkable representation of the entity
     virtual ICollideable* GetCollideable() = 0;
     virtual IServerNetworkable* GetNetworkable() = 0;

@@ -65,12 +65,12 @@ void TestFailureThrowsRuntimeError() {
     EXPECT_EQ(2, 3) << "Expected failure";
   } catch(const std::runtime_error& e) {
     if (strstr(e.what(), "Expected failure") != NULL)
-      return;
+    return;
 
     printf("%s",
-           "A failed assertion did throw an exception of the right type, "
-           "but the message is incorrect.  Instead of containing \"Expected "
-           "failure\", it is:\n");
+            "A failed assertion did throw an exception of the right type, "
+            "but the message is incorrect.  Instead of containing \"Expected "
+            "failure\", it is:\n");
     Fail(e.what());
   } catch(...) {
     Fail("A failed assertion threw the wrong type of exception.");

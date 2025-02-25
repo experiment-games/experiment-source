@@ -2676,7 +2676,7 @@ void ActivityList_RegisterSharedActivities( void )
 
 class CActivityDataOps : public CDefSaveRestoreOps
 {
-   public:
+    public:
     // save data type interface
     virtual void Save( const SaveRestoreFieldInfo_t &fieldInfo, ISave *pSave )
     {

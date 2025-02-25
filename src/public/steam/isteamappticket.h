@@ -18,7 +18,7 @@
 //-----------------------------------------------------------------------------
 class ISteamAppTicket
 {
-   public:
+    public:
     virtual uint32 GetAppOwnershipTicketData( uint32 nAppID, void *pvBuffer, uint32 cbBufferLength, uint32 *piAppId, uint32 *piSteamId, uint32 *piSignature, uint32 *pcbSignature ) = 0;
 };
 

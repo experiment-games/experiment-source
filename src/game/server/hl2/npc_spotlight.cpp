@@ -73,7 +73,7 @@ class CNPC_Spotlight : public CAI_BaseNPC
 {
     DECLARE_CLASS( CNPC_Spotlight, CAI_BaseNPC );
 
-   public:
+    public:
     CNPC_Spotlight();
     Class_T Classify( void );
     int UpdateTransmitState( void );
@@ -96,7 +96,7 @@ class CNPC_Spotlight : public CAI_BaseNPC
     void Precache( void );
     void Spawn( void );
 
-   public:
+    public:
     int m_fSpotlightFlags;
 
     // ------------------------------
@@ -180,7 +180,7 @@ class CNPC_Spotlight : public CAI_BaseNPC
     void InputTrackOn( inputdata_t &inputdata );
     void InputTrackOff( inputdata_t &inputdata );
 
-   protected:
+    protected:
     DECLARE_DATADESC();
 };
 
@@ -405,7 +405,7 @@ CBaseEntity *CNPC_Spotlight::BestInspectTarget( void )
             // the squad, make the enemy as eluded and fire a lost squad output
             float flTimeLastSeen = GetEnemies()->LastTimeSeen( pBestEntity );
             if ( !GetEnemies()->HasEludedMe( pBestEntity ) &&
-                 flTimeLastSeen + 0.5 < gpGlobals->curtime )
+                flTimeLastSeen + 0.5 < gpGlobals->curtime )
             {
                 GetEnemies()->MarkAsEluded( pBestEntity );
                 m_pOutputSquadLost.Set( *( ( EHANDLE * )pBestEntity ), this, this );
@@ -415,7 +415,7 @@ CBaseEntity *CNPC_Spotlight::BestInspectTarget( void )
 
         // If he has eluded me or isn't in the legal range of my spotligth reject
         else if ( GetEnemies()->HasEludedMe( pBestEntity ) ||
-                  !SpotlightIsPositionLegal( GetEnemies()->LastKnownPosition( pBestEntity ) ) )
+                !SpotlightIsPositionLegal( GetEnemies()->LastKnownPosition( pBestEntity ) ) )
         {
             pBestEntity = NULL;
         }
@@ -449,7 +449,7 @@ CBaseEntity *CNPC_Spotlight::BestInspectTarget( void )
             }
 
             if ( ( pEntity->Classify() == CLASS_MILITARY ) ||
-                 ( pEntity->Classify() == CLASS_BULLSEYE ) )
+                ( pEntity->Classify() == CLASS_BULLSEYE ) )
             {
                 continue;
             }
@@ -467,7 +467,7 @@ CBaseEntity *CNPC_Spotlight::BestInspectTarget( void )
 
             // If it's a new enemy or one that had eluded me
             if ( !GetEnemies()->HasMemory( pEntity ) ||
-                 GetEnemies()->HasEludedMe( pEntity ) )
+                GetEnemies()->HasEludedMe( pEntity ) )
             {
                 m_pOutputSquadDetect.Set( *( ( EHANDLE * )pEntity ), this, this );
             }
@@ -498,7 +498,7 @@ CBaseEntity *CNPC_Spotlight::BestInspectTarget( void )
             //  If both are hated, or both are not
             // -------------------------------------------
             else if ( ( nTestRelationship != D_HT && nBestRelationship != D_HT ) ||
-                      ( nTestRelationship == D_HT && nBestRelationship == D_HT ) )
+                    ( nTestRelationship == D_HT && nBestRelationship == D_HT ) )
             {
                 // --------------------------------------
                 //  Pick one with the higher priority
@@ -793,7 +793,7 @@ void CNPC_Spotlight::UpdateTargets( void )
             // If my inspection over clear my inspect target.
             // -----------------------------------------------------------
             if ( HaveInspectTarget() &&
-                 gpGlobals->curtime > m_flInspectEndTime )
+                gpGlobals->curtime > m_flInspectEndTime )
             {
                 m_flNextEntitySearchTime = gpGlobals->curtime + SPOTLIGHT_ENTITY_INSPECT_DELAY;
                 m_flNextHintSearchTime = gpGlobals->curtime + SPOTLIGHT_HINT_INSPECT_DELAY;
@@ -826,7 +826,7 @@ void CNPC_Spotlight::UpdateTargets( void )
             //  Check for hints to inspect
             // --------------------------------------
             if ( gpGlobals->curtime > m_flNextHintSearchTime &&
-                 !HaveInspectTarget() )
+                !HaveInspectTarget() )
             {
                 SetHintNode( CAI_HintManager::FindHint( this, HINT_NONE, 0, SPOTLIGHT_HINT_SEARCH_DIST ) );
 
@@ -874,8 +874,8 @@ void CNPC_Spotlight::UpdateTargets( void )
         //  See if I'm at my burn target
         // ------------------------------------------
         if ( !HaveInspectTarget() &&
-             m_pScriptedTarget &&
-             m_pSpotlightTarget != NULL )
+            m_pScriptedTarget &&
+            m_pSpotlightTarget != NULL )
         {
             float fTargetDist = ( m_vSpotlightTargetPos - m_vSpotlightCurrentPos ).Length();
             if ( fTargetDist < SPOTLIGHT_BURN_TARGET_THRESH )
@@ -1089,7 +1089,7 @@ float CNPC_Spotlight::SpotlightSpeed( void )
         return ( fSpeedScale * m_pScriptedTarget->MoveSpeed() );
     }
     else if ( m_NPCState == NPC_STATE_COMBAT ||
-              m_NPCState == NPC_STATE_ALERT )
+            m_NPCState == NPC_STATE_ALERT )
     {
         return ( fSpeedScale * m_flAlertSpeed );
     }
@@ -1172,7 +1172,7 @@ Vector CNPC_Spotlight::SpotlightCurrentPos( void )
     // a burn target, or an enemy
     // ---------------------------------------------
     if ( ( HaveInspectTarget() && GetEnemy() == NULL ) ||
-         ( !HaveInspectTarget() && !m_pScriptedTarget ) )
+        ( !HaveInspectTarget() && !m_pScriptedTarget ) )
     {
         bool bInRange = true;
         if ( UTIL_AngleDistance( m_flYaw, m_flYawCenter ) > m_flYawRange )
@@ -1257,7 +1257,7 @@ void CNPC_Spotlight::SpotlightUpdate( void )
     //  Go back to idle state after a while
     // ---------------------------------------------------
     if ( m_NPCState == NPC_STATE_ALERT &&
-         m_flLastStateChangeTime + 30 < gpGlobals->curtime )
+        m_flLastStateChangeTime + 30 < gpGlobals->curtime )
     {
         SetState( NPC_STATE_IDLE );
     }
@@ -1266,7 +1266,7 @@ void CNPC_Spotlight::SpotlightUpdate( void )
     //  If I don't have a spotlight attempt to create one
     // ---------------------------------------------------
     if ( !m_pSpotlight &&
-         m_fSpotlightFlags & BITS_SPOTLIGHT_LIGHT_ON )
+        m_fSpotlightFlags & BITS_SPOTLIGHT_LIGHT_ON )
     {
         SpotlightCreate();
     }

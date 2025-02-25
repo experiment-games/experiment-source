@@ -49,7 +49,7 @@ class QueueNode
 {
     friend class Queue< E >;
 
-   public:
+    public:
     // Gets the element in this node.
     const E &element() const
     {
@@ -66,7 +66,7 @@ class QueueNode
         return next_;
     }
 
-   private:
+    private:
     // Creates a node with a given element value.  The next pointer is
     // set to NULL.
     QueueNode( const E &element )
@@ -83,7 +83,7 @@ class QueueNode
 template < typename E >  // E is the element type.
 class Queue
 {
-   public:
+    public:
     // Creates an empty queue.
     Queue()
         : head_( NULL ), last_( NULL ), size_( 0 ) {}
@@ -201,7 +201,7 @@ class Queue
         return new_queue;
     }
 
-   private:
+    private:
     QueueNode< E > *head_;  // The first node of the queue.
     QueueNode< E > *last_;  // The last node of the queue.
     size_t size_;           // The number of elements in the queue.

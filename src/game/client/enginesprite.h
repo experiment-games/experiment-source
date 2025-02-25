@@ -28,7 +28,7 @@ class CEngineSprite
 {
     // NOTE: don't define a constructor or destructor so that this can be allocated
     // as before.
-   public:
+    public:
     int GetWidth()
     {
         return m_width;
@@ -74,7 +74,7 @@ class CEngineSprite
     bool IsVideo();
     void GetTexCoordRange( float *pMinU, float *pMinV, float *pMaxU, float *pMaxV );
 
-   private:
+    private:
     IVideoMaterial *m_VideoMaterial;
     int m_width;
     int m_height;

@@ -25,14 +25,14 @@ AM_LDFLAGS = $(PTHREAD_CFLAGS)
 # a "legitimate" directory for DATA.  Screw you, automake.
 protodir = $(includedir)
 nobase_dist_proto_DATA = google/protobuf/descriptor.proto \
-                         google/protobuf/compiler/plugin.proto
+                        google/protobuf/compiler/plugin.proto
 
 # Not sure why these don't get cleaned automatically.
 clean-local:
-	rm -f *.loT
+    rm -f *.loT
 
 CLEANFILES = $(protoc_outputs) unittest_proto_middleman \
-             testzip.jar testzip.list testzip.proto testzip.zip
+            testzip.jar testzip.list testzip.proto testzip.zip
 
 MAINTAINERCLEANFILES =   \
   Makefile.in
@@ -249,8 +249,8 @@ BUILT_SOURCES = $(protoc_outputs)
 if USE_EXTERNAL_PROTOC
 
 unittest_proto_middleman: $(protoc_inputs)
-	$(PROTOC) -I$(srcdir) --cpp_out=. $^
-	touch unittest_proto_middleman
+    $(PROTOC) -I$(srcdir) --cpp_out=. $^
+    touch unittest_proto_middleman
 
 else
 
@@ -258,8 +258,8 @@ else
 # relative to srcdir, which may not be the same as the current directory when
 # building out-of-tree.
 unittest_proto_middleman: protoc$(EXEEXT) $(protoc_inputs)
-	oldpwd=`pwd` && ( cd $(srcdir) && $$oldpwd/protoc$(EXEEXT) -I. --cpp_out=$$oldpwd $(protoc_inputs) )
-	touch unittest_proto_middleman
+    oldpwd=`pwd` && ( cd $(srcdir) && $$oldpwd/protoc$(EXEEXT) -I. --cpp_out=$$oldpwd $(protoc_inputs) )
+    touch unittest_proto_middleman
 
 endif
 
@@ -274,12 +274,12 @@ COMMON_TEST_SOURCES =                                          \
   google/protobuf/testing/file.h
 
 check_PROGRAMS = protoc protobuf-test protobuf-lazy-descriptor-test \
-                 protobuf-lite-test test_plugin $(GZCHECKPROGRAMS)
+                protobuf-lite-test test_plugin $(GZCHECKPROGRAMS)
 protobuf_test_LDADD = $(PTHREAD_LIBS) libprotobuf.la libprotoc.la \
-                      $(top_builddir)/gtest/lib/libgtest.la       \
-                      $(top_builddir)/gtest/lib/libgtest_main.la
+                    $(top_builddir)/gtest/lib/libgtest.la       \
+                    $(top_builddir)/gtest/lib/libgtest_main.la
 protobuf_test_CPPFLAGS = -I$(top_srcdir)/gtest/include         \
-                         -I$(top_builddir)/gtest/include
+                        -I$(top_builddir)/gtest/include
 # Disable optimization for tests unless the user explicitly asked for it,
 # since test_util.cc takes forever to compile with optimization (with GCC).
 # See configure.ac for more info.
@@ -319,11 +319,11 @@ nodist_protobuf_test_SOURCES = $(protoc_outputs)
 
 # Run cpp_unittest again with PROTOBUF_TEST_NO_DESCRIPTORS defined.
 protobuf_lazy_descriptor_test_LDADD = $(PTHREAD_LIBS) libprotobuf.la \
-                      $(top_builddir)/gtest/lib/libgtest.la       \
-                      $(top_builddir)/gtest/lib/libgtest_main.la
+                    $(top_builddir)/gtest/lib/libgtest.la       \
+                    $(top_builddir)/gtest/lib/libgtest_main.la
 protobuf_lazy_descriptor_test_CPPFLAGS = -I$(top_srcdir)/gtest/include    \
-                                         -I$(top_builddir)/gtest/include  \
-                                         -DPROTOBUF_TEST_NO_DESCRIPTORS
+                                        -I$(top_builddir)/gtest/include  \
+                                        -DPROTOBUF_TEST_NO_DESCRIPTORS
 protobuf_lazy_descriptor_test_CXXFLAGS = $(NO_OPT_CXXFLAGS)
 protobuf_lazy_descriptor_test_SOURCES =                        \
   google/protobuf/compiler/cpp/cpp_unittest.cc                 \
@@ -343,7 +343,7 @@ nodist_protobuf_lite_test_SOURCES = $(protoc_lite_outputs)
 test_plugin_LDADD = $(PTHREAD_LIBS) libprotobuf.la libprotoc.la \
                     $(top_builddir)/gtest/lib/libgtest.la
 test_plugin_CPPFLAGS = -I$(top_srcdir)/gtest/include         \
-                       -I$(top_builddir)/gtest/include
+                        -I$(top_builddir)/gtest/include
 test_plugin_SOURCES =                                          \
   google/protobuf/compiler/mock_code_generator.cc              \
   google/protobuf/testing/file.cc                              \

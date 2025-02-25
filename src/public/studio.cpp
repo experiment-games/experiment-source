@@ -1261,31 +1261,31 @@ const mstudioiklock_t &CStudioHdr::pIKAutoplayLock( int i )
 #if 0
 int	CStudioHdr::CountAutoplaySequences() const
 {
-	int count = 0;
-	for (int i = 0; i < GetNumSeq(); i++)
-	{
-		mstudioseqdesc_t &seqdesc = pSeqdesc( i );
-		if (seqdesc.flags & STUDIO_AUTOPLAY)
-		{
-			count++;
-		}
-	}
-	return count;
+    int count = 0;
+    for (int i = 0; i < GetNumSeq(); i++)
+    {
+        mstudioseqdesc_t &seqdesc = pSeqdesc( i );
+        if (seqdesc.flags & STUDIO_AUTOPLAY)
+        {
+            count++;
+        }
+    }
+    return count;
 }
 
 int	CStudioHdr::CopyAutoplaySequences( unsigned short *pOut, int outCount ) const
 {
-	int outIndex = 0;
-	for (int i = 0; i < GetNumSeq() && outIndex < outCount; i++)
-	{
-		mstudioseqdesc_t &seqdesc = pSeqdesc( i );
-		if (seqdesc.flags & STUDIO_AUTOPLAY)
-		{
-			pOut[outIndex] = i;
-			outIndex++;
-		}
-	}
-	return outIndex;
+    int outIndex = 0;
+    for (int i = 0; i < GetNumSeq() && outIndex < outCount; i++)
+    {
+        mstudioseqdesc_t &seqdesc = pSeqdesc( i );
+        if (seqdesc.flags & STUDIO_AUTOPLAY)
+        {
+            pOut[outIndex] = i;
+            outIndex++;
+        }
+    }
+    return outIndex;
 }
 
 #endif
@@ -1882,8 +1882,8 @@ void CStudioHdr::CActivityToSequenceMapping::Initialize( const CStudioHdr *__res
     register int sequenceCount = 0;
     int topActivity = 0;  // this will store the highest seen activity number (used later to make an ad hoc map on the stack)
     for ( UtlHashHandle_t handle = m_ActToSeqHash.GetFirstHandle();
-          m_ActToSeqHash.IsValidHandle( handle );
-          handle = m_ActToSeqHash.GetNextHandle( handle ) )
+        m_ActToSeqHash.IsValidHandle( handle );
+        handle = m_ActToSeqHash.GetNextHandle( handle ) )
     {
         HashValueType &element = m_ActToSeqHash[handle];
         element.startingIdx = sequenceCount;
@@ -2026,7 +2026,7 @@ static CStudioHdr::CActivityToSequenceMapping emptyMapping;
 bool CStudioHdr::CActivityToSequenceMapping::ValidateAgainst( const CStudioHdr *RESTRICT pstudiohdr ) RESTRICT
 {
     return ( this == &emptyMapping ||
-             ( m_pStudioHdr == pstudiohdr->m_pStudioHdr && m_expectedVModel == pstudiohdr->GetVirtualModel() ) );
+            ( m_pStudioHdr == pstudiohdr->m_pStudioHdr && m_expectedVModel == pstudiohdr->GetVirtualModel() ) );
 }
 
 void CStudioHdr::CActivityToSequenceMapping::SetValidation( const CStudioHdr *RESTRICT pstudiohdr ) RESTRICT

@@ -15,7 +15,7 @@ export CC=/path/to/gcc
 export CXX=/path/to/g++
 export CFLAGS=-fvisiblity=hidden
 export CXXFLAGS=-fvisiblity=hidden
-export LDFLAGS="-static-libgcc" 
+export LDFLAGS="-static-libgcc"
 ./configure --enable-shared=no
 
 * To build on linux x86_64:
@@ -31,7 +31,7 @@ alternatively, just put all those variables on the configure line (note that LIB
 
 ./configure CC=/path/to/c-compiler CXX=/path/to/c++-compiler [LDFLAGS=-static-libgcc] [-m32] [--with-pic] --enable-shared=no
 
-This will build src/protoc (the compiler binary) and src/.libs/libprotobuf.a (among others).  
+This will build src/protoc (the compiler binary) and src/.libs/libprotobuf.a (among others).
 
 publish protoc into src/devtools/bin/<platform>/
 publish libprotobuf.a gets into src/lib/<platform>/release

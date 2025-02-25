@@ -38,7 +38,7 @@ struct CoreDispBBox_t
 //
 class CCoreDispSurface
 {
-   public:
+    public:
     enum
     {
         QUAD_POINT_COUNT = 4
@@ -171,7 +171,7 @@ class CCoreDispSurface
         return &m_EdgeNeighbors[iEdge];
     }
 
-   protected:
+    protected:
     // Utility
     bool LongestInU( const Vector &vecU, const Vector &vecV );
 
@@ -461,7 +461,7 @@ inline void CCoreDispSurface::GetNormal( Vector &normal )
 //
 class CCoreDispNode
 {
-   public:
+    public:
     enum
     {
         MAX_NEIGHBOR_NODE_COUNT = 4
@@ -524,7 +524,7 @@ class CCoreDispNode
     friend void GetComponentsFromNodeIndex( int index, int *x, int *y );
     friend int GetNodeIndexFromComponents( int x, int y );
 
-   protected:
+    protected:
     Vector m_BBox[2];                                    // displacement node bounding box (take into account size of children)
     float m_ErrorTerm;                                   // LOD error term (the "precision" of the representation of the surface at this node's level)
     int m_VertIndex;                                     // the node's vertex index (center vertex of node)
@@ -702,7 +702,7 @@ struct CoreDispTri_t
 
 class CCoreDispInfo : public CDispUtilsHelper
 {
-   public:
+    public:
     //
     // tree and displacement surface directions
     //
@@ -719,15 +719,15 @@ class CCoreDispInfo : public CDispUtilsHelper
     };
 
 #if 0
-	//
-	// building parameters
-	//
-	enum { BUILD_NORMALS      = 0x1,
-		   BUILD_TEXCOORDS    = 0x2,
-		   BUILD_LIGHTCOORDS  = 0x4,
-		   BUILD_LODTREE      = 0x8,
-		   BUILD_COLLISION    = 0x10,
-		   BUILD_TANGENTSPACE = 0x20 };
+    //
+    // building parameters
+    //
+    enum { BUILD_NORMALS      = 0x1,
+            BUILD_TEXCOORDS    = 0x2,
+            BUILD_LIGHTCOORDS  = 0x4,
+            BUILD_LODTREE      = 0x8,
+            BUILD_COLLISION    = 0x10,
+            BUILD_TANGENTSPACE = 0x20 };
 #endif
 
     //
@@ -755,20 +755,20 @@ class CCoreDispInfo : public CDispUtilsHelper
     };
 
     // Convert from a CDispUtilsHelper.
-   public:
+    public:
     static CCoreDispInfo *FromDispUtils( CDispUtilsHelper *p )
     {
         return ( CCoreDispInfo * )p;
     }
 
     // CDispUtilsHelper implementation.
-   public:
+    public:
     virtual CDispNeighbor *GetEdgeNeighbor( int index );
     virtual CDispCornerNeighbors *GetCornerNeighbors( int index );
     virtual const CPowerInfo *GetPowerInfo() const;
     virtual CDispUtilsHelper *GetDispUtilsByIndex( int index );
 
-   public:
+    public:
     //=========================================================================
     //
     // Creation/Destruction
@@ -991,7 +991,7 @@ class CCoreDispInfo : public CDispUtilsHelper
     //
     friend void SmoothNeighboringDispSurfNormals( CCoreDispInfo **ppCoreDispInfoList, int listSize );
 
-   private:
+    private:
     // be changed to match the paint normal next pass)
     // LOD/collision node data
     CCoreDispNode *m_Nodes;  // LOD quad-tree nodes
@@ -1003,7 +1003,7 @@ class CCoreDispInfo : public CDispUtilsHelper
 
     // base surface data
     CCoreDispSurface m_Surf;  // surface containing displacement data
-                              // be changed to match the paint normal next pass)
+                            // be changed to match the paint normal next pass)
     // Vertex data..
     CoreDispVert_t *m_pVerts;
 

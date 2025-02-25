@@ -32,7 +32,7 @@
 
 class CPixelWriter
 {
-   public:
+    public:
     FORCEINLINE void SetPixelMemory( ImageFormat format, void *pMemory, int stride );
     FORCEINLINE void *GetPixelMemory()
     {
@@ -41,8 +41,8 @@ class CPixelWriter
 
     // this is no longer used:
 #if 0  // defined( _X360 )
-	// set after SetPixelMemory() 
-	FORCEINLINE void ActivateByteSwapping( bool bSwap );
+    // set after SetPixelMemory()
+    FORCEINLINE void ActivateByteSwapping( bool bSwap );
 #endif
 
     FORCEINLINE void Seek( int x, int y );
@@ -86,7 +86,7 @@ class CPixelWriter
         return m_pBits;
     }
 
-   private:
+    private:
     enum
     {
         PIXELWRITER_USING_FLOAT_FORMAT = 0x01,
@@ -111,13 +111,13 @@ class CPixelWriter
 #ifdef _X360
     ImageFormat m_Format;
 
-   public:
+    public:
     inline const ImageFormat &GetFormat()
     {
         return m_Format;
     }
 
-   private:
+    private:
 #endif
 };
 
@@ -360,32 +360,32 @@ FORCEINLINE_PIXEL void CPixelWriter::SetPixelMemory( ImageFormat format, void *p
 #if 0  // defined( _X360 )
 FORCEINLINE void CPixelWriter::ActivateByteSwapping( bool bSwap )
 {
-	// X360TBD: Who is trying to use this?
-	// Purposely not hooked up because PixelWriter has been ported to read/write native pixels only
-	Assert( 0 );
+    // X360TBD: Who is trying to use this?
+    // Purposely not hooked up because PixelWriter has been ported to read/write native pixels only
+    Assert( 0 );
 
-	if ( bSwap && !(m_nFlags & PIXELWRITER_SWAPBYTES ) )
-	{
-		m_nFlags |= PIXELWRITER_SWAPBYTES;
+    if ( bSwap && !(m_nFlags & PIXELWRITER_SWAPBYTES ) )
+    {
+        m_nFlags |= PIXELWRITER_SWAPBYTES;
 
-		// only tested with 4 byte formats
-		Assert( m_Size == 4 );
-	}
-	else if ( !bSwap && (m_nFlags & PIXELWRITER_SWAPBYTES ) )
-	{
-		m_nFlags &= ~PIXELWRITER_SWAPBYTES;
-	}
-	else
-	{
-		// same state
-		return;
-	}
+        // only tested with 4 byte formats
+        Assert( m_Size == 4 );
+    }
+    else if ( !bSwap && (m_nFlags & PIXELWRITER_SWAPBYTES ) )
+    {
+        m_nFlags &= ~PIXELWRITER_SWAPBYTES;
+    }
+    else
+    {
+        // same state
+        return;
+    }
 
-	// swap the shifts
-	m_RShift = 24-m_RShift;
-	m_GShift = 24-m_GShift;
-	m_BShift = 24-m_BShift;
-	m_AShift = 24-m_AShift;
+    // swap the shifts
+    m_RShift = 24-m_RShift;
+    m_GShift = 24-m_GShift;
+    m_BShift = 24-m_BShift;
+    m_AShift = 24-m_AShift;
 }
 #endif
 

@@ -17,17 +17,17 @@
 
 class CCriticalSection
 {
-   public:
+    public:
     CCriticalSection();
     ~CCriticalSection();
 
-   protected:
+    protected:
     friend class CCriticalSectionLock;
 
     void Lock();
     void Unlock();
 
-   public:
+    public:
     char m_CS[SIZEOF_CS];
 
     // Used to protect against deadlock in debug mode.
@@ -40,13 +40,13 @@ class CCriticalSection
 // Use this to lock a critical section.
 class CCriticalSectionLock
 {
-   public:
+    public:
     CCriticalSectionLock( CCriticalSection *pCS );
     ~CCriticalSectionLock();
     void Lock();
     void Unlock();
 
-   private:
+    private:
     CCriticalSection *m_pCS;
     bool m_bLocked;
 };
@@ -54,7 +54,7 @@ class CCriticalSectionLock
 template < class T >
 class CCriticalSectionData : private CCriticalSection
 {
-   public:
+    public:
     // You only have access to the data between Lock() and Unlock().
     T *Lock()
     {
@@ -67,7 +67,7 @@ class CCriticalSectionData : private CCriticalSection
         CCriticalSection::Unlock();
     }
 
-   private:
+    private:
     T m_Data;
 };
 
@@ -76,7 +76,7 @@ class CCriticalSectionData : private CCriticalSection
 // ------------------------------------------------------------------------------------------------ //
 class CEvent
 {
-   public:
+    public:
     CEvent();
     ~CEvent();
 
@@ -91,7 +91,7 @@ class CEvent
     // Unset the event's signalled status.
     bool ResetEvent();
 
-   private:
+    private:
     void *m_hEvent;
 };
 

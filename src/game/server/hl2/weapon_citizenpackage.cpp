@@ -50,7 +50,7 @@ class CWeaponCitizenSuitcase : public CWeaponCitizenPackage
 {
     DECLARE_CLASS( CWeaponCitizenSuitcase, CWeaponCitizenPackage );
 
-   public:
+    public:
     DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
     DECLARE_ACTTABLE();

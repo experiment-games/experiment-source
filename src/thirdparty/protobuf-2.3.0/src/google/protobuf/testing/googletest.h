@@ -73,7 +73,7 @@ static const LogLevel ERROR = LOGLEVEL_ERROR;
 // buffer unit tests.
 class ScopedMemoryLog
 {
-   public:
+    public:
     ScopedMemoryLog();
     virtual ~ScopedMemoryLog();
 
@@ -83,7 +83,7 @@ class ScopedMemoryLog
     // anyway.
     const vector< string >& GetMessages( LogLevel dummy ) const;
 
-   private:
+    private:
     vector< string > messages_;
     LogHandler* old_handler_;
 

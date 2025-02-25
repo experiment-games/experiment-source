@@ -6,14 +6,14 @@ $Include                "$SRCDIR\vpc_scripts\source_posix_base.vpc"
 
 $Configuration
 {
-	$General
-	{
-		$ConfigurationType                                      "Static Library (.lib)"
-		$GameOutputFile						"$OUTLIBDIR/$OUTLIBNAME$_STATICLIB_EXT"
-	}
+    $General
+    {
+        $ConfigurationType                                      "Static Library (.lib)"
+        $GameOutputFile						"$OUTLIBDIR/$OUTLIBNAME$_STATICLIB_EXT"
+    }
 
-	$Linker
-	{
-		$OutputFile                                             "$OUTLIBDIR/$OUTLIBNAME$_STATICLIB_EXT"
-	}
+    $Linker
+    {
+        $OutputFile                                             "$OUTLIBDIR/$OUTLIBNAME$_STATICLIB_EXT"
+    }
 }

@@ -17,7 +17,7 @@ class C_FuncPhysicsRespawnZone;
 
 class C_PhysPropClientside : public C_BreakableProp, public IBreakableWithPropData, public IMultiplayerPhysics
 {
-   public:
+    public:
     DECLARE_CLASS( C_PhysPropClientside, C_BreakableProp );
 
     C_PhysPropClientside();
@@ -71,7 +71,7 @@ class C_PhysPropClientside : public C_BreakableProp, public IBreakableWithPropDa
     void SetRespawnZone( C_FuncPhysicsRespawnZone *pZone );
 
     // IBreakableWithPropData interface:
-   public:
+    public:
     // IBreakableWithPropData
     void SetDmgModBullet( float flDmgMod )
     {
@@ -195,23 +195,23 @@ class C_PhysPropClientside : public C_BreakableProp, public IBreakableWithPropDa
     static void DestroyAll();   // clear all clientside created phys props
     static C_PhysPropClientside *CreateNew( bool bForce = false );
 
-   protected:
+    protected:
     static void ParseAllEntities( const char *pMapData );
     static const char *ParseEntity( const char *pEntData );
     static void InitializePropRespawnZones( void );
 
-   public:
+    public:
     int m_iPhysicsMode;    // should always be PHYSICS_MULTIPLAYER_CLIENTSIDE
     float m_flTouchDelta;  // Amount of time that must pass before another touch function can be called
     float m_fDeathTime;    // Point at which this object self destructs.
-                           // The default of -1 indicates the object shouldn't destruct.
+                            // The default of -1 indicates the object shouldn't destruct.
 
     // properties from serverclass CPhysicsProp
     float m_impactEnergyScale;
     int m_spawnflags;
     float m_inertiaScale;
 
-   protected:
+    protected:
     // Prop data storage
     float m_flDmgModBullet;
     float m_flDmgModClub;
@@ -241,7 +241,7 @@ class C_FuncPhysicsRespawnZone : public C_BaseEntity
 {
     DECLARE_CLASS( C_FuncPhysicsRespawnZone, C_BaseEntity );
 
-   public:
+    public:
     C_FuncPhysicsRespawnZone( void );
     ~C_FuncPhysicsRespawnZone( void );
 
@@ -253,7 +253,7 @@ class C_FuncPhysicsRespawnZone : public C_BaseEntity
     void RespawnProps( void );
     void ClientThink( void );
 
-   private:
+    private:
     struct clientsideproprespawn_t
     {
         string_t iszModelName;

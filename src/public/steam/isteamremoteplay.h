@@ -29,7 +29,7 @@ typedef uint32 RemotePlaySessionID_t;
 //-----------------------------------------------------------------------------
 class ISteamRemotePlay
 {
-   public:
+    public:
     // Get the number of currently connected Steam Remote Play sessions
     virtual uint32 GetSessionCount() = 0;
 

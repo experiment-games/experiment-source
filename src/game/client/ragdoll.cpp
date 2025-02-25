@@ -370,7 +370,7 @@ CRagdoll *CreateRagdoll(
 //-----------------------------------------------------------------------------
 class C_ServerRagdoll : public C_BaseAnimating
 {
-   public:
+    public:
     DECLARE_CLASS( C_ServerRagdoll, C_BaseAnimating );
     DECLARE_CLIENTCLASS();
     DECLARE_INTERPOLATION();
@@ -402,7 +402,7 @@ class C_ServerRagdoll : public C_BaseAnimating
     int m_elementCount;
     int m_boneIndex[RAGDOLL_MAX_ELEMENTS];
 
-   private:
+    private:
     C_ServerRagdoll( const C_ServerRagdoll &src );
 
     typedef CHandle< C_BaseAnimating > CBaseAnimatingHandle;
@@ -424,7 +424,7 @@ RecvPropArray( RecvPropQAngles( RECVINFO( m_ragAngles[0] ) ), m_ragAngles ),
 
         C_ServerRagdoll::C_ServerRagdoll( void )
     : m_iv_ragPos( "C_ServerRagdoll::m_iv_ragPos" ),
-      m_iv_ragAngles( "C_ServerRagdoll::m_iv_ragAngles" )
+    m_iv_ragAngles( "C_ServerRagdoll::m_iv_ragAngles" )
 {
     m_elementCount = 0;
     m_flLastBoneChangeTime = -FLT_MAX;
@@ -588,8 +588,8 @@ void C_ServerRagdoll::BuildTransformations( CStudioHdr *hdr, Vector *pos, Quater
                 matrix3x4_t &matrix = GetBoneForWrite( index );
 
                 if ( m_flBlendWeightCurrent != 0.0f && pSeqDesc &&
-                     // FIXME: this bone access is illegal
-                     pSeqDesc->weight( index ) != 0.0f )
+                    // FIXME: this bone access is illegal
+                    pSeqDesc->weight( index ) != 0.0f )
                 {
                     // Use the animated bone position instead
                     boneSimulated[index] = false;
@@ -610,7 +610,7 @@ void C_ServerRagdoll::BuildTransformations( CStudioHdr *hdr, Vector *pos, Quater
         // BUGBUG: Merge this code with the code in c_baseanimating somehow!!!
         // animate all non-simulated bones
         if ( boneSimulated[i] ||
-             CalcProceduralBone( hdr, i, m_BoneAccessor ) )
+            CalcProceduralBone( hdr, i, m_BoneAccessor ) )
         {
             continue;
         }
@@ -649,8 +649,8 @@ void C_ServerRagdoll::UpdateOnRemove()
 {
     C_BaseAnimating *anim = m_hUnragdoll.Get();
     if ( NULL != anim &&
-         anim->GetModel() &&
-         ( anim->GetModel() == GetModel() ) )
+        anim->GetModel() &&
+        ( anim->GetModel() == GetModel() ) )
     {
         // Need to tell C_BaseAnimating to blend out of the ragdoll data that we received last
         C_BaseAnimating::AutoAllowBoneAccess boneaccess( true, false );
@@ -685,7 +685,7 @@ class C_ServerRagdollAttached : public C_ServerRagdoll
 {
     DECLARE_CLASS( C_ServerRagdollAttached, C_ServerRagdoll );
 
-   public:
+    public:
     C_ServerRagdollAttached( void )
     {
         m_bHasParent = false;
@@ -774,7 +774,7 @@ class C_ServerRagdollAttached : public C_ServerRagdoll
     float m_parentTime;
     bool m_bHasParent;
 
-   private:
+    private:
     C_ServerRagdollAttached( const C_ServerRagdollAttached & );
 };
 

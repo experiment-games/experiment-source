@@ -30,7 +30,7 @@ enum eyeState_t
 //=========================================================
 class CNPC_Assassin : public CAI_BaseNPC
 {
-   public:
+    public:
     DECLARE_CLASS( CNPC_Assassin, CAI_BaseNPC );
     // DECLARE_SERVERCLASS();
     DECLARE_DATADESC();
@@ -70,7 +70,7 @@ class CNPC_Assassin : public CAI_BaseNPC
 
     const Vector &GetViewOffset( void );
 
-   private:
+    private:
     void SetEyeState( eyeState_t state );
     void FirePistol( int hand );
     bool CanFlip( int flipType, Activity &activity, const Vector *avoidPosition );

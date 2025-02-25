@@ -25,7 +25,7 @@ extern ConVar my_mat_fullbright;
 template < int N >
 class CFixedCommandStorageBuffer
 {
-   public:
+    public:
     uint8 m_Data[N];
 
     uint8 *m_pDataOut;
@@ -101,7 +101,7 @@ class CFixedCommandStorageBuffer
 template < class S >
 class CCommandBufferBuilder
 {
-   public:
+    public:
     S m_Storage;
 
     FORCEINLINE void End( void )

@@ -19,7 +19,7 @@
  */
 class CFuncNavCost : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_DATADESC();
     DECLARE_CLASS( CFuncNavCost, CBaseEntity );
 
@@ -43,7 +43,7 @@ class CFuncNavCost : public CBaseEntity
         return 1.0f;
     }
 
-   protected:
+    protected:
     int m_team;
     bool m_isDisabled;
     string_t m_iszTags;
@@ -59,7 +59,7 @@ class CFuncNavCost : public CBaseEntity
 //-----------------------------------------------------------------------------------------------------
 class CFuncNavAvoid : public CFuncNavCost
 {
-   public:
+    public:
     DECLARE_CLASS( CFuncNavAvoid, CFuncNavCost );
 
     virtual float GetCostMultiplier( CBaseCombatCharacter *who ) const;  // return pathfind cost multiplier for the given actor
@@ -68,7 +68,7 @@ class CFuncNavAvoid : public CFuncNavCost
 //-----------------------------------------------------------------------------------------------------
 class CFuncNavPrefer : public CFuncNavCost
 {
-   public:
+    public:
     DECLARE_CLASS( CFuncNavPrefer, CFuncNavCost );
 
     virtual float GetCostMultiplier( CBaseCombatCharacter *who ) const;  // return pathfind cost multiplier for the given actor
@@ -85,7 +85,7 @@ class CFuncNavBlocker : public CBaseEntity
     DECLARE_DATADESC();
     DECLARE_CLASS( CFuncNavBlocker, CBaseEntity );
 
-   public:
+    public:
     void Spawn();
     virtual void UpdateOnRemove( void );
 
@@ -115,7 +115,7 @@ class CFuncNavBlocker : public CBaseEntity
 
     static bool CalculateBlocked( bool *pResultByTeam, const Vector &vecMins, const Vector &vecMaxs );
 
-   private:
+    private:
     void UpdateBlocked();
 
     static CUtlLinkedList< CFuncNavBlocker * > gm_NavBlockers;

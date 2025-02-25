@@ -64,7 +64,7 @@ namespace compiler
 //     MockCodeGenerator_Abort." to stderr and then calls abort().
 class MockCodeGenerator : public CodeGenerator
 {
-   public:
+    public:
     MockCodeGenerator( const string& name );
     virtual ~MockCodeGenerator();
 
@@ -74,26 +74,26 @@ class MockCodeGenerator : public CodeGenerator
     // |insertions| is a comma-separated list of names of MockCodeGenerators which
     // should have inserted lines into this file.
     static void ExpectGenerated( const string& name,
-                                 const string& parameter,
-                                 const string& insertions,
-                                 const string& file,
-                                 const string& first_message_name,
-                                 const string& output_directory );
+                                const string& parameter,
+                                const string& insertions,
+                                const string& file,
+                                const string& first_message_name,
+                                const string& output_directory );
 
     // Get the name of the file which would be written by the given generator.
     static string GetOutputFileName( const string& generator_name,
-                                     const FileDescriptor* file );
+                                    const FileDescriptor* file );
     static string GetOutputFileName( const string& generator_name,
-                                     const string& file );
+                                    const string& file );
 
     // implements CodeGenerator ----------------------------------------
 
     virtual bool Generate( const FileDescriptor* file,
-                           const string& parameter,
-                           OutputDirectory* output_directory,
-                           string* error ) const;
+                            const string& parameter,
+                            OutputDirectory* output_directory,
+                            string* error ) const;
 
-   private:
+    private:
     string name_;
 
     static string GetOutputFileContent( const string& generator_name,

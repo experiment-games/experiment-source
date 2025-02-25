@@ -20,7 +20,7 @@ class CTEBeamLaser : public CTEBaseBeam
 {
     DECLARE_CLASS( CTEBeamLaser, CTEBaseBeam );
 
-   public:
+    public:
     DECLARE_SERVERCLASS();
 
     CTEBeamLaser( const char* name );
@@ -28,7 +28,7 @@ class CTEBeamLaser : public CTEBaseBeam
 
     virtual void Test( const Vector& current_origin, const QAngle& current_angles );
 
-   public:
+    public:
     CNetworkVar( int, m_nStartEntity );
     CNetworkVar( int, m_nEndEntity );
 };

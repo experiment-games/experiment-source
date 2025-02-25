@@ -64,7 +64,7 @@ class CNPCSimpleTalker;
 
 class CNPCSimpleTalkerExpresser : public CAI_ComponentWithOuter< CNPCSimpleTalker, CAI_Expresser >
 {
-   public:
+    public:
     CNPCSimpleTalkerExpresser( CNPCSimpleTalker *pOuter )
         : CAI_ComponentWithOuter< CNPCSimpleTalker, CAI_Expresser >( pOuter )
     {
@@ -112,7 +112,7 @@ class CNPCSimpleTalker : public CAI_PlayerAlly
 {
     DECLARE_CLASS( CNPCSimpleTalker, CAI_PlayerAlly );
 
-   public:
+    public:
     void Precache( void );
     virtual bool KeyValue( const char *szKeyName, const char *szValue );
 
@@ -263,7 +263,7 @@ class CNPCSimpleTalker : public CAI_PlayerAlly
     string_t m_iszUse;    // Custom +USE sentence group (follow)
     string_t m_iszUnUse;  // Custom +USE sentence group (stop following)
 
-   protected:
+    protected:
     CAI_FollowBehavior m_FollowBehavior;
     float m_useTime;  // Don't allow +USE until this time
 
@@ -273,10 +273,10 @@ class CNPCSimpleTalker : public CAI_PlayerAlly
 #ifndef _XBOX
     DEFINE_CUSTOM_AI;
 #else
-   public:
+    public:
     DEFINE_CUSTOM_AI;
 
-   private:
+    private:
 #endif
 };
 

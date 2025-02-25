@@ -115,10 +115,10 @@ class CZombie : public CAI_BlendingHost< CNPC_BaseZombie >
     DECLARE_DATADESC();
     DECLARE_CLASS( CZombie, CAI_BlendingHost< CNPC_BaseZombie > );
 
-   public:
+    public:
     CZombie()
         : m_DurationDoorBash( 2, 6 ),
-          m_NextTimeToStartDoorBash( 3.0 )
+        m_NextTimeToStartDoorBash( 3.0 )
     {
     }
 
@@ -183,13 +183,13 @@ class CZombie : public CAI_BlendingHost< CNPC_BaseZombie >
 
     const char *GetMoanSound( int nSound );
 
-   public:
+    public:
     DEFINE_CUSTOM_AI;
 
-   protected:
+    protected:
     static const char *pMoanSounds[];
 
-   private:
+    private:
     CHandle< CBaseDoor > m_hBlockingDoor;
     float m_flDoorBashYaw;
 
@@ -584,8 +584,8 @@ void CZombie::GatherConditions( void )
     ClearConditions( conditionsToClear, ARRAYSIZE( conditionsToClear ) );
 
     if ( m_hBlockingDoor == NULL ||
-         ( m_hBlockingDoor->m_toggle_state == TS_AT_TOP ||
-           m_hBlockingDoor->m_toggle_state == TS_GOING_UP ) )
+        ( m_hBlockingDoor->m_toggle_state == TS_AT_TOP ||
+            m_hBlockingDoor->m_toggle_state == TS_GOING_UP ) )
     {
         ClearCondition( COND_BLOCKED_BY_DOOR );
         if ( m_hBlockingDoor != NULL )
@@ -603,7 +603,7 @@ void CZombie::GatherConditions( void )
         {
             const float CHARGE_RESET_TOLERANCE = 60.0;
             if ( !GetEnemy() ||
-                 ( m_vPositionCharged - GetEnemyLKP() ).Length() > CHARGE_RESET_TOLERANCE )
+                ( m_vPositionCharged - GetEnemyLKP() ).Length() > CHARGE_RESET_TOLERANCE )
             {
                 SetCondition( COND_ZOMBIE_CHARGE_TARGET_MOVED );
             }
@@ -625,15 +625,15 @@ int CZombie::SelectFailSchedule( int failedSchedule, int failedTask, AI_TaskFail
     }
 
     if ( failedSchedule != SCHED_ZOMBIE_CHARGE_ENEMY &&
-         IsPathTaskFailure( taskFailCode ) &&
-         random->RandomInt( 1, 100 ) < 50 )
+        IsPathTaskFailure( taskFailCode ) &&
+        random->RandomInt( 1, 100 ) < 50 )
     {
         return SCHED_ZOMBIE_CHARGE_ENEMY;
     }
 
     if ( failedSchedule != SCHED_ZOMBIE_WANDER_ANGRILY &&
-         ( failedSchedule == SCHED_TAKE_COVER_FROM_ENEMY ||
-           failedSchedule == SCHED_CHASE_ENEMY_FAILED ) )
+        ( failedSchedule == SCHED_TAKE_COVER_FROM_ENEMY ||
+            failedSchedule == SCHED_CHASE_ENEMY_FAILED ) )
     {
         return SCHED_ZOMBIE_WANDER_ANGRILY;
     }

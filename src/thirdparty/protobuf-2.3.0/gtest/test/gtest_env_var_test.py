@@ -92,11 +92,11 @@ class GTestEnvVarTest(gtest_test_utils.TestCase):
     TestFlag('death_test_style', 'threadsafe', 'fast')
 
     if IS_WINDOWS:
-      TestFlag('catch_exceptions', '1', '0')
+    TestFlag('catch_exceptions', '1', '0')
 
     if IS_LINUX:
-      TestFlag('death_test_use_fork', '1', '0')
-      TestFlag('stack_trace_depth', '0', '100')
+    TestFlag('death_test_use_fork', '1', '0')
+    TestFlag('stack_trace_depth', '0', '100')
 
 
 if __name__ == '__main__':

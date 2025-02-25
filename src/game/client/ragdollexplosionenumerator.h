@@ -18,7 +18,7 @@ class CRagdollExplosionEnumerator : public IPartitionEnumerator
 {
     DECLARE_CLASS_GAMEROOT( CRagdollExplosionEnumerator, IPartitionEnumerator );
 
-   public:
+    public:
     // Forced constructor
     CRagdollExplosionEnumerator( Vector origin, float radius, float magnitude );
     ~CRagdollExplosionEnumerator();
@@ -26,7 +26,7 @@ class CRagdollExplosionEnumerator : public IPartitionEnumerator
     // Actual work code
     virtual IterationRetval_t EnumElement( IHandleEntity *pHandleEntity );
 
-   public:
+    public:
     // Data members
     CUtlVector< C_BaseEntity * > m_Entities;
     Vector m_vecOrigin;

@@ -19,7 +19,7 @@ CTacticalMissionManager &TheTacticalMissions( void )
 //---------------------------------------------------------------------------------------------
 class CListMissions : public CTacticalMissionManager::IForEachMission
 {
-   public:
+    public:
     virtual bool Inspect( const CTacticalMission &mission )
     {
         Msg( "%s\n", mission.GetName() );
@@ -39,7 +39,7 @@ CON_COMMAND_F( mission_list, "List all available tactical missions", FCVAR_GAMED
 //---------------------------------------------------------------------------------------------
 class CShowZone : public IForEachNavArea
 {
-   public:
+    public:
     virtual bool Inspect( const CNavArea *area )
     {
         area->DrawFilled( 255, 255, 0, 255, 9999.9f );

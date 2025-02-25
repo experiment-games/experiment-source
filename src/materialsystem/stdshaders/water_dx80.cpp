@@ -16,7 +16,7 @@
 #include "tier0/memdbgon.h"
 
 BEGIN_VS_SHADER( Water_DX80,
-                 "Help for Water_DX80" )
+                "Help for Water_DX80" )
 
 BEGIN_SHADER_PARAMS
 SHADER_PARAM( REFRACTTEXTURE, SHADER_PARAM_TYPE_TEXTURE, "", "" )

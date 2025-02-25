@@ -32,21 +32,21 @@ struct mountableGame_t
 
     mountableGame_t( const char *gameName, const char *directoryName, int gameId, bool isInstalled, bool isOwned )
         : name( gameName ),
-          directoryName( directoryName ),
-          appId( gameId ),
-          isMounted( false ),
-          isOwned( isOwned ),
-          isInstalled( isInstalled )
+        directoryName( directoryName ),
+        appId( gameId ),
+        isMounted( false ),
+        isOwned( isOwned ),
+        isInstalled( isInstalled )
     {
     }
 
     mountableGame_t( const mountableGame_t &other )
         : name( other.name ),
-          directoryName( other.directoryName ),
-          appId( other.appId ),
-          isMounted( other.isMounted ),
-          isOwned( other.isOwned ),
-          isInstalled( other.isInstalled )
+        directoryName( other.directoryName ),
+        appId( other.appId ),
+        isMounted( other.isMounted ),
+        isOwned( other.isOwned ),
+        isInstalled( other.isInstalled )
     {
         for ( int i = 0; i < other.vpks.Count(); i++ )
         {

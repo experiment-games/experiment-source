@@ -188,7 +188,7 @@ enum ShaderDrawBitField_t
     SHADER_DRAW_SECONDARY_TEXCOORD3 = 0x8000,
 
     SHADER_TEXCOORD_MASK = SHADER_DRAW_TEXCOORD0 | SHADER_DRAW_TEXCOORD1 |
-                           SHADER_DRAW_TEXCOORD2 | SHADER_DRAW_TEXCOORD3,
+                            SHADER_DRAW_TEXCOORD2 | SHADER_DRAW_TEXCOORD3,
 
     SHADER_LIGHTMAP_TEXCOORD_MASK = SHADER_DRAW_LIGHTMAP_TEXCOORD0 |
                                     SHADER_DRAW_LIGHTMAP_TEXCOORD1 |
@@ -196,9 +196,9 @@ enum ShaderDrawBitField_t
                                     SHADER_DRAW_LIGHTMAP_TEXCOORD3,
 
     SHADER_SECONDARY_TEXCOORD_MASK = SHADER_DRAW_SECONDARY_TEXCOORD0 |
-                                     SHADER_DRAW_SECONDARY_TEXCOORD1 |
-                                     SHADER_DRAW_SECONDARY_TEXCOORD2 |
-                                     SHADER_DRAW_SECONDARY_TEXCOORD3,
+                                    SHADER_DRAW_SECONDARY_TEXCOORD1 |
+                                    SHADER_DRAW_SECONDARY_TEXCOORD2 |
+                                    SHADER_DRAW_SECONDARY_TEXCOORD3,
 };
 
 enum ShaderFogMode_t
@@ -238,7 +238,7 @@ enum PolygonOffsetMode_t
 //-----------------------------------------------------------------------------
 abstract_class IShaderShadow
 {
-   public:
+    public:
     // Sets the default *shadow* state
     virtual void SetDefaultState() = 0;
 
@@ -287,9 +287,9 @@ abstract_class IShaderShadow
     // If pTexCoordDimensions is *not* specified, we assume all coordinates
     // are 2-dimensional
     virtual void VertexShaderVertexFormat( unsigned int nFlags,
-                                           int nTexCoordCount,
-                                           int* pTexCoordDimensions,
-                                           int nUserDataSize ) = 0;
+                                            int nTexCoordCount,
+                                            int* pTexCoordDimensions,
+                                            int nUserDataSize ) = 0;
 
     // Pixel and vertex shader methods
     virtual void SetVertexShader( const char* pFileName, int nStaticVshIndex ) = 0;

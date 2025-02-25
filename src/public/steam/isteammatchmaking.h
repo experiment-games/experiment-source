@@ -56,7 +56,7 @@ enum ELobbyDistanceFilter
 //-----------------------------------------------------------------------------
 class ISteamMatchmaking
 {
-   public:
+    public:
     // game server favorites storage
     // saves basic details about a multiplayer game server locally
 
@@ -86,21 +86,21 @@ class ISteamMatchmaking
     // to add more filter, the filter calls below need to be call before each and every RequestLobbyList() call
     // use the CCallResult<> object in steam_api.h to match the SteamAPICall_t call result to a function in an object, e.g.
     /*
-      class CMyLobbyListManager
-      {
+    class CMyLobbyListManager
+    {
         CCallResult<CMyLobbyListManager, LobbyMatchList_t> m_CallResultLobbyMatchList;
         void FindLobbies()
         {
-          // SteamMatchmaking()->AddRequestLobbyListFilter*() functions would be called here, before RequestLobbyList()
-          SteamAPICall_t hSteamAPICall = SteamMatchmaking()->RequestLobbyList();
-          m_CallResultLobbyMatchList.Set( hSteamAPICall, this, &CMyLobbyListManager::OnLobbyMatchList );
+        // SteamMatchmaking()->AddRequestLobbyListFilter*() functions would be called here, before RequestLobbyList()
+        SteamAPICall_t hSteamAPICall = SteamMatchmaking()->RequestLobbyList();
+        m_CallResultLobbyMatchList.Set( hSteamAPICall, this, &CMyLobbyListManager::OnLobbyMatchList );
         }
 
         void OnLobbyMatchList( LobbyMatchList_t *pLobbyMatchList, bool bIOFailure )
         {
-          // lobby list has be retrieved from Steam back-end, use results
+        // lobby list has be retrieved from Steam back-end, use results
         }
-      }
+    }
     */
     //
     STEAM_CALL_RESULT( LobbyMatchList_t )
@@ -291,7 +291,7 @@ typedef void *HServerListRequest;
 //-----------------------------------------------------------------------------
 class ISteamMatchmakingServerListResponse
 {
-   public:
+    public:
     // Server has responded ok with updated data
     virtual void ServerResponded( HServerListRequest hRequest, int iServer ) = 0;
 
@@ -314,7 +314,7 @@ class ISteamMatchmakingServerListResponse
 //-----------------------------------------------------------------------------
 class ISteamMatchmakingPingResponse
 {
-   public:
+    public:
     // Server has responded successfully and has updated data
     virtual void ServerResponded( gameserveritem_t &server ) = 0;
 
@@ -335,7 +335,7 @@ class ISteamMatchmakingPingResponse
 //-----------------------------------------------------------------------------
 class ISteamMatchmakingPlayersResponse
 {
-   public:
+    public:
     // Got data on a new player on the server -- you'll get this callback once per player
     // on the server which you have requested player data on.
     virtual void AddPlayerToList( const char *pchName, int nScore, float flTimePlayed ) = 0;
@@ -361,7 +361,7 @@ class ISteamMatchmakingPlayersResponse
 //-----------------------------------------------------------------------------
 class ISteamMatchmakingRulesResponse
 {
-   public:
+    public:
     // Got data on a rule on the server -- you'll get one of these per rule defined on
     // the server you are querying
     virtual void RulesResponded( const char *pchRule, const char *pchValue ) = 0;
@@ -385,7 +385,7 @@ const int HSERVERQUERY_INVALID = 0xffffffff;
 //-----------------------------------------------------------------------------
 class ISteamMatchmakingServers
 {
-   public:
+    public:
     // Request a new list of servers of a particular type.  These calls each correspond to one of the EMatchMakingType values.
     // Each call allocates a new asynchronous request object.
     // Request object must be released by calling ReleaseRequest( hServerListRequest )
@@ -402,27 +402,27 @@ class ISteamMatchmakingServers
 
     /* the filter operation codes that go in the key part of MatchMakingKeyValuePair_t should be one of these:
 
-      "map"
+    "map"
         - Server passes the filter if the server is playing the specified map.
-      "gamedataand"
+    "gamedataand"
         - Server passes the filter if the server's game data (ISteamGameServer::SetGameData) contains all of the
         specified strings.  The value field is a comma-delimited list of strings to match.
-      "gamedataor"
+    "gamedataor"
         - Server passes the filter if the server's game data (ISteamGameServer::SetGameData) contains at least one of the
         specified strings.  The value field is a comma-delimited list of strings to match.
-      "gamedatanor"
+    "gamedatanor"
         - Server passes the filter if the server's game data (ISteamGameServer::SetGameData) does not contain any
         of the specified strings.  The value field is a comma-delimited list of strings to check.
-      "gametagsand"
+    "gametagsand"
         - Server passes the filter if the server's game tags (ISteamGameServer::SetGameTags) contains all
         of the specified strings.  The value field is a comma-delimited list of strings to check.
-      "gametagsnor"
+    "gametagsnor"
         - Server passes the filter if the server's game tags (ISteamGameServer::SetGameTags) does not contain any
         of the specified strings.  The value field is a comma-delimited list of strings to check.
-      "and" (x1 && x2 && ... && xn)
-      "or" (x1 || x2 || ... || xn)
-      "nand" !(x1 && x2 && ... && xn)
-      "nor" !(x1 || x2 || ... || xn)
+    "and" (x1 && x2 && ... && xn)
+    "or" (x1 || x2 || ... || xn)
+    "nand" !(x1 && x2 && ... && xn)
+    "nor" !(x1 || x2 || ... || xn)
         - Performs Boolean operation on the following filters.  The operand to this filter specifies
         the "size" of the Boolean inputs to the operation, in Key/value pairs.  (The keyvalue
         pairs must immediately follow, i.e. this is a prefix logical operator notation.)
@@ -432,41 +432,41 @@ class ISteamMatchmakingServers
         For example, to match servers on a particular map or with a particular tag, would would
         use these filters.
 
-          ( server.map == "cp_dustbowl" || server.gametags.contains("payload") )
-          "or", "2"
-          "map", "cp_dustbowl"
-          "gametagsand", "payload"
+        ( server.map == "cp_dustbowl" || server.gametags.contains("payload") )
+        "or", "2"
+        "map", "cp_dustbowl"
+        "gametagsand", "payload"
 
         If logical inputs are nested, then the operand specifies the size of the entire
         "length" of its operands, not the number of immediate children.
 
-          ( server.map == "cp_dustbowl" || ( server.gametags.contains("payload") && !server.gametags.contains("payloadrace") ) )
-          "or", "4"
-          "map", "cp_dustbowl"
-          "and", "2"
-          "gametagsand", "payload"
-          "gametagsnor", "payloadrace"
+        ( server.map == "cp_dustbowl" || ( server.gametags.contains("payload") && !server.gametags.contains("payloadrace") ) )
+        "or", "4"
+        "map", "cp_dustbowl"
+        "and", "2"
+        "gametagsand", "payload"
+        "gametagsnor", "payloadrace"
 
         Unary NOT can be achieved using either "nand" or "nor" with a single operand.
 
-      "addr"
+    "addr"
         - Server passes the filter if the server's query address matches the specified IP or IP:port.
-      "gameaddr"
+    "gameaddr"
         - Server passes the filter if the server's game address matches the specified IP or IP:port.
 
-      The following filter operations ignore the "value" part of MatchMakingKeyValuePair_t
+    The following filter operations ignore the "value" part of MatchMakingKeyValuePair_t
 
-      "dedicated"
+    "dedicated"
         - Server passes the filter if it passed true to SetDedicatedServer.
-      "secure"
+    "secure"
         - Server passes the filter if the server is VAC-enabled.
-      "notfull"
+    "notfull"
         - Server passes the filter if the player count is less than the reported max player count.
-      "hasplayers"
+    "hasplayers"
         - Server passes the filter if the player count is greater than zero.
-      "noplayers"
+    "noplayers"
         - Server passes the filter if it doesn't have any players.
-      "linux"
+    "linux"
         - Server passes the filter if it's a linux server
     */
 
@@ -550,7 +550,7 @@ enum EChatMemberStateChange
 //-----------------------------------------------------------------------------
 class ISteamGameSearch
 {
-   public:
+    public:
     // =============================================================================================
     // Game Player APIs
 
@@ -653,7 +653,7 @@ enum ESteamPartyBeaconLocationData
 
 class ISteamParties
 {
-   public:
+    public:
     // =============================================================================================
     // Party Client APIs
 
@@ -782,7 +782,7 @@ struct LobbyDataUpdate_t
     uint64 m_ulSteamIDLobby;   // steamID of the Lobby
     uint64 m_ulSteamIDMember;  // steamID of the member whose data changed, or the room itself
     uint8 m_bSuccess;          // true if we lobby data was successfully changed;
-                               // will only be false if RequestLobbyData() was called on a lobby that no longer exists
+                                // will only be false if RequestLobbyData() was called on a lobby that no longer exists
 };
 
 //-----------------------------------------------------------------------------

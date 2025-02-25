@@ -18,7 +18,7 @@
 //-----------------------------------------------------------------------------
 class CTEBreakModel : public CBaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTEBreakModel, CBaseTempEntity );
 
     CTEBreakModel( const char* name );
@@ -30,7 +30,7 @@ class CTEBreakModel : public CBaseTempEntity
 
     DECLARE_SERVERCLASS();
 
-   public:
+    public:
     CNetworkVector( m_vecOrigin );
     CNetworkVector( m_vecSize );
     CNetworkVector( m_vecVelocity );

@@ -9,9 +9,9 @@ RES = windres
 .PHONY: all clean
 
 %.exe: %.c %.rc
-	$(RES) -i $*.rc -o rsrc.obj
-	$(CC) $(FLAGS) $*.c rsrc.obj $(LIBS) -o $(OUTDIR)\$@
-	$(RM) rsrc.obj
+    $(RES) -i $*.rc -o rsrc.obj
+    $(CC) $(FLAGS) $*.c rsrc.obj $(LIBS) -o $(OUTDIR)\$@
+    $(RM) rsrc.obj
 
 %.exe: %.c
-	$(CC) $(FLAGS) $*.c $(LIBS) -o $(OUTDIR)\$@
+    $(CC) $(FLAGS) $*.c $(LIBS) -o $(OUTDIR)\$@

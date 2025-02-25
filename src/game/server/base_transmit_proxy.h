@@ -16,7 +16,7 @@ class CBaseEntity;
 
 class CBaseTransmitProxy
 {
-   public:
+    public:
     CBaseTransmitProxy( CBaseEntity *pEnt );
     virtual ~CBaseTransmitProxy();
 
@@ -27,7 +27,7 @@ class CBaseTransmitProxy
     void AddRef();
     void Release();
 
-   private:
+    private:
     EHANDLE m_hEnt;
     unsigned short m_refCount;
 };

@@ -21,13 +21,13 @@ class CInfoCameraLink : public CLogicalEntity
     DECLARE_CLASS( CInfoCameraLink, CLogicalEntity );
     DECLARE_DATADESC();
 
-   public:
+    public:
     CInfoCameraLink();
     ~CInfoCameraLink();
 
     virtual void Activate();
 
-   private:
+    private:
     void InputSetCamera( inputdata_t &inputdata );
     void InputSetTargetEntity( inputdata_t &inputdata );
     void SetCameraByName( const char *szName );

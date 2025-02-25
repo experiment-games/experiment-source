@@ -24,7 +24,7 @@ class ParticleDraw
 {
     friend class CParticleEffectBinding;
 
-   public:
+    public:
     ParticleDraw();
 
     void Init( CMeshBuilder *pMeshBuilder, IMaterial *pMaterial, float fTimeDelta );
@@ -40,7 +40,7 @@ class ParticleDraw
 
     CParticleSubTexture *m_pSubTexture;
 
-   private:
+    private:
     CMeshBuilder *m_pMeshBuilder;
     IMaterial *m_pMaterial;
     float m_fTimeDelta;

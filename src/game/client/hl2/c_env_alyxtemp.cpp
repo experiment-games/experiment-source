@@ -14,7 +14,7 @@ class C_AlyxEmpEffect : public C_BaseEntity
     DECLARE_CLASS( C_AlyxEmpEffect, C_BaseEntity );
     DECLARE_CLIENTCLASS();
 
-   public:
+    public:
     void OnDataChanged( DataUpdateType_t updateType );
     RenderGroup_t GetRenderGroup( void );
 
@@ -25,7 +25,7 @@ class C_AlyxEmpEffect : public C_BaseEntity
     void UpdateCharging( float percentage );
     void UpdateDischarging( void );
 
-   private:
+    private:
     bool SetupEmitters( void );
     inline float GetStateDurationPercentage( void );
 
@@ -107,70 +107,70 @@ void C_AlyxEmpEffect::UpdateIdle( float percentage )
 {
 #if 0
 
-	// Must be active
-	if ( percentage >= 1.0f )
-		return;
+    // Must be active
+    if ( percentage >= 1.0f )
+        return;
 
-	// Emitters must be valid
-	if ( SetupEmitters() == false )
-		return;
+    // Emitters must be valid
+    if ( SetupEmitters() == false )
+        return;
 
-	// Reset our sort origin
-	m_pSimpleEmitter->SetSortOrigin( GetAbsOrigin() );
+    // Reset our sort origin
+    m_pSimpleEmitter->SetSortOrigin( GetAbsOrigin() );
 
-	SimpleParticle *sParticle;
+    SimpleParticle *sParticle;
 
-	// Do the charging particles
-	m_pAttractorEmitter->SetAttractorOrigin( GetAbsOrigin() );
+    // Do the charging particles
+    m_pAttractorEmitter->SetAttractorOrigin( GetAbsOrigin() );
 
-	Vector forward, right, up;
-	AngleVectors( GetAbsAngles(), &forward, &right, &up );
+    Vector forward, right, up;
+    AngleVectors( GetAbsAngles(), &forward, &right, &up );
 
-	Vector	offset;
-	float	dist;
+    Vector	offset;
+    float	dist;
 
-	int numParticles = floor( 4.0f * percentage );
+    int numParticles = floor( 4.0f * percentage );
 
-	float dTime = gpGlobals->frametime;
-	
-	while ( m_tParticleSpawn.NextEvent( dTime ) )
-	{
-		for ( int i = 0; i < numParticles; i++ )
-		{
-			dist = random->RandomFloat( 4.0f * EMP_SCALE * percentage, 64.0f * EMP_SCALE * percentage );
+    float dTime = gpGlobals->frametime;
 
-			offset = forward * dist;
+    while ( m_tParticleSpawn.NextEvent( dTime ) )
+    {
+        for ( int i = 0; i < numParticles; i++ )
+        {
+            dist = random->RandomFloat( 4.0f * EMP_SCALE * percentage, 64.0f * EMP_SCALE * percentage );
 
-			dist = RemapValClamped( dist, 4.0f * EMP_SCALE * percentage, 64.0f * EMP_SCALE * percentage, 6.0f, 1.0f );
-			offset += right * random->RandomFloat( -4.0f * EMP_SCALE * dist, 4.0f * EMP_SCALE * dist );
-			offset += up * random->RandomFloat( -4.0f * EMP_SCALE * dist, 4.0f * EMP_SCALE * dist );
+            offset = forward * dist;
 
-			offset += GetAbsOrigin();
+            dist = RemapValClamped( dist, 4.0f * EMP_SCALE * percentage, 64.0f * EMP_SCALE * percentage, 6.0f, 1.0f );
+            offset += right * random->RandomFloat( -4.0f * EMP_SCALE * dist, 4.0f * EMP_SCALE * dist );
+            offset += up * random->RandomFloat( -4.0f * EMP_SCALE * dist, 4.0f * EMP_SCALE * dist );
 
-			sParticle = (SimpleParticle *) m_pAttractorEmitter->AddParticle( sizeof(SimpleParticle), m_pAttractorEmitter->GetPMaterial( EMP_PARTICLES ), offset );
+            offset += GetAbsOrigin();
 
-			if ( sParticle == NULL )
-				return;
-			
-			sParticle->m_vecVelocity	= Vector(0,0,8);
-			sParticle->m_flDieTime		= 0.5f;
-			sParticle->m_flLifetime		= 0.0f;
+            sParticle = (SimpleParticle *) m_pAttractorEmitter->AddParticle( sizeof(SimpleParticle), m_pAttractorEmitter->GetPMaterial( EMP_PARTICLES ), offset );
 
-			sParticle->m_flRoll			= Helper_RandomInt( 0, 360 );
-			sParticle->m_flRollDelta	= 0.0f;
+            if ( sParticle == NULL )
+                return;
 
-			float alpha = 255 * percentage;
+            sParticle->m_vecVelocity	= Vector(0,0,8);
+            sParticle->m_flDieTime		= 0.5f;
+            sParticle->m_flLifetime		= 0.0f;
 
-			sParticle->m_uchColor[0]	= alpha;
-			sParticle->m_uchColor[1]	= alpha;
-			sParticle->m_uchColor[2]	= alpha;
-			sParticle->m_uchStartAlpha	= alpha;
-			sParticle->m_uchEndAlpha	= 0;
+            sParticle->m_flRoll			= Helper_RandomInt( 0, 360 );
+            sParticle->m_flRollDelta	= 0.0f;
 
-			sParticle->m_uchStartSize	= random->RandomFloat( 1, 2 );
-			sParticle->m_uchEndSize		= 0;
-		}
-	}
+            float alpha = 255 * percentage;
+
+            sParticle->m_uchColor[0]	= alpha;
+            sParticle->m_uchColor[1]	= alpha;
+            sParticle->m_uchColor[2]	= alpha;
+            sParticle->m_uchStartAlpha	= alpha;
+            sParticle->m_uchEndAlpha	= 0;
+
+            sParticle->m_uchStartSize	= random->RandomFloat( 1, 2 );
+            sParticle->m_uchEndSize		= 0;
+        }
+    }
 
 #endif
 }
@@ -226,52 +226,52 @@ void C_AlyxEmpEffect::UpdateCharging( float percentage )
 
 #if 0
 
-	// Do the charging particles
-	m_pAttractorEmitter->SetAttractorOrigin( GetAbsOrigin() );
+    // Do the charging particles
+    m_pAttractorEmitter->SetAttractorOrigin( GetAbsOrigin() );
 
-	Vector forward, right, up;
-	AngleVectors( GetAbsAngles(), &forward, &right, &up );
+    Vector forward, right, up;
+    AngleVectors( GetAbsAngles(), &forward, &right, &up );
 
-	Vector	offset;
-	float	dist;
+    Vector	offset;
+    float	dist;
 
-	int numParticles = floor( 4.0f * percentage );
+    int numParticles = floor( 4.0f * percentage );
 
-	for ( i = 0; i < numParticles; i++ )
-	{
-		dist = random->RandomFloat( 4.0f * percentage, 64.0f * percentage );
+    for ( i = 0; i < numParticles; i++ )
+    {
+        dist = random->RandomFloat( 4.0f * percentage, 64.0f * percentage );
 
-		offset = forward * dist;
+        offset = forward * dist;
 
-		dist = RemapValClamped( dist, 4.0f * percentage, 64.0f * percentage, 6.0f, 1.0f );
-		offset += right * random->RandomFloat( -4.0f * dist, 4.0f * dist );
-		offset += up * random->RandomFloat( -4.0f * dist, 4.0f * dist );
+        dist = RemapValClamped( dist, 4.0f * percentage, 64.0f * percentage, 6.0f, 1.0f );
+        offset += right * random->RandomFloat( -4.0f * dist, 4.0f * dist );
+        offset += up * random->RandomFloat( -4.0f * dist, 4.0f * dist );
 
-		offset += GetAbsOrigin();
+        offset += GetAbsOrigin();
 
-		sParticle = (SimpleParticle *) m_pAttractorEmitter->AddParticle( sizeof(SimpleParticle), m_pAttractorEmitter->GetPMaterial( EMP_PARTICLES ), offset );
+        sParticle = (SimpleParticle *) m_pAttractorEmitter->AddParticle( sizeof(SimpleParticle), m_pAttractorEmitter->GetPMaterial( EMP_PARTICLES ), offset );
 
-		if ( sParticle == NULL )
-			return;
-		
-		sParticle->m_vecVelocity	= Vector(0,0,8);
-		sParticle->m_flDieTime		= 0.5f;
-		sParticle->m_flLifetime		= 0.0f;
+        if ( sParticle == NULL )
+            return;
 
-		sParticle->m_flRoll			= Helper_RandomInt( 0, 360 );
-		sParticle->m_flRollDelta	= 0.0f;
+        sParticle->m_vecVelocity	= Vector(0,0,8);
+        sParticle->m_flDieTime		= 0.5f;
+        sParticle->m_flLifetime		= 0.0f;
 
-		float alpha = 255 * percentage;
+        sParticle->m_flRoll			= Helper_RandomInt( 0, 360 );
+        sParticle->m_flRollDelta	= 0.0f;
 
-		sParticle->m_uchColor[0]	= alpha;
-		sParticle->m_uchColor[1]	= alpha;
-		sParticle->m_uchColor[2]	= alpha;
-		sParticle->m_uchStartAlpha	= alpha;
-		sParticle->m_uchEndAlpha	= 0;
+        float alpha = 255 * percentage;
 
-		sParticle->m_uchStartSize	= random->RandomFloat( 1, 2 );
-		sParticle->m_uchEndSize		= 0;
-	}
+        sParticle->m_uchColor[0]	= alpha;
+        sParticle->m_uchColor[1]	= alpha;
+        sParticle->m_uchColor[2]	= alpha;
+        sParticle->m_uchStartAlpha	= alpha;
+        sParticle->m_uchEndAlpha	= 0;
+
+        sParticle->m_uchStartSize	= random->RandomFloat( 1, 2 );
+        sParticle->m_uchEndSize		= 0;
+    }
 
 #endif
 }
@@ -378,47 +378,47 @@ void C_AlyxEmpEffect::UpdateDischarging( void )
 
 #if 0
 
-	// Do the charging particles
-	m_pAttractorEmitter->SetAttractorOrigin( GetAbsOrigin() );
+    // Do the charging particles
+    m_pAttractorEmitter->SetAttractorOrigin( GetAbsOrigin() );
 
-	Vector	offset;
-	float	dist;
+    Vector	offset;
+    float	dist;
 
-	for ( i = 0; i < 4; i++ )
-	{
-		dist = random->RandomFloat( 4.0f, 64.0f );
+    for ( i = 0; i < 4; i++ )
+    {
+        dist = random->RandomFloat( 4.0f, 64.0f );
 
-		offset = forward * dist;
+        offset = forward * dist;
 
-		dist = RemapValClamped( dist, 4.0f, 64.0f, 6.0f, 1.0f );
-		offset += right * random->RandomFloat( -2.0f * dist, 2.0f * dist );
-		offset += up * random->RandomFloat( -2.0f * dist, 2.0f * dist );
+        dist = RemapValClamped( dist, 4.0f, 64.0f, 6.0f, 1.0f );
+        offset += right * random->RandomFloat( -2.0f * dist, 2.0f * dist );
+        offset += up * random->RandomFloat( -2.0f * dist, 2.0f * dist );
 
-		offset += GetAbsOrigin();
+        offset += GetAbsOrigin();
 
-		sParticle = (SimpleParticle *) m_pAttractorEmitter->AddParticle( sizeof(SimpleParticle), m_pAttractorEmitter->GetPMaterial( "effects/combinemuzzle2_dark" ), offset );
+        sParticle = (SimpleParticle *) m_pAttractorEmitter->AddParticle( sizeof(SimpleParticle), m_pAttractorEmitter->GetPMaterial( "effects/combinemuzzle2_dark" ), offset );
 
-		if ( sParticle == NULL )
-			return;
-		
-		sParticle->m_vecVelocity	= Vector(0,0,2);
-		sParticle->m_flDieTime		= 0.5f;
-		sParticle->m_flLifetime		= 0.0f;
+        if ( sParticle == NULL )
+            return;
 
-		sParticle->m_flRoll			= Helper_RandomInt( 0, 360 );
-		sParticle->m_flRollDelta	= 0.0f;
+        sParticle->m_vecVelocity	= Vector(0,0,2);
+        sParticle->m_flDieTime		= 0.5f;
+        sParticle->m_flLifetime		= 0.0f;
 
-		float alpha = 255;
+        sParticle->m_flRoll			= Helper_RandomInt( 0, 360 );
+        sParticle->m_flRollDelta	= 0.0f;
 
-		sParticle->m_uchColor[0]	= alpha;
-		sParticle->m_uchColor[1]	= alpha;
-		sParticle->m_uchColor[2]	= alpha;
-		sParticle->m_uchStartAlpha	= alpha;
-		sParticle->m_uchEndAlpha	= 0;
+        float alpha = 255;
 
-		sParticle->m_uchStartSize	= 1;
-		sParticle->m_uchEndSize		= 0;
-	}
+        sParticle->m_uchColor[0]	= alpha;
+        sParticle->m_uchColor[1]	= alpha;
+        sParticle->m_uchColor[2]	= alpha;
+        sParticle->m_uchStartAlpha	= alpha;
+        sParticle->m_uchEndAlpha	= 0;
+
+        sParticle->m_uchStartSize	= 1;
+        sParticle->m_uchEndSize		= 0;
+    }
 
 #endif
 }

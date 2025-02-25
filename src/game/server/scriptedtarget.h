@@ -21,7 +21,7 @@ class CScriptedTarget : public CAI_BaseNPC
 {
     DECLARE_CLASS( CScriptedTarget, CAI_BaseNPC );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     void Spawn( void );
@@ -56,7 +56,7 @@ class CScriptedTarget : public CAI_BaseNPC
 
     Vector m_vLastPosition;  // Last position that's been reached
 
-   private:
+    private:
     int m_iDisabled;       // Initial state
     string_t m_iszEntity;  // entity that is wanted for this script
     float m_flRadius;      // range to search

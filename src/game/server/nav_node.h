@@ -26,7 +26,7 @@
  */
 class CNavNode
 {
-   public:
+    public:
     CNavNode( const Vector &pos, const Vector &normal, CNavNode *parent, bool onDisplacement );
     ~CNavNode();
 
@@ -95,7 +95,7 @@ class CNavNode
         return m_isOnDisplacement;
     }
 
-   private:
+    private:
     CNavNode() {}  // constructor used only for hash lookup
     friend class CNavMesh;
 

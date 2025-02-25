@@ -19,7 +19,7 @@ class CFuncAreaPortalBase : public CBaseEntity
 {
     DECLARE_CLASS( CFuncAreaPortalBase, CBaseEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     CFuncAreaPortalBase();
@@ -97,13 +97,13 @@ class CFuncAreaPortalBase : public CBaseEntity
     // see into area 2.
     virtual bool UpdateVisibility( const Vector &vOrigin, float fovDistanceAdjustFactor, bool &bIsOpenOnClient );
 
-   public:
+    public:
     // This matches two dareaportal_t::m_PortalKeys.
     int m_portalNumber;
 
     int m_iPortalVersion;
 
-   private:
+    private:
     unsigned short m_AreaPortalsElement;  // link into g_AreaPortals.
 };
 

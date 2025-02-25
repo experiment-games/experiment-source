@@ -18,7 +18,7 @@
 //-----------------------------------------------------------------------------
 class Color
 {
-   public:
+    public:
     // constructors
     Color()
     {
@@ -107,7 +107,7 @@ class Color
         return *this;
     }
 
-   private:
+    private:
     unsigned char _color[4];
 };
 

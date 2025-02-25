@@ -53,11 +53,11 @@ struct RagdollSimulationData_t
 
 class CReplayRagdollRecorder
 {
-   private:
+    private:
     CReplayRagdollRecorder();
     ~CReplayRagdollRecorder();
 
-   public:
+    public:
     static CReplayRagdollRecorder& Instance();
 
     void Init();
@@ -76,7 +76,7 @@ class CReplayRagdollRecorder
         return m_bIsRecording;
     }
 
-   private:
+    private:
     typedef unsigned short Iterator_t;
 
     void StopRecordingRagdollAtIndex( Iterator_t nIndex );
@@ -90,7 +90,7 @@ class CReplayRagdollRecorder
 
     CUtlLinkedList< RagdollSimulationData_t*, Iterator_t > m_lstRagdolls;
     CUtlLinkedList< RagdollSimulationData_t*, Iterator_t > m_lstRagdollsToRecord;  // Contains some of the elements from m_lstRagdolls -
-                                                                                   // the ones which are still recording
+                                                                                    // the ones which are still recording
     bool m_bIsRecording;
 };
 
@@ -98,10 +98,10 @@ class CReplayRagdollRecorder
 
 class CReplayRagdollCache
 {
-   private:
+    private:
     CReplayRagdollCache();
 
-   public:
+    public:
     static CReplayRagdollCache& Instance();
 
     bool Init( char const* pszFilename );
@@ -120,7 +120,7 @@ class CReplayRagdollCache
     //
     bool GetFrame( C_BaseAnimating* pEntity, int nTick, bool* pBoneSimulated, CBoneAccessor* pBoneAccessor ) const;
 
-   private:
+    private:
     RagdollSimulationData_t* FindRagdollEntry( C_BaseAnimating* pEntity, int nTick );
     const RagdollSimulationData_t* FindRagdollEntry( C_BaseAnimating* pEntity, int nTick ) const;
 

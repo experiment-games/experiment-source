@@ -69,7 +69,7 @@
   (require 'cc-langs)
   (require 'cc-fonts))
 
-;; This mode does not inherit properties from other modes. So, we do not use 
+;; This mode does not inherit properties from other modes. So, we do not use
 ;; the usual `c-add-language' function.
 (eval-and-compile
   (put 'protobuf-mode 'c-mode-prefix "protobuf-"))
@@ -80,8 +80,8 @@
 
 (c-lang-defconst c-primitive-type-kwds
   protobuf '("double" "float" "int32" "int64" "uint32" "uint64" "sint32"
-             "sint64" "fixed32" "fixed64" "sfixed32" "sfixed64" "bool"
-             "string" "bytes" "group"))
+            "sint64" "fixed32" "fixed64" "sfixed32" "sfixed64" "bool"
+            "string" "bytes" "group"))
 
 (c-lang-defconst c-modifier-kwds
   protobuf '("required" "optional" "repeated"))
@@ -173,7 +173,7 @@
   "Syntax table used in protobuf-mode buffers.")
 (or protobuf-mode-syntax-table
     (setq protobuf-mode-syntax-table
-          (funcall (c-lang-const c-make-mode-syntax-table protobuf))))
+        (funcall (c-lang-const c-make-mode-syntax-table protobuf))))
 
 (defvar protobuf-mode-abbrev-table nil
   "Abbreviation table used in protobuf-mode buffers.")
@@ -208,7 +208,7 @@ Key bindings:
   (use-local-map protobuf-mode-map)
   (c-initialize-cc-mode t)
   (if (fboundp 'c-make-emacs-variables-local)
-      (c-make-emacs-variables-local))
+    (c-make-emacs-variables-local))
   (c-init-language-vars protobuf-mode)
   (c-common-init 'protobuf-mode)
   (easy-menu-add protobuf-menu)

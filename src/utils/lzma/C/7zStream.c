@@ -14,7 +14,7 @@ SRes SeqInStream_Read2(ISeqInStream *stream, void *buf, size_t size, SRes errorT
     size_t processed = size;
     RINOK(stream->Read(stream, buf, &processed));
     if (processed == 0)
-      return errorType;
+    return errorType;
     buf = (void *)((Byte *)buf + processed);
     size -= processed;
   }
@@ -56,7 +56,7 @@ SRes LookInStream_Read2(ILookInStream *stream, void *buf, size_t size, SRes erro
     size_t processed = size;
     RINOK(stream->Read(stream, buf, &processed));
     if (processed == 0)
-      return errorType;
+    return errorType;
     buf = (void *)((Byte *)buf + processed);
     size -= processed;
   }
@@ -95,7 +95,7 @@ static SRes LookToRead_Look_Exact(void *pp, const void **buf, size_t *size)
   {
     p->pos = 0;
     if (*size > LookToRead_BUF_SIZE)
-      *size = LookToRead_BUF_SIZE;
+    *size = LookToRead_BUF_SIZE;
     res = p->realStream->Read(p->realStream, p->buf, size);
     size2 = p->size = *size;
   }
@@ -136,8 +136,8 @@ static SRes LookToRead_Seek(void *pp, Int64 *pos, ESzSeek origin)
 void LookToRead_CreateVTable(CLookToRead *p, int lookahead)
 {
   p->s.Look = lookahead ?
-      LookToRead_Look_Lookahead :
-      LookToRead_Look_Exact;
+    LookToRead_Look_Lookahead :
+    LookToRead_Look_Exact;
   p->s.Skip = LookToRead_Skip;
   p->s.Read = LookToRead_Read;
   p->s.Seek = LookToRead_Seek;

@@ -22,7 +22,7 @@
 //-----------------------------------------------------------------------------
 class C_TESprite : public C_BaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_TESprite, C_BaseTempEntity );
     DECLARE_CLIENTCLASS();
 
@@ -31,7 +31,7 @@ class C_TESprite : public C_BaseTempEntity
 
     virtual void PostDataUpdate( DataUpdateType_t updateType );
 
-   public:
+    public:
     Vector m_vecOrigin;
     int m_nModelIndex;
     float m_fScale;

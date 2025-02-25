@@ -22,7 +22,7 @@
 
 class CStringPool
 {
-   public:
+    public:
     CStringPool();
     ~CStringPool();
 
@@ -34,7 +34,7 @@ class CStringPool
     // searches for a string already in the pool
     const char* Find( const char* pszValue );
 
-   protected:
+    protected:
     typedef CUtlRBTree< const char*, unsigned short > CStrSet;
 
     CStrSet m_Strings;
@@ -50,7 +50,7 @@ class CStringPool
 //-----------------------------------------------------------------------------
 class CCountedStringPool
 {
-   public:  // HACK, hash_item_t structure should not be public.
+    public:  // HACK, hash_item_t structure should not be public.
     struct hash_item_t
     {
         char* pString;
@@ -70,7 +70,7 @@ class CCountedStringPool
     CUtlVector< hash_item_t > m_Elements;
     unsigned short m_FreeListStart;
 
-   public:
+    public:
     CCountedStringPool();
     virtual ~CCountedStringPool();
 

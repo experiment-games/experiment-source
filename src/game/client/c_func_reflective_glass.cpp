@@ -12,12 +12,12 @@
 
 class C_FuncReflectiveGlass : public C_BaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_FuncReflectiveGlass, C_BaseEntity );
     DECLARE_CLIENTCLASS();
 
     // C_BaseEntity.
-   public:
+    public:
     C_FuncReflectiveGlass();
     virtual ~C_FuncReflectiveGlass();
 

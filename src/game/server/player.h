@@ -28,7 +28,7 @@
 // For queuing and processing usercmds
 class CCommandContext
 {
-   public:
+    public:
     CUtlVector< CUserCmd > cmds;
 
     int numcmds;
@@ -40,7 +40,7 @@ class CCommandContext
 // Info about last 20 or so updates to the
 class CPlayerCmdInfo
 {
-   public:
+    public:
     CPlayerCmdInfo()
         : m_flTime( 0.0f ), m_nNumCmds( 0 ), m_nDroppedPackets( 0 )
     {
@@ -56,7 +56,7 @@ class CPlayerCmdInfo
 
 class CPlayerSimInfo
 {
-   public:
+    public:
     CPlayerSimInfo()
         : m_flTime( 0.0f ), m_nNumCmds( 0 ), m_nTicksCorrected( 0 ), m_flFinalSimulationTime( 0.0f ), m_flGameSimulationTime( 0.0f ), m_flServerFrameTime( 0.0f ), m_vecAbsOrigin( 0, 0, 0 )
     {
@@ -181,7 +181,7 @@ extern ConVar *sv_cheats;
 class CBasePlayer;
 class CPlayerInfo : public IBotController, public IPlayerInfo
 {
-   public:
+    public:
     CPlayerInfo()
     {
         m_pParent = NULL;
@@ -235,7 +235,7 @@ class CPlayerInfo : public IBotController, public IPlayerInfo
 
     virtual CBotCmd GetLastUserCommand();
 
-   private:
+    private:
     CBasePlayer *m_pParent;
 };
 
@@ -245,14 +245,14 @@ class CBasePlayer : public CBaseCombatCharacter
     LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( CBasePlayer, LUA_BASEPLAYERMETANAME )
 #endif
 
-   public:
+    public:
     DECLARE_CLASS( CBasePlayer, CBaseCombatCharacter );
 
-   protected:
+    protected:
     // HACK FOR BOTS
     friend class CBotManager;
     static edict_t *s_PlayerEdict;  // must be set before calling constructor
-   public:
+    public:
     DECLARE_DATADESC();
     DECLARE_SERVERCLASS();
 
@@ -282,7 +282,7 @@ class CBasePlayer : public CBaseCombatCharacter
     CBaseAnimating *GetHands();
     void SetHands( CBaseAnimating *pHandsModel );
 
-   public:
+    public:
     void HideViewModels( void );
     void DestroyViewModels( void );
 
@@ -408,7 +408,7 @@ class CBasePlayer : public CBaseCombatCharacter
     {
         return true;
     }  // Bots should return FALSE for this, they can't receive NET messages
-       // Spectators should return TRUE for this
+        // Spectators should return TRUE for this
 
     virtual bool IsFakeClient( void ) const;
 
@@ -756,7 +756,7 @@ class CBasePlayer : public CBaseCombatCharacter
     void PlayWearableAnimsForPlaybackEvent( wearableanimplayback_t iPlayback );
 #endif
 
-   public:
+    public:
     // Player Physics Shadow
     void SetupVPhysicsShadow( const Vector &vecAbsOrigin, const Vector &vecAbsVelocity, CPhysCollide *pStandModel, const char *pStandHullName, CPhysCollide *pCrouchModel, const char *pCrouchHullName );
     IPhysicsPlayerController *GetPhysicsController()
@@ -1154,7 +1154,7 @@ class CBasePlayer : public CBaseCombatCharacter
         }
     }
 
-   private:
+    private:
     // How much of a movement time buffer can we process from this user?
     float m_flMovementTimeForUserCmdProcessingRemaining;
 
@@ -1170,7 +1170,7 @@ class CBasePlayer : public CBaseCombatCharacter
     int DetermineSimulationTicks( void );
     void AdjustPlayerTimeBase( int simulation_ticks );
 
-   public:
+    public:
     // How long since this player last interacted with something the game considers an objective/target/goal
     float GetTimeSinceLastObjective( void ) const
     {
@@ -1267,11 +1267,11 @@ class CBasePlayer : public CBaseCombatCharacter
     }
 #endif
 
-   private:
+    private:
     Activity m_Activity;
     float m_flLastObjectiveTime;  // Last curtime player touched/killed something the gamemode considers an objective
 
-   protected:
+    protected:
     void CalcPlayerView( CViewSetup &viewSetup, bool &bForceDrawLocalPlayer );
     void CalcVehicleView( IServerVehicle *pVehicle, CViewSetup &viewSetup, bool &bForceDrawLocalPlayer );
     void CalcViewModelView( const Vector &eyeOrigin, const QAngle &eyeAngles );
@@ -1330,7 +1330,7 @@ class CBasePlayer : public CBaseCombatCharacter
     bool m_bForcedObserverMode;                        // true, player was forced by invalid targets to switch mode
 
     CNetworkHandle( CBaseEntity, m_hZoomOwner );  // This is a pointer to the entity currently controlling the player's zoom
-                                                  // Only this entity can change the zoom state once it has ownership
+                                                // Only this entity can change the zoom state once it has ownership
 
     float m_tbdPrev;        // Time-based damage timer
     int m_idrowndmg;        // track drowning damage taken
@@ -1356,15 +1356,15 @@ class CBasePlayer : public CBaseCombatCharacter
     float m_fReplayEnd;   // time to stop replay mode
     int m_iReplayEntity;  // follow this entity in replay
 
-   private:
+    private:
     void HandleFuncTrain();
 
     // DATA
-   private:
+    private:
     CUtlVector< CCommandContext > m_CommandContext;
     // Player Physics Shadow
 
-   protected:  // used to be private, but need access for portal mod (Dave Kircher)
+    protected:  // used to be private, but need access for portal mod (Dave Kircher)
     IPhysicsPlayerController *m_pPhysicsController;
     IPhysicsObject *m_pShadowStand;
     IPhysicsObject *m_pShadowCrouch;
@@ -1373,7 +1373,7 @@ class CBasePlayer : public CBaseCombatCharacter
     bool m_touchedPhysObject;
     bool m_bPhysicsWasFrozen;
 
-   private:
+    private:
     int m_iPlayerSound;   // the index of the sound list slot reserved for this player
     int m_iTargetVolume;  // ideal sound volume.
 
@@ -1425,7 +1425,7 @@ class CBasePlayer : public CBaseCombatCharacter
     // player locking
     int m_iPlayerLocked;
 
-   protected:
+    protected:
     // the player's personal view model
     typedef CHandle< CBaseViewModel > CBaseViewModelHandle;
     CNetworkArray( CBaseViewModelHandle, m_hViewModel, MAX_VIEWMODELS );
@@ -1445,7 +1445,7 @@ class CBasePlayer : public CBaseCombatCharacter
     CUtlVector< CHandle< CEconWearable > > m_hMyWearables;
 #endif
 
-   private:
+    private:
     // Replicated to all clients
     CNetworkVar( float, m_flMaxspeed );  // Current maximum speed
 
@@ -1472,7 +1472,7 @@ class CBasePlayer : public CBaseCombatCharacter
     int m_nNumCrouches;   // Number of times we've crouched (for hinting)
     bool m_bDuckToggled;  // If true, the player is crouching via a toggle
 
-   public:
+    public:
     bool GetToggledDuckState( void )
     {
         return m_bDuckToggled;
@@ -1484,7 +1484,7 @@ class CBasePlayer : public CBaseCombatCharacter
     float m_flSideMove;
     int m_nNumCrateHudHints;
 
-   private:
+    private:
     // Used in test code to teleport the player to random locations in the map.
     Vector m_vForcedOrigin;
     bool m_bForceOrigin;
@@ -1521,7 +1521,7 @@ class CBasePlayer : public CBaseCombatCharacter
     // Player name
     char m_szNetname[MAX_PLAYER_NAME_LENGTH];
 
-   protected:
+    protected:
     // HACK FOR TF2 Prediction
     friend class CTFGameMovementRecon;
     friend class CGameMovement;
@@ -1574,7 +1574,7 @@ class CBasePlayer : public CBaseCombatCharacter
 
     bool m_bSinglePlayerGameEnding;
 
-   public:
+    public:
     float GetLaggedMovementValue( void )
     {
         return m_flLaggedMovementValue;
@@ -1599,14 +1599,14 @@ class CBasePlayer : public CBaseCombatCharacter
         m_bhasHaptics = has;
     }
 
-   private:
+    private:
     // NVNT member variable holding if this user is using a haptic device.
     bool m_bhasHaptics;
 
     bool m_autoKickDisabled;
 
 #if defined( LUA_SDK )
-   public:
+    public:
 #endif
     struct StepSoundCache_t
     {
@@ -1619,7 +1619,7 @@ class CBasePlayer : public CBaseCombatCharacter
     StepSoundCache_t m_StepSoundCache[2];
 
 #if defined( LUA_SDK )
-   private:
+    private:
 #endif
     CUtlLinkedList< CPlayerSimInfo > m_vecPlayerSimInfo;
     CUtlLinkedList< CPlayerCmdInfo > m_vecPlayerCmdInfo;
@@ -1632,7 +1632,7 @@ class CBasePlayer : public CBaseCombatCharacter
     // used to prevent achievement announcement spam
     CUtlVector< float > m_flAchievementTimes;
 
-   public:
+    public:
     virtual unsigned int PlayerSolidMask( bool brushOnly = false ) const;  // returns the solid mask for the given player, so bots can have a more-restrictive set
 };
 
@@ -1831,7 +1831,7 @@ bool ForEachPlayer( Functor &func )
  */
 class IPlayerFunctor
 {
-   public:
+    public:
     virtual void OnBeginIteration( void ) {}  // invoked once before iteration begins
 
     virtual bool operator()( CBasePlayer *player ) = 0;

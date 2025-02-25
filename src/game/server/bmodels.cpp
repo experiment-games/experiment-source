@@ -23,7 +23,7 @@
 // =================== FUNC_WALL ==============================================
 class CFuncWall : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_DATADESC();
     DECLARE_CLASS( CFuncWall, CBaseEntity );
     void Spawn( void );
@@ -87,7 +87,7 @@ void CFuncWall::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE use
 
 class CFuncWallToggle : public CFuncWall
 {
-   public:
+    public:
     DECLARE_CLASS( CFuncWallToggle, CFuncWall );
 
     DECLARE_DATADESC();
@@ -178,7 +178,7 @@ void CFuncWallToggle::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TY
 //============================== FUNC_VEHICLECLIP =====================================
 class CFuncVehicleClip : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CFuncVehicleClip, CBaseEntity );
     DECLARE_DATADESC();
 
@@ -188,7 +188,7 @@ class CFuncVehicleClip : public CBaseEntity
     void InputEnable( inputdata_t &data );
     void InputDisable( inputdata_t &data );
 
-   private:
+    private:
 };
 
 BEGIN_DATADESC( CFuncVehicleClip )
@@ -251,7 +251,7 @@ void CFuncVehicleClip::InputDisable( inputdata_t &data )
 
 class CFuncConveyor : public CFuncWall
 {
-   public:
+    public:
     DECLARE_CLASS( CFuncConveyor, CFuncWall );
     DECLARE_DATADESC();
     DECLARE_SERVERCLASS();
@@ -268,7 +268,7 @@ class CFuncConveyor : public CFuncWall
     void InputToggleDirection( inputdata_t &inputdata );
     void InputSetSpeed( inputdata_t &inputdata );
 
-   private:
+    private:
     Vector m_vecMoveDir;
     CNetworkVar( float, m_flConveyorSpeed );
 };
@@ -353,7 +353,7 @@ class CFuncIllusionary : public CBaseEntity
 {
     DECLARE_CLASS( CFuncIllusionary, CBaseEntity );
 
-   public:
+    public:
     void Spawn( void );
 };
 
@@ -382,7 +382,7 @@ class CFuncRotating : public CBaseEntity
 {
     DECLARE_CLASS( CFuncRotating, CBaseEntity );
 
-   public:
+    public:
     // basic functions
     void Spawn( void );
     void Precache( void );
@@ -404,7 +404,7 @@ class CFuncRotating : public CBaseEntity
     DECLARE_DATADESC();
     DECLARE_SERVERCLASS();
 
-   protected:
+    protected:
     bool SpinDown( float flTargetSpeed );
     float GetMoveSpeed( float flSpeed );
 
@@ -436,7 +436,7 @@ class CFuncRotating : public CBaseEntity
 
     bool m_bSolidBsp;  // Brush is SOLID_BSP
 
-   public:
+    public:
     Vector m_vecClientOrigin;
     QAngle m_vecClientAngles;
 };
@@ -1148,7 +1148,7 @@ void CFuncRotating::SetTargetSpeed( float flSpeed )
         // Check for reversing directions.
         //
         if ( ( ( m_flSpeed > 0 ) && ( m_flTargetSpeed < 0 ) ) ||
-             ( ( m_flSpeed < 0 ) && ( m_flTargetSpeed > 0 ) ) )
+            ( ( m_flSpeed < 0 ) && ( m_flTargetSpeed > 0 ) ) )
         {
             SetMoveDone( &CFuncRotating::ReverseMove );
         }
@@ -1325,7 +1325,7 @@ class CFuncVPhysicsClip : public CBaseEntity
     DECLARE_DATADESC();
     DECLARE_CLASS( CFuncVPhysicsClip, CBaseEntity );
 
-   public:
+    public:
     void Spawn();
     void Activate();
     bool CreateVPhysics( void );
@@ -1336,7 +1336,7 @@ class CFuncVPhysicsClip : public CBaseEntity
     void InputEnable( inputdata_t &inputdata );
     void InputDisable( inputdata_t &inputdata );
 
-   private:
+    private:
     string_t m_iFilterName;
     CHandle< CBaseFilter > m_hFilter;
     bool m_bDisabled;

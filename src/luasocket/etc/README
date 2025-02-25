@@ -35,7 +35,7 @@ Quoted-Printable and end-of-line marker conversions.
 
 This little  program is  a client  that uses  the FTP  and
 HTTP  code to implement a  command line  file graber. Just
-run 
+run
 
 	lua get.lua <remote-file> [<local-file>]
 
@@ -74,9 +74,9 @@ This is a forward server that can accept several connections
 and transfers simultaneously using non-blocking I/O and the
 coroutine-based dispatcher. You can run, for example
 
-    lua forward.lua 8080:proxy.com:3128 
+    lua forward.lua 8080:proxy.com:3128
 
-to redirect all local conections to port 8080 to the host 
+to redirect all local conections to port 8080 to the host
 'proxy.com' at port 3128.
 
     unix.c and unix.h

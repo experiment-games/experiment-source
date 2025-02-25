@@ -22,7 +22,7 @@ class CPDumpPanel : public CHudElement, public vgui::Panel
 {
     DECLARE_CLASS_SIMPLE( CPDumpPanel, vgui::Panel );
 
-   public:
+    public:
     enum
     {
         DUMP_CLASSNAME_SIZE = 128,
@@ -47,7 +47,7 @@ class CPDumpPanel : public CHudElement, public vgui::Panel
 
     void DumpComparision( const char *classname, const char *fieldname, const char *fieldtype, bool networked, bool noterrorchecked, bool differs, bool withintolerance, const char *value );
 
-   private:
+    private:
     void PredictionDumpColor( bool networked, bool errorchecked, bool differs, bool withintolerance, int &r, int &g, int &b, int &a );
     //-----------------------------------------------------------------------------
     // Purpose: Stores some info about the various fields of an entity for display

@@ -71,7 +71,7 @@ class SourceLocationTable;
 // FileDescriptor.
 class LIBPROTOBUF_EXPORT Parser
 {
-   public:
+    public:
     Parser();
     ~Parser();
 
@@ -126,7 +126,7 @@ class LIBPROTOBUF_EXPORT Parser
         stop_after_syntax_identifier_ = value;
     }
 
-   private:
+    private:
     // =================================================================
     // Error recovery helpers
 
@@ -197,14 +197,14 @@ class LIBPROTOBUF_EXPORT Parser
     // Record the given line and column and associate it with this descriptor
     // in the SourceLocationTable.
     void RecordLocation( const Message* descriptor,
-                         DescriptorPool::ErrorCollector::ErrorLocation location,
-                         int line,
-                         int column );
+                        DescriptorPool::ErrorCollector::ErrorLocation location,
+                        int line,
+                        int column );
 
     // Record the current line and column and associate it with this descriptor
     // in the SourceLocationTable.
     void RecordLocation( const Message* descriptor,
-                         DescriptorPool::ErrorCollector::ErrorLocation location );
+                        DescriptorPool::ErrorCollector::ErrorLocation location );
 
     // =================================================================
     // Parsers for various language constructs
@@ -258,7 +258,7 @@ class LIBPROTOBUF_EXPORT Parser
 
     // Parse an "extend" declaration.
     bool ParseExtend( RepeatedPtrField< FieldDescriptorProto >* extensions,
-                      RepeatedPtrField< DescriptorProto >* messages );
+                    RepeatedPtrField< DescriptorProto >* messages );
 
     // Parse a single enum value within an enum block.
     bool ParseEnumConstant( EnumValueDescriptorProto* enum_value );
@@ -319,7 +319,7 @@ class LIBPROTOBUF_EXPORT Parser
 // within the original source code.
 class LIBPROTOBUF_EXPORT SourceLocationTable
 {
-   public:
+    public:
     SourceLocationTable();
     ~SourceLocationTable();
 
@@ -329,20 +329,20 @@ class LIBPROTOBUF_EXPORT SourceLocationTable
     // location" in the ErrorCollector interface).  Returns true if found, false
     // otherwise.
     bool Find( const Message* descriptor,
-               DescriptorPool::ErrorCollector::ErrorLocation location,
-               int* line,
-               int* column ) const;
+                DescriptorPool::ErrorCollector::ErrorLocation location,
+                int* line,
+                int* column ) const;
 
     // Adds a location to the table.
     void Add( const Message* descriptor,
-              DescriptorPool::ErrorCollector::ErrorLocation location,
-              int line,
-              int column );
+            DescriptorPool::ErrorCollector::ErrorLocation location,
+            int line,
+            int column );
 
     // Clears the contents of the table.
     void Clear();
 
-   private:
+    private:
     typedef map<
         pair< const Message*, DescriptorPool::ErrorCollector::ErrorLocation >,
         pair< int, int > >

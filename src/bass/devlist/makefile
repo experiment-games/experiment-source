@@ -5,4 +5,4 @@ TARGET = devlist.exe
 all: $(TARGET)
 
 clean:
-	$(RM) $(OUTDIR)\$(TARGET)
+    $(RM) $(OUTDIR)\$(TARGET)

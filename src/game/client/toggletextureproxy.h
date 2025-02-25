@@ -17,7 +17,7 @@ class IMaterialVar;
 
 class CBaseToggleTextureProxy : public IMaterialProxy
 {
-   public:
+    public:
     CBaseToggleTextureProxy();
     virtual ~CBaseToggleTextureProxy();
 
@@ -29,7 +29,7 @@ class CBaseToggleTextureProxy : public IMaterialProxy
     }
     virtual IMaterial *GetMaterial();
 
-   private:
+    private:
     void Cleanup();
 
     C_BaseEntity *BindArgToEntity( void *pArg );

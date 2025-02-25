@@ -27,7 +27,7 @@ class CRopeAnchor : public CPointEntity
 {
     DECLARE_CLASS( CRopeAnchor, CPointEntity );
 
-   public:
+    public:
     void Spawn( void );
     void FallThink( void );
     void RemoveThink( void );

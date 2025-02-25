@@ -20,7 +20,7 @@ class CChoreoEvent;
 #pragma pack( 1 )
 class CSceneCache : public IBaseCacheInfo
 {
-   public:
+    public:
     unsigned int msecs;
     CUtlVector< unsigned short > sounds;
 

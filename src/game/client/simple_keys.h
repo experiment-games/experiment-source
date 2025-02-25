@@ -20,7 +20,7 @@ enum simplekeyinterp_t
 
 class CSimpleKeyInterp : public Vector
 {
-   public:
+    public:
     CSimpleKeyInterp( float t, simplekeyinterp_t interp, float x, float y = 0, float z = 0 )
         : Vector( x, y, z )
     {
@@ -42,7 +42,7 @@ class CSimpleKeyInterp : public Vector
 
 class CSimpleKeyList
 {
-   public:
+    public:
     int Insert( const CSimpleKeyInterp &key );
     bool Interp( Vector &out, float t );
 

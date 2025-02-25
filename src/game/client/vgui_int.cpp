@@ -61,7 +61,7 @@ void SetVGUICursorPos( int x, int y )
 
 class CHudTextureHandleProperty : public vgui::IPanelAnimationPropertyConverter
 {
-   public:
+    public:
     virtual void GetData( Panel *panel, KeyValues *kv, PanelAnimationMapEntry *entry )
     {
         void *data = ( void * )( ( *entry->m_pfnLookup )( panel ) );

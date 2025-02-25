@@ -16,9 +16,9 @@
 #include "GameEventListener.h"
 
 class C_ReplayCamera : public CGameEventListener,
-                       public IReplayCamera
+                        public IReplayCamera
 {
-   public:
+    public:
     C_ReplayCamera();
     virtual ~C_ReplayCamera();
 
@@ -75,7 +75,7 @@ class C_ReplayCamera : public CGameEventListener,
     float m_flRoamingShakeSpeed;
     float m_flRoamingShakeDir;
 
-   protected:
+    protected:
     void InitRoamingKeys();
     bool ShouldUseDefaultRoamingSettings() const;
 

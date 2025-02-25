@@ -115,9 +115,9 @@ DEFPARTICLE_ATTRIBUTE( TRACE_HIT_NORMAL, 20 );  // 0 0 0 if no hit
 #define MAX_PARTICLE_CONTROL_POINTS 64
 
 #define ATTRIBUTES_WHICH_ARE_VEC3S_MASK ( PARTICLE_ATTRIBUTE_TRACE_P0_MASK | PARTICLE_ATTRIBUTE_TRACE_P1_MASK | \
-                                          PARTICLE_ATTRIBUTE_TRACE_HIT_NORMAL | PARTICLE_ATTRIBUTE_XYZ_MASK |   \
-                                          PARTICLE_ATTRIBUTE_PREV_XYZ_MASK | PARTICLE_ATTRIBUTE_TINT_RGB_MASK | \
-                                          PARTICLE_ATTRIBUTE_HITBOX_RELATIVE_XYZ_MASK )
+                                        PARTICLE_ATTRIBUTE_TRACE_HIT_NORMAL | PARTICLE_ATTRIBUTE_XYZ_MASK |   \
+                                        PARTICLE_ATTRIBUTE_PREV_XYZ_MASK | PARTICLE_ATTRIBUTE_TINT_RGB_MASK | \
+                                        PARTICLE_ATTRIBUTE_HITBOX_RELATIVE_XYZ_MASK )
 #define ATTRIBUTES_WHICH_ARE_0_TO_1 ( PARTICLE_ATTRIBUTE_ALPHA_MASK | PARTICLE_ATTRIBUTE_ALPHA2_MASK )
 #define ATTRIBUTES_WHICH_ARE_ANGLES ( PARTICLE_ATTRIBUTE_ROTATION_MASK | PARTICLE_ATTRIBUTE_YAW_MASK )
 #define ATTRIBUTES_WHICH_ARE_INTS ( PARTICLE_ATTRIBUTE_PARTICLE_ID_MASK | PARTICLE_ATTRIBUTE_HITBOX_INDEX_MASK )
@@ -172,7 +172,7 @@ struct ModelHitBoxInfo_t
 
 class CModelHitBoxesInfo
 {
-   public:
+    public:
     float m_flLastUpdateTime;
     float m_flPrevLastUpdateTime;
     int m_nNumHitBoxes;
@@ -211,7 +211,7 @@ class CModelHitBoxesInfo
 
 class IParticleSystemQuery : public IAppSystem
 {
-   public:
+    public:
     virtual void GetLightingAtPoint( const Vector &vecOrigin, Color &tint ) = 0;
     virtual void TraceLine( const Vector &vecAbsStart,
                             const Vector &vecAbsEnd,
@@ -223,8 +223,8 @@ class IParticleSystemQuery : public IAppSystem
     // given a possible spawn point, tries to movie it to be on or in the source object. returns
     // true if it succeeded
     virtual bool MovePointInsideControllingObject( CParticleCollection *pParticles,
-                                                   void *pObject,
-                                                   Vector *pPnt )
+                                                    void *pObject,
+                                                    Vector *pPnt )
     {
         return true;
     }
@@ -294,7 +294,7 @@ typedef int ParticleSystemHandle_t;
 
 class CParticleSystemMgr
 {
-   public:
+    public:
     // Constructor, destructor
     CParticleSystemMgr();
     ~CParticleSystemMgr();
@@ -394,7 +394,7 @@ class CParticleSystemMgr
 
     void TallyParticlesRendered( int nVertexCount, int nIndexCount = 0 );
 
-   private:
+    private:
     struct RenderCache_t
     {
         IMaterial *m_pMaterial;
@@ -509,7 +509,7 @@ enum ParticleOperatorId_t
 //-----------------------------------------------------------------------------
 class IParticleOperatorDefinition
 {
-   public:
+    public:
     virtual const char *GetName() const = 0;
     virtual CParticleOperatorInstance *CreateInstance( const DmObjectId_t &id ) const = 0;
     //	virtual void DestroyInstance( CParticleOperatorInstance *pInstance ) const = 0;
@@ -547,7 +547,7 @@ class IParticleOperatorDefinition
 //-----------------------------------------------------------------------------
 class CParticleOperatorInstance
 {
-   public:
+    public:
     // custom allocators so we can be simd aligned
     void *operator new( size_t nSize );
     void *operator new( size_t size, int nBlockUse, const char *pFileName, int nLine );
@@ -588,8 +588,8 @@ class CParticleOperatorInstance
 
     // a renderer overrides this
     virtual void Render( IMatRenderContext *pRenderContext,
-                         CParticleCollection *pParticles,
-                         void *pContext ) const
+                        CParticleCollection *pParticles,
+                        void *pContext ) const
     {
     }
 
@@ -642,7 +642,7 @@ class CParticleOperatorInstance
     // this is called for each constarint every frame. It can set up data like nearby world traces,
     // etc
     virtual void SetupConstraintPerFrameData( CParticleCollection *pParticles,
-                                              void *pContext ) const
+                                            void *pContext ) const
     {
     }
 
@@ -759,13 +759,13 @@ class CParticleOperatorInstance
         // so that sheet references, etc can be cleaned up
     }
 
-   protected:
+    protected:
     // utility function for initting a scalar attribute to a random range in an sse fashion
     void InitScalarAttributeRandomRangeBlock( int nAttributeId, float fMinValue, float fMaxValue, CParticleCollection *pParticles, int nStartBlock, int nBlockCount ) const;
     void InitScalarAttributeRandomRangeExpBlock( int nAttributeId, float fMinValue, float fMaxValue, float fExp, CParticleCollection *pParticles, int nStartBlock, int nBlockCount ) const;
     void AddScalarAttributeRandomRangeBlock( int nAttributeId, float fMinValue, float fMaxValue, float fExp, CParticleCollection *pParticles, int nStartBlock, int nBlockCount, bool bRandomlyInvert ) const;
 
-   private:
+    private:
     friend class CParticleCollection;
 
     const IParticleOperatorDefinition *m_pDef;
@@ -783,7 +783,7 @@ class CParticleOperatorInstance
 
 class CParticleRenderOperatorInstance : public CParticleOperatorInstance
 {
-   public:
+    public:
     CParticleVisibilityInputs VisibilityInputs;
 };
 
@@ -793,7 +793,7 @@ class CParticleRenderOperatorInstance : public CParticleOperatorInstance
 template < class T >
 class CParticleOperatorDefinition : public IParticleOperatorDefinition
 {
-   public:
+    public:
     CParticleOperatorDefinition( const char *pFactoryName, ParticleOperatorId_t id, bool bIsObsolete )
         : m_pFactoryName( pFactoryName ), m_Id( id )
     {
@@ -838,7 +838,7 @@ class CParticleOperatorDefinition : public IParticleOperatorDefinition
         return sizeof( T );
     }
 
-   private:
+    private:
     const char *m_pFactoryName;
     ParticleOperatorId_t m_Id;
     bool m_bIsObsolete;
@@ -1006,7 +1006,7 @@ struct CParticleSIMDTransformation
 //-----------------------------------------------------------------------------
 class CParticleCollection
 {
-   public:
+    public:
     ~CParticleCollection( void );
 
     // Restarts the particle collection, stopping all non-continuous emitters
@@ -1154,10 +1154,10 @@ class CParticleCollection
 
     // calculate the points of a curve for a path
     void CalculatePathValues( CPathParameters const &PathIn,
-                              float flTimeStamp,
-                              Vector *pStartPnt,
-                              Vector *pMidPnt,
-                              Vector *pEndPnt );
+                            float flTimeStamp,
+                            Vector *pStartPnt,
+                            Vector *pMidPnt,
+                            Vector *pEndPnt );
 
     int GetGroupID() const;
 
@@ -1176,7 +1176,7 @@ class CParticleCollection
 
     CUtlReference< CSheet > m_Sheet;
 
-   protected:
+    protected:
     CParticleCollection();
 
     // Used by client code
@@ -1186,7 +1186,7 @@ class CParticleCollection
     // Bloat the bounding box by bounds around the control point
     void BloatBoundsUsingControlPoint();
 
-   private:
+    private:
     void GenerateSortedIndexList( Vector vecCameraPos, CParticleVisibilityData *pVisibilityData, bool bSorted );
 
     void Init( CParticleSystemDefinition *pDef, float flDelay, int nRandomSeed );
@@ -1242,7 +1242,7 @@ class CParticleCollection
 
     void LinkIntoDefList();
 
-   public:
+    public:
     fltx4 m_fl4CurTime;  // accumulated time
 
     int m_nPaddedActiveParticles;  // # of groups of 4 particles
@@ -1285,14 +1285,14 @@ class CParticleCollection
     void operator delete( void *pData );
     void operator delete( void *p, int nBlockUse, const char *pFileName, int nLine );
 
-   protected:
+    protected:
     // current bounds for the particle system
     bool m_bBoundsValid;
     Vector m_MinBounds;
     Vector m_MaxBounds;
     int m_nHighestCP;  // Highest CP set externally.  Needs to assert if a system calls to an unassigned CP.
 
-   private:
+    private:
     unsigned char *m_pParticleMemory;         // fixed size at initialization. Must be aligned for SSE
     unsigned char *m_pParticleInitialMemory;  // fixed size at initialization. Must be aligned for SSE
     unsigned char *m_pConstantMemory;
@@ -1361,7 +1361,7 @@ class CParticleCollection
 
 class CM128InitialAttributeIterator : public CStridedConstPtr< fltx4 >
 {
-   public:
+    public:
     FORCEINLINE CM128InitialAttributeIterator( int nAttribute, CParticleCollection *pParticles )
     {
         m_pData = pParticles->GetInitialM128AttributePtr( nAttribute, &m_nStride );
@@ -1370,7 +1370,7 @@ class CM128InitialAttributeIterator : public CStridedConstPtr< fltx4 >
 
 class CM128AttributeIterator : public CStridedConstPtr< fltx4 >
 {
-   public:
+    public:
     FORCEINLINE CM128AttributeIterator( int nAttribute, CParticleCollection *pParticles )
     {
         m_pData = pParticles->GetM128AttributePtr( nAttribute, &m_nStride );
@@ -1379,7 +1379,7 @@ class CM128AttributeIterator : public CStridedConstPtr< fltx4 >
 
 class C4IAttributeIterator : public CStridedConstPtr< FourInts >
 {
-   public:
+    public:
     FORCEINLINE C4IAttributeIterator( int nAttribute, CParticleCollection *pParticles )
     {
         m_pData = pParticles->Get4IAttributePtr( nAttribute, &m_nStride );
@@ -1388,7 +1388,7 @@ class C4IAttributeIterator : public CStridedConstPtr< FourInts >
 
 class CM128AttributeWriteIterator : public CStridedPtr< fltx4 >
 {
-   public:
+    public:
     FORCEINLINE CM128AttributeWriteIterator( void )
     {
     }
@@ -1404,7 +1404,7 @@ class CM128AttributeWriteIterator : public CStridedPtr< fltx4 >
 
 class C4VAttributeIterator : public CStridedConstPtr< FourVectors >
 {
-   public:
+    public:
     FORCEINLINE C4VAttributeIterator( int nAttribute, CParticleCollection *pParticles )
     {
         m_pData = pParticles->Get4VAttributePtr( nAttribute, &m_nStride );
@@ -1413,7 +1413,7 @@ class C4VAttributeIterator : public CStridedConstPtr< FourVectors >
 
 class C4VInitialAttributeIterator : public CStridedConstPtr< FourVectors >
 {
-   public:
+    public:
     FORCEINLINE C4VInitialAttributeIterator( int nAttribute, CParticleCollection *pParticles )
     {
         m_pData = pParticles->GetInitial4VAttributePtr( nAttribute, &m_nStride );
@@ -1422,7 +1422,7 @@ class C4VInitialAttributeIterator : public CStridedConstPtr< FourVectors >
 
 class C4VAttributeWriteIterator : public CStridedPtr< FourVectors >
 {
-   public:
+    public:
     FORCEINLINE C4VAttributeWriteIterator( int nAttribute, CParticleCollection *pParticles )
     {
         m_pData = pParticles->Get4VAttributePtrForWrite( nAttribute, &m_nStride );
@@ -1709,8 +1709,8 @@ inline const float *CParticleCollection::GetFloatAttributePtr( int nAttribute, i
     Assert( nParticleNumber < m_nAllocatedParticles );
     int block_ofs = nParticleNumber / 4;
     return m_pParticleAttributes[nAttribute] +
-           m_nParticleFloatStrides[nAttribute] * block_ofs +
-           ( nParticleNumber & 3 );
+            m_nParticleFloatStrides[nAttribute] * block_ofs +
+            ( nParticleNumber & 3 );
 }
 
 inline int *CParticleCollection::GetIntAttributePtrForWrite( int nAttribute, int nParticleNumber )
@@ -1771,8 +1771,8 @@ inline float *CParticleCollection::GetFloatAttributePtrForWrite( int nAttribute,
     Assert( nParticleNumber < m_nAllocatedParticles );
     int block_ofs = nParticleNumber / 4;
     return m_pParticleAttributes[nAttribute] +
-           m_nParticleFloatStrides[nAttribute] * block_ofs +
-           ( nParticleNumber & 3 );
+            m_nParticleFloatStrides[nAttribute] * block_ofs +
+            ( nParticleNumber & 3 );
 }
 
 inline fltx4 *CParticleCollection::GetM128AttributePtrForWrite( int nAttribute, size_t *pStrideOut )
@@ -1928,7 +1928,7 @@ class CParticleSystemDefinition
     DECLARE_DMXELEMENT_UNPACK();
     DECLARE_REFERENCED_CLASS( CParticleSystemDefinition );
 
-   public:
+    public:
     CParticleSystemDefinition( void );
     ~CParticleSystemDefinition( void );
 
@@ -1974,7 +1974,7 @@ class CParticleSystemDefinition
     void MarkReadsControlPoint( int nPoint );
     bool ReadsControlPoint( int nPoint ) const;
 
-   private:
+    private:
     void Precache();
     void Uncache();
     bool IsPrecached() const;
@@ -1989,7 +1989,7 @@ class CParticleSystemDefinition
     CUtlVector< CParticleOperatorInstance * > *GetOperatorList( ParticleFunctionType_t type );
     CParticleOperatorInstance *FindOperatorById( ParticleFunctionType_t type, const DmObjectId_t &id );
 
-   private:
+    private:
     int m_nInitialParticles;
     int m_nPerParticleUpdatedAttributeMask;
     int m_nPerParticleInitializedAttributeMask;
@@ -2018,7 +2018,7 @@ class CParticleSystemDefinition
     float m_flMaximumTimeStep;
     float m_flMaximumSimTime;  // maximum time to sim before drawing first frame.
     float m_flMinimumSimTime;  // minimum time to sim before drawing first frame - prevents all
-                               // capped particles from drawing at 0 time.
+                                // capped particles from drawing at 0 time.
 
     int m_nMinimumFrames;  // number of frames to apply max/min simulation times
 
@@ -2028,7 +2028,7 @@ class CParticleSystemDefinition
     size_t m_nContextDataSize;
     DmObjectId_t m_Id;
 
-   public:
+    public:
     float m_flMaxDrawDistance;        // distance at which to not draw.
     float m_flNoDrawTimeToGoToSleep;  // after not beeing seen for this long, the system will sleep
 

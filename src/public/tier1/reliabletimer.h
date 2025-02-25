@@ -22,7 +22,7 @@
 
 class CReliableTimer
 {
-   public:
+    public:
     CReliableTimer();
     void Start();
     void End();
@@ -34,7 +34,7 @@ class CReliableTimer
     int64 CMicroSecLeft();
     int64 CMilliSecLeft();
 
-   private:
+    private:
     int64 GetPerformanceCountNow();
 
     int64 m_nPerformanceCounterStart;

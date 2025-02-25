@@ -22,10 +22,10 @@
 // provide predicted positions of things for you.
 class CSimplePhysics
 {
-   public:
+    public:
     class CNode
     {
-       public:
+        public:
         // Call this when initializing the nodes with their starting positions.
         void Init( const Vector &vPos )
         {
@@ -39,12 +39,12 @@ class CSimplePhysics
 
     class IHelper
     {
-       public:
+        public:
         virtual void GetNodeForces( CNode *pNodes, int iNode, Vector *pAccel ) = 0;
         virtual void ApplyConstraints( CNode *pNodes, int nNodes ) = 0;
     };
 
-   public:
+    public:
     CSimplePhysics();
 
     void Init( float flTimeStep );
@@ -56,13 +56,13 @@ class CSimplePhysics
         float dt,
         float flDamp );
 
-   private:
+    private:
     double GetCurTime()
     {
         return m_flTimeStep * m_iCurTimeStep;
     }
 
-   private:
+    private:
     double m_flPredictedTime;  // (GetCurTime()-m_flTimeStep) <= m_flPredictedTime <= GetCurTime()
     int m_iCurTimeStep;
 

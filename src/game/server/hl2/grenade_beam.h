@@ -25,7 +25,7 @@ class CBeam;
 // End of the grenade beam
 class CGrenadeBeamChaser : public CBaseAnimating
 {
-   public:
+    public:
     DECLARE_CLASS( CGrenadeBeamChaser, CBaseAnimating );
     DECLARE_DATADESC();
 
@@ -39,13 +39,13 @@ class CGrenadeBeamChaser : public CBaseAnimating
 
 class CGrenadeBeam : public CBaseGrenade
 {
-   public:
+    public:
     DECLARE_CLASS( CGrenadeBeam, CBaseGrenade );
     DECLARE_DATADESC();
 
     static CGrenadeBeam* Create( CBaseEntity* pOwner, const Vector& vStart );
 
-   public:
+    public:
     void Spawn( void );
     void Precache( void );
     void Format( color32 clrColor, float flWidth );

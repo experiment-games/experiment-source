@@ -372,8 +372,8 @@ void CBaseHelicopter::DrawRotorWash( float flAltitude, const Vector &vecRotorOri
 #define MAX_AIRBOAT_ROLL_COSANGLE_X2 0.5f
 
 void CBaseHelicopter::DoWashPushOnAirboat( CBaseEntity *pAirboat,
-                                           const Vector &vecWashToAirboat,
-                                           float flWashAmount )
+                                            const Vector &vecWashToAirboat,
+                                            float flWashAmount )
 {
     // For the airboat, simply produce a small roll and a push outwards.
     // But don't produce a roll if we're too rolled in that direction already.
@@ -493,13 +493,13 @@ bool CBaseHelicopter::DoWashPush( washentity_t *pWash, const Vector &vecWashOrig
 
         IPhysicsObject *pPhysObject = pEntity->VPhysicsGetObject();
         Msg( "Pushed %s (index %d) (mass %f) with force %f (min %.2f max %.2f) at time %.2f\n",
-             pEntity->GetClassname(),
-             pEntity->entindex(),
-             pPhysObject->GetMass(),
-             flWashAmount,
-             BASECHOPPER_WASH_PUSH_MIN * flMass,
-             BASECHOPPER_WASH_PUSH_MAX * flMass,
-             gpGlobals->curtime );
+            pEntity->GetClassname(),
+            pEntity->entindex(),
+            pPhysObject->GetMass(),
+            flWashAmount,
+            BASECHOPPER_WASH_PUSH_MIN * flMass,
+            BASECHOPPER_WASH_PUSH_MAX * flMass,
+            gpGlobals->curtime );
     }
 
     // If we've pushed this thing for some time, remove it to give us a chance to find lighter things nearby
@@ -1310,14 +1310,14 @@ void CBaseHelicopter::Event_Killed( const CTakeDamageInfo &info )
     m_takedamage = DAMAGE_NO;
 
     /*
-      if (m_spawnflags & SF_NOWRECKAGE)
-      {
+    if (m_spawnflags & SF_NOWRECKAGE)
+    {
         m_flNextRocket = gpGlobals->curtime + 4.0;
-      }
-      else
-      {
+    }
+    else
+    {
         m_flNextRocket = gpGlobals->curtime + 15.0;
-      }
+    }
     */
     StopRotorWash();
 

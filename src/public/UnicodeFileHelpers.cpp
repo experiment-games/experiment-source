@@ -121,8 +121,8 @@ ucs2 *ReadUnicodeTokenNoSpecial( ucs2 *start, ucs2 *token, int tokenBufferSize, 
             /*
             if (*start == '\\' && *(start+1) == 'n')
             {
-              start++;
-              *token = '\n';
+            start++;
+            *token = '\n';
             }
             else
             */

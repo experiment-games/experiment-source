@@ -85,11 +85,11 @@ static SRes Lzma2EncInt_EncodeSubblock(CLzma2EncInt *p, Byte *outBuf,
   if (packSize < lzHeaderSize)
     return SZ_ERROR_OUTPUT_EOF;
   packSize -= lzHeaderSize;
-  
+
   LzmaEnc_SaveState(p->enc);
   res = LzmaEnc_CodeOneMemBlock(p->enc, p->needInitState,
-      outBuf + lzHeaderSize, &packSize, LZMA2_PACK_SIZE_MAX, &unpackSize);
-  
+    outBuf + lzHeaderSize, &packSize, LZMA2_PACK_SIZE_MAX, &unpackSize);
+
   PRF(printf("\npackSize = %7d unpackSize = %7d  ", packSize, unpackSize));
 
   if (unpackSize == 0)
@@ -100,7 +100,7 @@ static SRes Lzma2EncInt_EncodeSubblock(CLzma2EncInt *p, Byte *outBuf,
   else
   {
     if (res != SZ_ERROR_OUTPUT_EOF)
-      return res;
+    return res;
     res = SZ_OK;
     useCopyBlock = True;
   }
@@ -111,26 +111,26 @@ static SRes Lzma2EncInt_EncodeSubblock(CLzma2EncInt *p, Byte *outBuf,
     PRF(printf("################# COPY           "));
     while (unpackSize > 0)
     {
-      UInt32 u = (unpackSize < LZMA2_COPY_CHUNK_SIZE) ? unpackSize : LZMA2_COPY_CHUNK_SIZE;
-      if (packSizeLimit - destPos < u + 3)
+    UInt32 u = (unpackSize < LZMA2_COPY_CHUNK_SIZE) ? unpackSize : LZMA2_COPY_CHUNK_SIZE;
+    if (packSizeLimit - destPos < u + 3)
         return SZ_ERROR_OUTPUT_EOF;
-      outBuf[destPos++] = (Byte)(p->srcPos == 0 ? LZMA2_CONTROL_COPY_RESET_DIC : LZMA2_CONTROL_COPY_NO_RESET);
-      outBuf[destPos++] = (Byte)((u - 1) >> 8);
-      outBuf[destPos++] = (Byte)(u - 1);
-      memcpy(outBuf + destPos, LzmaEnc_GetCurBuf(p->enc) - unpackSize, u);
-      unpackSize -= u;
-      destPos += u;
-      p->srcPos += u;
-      if (outStream)
-      {
+    outBuf[destPos++] = (Byte)(p->srcPos == 0 ? LZMA2_CONTROL_COPY_RESET_DIC : LZMA2_CONTROL_COPY_NO_RESET);
+    outBuf[destPos++] = (Byte)((u - 1) >> 8);
+    outBuf[destPos++] = (Byte)(u - 1);
+    memcpy(outBuf + destPos, LzmaEnc_GetCurBuf(p->enc) - unpackSize, u);
+    unpackSize -= u;
+    destPos += u;
+    p->srcPos += u;
+    if (outStream)
+    {
         *packSizeRes += destPos;
         if (outStream->Write(outStream, outBuf, destPos) != destPos)
-          return SZ_ERROR_WRITE;
+        return SZ_ERROR_WRITE;
         destPos = 0;
-      }
-      else
+    }
+    else
         *packSizeRes = destPos;
-      /* needInitState = True; */
+    /* needInitState = True; */
     }
     LzmaEnc_RestoreState(p->enc);
     return SZ_OK;
@@ -148,17 +148,17 @@ static SRes Lzma2EncInt_EncodeSubblock(CLzma2EncInt *p, Byte *outBuf,
     outBuf[destPos++] = (Byte)u;
     outBuf[destPos++] = (Byte)(pm >> 8);
     outBuf[destPos++] = (Byte)pm;
-    
+
     if (p->needInitProp)
-      outBuf[destPos++] = p->props;
-    
+    outBuf[destPos++] = p->props;
+
     p->needInitProp = False;
     p->needInitState = False;
     destPos += packSize;
     p->srcPos += unpackSize;
 
     if (outStream)
-      if (outStream->Write(outStream, outBuf, destPos) != destPos)
+    if (outStream->Write(outStream, outBuf, destPos) != destPos)
         return SZ_ERROR_WRITE;
     *packSizeRes = destPos;
     return SZ_OK;
@@ -194,7 +194,7 @@ void Lzma2EncProps_Normalize(CLzma2EncProps *p)
   if (t3 <= 0)
   {
     if (t2 <= 0)
-      t2 = 1;
+    t2 = 1;
     t3 = t1n * t2;
   }
   else if (t2 <= 0)
@@ -202,17 +202,17 @@ void Lzma2EncProps_Normalize(CLzma2EncProps *p)
     t2 = t3 / t1n;
     if (t2 == 0)
     {
-      t1 = 1;
-      t2 = t3;
+    t1 = 1;
+    t2 = t3;
     }
     if (t2 > NUM_MT_CODER_THREADS_MAX)
-      t2 = NUM_MT_CODER_THREADS_MAX;
+    t2 = NUM_MT_CODER_THREADS_MAX;
   }
   else if (t1 <= 0)
   {
     t1 = t3 / t2;
     if (t1 == 0)
-      t1 = 1;
+    t1 = 1;
   }
   else
     t3 = t1n * t2;
@@ -237,12 +237,12 @@ void Lzma2EncProps_Normalize(CLzma2EncProps *p)
     UInt64 temp = p->lzmaProps.reduceSize + p->blockSize - 1;
     if (temp > p->lzmaProps.reduceSize)
     {
-      UInt64 numBlocks = temp / p->blockSize;
-      if (numBlocks < t2)
-      {
+    UInt64 numBlocks = temp / p->blockSize;
+    if (numBlocks < t2)
+    {
         t2 = (UInt32)numBlocks;
         t3 = t1 * t2;
-      }
+    }
     }
   }
   p->numBlockThreads = t2;
@@ -260,7 +260,7 @@ typedef struct
 {
   Byte propEncoded;
   CLzma2EncProps props;
-  
+
   Byte *outBuf;
 
   ISzAlloc *alloc;
@@ -287,30 +287,30 @@ static SRes Lzma2Enc_EncodeMt1(CLzma2EncInt *p, CLzma2Enc *mainEncoder,
   {
     mainEncoder->outBuf = (Byte *)IAlloc_Alloc(mainEncoder->alloc, LZMA2_CHUNK_SIZE_COMPRESSED_MAX);
     if (mainEncoder->outBuf == 0)
-      return SZ_ERROR_MEM;
+    return SZ_ERROR_MEM;
   }
   RINOK(Lzma2EncInt_Init(p, &mainEncoder->props));
   RINOK(LzmaEnc_PrepareForLzma2(p->enc, inStream, LZMA2_KEEP_WINDOW_SIZE,
-      mainEncoder->alloc, mainEncoder->allocBig));
+    mainEncoder->alloc, mainEncoder->allocBig));
   for (;;)
   {
     size_t packSize = LZMA2_CHUNK_SIZE_COMPRESSED_MAX;
     res = Lzma2EncInt_EncodeSubblock(p, mainEncoder->outBuf, &packSize, outStream);
     if (res != SZ_OK)
-      break;
+    break;
     packTotal += packSize;
     res = Progress(progress, p->srcPos, packTotal);
     if (res != SZ_OK)
-      break;
+    break;
     if (packSize == 0)
-      break;
+    break;
   }
   LzmaEnc_Finish(p->enc);
   if (res == SZ_OK)
   {
     Byte b = 0;
     if (outStream->Write(outStream, &b, 1) != 1)
-      return SZ_ERROR_WRITE;
+    return SZ_ERROR_WRITE;
   }
   return res;
 }
@@ -324,7 +324,7 @@ typedef struct
 } CMtCallbackImp;
 
 static SRes MtCallbackImp_Code(void *pp, unsigned index, Byte *dest, size_t *destSize,
-      const Byte *src, size_t srcSize, int finished)
+    const Byte *src, size_t srcSize, int finished)
 {
   CMtCallbackImp *imp = (CMtCallbackImp *)pp;
   CLzma2Enc *mainEncoder = imp->lzma2Enc;
@@ -337,40 +337,40 @@ static SRes MtCallbackImp_Code(void *pp, unsigned index, Byte *dest, size_t *des
 
     if (srcSize != 0)
     {
-      RINOK(Lzma2EncInt_Init(p, &mainEncoder->props));
-     
-      RINOK(LzmaEnc_MemPrepare(p->enc, src, srcSize, LZMA2_KEEP_WINDOW_SIZE,
-          mainEncoder->alloc, mainEncoder->allocBig));
-     
-      while (p->srcPos < srcSize)
-      {
+    RINOK(Lzma2EncInt_Init(p, &mainEncoder->props));
+
+    RINOK(LzmaEnc_MemPrepare(p->enc, src, srcSize, LZMA2_KEEP_WINDOW_SIZE,
+        mainEncoder->alloc, mainEncoder->allocBig));
+
+    while (p->srcPos < srcSize)
+    {
         size_t packSize = destLim - *destSize;
         res = Lzma2EncInt_EncodeSubblock(p, dest + *destSize, &packSize, NULL);
         if (res != SZ_OK)
-          break;
+        break;
         *destSize += packSize;
 
         if (packSize == 0)
         {
-          res = SZ_ERROR_FAIL;
-          break;
+        res = SZ_ERROR_FAIL;
+        break;
         }
 
         if (MtProgress_Set(&mainEncoder->mtCoder.mtProgress, index, p->srcPos, *destSize) != SZ_OK)
         {
-          res = SZ_ERROR_PROGRESS;
-          break;
+        res = SZ_ERROR_PROGRESS;
+        break;
         }
-      }
-      LzmaEnc_Finish(p->enc);
-      if (res != SZ_OK)
+    }
+    LzmaEnc_Finish(p->enc);
+    if (res != SZ_OK)
         return res;
     }
     if (finished)
     {
-      if (*destSize == destLim)
+    if (*destSize == destLim)
         return SZ_ERROR_OUTPUT_EOF;
-      dest[(*destSize)++] = 0;
+    dest[(*destSize)++] = 0;
     }
   }
   return res;
@@ -393,7 +393,7 @@ CLzma2EncHandle Lzma2Enc_Create(ISzAlloc *alloc, ISzAlloc *allocBig)
   {
     unsigned i;
     for (i = 0; i < NUM_MT_CODER_THREADS_MAX; i++)
-      p->coders[i].enc = 0;
+    p->coders[i].enc = 0;
   }
   #ifndef _7ZIP_ST
   MtCoder_Construct(&p->mtCoder);
@@ -411,8 +411,8 @@ void Lzma2Enc_Destroy(CLzma2EncHandle pp)
     CLzma2EncInt *t = &p->coders[i];
     if (t->enc)
     {
-      LzmaEnc_Destroy(t->enc, p->alloc, p->allocBig);
-      t->enc = 0;
+    LzmaEnc_Destroy(t->enc, p->alloc, p->allocBig);
+    t->enc = 0;
     }
   }
 
@@ -443,7 +443,7 @@ Byte Lzma2Enc_WriteProperties(CLzma2EncHandle pp)
   UInt32 dicSize = LzmaEncProps_GetDictSize(&p->props.lzmaProps);
   for (i = 0; i < 40; i++)
     if (dicSize <= LZMA2_DIC_SIZE_FROM_PROP(i))
-      break;
+    break;
   return (Byte)i;
 }
 
@@ -458,8 +458,8 @@ SRes Lzma2Enc_Encode(CLzma2EncHandle pp,
     CLzma2EncInt *t = &p->coders[i];
     if (t->enc == NULL)
     {
-      t->enc = LzmaEnc_Create(p->alloc);
-      if (t->enc == NULL)
+    t->enc = LzmaEnc_Create(p->alloc);
+    if (t->enc == NULL)
         return SZ_ERROR_MEM;
     }
   }
@@ -476,7 +476,7 @@ SRes Lzma2Enc_Encode(CLzma2EncHandle pp,
 
     mtCallback.funcTable.Code = MtCallbackImp_Code;
     mtCallback.lzma2Enc = p;
-    
+
     p->mtCoder.progress = progress;
     p->mtCoder.inStream = inStream;
     p->mtCoder.outStream = outStream;
@@ -486,7 +486,7 @@ SRes Lzma2Enc_Encode(CLzma2EncHandle pp,
     p->mtCoder.blockSize = p->props.blockSize;
     p->mtCoder.destBlockSize = p->props.blockSize + (p->props.blockSize >> 10) + 16;
     p->mtCoder.numThreads = p->props.numBlockThreads;
-    
+
     return MtCoder_Code(&p->mtCoder);
   }
   #endif

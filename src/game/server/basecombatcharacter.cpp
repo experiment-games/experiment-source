@@ -128,7 +128,7 @@ Relationship_t **CBaseCombatCharacter::m_DefaultRelationship = NULL;
 //-----------------------------------------------------------------------------
 class CCleanupDefaultRelationShips : public CAutoGameSystem
 {
-   public:
+    public:
     CCleanupDefaultRelationShips( char const *name )
         : CAutoGameSystem( name )
     {
@@ -229,19 +229,19 @@ bool CBaseCombatCharacter::HasHumanGibs( void )
 #if defined( HL2_DLL )
     Class_T myClass = Classify();
     if ( myClass == CLASS_CITIZEN_PASSIVE ||
-         myClass == CLASS_CITIZEN_REBEL ||
-         myClass == CLASS_COMBINE ||
-         myClass == CLASS_CONSCRIPT ||
-         myClass == CLASS_METROPOLICE ||
-         myClass == CLASS_PLAYER )
+        myClass == CLASS_CITIZEN_REBEL ||
+        myClass == CLASS_COMBINE ||
+        myClass == CLASS_CONSCRIPT ||
+        myClass == CLASS_METROPOLICE ||
+        myClass == CLASS_PLAYER )
         return true;
 
 #elif defined( HL1_DLL )
     Class_T myClass = Classify();
     if ( myClass == CLASS_HUMAN_MILITARY ||
-         myClass == CLASS_PLAYER_ALLY ||
-         myClass == CLASS_HUMAN_PASSIVE ||
-         myClass == CLASS_PLAYER )
+        myClass == CLASS_PLAYER_ALLY ||
+        myClass == CLASS_HUMAN_PASSIVE ||
+        myClass == CLASS_PLAYER )
     {
         return true;
     }
@@ -263,10 +263,10 @@ bool CBaseCombatCharacter::HasAlienGibs( void )
 #if defined( HL2_DLL )
     Class_T myClass = Classify();
     if ( myClass == CLASS_BARNACLE ||
-         myClass == CLASS_STALKER ||
-         myClass == CLASS_ZOMBIE ||
-         myClass == CLASS_VORTIGAUNT ||
-         myClass == CLASS_HEADCRAB )
+        myClass == CLASS_STALKER ||
+        myClass == CLASS_ZOMBIE ||
+        myClass == CLASS_VORTIGAUNT ||
+        myClass == CLASS_HEADCRAB )
     {
         return true;
     }
@@ -274,10 +274,10 @@ bool CBaseCombatCharacter::HasAlienGibs( void )
 #elif defined( HL1_DLL )
     Class_T myClass = Classify();
     if ( myClass == CLASS_ALIEN_MILITARY ||
-         myClass == CLASS_ALIEN_MONSTER ||
-         myClass == CLASS_INSECT ||
-         myClass == CLASS_ALIEN_PREDATOR ||
-         myClass == CLASS_ALIEN_PREY )
+        myClass == CLASS_ALIEN_MONSTER ||
+        myClass == CLASS_INSECT ||
+        myClass == CLASS_ALIEN_PREDATOR ||
+        myClass == CLASS_ALIEN_PREY )
     {
         return true;
     }
@@ -311,7 +311,7 @@ struct VisibilityCacheEntry_t
 
 class CVisibilityCacheEntryLess
 {
-   public:
+    public:
     CVisibilityCacheEntryLess( int ) {}
     bool operator!() const
     {
@@ -332,7 +332,7 @@ bool CBaseCombatCharacter::FVisible( CBaseEntity *pEntity, int traceMask, CBaseE
 
     if ( traceMask != MASK_BLOCKLOS || !ShouldUseVisibilityCache() || pEntity == this
 #if defined( HL2_DLL )
-         || Classify() == CLASS_BULLSEYE || pEntity->Classify() == CLASS_BULLSEYE
+        || Classify() == CLASS_BULLSEYE || pEntity->Classify() == CLASS_BULLSEYE
 #endif
     )
     {
@@ -1118,12 +1118,12 @@ bool CTraceFilterMelee::ShouldHitEntity( IHandleEntity *pHandleEntity, int conte
         /*
         if ( pEntity->GetServerVehicle() != NULL )
         {
-          CBaseEntity *pDriver = pEntity->GetServerVehicle()->GetPassenger();
+        CBaseEntity *pDriver = pEntity->GetServerVehicle()->GetPassenger();
 
-          if ( pDriver != NULL )
-          {
+        if ( pDriver != NULL )
+        {
             pEntity = pDriver;
-          }
+        }
         }
         */
 
@@ -1480,17 +1480,17 @@ bool CBaseCombatCharacter::BecomeRagdoll( const CTakeDamageInfo &info, const Vec
 
 // UNDONE: Put in a real sound cue here, don't do this bogus hack anymore
 #if 0
-		Vector soundOrigin = info.GetDamagePosition();
-		CPASAttenuationFilter filter( soundOrigin );
+        Vector soundOrigin = info.GetDamagePosition();
+        CPASAttenuationFilter filter( soundOrigin );
 
-		EmitSound_t ep;
-		ep.m_nChannel = CHAN_STATIC;
-		ep.m_pSoundName = "NPC_MetroPolice.HitByVehicle";
-		ep.m_flVolume = 1.0f;
-		ep.m_SoundLevel = SNDLVL_NORM;
-		ep.m_pOrigin = &soundOrigin;
+        EmitSound_t ep;
+        ep.m_nChannel = CHAN_STATIC;
+        ep.m_pSoundName = "NPC_MetroPolice.HitByVehicle";
+        ep.m_flVolume = 1.0f;
+        ep.m_SoundLevel = SNDLVL_NORM;
+        ep.m_pOrigin = &soundOrigin;
 
-		EmitSound( filter, SOUND_FROM_WORLD, ep );
+        EmitSound( filter, SOUND_FROM_WORLD, ep );
 #endif
         // in single player create ragdolls on the server when the player hits someone
         // with their vehicle - for more dramatic death/collisions
@@ -1644,11 +1644,11 @@ void CBaseCombatCharacter::Event_Killed( const CTakeDamageInfo &info )
     ClearLastKnownArea();
 
 #if 0
-	// L4D specific hack for zombie commentary mode
-	if( GetOwnerEntity() != NULL )
-	{
-		GetOwnerEntity()->DeathNotice( this );
-	}
+    // L4D specific hack for zombie commentary mode
+    if( GetOwnerEntity() != NULL )
+    {
+        GetOwnerEntity()->DeathNotice( this );
+    }
 #endif
 
 #ifdef NEXT_BOT
@@ -1756,9 +1756,9 @@ void CBaseCombatCharacter::ThrowDirForWeaponStrip( CBaseCombatWeapon *pWeapon, c
 // For weapon strip
 //-----------------------------------------------------------------------------
 void CBaseCombatCharacter::DropWeaponForWeaponStrip( CBaseCombatWeapon *pWeapon,
-                                                     const Vector &vecForward,
-                                                     const QAngle &vecAngles,
-                                                     float flDiameter )
+                                                    const Vector &vecForward,
+                                                    const QAngle &vecAngles,
+                                                    float flDiameter )
 {
     Vector vecOrigin;
     CollisionProp()->RandomPointInBounds( Vector( 0.5f, 0.5f, 0.5f ), Vector( 0.5f, 0.5f, 1.0f ), &vecOrigin );
@@ -1814,7 +1814,7 @@ void CBaseCombatCharacter::Weapon_DropAll( bool bDisallowWeaponPickup )
     AngleVectors( gunAngles, &vecForward, NULL, NULL );
 
     float flDiameter = sqrt( CollisionProp()->OBBSize().x * CollisionProp()->OBBSize().x +
-                             CollisionProp()->OBBSize().y * CollisionProp()->OBBSize().y );
+                            CollisionProp()->OBBSize().y * CollisionProp()->OBBSize().y );
 
     CBaseCombatWeapon *pActiveWeapon = GetActiveWeapon();
     for ( int i = 0; i < MAX_WEAPONS; ++i )
@@ -3257,8 +3257,8 @@ CBaseEntity *CBaseCombatCharacter::FindMissTarget( void )
 
         // See if it's a good target candidate
         if ( FClassnameIs( pEnts[i], "prop_dynamic" ) ||
-             FClassnameIs( pEnts[i], "prop_physics" ) ||
-             FClassnameIs( pEnts[i], "physics_prop" ) )
+            FClassnameIs( pEnts[i], "prop_physics" ) ||
+            FClassnameIs( pEnts[i], "physics_prop" ) )
         {
             pMissCandidates[numMissCandidates++] = pEnts[i];
             continue;
@@ -3363,21 +3363,21 @@ float CBaseCombatCharacter::GetFogObscuredRatio( CBaseEntity *target ) const
 float CBaseCombatCharacter::GetFogObscuredRatio( float range ) const
 {
     /* TODO: Get global fog from map somehow since nav mesh fog is gone
-      fogparams_t fog;
-      GetFogParams( &fog );
+    fogparams_t fog;
+    GetFogParams( &fog );
 
-      if ( !fog.enable )
+    if ( !fog.enable )
         return 0.0f;
 
-      if ( range <= fog.start )
+    if ( range <= fog.start )
         return 0.0f;
 
-      if ( range >= fog.end )
+    if ( range >= fog.end )
         return 1.0f;
 
-      float ratio = (range - fog.start) / (fog.end - fog.start);
-      ratio = MIN( ratio, fog.maxdensity );
-      return ratio;
+    float ratio = (range - fog.start) / (fog.end - fog.start);
+    ratio = MIN( ratio, fog.maxdensity );
+    return ratio;
     */
     return 0.0f;
 }

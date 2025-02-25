@@ -23,7 +23,7 @@ class CLoadingDiscPanel : public vgui::EditablePanel
 {
     typedef vgui::EditablePanel BaseClass;
 
-   public:
+    public:
     CLoadingDiscPanel( vgui::VPANEL parent );
     ~CLoadingDiscPanel();
 
@@ -36,7 +36,7 @@ class CLoadingDiscPanel : public vgui::EditablePanel
         h = ScreenHeight();
 
         if ( w != m_ScreenSize[0] ||
-             h != m_ScreenSize[1] )
+            h != m_ScreenSize[1] )
         {
             m_ScreenSize[0] = w;
             m_ScreenSize[1] = h;
@@ -63,7 +63,7 @@ class CLoadingDiscPanel : public vgui::EditablePanel
         m_pLoadingLabel->SetText( text );
     }
 
-   private:
+    private:
     vgui::Label *m_pLoadingLabel;
     int m_ScreenSize[2];
 };
@@ -107,12 +107,12 @@ CLoadingDiscPanel::~CLoadingDiscPanel()
 
 class CLoadingDisc : public ILoadingDisc
 {
-   private:
+    private:
     CLoadingDiscPanel *loadingDiscPanel;
     CLoadingDiscPanel *m_pPauseDiscPanel;
     vgui::VPANEL m_hParent;
 
-   public:
+    public:
     CLoadingDisc( void )
     {
         loadingDiscPanel = NULL;

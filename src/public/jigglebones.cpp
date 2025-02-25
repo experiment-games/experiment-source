@@ -261,16 +261,16 @@ void CJiggleBones::BuildJiggleTransformations( int boneIndex, float currenttime,
                     ConcatTransforms( goalMX, yawMatrix, limitMatrix );
 
                     Vector limitLeft( limitMatrix.m_flMatVal[0][0],
-                                      limitMatrix.m_flMatVal[1][0],
-                                      limitMatrix.m_flMatVal[2][0] );
+                                    limitMatrix.m_flMatVal[1][0],
+                                    limitMatrix.m_flMatVal[2][0] );
 
                     Vector limitUp( limitMatrix.m_flMatVal[0][1],
                                     limitMatrix.m_flMatVal[1][1],
                                     limitMatrix.m_flMatVal[2][1] );
 
                     Vector limitForward( limitMatrix.m_flMatVal[0][2],
-                                         limitMatrix.m_flMatVal[1][2],
-                                         limitMatrix.m_flMatVal[2][2] );
+                                        limitMatrix.m_flMatVal[1][2],
+                                        limitMatrix.m_flMatVal[2][2] );
 
 #ifdef CLIENT_DLL
                     if ( cl_jiggle_bone_debug_yaw_constraints.GetBool() )
@@ -284,8 +284,8 @@ void CJiggleBones::BuildJiggleTransformations( int boneIndex, float currenttime,
 #endif  // CLIENT_DLL
 
                     Vector limitAlong( DotProduct( limitLeft, along ),
-                                       DotProduct( limitUp, along ),
-                                       DotProduct( limitForward, along ) );
+                                        DotProduct( limitUp, along ),
+                                        DotProduct( limitForward, along ) );
 
                     // clip to limit plane
                     data->tipPos = goalBasePosition + limitAlong.y * limitUp + limitAlong.z * limitForward;
@@ -355,16 +355,16 @@ void CJiggleBones::BuildJiggleTransformations( int boneIndex, float currenttime,
                     ConcatTransforms( goalMX, pitchMatrix, limitMatrix );
 
                     Vector limitLeft( limitMatrix.m_flMatVal[0][0],
-                                      limitMatrix.m_flMatVal[1][0],
-                                      limitMatrix.m_flMatVal[2][0] );
+                                    limitMatrix.m_flMatVal[1][0],
+                                    limitMatrix.m_flMatVal[2][0] );
 
                     Vector limitUp( limitMatrix.m_flMatVal[0][1],
                                     limitMatrix.m_flMatVal[1][1],
                                     limitMatrix.m_flMatVal[2][1] );
 
                     Vector limitForward( limitMatrix.m_flMatVal[0][2],
-                                         limitMatrix.m_flMatVal[1][2],
-                                         limitMatrix.m_flMatVal[2][2] );
+                                        limitMatrix.m_flMatVal[1][2],
+                                        limitMatrix.m_flMatVal[2][2] );
 
 #ifdef CLIENT_DLL
                     if ( cl_jiggle_bone_debug_pitch_constraints.GetBool() )
@@ -378,8 +378,8 @@ void CJiggleBones::BuildJiggleTransformations( int boneIndex, float currenttime,
 #endif  // CLIENT_DLL
 
                     Vector limitAlong( DotProduct( limitLeft, along ),
-                                       DotProduct( limitUp, along ),
-                                       DotProduct( limitForward, along ) );
+                                        DotProduct( limitUp, along ),
+                                        DotProduct( limitForward, along ) );
 
                     // clip to limit plane
                     data->tipPos = goalBasePosition + limitAlong.x * limitLeft + limitAlong.z * limitForward;
@@ -601,59 +601,59 @@ void CJiggleBones::BuildJiggleTransformations( int boneIndex, float currenttime,
         if ( jiggleInfo->flags & ( JIGGLE_IS_FLEXIBLE | JIGGLE_IS_RIGID ) )
         {
             debugoverlay->AddLineOverlay( goalBasePosition,
-                                          data->tipPos,
-                                          255,
-                                          255,
-                                          0,
-                                          true,
-                                          dT );
+                                        data->tipPos,
+                                        255,
+                                        255,
+                                        0,
+                                        true,
+                                        dT );
 
             debugoverlay->AddLineOverlay( data->tipPos + Vector( -sz, 0, 0 ),
-                                          data->tipPos + Vector( sz, 0, 0 ),
-                                          0,
-                                          255,
-                                          255,
-                                          true,
-                                          dT );
+                                        data->tipPos + Vector( sz, 0, 0 ),
+                                        0,
+                                        255,
+                                        255,
+                                        true,
+                                        dT );
             debugoverlay->AddLineOverlay( data->tipPos + Vector( 0, -sz, 0 ),
-                                          data->tipPos + Vector( 0, sz, 0 ),
-                                          0,
-                                          255,
-                                          255,
-                                          true,
-                                          dT );
+                                        data->tipPos + Vector( 0, sz, 0 ),
+                                        0,
+                                        255,
+                                        255,
+                                        true,
+                                        dT );
             debugoverlay->AddLineOverlay( data->tipPos + Vector( 0, 0, -sz ),
-                                          data->tipPos + Vector( 0, 0, sz ),
-                                          0,
-                                          255,
-                                          255,
-                                          true,
-                                          dT );
+                                        data->tipPos + Vector( 0, 0, sz ),
+                                        0,
+                                        255,
+                                        255,
+                                        true,
+                                        dT );
         }
 
         if ( jiggleInfo->flags & JIGGLE_HAS_BASE_SPRING )
         {
             debugoverlay->AddLineOverlay( data->basePos + Vector( -sz, 0, 0 ),
-                                          data->basePos + Vector( sz, 0, 0 ),
-                                          255,
-                                          0,
-                                          255,
-                                          true,
-                                          dT );
+                                        data->basePos + Vector( sz, 0, 0 ),
+                                        255,
+                                        0,
+                                        255,
+                                        true,
+                                        dT );
             debugoverlay->AddLineOverlay( data->basePos + Vector( 0, -sz, 0 ),
-                                          data->basePos + Vector( 0, sz, 0 ),
-                                          255,
-                                          0,
-                                          255,
-                                          true,
-                                          dT );
+                                        data->basePos + Vector( 0, sz, 0 ),
+                                        255,
+                                        0,
+                                        255,
+                                        true,
+                                        dT );
             debugoverlay->AddLineOverlay( data->basePos + Vector( 0, 0, -sz ),
-                                          data->basePos + Vector( 0, 0, sz ),
-                                          255,
-                                          0,
-                                          255,
-                                          true,
-                                          dT );
+                                        data->basePos + Vector( 0, 0, sz ),
+                                        255,
+                                        0,
+                                        255,
+                                        true,
+                                        dT );
         }
     }
 #endif  // CLIENT_DLL

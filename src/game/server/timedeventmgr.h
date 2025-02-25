@@ -23,7 +23,7 @@ class CTimedEventMgr;
 
 abstract_class IEventRegisterCallback
 {
-   public:
+    public:
     virtual void FireEvent() = 0;
 };
 
@@ -32,7 +32,7 @@ class CEventRegister
     friend bool TimedEventMgr_LessFunc( CEventRegister *const &a, CEventRegister *const &b );
     friend class CTimedEventMgr;
 
-   public:
+    public:
     CEventRegister();
     ~CEventRegister();
 
@@ -48,11 +48,11 @@ class CEventRegister
         return m_bRegistered;
     }
 
-   private:
+    private:
     void Reregister();  // After having an event processed, this is called to have it register for the next one.
     void Term();
 
-   private:
+    private:
     CTimedEventMgr *m_pEventMgr;
     float m_flNextEventTime;
     float m_flUpdateInterval;
@@ -64,18 +64,18 @@ class CTimedEventMgr
 {
     friend class CEventRegister;
 
-   public:
+    public:
     CTimedEventMgr();
 
     // Call this each frame to fire events.
     void FireEvents();
 
-   private:
+    private:
     // Things used by CEventRegister.
     void RegisterForNextEvent( CEventRegister *pEvent );
     void RemoveEvent( CEventRegister *pEvent );
 
-   private:
+    private:
     // Events, sorted by the time at which they will fire.
     CUtlPriorityQueue< CEventRegister * > m_Events;
 };

@@ -24,7 +24,7 @@ namespace vgui
 //-----------------------------------------------------------------------------
 class BaseTooltip
 {
-   public:
+    public:
     BaseTooltip( Panel *parent, const char *text = NULL );
 
     virtual void SetText( const char *text );
@@ -47,11 +47,11 @@ class BaseTooltip
     int GetTooltipDelay();
     void SetEnabled( bool bState );
 
-   private:
+    private:
     Panel *m_pParent;
     virtual void ApplySchemeSettings( IScheme *pScheme ){};
 
-   protected:
+    protected:
     CUtlVector< char > m_Text;
     int _delay;         // delay that counts down
     int _tooltipDelay;  // delay before tooltip comes up.
@@ -63,7 +63,7 @@ class BaseTooltip
 
 class TextTooltip : public BaseTooltip
 {
-   public:
+    public:
     TextTooltip( Panel *parent, const char *text = NULL );
     ~TextTooltip();
 

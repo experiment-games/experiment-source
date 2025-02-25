@@ -22,7 +22,7 @@ CLIENTEFFECT_REGISTER_END()
 
 class C_ExtinguisherJet : public C_BaseEntity
 {
-   public:
+    public:
     DECLARE_CLIENTCLASS();
     DECLARE_CLASS( C_ExtinguisherJet, C_BaseEntity );
 
@@ -38,7 +38,7 @@ class C_ExtinguisherJet : public C_BaseEntity
         return m_bEmit;
     }
 
-   protected:
+    protected:
     void AddExtinguisherDecal( trace_t &tr );
 
     bool m_bEmit;
@@ -52,7 +52,7 @@ class C_ExtinguisherJet : public C_BaseEntity
     CSmartPtr< CSimpleEmitter > m_pEmitter;
     CSmartPtr< CEmberEffect > m_pEmberEmitter;
 
-   private:
+    private:
     C_ExtinguisherJet( const C_ExtinguisherJet & );
 };
 

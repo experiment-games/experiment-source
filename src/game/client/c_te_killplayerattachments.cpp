@@ -19,7 +19,7 @@
 //-----------------------------------------------------------------------------
 class C_TEKillPlayerAttachments : public C_BaseTempEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_TEKillPlayerAttachments, C_BaseTempEntity );
     DECLARE_CLIENTCLASS();
 
@@ -28,7 +28,7 @@ class C_TEKillPlayerAttachments : public C_BaseTempEntity
 
     virtual void PostDataUpdate( DataUpdateType_t updateType );
 
-   public:
+    public:
     int m_nPlayer;
 };
 

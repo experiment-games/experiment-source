@@ -27,7 +27,7 @@ struct netadr_s;
 
 class IHLTVServer : public IBaseInterface
 {
-   public:
+    public:
     virtual ~IHLTVServer() {}
 
     virtual IServer *GetBaseServer( void ) = 0;      // get HLTV base server interface

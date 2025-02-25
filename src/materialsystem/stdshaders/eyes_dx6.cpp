@@ -15,7 +15,7 @@
 DEFINE_FALLBACK_SHADER( Eyes, Eyes_dx6 )
 
 BEGIN_VS_SHADER( Eyes_dx6,
-                 "Help for Eyes" )
+                "Help for Eyes" )
 
 BEGIN_SHADER_PARAMS
 SHADER_PARAM( IRIS, SHADER_PARAM_TYPE_TEXTURE, "shadertest/BaseTexture", "iris texture" )
@@ -114,32 +114,32 @@ void DrawFlashlight_Iris( IMaterialVar** params, IShaderDynamicAPI* pShaderAPI, 
         pShaderShadow->CustomTextureStages( 2 );
 
         pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
-                                               SHADER_TEXCHANNEL_COLOR,
-                                               SHADER_TEXOP_MODULATE,
-                                               SHADER_TEXARG_TEXTURE,
-                                               SHADER_TEXARG_VERTEXCOLOR );
+                                                SHADER_TEXCHANNEL_COLOR,
+                                                SHADER_TEXOP_MODULATE,
+                                                SHADER_TEXARG_TEXTURE,
+                                                SHADER_TEXARG_VERTEXCOLOR );
 
         pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1,
-                                               SHADER_TEXCHANNEL_COLOR,
-                                               SHADER_TEXOP_MODULATE,
-                                               SHADER_TEXARG_TEXTURE,
-                                               SHADER_TEXARG_PREVIOUSSTAGE );
+                                                SHADER_TEXCHANNEL_COLOR,
+                                                SHADER_TEXOP_MODULATE,
+                                                SHADER_TEXARG_TEXTURE,
+                                                SHADER_TEXARG_PREVIOUSSTAGE );
 
         // alpha stage 0
         // get alpha from constant alpha
         pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE0,
-                                               SHADER_TEXCHANNEL_ALPHA,
-                                               SHADER_TEXOP_SELECTARG1,
-                                               SHADER_TEXARG_CONSTANTCOLOR,
-                                               SHADER_TEXARG_NONE );
+                                                SHADER_TEXCHANNEL_ALPHA,
+                                                SHADER_TEXOP_SELECTARG1,
+                                                SHADER_TEXARG_CONSTANTCOLOR,
+                                                SHADER_TEXARG_NONE );
 
         // alpha stage 1
         // get alpha from $basetexture
         pShaderShadow->CustomTextureOperation( SHADER_TEXTURE_STAGE1,
-                                               SHADER_TEXCHANNEL_ALPHA,
-                                               SHADER_TEXOP_MODULATE,
-                                               SHADER_TEXARG_TEXTURE,
-                                               SHADER_TEXARG_PREVIOUSSTAGE );
+                                                SHADER_TEXCHANNEL_ALPHA,
+                                                SHADER_TEXOP_MODULATE,
+                                                SHADER_TEXARG_TEXTURE,
+                                                SHADER_TEXARG_PREVIOUSSTAGE );
 
         pShaderShadow->EnableTexture( SHADER_SAMPLER0, true );
         pShaderShadow->EnableTexture( SHADER_SAMPLER1, true );

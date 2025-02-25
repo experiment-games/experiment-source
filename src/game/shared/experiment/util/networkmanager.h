@@ -24,7 +24,7 @@ struct ConnectedPlayer_t
 
 class CNetworkManager : public CBaseGameSystemPerFrame, public CGameEventListener
 {
-   public:
+    public:
     virtual char const *Name()
     {
         return "CNetworkManager";
@@ -67,7 +67,7 @@ class CNetworkManager : public CBaseGameSystemPerFrame, public CGameEventListene
     IConnectedClient *FindConnectedClient( CBasePlayer *client );
     CBasePlayer *FindConnectedPlayer( IConnectedClient *client );
 
-   private:
+    private:
     bool m_bIsClient;
     bool m_bIsServer;
 

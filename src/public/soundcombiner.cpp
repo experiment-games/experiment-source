@@ -22,11 +22,11 @@
 
 class CSoundCombiner : public ISoundCombiner
 {
-   public:
+    public:
     CSoundCombiner()
         : m_pWaveOutput( NULL ),
-          m_pOutRIFF( NULL ),
-          m_pOutIterator( NULL )
+        m_pOutRIFF( NULL ),
+        m_pOutIterator( NULL )
     {
         m_szOutFile[0] = 0;
     }
@@ -34,15 +34,15 @@ class CSoundCombiner : public ISoundCombiner
     virtual bool CombineSoundFiles( IFileSystem *filesystem, char const *outfile, CUtlVector< CombinerEntry > &info );
     virtual bool IsCombinedFileChecksumValid( IFileSystem *filesystem, char const *outfile, CUtlVector< CombinerEntry > &info );
 
-   private:
+    private:
     struct CombinerWork
     {
         CombinerWork()
             : sentence(),
-              duration( 0.0 ),
-              wave( 0 ),
-              mixer( 0 ),
-              entry( 0 )
+            duration( 0.0 ),
+            wave( 0 ),
+            mixer( 0 ),
+            entry( 0 )
         {
         }
         CSentence sentence;
@@ -111,8 +111,8 @@ bool CSoundCombiner::CreateWorkList( IFileSystem *filesystem, CUtlVector< Combin
         if ( !LoadSentenceFromWavFile( fullpath, workitem->sentence ) )
         {
             Warning( "CSoundCombiner::CreateWorkList couldn't load %s for work item (%d)\n",
-                     fullpath,
-                     i );
+                    fullpath,
+                    i );
             return false;
         }
 
@@ -243,8 +243,8 @@ bool CSoundCombiner::IsCombinedFileChecksumValid( IFileSystem *filesystem, char 
         if ( !valid )
         {
             Warning( "  checksum computed %u, disk %u\n",
-                     computedChecksum,
-                     diskFileEmbeddedChecksum );
+                    computedChecksum,
+                    diskFileEmbeddedChecksum );
         }
     }
     else
@@ -276,7 +276,7 @@ bool CSoundCombiner::VerifyFilesExist( IFileSystem *filesystem, CUtlVector< Comb
 //-----------------------------------------------------------------------------
 class StdIOReadBinary : public IFileReadBinary
 {
-   public:
+    public:
     int open( const char *pFileName )
     {
         return ( int )filesystem->Open( pFileName, "rb" );
@@ -325,7 +325,7 @@ class StdIOReadBinary : public IFileReadBinary
 
 class StdIOWriteBinary : public IFileWriteBinary
 {
-   public:
+    public:
     int create( const char *pFileName )
     {
         return ( int )filesystem->Open( pFileName, "wb" );
@@ -472,33 +472,33 @@ bool CSoundCombiner::SaveSentenceToWavFile( char const *wavfile, CSentence& sent
     // Walk input chunks and copy to output
     while ( walk.ChunkAvailable() )
     {
-      m_pOutIterator->ChunkStart( walk.ChunkName() );
+    m_pOutIterator->ChunkStart( walk.ChunkName() );
 
-      switch ( walk.ChunkName() )
-      {
-      case WAVE_VALVEDATA:
+    switch ( walk.ChunkName() )
+    {
+    case WAVE_VALVEDATA:
         {
-          // Overwrite data
-          CSoundCombiner::StoreValveDataChunk( sentence );
-          wordtrackwritten = true;
+        // Overwrite data
+        CSoundCombiner::StoreValveDataChunk( sentence );
+        wordtrackwritten = true;
         }
         break;
-      default:
+    default:
         m_pOutIterator->CopyChunkData( walk );
         break;
-      }
+    }
 
-      m_pOutIterator->ChunkFinish();
+    m_pOutIterator->ChunkFinish();
 
-      walk.ChunkNext();
+    walk.ChunkNext();
     }
 
     // If we didn't write it above, write it now
     if ( !wordtrackwritten )
     {
-      m_pOutIterator->ChunkStart( WAVE_VALVEDATA );
-      CSoundCombiner::StoreValveDataChunk( sentence );
-      m_pOutIterator->ChunkFinish();
+    m_pOutIterator->ChunkStart( WAVE_VALVEDATA );
+    CSoundCombiner::StoreValveDataChunk( sentence );
+    m_pOutIterator->ChunkFinish();
     }
   }
 

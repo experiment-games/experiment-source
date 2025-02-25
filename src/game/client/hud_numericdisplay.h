@@ -20,7 +20,7 @@ class CHudNumericDisplay : public vgui::Panel
 {
     DECLARE_CLASS_SIMPLE( CHudNumericDisplay, vgui::Panel );
 
-   public:
+    public:
     CHudNumericDisplay( vgui::Panel *parent, const char *name );
 
     void SetDisplayValue( int value );
@@ -42,14 +42,14 @@ class CHudNumericDisplay : public vgui::Panel
 
     virtual void Reset();
 
-   protected:
+    protected:
     // vgui overrides
     virtual void Paint();
     virtual void PaintLabel();
 
     virtual void PaintNumbers( vgui::HFont font, int xpos, int ypos, int value );
 
-   protected:
+    protected:
     int m_iValue;
     int m_iSecondaryValue;
     wchar_t m_LabelText[32];

@@ -71,12 +71,12 @@ ConceptHistory_t &ConceptHistory_t::operator=( const ConceptHistory_t &src )
 
 BEGIN_SIMPLE_DATADESC( ConceptHistory_t )
 DEFINE_FIELD( timeSpoken, FIELD_TIME ),  // Relative to server time
-                                         // DEFINE_EMBEDDED( response,	FIELD_??? ),	// This is manually saved/restored by the ConceptHistory saverestore ops below
+                                        // DEFINE_EMBEDDED( response,	FIELD_??? ),	// This is manually saved/restored by the ConceptHistory saverestore ops below
     END_DATADESC()
 
         class CConceptHistoriesDataOps : public CDefSaveRestoreOps
 {
-   public:
+    public:
     virtual void Save( const SaveRestoreFieldInfo_t &fieldInfo, ISave *pSave )
     {
         CUtlDict< ConceptHistory_t, int > *ch = ( ( CUtlDict< ConceptHistory_t, int > * )fieldInfo.pField );
@@ -212,12 +212,12 @@ static int g_nExpressers;
 
 CAI_Expresser::CAI_Expresser( CBaseFlex *pOuter )
     : m_pOuter( pOuter ),
-      m_pSink( NULL ),
-      m_flStopTalkTime( 0 ),
-      m_flLastTimeAcceptedSpeak( 0 ),
-      m_flBlockedTalkTime( 0 ),
-      m_flStopTalkTimeWithoutDelay( 0 ),
-      m_voicePitch( 100 )
+    m_pSink( NULL ),
+    m_flStopTalkTime( 0 ),
+    m_flLastTimeAcceptedSpeak( 0 ),
+    m_flBlockedTalkTime( 0 ),
+    m_flStopTalkTimeWithoutDelay( 0 ),
+    m_voicePitch( 100 )
 {
 #ifdef DEBUG
     g_nExpressers++;

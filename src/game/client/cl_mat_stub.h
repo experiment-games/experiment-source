@@ -18,13 +18,13 @@ class IMaterialSystem;
 // it will automatically unstub in its destructor.
 class CMatStubHandler
 {
-   public:
+    public:
     CMatStubHandler();
     ~CMatStubHandler();
 
     void End();
 
-   public:
+    public:
     IMaterialSystem *m_pOldMaterialSystem;
 };
 

@@ -36,7 +36,7 @@ class CMissile : public CBaseCombatCharacter
 {
     DECLARE_CLASS( CMissile, CBaseCombatCharacter );
 
-   public:
+    public:
     CMissile();
     ~CMissile();
 
@@ -82,7 +82,7 @@ class CMissile : public CBaseCombatCharacter
 
     static CMissile *Create( const Vector &vecOrigin, const QAngle &vecAngles, edict_t *pentOwner );
 
-   protected:
+    protected:
     virtual void DoExplosion();
     virtual void ComputeActualDotPosition( CLaserDot *pLaserDot, Vector *pActualDotPosition, float *pHomingSpeed );
     virtual int AugerHealth()
@@ -101,7 +101,7 @@ class CMissile : public CBaseCombatCharacter
     float m_flMarkDeadTime;
     float m_flDamage;
 
-   private:
+    private:
     float m_flGracePeriodEndsAt;
 
     DECLARE_DATADESC();
@@ -122,7 +122,7 @@ class CAPCMissile : public CMissile
     DECLARE_CLASS( CMissile, CMissile );
     DECLARE_DATADESC();
 
-   public:
+    public:
     static CAPCMissile *Create( const Vector &vecOrigin, const QAngle &vecAngles, const Vector &vecVelocity, CBaseEntity *pOwner );
 
     CAPCMissile();
@@ -143,12 +143,12 @@ class CAPCMissile : public CMissile
 
     CAPCMissile *m_pNext;
 
-   protected:
+    protected:
     virtual void DoExplosion();
     virtual void ComputeActualDotPosition( CLaserDot *pLaserDot, Vector *pActualDotPosition, float *pHomingSpeed );
     virtual int AugerHealth();
 
-   private:
+    private:
     void Init();
     void ComputeLeadingPosition( const Vector &vecShootPosition, CBaseEntity *pTarget, Vector *pLeadPosition );
     void BeginSeekThink();
@@ -183,7 +183,7 @@ class CWeaponRPG : public CBaseExperimentCombatWeapon
 {
     DECLARE_CLASS( CWeaponRPG, CBaseExperimentCombatWeapon );
 
-   public:
+    public:
     CWeaponRPG();
     ~CWeaponRPG();
 
@@ -283,7 +283,7 @@ class CWeaponRPG : public CBaseExperimentCombatWeapon
 
     DECLARE_ACTTABLE();
 
-   protected:
+    protected:
     CNetworkVar( bool, m_bInitialStateUpdate );
     CNetworkVar( bool, m_bGuiding );
     CNetworkVar( bool, m_bHideGuiding );
@@ -295,7 +295,7 @@ class CWeaponRPG : public CBaseExperimentCombatWeapon
     CHandle< CLaserDot > m_hLaserDot;
 #endif
 
-   private:
+    private:
     CWeaponRPG( const CWeaponRPG & );
 };
 

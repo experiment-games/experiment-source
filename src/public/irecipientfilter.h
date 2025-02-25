@@ -16,7 +16,7 @@
 //-----------------------------------------------------------------------------
 class IRecipientFilter
 {
-   public:
+    public:
     virtual ~IRecipientFilter() {}
 
     virtual bool IsReliable( void ) const = 0;

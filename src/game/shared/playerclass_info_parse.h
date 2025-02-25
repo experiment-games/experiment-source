@@ -28,16 +28,16 @@ typedef unsigned short PLAYERCLASS_FILE_INFO_HANDLE;
 //-----------------------------------------------------------------------------
 class FilePlayerClassInfo_t
 {
-   public:
+    public:
     FilePlayerClassInfo_t();
 
     // Each game can override this to get whatever values it wants from the script.
     virtual void Parse( KeyValues *pKeyValuesData, const char *szClassName );
 
-   public:
+    public:
     bool m_bParsedScript;
 
-   public:
+    public:
     // Class properties
 
     // todo : better lengths for these arrays ?

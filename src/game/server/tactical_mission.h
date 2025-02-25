@@ -17,16 +17,16 @@ class CBasePlayer;
  */
 class CTacticalMissionZone
 {
-   public:
+    public:
     virtual CNavArea *SelectArea( CBasePlayer *who ) const;
 
     /**
-     * Iterate each area in this zone.
-     * If functor returns false, stop iterating and return false.
-     */
+    * Iterate each area in this zone.
+    * If functor returns false, stop iterating and return false.
+    */
     virtual bool ForEachArea( IForEachNavArea &func ) const;
 
-   protected:
+    protected:
     CUtlVector< CNavArea * > m_areaVector;
 };
 
@@ -36,7 +36,7 @@ class CTacticalMissionZone
  */
 class CTacticalMission
 {
-   public:
+    public:
     virtual ~CTacticalMission() {}
 
     virtual const CTacticalMissionZone *GetDeployZone( CBasePlayer *who ) const;  // where give player should be during this mission
@@ -67,7 +67,7 @@ inline const CTacticalMissionZone *CTacticalMission::GetEnemyZone( void ) const
  */
 class CTacticalMissionManager : public CGameEventListener
 {
-   public:
+    public:
     CTacticalMissionManager( void );
     virtual ~CTacticalMissionManager() {}
 
@@ -82,17 +82,17 @@ class CTacticalMissionManager : public CGameEventListener
     virtual const CTacticalMission *GetMission( const char *name );  // given a mission name, return the mission (or NULL)
 
     /**
-     * Iterate each mission.
-     * If functor returns false, stop iterating and return false.
-     */
+    * Iterate each mission.
+    * If functor returns false, stop iterating and return false.
+    */
     class IForEachMission
     {
-       public:
+        public:
         virtual bool Inspect( const CTacticalMission &mission ) = 0;
     };
     virtual bool ForEachMission( IForEachMission &func );
 
-   protected:
+    protected:
     CUtlVector< CTacticalMission * > m_missionVector;
 };
 

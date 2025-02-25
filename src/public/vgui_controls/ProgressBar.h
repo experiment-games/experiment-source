@@ -26,7 +26,7 @@ class ProgressBar : public Panel
 {
     DECLARE_CLASS_SIMPLE( ProgressBar, Panel );
 
-   public:
+    public:
     ProgressBar( Panel *parent, const char *panelName );
     ~ProgressBar();
 
@@ -67,22 +67,22 @@ class ProgressBar : public Panel
         m_iProgressDirection = val;
     }
 
-   protected:
+    protected:
     virtual void Paint();
     void PaintSegment( int &x, int &y, int tall, int wide );
     virtual void PaintBackground();
     virtual void ApplySchemeSettings( IScheme *pScheme );
     MESSAGE_FUNC_PARAMS( OnDialogVariablesChanged, "DialogVariables", dialogVariables );
     /* CUSTOM MESSAGE HANDLING
-      "SetProgress"
+    "SetProgress"
         input:	"progress"	- float value of the progress to set
     */
 
-   protected:
+    protected:
     int m_iProgressDirection;
     float _progress;
 
-   private:
+    private:
     int _segmentCount;
     int _segmentGap;
     int _segmentWide;
@@ -98,7 +98,7 @@ class ContinuousProgressBar : public ProgressBar
 {
     DECLARE_CLASS_SIMPLE( ContinuousProgressBar, ProgressBar );
 
-   public:
+    public:
     ContinuousProgressBar( Panel *parent, const char *panelName );
 
     virtual void Paint();

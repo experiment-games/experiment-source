@@ -27,7 +27,7 @@ class CPointDevShotCamera : public CBaseEntity
 {
     DECLARE_CLASS( CPointDevShotCamera, CBaseEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     void Spawn( void );
@@ -38,7 +38,7 @@ class CPointDevShotCamera : public CBaseEntity
     // Always transmit to clients so they know where to move the view to
     virtual int UpdateTransmitState();
 
-   private:
+    private:
     string_t m_iszCameraName;
     int m_iFOV;
 };
@@ -179,7 +179,7 @@ void CPointDevShotCamera::DevShotThink_PostShot( void )
 //-----------------------------------------------------------------------------
 class CDevShotSystem : public CAutoGameSystemPerFrame
 {
-   public:
+    public:
     CDevShotSystem( char const *name )
         : CAutoGameSystemPerFrame( name )
     {
@@ -262,7 +262,7 @@ class CDevShotSystem : public CAutoGameSystemPerFrame
         }
     }
 
-   private:
+    private:
     bool m_bIssuedNextMapCommand;
     bool m_bParsedMapFile;
 };

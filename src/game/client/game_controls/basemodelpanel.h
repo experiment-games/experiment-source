@@ -21,7 +21,7 @@ class C_SceneEntity;
 
 class CModelPanelModel : public C_BaseFlex
 {
-   public:
+    public:
     CModelPanelModel() {}
     DECLARE_CLASS( CModelPanelModel, C_BaseFlex );
 
@@ -36,7 +36,7 @@ class CModelPanelModel : public C_BaseFlex
 //-----------------------------------------------------------------------------
 class CModelPanelModelAnimation
 {
-   public:
+    public:
     CModelPanelModelAnimation()
     {
         m_pszName = NULL;
@@ -73,7 +73,7 @@ class CModelPanelModelAnimation
         }
     }
 
-   public:
+    public:
     const char *m_pszName;
     const char *m_pszSequence;
     const char *m_pszActivity;
@@ -86,7 +86,7 @@ class CModelPanelModelAnimation
 //-----------------------------------------------------------------------------
 class CModelPanelAttachedModelInfo
 {
-   public:
+    public:
     CModelPanelAttachedModelInfo()
     {
         m_pszModelName = NULL;
@@ -102,7 +102,7 @@ class CModelPanelAttachedModelInfo
         }
     }
 
-   public:
+    public:
     const char *m_pszModelName;
     int m_nSkin;
 };
@@ -112,7 +112,7 @@ class CModelPanelAttachedModelInfo
 //-----------------------------------------------------------------------------
 class CModelPanelModelInfo
 {
-   public:
+    public:
     CModelPanelModelInfo()
     {
         m_pszModelName = NULL;
@@ -148,7 +148,7 @@ class CModelPanelModelInfo
         m_AttachedModelsInfo.PurgeAndDeleteElements();
     }
 
-   public:
+    public:
     const char *m_pszModelName;
     const char *m_pszModelName_HWM;
     int m_nSkin;
@@ -168,7 +168,7 @@ class CModelPanelModelInfo
 //-----------------------------------------------------------------------------
 class CModelPanel : public vgui::EditablePanel, public CGameEventListener
 {
-   public:
+    public:
     DECLARE_CLASS_SIMPLE( CModelPanel, vgui::EditablePanel );
 
     CModelPanel( vgui::Panel *parent, const char *name );
@@ -204,20 +204,20 @@ class CModelPanel : public vgui::EditablePanel, public CGameEventListener
 
     void UpdateModel();
 
-   public:  // IGameEventListener:
+    public:  // IGameEventListener:
     virtual void FireGameEvent( IGameEvent *event );
 
-   protected:
+    protected:
     virtual void SetupModel( void );
     virtual void SetupVCD( void );
     virtual const char *GetModelName( void );
 
-   private:
+    private:
     void InitCubeMaps();
     int FindAnimByName( const char *pszName );
     void CalculateFrameDistanceInternal( const model_t *pModel );
 
-   public:
+    public:
     int m_nFOV;
     float m_flFrameDistance;
     bool m_bStartFramed;
@@ -228,7 +228,7 @@ class CModelPanel : public vgui::EditablePanel, public CGameEventListener
 
     CHandle< C_SceneEntity > m_hScene;
 
-   private:
+    private:
     bool m_bPanelDirty;
     int m_iDefaultAnimation;
 

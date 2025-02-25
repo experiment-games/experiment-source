@@ -16,14 +16,14 @@ class CSchemeVisualizer : public vgui::Frame
 {
     DECLARE_CLASS_SIMPLE( CSchemeVisualizer, vgui::Frame );
 
-   public:
+    public:
     CSchemeVisualizer( vgui::Panel *pParent, vgui::IScheme *pViewScheme, const char *pSchemeName );
     virtual ~CSchemeVisualizer();
 
-   private:
+    private:
     virtual void PerformLayout();
 
-   private:
+    private:
     virtual void OnTick();
 
     enum ListDataType_t

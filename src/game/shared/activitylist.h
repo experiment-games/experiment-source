@@ -17,7 +17,7 @@ typedef struct activityentry_s activityentry_t;
 
 class CActivityRemap
 {
-   public:
+    public:
     CActivityRemap()
     {
         pExtraBlock = NULL;
@@ -36,13 +36,13 @@ class CActivityRemap
     Activity activity;
     Activity mappedActivity;
 
-   private:
+    private:
     KeyValues *pExtraBlock;
 };
 
 class CActivityRemapCache
 {
-   public:
+    public:
     CActivityRemapCache()
     {
     }

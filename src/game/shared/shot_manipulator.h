@@ -22,7 +22,7 @@ extern ConVar ai_shot_bias_max;
 //---------------------------------------------------------
 class CShotManipulator
 {
-   public:
+    public:
     CShotManipulator( const Vector &vecForward )
     {
         SetShootDir( vecForward );
@@ -53,7 +53,7 @@ class CShotManipulator
         return m_vecUp;
     }
 
-   private:
+    private:
     Vector m_vecShotDirection;
     Vector m_vecRight;
     Vector m_vecUp;

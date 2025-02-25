@@ -31,7 +31,7 @@ struct edict_t;
 
 class CSaveRestoreSegment
 {
-   public:
+    public:
     CSaveRestoreSegment();
 
     //---------------------------------
@@ -60,7 +60,7 @@ class CSaveRestoreSegment
     unsigned short FindCreateSymbol( const char *pszToken );
     const char *StringFromSymbol( int token );
 
-   private:
+    private:
 #ifndef _WIN32
     unsigned _rotr( unsigned val, int shift );
 #endif
@@ -176,7 +176,7 @@ struct saverestorelevelinfo_t
 
 class CGameSaveRestoreInfo
 {
-   public:
+    public:
     CGameSaveRestoreInfo()
         : tableCount( 0 ), pTable( 0 ), m_pCurrentEntity( 0 ), m_EntityToIndex( 1024 )
     {
@@ -283,7 +283,7 @@ class CGameSaveRestoreInfo
     saverestorelevelinfo_t levelInfo;
     Vector modelSpaceOffset;  // used only for globaly entity brushes modelled in different coordinate systems.
 
-   private:
+    private:
     int tableCount;                 // Number of elements in the entity table
     entitytable_t *pTable;          // Array of entitytable_t elements (1 for each entity)
     CBaseEntity *m_pCurrentEntity;  // only valid during the save functions of this entity, NULL otherwise
@@ -302,7 +302,7 @@ class CGameSaveRestoreInfo
 
     class CHashFuncs
     {
-       public:
+        public:
         CHashFuncs( int ) {}
 
         // COMPARE
@@ -326,9 +326,9 @@ class CGameSaveRestoreInfo
 //-----------------------------------------------------------------------------
 
 class CSaveRestoreData : public CSaveRestoreSegment,
-                         public CGameSaveRestoreInfo
+                        public CGameSaveRestoreInfo
 {
-   public:
+    public:
     CSaveRestoreData()
         : bAsync( false ) {}
 
@@ -533,7 +533,7 @@ inline unsigned CSaveRestoreSegment::_rotr( unsigned val, int shift )
     unsigned num = val; /* number to rotate */
 
     shift &= 0x1f; /* modulo 32 -- this will also make
-      negative shifts work */
+    negative shifts work */
 
     while ( shift-- )
     {

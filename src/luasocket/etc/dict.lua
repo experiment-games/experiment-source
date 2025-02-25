@@ -54,21 +54,21 @@ end
 
 function metat.__index:define(database, word)
     database = database or "!"
-      socket.try(self.tp:command("DEFINE",  database .. " " .. word))
+    socket.try(self.tp:command("DEFINE",  database .. " " .. word))
     local code, count = self:check(150)
     local defs = {}
     for i = 1, count do
-          self:check(151)
+        self:check(151)
         table.insert(defs, self:getdef())
     end
-      self:check(250)
+    self:check(250)
     return defs
 end
 
 function metat.__index:match(database, strat, word)
     database = database or "!"
     strat = strat or "."
-      socket.try(self.tp:command("MATCH",  database .." ".. strat .." ".. word))
+    socket.try(self.tp:command("MATCH",  database .." ".. strat .." ".. word))
     self:check(152)
     local mat = {}
     local line = socket.try(self.tp:receive())
@@ -78,7 +78,7 @@ function metat.__index:match(database, strat, word)
         table.insert(mat[database], word)
         line = socket.try(self.tp:receive())
     end
-      self:check(250)
+    self:check(250)
     return mat
 end
 
@@ -148,4 +148,3 @@ get = socket.protect(function(gett)
     if base.type(gett) == "string" then return sget(gett)
     else return tget(gett) end
 end)
-

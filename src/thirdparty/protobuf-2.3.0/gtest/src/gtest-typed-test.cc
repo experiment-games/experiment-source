@@ -48,36 +48,36 @@ const char* TypedTestCasePState::VerifyRegisteredTestNames(
   Message errors;
   ::std::set<String> tests;
   for (const char* names = registered_tests; names != NULL;
-       names = SkipComma(names)) {
+        names = SkipComma(names)) {
     const String name = GetPrefixUntilComma(names);
     if (tests.count(name) != 0) {
-      errors << "Test " << name << " is listed more than once.\n";
-      continue;
+    errors << "Test " << name << " is listed more than once.\n";
+    continue;
     }
 
     bool found = false;
     for (DefinedTestIter it = defined_test_names_.begin();
-         it != defined_test_names_.end();
-         ++it) {
-      if (name == *it) {
+        it != defined_test_names_.end();
+        ++it) {
+    if (name == *it) {
         found = true;
         break;
-      }
+    }
     }
 
     if (found) {
-      tests.insert(name);
+    tests.insert(name);
     } else {
-      errors << "No test named " << name
-             << " can be found in this test case.\n";
+    errors << "No test named " << name
+            << " can be found in this test case.\n";
     }
   }
 
   for (DefinedTestIter it = defined_test_names_.begin();
-       it != defined_test_names_.end();
-       ++it) {
+        it != defined_test_names_.end();
+        ++it) {
     if (tests.count(*it) == 0) {
-      errors << "You forgot to list test " << *it << ".\n";
+    errors << "You forgot to list test " << *it << ".\n";
     }
   }
 

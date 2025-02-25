@@ -38,7 +38,7 @@ class CBaseGrenade : public CBaseProjectile
 {
     DECLARE_CLASS( CBaseGrenade, CBaseProjectile );
 
-   public:
+    public:
     CBaseGrenade( void );
     ~CBaseGrenade( void );
 
@@ -127,7 +127,7 @@ class CBaseGrenade : public CBaseProjectile
     void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
 #endif
 
-   public:
+    public:
     IMPLEMENT_NETWORK_VAR_FOR_DERIVED( m_vecVelocity );
     IMPLEMENT_NETWORK_VAR_FOR_DERIVED( m_fFlags );
 
@@ -138,11 +138,11 @@ class CBaseGrenade : public CBaseProjectile
     float m_flDetonateTime;  // Time at which to detonate.
     float m_flWarnAITime;    // Time at which to warn the AI
 
-   protected:
+    protected:
     CNetworkVar( float, m_flDamage );  // Damage to inflict.
     string_t m_iszBounceSound;         // The sound to make on bouncing.  If not NULL, overrides the BounceSound() function.
 
-   private:
+    private:
     CNetworkHandle( CBaseEntity, m_hThrower );  // Who threw this grenade
     EHANDLE m_hOriginalThrower;                 // Who was the original thrower of this grenade
 

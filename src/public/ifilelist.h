@@ -16,7 +16,7 @@
 // class if a particular filename is in the list.
 class IFileList
 {
-   public:
+    public:
     virtual bool IsFileInList( const char *pFilename ) = 0;
     virtual void Release() = 0;
 };

@@ -11,13 +11,13 @@
 
 class CTextureToggle : public CPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTextureToggle, CPointEntity );
 
     void InputIncrementBrushTexIndex( inputdata_t &inputdata );
     void InputSetBrushTexIndex( inputdata_t &inputdata );
 
-   private:
+    private:
     DECLARE_DATADESC();
 };
 

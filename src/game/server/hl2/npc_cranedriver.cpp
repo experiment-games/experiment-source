@@ -65,7 +65,7 @@ class CNPC_CraneDriver : public CNPC_VehicleDriver
 {
     DECLARE_CLASS( CNPC_CraneDriver, CNPC_VehicleDriver );
 
-   public:
+    public:
     DECLARE_DATADESC();
     DEFINE_CUSTOM_AI;
 
@@ -88,7 +88,7 @@ class CNPC_CraneDriver : public CNPC_VehicleDriver
     void InputForcePickup( inputdata_t &inputdata );
     void InputForceDrop( inputdata_t &inputdata );
 
-   protected:
+    protected:
     CHandle< CPropCrane > m_hCrane;
 
     EHANDLE m_hPickupTarget;

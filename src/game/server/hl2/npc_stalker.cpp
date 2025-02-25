@@ -419,15 +419,15 @@ void CNPC_Stalker::PainSound( const CTakeDamageInfo &info )
 // @TODO (toml 07-18-03): this function is never called. Presumably what it is trying to do still needs to be done...
 int CNPC_Stalker::GetSlotSchedule(int slotID)
 {
-	switch (slotID)
-	{
+    switch (slotID)
+    {
 
-		case SQUAD_SLOT_CHASE_ENEMY_1:
-		case SQUAD_SLOT_CHASE_ENEMY_2:
-			return SCHED_STALKER_CHASE_ENEMY;
-			break;
-	}
-	return SCHED_NONE;
+        case SQUAD_SLOT_CHASE_ENEMY_1:
+        case SQUAD_SLOT_CHASE_ENEMY_2:
+            return SCHED_STALKER_CHASE_ENEMY;
+            break;
+    }
+    return SCHED_NONE;
 }
 #endif
 
@@ -509,7 +509,7 @@ void CNPC_Stalker::StartTask( const Task_t *pTask )
             CBaseCombatCharacter *pBCC = GetEnemyCombatCharacterPointer();
 
             if ( pBCC && ( !pBCC->FInViewCone( this ) ) &&
-                 ( gpGlobals->curtime - m_flLastAttackTime > 1.0 ) )
+                ( gpGlobals->curtime - m_flLastAttackTime > 1.0 ) )
             {
                 m_flLastAttackTime = gpGlobals->curtime;
 
@@ -557,7 +557,7 @@ void CNPC_Stalker::StartTask( const Task_t *pTask )
                     Vector targetToMe = ( pBCC->GetAbsOrigin() - GetAbsOrigin() );
                     Vector vBCCFacing = pBCC->BodyDirection2D();
                     if ( ( DotProduct( vBCCFacing, targetToMe ) < 0 ) &&
-                         ( pBCC->GetSmoothedVelocity().Length() < 50 ) )
+                        ( pBCC->GetSmoothedVelocity().Length() < 50 ) )
                     {
                         missPos.z -= 150;
                     }
@@ -904,18 +904,18 @@ void CNPC_Stalker::StartAttackBeam( void )
         m_pLightGlow->SetScale( 0.65 );
 
 #if 0
-		CBaseEntity *pEnemy = GetEnemy();
-		// --------------------------------------------------------
-		// Play start up sound - client should always hear this!
-		// --------------------------------------------------------
-		if (pEnemy != NULL && (pEnemy->IsPlayer()) ) 
-		{
-			EmitAmbientSound( 0, pEnemy->GetAbsOrigin(), "NPC_Stalker.AmbientLaserStart" );
-		}
-		else
-		{
-			EmitAmbientSound( 0, GetAbsOrigin(), "NPC_Stalker.AmbientLaserStart" );
-		}
+        CBaseEntity *pEnemy = GetEnemy();
+        // --------------------------------------------------------
+        // Play start up sound - client should always hear this!
+        // --------------------------------------------------------
+        if (pEnemy != NULL && (pEnemy->IsPlayer()) )
+        {
+            EmitAmbientSound( 0, pEnemy->GetAbsOrigin(), "NPC_Stalker.AmbientLaserStart" );
+        }
+        else
+        {
+            EmitAmbientSound( 0, GetAbsOrigin(), "NPC_Stalker.AmbientLaserStart" );
+        }
 #endif
     }
 

@@ -18,7 +18,7 @@
 //-----------------------------------------------------------------------------
 class C_TEBeamEntPoint : public C_TEBaseBeam
 {
-   public:
+    public:
     DECLARE_CLASS( C_TEBeamEntPoint, C_TEBaseBeam );
     DECLARE_CLIENTCLASS();
 
@@ -27,7 +27,7 @@ class C_TEBeamEntPoint : public C_TEBaseBeam
 
     virtual void PostDataUpdate( DataUpdateType_t updateType );
 
-   public:
+    public:
     int m_nStartEntity;
     int m_nEndEntity;
     Vector m_vecStartPoint;

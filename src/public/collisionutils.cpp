@@ -46,8 +46,8 @@ static float ComputeBoxOffset( const Ray_t &ray )
 
     // Find the projection of the box diagonal along the ray...
     float offset = FloatMakePositive( ray.m_Extents[0] * ray.m_Delta[0] ) +
-                   FloatMakePositive( ray.m_Extents[1] * ray.m_Delta[1] ) +
-                   FloatMakePositive( ray.m_Extents[2] * ray.m_Delta[2] );
+                    FloatMakePositive( ray.m_Extents[1] * ray.m_Delta[1] ) +
+                    FloatMakePositive( ray.m_Extents[2] * ray.m_Delta[2] );
 
     // We need to divide twice: Once to normalize the computation above
     // so we get something in units of extents, and the second to normalize
@@ -231,10 +231,10 @@ int IntersectTriangleWithPlaneBarycentric( const Vector &org, const Vector &edge
     if ( edgeVDotNormal != edgeUDotNormal )
     {
         pIntersection[ptIdx].x = -( orgDotNormal - plane.w + edgeVDotNormal ) /
-                                 ( edgeUDotNormal - edgeVDotNormal );
+                                ( edgeUDotNormal - edgeVDotNormal );
         pIntersection[ptIdx].y = 1.0f - pIntersection[ptIdx].x;
         if ( ( pIntersection[ptIdx].x >= 0.0f ) && ( pIntersection[ptIdx].x <= 1.0f ) &&
-             ( pIntersection[ptIdx].y >= 0.0f ) && ( pIntersection[ptIdx].y <= 1.0f ) )
+            ( pIntersection[ptIdx].y >= 0.0f ) && ( pIntersection[ptIdx].y <= 1.0f ) )
             ++ptIdx;
     }
 
@@ -584,8 +584,8 @@ bool IsBoxIntersectingBoxExtents( const Vector &boxCenter1, const Vector &boxHal
     VectorSubtract( boxCenter1, boxCenter2, vecDelta );
     VectorAdd( boxHalfDiagonal1, boxHalfDiagonal2, vecSize );
     return ( FloatMakePositive( vecDelta.x ) <= vecSize.x ) &&
-           ( FloatMakePositive( vecDelta.y ) <= vecSize.y ) &&
-           ( FloatMakePositive( vecDelta.z ) <= vecSize.z );
+            ( FloatMakePositive( vecDelta.y ) <= vecSize.y ) &&
+            ( FloatMakePositive( vecDelta.z ) <= vecSize.z );
 }
 
 //-----------------------------------------------------------------------------
@@ -601,11 +601,11 @@ bool IsOBBIntersectingOBB( const Vector &vecOrigin1, const QAngle &vecAngles1, c
     // this fast check would only be good for cubes.
     /*if ( vecAngles1 == vecAngles2 )
     {
-      const Vector &vecDelta = vecOrigin2 - vecOrigin1;
-      Vector vecOtherMins, vecOtherMaxs;
-      VectorAdd( boxMin2, vecDelta, vecOtherMins );
-      VectorAdd( boxMax2, vecDelta, vecOtherMaxs );
-      return IsBoxIntersectingBox( boxMin1, boxMax1, vecOtherMins, vecOtherMaxs );
+    const Vector &vecDelta = vecOrigin2 - vecOrigin1;
+    Vector vecOtherMins, vecOtherMaxs;
+    VectorAdd( boxMin2, vecDelta, vecOtherMins );
+    VectorAdd( boxMax2, vecDelta, vecOtherMaxs );
+    return IsBoxIntersectingBox( boxMin1, boxMax1, vecOtherMins, vecOtherMaxs );
     }*/
 
     // OBB test...
@@ -1687,12 +1687,12 @@ void GetNonMajorAxes( const Vector &vNormal, Vector2D &axes )
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 QuadBarycentricRetval_t QuadWithParallelEdges( const Vector &vecOrigin,
-                                               const Vector &vecU,
-                                               float lengthU,
-                                               const Vector &vecV,
-                                               float lengthV,
-                                               const Vector &pt,
-                                               Vector2D &vecUV )
+                                                const Vector &vecU,
+                                                float lengthU,
+                                                const Vector &vecV,
+                                                float lengthV,
+                                                const Vector &pt,
+                                                Vector2D &vecUV )
 {
     Ray_t rayAxis;
     Ray_t rayPt;
@@ -1724,7 +1724,7 @@ QuadBarycentricRetval_t QuadWithParallelEdges( const Vector &vecOrigin,
 
     // inside of the quad??
     if ( ( vecUV[0] < 0.0f ) || ( vecUV[0] > 1.0f ) ||
-         ( vecUV[1] < 0.0f ) || ( vecUV[1] > 1.0f ) )
+        ( vecUV[1] < 0.0f ) || ( vecUV[1] > 1.0f ) )
         return BARY_QUADRATIC_FALSE;
 
     return BARY_QUADRATIC_TRUE;
@@ -1927,12 +1927,12 @@ QuadBarycentricRetval_t PointInQuadToBarycentric( const Vector &v1, const Vector
         ( v1[projAxes[0]] * axisU[0][projAxes[1]] ) +
         ( point[projAxes[0]] * axisU[0][projAxes[1]] );
     negB = C -
-           ( v1[projAxes[1]] * axisU[1][projAxes[0]] ) +
-           ( point[projAxes[1]] * axisU[1][projAxes[0]] ) +
-           ( v1[projAxes[0]] * axisU[1][projAxes[1]] ) -
-           ( point[projAxes[0]] * axisU[1][projAxes[1]] ) +
-           ( axisU[0][projAxes[1]] * axisV[0][projAxes[0]] ) -
-           ( axisU[0][projAxes[0]] * axisV[0][projAxes[1]] );
+            ( v1[projAxes[1]] * axisU[1][projAxes[0]] ) +
+            ( point[projAxes[1]] * axisU[1][projAxes[0]] ) +
+            ( v1[projAxes[0]] * axisU[1][projAxes[1]] ) -
+            ( point[projAxes[0]] * axisU[1][projAxes[1]] ) +
+            ( axisU[0][projAxes[1]] * axisV[0][projAxes[0]] ) -
+            ( axisU[0][projAxes[0]] * axisV[0][projAxes[1]] );
 
     if ( ( A > -PIQ_PLANE_EPSILON ) && ( A < PIQ_PLANE_EPSILON ) )
     {
@@ -1949,18 +1949,18 @@ QuadBarycentricRetval_t PointInQuadToBarycentric( const Vector &v1, const Vector
         return QuadWithParallelEdges( v1, vecUAvg, fLengthUAvg, vecVAvg, fLengthVAvg, point, uv );
 
 #if 0
-		// legacy code -- kept here for completeness!
+        // legacy code -- kept here for completeness!
 
-		// not a quadratic -- solve linearly
-		t = C / negB;
+        // not a quadratic -- solve linearly
+        t = C / negB;
 
-		// See (1.2) above
-		float ui = axisU[0][projAxes[0]] + t * ( axisU[1][projAxes[0]] - axisU[0][projAxes[0]] );
-		if( FloatMakePositive( ui ) >= 1e-5 )
-		{
-			// See (1.0) above
-			s = ( point[projAxes[0]] - v1[projAxes[0]] - axisV[0][projAxes[0]] * t ) / ui;
-		}
+        // See (1.2) above
+        float ui = axisU[0][projAxes[0]] + t * ( axisU[1][projAxes[0]] - axisU[0][projAxes[0]] );
+        if( FloatMakePositive( ui ) >= 1e-5 )
+        {
+            // See (1.0) above
+            s = ( point[projAxes[0]] - v1[projAxes[0]] - axisV[0][projAxes[0]] * t ) / ui;
+        }
 #endif
     }
     else
@@ -2848,55 +2848,55 @@ bool IsBoxIntersectingTriangle( const Vector &vecBoxCenter, const Vector &vecBox
 #if 0
 Vector CalcClosestPointOnTriangle( const Vector &P, const Vector &v0, const Vector &v1, const Vector &v2 )
 {
-	Vector e0 = v1 - v0;
-	Vector e1 = v2 - v0;
-	Vector p0 = P - v0;
+    Vector e0 = v1 - v0;
+    Vector e1 = v2 - v0;
+    Vector p0 = P - v0;
 
-	// voronoi region of v0
-	float d1 = DotProduct( e0, p0 );
-	float d2 = DotProduct( e1, p0 );
-	if (d1 <= 0.0f && d2 <= 0.0f)
-		return v0;
+    // voronoi region of v0
+    float d1 = DotProduct( e0, p0 );
+    float d2 = DotProduct( e1, p0 );
+    if (d1 <= 0.0f && d2 <= 0.0f)
+        return v0;
 
-	// voronoi region of v1
-	Vector p1 = P - v1;
-	float d3 = DotProduct( e0, p1 );
-	float d4 = DotProduct( e1, p1 );
-	if (d3 >=0.0f && d4 <= d3)
-		return v1;
+    // voronoi region of v1
+    Vector p1 = P - v1;
+    float d3 = DotProduct( e0, p1 );
+    float d4 = DotProduct( e1, p1 );
+    if (d3 >=0.0f && d4 <= d3)
+        return v1;
 
-	// voronoi region of e0 (v0-v1)
-	float ve2 = d1*d4 - d3*d2;
-	if ( ve2 <= 0.0f && d1 >= 0.0f && d3 <= 0.0f )
-	{
-		float v = d1 / (d1-d3);
-		return v0 + v * e0;
-	}
-	// voronoi region of v2
-	Vector p2 = P - v2;
-	float d5 = DotProduct( e0, p2 );
-	float d6 = DotProduct( e1, p2 );
-	if (d6 >= 0.0f && d5 <= d6)
-		return v2;
-	// voronoi region of e1
-	float ve1 = d5*d2 - d1*d6;
-	if (ve1 <= 0.0f && d2 >= 0.0f && d6 >= 0.0f)
-	{
-		float w = d2 / (d2-d6);
-		return v0 + w * e1;
-	}
-	// voronoi region on e2
-	float ve0 = d3*d6 - d5*d4;
-	if ( ve0 <= 0.0f && (d4-d3) >= 0.0f && (d5-d6) >= 0.0f )
-	{
-		float w = (d4-d3)/((d4-d3) + (d5-d6));
-		return v1 + w * (v2-v1);
-	}
-	// voronoi region of v0v1v2 triangle
-	float denom = 1.0f / (ve0+ve1+ve2);
-	float v = ve1*denom;
-	float w = ve2 * denom;
-	return v0 + e0 * v + e1 * w;
+    // voronoi region of e0 (v0-v1)
+    float ve2 = d1*d4 - d3*d2;
+    if ( ve2 <= 0.0f && d1 >= 0.0f && d3 <= 0.0f )
+    {
+        float v = d1 / (d1-d3);
+        return v0 + v * e0;
+    }
+    // voronoi region of v2
+    Vector p2 = P - v2;
+    float d5 = DotProduct( e0, p2 );
+    float d6 = DotProduct( e1, p2 );
+    if (d6 >= 0.0f && d5 <= d6)
+        return v2;
+    // voronoi region of e1
+    float ve1 = d5*d2 - d1*d6;
+    if (ve1 <= 0.0f && d2 >= 0.0f && d6 >= 0.0f)
+    {
+        float w = d2 / (d2-d6);
+        return v0 + w * e1;
+    }
+    // voronoi region on e2
+    float ve0 = d3*d6 - d5*d4;
+    if ( ve0 <= 0.0f && (d4-d3) >= 0.0f && (d5-d6) >= 0.0f )
+    {
+        float w = (d4-d3)/((d4-d3) + (d5-d6));
+        return v1 + w * (v2-v1);
+    }
+    // voronoi region of v0v1v2 triangle
+    float denom = 1.0f / (ve0+ve1+ve2);
+    float v = ve1*denom;
+    float w = ve2 * denom;
+    return v0 + e0 * v + e1 * w;
 }
 #endif
 
@@ -2992,13 +2992,13 @@ bool OBBHasFullyContainedIntersectionWithQuad( const Vector &vOBBExtent1_Scaled,
 // outside the quad's extents
 //-----------------------------------------------------------------------------
 bool RayHasFullyContainedIntersectionWithQuad( const Ray_t &ray,
-                                               const Vector &vQuadNormal,
-                                               float fQuadPlaneDist,
-                                               const Vector &ptQuadCenter,
-                                               const Vector &vQuadExtent1_Normalized,
-                                               float fQuadExtent1Length,
-                                               const Vector &vQuadExtent2_Normalized,
-                                               float fQuadExtent2Length )
+                                                const Vector &vQuadNormal,
+                                                float fQuadPlaneDist,
+                                                const Vector &ptQuadCenter,
+                                                const Vector &vQuadExtent1_Normalized,
+                                                float fQuadExtent1Length,
+                                                const Vector &vQuadExtent2_Normalized,
+                                                float fQuadExtent2Length )
 {
     Vector ptPlaneIntersections[( 12 + 12 + 8 )];  // absolute max possible: 12 lines to connect the start box, 12 more to connect the end box, 8 to connect the boxes to eachother
 

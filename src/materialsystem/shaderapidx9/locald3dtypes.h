@@ -26,7 +26,7 @@ struct IDirect3D10BaseTexture
 
 class CDx10Types
 {
-   public:
+    public:
     typedef struct IDirect3D10BaseTexture IDirect3DTexture;
     // FIXME: What is this called now ?
     // typedef ID3D10TextureCube			IDirect3DCubeTexture;
@@ -89,7 +89,7 @@ typedef IDirect3DVertexBuffer *LPDIRECT3DVERTEXBUFFER;
 
 class CDx9Types
 {
-   public:
+    public:
     typedef IDirect3DTexture9 IDirect3DTexture;
     typedef IDirect3DBaseTexture9 IDirect3DBaseTexture;
     typedef IDirect3DCubeTexture9 IDirect3DCubeTexture;

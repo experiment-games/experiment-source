@@ -17,8 +17,8 @@ CSteamAPIContext *steamapicontext = &g_ClientSteamContext;
 CClientSteamContext::CClientSteamContext()
 #if !defined( NO_STEAM )
     : m_CallbackSteamServersDisconnected( this, &CClientSteamContext::OnSteamServersDisconnected ),
-      m_CallbackSteamServerConnectFailure( this, &CClientSteamContext::OnSteamServerConnectFailure ),
-      m_CallbackSteamServersConnected( this, &CClientSteamContext::OnSteamServersConnected )
+    m_CallbackSteamServerConnectFailure( this, &CClientSteamContext::OnSteamServerConnectFailure ),
+    m_CallbackSteamServersConnected( this, &CClientSteamContext::OnSteamServersConnected )
 #endif
 {
     m_bActive = false;

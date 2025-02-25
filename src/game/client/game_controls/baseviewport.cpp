@@ -290,10 +290,10 @@ IViewPortPanel *CBaseViewport::CreatePanelByName( const char *szPanelName )
         newpanel = new CTextWindow( this );
     }
     /*	else if ( Q_strcmp(PANEL_OVERVIEW, szPanelName) == 0 )
-      {
+    {
         newpanel = new CMapOverview( this );
-      }
-      */
+    }
+    */
     else if ( Q_strcmp( PANEL_TEAM, szPanelName ) == 0 )
     {
         newpanel = new CTeamMenu( this );
@@ -572,7 +572,7 @@ bool CBaseViewport::AllowedToPrintText( void )
 {
     /* int iId = GetCurrentMenuID();
     if ( iId == MENU_TEAM || iId == MENU_CLASS || iId == MENU_INTRO || iId == MENU_CLASSHELP )
-      return false; */
+    return false; */
     // TODO ask every aktive elemet if it allows to draw text while visible
 
     return ( m_pActivePanel == NULL );

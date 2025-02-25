@@ -224,20 +224,20 @@ void CBaseAnimatingOverlay::VerifyOrder( void )
     /*
     for ( i = 0; i < MAX_OVERLAYS; i++ )
     {
-      int j = layer[i];
-      if (j != MAX_OVERLAYS)
-      {
+    int j = layer[i];
+    if (j != MAX_OVERLAYS)
+    {
         char tempstr[512];
         Q_snprintf( tempstr, sizeof( tempstr ),"%d : %d :%.2f :%d:%d:%.1f",
-          j,
-          m_AnimOverlay[ j ].m_nSequence,
-          m_AnimOverlay[ j ].m_flWeight,
-          m_AnimOverlay[ j ].IsActive(),
-          m_AnimOverlay[ j ].IsKillMe(),
-          m_AnimOverlay[ j ].m_flKillDelay
-          );
+        j,
+        m_AnimOverlay[ j ].m_nSequence,
+        m_AnimOverlay[ j ].m_flWeight,
+        m_AnimOverlay[ j ].IsActive(),
+        m_AnimOverlay[ j ].IsKillMe(),
+        m_AnimOverlay[ j ].m_flKillDelay
+        );
         EntityText( i, tempstr, 0.1 );
-      }
+    }
     }
     */
 #endif
@@ -321,7 +321,7 @@ void CBaseAnimatingOverlay::StudioFrameAdvance()
                 /*
                 if (m_AnimOverlay[ i ].IsAbandoned())
                 {
-                  Msg(" %d abandoned %.2f (%.2f)\n", i, gpGlobals->curtime, m_AnimOverlay[ i ].m_flLastAccess );
+                Msg(" %d abandoned %.2f (%.2f)\n", i, gpGlobals->curtime, m_AnimOverlay[ i ].m_flLastAccess );
                 }
                 */
                 Msg( " %d (%d): %s : %5.3f (%.3f)\n", i, m_AnimOverlay[i].m_nOrder.Get(), GetSequenceName( m_AnimOverlay[i].m_nSequence ), m_AnimOverlay[i].m_flCycle.Get(), m_AnimOverlay[i].m_flWeight.Get() );
@@ -394,7 +394,7 @@ void CAnimationLayer::DispatchAnimEvents( CBaseAnimating *eventHandler, CBaseAni
     /*
     if (pOwner->m_debugOverlays & OVERLAY_NPC_SELECTED_BIT)
     {
-      Msg( "%s:%s : checking %.2f %.2f (%d)\n", STRING(pOwner->GetModelName()), pstudiohdr->pSeqdesc( m_nSequence ).pszLabel(), flStart, flEnd, m_bSequenceFinished );
+    Msg( "%s:%s : checking %.2f %.2f (%d)\n", STRING(pOwner->GetModelName()), pstudiohdr->pSeqdesc( m_nSequence ).pszLabel(), flStart, flEnd, m_bSequenceFinished );
     }
     */
 
@@ -499,7 +499,7 @@ void CBaseAnimatingOverlay::OnRestore()
     for ( i = 0; i < m_AnimOverlay.Count(); i++ )
     {
         if ( ( m_AnimOverlay[i].IsActive() && ( m_AnimOverlay[i].m_fFlags & ANIM_LAYER_DONTRESTORE ) ) ||
-             ( GetModelPtr() && !IsValidSequence( m_AnimOverlay[i].m_nSequence ) ) )
+            ( GetModelPtr() && !IsValidSequence( m_AnimOverlay[i].m_nSequence ) ) )
         {
             FastRemoveLayer( i );
         }

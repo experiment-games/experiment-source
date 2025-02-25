@@ -44,7 +44,7 @@ struct CEmphasisSample
 
 class CBasePhonemeTag
 {
-   public:
+    public:
     CBasePhonemeTag();
     CBasePhonemeTag( const CBasePhonemeTag &from );
 
@@ -89,7 +89,7 @@ class CBasePhonemeTag
         m_nPhonemeCode = phonemeCode;
     }
 
-   private:
+    private:
     float m_flStartTime;
     float m_flEndTime;
     unsigned short m_nPhonemeCode;
@@ -102,7 +102,7 @@ class CPhonemeTag : public CBasePhonemeTag
 {
     typedef CBasePhonemeTag BaseClass;
 
-   public:
+    public:
     CPhonemeTag( void );
     CPhonemeTag( const char *phoneme );
     CPhonemeTag( const CPhonemeTag &from );
@@ -123,7 +123,7 @@ class CPhonemeTag : public CBasePhonemeTag
     unsigned int GetStartByte() const;
     unsigned int GetEndByte() const;
 
-   private:
+    private:
     char *m_szPhoneme;
 };
 
@@ -132,7 +132,7 @@ class CPhonemeTag : public CBasePhonemeTag
 //-----------------------------------------------------------------------------
 class CWordTag
 {
-   public:
+    public:
     CWordTag( void );
     CWordTag( const char *word );
     CWordTag( const CWordTag &from );
@@ -160,7 +160,7 @@ class CWordTag
     unsigned int GetStartByte() const;
     unsigned int GetEndByte() const;
 
-   private:
+    private:
     char *m_pszWord;
 };
 
@@ -211,7 +211,7 @@ enum
 //-----------------------------------------------------------------------------
 class CSentence
 {
-   public:
+    public:
     static char const *NameForLanguage( int language );
     static int LanguageForName( char const *name );
     static void ColorForLanguage( int language, unsigned char &r, unsigned char &g, unsigned char &b );
@@ -293,7 +293,7 @@ class CSentence
     static int CountWords( char const *pszText );
     static bool ShouldSplitWord( char in );
 
-   public:
+    public:
 #if PHONEME_EDITOR
     char *m_szText;
 
@@ -315,7 +315,7 @@ class CSentence
     bool m_bShouldVoiceDuck : 8;
     bool m_bIsCached : 8;
 
-   private:
+    private:
     void ParseDataVersionOnePointZero( CUtlBuffer &buf );
     void ParsePlaintext( CUtlBuffer &buf );
     void ParseWords( CUtlBuffer &buf );

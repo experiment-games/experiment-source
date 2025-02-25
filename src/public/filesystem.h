@@ -65,7 +65,7 @@ enum EPureServerFileClass
 
 class IPureServerWhitelist
 {
-   public:
+    public:
     // Reference counting
     virtual void AddRef() = 0;
     virtual void Release() = 0;
@@ -171,7 +171,7 @@ enum FileBlockingWarning_t
 #pragma pack( 1 )
 class FileBlockingItem
 {
-   public:
+    public:
     enum
     {
         FB_ACCESS_OPEN = 1,
@@ -184,16 +184,16 @@ class FileBlockingItem
 
     FileBlockingItem()
         : m_ItemType( ( FileBlockingWarning_t )0 ),
-          m_flElapsed( 0.0f ),
-          m_nAccessType( 0 )
+        m_flElapsed( 0.0f ),
+        m_nAccessType( 0 )
     {
         SetFileName( NULL );
     }
 
     FileBlockingItem( int type, char const *filename, float elapsed, int accessType )
         : m_ItemType( ( FileBlockingWarning_t )type ),
-          m_flElapsed( elapsed ),
-          m_nAccessType( accessType )
+        m_flElapsed( elapsed ),
+        m_nAccessType( accessType )
     {
         SetFileName( filename );
     }
@@ -226,14 +226,14 @@ class FileBlockingItem
     float m_flElapsed;
     byte m_nAccessType;
 
-   private:
+    private:
     char m_szFilename[32];
 };
 #pragma pack()
 
 class IBlockingFileItemList
 {
-   public:
+    public:
     // You can't call any of the below calls without locking first
     virtual void LockMutex() = 0;
     virtual void UnlockMutex() = 0;
@@ -265,7 +265,7 @@ enum FilesystemOpenExFlags_t
 {
     FSOPEN_UNBUFFERED = ( 1 << 0 ),
     FSOPEN_FORCE_TRACK_CRC = ( 1 << 1 ),  // This makes it calculate a CRC for the file (if the file came from disk) regardless
-                                          // of the IFileList passed to RegisterFileWhitelist.
+                                        // of the IFileList passed to RegisterFileWhitelist.
     FSOPEN_NEVERINPACK = ( 1 << 2 ),      // 360 only, hint to FS that file is not allowed to be in pack file
 };
 
@@ -406,20 +406,20 @@ struct FileHash_t
     bool operator==( const FileHash_t &src ) const
     {
         return m_crcIOSequence == src.m_crcIOSequence &&
-               m_md5contents == src.m_md5contents &&
-               m_eFileHashType == src.m_eFileHashType;
+                m_md5contents == src.m_md5contents &&
+                m_eFileHashType == src.m_eFileHashType;
     }
     bool operator!=( const FileHash_t &src ) const
     {
         return m_crcIOSequence != src.m_crcIOSequence ||
-               m_md5contents != src.m_md5contents ||
-               m_eFileHashType != src.m_eFileHashType;
+                m_md5contents != src.m_md5contents ||
+                m_eFileHashType != src.m_eFileHashType;
     }
 };
 
 class CUnverifiedFileHash
 {
-   public:
+    public:
     char m_PathID[MAX_PATH];
     char m_Filename[MAX_PATH];
     int m_nFileFraction;
@@ -428,7 +428,7 @@ class CUnverifiedFileHash
 
 class CUnverifiedCRCFile
 {
-   public:
+    public:
     char m_PathID[MAX_PATH];
     char m_Filename[MAX_PATH];
     CRC32_t m_CRC;
@@ -436,7 +436,7 @@ class CUnverifiedCRCFile
 
 class CUnverifiedMD5File
 {
-   public:
+    public:
     char m_PathID[MAX_PATH];
     char m_Filename[MAX_PATH];
     unsigned char bits[MD5_DIGEST_LENGTH];
@@ -455,7 +455,7 @@ class CUnverifiedMD5File
 
 abstract_class IAsyncFileFetch
 {
-   public:
+    public:
     typedef void *Handle;
 
     /// Initiate a request.  Returns error status, or on success
@@ -482,7 +482,7 @@ abstract_class IAsyncFileFetch
 // This interface is for VPK files to communicate with FileTracker
 abstract_class IThreadedFileMD5Processor
 {
-   public:
+    public:
     virtual int SubmitThreadedMD5Request( uint8 * pubBuffer, int cubBuffer, int PackFileID, int nPackFileNumber, int nPackFileFraction ) = 0;
     virtual bool BlockUntilMD5RequestComplete( int iRequest, MD5Value_t *pMd5ValueOut ) = 0;
     virtual bool IsMD5RequestComplete( int iRequest, MD5Value_t *pMd5ValueOut ) = 0;
@@ -498,7 +498,7 @@ abstract_class IThreadedFileMD5Processor
 
 abstract_class IBaseFileSystem
 {
-   public:
+    public:
     virtual int Read( void *pOutput, int size, FileHandle_t file ) = 0;
     virtual int Write( void const *pInput, int size, FileHandle_t file ) = 0;
 
@@ -536,7 +536,7 @@ abstract_class IBaseFileSystem
 
 abstract_class IFileSystem : public IAppSystem, public IBaseFileSystem
 {
-   public:
+    public:
     //--------------------------------------------------------
     // Steam operations
     //--------------------------------------------------------
@@ -941,7 +941,7 @@ abstract_class IFileSystem : public IAppSystem, public IBaseFileSystem
 //-----------------------------------------------------------------------------
 class CMemoryFileBacking : public CRefCounted< CRefCountServiceMT >
 {
-   public:
+    public:
     CMemoryFileBacking( IFileSystem *pFS )
         : m_pFS( pFS ), m_nRegistered( 0 ), m_pFileName( NULL ), m_pData( NULL ), m_nLength( 0 ) {}
     ~CMemoryFileBacking()
@@ -956,7 +956,7 @@ class CMemoryFileBacking : public CRefCounted< CRefCountServiceMT >
     const char *m_pData;
     int m_nLength;
 
-   private:
+    private:
     CMemoryFileBacking( const CMemoryFileBacking & );             // not defined
     CMemoryFileBacking &operator=( const CMemoryFileBacking & );  // not defined
 };
@@ -975,7 +975,7 @@ extern char g_szXboxProfileLastFileOpened[MAX_PATH];
 #if defined( _X360 ) && defined( _BASETSD_H_ )
 class CXboxDiskCacheSetter
 {
-   public:
+    public:
     CXboxDiskCacheSetter( SIZE_T newSize )
     {
         m_oldSize = XGetFileCacheSize();
@@ -987,7 +987,7 @@ class CXboxDiskCacheSetter
         XSetFileCacheSize( m_oldSize );
     }
 
-   private:
+    private:
     SIZE_T m_oldSize;
 };
 #define DISK_INTENSIVE() CXboxDiskCacheSetter cacheSetter( 1024 * 1024 )

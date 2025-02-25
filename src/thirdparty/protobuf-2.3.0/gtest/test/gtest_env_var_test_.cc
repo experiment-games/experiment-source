@@ -107,7 +107,7 @@ void PrintFlag(const char* flag) {
   }
 
   cout << "Invalid flag name " << flag
-       << ".  Valid names are break_on_failure, color, filter, etc.\n";
+        << ".  Valid names are break_on_failure, color, filter, etc.\n";
   exit(1);
 }
 

@@ -23,7 +23,7 @@ class CReplay;
 //
 class IReplayPerformanceEditor : public IBaseInterface
 {
-   public:
+    public:
     virtual CReplay *GetReplay() = 0;
     virtual void OnRewindComplete() = 0;
 };

@@ -61,8 +61,8 @@ void Message::MergeFrom(const Message& from) {
   const Descriptor* descriptor = GetDescriptor();
   GOOGLE_CHECK_EQ(from.GetDescriptor(), descriptor)
     << ": Tried to merge from a message with a different type.  "
-       "to: " << descriptor->full_name() << ", "
-       "from:" << from.GetDescriptor()->full_name();
+        "to: " << descriptor->full_name() << ", "
+        "from:" << from.GetDescriptor()->full_name();
   ReflectionOps::Merge(from, this);
 }
 
@@ -74,8 +74,8 @@ void Message::CopyFrom(const Message& from) {
   const Descriptor* descriptor = GetDescriptor();
   GOOGLE_CHECK_EQ(from.GetDescriptor(), descriptor)
     << ": Tried to copy from a message with a different type."
-       "to: " << descriptor->full_name() << ", "
-       "from:" << from.GetDescriptor()->full_name();
+        "to: " << descriptor->full_name() << ", "
+        "from:" << from.GetDescriptor()->full_name();
   ReflectionOps::Copy(from, this);
 }
 
@@ -149,7 +149,7 @@ int Message::ByteSize() const {
 
 void Message::SetCachedSize(int size) const {
   GOOGLE_LOG(FATAL) << "Message class \"" << GetDescriptor()->full_name()
-             << "\" implements neither SetCachedSize() nor ByteSize().  "
+            << "\" implements neither SetCachedSize() nor ByteSize().  "
                 "Must implement one or the other.";
 }
 
@@ -207,7 +207,7 @@ class GeneratedMessageFactory : public MessageFactory {
  private:
   // Only written at static init time, so does not require locking.
   hash_map<const char*, RegistrationFunc*,
-           hash<const char*>, streq> file_map_;
+            hash<const char*>, streq> file_map_;
 
   // Initialized lazily, so requires locking.
   Mutex mutex_;
@@ -231,7 +231,7 @@ GeneratedMessageFactory::~GeneratedMessageFactory() {}
 
 GeneratedMessageFactory* GeneratedMessageFactory::singleton() {
   ::google::protobuf::GoogleOnceInit(&generated_message_factory_once_init_,
-                 &InitGeneratedMessageFactory);
+                &InitGeneratedMessageFactory);
   return generated_message_factory_;
 }
 
@@ -243,10 +243,10 @@ void GeneratedMessageFactory::RegisterFile(
 }
 
 void GeneratedMessageFactory::RegisterType(const Descriptor* descriptor,
-                                           const Message* prototype) {
+                                            const Message* prototype) {
   GOOGLE_DCHECK_EQ(descriptor->file()->pool(), DescriptorPool::generated_pool())
     << "Tried to register a non-generated type with the generated "
-       "type registry.";
+        "type registry.";
 
   // This should only be called as a result of calling a file registration
   // function during GetPrototype(), in which case we already have locked
@@ -270,10 +270,10 @@ const Message* GeneratedMessageFactory::GetPrototype(const Descriptor* type) {
 
   // Apparently the file hasn't been registered yet.  Let's do that now.
   RegistrationFunc* registration_func =
-      FindPtrOrNull(file_map_, type->file()->name().c_str());
+    FindPtrOrNull(file_map_, type->file()->name().c_str());
   if (registration_func == NULL) {
     GOOGLE_LOG(DFATAL) << "File appears to be in generated pool but wasn't "
-                   "registered: " << type->file()->name();
+                    "registered: " << type->file()->name();
     return NULL;
   }
 
@@ -305,7 +305,7 @@ MessageFactory* MessageFactory::generated_factory() {
 void MessageFactory::InternalRegisterGeneratedFile(
     const char* filename, void (*register_messages)(const string&)) {
   GeneratedMessageFactory::singleton()->RegisterFile(filename,
-                                                     register_messages);
+                                                    register_messages);
 }
 
 void MessageFactory::InternalRegisterGeneratedMessage(

@@ -419,13 +419,13 @@ void UTIL_SetOrigin( C_BaseEntity *entity, const Vector &vecOrigin )
 #include "utlsymbol.h"
 class CPrecacheOtherList : public CAutoServerSystem
 {
-   public:
+    public:
     virtual void LevelInitPreEntity();
     virtual void LevelShutdownPostEntity();
 
     bool AddOrMarkPrecached( const char *pClassname );
 
-   private:
+    private:
     CUtlSymbolTable m_list;
 };
 
@@ -598,7 +598,7 @@ void ClientPrint( C_BasePlayer *player, int msg_dest, const char *msg_name, cons
 // enumerate entities that match a set of edict flags into a static array
 class CFlaggedEntitiesEnum : public IPartitionEnumerator
 {
-   public:
+    public:
     CFlaggedEntitiesEnum( C_BaseEntity **pList, int listMax, int flagMask );
     // This gets called	by the enumeration methods with each element
     // that passes the test.
@@ -610,7 +610,7 @@ class CFlaggedEntitiesEnum : public IPartitionEnumerator
     }
     bool AddToList( C_BaseEntity *pEntity );
 
-   private:
+    private:
     C_BaseEntity **m_pList;
     int m_listMax;
     int m_flagMask;

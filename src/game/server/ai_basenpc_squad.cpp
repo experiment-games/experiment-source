@@ -103,7 +103,7 @@ bool CAI_BaseNPC::IsValidCover( const Vector &vecCoverLocation, CAI_Hint const *
     // is already nearby
     if (m_pSquad)
     {
-      return m_pSquad->IsValidCover( vecCoverLocation, pHint );
+    return m_pSquad->IsValidCover( vecCoverLocation, pHint );
     }
     */
 

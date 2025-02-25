@@ -6,4 +6,4 @@ FLAGS += -mwindows
 all: $(TARGET)
 
 clean:
-	$(RM) $(OUTDIR)\$(TARGET)
+    $(RM) $(OUTDIR)\$(TARGET)

@@ -27,7 +27,7 @@ class CBaseEntity;
 //-----------------------------------------------------------------------------
 class CGameTrace : public CBaseTrace
 {
-   public:
+    public:
     // Returns true if hEnt points at the world entity.
     // If this returns true, then you can't use GetHitBoxIndex().
     bool DidHitWorld() const;
@@ -49,7 +49,7 @@ class CGameTrace : public CBaseTrace
     edict_t *GetEdict() const;
 #endif
 
-   public:
+    public:
     float fractionleftsolid;  // time we left a solid, only valid if we started in solid
     csurface_t surface;       // surface hit (impact surface)
 
@@ -73,7 +73,7 @@ class CGameTrace : public CBaseTrace
     // HACKHACK: We only do this for Lua, but Lua classes which use traces
     // will throw errors when we compile, so define this outside of the Lua
     // SDK.
-   private:
+    private:
     // No copy constructors allowed
     CGameTrace( const CGameTrace &vOther );
 #endif
@@ -96,7 +96,7 @@ typedef CGameTrace trace_t;
 
 class CTraceListData : public IPartitionEnumerator
 {
-   public:
+    public:
     CTraceListData( int nLeafMax = TLD_DEF_LEAF_MAX, int nEntityMax = TLD_DEF_ENTITY_MAX )
     {
         MEM_ALLOC_CREDIT();
@@ -181,7 +181,7 @@ class CTraceListData : public IPartitionEnumerator
         return ITERATION_CONTINUE;
     }
 
-   public:
+    public:
     int m_nLeafCount;
     CUtlVector< int > m_aLeafList;
 

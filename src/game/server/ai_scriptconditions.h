@@ -21,10 +21,10 @@
 
 class CAI_ProxTester
 {
-   public:
+    public:
     CAI_ProxTester()
         : m_distSq( 0 ),
-          m_fInside( false )
+        m_fInside( false )
     {
     }
 
@@ -48,7 +48,7 @@ class CAI_ProxTester
 
     DECLARE_SIMPLE_DATADESC();
 
-   private:
+    private:
     float m_distSq;
     bool m_fInside;
 };
@@ -56,7 +56,7 @@ class CAI_ProxTester
 //-----------------------------------------------------------------------------
 class CAI_ScriptConditionsElement
 {
-   public:
+    public:
     DECLARE_SIMPLE_DATADESC();
 
     void SetActor( CBaseEntity *pEntity )
@@ -86,7 +86,7 @@ class CAI_ScriptConditionsElement
         return &m_Timeout;
     }
 
-   private:
+    private:
     EHANDLE m_hActor;
     CSimTimer m_Timer;
     CSimTimer m_Timeout;
@@ -103,35 +103,35 @@ class CAI_ScriptConditions : public CBaseEntity, public IEntityListener
 {
     DECLARE_CLASS( CAI_ScriptConditions, CBaseEntity );
 
-   public:
+    public:
     CAI_ScriptConditions()
         : m_fDisabled( true ),
-          m_flRequiredTime( 0 ),
-          m_fMinState( NPC_STATE_IDLE ),
-          m_fMaxState( NPC_STATE_IDLE ),
-          m_fScriptStatus( TRS_NONE ),
-          m_fActorSeePlayer( TRS_NONE ),
-          m_flPlayerActorProximity( 0 ),
-          m_flPlayerActorFOV( -1 ),
-          m_fPlayerActorLOS( TRS_NONE ),
-          m_fActorSeeTarget( TRS_NONE ),
-          m_flActorTargetProximity( 0 ),
-          m_flPlayerTargetProximity( 0 ),
-          m_flPlayerTargetFOV( 0 ),
-          m_fPlayerTargetLOS( TRS_NONE ),
-          m_fPlayerBlockingActor( TRS_NONE ),
-          m_flMinTimeout( 0 ),
-          m_flMaxTimeout( 0 ),
-          m_fActorInPVS( TRS_NONE ),
-          m_fActorInVehicle( TRS_NONE ),
-          m_fPlayerInVehicle( TRS_NONE )
+        m_flRequiredTime( 0 ),
+        m_fMinState( NPC_STATE_IDLE ),
+        m_fMaxState( NPC_STATE_IDLE ),
+        m_fScriptStatus( TRS_NONE ),
+        m_fActorSeePlayer( TRS_NONE ),
+        m_flPlayerActorProximity( 0 ),
+        m_flPlayerActorFOV( -1 ),
+        m_fPlayerActorLOS( TRS_NONE ),
+        m_fActorSeeTarget( TRS_NONE ),
+        m_flActorTargetProximity( 0 ),
+        m_flPlayerTargetProximity( 0 ),
+        m_flPlayerTargetFOV( 0 ),
+        m_fPlayerTargetLOS( TRS_NONE ),
+        m_fPlayerBlockingActor( TRS_NONE ),
+        m_flMinTimeout( 0 ),
+        m_flMaxTimeout( 0 ),
+        m_fActorInPVS( TRS_NONE ),
+        m_fActorInVehicle( TRS_NONE ),
+        m_fPlayerInVehicle( TRS_NONE )
     {
 #ifndef HL2_EPISODIC
         m_hActor = NULL;
 #endif
     }
 
-   private:
+    private:
     void Spawn();
     void Activate();
 

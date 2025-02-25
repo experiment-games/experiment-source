@@ -29,7 +29,7 @@ class CTier3SteamApp : public CTier2SteamApp
 {
     typedef CTier2SteamApp BaseClass;
 
-   public:
+    public:
     // Methods of IApplication
     virtual bool PreInit()
     {
@@ -55,7 +55,7 @@ class CTier3DmSteamApp : public CTier2DmSteamApp
 {
     typedef CTier2DmSteamApp BaseClass;
 
-   public:
+    public:
     // Methods of IApplication
     virtual bool PreInit()
     {
@@ -81,7 +81,7 @@ class CVguiSteamApp : public CTier3SteamApp
 {
     typedef CTier3SteamApp BaseClass;
 
-   public:
+    public:
     // Methods of IApplication
     virtual bool PreInit()
     {
@@ -100,7 +100,7 @@ class CVguiDmSteamApp : public CTier3DmSteamApp
 {
     typedef CTier3DmSteamApp BaseClass;
 
-   public:
+    public:
     // Methods of IApplication
     virtual bool PreInit()
     {

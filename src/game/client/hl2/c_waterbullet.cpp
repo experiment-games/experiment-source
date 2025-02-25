@@ -12,7 +12,7 @@
 
 class C_WaterBullet : public C_BaseAnimating
 {
-   public:
+    public:
     DECLARE_CLIENTCLASS();
     DECLARE_CLASS( C_WaterBullet, C_BaseAnimating );
 
@@ -111,7 +111,7 @@ class C_WaterBullet : public C_BaseAnimating
         return true;
     }
 
-   private:
+    private:
     C_WaterBullet( const C_WaterBullet & );
 
     CSmartPtr< CSimpleEmitter > m_pEmitter;

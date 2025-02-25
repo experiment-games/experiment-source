@@ -20,12 +20,12 @@ class CPointTeleport : public CBaseEntity
 {
     DECLARE_CLASS( CPointTeleport, CBaseEntity );
 
-   public:
+    public:
     void Activate( void );
 
     void InputTeleport( inputdata_t &inputdata );
 
-   private:
+    private:
     bool EntityMayTeleport( CBaseEntity *pTarget );
 
     Vector m_vSaveOrigin;

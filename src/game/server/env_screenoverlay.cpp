@@ -17,7 +17,7 @@ class CEnvScreenOverlay : public CPointEntity
 {
     DECLARE_CLASS( CEnvScreenOverlay, CPointEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
     DECLARE_SERVERCLASS();
 
@@ -37,7 +37,7 @@ class CEnvScreenOverlay : public CPointEntity
         m_bIsActive = bActive;
     }
 
-   protected:
+    protected:
     CNetworkArray( string_t, m_iszOverlayNames, MAX_SCREEN_OVERLAYS );
     CNetworkArray( float, m_flOverlayTimes, MAX_SCREEN_OVERLAYS );
     CNetworkVar( float, m_flStartTime );
@@ -200,7 +200,7 @@ class CEnvScreenEffect : public CPointEntity
 {
     DECLARE_CLASS( CEnvScreenEffect, CPointEntity );
 
-   public:
+    public:
     DECLARE_DATADESC();
     DECLARE_SERVERCLASS();
 
@@ -216,7 +216,7 @@ class CEnvScreenEffect : public CPointEntity
     virtual void Spawn( void );
     virtual void Precache( void );
 
-   private:
+    private:
     void InputStartEffect( inputdata_t &inputdata );
     void InputStopEffect( inputdata_t &inputdata );
 

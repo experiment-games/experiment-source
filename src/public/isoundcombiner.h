@@ -28,7 +28,7 @@ struct CombinerEntry
 
 abstract_class ISoundCombiner
 {
-   public:
+    public:
     virtual ~ISoundCombiner() {}
 
     virtual bool CombineSoundFiles( IFileSystem * filesystem, char const *outfile, CUtlVector< CombinerEntry > &info ) = 0;

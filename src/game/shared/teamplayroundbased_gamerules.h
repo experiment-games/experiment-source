@@ -129,7 +129,7 @@ struct LobbyPlayerInfo_t
 //-----------------------------------------------------------------------------
 class CGameRulesRoundStateInfo
 {
-   public:
+    public:
     gamerules_roundstate_t m_iRoundState;
     const char *m_pStateName;
 
@@ -143,7 +143,7 @@ class CGameRulesRoundStateInfo
 //-----------------------------------------------------------------------------
 class CTeamplayRoundBasedRulesProxy : public CGameRulesProxy
 {
-   public:
+    public:
     DECLARE_CLASS( CTeamplayRoundBasedRulesProxy, CGameRulesProxy );
     DECLARE_NETWORKCLASS();
 
@@ -167,7 +167,7 @@ class CTeamplayRoundBasedRules : public CTeamplayRules, public CGameEventListene
 {
     DECLARE_CLASS( CTeamplayRoundBasedRules, CTeamplayRules );
 
-   public:
+    public:
     CTeamplayRoundBasedRules();
 
 #ifdef CLIENT_DLL
@@ -346,14 +346,14 @@ class CTeamplayRoundBasedRules : public CTeamplayRules, public CGameEventListene
         m_bAllowBetweenRounds = bValue;
     }
 
-   public:  // IGameEventListener Interface
+    public:  // IGameEventListener Interface
     virtual void FireGameEvent( IGameEvent *event );
 
     //----------------------------------------------------------------------------------
     // Server specific
 #ifdef GAME_DLL
     // Derived game rules class should override these
-   public:
+    public:
     // Override this to prevent removal of game specific entities that need to persist
     virtual bool RoundCleanupShouldIgnore( CBaseEntity *pEnt );
     virtual bool ShouldCreateEntity( const char *pszClassName );
@@ -466,7 +466,7 @@ class CTeamplayRoundBasedRules : public CTeamplayRules, public CGameEventListene
         return true;
     }
 
-   public:
+    public:
     void State_Transition( gamerules_roundstate_t newState );
 
     void RespawnPlayers( bool bForceRespawn, bool bTeam = false, int iTeam = TEAM_UNASSIGNED );
@@ -575,7 +575,7 @@ class CTeamplayRoundBasedRules : public CTeamplayRules, public CGameEventListene
         return IsInWaitingForPlayers();
     }
 
-   protected:
+    protected:
     virtual void Think( void );
 
     virtual void CheckChatText( CBasePlayer *pPlayer, char *pText );
@@ -654,7 +654,7 @@ class CTeamplayRoundBasedRules : public CTeamplayRules, public CGameEventListene
     // mp_scrambleteams_auto
     void ResetTeamsRoundWinTracking( void );
 
-   protected:
+    protected:
     virtual void InitTeams( void );
     virtual int CountActivePlayers( void );
 
@@ -703,7 +703,7 @@ class CTeamplayRoundBasedRules : public CTeamplayRules, public CGameEventListene
         return m_flLastTeamWin;
     }
 
-   protected:
+    protected:
     CGameRulesRoundStateInfo *m_pCurStateInfo;  // Per-state data
     float m_flStateTransitionTime;              // Timer for round states
 
@@ -749,7 +749,7 @@ class CTeamplayRoundBasedRules : public CTeamplayRules, public CGameEventListene
 
     float m_flLastTeamWin;
 
-   private:
+    private:
     CUtlMap< int, int > m_GameTeams;  // Team index, Score
 #endif
     // End server specific
@@ -758,7 +758,7 @@ class CTeamplayRoundBasedRules : public CTeamplayRules, public CGameEventListene
     //----------------------------------------------------------------------------------
     // Client specific
 #ifdef CLIENT_DLL
-   public:
+    public:
     virtual void OnPreDataChanged( DataUpdateType_t updateType );
     virtual void OnDataChanged( DataUpdateType_t updateType );
     virtual void HandleOvertimeBegin() {}
@@ -769,13 +769,13 @@ class CTeamplayRoundBasedRules : public CTeamplayRules, public CGameEventListene
         b = 0.76f;
     }
 
-   private:
+    private:
     bool m_bOldInWaitingForPlayers;
     bool m_bOldInOvertime;
     bool m_bOldInSetup;
 #endif  // CLIENT_DLL
 
-   public:
+    public:
     bool WouldChangeUnbalanceTeams( int iNewTeam, int iCurrentTeam );
     bool AreTeamsUnbalanced( int &iHeaviestTeam, int &iLightestTeam );
     virtual bool HaveCheatsBeenEnabledDuringLevel( void )
@@ -783,13 +783,13 @@ class CTeamplayRoundBasedRules : public CTeamplayRules, public CGameEventListene
         return m_bCheatsEnabledDuringLevel;
     }
 
-   protected:
+    protected:
     CNetworkVar( gamerules_roundstate_t, m_iRoundState );
     CNetworkVar( bool, m_bInOvertime );  // Are we currently in overtime?
     CNetworkVar( bool, m_bInSetup );     // Are we currently in setup?
     CNetworkVar( bool, m_bSwitchedTeamsThisRound );
 
-   protected:
+    protected:
     CNetworkVar( int, m_iWinningTeam );  // Set before entering GR_STATE_TEAM_WIN
     CNetworkVar( int, m_iWinReason );
     CNetworkVar( bool, m_bInWaitingForPlayers );
@@ -803,10 +803,10 @@ class CTeamplayRoundBasedRules : public CTeamplayRules, public CGameEventListene
     CNetworkArray( bool, m_bPlayerReady, MAX_PLAYERS );
     CNetworkVar( bool, m_bCheatsEnabledDuringLevel );
 
-   public:
+    public:
     CNetworkArray( float, m_TeamRespawnWaveTimes, MAX_TEAMS );  // Time between each team's respawn wave
 
-   private:
+    private:
     float m_flStartBalancingTeamsAt;
     float m_flNextBalanceTeamsTime;
     bool m_bPrintedUnbalanceWarning;
@@ -816,10 +816,10 @@ class CTeamplayRoundBasedRules : public CTeamplayRules, public CGameEventListene
     int m_nAutoBalanceQueuePlayerIndex;
     int m_nAutoBalanceQueuePlayerScore;
 
-   protected:
+    protected:
     bool m_bAllowBetweenRounds;
 
-   public:
+    public:
     float m_flStopWatchTotalTime;
     int m_iLastCapPointChanged;
 };

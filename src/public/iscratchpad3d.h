@@ -27,7 +27,7 @@ class IFileSystem;
 
 class CSPColor
 {
-   public:
+    public:
     CSPColor()
     {
         m_flAlpha = 1;
@@ -49,20 +49,20 @@ class CSPColor
 
 class CSPVert
 {
-   public:
+    public:
     CSPVert();
     CSPVert( Vector const &vPos, const CSPColor &vColor = CSPColor( Vector( 1, 1, 1 ), 1 ) );
 
     void Init( Vector const &vPos, const CSPColor &vColor = CSPColor( Vector( 1, 1, 1 ), 1 ) );
 
-   public:
+    public:
     Vector m_vPos;
     CSPColor m_vColor;
 };
 
 class CSPVertList
 {
-   public:
+    public:
     CSPVertList( int nVerts = 0 );
     CSPVertList( CSPVert const *pVerts, int nVerts );
     CSPVertList( Vector const *pVerts, int nVerts, CSPColor vColor = CSPColor( 1, 1, 1 ) );
@@ -77,17 +77,17 @@ class CSPVertList
 
 class SPRGBA
 {
-   public:
+    public:
     unsigned char r, g, b, a;
 };
 
 class CTextParams
 {
-   public:
+    public:
     CTextParams();
 
     Vector m_vColor;  // Color of the string (starting color.. at some point,
-                      // we can embed commands in the text itself to change the color).
+                    // we can embed commands in the text itself to change the color).
     float m_flAlpha;  // Alpha of the whole thing.
 
     bool m_bSolidBackground;  // Should the background be solid or alpha'd?
@@ -106,11 +106,11 @@ class CTextParams
 
 abstract_class IScratchPad3D
 {
-   protected:
+    protected:
     virtual ~IScratchPad3D() {}
 
     // Types.
-   public:
+    public:
     enum RenderState
     {
         RS_FillMode = 0,  // val = one of the FillMode enums
@@ -124,7 +124,7 @@ abstract_class IScratchPad3D
         FillMode_Solid
     };
 
-   public:
+    public:
     virtual void Release() = 0;
 
     // This sets up a mapping between input coordinates and output coordinates.
@@ -177,7 +177,7 @@ abstract_class IScratchPad3D
     virtual void Flush() = 0;
 
     // Primitives that build on the atomic primitives.
-   public:
+    public:
     // Draw a black and white image.
     // Corners are in this order: bottom-left, top-left, top-right, bottom-right.
     // If the corners are NULL, then the image is drawn in the XY plane from (-100,-100) to (100,100).
@@ -206,7 +206,7 @@ abstract_class IScratchPad3D
 // and release it automatically when the function exits.
 class CScratchPadAutoRelease
 {
-   public:
+    public:
     CScratchPadAutoRelease( IScratchPad3D *pPad )
     {
         m_pPad = pPad;

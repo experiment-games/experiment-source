@@ -8,7 +8,7 @@
 ;
 ; The texture coordinates need to be defined as follows:
 ; tc0 - Normalmap and lightmap texture coordinates
-; c0, c1, c2 - Axes of the lightmap coordinate system in tangent space 
+; c0, c1, c2 - Axes of the lightmap coordinate system in tangent space
 ;------------------------------------------------------------------------------
 ps.1.4
 
@@ -16,14 +16,14 @@ ps.1.4
 texld r0, t0
 
 ; Sample the lightmaps
-texld r1, t1 
-texld r2, t2 
-texld r3, t3 
+texld r1, t1
+texld r2, t2
+texld r3, t3
 
 ; Sample the base texture
 texld r4, t4
 
-; output = (lightmapColor[0] * ( ( N dot basis[0] )^2 ) + 
+; output = (lightmapColor[0] * ( ( N dot basis[0] )^2 ) +
 ;	       lightmapColor[1] * ( ( N dot basis[1] )^2 ) +
 ;	       lightmapColor[2] * ( ( N dot basis[2] )^2 ) ) * base
 

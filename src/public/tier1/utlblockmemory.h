@@ -45,7 +45,7 @@
 template < class T, class I >
 class CUtlBlockMemory
 {
-   public:
+    public:
     // constructor, destructor
     CUtlBlockMemory( int nGrowSize = 0, int nInitSize = 0 );
     ~CUtlBlockMemory();
@@ -65,7 +65,7 @@ class CUtlBlockMemory
 
     class Iterator_t
     {
-       public:
+        public:
         Iterator_t( I i )
             : index( i ) {}
         I index;
@@ -138,7 +138,7 @@ class CUtlBlockMemory
     // Purge all but the given number of elements
     void Purge( int numElements );
 
-   protected:
+    protected:
     int Index( int major, int minor ) const
     {
         return ( major << m_nIndexShift ) | minor;

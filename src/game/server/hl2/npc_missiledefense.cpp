@@ -42,7 +42,7 @@ class CNPC_MissileDefense : public CAI_BaseNPC
     DECLARE_CLASS( CNPC_MissileDefense, CAI_BaseNPC );
     DECLARE_DATADESC();
 
-   public:
+    public:
     CNPC_MissileDefense( void ){};
     void Precache( void );
     void Spawn( void );
@@ -365,7 +365,7 @@ void CNPC_MissileDefense::RunAI( void )
 {
     // If my enemy is dead clear the memory and reset m_hEnemy
     if ( GetEnemy() != NULL &&
-         !GetEnemy()->IsAlive() )
+        !GetEnemy()->IsAlive() )
     {
         ClearEnemyMemory();
         SetEnemy( NULL );

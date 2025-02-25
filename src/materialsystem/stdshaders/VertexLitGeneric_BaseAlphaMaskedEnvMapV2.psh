@@ -14,4 +14,3 @@ mad	r0.rgb, r1, c2, r0	; + envmap * mask * tint
 #if WRITEONETODESTALPHA
 +mov r0.a, c4			; make alpha 255
 #endif
-

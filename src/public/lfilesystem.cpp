@@ -169,7 +169,7 @@ LUA_BINDING_BEGIN( Files, FileExists, "library", "Check if the file or directory
     const char *pathId = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optstring, 2, 0, "pathId" );
 
     lua_pushboolean( L,
-                     filesystem->FileExists( filePath, pathId ) || filesystem->IsDirectory( filePath, pathId ) );
+                    filesystem->FileExists( filePath, pathId ) || filesystem->IsDirectory( filePath, pathId ) );
 
     return 1;
 }

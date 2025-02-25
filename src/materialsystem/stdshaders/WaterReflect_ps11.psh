@@ -1,14 +1,14 @@
 ps.1.1
 
-; t0: 
+; t0:
 ;		texture: dudv map
 ;		texcoords: dudvmap texcoords
 ; t1:
 ;		texture: reflection render target
-;		texcoords: 
-; t2:	
+;		texcoords:
+; t2:
 ;		texture: normal map (usef for fresnel calculation)
-;		texcoords: 
+;		texcoords:
 ; t4:	texture: normalization cube map
 ;		texcoords: eye vect
 

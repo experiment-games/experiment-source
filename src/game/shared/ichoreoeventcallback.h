@@ -21,7 +21,7 @@ class CChoreoScene;
 //-----------------------------------------------------------------------------
 abstract_class IChoreoEventCallback
 {
-   public:
+    public:
     virtual void StartEvent( float currenttime, CChoreoScene *scene, CChoreoEvent *event ) = 0;
     // Only called for events with HasEndTime() == true
     virtual void EndEvent( float currenttime, CChoreoScene *scene, CChoreoEvent *event ) = 0;

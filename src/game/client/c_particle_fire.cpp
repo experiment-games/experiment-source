@@ -25,7 +25,7 @@ Vector g_FireSpreadDirection( 0, 0, 1 );
 
 class FireRamp
 {
-   public:
+    public:
     FireRamp( const Vector &s, const Vector &e )
     {
         m_Start = s;
@@ -68,7 +68,7 @@ inline int GetOppositeOffset( int offset )
 
 class C_ParticleFire : public C_BaseParticleEntity, public IPrototypeAppEffect
 {
-   public:
+    public:
     DECLARE_CLASS( C_ParticleFire, C_BaseParticleEntity );
     DECLARE_CLIENTCLASS();
 
@@ -77,7 +77,7 @@ class C_ParticleFire : public C_BaseParticleEntity, public IPrototypeAppEffect
 
     class FireEmitter
     {
-       public:
+        public:
         Vector m_Pos;
         TimedEvent m_SpawnEvent;
         float m_Lifetime;                  // How long it's been emitting.
@@ -86,7 +86,7 @@ class C_ParticleFire : public C_BaseParticleEntity, public IPrototypeAppEffect
 
     class FireParticle : public Particle
     {
-       public:
+        public:
         Vector m_StartPos;  // The particle moves from m_StartPos to (m_StartPos+m_Direction) over its lifetime.
         Vector m_Direction;
 
@@ -96,20 +96,20 @@ class C_ParticleFire : public C_BaseParticleEntity, public IPrototypeAppEffect
     };
 
     // C_BaseEntity.
-   public:
+    public:
     virtual void OnDataChanged( DataUpdateType_t updateType );
 
     // IPrototypeAppEffect.
-   public:
+    public:
     virtual void Start( CParticleMgr *pParticleMgr, IPrototypeArgAccess *pArgs );
 
     // IParticleEffect.
-   public:
+    public:
     virtual void Update( float fTimeDelta );
     virtual void RenderParticles( CParticleRenderIterator *pIterator );
     virtual void SimulateParticles( CParticleSimulateIterator *pIterator );
 
-   public:
+    public:
     CParticleMgr *m_pParticleMgr;
     PMaterialHandle m_MaterialHandle;
 
@@ -121,7 +121,7 @@ class C_ParticleFire : public C_BaseParticleEntity, public IPrototypeAppEffect
     FireEmitter m_Emitters[MAX_FIRE_EMITTERS];
     int m_nEmitters;
 
-   private:
+    private:
     C_ParticleFire( const C_ParticleFire & );
 };
 

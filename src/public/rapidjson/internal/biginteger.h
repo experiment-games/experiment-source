@@ -28,7 +28,7 @@ namespace internal
 
 class BigInteger
 {
-   public:
+    public:
     typedef uint64_t Type;
 
     BigInteger( const BigInteger& rhs )
@@ -265,7 +265,7 @@ class BigInteger
         return count_ == 1 && digits_[0] == 0;
     }
 
-   private:
+    private:
     void AppendDecimal64( const char* begin, const char* end )
     {
         uint64_t u = ParseUint64( begin, end );

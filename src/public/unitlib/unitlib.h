@@ -107,7 +107,7 @@
 //-----------------------------------------------------------------------------
 class ITestCase
 {
-   public:
+    public:
     // This returns the	test name
     virtual char const* GetName() = 0;
 
@@ -117,7 +117,7 @@ class ITestCase
 
 class ITestSuite : public ITestCase
 {
-   public:
+    public:
     // Add a test to the suite...
     virtual void AddTest( ITestCase* pTest ) = 0;
 };
@@ -146,14 +146,14 @@ UNITLIB_INTERFACE ITestCase* GetUnitTest( int i );
 //-----------------------------------------------------------------------------
 class UNITLIB_CLASS_INTERFACE CTestCase : public ITestCase
 {
-   public:
+    public:
     CTestCase( char const* pName, ITestSuite* pParent = 0 );
     ~CTestCase();
 
     // Returns the test name
     char const* GetName();
 
-   private:
+    private:
     char* m_pName;
 };
 
@@ -162,7 +162,7 @@ class UNITLIB_CLASS_INTERFACE CTestCase : public ITestCase
 //-----------------------------------------------------------------------------
 class UNITLIB_CLASS_INTERFACE CTestSuite : public ITestSuite
 {
-   public:
+    public:
     CTestSuite( char const* pName, ITestSuite* pParent = 0 );
     ~CTestSuite();
 
@@ -175,7 +175,7 @@ class UNITLIB_CLASS_INTERFACE CTestSuite : public ITestSuite
     // Returns the test name
     char const* GetName();
 
-   protected:
+    protected:
     int m_TestCount;
     ITestCase** m_ppTestCases;
     char* m_pName;
@@ -184,7 +184,7 @@ class UNITLIB_CLASS_INTERFACE CTestSuite : public ITestSuite
 #define TESTSUITE_CLASS( _suite )         \
     class CTS##_suite : public CTestSuite \
     {                                     \
-       public:                            \
+        public:                            \
         CTS##_suite();                    \
     };
 
@@ -213,7 +213,7 @@ class UNITLIB_CLASS_INTERFACE CTestSuite : public ITestSuite
 #define TESTCASE_CLASS( _case )         \
     class CTC##_case : public CTestCase \
     {                                   \
-       public:                          \
+        public:                          \
         CTC##_case();                   \
         void RunTest();                 \
     };
@@ -221,18 +221,18 @@ class UNITLIB_CLASS_INTERFACE CTestSuite : public ITestSuite
 #define DEFINE_TESTCASE_NOSUITE( _case )              \
     TESTCASE_CLASS( _case )                           \
     CTC##_case::CTC##_case() : CTestCase( #_case ) {} \
-                                                      \
+                                                    \
     CTC##_case s_TC##_case;                           \
-                                                      \
+                                                    \
     void CTC##_case ::RunTest()
 
 #define DEFINE_TESTCASE( _case, _suite )                               \
     TESTCASE_CLASS( _case )                                            \
     FWD_DECLARE_TESTSUITE( _suite )                                    \
     CTC##_case::CTC##_case() : CTestCase( #_case, GetTS##_suite() ) {} \
-                                                                       \
+                                                                        \
     CTC##_case s_TC##_case;                                            \
-                                                                       \
+                                                                        \
     void CTC##_case ::RunTest()
 
 #define _Shipping_AssertMsg( _exp, _msg, _executeExp, _bFatal )                                      \

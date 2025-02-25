@@ -102,7 +102,7 @@ void CWeaponCrowbar::AddViewKick( void )
 // Animation event handlers
 //-----------------------------------------------------------------------------
 void CWeaponCrowbar::HandleAnimEventMeleeHit( animevent_t *pEvent,
-                                              CBaseCombatCharacter *pOperator )
+                                            CBaseCombatCharacter *pOperator )
 {
     // Trace up or down based on where the enemy is...
     // But only if we're basically facing that direction
@@ -135,7 +135,7 @@ void CWeaponCrowbar::HandleAnimEventMeleeHit( animevent_t *pEvent,
 // Animation event
 //-----------------------------------------------------------------------------
 void CWeaponCrowbar::Operator_HandleAnimEvent( animevent_t *pEvent,
-                                               CBaseCombatCharacter *pOperator )
+                                                CBaseCombatCharacter *pOperator )
 {
     switch ( pEvent->event )
     {

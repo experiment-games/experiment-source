@@ -50,7 +50,7 @@ namespace cpp
 
 class StringFieldGenerator : public FieldGenerator
 {
-   public:
+    public:
     explicit StringFieldGenerator( const FieldDescriptor* descriptor );
     ~StringFieldGenerator();
 
@@ -69,7 +69,7 @@ class StringFieldGenerator : public FieldGenerator
     void GenerateSerializeWithCachedSizesToArray( io::Printer* printer ) const;
     void GenerateByteSize( io::Printer* printer ) const;
 
-   private:
+    private:
     const FieldDescriptor* descriptor_;
     map< string, string > variables_;
 
@@ -78,7 +78,7 @@ class StringFieldGenerator : public FieldGenerator
 
 class RepeatedStringFieldGenerator : public FieldGenerator
 {
-   public:
+    public:
     explicit RepeatedStringFieldGenerator( const FieldDescriptor* descriptor );
     ~RepeatedStringFieldGenerator();
 
@@ -95,7 +95,7 @@ class RepeatedStringFieldGenerator : public FieldGenerator
     void GenerateSerializeWithCachedSizesToArray( io::Printer* printer ) const;
     void GenerateByteSize( io::Printer* printer ) const;
 
-   private:
+    private:
     const FieldDescriptor* descriptor_;
     map< string, string > variables_;
 

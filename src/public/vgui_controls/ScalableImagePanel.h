@@ -24,7 +24,7 @@ class ScalableImagePanel : public Panel
 {
     DECLARE_CLASS_SIMPLE( ScalableImagePanel, Panel );
 
-   public:
+    public:
     ScalableImagePanel( Panel *parent, const char *name );
     ~ScalableImagePanel();
 
@@ -34,14 +34,14 @@ class ScalableImagePanel : public Panel
         m_DrawColor = color;
     }
 
-   protected:
+    protected:
     virtual void PaintBackground();
     virtual void GetSettings( KeyValues *outResourceData );
     virtual void ApplySettings( KeyValues *inResourceData );
     virtual void PerformLayout( void );
     virtual const char *GetDescription();
 
-   private:
+    private:
     int m_iSrcCornerHeight;  // in pixels, how tall is the corner inside the image
     int m_iSrcCornerWidth;   // same for width
     int m_iCornerHeight;     // output size of the corner height in pixels

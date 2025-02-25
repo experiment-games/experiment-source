@@ -74,7 +74,7 @@ extern ConVar mp_timelimit;
 //=========================================================
 class CMultiplayRules : public CGameRules
 {
-   public:
+    public:
     DECLARE_CLASS( CMultiplayRules, CGameRules );
 
     // Functions to verify the single/multiplayer status of a game
@@ -239,7 +239,7 @@ class CMultiplayRules : public CGameRules
 
     virtual void ClientCommandKeyValues( edict_t *pEntity, KeyValues *pKeyValues );
 
-   public:
+    public:
     struct ResponseRules_t
     {
         CUtlVector< IResponseSystem * > m_ResponseSystems;
@@ -264,7 +264,7 @@ class CMultiplayRules : public CGameRules
 
     virtual bool IsManualMapChangeOkay( const char **pszReason ) OVERRIDE;
 
-   protected:
+    protected:
     virtual bool UseSuicidePenalty()
     {
         return true;
@@ -274,10 +274,10 @@ class CMultiplayRules : public CGameRules
         return -1.0f;
     }
 
-   public:
+    public:
     virtual void ChangeLevel( void );
 
-   protected:
+    protected:
     virtual void GoToIntermission( void );
     virtual void LoadMapCycleFile( void );
     void ChangeLevelToMap( const char *pszMap );
@@ -291,13 +291,13 @@ class CMultiplayRules : public CGameRules
 
 #else
 
-   public:
+    public:
     const char *GetVoiceCommandSubtitle( int iMenu, int iItem );
     bool GetVoiceMenuLabels( int iMenu, KeyValues *pKV );
 
 #endif
 
-   private:
+    private:
     CUtlVector< CUtlVector< VoiceCommandMenuItem_t > > m_VoiceCommandMenus;
 };
 

@@ -353,16 +353,16 @@ bool CBaseTrigger::PassesTriggerFilters( CBaseEntity *pOther )
 {
     // First test spawn flag filters
     if ( HasSpawnFlags( SF_TRIGGER_ALLOW_ALL ) ||
-         ( HasSpawnFlags( SF_TRIGGER_ALLOW_CLIENTS ) && ( pOther->GetFlags() & FL_CLIENT ) ) ||
-         ( HasSpawnFlags( SF_TRIGGER_ALLOW_NPCS ) && ( pOther->GetFlags() & FL_NPC ) ) ||
-         ( HasSpawnFlags( SF_TRIGGER_ALLOW_PUSHABLES ) && FClassnameIs( pOther, "func_pushable" ) ) ||
-         ( HasSpawnFlags( SF_TRIGGER_ALLOW_PHYSICS ) && pOther->GetMoveType() == MOVETYPE_VPHYSICS )
+        ( HasSpawnFlags( SF_TRIGGER_ALLOW_CLIENTS ) && ( pOther->GetFlags() & FL_CLIENT ) ) ||
+        ( HasSpawnFlags( SF_TRIGGER_ALLOW_NPCS ) && ( pOther->GetFlags() & FL_NPC ) ) ||
+        ( HasSpawnFlags( SF_TRIGGER_ALLOW_PUSHABLES ) && FClassnameIs( pOther, "func_pushable" ) ) ||
+        ( HasSpawnFlags( SF_TRIGGER_ALLOW_PHYSICS ) && pOther->GetMoveType() == MOVETYPE_VPHYSICS )
 #if defined( HL2_EPISODIC ) || defined( TF_DLL )
-         ||
-         ( HasSpawnFlags( SF_TRIG_TOUCH_DEBRIS ) &&
-           ( pOther->GetCollisionGroup() == COLLISION_GROUP_DEBRIS ||
-             pOther->GetCollisionGroup() == COLLISION_GROUP_DEBRIS_TRIGGER ||
-             pOther->GetCollisionGroup() == COLLISION_GROUP_INTERACTIVE_DEBRIS ) )
+        ||
+        ( HasSpawnFlags( SF_TRIG_TOUCH_DEBRIS ) &&
+            ( pOther->GetCollisionGroup() == COLLISION_GROUP_DEBRIS ||
+            pOther->GetCollisionGroup() == COLLISION_GROUP_DEBRIS_TRIGGER ||
+            pOther->GetCollisionGroup() == COLLISION_GROUP_INTERACTIVE_DEBRIS ) )
 #endif
     )
     {
@@ -581,7 +581,7 @@ void CBaseTrigger::InputToggle( inputdata_t &inputdata )
 //-----------------------------------------------------------------------------
 class CTriggerRemove : public CBaseTrigger
 {
-   public:
+    public:
     DECLARE_CLASS( CTriggerRemove, CBaseTrigger );
 
     void Spawn( void );
@@ -974,7 +974,7 @@ class CTriggerOnce : public CTriggerMultiple
 {
     DECLARE_CLASS( CTriggerOnce, CTriggerMultiple );
 
-   public:
+    public:
     void Spawn( void );
 };
 
@@ -1000,7 +1000,7 @@ class CTriggerLook : public CTriggerOnce
 {
     DECLARE_CLASS( CTriggerLook, CTriggerOnce );
 
-   public:
+    public:
     EHANDLE m_hLookTarget;
     float m_flFieldOfView;
     float m_flLookTime;         // How long must I look for
@@ -1018,7 +1018,7 @@ class CTriggerLook : public CTriggerOnce
 
     DECLARE_DATADESC();
 
-   private:
+    private:
     void Trigger( CBaseEntity *pActivator, bool bTimeout );
     void TimeoutThink();
 
@@ -1234,7 +1234,7 @@ int CTriggerLook::DrawDebugTextOverlays( void )
 // ##################################################################################
 class CTriggerVolume : public CPointEntity  // Derive from point entity so this doesn't move across levels
 {
-   public:
+    public:
     DECLARE_CLASS( CTriggerVolume, CPointEntity );
 
     void Spawn( void );
@@ -1274,7 +1274,7 @@ class CChangeLevel : public CBaseTrigger
 {
     DECLARE_DATADESC();
 
-   public:
+    public:
     DECLARE_CLASS( CChangeLevel, CBaseTrigger );
 
     void Spawn( void );
@@ -1283,7 +1283,7 @@ class CChangeLevel : public CBaseTrigger
 
     static int ChangeList( levellist_t *pLevelList, int maxList );
 
-   private:
+    private:
     void TouchChangeLevel( CBaseEntity *pOther );
     void ChangeLevelNow( CBaseEntity *pActivator );
 
@@ -1313,7 +1313,7 @@ class CChangeLevel : public CBaseTrigger
     // Figures out save flags for the entity
     static int ComputeEntitySaveFlags( CBaseEntity *pEntity );
 
-   private:
+    private:
     char m_szMapName[cchMapNameMost];       // trigger_changelevel only:  next map
     char m_szLandmarkName[cchMapNameMost];  // trigger_changelevel only:  landmark on next map
     bool m_bTouched;
@@ -2130,7 +2130,7 @@ int CChangeLevel::ChangeList( levellist_t *pLevelList, int maxList )
 //-----------------------------------------------------------------------------
 class CTriggerPush : public CBaseTrigger
 {
-   public:
+    public:
     DECLARE_CLASS( CTriggerPush, CBaseTrigger );
 
     void Spawn( void );
@@ -2253,7 +2253,7 @@ void CTriggerPush::Touch( CBaseEntity *pOther )
 #if defined( HL2_DLL )
             // HACK HACK  HL2 players on ladders will only be disengaged if the sf is set, otherwise no push occurs.
             if ( pOther->IsPlayer() &&
-                 pOther->GetMoveType() == MOVETYPE_LADDER )
+                pOther->GetMoveType() == MOVETYPE_LADDER )
             {
                 if ( !HasSpawnFlags( SF_TRIG_PUSH_AFFECT_PLAYER_ON_LADDER ) )
                 {
@@ -2300,7 +2300,7 @@ const int SF_TELEPORT_PRESERVE_ANGLES = 0x20;  // Preserve angles even when a lo
 
 class CTriggerTeleport : public CBaseTrigger
 {
-   public:
+    public:
     DECLARE_CLASS( CTriggerTeleport, CBaseTrigger );
 
     virtual void Spawn( void ) OVERRIDE;
@@ -2408,7 +2408,7 @@ LINK_ENTITY_TO_CLASS( info_teleport_destination, CPointEntity );
 //-----------------------------------------------------------------------------
 class CTriggerTeleportRelative : public CBaseTrigger
 {
-   public:
+    public:
     DECLARE_CLASS( CTriggerTeleportRelative, CBaseTrigger );
 
     virtual void Spawn( void ) OVERRIDE;
@@ -2447,7 +2447,7 @@ void CTriggerTeleportRelative::Touch( CBaseEntity *pOther )
 //-----------------------------------------------------------------------------
 class CTriggerToggleSave : public CBaseTrigger
 {
-   public:
+    public:
     DECLARE_CLASS( CTriggerToggleSave, CBaseTrigger );
 
     void Spawn( void );
@@ -2515,7 +2515,7 @@ void CTriggerToggleSave::Touch( CBaseEntity *pOther )
 //-----------------------------------------------------------------------------
 class CTriggerSave : public CBaseTrigger
 {
-   public:
+    public:
     DECLARE_CLASS( CTriggerSave, CBaseTrigger );
 
     void Spawn( void );
@@ -2601,7 +2601,7 @@ void CTriggerSave::Touch( CBaseEntity *pOther )
 
 class CTriggerGravity : public CBaseTrigger
 {
-   public:
+    public:
     DECLARE_CLASS( CTriggerGravity, CBaseTrigger );
     DECLARE_DATADESC();
 
@@ -2636,7 +2636,7 @@ void CTriggerGravity::GravityTouch( CBaseEntity *pOther )
 // this is a really bad idea.
 class CAI_ChangeTarget : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CAI_ChangeTarget, CBaseEntity );
 
     // Input handlers.
@@ -2649,7 +2649,7 @@ class CAI_ChangeTarget : public CBaseEntity
 
     DECLARE_DATADESC();
 
-   private:
+    private:
     string_t m_iszNewTarget;
 };
 LINK_ENTITY_TO_CLASS( ai_changetarget, CAI_ChangeTarget );
@@ -2683,7 +2683,7 @@ DEFINE_KEYFIELD( m_iszNewTarget, FIELD_STRING, "m_iszNewTarget" ),
 //-----------------------------------------------------------------------------
 class CAI_ChangeHintGroup : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CAI_ChangeHintGroup, CBaseEntity );
 
     int ObjectCaps( void )
@@ -2696,7 +2696,7 @@ class CAI_ChangeHintGroup : public CBaseEntity
 
     DECLARE_DATADESC();
 
-   private:
+    private:
     CAI_BaseNPC *FindQualifiedNPC( CAI_BaseNPC *pPrev, CBaseEntity *pActivator, CBaseEntity *pCaller );
 
     int m_iSearchType;
@@ -2785,7 +2785,7 @@ void CAI_ChangeHintGroup::InputActivate( inputdata_t &inputdata )
 //-----------------------------------------------------------------------------
 class CTriggerCamera : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CTriggerCamera, CBaseEntity );
 
     void Spawn( void );
@@ -2805,7 +2805,7 @@ class CTriggerCamera : public CBaseEntity
     void InputEnable( inputdata_t &inputdata );
     void InputDisable( inputdata_t &inputdata );
 
-   private:
+    private:
     EHANDLE m_hPlayer;
     EHANDLE m_hTarget;
 
@@ -2840,7 +2840,7 @@ class CTriggerCamera : public CBaseEntity
     int m_nPlayerButtons;
     int m_nOldTakeDamage;
 
-   private:
+    private:
     COutputEvent m_OnEndFollow;
 };
 
@@ -3390,7 +3390,7 @@ void CTriggerCamera::Move()
 //-----------------------------------------------------------------------------
 class CTriggerCDAudio : public CBaseTrigger
 {
-   public:
+    public:
     DECLARE_CLASS( CTriggerCDAudio, CBaseTrigger );
 
     void Spawn( void );
@@ -3481,7 +3481,7 @@ void CTriggerCDAudio::PlayTrack( void )
 //-----------------------------------------------------------------------------
 class CTriggerProximity : public CBaseTrigger
 {
-   public:
+    public:
     DECLARE_CLASS( CTriggerProximity, CBaseTrigger );
 
     virtual void Spawn( void );
@@ -3491,7 +3491,7 @@ class CTriggerProximity : public CBaseTrigger
 
     void MeasureThink( void );
 
-   protected:
+    protected:
     EHANDLE m_hMeasureTarget;
     string_t m_iszMeasureTarget;  // The entity from which we measure proximities.
     float m_fRadius;              // The radius around the measure target that we measure within.
@@ -3668,7 +3668,7 @@ class CPhysicsWind : public IMotionEvent
 {
     DECLARE_SIMPLE_DATADESC();
 
-   public:
+    public:
     simresult_e Simulate( IPhysicsMotionController *pController, IPhysicsObject *pObject, float deltaTime, Vector &linear, AngularImpulse &angular )
     {
         // If we have no windspeed, we're not doing anything
@@ -3714,7 +3714,7 @@ class CTriggerWind : public CBaseVPhysicsTrigger
 {
     DECLARE_CLASS( CTriggerWind, CBaseVPhysicsTrigger );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     void Spawn( void );
@@ -3731,7 +3731,7 @@ class CTriggerWind : public CBaseVPhysicsTrigger
     void InputEnable( inputdata_t &inputdata );
     void InputSetSpeed( inputdata_t &inputdata );
 
-   private:
+    private:
     int m_nSpeedBase;     // base line for how hard the wind blows
     int m_nSpeedNoise;    // noise added to wind speed +/-
     int m_nSpeedCurrent;  // current wind speed
@@ -3996,7 +3996,7 @@ class CTriggerImpact : public CTriggerMultiple
 {
     DECLARE_CLASS( CTriggerImpact, CTriggerMultiple );
 
-   public:
+    public:
     DECLARE_DATADESC();
 
     float m_flMagnitude;
@@ -4129,7 +4129,7 @@ class CTriggerPlayerMovement : public CBaseTrigger
 {
     DECLARE_CLASS( CTriggerPlayerMovement, CBaseTrigger );
 
-   public:
+    public:
     void Spawn( void );
     void StartTouch( CBaseEntity *pOther );
     void EndTouch( CBaseEntity *pOther );
@@ -4360,10 +4360,10 @@ bool CBaseVPhysicsTrigger::PassesTriggerFilters( CBaseEntity *pOther )
 
     // First test spawn flag filters
     if ( HasSpawnFlags( SF_TRIGGER_ALLOW_ALL ) ||
-         ( HasSpawnFlags( SF_TRIGGER_ALLOW_CLIENTS ) && ( pOther->GetFlags() & FL_CLIENT ) ) ||
-         ( HasSpawnFlags( SF_TRIGGER_ALLOW_NPCS ) && ( pOther->GetFlags() & FL_NPC ) ) ||
-         ( HasSpawnFlags( SF_TRIGGER_ALLOW_PUSHABLES ) && FClassnameIs( pOther, "func_pushable" ) ) ||
-         ( HasSpawnFlags( SF_TRIGGER_ALLOW_PHYSICS ) && pOther->GetMoveType() == MOVETYPE_VPHYSICS ) )
+        ( HasSpawnFlags( SF_TRIGGER_ALLOW_CLIENTS ) && ( pOther->GetFlags() & FL_CLIENT ) ) ||
+        ( HasSpawnFlags( SF_TRIGGER_ALLOW_NPCS ) && ( pOther->GetFlags() & FL_NPC ) ) ||
+        ( HasSpawnFlags( SF_TRIGGER_ALLOW_PUSHABLES ) && FClassnameIs( pOther, "func_pushable" ) ) ||
+        ( HasSpawnFlags( SF_TRIGGER_ALLOW_PHYSICS ) && pOther->GetMoveType() == MOVETYPE_VPHYSICS ) )
     {
         bool bOtherIsPlayer = pOther->IsPlayer();
         if ( HasSpawnFlags( SF_TRIGGER_ONLY_PLAYER_ALLY_NPCS ) && !bOtherIsPlayer )
@@ -4402,7 +4402,7 @@ class CTriggerVPhysicsMotion : public CBaseVPhysicsTrigger, public IMotionEvent
 {
     DECLARE_CLASS( CTriggerVPhysicsMotion, CBaseVPhysicsTrigger );
 
-   public:
+    public:
     void Spawn();
     void Precache();
     virtual void UpdateOnRemove();
@@ -4452,7 +4452,7 @@ class CTriggerVPhysicsMotion : public CBaseVPhysicsTrigger, public IMotionEvent
 
     virtual simresult_e Simulate( IPhysicsMotionController *pController, IPhysicsObject *pObject, float deltaTime, Vector &linear, AngularImpulse &angular );
 
-   private:
+    private:
     IPhysicsMotionController *m_pController;
 
 #ifndef _XBOX
@@ -4763,7 +4763,7 @@ class CServerRagdollTrigger : public CBaseTrigger
 {
     DECLARE_CLASS( CServerRagdollTrigger, CBaseTrigger );
 
-   public:
+    public:
     virtual void StartTouch( CBaseEntity *pOther );
     virtual void EndTouch( CBaseEntity *pOther );
     virtual void Spawn( void );
@@ -4813,7 +4813,7 @@ void CServerRagdollTrigger::EndTouch( CBaseEntity *pOther )
 //-----------------------------------------------------------------------------
 class CTriggerApplyImpulse : public CBaseTrigger
 {
-   public:
+    public:
     DECLARE_CLASS( CTriggerApplyImpulse, CBaseTrigger );
     DECLARE_DATADESC();
 
@@ -4823,7 +4823,7 @@ class CTriggerApplyImpulse : public CBaseTrigger
 
     void InputApplyImpulse( inputdata_t & );
 
-   private:
+    private:
     Vector m_vecImpulseDir;
     float m_flForce;
 };
@@ -4882,7 +4882,7 @@ class CFrictionModifier : public CBaseTrigger
 {
     DECLARE_CLASS( CFrictionModifier, CBaseTrigger );
 
-   public:
+    public:
     void Spawn( void );
     bool KeyValue( const char *szKeyName, const char *szValue );
 

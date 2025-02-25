@@ -15,7 +15,7 @@
 template < class T >
 class CUtlStringMap
 {
-   public:
+    public:
     CUtlStringMap( bool caseInsensitive = true )
         : m_SymbolTable( 0, 32, caseInsensitive )
     {
@@ -90,7 +90,7 @@ class CUtlStringMap
         m_SymbolTable.RemoveAll();
     }
 
-   private:
+    private:
     CUtlVector< T > m_Vector;
     CUtlSymbolTable m_SymbolTable;
 };

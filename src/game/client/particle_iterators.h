@@ -36,7 +36,7 @@ class CParticleRenderIterator
     friend class CParticleMgr;
     friend class CParticleEffectBinding;
 
-   public:
+    public:
     CParticleRenderIterator();
 
     // The sort key is used to sort the particles incrementally as they're rendered.
@@ -50,10 +50,10 @@ class CParticleRenderIterator
     // it should GO AWAY SOON!
     ParticleDraw *GetParticleDraw() const;
 
-   private:
+    private:
     void TestFlushBatch();
 
-   private:
+    private:
     // Set by CParticleMgr.
     CParticleEffectBinding *m_pEffectBinding;
     CEffectMaterial *m_pMaterial;
@@ -89,7 +89,7 @@ class CParticleSimulateIterator
     friend class CParticleMgr;
     friend class CParticleEffectBinding;
 
-   public:
+    public:
     CParticleSimulateIterator();
 
     // Iterate through the particles, simulate them, and remove them if necessary.
@@ -100,7 +100,7 @@ class CParticleSimulateIterator
     void RemoveParticle( Particle *pParticle );
     void RemoveAllParticles();
 
-   private:
+    private:
     CParticleEffectBinding *m_pEffectBinding;
     CEffectMaterial *m_pMaterial;
     float m_flTimeDelta;

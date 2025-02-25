@@ -18,7 +18,7 @@
 
 class CEnvZoom : public CPointEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CEnvZoom, CPointEntity );
 
     void InputZoom( inputdata_t &inputdata );
@@ -33,7 +33,7 @@ class CEnvZoom : public CPointEntity
         return m_flSpeed;
     }
 
-   private:
+    private:
     float m_flSpeed;
     int m_nFOV;
 

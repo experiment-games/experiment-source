@@ -35,7 +35,7 @@ DECLARE_AUTO_LIST( IBaseProjectileAutoList );
 class CBaseProjectile : public CBaseAnimating, public IBaseProjectileAutoList
 #endif  // !CLIENT_DLL
 {
-   public:
+    public:
     DECLARE_CLASS( CBaseProjectile, CBaseAnimating );
     DECLARE_NETWORKCLASS();
 
@@ -82,14 +82,14 @@ class CBaseProjectile : public CBaseAnimating, public IBaseProjectileAutoList
         return m_hOriginalLauncher;
     }
 
-   protected:
+    protected:
 #ifdef GAME_DLL
     void CollideWithTeammatesThink();
 
     int m_iDestroyableHitCount;
 #endif  // GAME_DLL
 
-   private:
+    private:
 #ifdef GAME_DLL
     void ResetCollideWithTeammates();
 

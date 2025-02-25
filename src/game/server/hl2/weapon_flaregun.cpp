@@ -387,15 +387,15 @@ void CFlare::FlareTouch( CBaseEntity *pOther )
     if ( pOther && pOther->m_takedamage )
     {
         /*
-          The Flare is the iRifle round right now. No damage, just ignite. (sjb)
+        The Flare is the iRifle round right now. No damage, just ignite. (sjb)
 
         //Damage is a function of how fast the flare is flying.
         int iDamage = GetAbsVelocity().Length() / 50.0f;
 
         if ( iDamage < 5 )
         {
-          //Clamp minimum damage
-          iDamage = 5;
+        //Clamp minimum damage
+        iDamage = 5;
         }
 
         //Use m_pOwner, not GetOwnerEntity()
@@ -667,13 +667,13 @@ PRECACHE_WEAPON_REGISTER( weapon_flaregun );
 //-----------------------------------------------------------------------------
 void CFlaregun::Precache( void )
 {
-	BaseClass::Precache();
+    BaseClass::Precache();
 
-	PrecacheScriptSound( "Flare.Touch" );
+    PrecacheScriptSound( "Flare.Touch" );
 
-	PrecacheScriptSound( "Weapon_FlareGun.Burn" );
+    PrecacheScriptSound( "Weapon_FlareGun.Burn" );
 
-	UTIL_PrecacheOther( "env_flare" );
+    UTIL_PrecacheOther( "env_flare" );
 }
 
 //-----------------------------------------------------------------------------
@@ -681,72 +681,72 @@ void CFlaregun::Precache( void )
 //-----------------------------------------------------------------------------
 void CFlaregun::PrimaryAttack( void )
 {
-	CBasePlayer *pOwner = ToBasePlayer( GetOwner() );
-	
-	if ( pOwner == NULL )
-		return;
+    CBasePlayer *pOwner = ToBasePlayer( GetOwner() );
 
-	if ( m_iClip1 <= 0 )
-	{
-		SendWeaponAnim( ACT_VM_DRYFIRE );
-		pOwner->m_flNextAttack = gpGlobals->curtime + SequenceDuration();
-		return;
-	}
+    if ( pOwner == NULL )
+        return;
 
-	m_iClip1 = m_iClip1 - 1;
+    if ( m_iClip1 <= 0 )
+    {
+        SendWeaponAnim( ACT_VM_DRYFIRE );
+        pOwner->m_flNextAttack = gpGlobals->curtime + SequenceDuration();
+        return;
+    }
 
-	SendWeaponAnim( ACT_VM_PRIMARYATTACK );
-	pOwner->m_flNextAttack = gpGlobals->curtime + 1;
+    m_iClip1 = m_iClip1 - 1;
 
-	CFlare *pFlare = CFlare::Create( pOwner->Weapon_ShootPosition(), pOwner->EyeAngles(), pOwner, FLARE_DURATION );
+    SendWeaponAnim( ACT_VM_PRIMARYATTACK );
+    pOwner->m_flNextAttack = gpGlobals->curtime + 1;
 
-	if ( pFlare == NULL )
-		return;
+    CFlare *pFlare = CFlare::Create( pOwner->Weapon_ShootPosition(), pOwner->EyeAngles(), pOwner, FLARE_DURATION );
 
-	Vector forward;
-	pOwner->EyeVectors( &forward );
+    if ( pFlare == NULL )
+        return;
 
-	pFlare->SetAbsVelocity( forward * 1500 );
+    Vector forward;
+    pOwner->EyeVectors( &forward );
 
-	WeaponSound( SINGLE );
+    pFlare->SetAbsVelocity( forward * 1500 );
+
+    WeaponSound( SINGLE );
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose:
 //-----------------------------------------------------------------------------
 void CFlaregun::SecondaryAttack( void )
 {
-	CBasePlayer *pOwner = ToBasePlayer( GetOwner() );
-	
-	if ( pOwner == NULL )
-		return;
+    CBasePlayer *pOwner = ToBasePlayer( GetOwner() );
 
-	if ( m_iClip1 <= 0 )
-	{
-		SendWeaponAnim( ACT_VM_DRYFIRE );
-		pOwner->m_flNextAttack = gpGlobals->curtime + SequenceDuration();
-		return;
-	}
+    if ( pOwner == NULL )
+        return;
 
-	m_iClip1 = m_iClip1 - 1;
+    if ( m_iClip1 <= 0 )
+    {
+        SendWeaponAnim( ACT_VM_DRYFIRE );
+        pOwner->m_flNextAttack = gpGlobals->curtime + SequenceDuration();
+        return;
+    }
 
-	SendWeaponAnim( ACT_VM_PRIMARYATTACK );
-	pOwner->m_flNextAttack = gpGlobals->curtime + 1;
+    m_iClip1 = m_iClip1 - 1;
 
-	CFlare *pFlare = CFlare::Create( pOwner->Weapon_ShootPosition(), pOwner->EyeAngles(), pOwner, FLARE_DURATION );
+    SendWeaponAnim( ACT_VM_PRIMARYATTACK );
+    pOwner->m_flNextAttack = gpGlobals->curtime + 1;
 
-	if ( pFlare == NULL )
-		return;
+    CFlare *pFlare = CFlare::Create( pOwner->Weapon_ShootPosition(), pOwner->EyeAngles(), pOwner, FLARE_DURATION );
 
-	Vector forward;
-	pOwner->EyeVectors( &forward );
+    if ( pFlare == NULL )
+        return;
 
-	pFlare->SetAbsVelocity( forward * 500 );
-	pFlare->SetGravity(1.0f);
-	pFlare->SetFriction( 0.85f );
-	pFlare->SetMoveType( MOVETYPE_FLYGRAVITY, MOVECOLLIDE_FLY_BOUNCE );
+    Vector forward;
+    pOwner->EyeVectors( &forward );
 
-	WeaponSound( SINGLE );
+    pFlare->SetAbsVelocity( forward * 500 );
+    pFlare->SetGravity(1.0f);
+    pFlare->SetFriction( 0.85f );
+    pFlare->SetMoveType( MOVETYPE_FLYGRAVITY, MOVECOLLIDE_FLY_BOUNCE );
+
+    WeaponSound( SINGLE );
 }
 
 #endif

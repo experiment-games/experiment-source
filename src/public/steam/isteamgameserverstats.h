@@ -1,4 +1,4 @@
-//====== Copyright © Valve Corporation, All rights reserved. =======
+//====== Copyright ï¿½ Valve Corporation, All rights reserved. =======
 //
 // Purpose: interface for game servers to steam stats and achievements
 //
@@ -17,7 +17,7 @@
 //-----------------------------------------------------------------------------
 class ISteamGameServerStats
 {
-   public:
+    public:
     // downloads stats for the user
     // returns a GSStatsReceived_t callback when completed
     // if the user has no stats, GSStatsReceived_t.m_eResult will be set to k_EResultFail

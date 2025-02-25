@@ -21,14 +21,14 @@
 
 class CHalfLife2Proxy : public CGameRulesProxy
 {
-   public:
+    public:
     DECLARE_CLASS( CHalfLife2Proxy, CGameRulesProxy );
     DECLARE_NETWORKCLASS();
 };
 
 class CHalfLife2 : public CSingleplayRules
 {
-   public:
+    public:
     DECLARE_CLASS( CHalfLife2, CSingleplayRules );
 
     // Damage Query Overrides.
@@ -45,7 +45,7 @@ class CHalfLife2 : public CSingleplayRules
     virtual void LevelInitPreEntity();
 #endif
 
-   private:
+    private:
     // Rules change for the mega physgun
     CNetworkVar( bool, m_bMegaPhysgun );
 
@@ -82,7 +82,7 @@ class CHalfLife2 : public CSingleplayRules
 
     virtual bool ShouldBurningPropsEmitLight();
 
-   public:
+    public:
     bool AllowDamage( CBaseEntity *pVictim, const CTakeDamageInfo &info );
 
     bool NPC_ShouldDropGrenade( CBasePlayer *pRecipient );
@@ -96,7 +96,7 @@ class CHalfLife2 : public CSingleplayRules
 
     virtual bool IsAlyxInDarknessMode();
 
-   private:
+    private:
     float m_flLastHealthDropTime;
     float m_flLastGrenadeDropTime;
 

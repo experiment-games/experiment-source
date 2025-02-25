@@ -19,7 +19,7 @@ class CIconPanel : public vgui::Panel
 {
     DECLARE_CLASS_SIMPLE( CIconPanel, vgui::Panel );
 
-   public:
+    public:
     CIconPanel( vgui::Panel *parent, const char *name );
 
     void Init( void );
@@ -33,7 +33,7 @@ class CIconPanel : public vgui::Panel
         m_IconColor = cColor;
     }
 
-   private:
+    private:
     CHudTexture *m_icon;
     char m_szIcon[128];
 

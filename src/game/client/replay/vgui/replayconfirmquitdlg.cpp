@@ -32,8 +32,8 @@ ConVar replay_quitmsg_dontaskagain( "replay_quitmsg_dontaskagain", "0", FCVAR_CL
 
 CReplayConfirmQuitDialog::CReplayConfirmQuitDialog( Panel *pParent )
     : BaseClass( pParent, "confirmquitdlg" ),
-      m_pDontShowAgain( NULL ),
-      m_pQuitButton( NULL )
+    m_pDontShowAgain( NULL ),
+    m_pQuitButton( NULL )
 {
     SetScheme( "ClientScheme" );
     InvalidateLayout( true, true );

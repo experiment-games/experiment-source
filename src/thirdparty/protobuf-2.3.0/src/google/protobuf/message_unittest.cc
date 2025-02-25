@@ -118,8 +118,8 @@ TEST(MessageTest, ParseFromFileDescriptor) {
 
 TEST(MessageTest, ParsePackedFromFileDescriptor) {
   string filename =
-      TestSourceDir() +
-      "/google/protobuf/testdata/golden_packed_fields_message";
+    TestSourceDir() +
+    "/google/protobuf/testdata/golden_packed_fields_message";
   int file = open(filename.c_str(), O_RDONLY | O_BINARY);
 
   unittest::TestPackedTypes message;
@@ -173,7 +173,7 @@ TEST(MessageTest, ParseHelpers) {
     io::ArrayInputStream stream(data.data(), data.size());
     protobuf_unittest::TestAllTypes message;
     EXPECT_FALSE(
-      message.ParseFromBoundedZeroCopyStream(&stream, data.size() + 1));
+    message.ParseFromBoundedZeroCopyStream(&stream, data.size() + 1));
   }
 }
 
@@ -260,7 +260,7 @@ TEST(MessageTest, ParseFailsOnInvalidMessageEnd) {
 TEST(MessageFactoryTest, GeneratedFactoryLookup) {
   EXPECT_EQ(
     MessageFactory::generated_factory()->GetPrototype(
-      protobuf_unittest::TestAllTypes::descriptor()),
+    protobuf_unittest::TestAllTypes::descriptor()),
     &protobuf_unittest::TestAllTypes::default_instance());
 }
 

@@ -20,7 +20,7 @@ struct SlideMaterialList_t
 
 class C_SlideshowDisplay : public C_BaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( C_SlideshowDisplay, CBaseEntity );
     DECLARE_CLIENTCLASS();
 
@@ -53,10 +53,10 @@ class C_SlideshowDisplay : public C_BaseEntity
         return m_iCurrentSlideIndex;
     }
 
-   private:
+    private:
     void BuildSlideShowImagesList( void );
 
-   private:
+    private:
     bool m_bEnabled;
 
     char m_szDisplayText[128];

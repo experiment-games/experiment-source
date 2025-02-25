@@ -53,7 +53,7 @@ ConVar cl_vote_ui_show_notification( "cl_vote_ui_show_notification", "0" );
 //-----------------------------------------------------------------------------
 class CTFVoteNotification : public CEconNotification
 {
-   public:
+    public:
     CTFVoteNotification( const char *pPlayerName )
         : CEconNotification()
     {
@@ -69,10 +69,10 @@ class CTFVoteNotification : public CEconNotification
     virtual void Trigger()
     {
         CTFGenericConfirmDialog *pDialog = ShowConfirmDialog( "#GameUI_Vote_Notification_Title",
-                                                              "#GameUI_Vote_Notification_Text",
-                                                              "#GameUI_Vote_Notification_View",
-                                                              "#cancel",
-                                                              &ConfirmShowVoteSetup );
+                                                            "#GameUI_Vote_Notification_Text",
+                                                            "#GameUI_Vote_Notification_View",
+                                                            "#cancel",
+                                                            &ConfirmShowVoteSetup );
         pDialog->SetContext( this );
         pDialog->AddStringToken( "initiator", m_wszPlayerName );
         // so we aren't deleted
@@ -106,7 +106,7 @@ class CTFVoteNotification : public CEconNotification
         pNotification->MarkForDeletion();
     }
 
-   public:
+    public:
     wchar_t m_wszPlayerName[MAX_PLAYER_NAME_LENGTH];
 };
 #endif  // TF_CLIENT_DLL

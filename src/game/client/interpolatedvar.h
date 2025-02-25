@@ -35,9 +35,9 @@
 #define INTERPOLATE_OMIT_UPDATE_LAST_NETWORKED ( 1 << 5 )
 
 #define EXTRA_INTERPOLATION_HISTORY_STORED 0.05f  // It stores this much extra interpolation history,
-                                                  // so you can always call Interpolate() this far
-                                                  // in the past from your last call and be able to
-                                                  // get an interpolated value.
+                                                // so you can always call Interpolate() this far
+                                                // in the past from your last call and be able to
+                                                // get an interpolated value.
 
 // this global keeps the last known server packet tick (to avoid calling engine->GetLastTimestamp() all the time)
 extern float g_flLastPacketTimestamp;
@@ -52,7 +52,7 @@ inline void Interpolation_SetLastPacketTimeStamp( float timestamp )
 // you want to enable extrapolation.
 class CInterpolationContext
 {
-   public:
+    public:
     CInterpolationContext()
     {
         m_bOldAllowExtrapolation = s_bAllowExtrapolation;
@@ -101,7 +101,7 @@ class CInterpolationContext
         return s_flLastTimeStamp;
     }
 
-   private:
+    private:
     CInterpolationContext *m_pNext;
     bool m_bOldAllowExtrapolation;
     float m_flOldLastTimeStamp;
@@ -140,7 +140,7 @@ inline QAngle ExtrapolateInterpolatedVarType( const QAngle &oldVal, const QAngle
 
 abstract_class IInterpolatedVar
 {
-   public:
+    public:
     virtual ~IInterpolatedVar() {}
 
     virtual void Setup( void *pValue, int type ) = 0;
@@ -261,7 +261,7 @@ struct CInterpolatedVarEntryBase
     int count;
     Type *value;
 
-   private:
+    private:
     CInterpolatedVarEntryBase( const CInterpolatedVarEntryBase &src );
 };
 
@@ -305,7 +305,7 @@ struct CInterpolatedVarEntryBase< Type, false >
 template < typename T >
 class CSimpleRingBuffer
 {
-   public:
+    public:
     CSimpleRingBuffer( int startSize = 4 )
     {
         m_pElements = 0;
@@ -431,7 +431,7 @@ class CSimpleRingBuffer
         }
     }
 
-   private:
+    private:
     inline int WrapRange( int i ) const
     {
         return ( i >= m_maxElement ) ? ( i - m_maxElement ) : i;
@@ -451,14 +451,14 @@ class CSimpleRingBuffer
 template < typename Type, bool IS_ARRAY >
 class CInterpolatedVarArrayBase : public IInterpolatedVar
 {
-   public:
+    public:
     friend class CInterpolatedVarPrivate;
 
     CInterpolatedVarArrayBase( const char *pDebugName = "no debug name" );
     virtual ~CInterpolatedVarArrayBase();
 
     // IInterpolatedVar overrides.
-   public:
+    public:
     virtual void Setup( void *pValue, int type );
     virtual void SetInterpolationAmount( float seconds );
     virtual void NoteLastNetworkedValue();
@@ -473,7 +473,7 @@ class CInterpolatedVarArrayBase : public IInterpolatedVar
         return m_pDebugName;
     }
 
-   public:
+    public:
     // Just like the IInterpolatedVar functions, but you can specify an interpolation amount.
     bool NoteChanged( float changetime, float interpolation_amount, bool bUpdateLastNetworkedValue );
     int Interpolate( float currentTime, float interpolation_amount );
@@ -524,14 +524,14 @@ class CInterpolatedVarArrayBase : public IInterpolatedVar
     }
     bool GetInterpolationInfo( float currentTime, int *pNewer, int *pOlder, int *pOldest );
 
-   protected:
+    protected:
     typedef CInterpolatedVarEntryBase< Type, IS_ARRAY > CInterpolatedVarEntry;
     typedef CSimpleRingBuffer< CInterpolatedVarEntry > CVarHistory;
     friend class CInterpolationInfo;
 
     class CInterpolationInfo
     {
-       public:
+        public:
         bool m_bHermite;
         int oldest;  // Only set if using hermite.
         int older;
@@ -539,7 +539,7 @@ class CInterpolatedVarArrayBase : public IInterpolatedVar
         float frac;
     };
 
-   protected:
+    protected:
     void RemoveOldEntries( float oldesttime );
     void RemoveEntriesPreviousTo( float flTime );
 
@@ -578,7 +578,7 @@ class CInterpolatedVarArrayBase : public IInterpolatedVar
 
     bool ValidOrder();
 
-   protected:
+    protected:
     // The underlying data element
     Type *m_pValue;
     CVarHistory m_VarHistory;
@@ -672,9 +672,9 @@ inline bool CInterpolatedVarArrayBase< Type, IS_ARRAY >::NoteChanged( float chan
     }
 
 #if 0
-	// Since we don't clean out the old entries until Interpolate(), make sure that there
-	// aren't any super old entries hanging around.
-	RemoveOldEntries( gpGlobals->curtime - interpolation_amount - 2.0f );
+    // Since we don't clean out the old entries until Interpolate(), make sure that there
+    // aren't any super old entries hanging around.
+    RemoveOldEntries( gpGlobals->curtime - interpolation_amount - 2.0f );
 #else
     // JAY: It doesn't seem like the above code is correct.  This is keeping more than two seconds of history
     // for variables that aren't being interpolated for some reason.  For example, the player model isn't drawn
@@ -938,10 +938,10 @@ inline void CInterpolatedVarArrayBase< Type, IS_ARRAY >::DebugInterpolate( Type 
         // previous velocity (out to a certain amount).
         int realOlder = info.newer + 1;
         if ( CInterpolationContext::IsExtrapolationAllowed() &&
-             IsValidIndex( realOlder ) &&
-             history[realOlder].changetime != 0.0 &&
-             interpolation_amount > 0.000001f &&
-             CInterpolationContext::GetLastTimeStamp() <= m_LastNetworkedTime )
+            IsValidIndex( realOlder ) &&
+            history[realOlder].changetime != 0.0 &&
+            interpolation_amount > 0.000001f &&
+            CInterpolationContext::GetLastTimeStamp() <= m_LastNetworkedTime )
         {
             // At this point, we know we're out of data and we have the ability to get a velocity to extrapolate with.
             //
@@ -1006,10 +1006,10 @@ inline int CInterpolatedVarArrayBase< Type, IS_ARRAY >::Interpolate( float curre
         // previous velocity (out to a certain amount).
         int realOlder = info.newer + 1;
         if ( CInterpolationContext::IsExtrapolationAllowed() &&
-             IsValidIndex( realOlder ) &&
-             history[realOlder].changetime != 0.0 &&
-             interpolation_amount > 0.000001f &&
-             CInterpolationContext::GetLastTimeStamp() <= m_LastNetworkedTime )
+            IsValidIndex( realOlder ) &&
+            history[realOlder].changetime != 0.0 &&
+            interpolation_amount > 0.000001f &&
+            CInterpolationContext::GetLastTimeStamp() <= m_LastNetworkedTime )
         {
             // At this point, we know we're out of data and we have the ability to get a velocity to extrapolate with.
             //
@@ -1118,7 +1118,7 @@ void CInterpolatedVarArrayBase< Type, IS_ARRAY >::GetDerivative_SmoothVelocity( 
             //
             // The End
             if ( m_InterpolationAmount > 0.000001f &&
-                 CInterpolationContext::GetLastTimeStamp() <= ( currentTime - m_InterpolationAmount ) )
+                CInterpolationContext::GetLastTimeStamp() <= ( currentTime - m_InterpolationAmount ) )
             {
                 bExtrapolate = true;
             }
@@ -1376,7 +1376,7 @@ inline void CInterpolatedVarArrayBase< Type, IS_ARRAY >::TimeFixup2_Hermite(
 
     // If times are not of the same interval renormalize the earlier sample to allow for uniform hermite spline interpolation
     if ( fabs( dt1 - dt2 ) > 0.0001f &&
-         dt2 > 0.0001f )
+        dt2 > 0.0001f )
     {
         // Renormalize
         float frac = dt1 / dt2;
@@ -1553,7 +1553,7 @@ inline bool CInterpolatedVarArrayBase< Type, IS_ARRAY >::ValidOrder()
 template < typename Type, int COUNT >
 class CInterpolatedVarArray : public CInterpolatedVarArrayBase< Type, true >
 {
-   public:
+    public:
     CInterpolatedVarArray( const char *pDebugName = "no debug name" )
         : CInterpolatedVarArrayBase< Type, true >( pDebugName )
     {
@@ -1568,7 +1568,7 @@ class CInterpolatedVarArray : public CInterpolatedVarArrayBase< Type, true >
 template < typename Type >
 class CInterpolatedVar : public CInterpolatedVarArrayBase< Type, false >
 {
-   public:
+    public:
     CInterpolatedVar( const char *pDebugName = NULL )
         : CInterpolatedVarArrayBase< Type, false >( pDebugName )
     {

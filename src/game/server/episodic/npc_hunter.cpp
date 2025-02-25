@@ -257,7 +257,7 @@ bool IsStriderBuster( CBaseEntity *pEntity )
         return false;
 
     if ( pEntity->m_iClassname == s_iszStriderBusterClassname ||
-         pEntity->m_iClassname == s_iszMagnadeClassname )
+        pEntity->m_iClassname == s_iszMagnadeClassname )
         return true;
 
     return false;
@@ -273,8 +273,8 @@ bool HateThisStriderBuster( CBaseEntity *pTarget )
     if ( pTarget->VPhysicsGetObject() )
     {
         if ( hunter_hate_held_striderbusters.GetBool() ||
-             hunter_hate_thrown_striderbusters.GetBool() ||
-             hunter_hate_attached_striderbusters.GetBool() )
+            hunter_hate_thrown_striderbusters.GetBool() ||
+            hunter_hate_attached_striderbusters.GetBool() )
         {
             if ( ( pTarget->VPhysicsGetObject()->GetGameFlags() & ( FVPHYSICS_PLAYER_HELD | FVPHYSICS_WAS_THROWN ) ) )
             {
@@ -307,7 +307,7 @@ class CHunterFlechette : public CPhysicsProp, public IParentPropInteraction
 {
     DECLARE_CLASS( CHunterFlechette, CPhysicsProp );
 
-   public:
+    public:
     CHunterFlechette();
     ~CHunterFlechette();
 
@@ -321,7 +321,7 @@ class CHunterFlechette : public CPhysicsProp, public IParentPropInteraction
         return m_bThrownBack;
     }
 
-   public:
+    public:
     void Spawn();
     void Activate();
     void Precache();
@@ -338,7 +338,7 @@ class CHunterFlechette : public CPhysicsProp, public IParentPropInteraction
     void OnParentCollisionInteraction( parentCollisionInteraction_t eType, int index, gamevcollisionevent_t *pEvent );
     void OnParentPhysGunDrop( CBasePlayer *pPhysGunUser, PhysGunDrop_t Reason );
 
-   protected:
+    protected:
     void SetupGlobalModelData();
 
     void StickTo( CBaseEntity *pOther, trace_t &tr );
@@ -914,7 +914,7 @@ void Hunter_ApplyChargeDamage( CBaseEntity *pHunter, CBaseEntity *pTarget, float
 //-----------------------------------------------------------------------------
 class CHunterTraceFilterSkipPhysics : public CTraceFilter
 {
-   public:
+    public:
     // It does have a base, but we'll never network anything below here..
     DECLARE_CLASS_NOBASE( CHunterTraceFilterSkipPhysics );
 
@@ -965,7 +965,7 @@ class CHunterTraceFilterSkipPhysics : public CTraceFilter
         return true;
     }
 
-   private:
+    private:
     const IHandleEntity *m_pPassEnt;
     int m_collisionGroup;
     float m_minMass;
@@ -986,13 +986,13 @@ inline void HunterTraceHull_SkipPhysics( const Vector &vecAbsStart, const Vector
 //-----------------------------------------------------------------------------
 class CAI_HunterEscortBehavior : public CAI_FollowBehavior
 {
-   public:
+    public:
     DECLARE_CLASS( CAI_HunterEscortBehavior, CAI_FollowBehavior );
 
     CAI_HunterEscortBehavior()
         : BaseClass( AI_FollowParams_t( AIF_HUNTER, true ) ),
-          m_flTimeEscortReturn( 0 ),
-          m_bEnabled( false )
+        m_flTimeEscortReturn( 0 ),
+        m_bEnabled( false )
     {
     }
 
@@ -1097,7 +1097,7 @@ class CNPC_Hunter : public CAI_BaseActor
 {
     DECLARE_CLASS( CNPC_Hunter, CAI_BaseActor );
 
-   public:
+    public:
     CNPC_Hunter();
     ~CNPC_Hunter();
 
@@ -1297,7 +1297,7 @@ class CNPC_Hunter : public CAI_BaseActor
     void StriderBusterAttached( CBaseEntity *pAttached );
     void StriderBusterDetached( CBaseEntity *pAttached );
 
-   private:
+    private:
     void ConsiderFlinching( const CTakeDamageInfo &info );
 
     void TaskFindDodgeActivity();
@@ -1912,9 +1912,9 @@ bool CNPC_Hunter::OverrideMoveFacing( const AILocalMoveGoal_t &move, float flInt
 
     // FIXME: this will break scripted sequences that walk when they have an enemy
     if ( GetEnemy() &&
-         ( bSideStepping ||
-           ( ( ( GetNavigator()->GetMovementActivity() == ACT_RUN ) || ( GetNavigator()->GetMovementActivity() == ACT_WALK ) ) &&
-             !IsCurSchedule( SCHED_HUNTER_TAKE_COVER_FROM_ENEMY, false ) ) ) )
+        ( bSideStepping ||
+            ( ( ( GetNavigator()->GetMovementActivity() == ACT_RUN ) || ( GetNavigator()->GetMovementActivity() == ACT_WALK ) ) &&
+            !IsCurSchedule( SCHED_HUNTER_TAKE_COVER_FROM_ENEMY, false ) ) ) )
     {
         Vector vecEnemyLKP = GetEnemyLKP();
 
@@ -2246,8 +2246,8 @@ void CNPC_Hunter::GatherConditions()
                 Vector2D vDirToHunter = GetAbsOrigin().AsVector2D() - pVehicle->GetAbsOrigin().AsVector2D();
                 vDirToHunter.NormalizeInPlace();
                 if ( DotProduct2D( vDirMovement, vDirToHunter ) > hunter_dodge_warning_cone.GetFloat() &&
-                     CalcDistanceSqrToLine2D( GetAbsOrigin().AsVector2D(), pVehicle->GetAbsOrigin().AsVector2D(), vecFuturePos, &t ) < Square( hunter_dodge_warning_width.GetFloat() * .5 ) &&
-                     t > 0.0 && t < 1.0 )
+                    CalcDistanceSqrToLine2D( GetAbsOrigin().AsVector2D(), pVehicle->GetAbsOrigin().AsVector2D(), vecFuturePos, &t ) < Square( hunter_dodge_warning_width.GetFloat() * .5 ) &&
+                    t > 0.0 && t < 1.0 )
                 {
                     if ( fabs( predictTime - hunter_dodge_warning.GetFloat() ) < .05 || random->RandomInt( 0, 3 ) )
                     {
@@ -2543,8 +2543,8 @@ void CNPC_Hunter::BuildScheduleTestBits()
 
     // Interrupt everything if we need to dodge.
     if ( !IsCurSchedule( SCHED_HUNTER_DODGE, false ) &&
-         !IsCurSchedule( SCHED_HUNTER_STAGGER, false ) &&
-         !IsCurSchedule( SCHED_ALERT_FACE_BESTSOUND, false ) )
+        !IsCurSchedule( SCHED_HUNTER_STAGGER, false ) &&
+        !IsCurSchedule( SCHED_ALERT_FACE_BESTSOUND, false ) )
     {
         SetCustomInterruptCondition( COND_HUNTER_INCOMING_VEHICLE );
         SetCustomInterruptCondition( COND_HEAR_PHYSICS_DANGER );
@@ -2800,14 +2800,14 @@ int CNPC_Hunter::SelectCombatSchedule()
 
     // Sidestep every so often if my enemy is nearby and facing me.
     /*
-      if ( gpGlobals->curtime > m_flNextSideStepTime )
-      {
+    if ( gpGlobals->curtime > m_flNextSideStepTime )
+    {
         if ( HasCondition( COND_ENEMY_FACING_ME ) && ( UTIL_DistApprox( GetEnemy()->GetAbsOrigin(), GetAbsOrigin() ) < HUNTER_FACE_ENEMY_DIST ) )
         {
-          m_flNextSideStepTime = gpGlobals->curtime + random->RandomFloat( 1.0f, 3.0f );
-          return SCHED_HUNTER_SIDESTEP;
+        m_flNextSideStepTime = gpGlobals->curtime + random->RandomFloat( 1.0f, 3.0f );
+        return SCHED_HUNTER_SIDESTEP;
         }
-      }
+    }
     */
     if ( HasCondition( COND_HEAVY_DAMAGE ) && ( gpGlobals->curtime > m_flNextSideStepTime ) )
     {
@@ -2824,10 +2824,10 @@ int CNPC_Hunter::SelectCombatSchedule()
                 return SCHED_HUNTER_CHARGE_ENEMY;
             }
             /*
-                  else
-                  {
+                else
+                {
                     return SCHED_HUNTER_SIDESTEP;
-                  }
+                }
             */
         }
 
@@ -3052,7 +3052,7 @@ int CNPC_Hunter::SelectSchedule()
 
     // back away if there's a magnade glued to my head.
     if ( hunter_retreat_striderbusters.GetBool() /*&& GetEnemy() && ( GetEnemy()->IsPlayer() )*/
-         && ( m_hAttachedBusters.Count() > 0 ) && m_fCorneredTimer < gpGlobals->curtime )
+        && ( m_hAttachedBusters.Count() > 0 ) && m_fCorneredTimer < gpGlobals->curtime )
     {
         return SCHED_HUNTER_TAKE_COVER_FROM_ENEMY;
     }
@@ -3870,23 +3870,23 @@ bool CNPC_Hunter::EnemyIsRightInFrontOfMe( CBaseEntity **pEntity )
 void CNPC_Hunter::ChargeLookAhead( void )
 {
 #if 0
-	trace_t	tr;
-	Vector vecForward;
-	GetVectors( &vecForward, NULL, NULL );
-	Vector vecTestPos = GetAbsOrigin() + ( vecForward * m_flGroundSpeed * 0.75 );
-	Vector testHullMins = GetHullMins();
-	testHullMins.z += (StepHeight() * 2);
-	HunterTraceHull_SkipPhysics( GetAbsOrigin(), vecTestPos, testHullMins, GetHullMaxs(), MASK_SHOT_HULL, this, COLLISION_GROUP_NONE, &tr, VPhysicsGetObject()->GetMass() * 0.5 );
+    trace_t	tr;
+    Vector vecForward;
+    GetVectors( &vecForward, NULL, NULL );
+    Vector vecTestPos = GetAbsOrigin() + ( vecForward * m_flGroundSpeed * 0.75 );
+    Vector testHullMins = GetHullMins();
+    testHullMins.z += (StepHeight() * 2);
+    HunterTraceHull_SkipPhysics( GetAbsOrigin(), vecTestPos, testHullMins, GetHullMaxs(), MASK_SHOT_HULL, this, COLLISION_GROUP_NONE, &tr, VPhysicsGetObject()->GetMass() * 0.5 );
 
-	//NDebugOverlay::Box( tr.startpos, testHullMins, GetHullMaxs(), 0, 255, 0, true, 0.1f );
-	//NDebugOverlay::Box( vecTestPos, testHullMins, GetHullMaxs(), 255, 0, 0, true, 0.1f );
+    //NDebugOverlay::Box( tr.startpos, testHullMins, GetHullMaxs(), 0, 255, 0, true, 0.1f );
+    //NDebugOverlay::Box( vecTestPos, testHullMins, GetHullMaxs(), 255, 0, 0, true, 0.1f );
 
-	if ( tr.fraction != 1.0 )
-	{
-		// dvs: TODO:
-		// Start playing the hit animation
-		//AddGesture( ACT_HUNTER_CHARGE_ANTICIPATION );
-	}
+    if ( tr.fraction != 1.0 )
+    {
+        // dvs: TODO:
+        // Start playing the hit animation
+        //AddGesture( ACT_HUNTER_CHARGE_ANTICIPATION );
+    }
 #endif
 }
 
@@ -4550,14 +4550,14 @@ bool CNPC_Hunter::IsValidEnemy( CBaseEntity *pTarget )
         if ( pTarget->VPhysicsGetObject() )
         {
             if ( ( pTarget->VPhysicsGetObject()->GetGameFlags() & FVPHYSICS_PLAYER_HELD ) &&
-                 hunter_hate_held_striderbusters.GetBool() )
+                hunter_hate_held_striderbusters.GetBool() )
             {
                 if ( gpGlobals->curtime - StriderBuster_GetPickupTime( pTarget ) > hunter_hate_held_striderbusters_delay.GetFloat() )
                 {
                     if ( StriderBuster_NumFlechettesAttached( pTarget ) <= 2 )
                     {
                         if ( m_EscortBehavior.GetEscortTarget() &&
-                             ( m_EscortBehavior.GetEscortTarget()->GetAbsOrigin().AsVector2D() - pTarget->GetAbsOrigin().AsVector2D() ).LengthSqr() < Square( hunter_hate_held_striderbusters_tolerance.GetFloat() ) )
+                            ( m_EscortBehavior.GetEscortTarget()->GetAbsOrigin().AsVector2D() - pTarget->GetAbsOrigin().AsVector2D() ).LengthSqr() < Square( hunter_hate_held_striderbusters_tolerance.GetFloat() ) )
                         {
                             return true;
                         }
@@ -4573,9 +4573,9 @@ bool CNPC_Hunter::IsValidEnemy( CBaseEntity *pTarget )
             {
                 float t;
                 float dist = CalcDistanceSqrToLineSegment2D( m_EscortBehavior.GetEscortTarget()->GetAbsOrigin().AsVector2D(),
-                                                             pTarget->GetAbsOrigin().AsVector2D(),
-                                                             pTarget->GetAbsOrigin().AsVector2D() + pTarget->GetSmoothedVelocity().AsVector2D(),
-                                                             &t );
+                                                            pTarget->GetAbsOrigin().AsVector2D(),
+                                                            pTarget->GetAbsOrigin().AsVector2D() + pTarget->GetSmoothedVelocity().AsVector2D(),
+                                                            &t );
 
                 if ( t > 0 && dist < Square( hunter_hate_thrown_striderbusters_tolerance.GetFloat() ) )
                 {
@@ -4748,7 +4748,7 @@ int CNPC_Hunter::MeleeAttack1Conditions( float flDot, float flDist )
         return COND_NONE;
 
     if ( ( gpGlobals->curtime < m_flNextMeleeTime ) &&  // allow berzerk bashing if cornered
-         !( m_hAttachedBusters.Count() > 0 && gpGlobals->curtime < m_fCorneredTimer ) )
+        !( m_hAttachedBusters.Count() > 0 && gpGlobals->curtime < m_fCorneredTimer ) )
     {
         return COND_NONE;
     }
@@ -4836,15 +4836,15 @@ int CNPC_Hunter::MeleeAttack1Conditions( float flDot, float flDist )
     // dvs TODO: incorporate this
     /*if ( tr.m_pEnt->IsBSPModel() )
     {
-      // The trace hit something solid, but it's not the enemy. If this item is closer to the hunter than
-      // the enemy is, treat this as an obstruction.
-      Vector vecToEnemy = GetEnemy()->WorldSpaceCenter() - WorldSpaceCenter();
-      Vector vecTrace = tr.endpos - tr.startpos;
+    // The trace hit something solid, but it's not the enemy. If this item is closer to the hunter than
+    // the enemy is, treat this as an obstruction.
+    Vector vecToEnemy = GetEnemy()->WorldSpaceCenter() - WorldSpaceCenter();
+    Vector vecTrace = tr.endpos - tr.startpos;
 
-      if ( vecTrace.Length2DSqr() < vecToEnemy.Length2DSqr() )
-      {
+    if ( vecTrace.Length2DSqr() < vecToEnemy.Length2DSqr() )
+    {
         return COND_HUNTER_LOCAL_MELEE_OBSTRUCTION;
-      }
+    }
     }*/
 
     if ( !tr.m_pEnt->IsWorld() && GetEnemy() && GetEnemy()->GetGroundEntity() == tr.m_pEnt )
@@ -5031,30 +5031,30 @@ CBaseEntity *CNPC_Hunter::MeleeAttack( float flDist, int iDamage, QAngle &qaView
 
             /*if ( UTIL_ShouldShowBlood( pPlayer->BloodColor() ) )
             {
-              // Spray some of the player's blood on the hunter.
-              trace_t tr;
+            // Spray some of the player's blood on the hunter.
+            trace_t tr;
 
-              Vector vecHunterEyePos; // = EyePosition();
-              QAngle angDiscard;
-              GetBonePosition( LookupBone( "MiniStrider.top_eye_bone" ), vecHunterEyePos, angDiscard );
+            Vector vecHunterEyePos; // = EyePosition();
+            QAngle angDiscard;
+            GetBonePosition( LookupBone( "MiniStrider.top_eye_bone" ), vecHunterEyePos, angDiscard );
 
-              Vector vecPlayerEyePos = pPlayer->EyePosition();
+            Vector vecPlayerEyePos = pPlayer->EyePosition();
 
-              Vector vecDir = vecHunterEyePos - vecPlayerEyePos;
-              float flLen = VectorNormalize( vecDir );
+            Vector vecDir = vecHunterEyePos - vecPlayerEyePos;
+            float flLen = VectorNormalize( vecDir );
 
-              Vector vecStart = vecPlayerEyePos - ( vecDir * 64 );
-              Vector vecEnd = vecPlayerEyePos + ( vecDir * ( flLen + 64 ) );
+            Vector vecStart = vecPlayerEyePos - ( vecDir * 64 );
+            Vector vecEnd = vecPlayerEyePos + ( vecDir * ( flLen + 64 ) );
 
-              NDebugOverlay::HorzArrow( vecStart, vecEnd, 16, 255, 255, 0, 255, false, 10 );
+            NDebugOverlay::HorzArrow( vecStart, vecEnd, 16, 255, 255, 0, 255, false, 10 );
 
-              UTIL_TraceLine( vecStart, vecEnd, MASK_SHOT, pPlayer, COLLISION_GROUP_NONE, &tr );
+            UTIL_TraceLine( vecStart, vecEnd, MASK_SHOT, pPlayer, COLLISION_GROUP_NONE, &tr );
 
-              if ( tr.m_pEnt )
-              {
+            if ( tr.m_pEnt )
+            {
                 Msg( "Hit %s!!!\n", tr.m_pEnt->GetDebugName() );
                 UTIL_DecalTrace( &tr, "Blood" );
-              }
+            }
             }*/
         }
         else if ( !pPlayer )
@@ -5257,9 +5257,9 @@ void CNPC_Hunter::TraceAttack( const CTakeDamageInfo &inputInfo, const Vector &v
 
     // HUnters have special resisitance to some types of damage.
     if ( ( info.GetDamageType() & DMG_BULLET ) ||
-         ( info.GetDamageType() & DMG_BUCKSHOT ) ||
-         ( info.GetDamageType() & DMG_CLUB ) ||
-         ( info.GetDamageType() & DMG_NEVERGIB ) )
+        ( info.GetDamageType() & DMG_BUCKSHOT ) ||
+        ( info.GetDamageType() & DMG_CLUB ) ||
+        ( info.GetDamageType() & DMG_NEVERGIB ) )
     {
         float flScale = 1.0;
 
@@ -5557,7 +5557,7 @@ int CNPC_Hunter::OnTakeDamage_Alive( const CTakeDamageInfo &info )
 
     bool bHitByUnoccupiedCar = false;
     if ( ( ( info.GetDamageType() & DMG_CRUSH ) && ( pAttacker && pAttacker->IsPlayer() ) ) ||
-         ( info.GetDamageType() & DMG_VEHICLE ) )
+        ( info.GetDamageType() & DMG_VEHICLE ) )
     {
         // myInfo, not info! it may have been modified above.
         float flDamage = myInfo.GetDamage();
@@ -5570,8 +5570,8 @@ int CNPC_Hunter::OnTakeDamage_Alive( const CTakeDamageInfo &info )
         {
             CBaseEntity *pInflictor = info.GetInflictor();
             if ( ( info.GetDamageType() & DMG_VEHICLE ) ||
-                 ( pInflictor && pInflictor->GetServerVehicle() &&
-                   ( ( bHitByUnoccupiedCar = ( dynamic_cast< CPropVehicleDriveable * >( pInflictor ) && static_cast< CPropVehicleDriveable * >( pInflictor )->GetDriver() == NULL ) ) == false ) ) )
+                ( pInflictor && pInflictor->GetServerVehicle() &&
+                    ( ( bHitByUnoccupiedCar = ( dynamic_cast< CPropVehicleDriveable * >( pInflictor ) && static_cast< CPropVehicleDriveable * >( pInflictor )->GetDriver() == NULL ) ) == false ) ) )
             {
                 // Adjust the damage from vehicles.
                 flDamage *= sk_hunter_vehicle_damage_scale.GetFloat();
@@ -5620,9 +5620,9 @@ int CNPC_Hunter::OnTakeDamage_Alive( const CTakeDamageInfo &info )
     float flScale = 1.0;
 
     if ( pAttacker &&
-         ( ( pAttacker->Classify() == CLASS_CITIZEN_REBEL ) ||
-           ( pAttacker->Classify() == CLASS_PLAYER_ALLY ) ||
-           ( pAttacker->Classify() == CLASS_PLAYER_ALLY_VITAL ) ) )
+        ( ( pAttacker->Classify() == CLASS_CITIZEN_REBEL ) ||
+            ( pAttacker->Classify() == CLASS_PLAYER_ALLY ) ||
+            ( pAttacker->Classify() == CLASS_PLAYER_ALLY_VITAL ) ) )
     {
         flScale *= sk_hunter_citizen_damage_scale.GetFloat();
     }
@@ -6214,11 +6214,11 @@ void CNPC_Hunter::FootFX( const Vector &origin )
     float yaw = random->RandomInt(0,120);
     for ( int i = 0; i < 3; i++ )
     {
-      Vector dir = UTIL_YawToVector( yaw + i*120 ) * 10;
-      VectorNormalize( dir );
-      dir.z = 0.25;
-      VectorNormalize( dir );
-      g_pEffects->Dust( tr.endpos, dir, 12, 50 );
+    Vector dir = UTIL_YawToVector( yaw + i*120 ) * 10;
+    VectorNormalize( dir );
+    dir.z = 0.25;
+    VectorNormalize( dir );
+    g_pEffects->Dust( tr.endpos, dir, 12, 50 );
     }*/
 }
 
@@ -6473,9 +6473,9 @@ void CNPC_Hunter::UpdateAim()
     int eActivity = GetActivity();
 
     if ( GetEnemy() &&
-         GetState() != NPC_STATE_SCRIPT &&
-         ( eActivity != ACT_HUNTER_CHARGE_CRASH ) &&
-         ( eActivity != ACT_HUNTER_CHARGE_HIT ) )
+        GetState() != NPC_STATE_SCRIPT &&
+        ( eActivity != ACT_HUNTER_CHARGE_CRASH ) &&
+        ( eActivity != ACT_HUNTER_CHARGE_HIT ) )
     {
         Vector vecShootOrigin;
 
@@ -6496,11 +6496,11 @@ void CNPC_Hunter::UpdateAim()
 bool CNPC_Hunter::CanBecomeRagdoll()
 {
     return ( m_nKillingDamageType & DMG_CRUSH ) ||
-           IsCurSchedule( SCHED_DIE, false ) ||                  // Finished playing death anim, time to ragdoll
-           IsCurSchedule( SCHED_HUNTER_CHARGE_ENEMY, false ) ||  // While moving, it looks better to ragdoll instantly
-           IsCurSchedule( SCHED_SCRIPTED_RUN, false ) ||
-           ( GetActivity() == ACT_WALK ) || ( GetActivity() == ACT_RUN ) ||
-           GetCurSchedule() == NULL;  // Failsafe
+            IsCurSchedule( SCHED_DIE, false ) ||                  // Finished playing death anim, time to ragdoll
+            IsCurSchedule( SCHED_HUNTER_CHARGE_ENEMY, false ) ||  // While moving, it looks better to ragdoll instantly
+            IsCurSchedule( SCHED_SCRIPTED_RUN, false ) ||
+            ( GetActivity() == ACT_WALK ) || ( GetActivity() == ACT_RUN ) ||
+            GetCurSchedule() == NULL;  // Failsafe
 }
 
 //-----------------------------------------------------------------------------
@@ -6516,8 +6516,8 @@ Activity CNPC_Hunter::GetDeathActivity()
 void CAI_HunterEscortBehavior::OnDamage( const CTakeDamageInfo &info )
 {
     if ( info.GetDamage() > 0 && info.GetAttacker()->IsPlayer() &&
-         GetFollowTarget() && ( AIGetNumFollowers( GetFollowTarget() ) > 1 ) &&
-         ( GetOuter()->GetSquad()->GetSquadSoundWaitTime() <= gpGlobals->curtime ) )  // && !FarFromFollowTarget()
+        GetFollowTarget() && ( AIGetNumFollowers( GetFollowTarget() ) > 1 ) &&
+        ( GetOuter()->GetSquad()->GetSquadSoundWaitTime() <= gpGlobals->curtime ) )  // && !FarFromFollowTarget()
     {
         // Start the clock ticking. We'll return the the strider when the timer elapses.
         m_flTimeEscortReturn = gpGlobals->curtime + random->RandomFloat( 15.0f, 25.0f );
@@ -6846,14 +6846,14 @@ void CAI_HunterEscortBehavior::DistributeFreeHunters()
     }
 
 #if 0
-	CBaseEntity *pHunterMaker = gEntList.FindEntityByClassname( NULL, "npc_hunter_maker" ); // TODO: this picks the same one every time!
-	if ( pHunterMaker )
-	{
-		for ( i = 0; i < freeHunters.Count(); i++ )
-		{
-			freeHunters[i]->m_EscortBehavior.SetFollowTarget( pHunterMaker );
-		}
-	}
+    CBaseEntity *pHunterMaker = gEntList.FindEntityByClassname( NULL, "npc_hunter_maker" ); // TODO: this picks the same one every time!
+    if ( pHunterMaker )
+    {
+        for ( i = 0; i < freeHunters.Count(); i++ )
+        {
+            freeHunters[i]->m_EscortBehavior.SetFollowTarget( pHunterMaker );
+        }
+    }
 #endif
 }
 
@@ -6946,7 +6946,7 @@ class CHunterMaker : public CTemplateNPCMaker
 {
     typedef CTemplateNPCMaker BaseClass;
 
-   public:
+    public:
     void MakeMultipleNPCS( int nNPCs )
     {
         const float MIN_HEALTH_PCT = 0.2;

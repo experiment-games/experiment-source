@@ -44,7 +44,7 @@ class CHUDAutoAim : public CHudElement, public vgui::Panel
 {
     DECLARE_CLASS_SIMPLE( CHUDAutoAim, vgui::Panel );
 
-   public:
+    public:
     CHUDAutoAim( const char *pElementName );
     virtual ~CHUDAutoAim( void );
 
@@ -55,7 +55,7 @@ class CHUDAutoAim : public CHudElement, public vgui::Panel
     virtual void OnThink();
     virtual void Paint();
 
-   private:
+    private:
     void ResetAlpha()
     {
         m_alpha = 0;
@@ -257,112 +257,112 @@ void CHUDAutoAim::OnThink()
             }
 
 #if 0
-			bool doScaling = hud_autoaim_scale_icon.GetBool();
+            bool doScaling = hud_autoaim_scale_icon.GetBool();
 
-			// These are the X & Y coords of where the crosshair should be. Default to 
-			// returning to the center of the screen if there is no target.
-			int goalx = ScreenWidth() / 2;
-			int goaly = ScreenHeight() / 2;
-			int goalalpha = 0;
-			float goalscale = AUTOAIM_MIN_SCALE;
-			float speed = AUTOAIM_OFFTARGET_CROSSHAIR_SPEED;
+            // These are the X & Y coords of where the crosshair should be. Default to
+            // returning to the center of the screen if there is no target.
+            int goalx = ScreenWidth() / 2;
+            int goaly = ScreenHeight() / 2;
+            int goalalpha = 0;
+            float goalscale = AUTOAIM_MIN_SCALE;
+            float speed = AUTOAIM_OFFTARGET_CROSSHAIR_SPEED;
 
-			if( pTarget )
-			{
-				// Get the autoaim crosshair onto the target.
-				Vector screen;
+            if( pTarget )
+            {
+                // Get the autoaim crosshair onto the target.
+                Vector screen;
 
-				// Center the crosshair on the entity.
-				if( doScaling )
-				{
-					// Put the crosshair over the center of the target.
-					ScreenTransform( pTarget->WorldSpaceCenter(), screen );
-				}
-				else
-				{
-					// Put the crosshair exactly where the player is aiming.
-					ScreenTransform( pLocalPlayer->m_HL2Local.m_vecAutoAimPoint, screen );
-				}
+                // Center the crosshair on the entity.
+                if( doScaling )
+                {
+                    // Put the crosshair over the center of the target.
+                    ScreenTransform( pTarget->WorldSpaceCenter(), screen );
+                }
+                else
+                {
+                    // Put the crosshair exactly where the player is aiming.
+                    ScreenTransform( pLocalPlayer->m_HL2Local.m_vecAutoAimPoint, screen );
+                }
 
-				// Set Goal Position and speed.
-				goalx += 0.5f * screen[0] * ScreenWidth() + 0.5f;
-				goaly -= 0.5f * screen[1] * ScreenHeight() + 0.5f;
-				speed = AUTOAIM_ONTARGET_CROSSHAIR_SPEED;
+                // Set Goal Position and speed.
+                goalx += 0.5f * screen[0] * ScreenWidth() + 0.5f;
+                goaly -= 0.5f * screen[1] * ScreenHeight() + 0.5f;
+                speed = AUTOAIM_ONTARGET_CROSSHAIR_SPEED;
 
-				goalalpha = AUTOAIM_MAX_ALPHA;
+                goalalpha = AUTOAIM_MAX_ALPHA;
 
-				if( doScaling )
-				{
-					// Scale the crosshair to envelope the entity's bounds on screen.
-					Vector vecMins, vecMaxs;
-					Vector vecScreenMins, vecScreenMaxs;
+                if( doScaling )
+                {
+                    // Scale the crosshair to envelope the entity's bounds on screen.
+                    Vector vecMins, vecMaxs;
+                    Vector vecScreenMins, vecScreenMaxs;
 
-					// Get mins and maxs in world space
-					vecMins = pTarget->GetAbsOrigin() + pTarget->WorldAlignMins();
-					vecMaxs = pTarget->GetAbsOrigin() + pTarget->WorldAlignMaxs();
+                    // Get mins and maxs in world space
+                    vecMins = pTarget->GetAbsOrigin() + pTarget->WorldAlignMins();
+                    vecMaxs = pTarget->GetAbsOrigin() + pTarget->WorldAlignMaxs();
 
-					// Project them to screen
-					ScreenTransform( vecMins, vecScreenMins );
-					ScreenTransform( vecMaxs, vecScreenMaxs );
+                    // Project them to screen
+                    ScreenTransform( vecMins, vecScreenMins );
+                    ScreenTransform( vecMaxs, vecScreenMaxs );
 
-					vecScreenMins.y = (ScreenWidth()/2) - 0.5f * vecScreenMins.y * ScreenWidth() + 0.5f;
-					vecScreenMaxs.y = (ScreenWidth()/2) - 0.5f * vecScreenMaxs.y * ScreenWidth() + 0.5f;
+                    vecScreenMins.y = (ScreenWidth()/2) - 0.5f * vecScreenMins.y * ScreenWidth() + 0.5f;
+                    vecScreenMaxs.y = (ScreenWidth()/2) - 0.5f * vecScreenMaxs.y * ScreenWidth() + 0.5f;
 
-					float screenSize = vecScreenMins.y - vecScreenMaxs.y;
+                    float screenSize = vecScreenMins.y - vecScreenMaxs.y;
 
-					// Set goal scale
-					goalscale = screenSize / 64.0f; // 64 is the width of the crosshair art.
-				}
-				else
-				{
-					goalscale = 1.0f;
-				}
-			}
+                    // Set goal scale
+                    goalscale = screenSize / 64.0f; // 64 is the width of the crosshair art.
+                }
+                else
+                {
+                    goalscale = 1.0f;
+                }
+            }
 
-			// Now approach the goal, alpha, and scale
-			Vector vecGoal( goalx, goaly, 0 );
-			Vector vecDir = vecGoal - m_vecPos;
-			float flDistRemaining = VectorNormalize( vecDir );
-			m_vecPos += vecDir * min(flDistRemaining, (speed * gpGlobals->frametime) );
+            // Now approach the goal, alpha, and scale
+            Vector vecGoal( goalx, goaly, 0 );
+            Vector vecDir = vecGoal - m_vecPos;
+            float flDistRemaining = VectorNormalize( vecDir );
+            m_vecPos += vecDir * min(flDistRemaining, (speed * gpGlobals->frametime) );
 
-			// Lerp and Clamp scale
-			float scaleDelta = fabs( goalscale - m_scale );
-			float scaleMove = MIN( AUTOAIM_SCALE_SPEED * gpGlobals->frametime, scaleDelta );
-			if( m_scale < goalscale )
-			{
-				m_scale += scaleMove;
-			}
-			else if( m_scale > goalscale )
-			{
-				m_scale -= scaleMove;
-			}
-			if( m_scale > AUTOAIM_MAX_SCALE )
-			{
-				m_scale = AUTOAIM_MAX_SCALE;
-			}
-			else if( m_scale < AUTOAIM_MIN_SCALE )
-			{
-				m_scale = AUTOAIM_MIN_SCALE;
-			}
+            // Lerp and Clamp scale
+            float scaleDelta = fabs( goalscale - m_scale );
+            float scaleMove = MIN( AUTOAIM_SCALE_SPEED * gpGlobals->frametime, scaleDelta );
+            if( m_scale < goalscale )
+            {
+                m_scale += scaleMove;
+            }
+            else if( m_scale > goalscale )
+            {
+                m_scale -= scaleMove;
+            }
+            if( m_scale > AUTOAIM_MAX_SCALE )
+            {
+                m_scale = AUTOAIM_MAX_SCALE;
+            }
+            else if( m_scale < AUTOAIM_MIN_SCALE )
+            {
+                m_scale = AUTOAIM_MIN_SCALE;
+            }
 
-			if( goalalpha > m_alpha )
-			{
-				m_alpha += AUTOAIM_ALPHA_UP_SPEED * gpGlobals->frametime;
-			}
-			else if( goalalpha < m_alpha )
-			{
-				m_alpha -= AUTOAIM_ALPHA_DOWN_SPEED * gpGlobals->frametime;
-			}
+            if( goalalpha > m_alpha )
+            {
+                m_alpha += AUTOAIM_ALPHA_UP_SPEED * gpGlobals->frametime;
+            }
+            else if( goalalpha < m_alpha )
+            {
+                m_alpha -= AUTOAIM_ALPHA_DOWN_SPEED * gpGlobals->frametime;
+            }
 
-			// Clamp alpha
-			if( m_alpha < 0 )
-			{
-				m_alpha = 0;
-			}
-			else if( m_alpha > AUTOAIM_MAX_ALPHA )
-			{
-				m_alpha = AUTOAIM_MAX_ALPHA;
-			}
+            // Clamp alpha
+            if( m_alpha < 0 )
+            {
+                m_alpha = 0;
+            }
+            else if( m_alpha > AUTOAIM_MAX_ALPHA )
+            {
+                m_alpha = AUTOAIM_MAX_ALPHA;
+            }
 #endif
         }
         break;

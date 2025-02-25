@@ -35,7 +35,7 @@ enum EParentalFeature
 
 class ISteamParentalSettings
 {
-   public:
+    public:
     virtual bool BIsParentalLockEnabled() = 0;
     virtual bool BIsParentalLockLocked() = 0;
 

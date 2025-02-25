@@ -62,7 +62,7 @@ struct ShaderParamInfo_t
 //-----------------------------------------------------------------------------
 abstract_class IShader
 {
-   public:
+    public:
     // Returns the shader name
     virtual char const* GetName() const = 0;
 

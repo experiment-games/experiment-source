@@ -40,7 +40,7 @@ EXTERN_SEND_TABLE( DT_EffectData );
 // This is the class that holds whatever data we're sending down to the client to make the effect.
 class CEffectData
 {
-   public:
+    public:
     Vector m_vOrigin;
     Vector m_vStart;
     Vector m_vNormal;
@@ -72,7 +72,7 @@ class CEffectData
     te_tf_particle_effects_control_point_t m_ControlPoint1;
 
     // Don't mess with stuff below here. DispatchEffect handles all of this.
-   public:
+    public:
     CEffectData()
     {
         m_vOrigin.Init();
@@ -119,7 +119,7 @@ class CEffectData
     int entindex() const;
 #endif
 
-   private:
+    private:
 #ifdef CLIENT_DLL
     DECLARE_CLIENTCLASS_NOBASE()
 #else

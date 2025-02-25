@@ -59,7 +59,7 @@ const float MinObstacleAreaWidth = 10.0f;       // min width of a nav area we wi
  */
 class ApproachAreaCost
 {
-   public:
+    public:
     float operator()( CNavArea *area, CNavArea *fromArea, const CNavLadder *ladder, const CFuncElevator *elevator )
     {
         // check if this area is "blocked"
@@ -490,7 +490,7 @@ void CNavLadder::ConnectGeneratedLadder( float maxHeightAboveTopArea )
 //--------------------------------------------------------------------------------------------------------
 class JumpConnector
 {
-   public:
+    public:
     bool operator()( CNavArea *jumpArea )
     {
         if ( !( jumpArea->GetAttributes() & NAV_MESH_JUMP ) )
@@ -514,7 +514,7 @@ class JumpConnector
         return true;
     }
 
-   private:
+    private:
     struct Connection
     {
         CNavArea *source;
@@ -1520,7 +1520,7 @@ static void splitX( CNavArea *area )
 
     const float epsilon = 0.1f;
     if ( fabs( split - area->GetCorner( NORTH_WEST ).x ) < epsilon ||
-         fabs( split - area->GetCorner( SOUTH_EAST ).x ) < epsilon )
+        fabs( split - area->GetCorner( SOUTH_EAST ).x ) < epsilon )
     {
         // too small to subdivide
         return;
@@ -1552,7 +1552,7 @@ static void splitY( CNavArea *area )
 
     const float epsilon = 0.1f;
     if ( fabs( split - area->GetCorner( NORTH_WEST ).y ) < epsilon ||
-         fabs( split - area->GetCorner( SOUTH_EAST ).y ) < epsilon )
+        fabs( split - area->GetCorner( SOUTH_EAST ).y ) < epsilon )
     {
         // too small to subdivide
         return;
@@ -1650,7 +1650,7 @@ static bool testStitchConnection( CNavArea *source, CNavArea *target, const Vect
 //--------------------------------------------------------------------------------------------------------
 class IncrementallyGeneratedAreas
 {
-   public:
+    public:
     bool operator()( CNavArea *area )
     {
         return area->HasNodes();
@@ -1676,7 +1676,7 @@ void CNavMesh::StitchGeneratedAreas( void )
 //--------------------------------------------------------------------------------------------------------
 class AreaSet
 {
-   public:
+    public:
     AreaSet( CUtlVector< CNavArea * > *areas )
     {
         m_areas = areas;
@@ -1687,7 +1687,7 @@ class AreaSet
         return ( m_areas->HasElement( area ) );
     }
 
-   private:
+    private:
     CUtlVector< CNavArea * > *m_areas;
 };
 
@@ -2096,9 +2096,9 @@ void CNavMesh::MergeGeneratedAreas( void )
                     continue;
 
                 if ( area->m_node[NORTH_WEST] == adjArea->m_node[SOUTH_WEST] &&
-                     area->m_node[NORTH_EAST] == adjArea->m_node[SOUTH_EAST] &&
-                     area->GetAttributes() == adjArea->GetAttributes() &&
-                     area->IsCoplanar( adjArea ) )
+                    area->m_node[NORTH_EAST] == adjArea->m_node[SOUTH_EAST] &&
+                    area->GetAttributes() == adjArea->GetAttributes() &&
+                    area->IsCoplanar( adjArea ) )
                 {
                     // merge vertical
                     area->m_node[NORTH_WEST] = adjArea->m_node[NORTH_WEST];
@@ -2128,9 +2128,9 @@ void CNavMesh::MergeGeneratedAreas( void )
                     continue;
 
                 if ( adjArea->m_node[NORTH_WEST] == area->m_node[SOUTH_WEST] &&
-                     adjArea->m_node[NORTH_EAST] == area->m_node[SOUTH_EAST] &&
-                     area->GetAttributes() == adjArea->GetAttributes() &&
-                     area->IsCoplanar( adjArea ) )
+                    adjArea->m_node[NORTH_EAST] == area->m_node[SOUTH_EAST] &&
+                    area->GetAttributes() == adjArea->GetAttributes() &&
+                    area->IsCoplanar( adjArea ) )
                 {
                     // merge vertical
                     area->m_node[SOUTH_WEST] = adjArea->m_node[SOUTH_WEST];
@@ -2160,9 +2160,9 @@ void CNavMesh::MergeGeneratedAreas( void )
                     continue;
 
                 if ( area->m_node[NORTH_WEST] == adjArea->m_node[NORTH_EAST] &&
-                     area->m_node[SOUTH_WEST] == adjArea->m_node[SOUTH_EAST] &&
-                     area->GetAttributes() == adjArea->GetAttributes() &&
-                     area->IsCoplanar( adjArea ) )
+                    area->m_node[SOUTH_WEST] == adjArea->m_node[SOUTH_EAST] &&
+                    area->GetAttributes() == adjArea->GetAttributes() &&
+                    area->IsCoplanar( adjArea ) )
                 {
                     // merge horizontal
                     area->m_node[NORTH_WEST] = adjArea->m_node[NORTH_WEST];
@@ -2192,9 +2192,9 @@ void CNavMesh::MergeGeneratedAreas( void )
                     continue;
 
                 if ( adjArea->m_node[NORTH_WEST] == area->m_node[NORTH_EAST] &&
-                     adjArea->m_node[SOUTH_WEST] == area->m_node[SOUTH_EAST] &&
-                     area->GetAttributes() == adjArea->GetAttributes() &&
-                     area->IsCoplanar( adjArea ) )
+                    adjArea->m_node[SOUTH_WEST] == area->m_node[SOUTH_EAST] &&
+                    area->GetAttributes() == adjArea->GetAttributes() &&
+                    area->IsCoplanar( adjArea ) )
                 {
                     // merge horizontal
                     area->m_node[NORTH_EAST] = adjArea->m_node[NORTH_EAST];
@@ -2402,7 +2402,7 @@ void CNavMesh::FixCornerOnCornerAreas( void )
 
             // if we have any connections on cardinal compass directions on edge on either side of corner we're OK, skip this nav area
             if ( area->GetAdjacentCount( dirToLeft ) > 0 || area->GetAdjacentCount( dirToRight ) > 0 ||
-                 area->GetIncomingConnections( dirToLeft )->Count() > 0 || area->GetIncomingConnections( dirToRight )->Count() > 0 )
+                area->GetIncomingConnections( dirToLeft )->Count() > 0 || area->GetIncomingConnections( dirToRight )->Count() > 0 )
                 continue;
 
             Vector cornerPos = area->GetCorner( ( NavCornerType )iCorner );
@@ -2459,7 +2459,7 @@ void CNavMesh::FixCornerOnCornerAreas( void )
 
                 CTraceFilterWalkableEntities filter( NULL, COLLISION_GROUP_NONE, WALK_THRU_EVERYTHING );
                 if ( !TraceAdjacentNode( 0, vecCorner[1], vecCorner[0], &result, MaxDrop ) ||  // can we move from edge of other area to far corner of new node
-                     !TraceAdjacentNode( 0, vecCorner[3], vecCorner[0], &result, MaxDrop ) )   // can we move from edge of this area to far corner of new node
+                    !TraceAdjacentNode( 0, vecCorner[3], vecCorner[0], &result, MaxDrop ) )   // can we move from edge of this area to far corner of new node
                     continue;                                                                  // new node would not fit
 
                 // as sanity check, make sure there's not already a nav area there, shouldn't be
@@ -2535,7 +2535,7 @@ void CNavMesh::SplitAreasUnderOverhangs( void )
                         // overlap, disregard it
                         const float flMinSeparation = HumanCrouchHeight;
                         if ( !( areaExtent.lo.z > otherAreaExtent.hi.z + flMinSeparation ) &&
-                             !( otherAreaExtent.lo.z > areaExtent.hi.z + flMinSeparation ) )
+                            !( otherAreaExtent.lo.z > areaExtent.hi.z + flMinSeparation ) )
                             continue;
 
                         // figure out which area is above and which is below
@@ -2738,31 +2738,31 @@ bool TestForValidJumpArea( CNavNode *node )
         return false;
 
     if ( !IsHeightDifferenceValid(
-             node->GetPosition()->z,
-             south->GetPosition()->z,
-             southEast->GetPosition()->z,
-             east->GetPosition()->z ) )
+            node->GetPosition()->z,
+            south->GetPosition()->z,
+            southEast->GetPosition()->z,
+            east->GetPosition()->z ) )
         return false;
 
     if ( !IsHeightDifferenceValid(
-             south->GetPosition()->z,
-             node->GetPosition()->z,
-             southEast->GetPosition()->z,
-             east->GetPosition()->z ) )
+            south->GetPosition()->z,
+            node->GetPosition()->z,
+            southEast->GetPosition()->z,
+            east->GetPosition()->z ) )
         return false;
 
     if ( !IsHeightDifferenceValid(
-             southEast->GetPosition()->z,
-             south->GetPosition()->z,
-             node->GetPosition()->z,
-             east->GetPosition()->z ) )
+            southEast->GetPosition()->z,
+            south->GetPosition()->z,
+            node->GetPosition()->z,
+            east->GetPosition()->z ) )
         return false;
 
     if ( !IsHeightDifferenceValid(
-             east->GetPosition()->z,
-             south->GetPosition()->z,
-             southEast->GetPosition()->z,
-             node->GetPosition()->z ) )
+            east->GetPosition()->z,
+            south->GetPosition()->z,
+            southEast->GetPosition()->z,
+            node->GetPosition()->z ) )
         return false;
 
     return true;
@@ -2776,7 +2776,7 @@ class TestOverlapping
     Vector m_sw;
     Vector m_se;
 
-   public:
+    public:
     TestOverlapping( const Vector &nw, const Vector &ne, const Vector &sw, const Vector &se )
         : m_nw( nw ), m_ne( ne ), m_sw( sw ), m_se( se )
     {
@@ -3214,9 +3214,9 @@ int CNavMesh::BuildArea( CNavNode *node, int width, int height )
     // If any of the corners have an obstacle in the direction of another corner, then there's an internal obstruction of this nav node.
     // Mark it as not mergable so it doesn't become a part of anything else and we will fix it up later.
     if ( nwNode->m_obstacleHeight[SOUTH] > MaxTraversableHeight || nwNode->m_obstacleHeight[EAST] > MaxTraversableHeight ||
-         neNode->m_obstacleHeight[WEST] > MaxTraversableHeight || neNode->m_obstacleHeight[SOUTH] > MaxTraversableHeight ||
-         seNode->m_obstacleHeight[NORTH] > MaxTraversableHeight || seNode->m_obstacleHeight[WEST] > MaxTraversableHeight ||
-         swNode->m_obstacleHeight[EAST] > MaxTraversableHeight || swNode->m_obstacleHeight[NORTH] > MaxTraversableHeight )
+        neNode->m_obstacleHeight[WEST] > MaxTraversableHeight || neNode->m_obstacleHeight[SOUTH] > MaxTraversableHeight ||
+        seNode->m_obstacleHeight[NORTH] > MaxTraversableHeight || seNode->m_obstacleHeight[WEST] > MaxTraversableHeight ||
+        swNode->m_obstacleHeight[EAST] > MaxTraversableHeight || swNode->m_obstacleHeight[NORTH] > MaxTraversableHeight )
     {
         Assert( width == 1 );  // We should only ever try to build a 1x1 area out of any two nodes that have an obstruction between them
         Assert( height == 1 );
@@ -4163,11 +4163,11 @@ void DrawTrace( const trace_t *trace )
     /*
     if ( trace->fraction > 0.0f && !trace->startsolid )
     {
-      NDebugOverlay::SweptBox( trace->startpos, trace->endpos, NavTraceMins, NavTraceMaxs, vec3_angle, 0, 255, 0, 45, 100 );
+    NDebugOverlay::SweptBox( trace->startpos, trace->endpos, NavTraceMins, NavTraceMaxs, vec3_angle, 0, 255, 0, 45, 100 );
     }
     else
     {
-      NDebugOverlay::SweptBox( trace->startpos, trace->endpos, NavTraceMins, NavTraceMaxs, vec3_angle, 255, 0, 0, 45, 100 );
+    NDebugOverlay::SweptBox( trace->startpos, trace->endpos, NavTraceMins, NavTraceMaxs, vec3_angle, 255, 0, 0, 45, 100 );
     }
     */
 }
@@ -4661,7 +4661,7 @@ bool IsWalkableTraceLineClear( const Vector &from, const Vector &to, unsigned in
 //--------------------------------------------------------------------------------------------------------------
 class Subdivider
 {
-   public:
+    public:
     Subdivider( int depth )
     {
         m_depth = depth;

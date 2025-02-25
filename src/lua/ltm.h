@@ -59,7 +59,7 @@ typedef enum
 #define notm( tm ) ttisnil( tm )
 
 #define gfasttm( g, et, e ) ( ( et ) == NULL ? NULL : ( ( et )->flags & ( 1u << ( e ) ) ) ? NULL \
-                                                                                          : luaT_gettm( et, e, ( g )->tmname[e] ) )
+                                                                                        : luaT_gettm( et, e, ( g )->tmname[e] ) )
 
 #define fasttm( l, et, e ) gfasttm( G( l ), et, e )
 

@@ -84,22 +84,22 @@ AM_CPPFLAGS = -I$(srcdir) -I$(srcdir)/include
 lib_LTLIBRARIES = lib/libgtest.la lib/libgtest_main.la
 
 lib_libgtest_la_SOURCES = src/gtest.cc \
-                          src/gtest-death-test.cc \
-                          src/gtest-filepath.cc \
-                          src/gtest-internal-inl.h \
-                          src/gtest-port.cc \
-                          src/gtest-test-part.cc \
-                          src/gtest-typed-test.cc
+                        src/gtest-death-test.cc \
+                        src/gtest-filepath.cc \
+                        src/gtest-internal-inl.h \
+                        src/gtest-port.cc \
+                        src/gtest-test-part.cc \
+                        src/gtest-typed-test.cc
 
 pkginclude_HEADERS = include/gtest/gtest.h \
-                     include/gtest/gtest-death-test.h \
-                     include/gtest/gtest-message.h \
-                     include/gtest/gtest-param-test.h \
-                     include/gtest/gtest_pred_impl.h \
-                     include/gtest/gtest_prod.h \
-                     include/gtest/gtest-spi.h \
-                     include/gtest/gtest-test-part.h \
-                     include/gtest/gtest-typed-test.h
+                    include/gtest/gtest-death-test.h \
+                    include/gtest/gtest-message.h \
+                    include/gtest/gtest-param-test.h \
+                    include/gtest/gtest_pred_impl.h \
+                    include/gtest/gtest_prod.h \
+                    include/gtest/gtest-spi.h \
+                    include/gtest/gtest-test-part.h \
+                    include/gtest/gtest-typed-test.h
 
 pkginclude_internaldir = $(pkgincludedir)/internal
 pkginclude_internal_HEADERS = \
@@ -143,48 +143,48 @@ TESTS += samples/sample1_unittest
 check_PROGRAMS += samples/sample1_unittest
 samples_sample1_unittest_SOURCES = samples/sample1_unittest.cc
 samples_sample1_unittest_LDADD = lib/libgtest_main.la \
-                                 samples/libsamples.la
+                                samples/libsamples.la
 
 TESTS += samples/sample2_unittest
 check_PROGRAMS += samples/sample2_unittest
 samples_sample2_unittest_SOURCES = samples/sample2_unittest.cc
 samples_sample2_unittest_LDADD = lib/libgtest_main.la \
-                                 samples/libsamples.la
+                                samples/libsamples.la
 
 TESTS += samples/sample3_unittest
 check_PROGRAMS += samples/sample3_unittest
 samples_sample3_unittest_SOURCES = samples/sample3_unittest.cc
 samples_sample3_unittest_LDADD = lib/libgtest_main.la \
-                                 samples/libsamples.la
+                                samples/libsamples.la
 
 TESTS += samples/sample4_unittest
 check_PROGRAMS += samples/sample4_unittest
 samples_sample4_unittest_SOURCES = samples/sample4_unittest.cc
 samples_sample4_unittest_LDADD = lib/libgtest_main.la \
-                                 samples/libsamples.la
+                                samples/libsamples.la
 
 TESTS += samples/sample5_unittest
 check_PROGRAMS += samples/sample5_unittest
 samples_sample5_unittest_SOURCES = samples/sample5_unittest.cc
 samples_sample5_unittest_LDADD = lib/libgtest_main.la \
-                                 samples/libsamples.la
+                                samples/libsamples.la
 
 TESTS += samples/sample6_unittest
 check_PROGRAMS += samples/sample6_unittest
 samples_sample6_unittest_SOURCES = samples/prime_tables.h \
-                                   samples/sample6_unittest.cc
+                                    samples/sample6_unittest.cc
 samples_sample6_unittest_LDADD = lib/libgtest_main.la
 
 TESTS += samples/sample7_unittest
 check_PROGRAMS += samples/sample7_unittest
 samples_sample7_unittest_SOURCES = samples/prime_tables.h \
-                                   samples/sample7_unittest.cc
+                                    samples/sample7_unittest.cc
 samples_sample7_unittest_LDADD = lib/libgtest_main.la
 
 TESTS += samples/sample8_unittest
 check_PROGRAMS += samples/sample8_unittest
 samples_sample8_unittest_SOURCES = samples/prime_tables.h \
-                                   samples/sample8_unittest.cc
+                                    samples/sample8_unittest.cc
 samples_sample8_unittest_LDADD = lib/libgtest_main.la
 
 TESTS += samples/sample9_unittest
@@ -202,7 +202,7 @@ check_PROGRAMS += test/gtest-death-test_test
 test_gtest_death_test_test_SOURCES = test/gtest-death-test_test.cc
 test_gtest_death_test_test_CXXFLAGS = $(AM_CXXFLAGS) $(PTHREAD_CFLAGS)
 test_gtest_death_test_test_LDADD = $(PTHREAD_LIBS) $(PTHREAD_CFLAGS) \
-                                   lib/libgtest_main.la
+                                    lib/libgtest_main.la
 
 TESTS += test/gtest_environment_test
 check_PROGRAMS += test/gtest_environment_test
@@ -242,8 +242,8 @@ test_gtest_options_test_LDADD = lib/libgtest_main.la
 TESTS += test/gtest-param-test_test
 check_PROGRAMS += test/gtest-param-test_test
 test_gtest_param_test_test_SOURCES = test/gtest-param-test_test.cc \
-                                     test/gtest-param-test2_test.cc \
-                                     test/gtest-param-test_test.h
+                                    test/gtest-param-test2_test.cc \
+                                    test/gtest-param-test_test.h
 test_gtest_param_test_test_LDADD = lib/libgtest.la
 
 TESTS += test/gtest-port_test
@@ -259,8 +259,8 @@ test_gtest_pred_impl_unittest_LDADD = lib/libgtest_main.la
 TESTS += test/gtest_prod_test
 check_PROGRAMS += test/gtest_prod_test
 test_gtest_prod_test_SOURCES = test/gtest_prod_test.cc \
-                               test/production.cc \
-                               test/production.h
+                                test/production.cc \
+                                test/production.h
 test_gtest_prod_test_LDADD = lib/libgtest_main.la
 
 TESTS += test/gtest_repeat_test
@@ -293,8 +293,8 @@ test_gtest_throw_on_failure_ex_test_CXXFLAGS = $(AM_CXXFLAGS) -fexceptions
 TESTS += test/gtest-typed-test_test
 check_PROGRAMS += test/gtest-typed-test_test
 test_gtest_typed_test_test_SOURCES = test/gtest-typed-test_test.cc \
-                                     test/gtest-typed-test2_test.cc \
-                                     test/gtest-typed-test_test.h
+                                    test/gtest-typed-test2_test.cc \
+                                    test/gtest-typed-test_test.h
 test_gtest_typed_test_test_LDADD = lib/libgtest_main.la
 
 TESTS += test/gtest_unittest
@@ -316,8 +316,8 @@ test_gtest_listener_test_LDADD = lib/libgtest_main.la
 TESTS += test/gtest_no_rtti_test
 check_PROGRAMS += test/gtest_no_rtti_test
 test_gtest_no_rtti_test_SOURCES = test/gtest_unittest.cc \
-                                  src/gtest-all.cc \
-                                  src/gtest_main.cc
+                                src/gtest-all.cc \
+                                src/gtest_main.cc
 test_gtest_no_rtti_test_CXXFLAGS = $(AM_CXXFLAGS) -fno-rtti -DGTEST_HAS_RTTI=0
 
 # Verifies that Google Test's own TR1 tuple implementation works.
@@ -348,7 +348,7 @@ check_SCRIPTS =
 
 # These two Python modules are used by multiple Python tests below.
 check_SCRIPTS += test/gtest_test_utils.py \
-                 test/gtest_xml_test_utils.py
+                test/gtest_xml_test_utils.py
 
 check_PROGRAMS += test/gtest_break_on_failure_unittest_
 test_gtest_break_on_failure_unittest__SOURCES = \
@@ -392,7 +392,7 @@ test_gtest_output_test__SOURCES = test/gtest_output_test_.cc
 test_gtest_output_test__LDADD = lib/libgtest.la
 check_SCRIPTS += test/gtest_output_test.py
 EXTRA_DIST += test/gtest_output_test_golden_lin.txt \
-              test/gtest_output_test_golden_win.txt
+            test/gtest_output_test_golden_win.txt
 TESTS += test/gtest_output_test.py
 
 check_PROGRAMS += test/gtest_shuffle_test_
@@ -435,7 +435,7 @@ TESTS += test/gtest_xml_output_unittest.py
 #   implementation of tests for verifying that certain kinds of misuse
 #   of Google Test don't compile.)
 EXTRA_DIST += $(check_SCRIPTS) \
-              test/gtest_nc.cc \
-              test/gtest_nc_test.py
+            test/gtest_nc.cc \
+            test/gtest_nc_test.py
 
 endif

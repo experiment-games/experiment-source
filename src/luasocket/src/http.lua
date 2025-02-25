@@ -35,11 +35,11 @@ local SCHEMES = {
     , https = {
         port = 443
         , create = function(t)
-          local https = assert(
+        local https = assert(
             require("ssl.https"), 'LuaSocket: LuaSec not found')
-          local tcp = assert(
+        local tcp = assert(
             https.tcp, 'LuaSocket: Function tcp() not available from LuaSec')
-          return tcp(t) end }}
+        return tcp(t) end }}
 
 -----------------------------------------------------------------------------
 -- Reads MIME headers from a connection, unfolding where needed
@@ -206,10 +206,10 @@ local function adjusturi(reqt)
     -- if there is a proxy, we need the full url. otherwise, just a part.
     if not reqt.proxy and not _M.PROXY then
         u = {
-           path = socket.try(reqt.path, "invalid path 'nil'"),
-           params = reqt.params,
-           query = reqt.query,
-           fragment = reqt.fragment
+            path = socket.try(reqt.path, "invalid path 'nil'"),
+            params = reqt.params,
+            query = reqt.query,
+            fragment = reqt.fragment
         }
     end
     return url.build(u)
@@ -241,7 +241,7 @@ local function adjustheaders(reqt)
     if reqt.user and reqt.password then
         lower["authorization"] =
             "Basic " ..  (mime.b64(reqt.user .. ":" ..
-		url.unescape(reqt.password)))
+        url.unescape(reqt.password)))
     end
     -- if we have proxy authentication information, pass it along
     local proxy = reqt.proxy or _M.PROXY
@@ -305,8 +305,8 @@ local function shouldredirect(reqt, code, headers)
     -- avoid https downgrades
     if ('https' == reqt.scheme) and ('https' ~= scheme) then return false end
     return (reqt.redirect ~= false) and
-           (code == 301 or code == 302 or code == 303 or code == 307) and
-           (not reqt.method or reqt.method == "GET" or reqt.method == "HEAD")
+            (code == 301 or code == 302 or code == 303 or code == 307) and
+            (not reqt.method or reqt.method == "GET" or reqt.method == "HEAD")
         and ((false == reqt.maxredirects)
                 or ((reqt.nredirects or 0)
                         < (reqt.maxredirects or 5)))

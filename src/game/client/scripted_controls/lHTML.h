@@ -17,7 +17,7 @@ class LHTML : public HTML
 
     LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( LHTML, "Html" );
 
-   public:
+    public:
     // You can optionally pass in the panel to send the click message to and the name of the command to send to that panel.
     LHTML( Panel *parent, const char *name, bool allowJavaScript = false, bool bPopupWindow = false, lua_State *L = NULL );
 
@@ -30,7 +30,7 @@ class LHTML : public HTML
         return m_bIsLoading;
     }
 
-   protected:
+    protected:
     virtual void ApplySchemeSettings( vgui::IScheme *pScheme )
     {
         LUA_CALL_PANEL_METHOD_BEGIN( "ApplySchemeSettings" );
@@ -39,7 +39,7 @@ class LHTML : public HTML
         BaseClass::ApplySchemeSettings( pScheme );
     }
 
-   private:
+    private:
     bool m_bIsLoading;
 };
 

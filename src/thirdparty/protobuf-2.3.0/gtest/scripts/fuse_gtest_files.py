@@ -33,21 +33,21 @@
 Fuses Google Test source code into a .h file and a .cc file.
 
 SYNOPSIS
-       fuse_gtest_files.py [GTEST_ROOT_DIR] OUTPUT_DIR
+        fuse_gtest_files.py [GTEST_ROOT_DIR] OUTPUT_DIR
 
-       Scans GTEST_ROOT_DIR for Google Test source code, and generates
-       two files: OUTPUT_DIR/gtest/gtest.h and OUTPUT_DIR/gtest/gtest-all.cc.
-       Then you can build your tests by adding OUTPUT_DIR to the include
-       search path and linking with OUTPUT_DIR/gtest/gtest-all.cc.  These
-       two files contain everything you need to use Google Test.  Hence
-       you can "install" Google Test by copying them to wherever you want.
+        Scans GTEST_ROOT_DIR for Google Test source code, and generates
+        two files: OUTPUT_DIR/gtest/gtest.h and OUTPUT_DIR/gtest/gtest-all.cc.
+        Then you can build your tests by adding OUTPUT_DIR to the include
+        search path and linking with OUTPUT_DIR/gtest/gtest-all.cc.  These
+        two files contain everything you need to use Google Test.  Hence
+        you can "install" Google Test by copying them to wherever you want.
 
-       GTEST_ROOT_DIR can be omitted and defaults to the parent
-       directory of the directory holding this script.
+        GTEST_ROOT_DIR can be omitted and defaults to the parent
+        directory of the directory holding this script.
 
 EXAMPLES
-       ./fuse_gtest_files.py fused_gtest
-       ./fuse_gtest_files.py path/to/unpacked/gtest fused_gtest
+        ./fuse_gtest_files.py fused_gtest
+        ./fuse_gtest_files.py path/to/unpacked/gtest fused_gtest
 
 This tool is experimental.  In particular, it assumes that there is no
 conditional inclusion of Google Test headers.  Please report any
@@ -91,9 +91,9 @@ def VerifyFileExists(directory, relative_path):
 
   if not os.path.isfile(os.path.join(directory, relative_path)):
     print 'ERROR: Cannot find %s in directory %s.' % (relative_path,
-                                                      directory)
+                                                    directory)
     print ('Please either specify a valid project root directory '
-           'or omit it on the command line.')
+            'or omit it on the command line.')
     sys.exit(1)
 
 
@@ -120,11 +120,11 @@ def VerifyOutputFile(output_dir, relative_path):
     # work with automated processes.  We should provide a way for the
     # Makefile to force overwriting the files.
     print ('%s already exists in directory %s - overwrite it? (y/N) ' %
-           (relative_path, output_dir))
+            (relative_path, output_dir))
     answer = sys.stdin.readline().strip()
     if answer not in ['y', 'Y']:
-      print 'ABORTED.'
-      sys.exit(1)
+    print 'ABORTED.'
+    sys.exit(1)
 
   # Makes sure the directory holding the output file exists; creates
   # it and all its ancestors if necessary.
@@ -154,17 +154,17 @@ def FuseGTestH(gtest_root, output_dir):
 
     # We don't process the same header twice.
     if gtest_header_path in processed_files:
-      return
+    return
 
     processed_files.add(gtest_header_path)
 
     # Reads each line in the given gtest header.
     for line in file(os.path.join(gtest_root, gtest_header_path), 'r'):
-      m = INCLUDE_GTEST_FILE_REGEX.match(line)
-      if m:
+    m = INCLUDE_GTEST_FILE_REGEX.match(line)
+    if m:
         # It's '#include <gtest/...>' - let's process it recursively.
         ProcessFile('include/' + m.group(1))
-      else:
+    else:
         # Otherwise we copy the line unchanged to the output file.
         output_file.write(line)
 
@@ -182,35 +182,35 @@ def FuseGTestAllCcToFile(gtest_root, output_file):
 
     # We don't process the same #included file twice.
     if gtest_source_file in processed_files:
-      return
+    return
 
     processed_files.add(gtest_source_file)
 
     # Reads each line in the given gtest source file.
     for line in file(os.path.join(gtest_root, gtest_source_file), 'r'):
-      m = INCLUDE_GTEST_FILE_REGEX.match(line)
-      if m:
+    m = INCLUDE_GTEST_FILE_REGEX.match(line)
+    if m:
         if 'include/' + m.group(1) == GTEST_SPI_H_SEED:
-          # It's '#include <gtest/gtest-spi.h>'.  This file is not
-          # #included by <gtest/gtest.h>, so we need to process it.
-          ProcessFile(GTEST_SPI_H_SEED)
+        # It's '#include <gtest/gtest-spi.h>'.  This file is not
+        # #included by <gtest/gtest.h>, so we need to process it.
+        ProcessFile(GTEST_SPI_H_SEED)
         else:
-          # It's '#include <gtest/foo.h>' where foo is not gtest-spi.
-          # We treat it as '#include <gtest/gtest.h>', as all other
-          # gtest headers are being fused into gtest.h and cannot be
-          # #included directly.
+        # It's '#include <gtest/foo.h>' where foo is not gtest-spi.
+        # We treat it as '#include <gtest/gtest.h>', as all other
+        # gtest headers are being fused into gtest.h and cannot be
+        # #included directly.
 
-          # There is no need to #include <gtest/gtest.h> more than once.
-          if not GTEST_H_SEED in processed_files:
+        # There is no need to #include <gtest/gtest.h> more than once.
+        if not GTEST_H_SEED in processed_files:
             processed_files.add(GTEST_H_SEED)
             output_file.write('#include <%s>\n' % (GTEST_H_OUTPUT,))
-      else:
+    else:
         m = INCLUDE_SRC_FILE_REGEX.match(line)
         if m:
-          # It's '#include "src/foo"' - let's process it recursively.
-          ProcessFile(m.group(1))
+        # It's '#include "src/foo"' - let's process it recursively.
+        ProcessFile(m.group(1))
         else:
-          output_file.write(line)
+        output_file.write(line)
 
   ProcessFile(GTEST_ALL_CC_SEED)
 

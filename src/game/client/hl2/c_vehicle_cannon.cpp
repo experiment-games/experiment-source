@@ -24,7 +24,7 @@ class C_PropCannon : public C_BaseAnimating, public IClientVehicle
 {
     DECLARE_CLASS( C_PropCannon, C_BaseAnimating );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
     DECLARE_DATADESC();
 
@@ -32,7 +32,7 @@ class C_PropCannon : public C_BaseAnimating, public IClientVehicle
 
     void PreDataUpdate( DataUpdateType_t updateType );
 
-   public:
+    public:
     // IClientVehicle overrides.
     virtual void GetVehicleViewPosition( int nRole, Vector *pOrigin, QAngle *pAngles, float *pFOV = NULL );
     virtual void GetVehicleFOV( float &flFOV )
@@ -69,7 +69,7 @@ class C_PropCannon : public C_BaseAnimating, public IClientVehicle
         return 0;
     }
 
-   public:
+    public:
     // C_BaseEntity overrides.
     virtual IClientVehicle *GetClientVehicle()
     {
@@ -93,7 +93,7 @@ class C_PropCannon : public C_BaseAnimating, public IClientVehicle
     };
     virtual void GetRenderBounds( Vector &theMins, Vector &theMaxs );
 
-   private:
+    private:
     CHandle< C_BasePlayer > m_hPlayer;
     CHandle< C_BasePlayer > m_hPrevPlayer;
 
@@ -122,7 +122,7 @@ RecvPropEHandle( RECVINFO( m_hPlayer ) ),
 
 #define PITCH_CURVE_ZERO 10    // pitch less than this is clamped to zero
 #define PITCH_CURVE_LINEAR 45  // pitch greater than this is copied out
-                               // spline in between
+                                // spline in between
 
     //-----------------------------------------------------------------------------
     // Purpose:

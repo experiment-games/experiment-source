@@ -17,7 +17,7 @@
 //-----------------------------------------------------------------------------
 abstract_class IRegistry
 {
-   public:
+    public:
     // We have to have a virtual destructor since otherwise the derived class destructors
     // will not be called.
     virtual ~IRegistry() {}

@@ -112,11 +112,11 @@ void CSoundscapeSystem::PrintDebugInfo()
     {
         CEnvSoundscape *currentSoundscape = m_soundscapeEntities[entityIndex];
         Msg( "- %d: %s x:%.4f y:%.4f z:%.4f\n",
-             entityIndex,
-             STRING( currentSoundscape->GetSoundscapeName() ),
-             currentSoundscape->GetAbsOrigin().x,
-             currentSoundscape->GetAbsOrigin().y,
-             currentSoundscape->GetAbsOrigin().z );
+            entityIndex,
+            STRING( currentSoundscape->GetSoundscapeName() ),
+            currentSoundscape->GetAbsOrigin().x,
+            currentSoundscape->GetAbsOrigin().y,
+            currentSoundscape->GetAbsOrigin().z );
     }
     Msg( "----------------------------------\n\n" );
 }
@@ -149,8 +149,8 @@ bool CSoundscapeSystem::Init()
             }
 
             Warning( "CSoundscapeSystem::Init:  Manifest '%s' with bogus file type '%s', expecting 'file'\n",
-                     SOUNDSCAPE_MANIFEST_FILE,
-                     sub->GetName() );
+                    SOUNDSCAPE_MANIFEST_FILE,
+                    sub->GetName() );
         }
 
         if ( mapSoundscapeFilename && filesystem->FileExists( mapSoundscapeFilename ) )

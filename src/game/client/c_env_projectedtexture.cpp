@@ -31,7 +31,7 @@ class C_EnvProjectedTexture : public C_BaseEntity
 {
     DECLARE_CLASS( C_EnvProjectedTexture, C_BaseEntity );
 
-   public:
+    public:
     DECLARE_CLIENTCLASS();
 
     virtual void OnDataChanged( DataUpdateType_t updateType );
@@ -44,7 +44,7 @@ class C_EnvProjectedTexture : public C_BaseEntity
     C_EnvProjectedTexture();
     ~C_EnvProjectedTexture();
 
-   private:
+    private:
     ClientShadowHandle_t m_LightHandle;
 
     EHANDLE m_hTargetEntity;

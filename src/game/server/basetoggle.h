@@ -15,7 +15,7 @@ class CBaseToggle : public CBaseEntity
 {
     DECLARE_CLASS( CBaseToggle, CBaseEntity );
 
-   public:
+    public:
     CBaseToggle();
 
     virtual bool KeyValue( const char *szKeyName, const char *szValue );
@@ -67,10 +67,10 @@ class CBaseToggle : public CBaseEntity
     static float AxisDelta( int flags, const QAngle &angle1, const QAngle &angle2 );
 
     string_t m_sMaster;  // If this button has a master switch, this is the targetname.
-                         // A master switch must be of the multisource type. If all
-                         // of the switches in the multisource have been triggered, then
-                         // the button will be allowed to operate. Otherwise, it will be
-                         // deactivated.
+                        // A master switch must be of the multisource type. If all
+                        // of the switches in the multisource have been triggered, then
+                        // the button will be allowed to operate. Otherwise, it will be
+                        // deactivated.
 };
 
 #endif  // BASETOGGLE_H

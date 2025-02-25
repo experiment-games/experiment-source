@@ -23,7 +23,7 @@ extern short g_sModelIndexBloodSpray;  // (in combatweapon.cpp) holds the sprite
 //-----------------------------------------------------------------------------
 class CEffectsServer : public IEffects
 {
-   public:
+    public:
     CEffectsServer();
     virtual ~CEffectsServer();
 
@@ -46,7 +46,7 @@ class CEffectsServer : public IEffects
         Assert( 0 );
     }
 
-   private:
+    private:
     //-----------------------------------------------------------------------------
     // Purpose: Returning true means don't even call TE func
     // Input  : filter -

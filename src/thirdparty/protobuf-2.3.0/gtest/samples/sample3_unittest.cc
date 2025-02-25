@@ -69,7 +69,7 @@
 // To use a test fixture, derive a class from testing::Test.
 class QueueTest : public testing::Test {
  protected:  // You should make the members protected s.t. they can be
-             // accessed from sub-classes.
+            // accessed from sub-classes.
 
   // virtual void SetUp() will be called before each test is run.  You
   // should define it if you need to initialize the varaibles.
@@ -103,8 +103,8 @@ class QueueTest : public testing::Test {
 
     // Verifies the relationship between the elements of the two queues.
     for ( const QueueNode<int> * n1 = q->Head(), * n2 = new_q->Head();
-          n1 != NULL; n1 = n1->next(), n2 = n2->next() ) {
-      EXPECT_EQ(2 * n1->element(), n2->element());
+        n1 != NULL; n1 = n1->next(), n2 = n2->next() ) {
+    EXPECT_EQ(2 * n1->element(), n2->element());
     }
 
     delete new_q;

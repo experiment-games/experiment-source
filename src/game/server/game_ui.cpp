@@ -29,7 +29,7 @@
 
 class CGameUI : public CBaseEntity
 {
-   public:
+    public:
     DECLARE_CLASS( CGameUI, CBaseEntity );
 
     DECLARE_DATADESC();
@@ -288,7 +288,7 @@ void CGameUI::Think( void )
     // Deactivate if they jump or press +use.
     // FIXME: prevent the use from going through in player.cpp
     if ( ( ( pPlayer->m_afButtonPressed & IN_USE ) && ( m_spawnflags & SF_GAMEUI_USE_DEACTIVATES ) ) ||
-         ( ( pPlayer->m_afButtonPressed & IN_JUMP ) && ( m_spawnflags & SF_GAMEUI_JUMP_DEACTIVATES ) ) )
+        ( ( pPlayer->m_afButtonPressed & IN_JUMP ) && ( m_spawnflags & SF_GAMEUI_JUMP_DEACTIVATES ) ) )
     {
         Deactivate( pPlayer );
         return;

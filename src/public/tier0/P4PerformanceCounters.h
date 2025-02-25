@@ -27,21 +27,21 @@
 
         http://user.it.uu.se/~mikpe/linux/perfctr/
 
-     * Known quirks:
+    * Known quirks:
  - OVF_PMI+FORCE_OVF counters must have an ireset value of -1.
-   This allows the regular overflow check to also handle FORCE_OVF
-   counters. Not having this restriction would lead to MAJOR
-   complications in the driver's "detect overflow counters" code.
-   There is no loss of functionality since the ireset value doesn't
-   affect the counter's PMI rate for FORCE_OVF counters.
+    This allows the regular overflow check to also handle FORCE_OVF
+    counters. Not having this restriction would lead to MAJOR
+    complications in the driver's "detect overflow counters" code.
+    There is no loss of functionality since the ireset value doesn't
+    affect the counter's PMI rate for FORCE_OVF counters.
 
  - In experiments with FORCE_OVF counters, and regular OVF_PMI
-   counters with small ireset values between -8 and -1, it appears
-   that the faulting instruction is subjected to a new PMI before
-   it can complete, ad infinitum. This occurs even though the driver
-   clears the CCCR (and in testing also the ESCR) and invokes a
-   user-space signal handler before restoring the CCCR and resuming
-   the instruction.
+    counters with small ireset values between -8 and -1, it appears
+    that the faulting instruction is subjected to a new PMI before
+    it can complete, ad infinitum. This occurs even though the driver
+    clears the CCCR (and in testing also the ESCR) and invokes a
+    user-space signal handler before restoring the CCCR and resuming
+    the instruction.
 */
 
 #define NCOUNTERS 18
@@ -149,7 +149,7 @@ class P4BaseEvent
 {
     int m_counter;
 
-   protected:
+    protected:
     void SetCounter( int counter )
     {
         m_counter = counter;
@@ -158,7 +158,7 @@ class P4BaseEvent
         escrPort = cccr_escr_map[m_counter][cccr.CCCRSelect];
     }
 
-   public:
+    public:
     unsigned short m_eventMask;
     const tchar *description;
     PME *pme;
@@ -222,10 +222,10 @@ class P4BaseEvent
 #if 0
         // we need to copy this into a temp for some reason
         int temp = m_counter;
-        _asm 
+        _asm
         {
             mov ecx, temp
-            RDPMC 
+            RDPMC
         }
 #endif
     }

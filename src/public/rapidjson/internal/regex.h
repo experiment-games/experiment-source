@@ -51,7 +51,7 @@ namespace internal
 template < typename SourceStream, typename Encoding >
 class DecodedStream
 {
-   public:
+    public:
     DecodedStream( SourceStream& ss )
         : ss_( ss ), codepoint_()
     {
@@ -69,7 +69,7 @@ class DecodedStream
         return c;
     }
 
-   private:
+    private:
     void Decode()
     {
         if ( !Encoding::Decode( ss_, &codepoint_ ) )
@@ -124,7 +124,7 @@ class GenericRegexSearch;
 template < typename Encoding, typename Allocator = CrtAllocator >
 class GenericRegex
 {
-   public:
+    public:
     typedef Encoding EncodingType;
     typedef typename Encoding::Ch Ch;
     template < typename, typename >
@@ -145,7 +145,7 @@ class GenericRegex
         return root_ != kRegexInvalidState;
     }
 
-   private:
+    private:
     enum Operator
     {
         kZeroOrOne,
@@ -672,7 +672,7 @@ class GenericRegex
 template < typename RegexType, typename Allocator = CrtAllocator >
 class GenericRegexSearch
 {
-   public:
+    public:
     typedef typename RegexType::EncodingType Encoding;
     typedef typename Encoding::Ch Ch;
 
@@ -717,7 +717,7 @@ class GenericRegexSearch
         return Search( is );
     }
 
-   private:
+    private:
     typedef typename RegexType::State State;
     typedef typename RegexType::Range Range;
 
@@ -742,8 +742,8 @@ class GenericRegexSearch
             {
                 const State& sr = regex_.GetState( *s );
                 if ( sr.codepoint == codepoint ||
-                     sr.codepoint == RegexType::kAnyCharacterClass ||
-                     ( sr.codepoint == RegexType::kRangeCharacterClass && MatchRange( sr.rangeStart, codepoint ) ) )
+                    sr.codepoint == RegexType::kAnyCharacterClass ||
+                    ( sr.codepoint == RegexType::kRangeCharacterClass && MatchRange( sr.rangeStart, codepoint ) ) )
                 {
                     matched = AddState( *next, sr.out ) || matched;
                     if ( !anchorEnd && matched )

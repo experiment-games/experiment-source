@@ -24,7 +24,7 @@ class IChoreoStringPool;
 //-----------------------------------------------------------------------------
 class CChoreoActor
 {
-   public:
+    public:
     // Construction
     CChoreoActor( void );
     CChoreoActor( const char *name );
@@ -69,7 +69,7 @@ class CChoreoActor
 
     void MarkForSaveAll( bool mark );
 
-   private:
+    private:
     // Clear structure out
     void Init( void );
 
