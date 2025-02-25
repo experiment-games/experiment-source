@@ -10,6 +10,11 @@
 
 #include "iclientvehicle.h"
 #include "vehicle_viewblend_shared.h"
+
+#ifdef LUA_SDK
+#include <lmovedata.h>
+#endif
+
 class C_PropVehicleDriveable : public C_BaseAnimating, public IClientVehicle
 {
     DECLARE_CLASS( C_PropVehicleDriveable, C_BaseAnimating );
@@ -33,7 +38,18 @@ class C_PropVehicleDriveable : public C_BaseAnimating, public IClientVehicle
     virtual void GetVehicleViewPosition( int nRole, Vector *pOrigin, QAngle *pAngles, float *pFOV = NULL );
 
     virtual void SetupMove( C_BasePlayer *player, CUserCmd *ucmd, IMoveHelper *pHelper, CMoveData *move ) {}
-    virtual void ProcessMovement( C_BasePlayer *pPlayer, CMoveData *pMoveData ) {}
+    virtual void ProcessMovement( C_BasePlayer *pPlayer, CMoveData *pMoveData )
+    {
+#ifdef LUA_SDK
+        LUA_CALL_HOOK_BEGIN( "VehicleMove" );
+        CBasePlayer::PushLuaInstanceSafe( L, pPlayer );
+        CBaseEntity::PushLuaInstanceSafe( L, this->GetVehicleEnt() );
+        lua_pushmovedata( L, pMoveData );
+        LUA_CALL_HOOK_END( 3, 1 );
+
+        LUA_RETURN_NONE_IF_FALSE();
+#endif
+    }
     virtual void FinishMove( C_BasePlayer *player, CUserCmd *ucmd, CMoveData *move ) {}
 
     virtual void ItemPostFrame( C_BasePlayer *pPlayer ) {}
@@ -70,7 +86,7 @@ class C_PropVehicleDriveable : public C_BaseAnimating, public IClientVehicle
 
     virtual bool IsPredicted() const
     {
-        return false;
+        return true;
     }
     virtual int GetJoystickResponseCurve() const;
 

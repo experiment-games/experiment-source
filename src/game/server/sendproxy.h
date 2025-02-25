@@ -41,6 +41,13 @@ SendProp SendPropPredictableId(
     int sizeofVar = SIZEOF_IGNORE );
 #endif
 
+#ifdef LUA_SDK
+SendProp SendPropLuaNetworkVariables(
+    const char *pVarName,
+    int offset,
+    int sizeofVar = SIZEOF_IGNORE );
+#endif
+
 SendProp SendPropIntWithMinusOneFlag(
     const char *pVarName,
     int offset,

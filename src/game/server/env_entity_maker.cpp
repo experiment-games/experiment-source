@@ -69,10 +69,12 @@ class CEnvEntityMaker : public CPointEntity
     COutputEvent m_pOutputOnFailedSpawn;
 };
 
+// clang-format off
+
 BEGIN_DATADESC( CEnvEntityMaker )
-// DEFINE_FIELD( m_vecEntityMins, FIELD_VECTOR ),
-// DEFINE_FIELD( m_vecEntityMaxs, FIELD_VECTOR ),
-DEFINE_FIELD( m_hCurrentInstance, FIELD_EHANDLE ),
+    // DEFINE_FIELD( m_vecEntityMins, FIELD_VECTOR ),
+    // DEFINE_FIELD( m_vecEntityMaxs, FIELD_VECTOR ),
+    DEFINE_FIELD( m_hCurrentInstance, FIELD_EHANDLE ),
     DEFINE_FIELD( m_hCurrentBlocker, FIELD_EHANDLE ),
     DEFINE_FIELD( m_vecBlockerOrigin, FIELD_VECTOR ),
     DEFINE_KEYFIELD( m_iszTemplate, FIELD_STRING, "EntityTemplate" ),
@@ -91,16 +93,18 @@ DEFINE_FIELD( m_hCurrentInstance, FIELD_EHANDLE ),
 
     // Functions
     DEFINE_THINKFUNC( CheckSpawnThink ),
-    END_DATADESC()
+END_DATADESC()
 
-        BEGIN_ENT_SCRIPTDESC( CEnvEntityMaker, CBaseEntity, "env_entity_maker" )
-            DEFINE_SCRIPTFUNC_NAMED( SpawnEntityFromScript, "SpawnEntity", "Create an entity at the location of the maker" )
-                DEFINE_SCRIPTFUNC_NAMED( SpawnEntityAtEntityOriginFromScript, "SpawnEntityAtEntityOrigin", "Create an entity at the location of a specified entity instance" )
-                    DEFINE_SCRIPTFUNC_NAMED( SpawnEntityAtNamedEntityOriginFromScript, "SpawnEntityAtNamedEntityOrigin", "Create an entity at the location of a named entity" )
-                        DEFINE_SCRIPTFUNC_NAMED( SpawnEntityAtLocationFromScript, "SpawnEntityAtLocation", "Create an entity at a specified location and orientaton, orientation is Euler angle in degrees (pitch, yaw, roll)" )
-                            END_SCRIPTDESC()
+BEGIN_ENT_SCRIPTDESC( CEnvEntityMaker, CBaseEntity, "env_entity_maker" )
+    DEFINE_SCRIPTFUNC_NAMED( SpawnEntityFromScript, "SpawnEntity", "Create an entity at the location of the maker" )
+    DEFINE_SCRIPTFUNC_NAMED( SpawnEntityAtEntityOriginFromScript, "SpawnEntityAtEntityOrigin", "Create an entity at the location of a specified entity instance" )
+    DEFINE_SCRIPTFUNC_NAMED( SpawnEntityAtNamedEntityOriginFromScript, "SpawnEntityAtNamedEntityOrigin", "Create an entity at the location of a named entity" )
+    DEFINE_SCRIPTFUNC_NAMED( SpawnEntityAtLocationFromScript, "SpawnEntityAtLocation", "Create an entity at a specified location and orientaton, orientation is Euler angle in degrees (pitch, yaw, roll)" )
+END_SCRIPTDESC()
 
-                                LINK_ENTITY_TO_CLASS( env_entity_maker, CEnvEntityMaker );
+LINK_ENTITY_TO_CLASS( env_entity_maker, CEnvEntityMaker );
+
+// clang-format on
 
 //-----------------------------------------------------------------------------
 // Purpose:

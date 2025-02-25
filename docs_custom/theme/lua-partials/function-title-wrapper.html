@@ -1,0 +1,13 @@
+<div class="lua__title">
+    <h1>
+        {%- if page.meta.lua.arguments -%}
+        {% set arguments = page.meta.lua.arguments %}
+        {% include "lua-partials/function-title.html" %}
+        {%- else -%}
+        {% set arguments = [] %}
+        {% include "lua-partials/function-title.html" %}
+        {%- endif -%}
+    </h1>
+
+    <div class="lua__realm lua__realm--{{ page.meta.lua.realm }}">{{ page.meta.lua.realm }}</div>
+</div>

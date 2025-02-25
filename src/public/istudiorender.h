@@ -1,4 +1,4 @@
-//========= Copyright Valve Corporation, All rights reserved. ============//
+//===== Copyright � 1996-2005, Valve Corporation, All rights reserved. ======//
 //
 // Purpose:
 //
@@ -20,6 +20,7 @@
 #include "materialsystem/imaterialsystem.h"
 #include "appframework/IAppSystem.h"
 #include "datacache/imdlcache.h"
+#include "tier0/fasttimer.h"
 #include "studio.h"
 
 //-----------------------------------------------------------------------------
@@ -44,6 +45,8 @@ namespace OptimizedModel
 struct FileHeader_t;
 }
 class IPooledVBAllocator;
+struct MeshInstanceData_t;
+struct ShaderStencilState_t;
 
 // undone: what's the standard for function type naming?
 typedef void ( *StudioRender_Printf_t )( PRINTF_FORMAT_STRING const char *fmt, ... );
@@ -114,6 +117,10 @@ enum
 
     STUDIORENDER_SHADOWDEPTHTEXTURE = 0x200,
 
+    STUDIORENDER_NO_SKIN = 0x400,
+
+    STUDIORENDER_SKIP_DECALS = 0x800,
+
     STUDIORENDER_SSAODEPTHTEXTURE = 0x1000,
 
     STUDIORENDER_GENERATE_STATS = 0x8000,
@@ -128,9 +135,9 @@ enum
 #define VERTEX_TEXCOORD0_2D ( ( ( uint64 )2 ) << ( TEX_COORD_SIZE_BIT + ( 3 * 0 ) ) )
 enum MaterialVertexFormat_t
 {
-    MATERIAL_VERTEX_FORMAT_MODEL_SKINNED = ( VertexFormat_t )VERTEX_POSITION | VERTEX_COLOR | VERTEX_NORMAL | VERTEX_TEXCOORD0_2D | VERTEX_BONEWEIGHT( 2 ) | VERTEX_BONE_INDEX | VERTEX_USERDATA_SIZE( 4 ),
+    MATERIAL_VERTEX_FORMAT_MODEL = ( VertexFormat_t )VERTEX_POSITION | VERTEX_COLOR_STREAM_1 | VERTEX_NORMAL | VERTEX_TEXCOORD0_2D | VERTEX_USERDATA_SIZE( 4 ),
     MATERIAL_VERTEX_FORMAT_MODEL_SKINNED_DX7 = ( VertexFormat_t )VERTEX_POSITION | VERTEX_COLOR | VERTEX_NORMAL | VERTEX_TEXCOORD0_2D | VERTEX_BONEWEIGHT( 2 ) | VERTEX_BONE_INDEX,
-    MATERIAL_VERTEX_FORMAT_MODEL = ( VertexFormat_t )VERTEX_POSITION | VERTEX_COLOR | VERTEX_NORMAL | VERTEX_TEXCOORD0_2D | VERTEX_USERDATA_SIZE( 4 ),
+    MATERIAL_VERTEX_FORMAT_MODEL_SKINNED = ( VertexFormat_t )VERTEX_POSITION | VERTEX_COLOR | VERTEX_NORMAL | VERTEX_TEXCOORD0_2D | VERTEX_BONEWEIGHT( 2 ) | VERTEX_BONE_INDEX | VERTEX_USERDATA_SIZE( 4 ),
     MATERIAL_VERTEX_FORMAT_MODEL_DX7 = ( VertexFormat_t )VERTEX_POSITION | VERTEX_COLOR | VERTEX_NORMAL | VERTEX_TEXCOORD0_2D,
     MATERIAL_VERTEX_FORMAT_COLOR = ( VertexFormat_t )VERTEX_SPECULAR
 };
@@ -192,6 +199,7 @@ struct ColorMeshInfo_t
     IPooledVBAllocator *m_pPooledVBAllocator;
     int m_nVertOffsetInBytes;
     int m_nNumVerts;
+    // Experiment; TODO: these are not in the Alien Swarm SDK, test if they work with that StudioRender version.
     ITexture *m_pLightmap;
     ColorTexelsInfo_t *m_pLightmapData;
 };
@@ -208,9 +216,66 @@ struct DrawModelInfo_t
     int m_Lod;
     ColorMeshInfo_t *m_pColorMeshes;
     bool m_bStaticLighting;
-    Vector m_vecAmbientCube[6];  // ambient, and lights that aren't in locallight[]
-    int m_nLocalLightCount;
-    LightDesc_t m_LocalLightDescs[4];
+    MaterialLightingState_t m_LightingState;
+
+    IMPLEMENT_OPERATOR_EQUAL( DrawModelInfo_t );
+};
+
+enum
+{
+    // This is because we store which flashlights are on which model
+    // in a 32-bit field (see ModelArrayInstanceData_t::m_nFlashlightUsage)
+    MAX_FLASHLIGHTS_PER_INSTANCE_DRAW_CALL = 32
+};
+
+struct FlashlightInstance_t
+{
+    IMaterial *m_pDebugMaterial;
+    FlashlightState_t m_FlashlightState;
+    VMatrix m_WorldToTexture;
+    ITexture *m_pFlashlightDepthTexture;
+};
+
+struct StudioModelArrayInfo2_t
+{
+    int m_nFlashlightCount;
+    FlashlightInstance_t *m_pFlashlights;  // NOTE: Can have at most MAX_FLASHLIGHTS_PER_INSTANCE_DRAW_CALL of these
+};
+
+struct StudioModelArrayInfo_t : public StudioModelArrayInfo2_t
+{
+    studiohdr_t *m_pStudioHdr;
+    studiohwdata_t *m_pHardwareData;
+};
+
+struct StudioArrayData_t
+{
+    studiohdr_t *m_pStudioHdr;
+    studiohwdata_t *m_pHardwareData;
+    void *m_pInstanceData;  // See StudioShadowArrayInstanceData_t or StudioArrayInstanceData_t
+    int m_nCount;
+};
+
+struct StudioShadowArrayInstanceData_t
+{
+    int m_nLOD;
+    int m_nBody;
+    int m_nSkin;
+    matrix3x4a_t *m_pPoseToWorld;
+    float *m_pFlexWeights;
+    float *m_pDelayedFlexWeights;
+};
+
+struct StudioArrayInstanceData_t : public StudioShadowArrayInstanceData_t
+{
+    MaterialLightingState_t *m_pLightingState;
+    MaterialLightingState_t *m_pDecalLightingState;
+    ITexture *m_pEnvCubemapTexture;
+    StudioDecalHandle_t m_Decals;
+    uint32 m_nFlashlightUsage;  // Mask indicating which flashlights to use.
+    ShaderStencilState_t *m_pStencilState;
+    ColorMeshInfo_t *m_pColorMeshInfo;
+    Vector4D m_DiffuseModulation;
 };
 
 struct GetTriangles_Vertex_t
@@ -222,6 +287,8 @@ struct GetTriangles_Vertex_t
     Vector4D m_BoneWeight;
     int m_BoneIndex[4];
     int m_NumBones;
+
+    IMPLEMENT_OPERATOR_EQUAL( GetTriangles_Vertex_t );
 };
 
 struct GetTriangles_MaterialBatch_t
@@ -235,13 +302,8 @@ struct GetTriangles_Output_t
 {
     CUtlVector< GetTriangles_MaterialBatch_t > m_MaterialBatches;
     matrix3x4_t m_PoseToWorld[MAXSTUDIOBONES];
-};
 
-struct model_array_instance_t
-{
-    matrix3x4_t modelToWorld;
-
-    // UNDONE: Per instance lighting values?
+    DISALLOW_OPERATOR_EQUAL( GetTriangles_Output_t );
 };
 
 //-----------------------------------------------------------------------------
@@ -363,10 +425,18 @@ abstract_class IStudioRender : public IAppSystem
     // Returns materials used by a particular model
     virtual int GetMaterialList( studiohdr_t * pStudioHdr, int count, IMaterial **ppMaterials ) = 0;
     virtual int GetMaterialListFromBodyAndSkin( MDLHandle_t studio, int nSkin, int nBody, int nCountOutputMaterials, IMaterial **ppOutputMaterials ) = 0;
-    // draw an array of models with the same state
-    virtual void DrawModelArray( const DrawModelInfo_t &drawInfo, int arrayCount, model_array_instance_t *pInstanceData, int instanceStride, int flags = STUDIORENDER_DRAW_ENTIRE_MODEL ) = 0;
 
-    virtual void GetMaterialOverride( IMaterial * *ppOutForcedMaterial, OverrideType_t * pOutOverrideType ) = 0;
+    // no debug modes, just fastest drawing path
+    virtual void DrawModelArrayStaticProp( const DrawModelInfo_t &drawInfo, int nInstanceCount, const MeshInstanceData_t *pInstanceData, ColorMeshInfo_t **pColorMeshes ) = 0;
+
+    // draw an array of models with the same state
+    virtual void DrawModelArray( const StudioModelArrayInfo_t &drawInfo, int nCount, StudioArrayInstanceData_t *pInstanceData, int nInstanceStride, int flags = STUDIORENDER_DRAW_ENTIRE_MODEL ) = 0;
+
+    // draw an array of models with the same state
+    virtual void DrawModelShadowArray( int nCount, StudioArrayData_t *pShadowData, int nInstanceStride, int flags = STUDIORENDER_DRAW_ENTIRE_MODEL ) = 0;
+
+    // draw an array of models with the same state
+    virtual void DrawModelArray( const StudioModelArrayInfo2_t &info, int nCount, StudioArrayData_t *pArrayData, int nInstanceStride, int flags = STUDIORENDER_DRAW_ENTIRE_MODEL ) = 0;
 };
 
 extern IStudioRender *g_pStudioRender;

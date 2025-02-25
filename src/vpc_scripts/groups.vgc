@@ -12,6 +12,10 @@ $Group "gamedlls"
 {
 	"client"
 	"server"
+
+    "lua54"
+    "luasocket"
+    "libpng"
 }
 
 $Group "game"
@@ -23,6 +27,13 @@ $Group "game"
 	"server"
 	"tier1"
 	"vgui_controls"
+
+    "lua54"
+    "luasocket"
+    "libpng"
+    "helloworldmodule"
+
+	"networksystem"
 }
 
 $Group "shaders"
@@ -39,6 +50,7 @@ $Group "everything"
 	"glview"
 	"height2normal"
 	"launcher_main"
+    "lzma"
 	"mathlib"
 	"motionmapper"
 	"phonemeextractor"
@@ -58,6 +70,13 @@ $Group "everything"
 	"vvis_dll"
 	"vvis_launcher"
 
+    "lua54"
+    "luasocket"
+    "libpng"
+    "helloworldmodule"
+
+	"networksystem"
+
 	"game_shader_generic_example"
 
 	// You probably don't want to override all shaders by default.
@@ -70,5 +89,8 @@ $Group "dedicated"
 	"mathlib"
 	"server"
 	"tier1"
+
+    "lua54"
+    "luasocket"
 }
 

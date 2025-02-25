@@ -1,0 +1,11 @@
+<span class="lua__type">
+    {% if type.startswith('enumeration/') %}
+    <a href="{{ config.site_url }}{{ type | replace('enumeration/', 'enumerations/') }}" class="lua__type__enum">{{ type | replace('enumeration/', '') }}</a>
+    {% elif type == 'number' or type == 'integer' or type == 'string' or type == 'boolean' or type == 'table' or type == 'function' %}
+    <a href="{{ config.site_url }}general/standard-types/{{ type }}">{{ type }}</a>
+    {% elif type == 'unknown' %}
+    unknown
+    {% else %}
+    <a href="{{ config.site_url }}classes/{{ type }}" class="lua__type__class">{{ type }}</a>
+    {% endif %}
+</span>

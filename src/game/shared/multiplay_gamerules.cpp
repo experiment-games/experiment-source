@@ -333,9 +333,7 @@ bool CMultiplayRules::Init()
     return BaseClass::Init();
 }
 
-#ifdef CLIENT_DLL
-
-#else
+#ifndef CLIENT_DLL
 
 extern bool g_fGameOver;
 
@@ -367,11 +365,14 @@ void CMultiplayRules::RefreshSkillData( bool forceUpdate )
 //=============================================================================
 #endif
 }
+#endif
 
+#if defined( LUA_SDK ) || !defined( CLIENT_DLL )
 //=========================================================
 //=========================================================
 void CMultiplayRules::Think( void )
 {
+#ifndef CLIENT_DLL
     BaseClass::Think();
 
     ///// Check game rules /////
@@ -405,8 +406,11 @@ void CMultiplayRules::Think( void )
             }
         }
     }
+#endif
 }
+#endif
 
+#ifndef CLIENT_DLL
 //=========================================================
 //=========================================================
 void CMultiplayRules::FrameUpdatePostEntityThink()

@@ -1,0 +1,11 @@
+"VertexlitGeneric"
+{
+	"$basetexture" 				"models/stalkertnb/humans/cs1_csky"
+	"$bumpmap" 					"models/stalkertnb/humans/cs1_normal"
+	
+
+	
+	"$envmap" "env_cubemap"
+	"$normalmapalphaenvmapmask" "1"	
+	"$envmapcontrast" 			"0.8"	
+}

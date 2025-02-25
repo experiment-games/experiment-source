@@ -89,7 +89,7 @@ IMPLEMENT_SERVERCLASS_ST( CWeaponAnnabelle, DT_WeaponAnnabelle )
 END_SEND_TABLE()
 
 LINK_ENTITY_TO_CLASS( weapon_annabelle, CWeaponAnnabelle );
-#ifndef HL2MP
+#if !defined( HL2MP ) && !defined( EXPERIMENT_SOURCE )
 PRECACHE_WEAPON_REGISTER( weapon_annabelle );
 #endif
 

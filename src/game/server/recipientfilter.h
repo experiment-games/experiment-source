@@ -65,7 +65,13 @@ class CRecipientFilter : public IRecipientFilter
    private:
     bool m_bReliable;
     bool m_bInitMessage;
+#ifdef LUA_SDK
+   public:
+#endif
     CUtlVector< int > m_Recipients;
+#ifdef LUA_SDK
+   private:
+#endif
 
     // If using prediction rules, the filter itself suppresses local player
     bool m_bUsingPredictionRules;

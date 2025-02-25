@@ -645,7 +645,7 @@ void CHL2GameMovement::FullLadderMove()
 
     float dist = MIN( dist1sqr, dist2sqr );
     bool neardismountnode = ( dist < 16.0f * 16.0f ) ? true : false;
-    float ladderUnitsPerTick = ( MAX_CLIMB_SPEED * gpGlobals->interval_per_tick );
+    float ladderUnitsPerTick = ( ClimbSpeed() * gpGlobals->interval_per_tick );
     bool neardismountnode2 = ( dist < ladderUnitsPerTick * ladderUnitsPerTick ) ? true : false;
 
     // Really close to node, cvar is set, and pressing a key, then simulate a +USE
@@ -824,7 +824,7 @@ bool CHL2GameMovement::CheckLadderAutoMountCone( CFuncLadder *ladder, const Vect
 			dist,
 			maxDistToLadder,
 			(float)fabs( ladderAxis.Dot( m_vecForward ) ),
-			facingDot, 
+			facingDot,
 			angle);
 #endif
 
@@ -920,7 +920,7 @@ float CHL2GameMovement::MaxSpeed()
         return mv->m_flMaxSpeed;
     }
 
-    return player->MaxSpeed();
+    return player->GetMaxSpeed();
 }
 
 //-----------------------------------------------------------------------------
@@ -1069,7 +1069,7 @@ bool CHL2GameMovement::LadderMove( void )
 
         VectorNormalize( jumpDir );
 
-        VectorScale( jumpDir, MAX_CLIMB_SPEED, mv->m_vecVelocity );
+        VectorScale( jumpDir, ClimbSpeed(), mv->m_vecVelocity );
         // Tracker 13558:  Don't add any extra z velocity if facing downward at all
         if ( m_vecForward.z >= 0.0f )
         {
@@ -1148,7 +1148,7 @@ bool CHL2GameMovement::LadderMove( void )
         }
 #endif  //_XBOX
 
-        mv->m_vecVelocity = MAX_CLIMB_SPEED * factor * ladderUp;
+        mv->m_vecVelocity = ClimbSpeed() * factor * ladderUp;
     }
     else
     {
@@ -1173,7 +1173,7 @@ void CHL2GameMovement::SetGroundEntity( trace_t *pm )
 
 bool CHL2GameMovement::CanAccelerate()
 {
-#ifdef HL2MP
+#if defined( HL2MP ) || defined( EXPERIMENT_SOURCE )
     if ( player->IsObserver() )
     {
         return true;

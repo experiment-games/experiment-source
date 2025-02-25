@@ -1,0 +1,9 @@
+#!/bin/bash
+
+find . -name "*.vcxproj" -exec rm {} \;
+find . -name "*.vcxproj.filters" -exec rm {} \;
+find . -name "*.vcxproj.user" -exec rm {} \;
+
+if [ -f "experiment.sln" ]; then
+    rm "experiment.sln"
+fi

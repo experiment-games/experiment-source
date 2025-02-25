@@ -53,7 +53,13 @@
 
 #ifdef PORTAL
 #include "portal_player.h"
-#endif  // PORTAL
+#endif
+
+#ifdef LUA_SDK
+#include "luamanager.h"
+#include "lbasecombatweapon_shared.h"
+#include "lbaseplayer_shared.h"
+#endif
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -284,7 +290,7 @@ void CC_ToggleDuck( void )
 
 static ConCommand toggle_duck( "toggle_duck", CC_ToggleDuck, "Toggles duck" );
 
-#ifndef HL2MP
+#if !defined( HL2MP ) && !defined( EXPERIMENT_SOURCE )
 #ifndef PORTAL
 LINK_ENTITY_TO_CLASS( player, CHL2_Player );
 #endif
@@ -294,8 +300,10 @@ PRECACHE_REGISTER( player );
 
 CBaseEntity *FindEntityForward( CBasePlayer *pMe, bool fHull );
 
+// clang-format off
+
 BEGIN_SIMPLE_DATADESC( LadderMove_t )
-DEFINE_FIELD( m_bForceLadderMove, FIELD_BOOLEAN ),
+    DEFINE_FIELD( m_bForceLadderMove, FIELD_BOOLEAN ),
     DEFINE_FIELD( m_bForceMount, FIELD_BOOLEAN ),
     DEFINE_FIELD( m_flStartTime, FIELD_TIME ),
     DEFINE_FIELD( m_flArrivalTime, FIELD_TIME ),
@@ -303,15 +311,15 @@ DEFINE_FIELD( m_bForceLadderMove, FIELD_BOOLEAN ),
     DEFINE_FIELD( m_vecStartPosition, FIELD_POSITION_VECTOR ),
     DEFINE_FIELD( m_hForceLadder, FIELD_EHANDLE ),
     DEFINE_FIELD( m_hReservedSpot, FIELD_EHANDLE ),
-    END_DATADESC()
+END_DATADESC()
 
-    // Global Savedata for HL2 player
-    BEGIN_DATADESC( CHL2_Player )
-
-        DEFINE_FIELD( m_nControlClass, FIELD_INTEGER ),
+// Global Savedata for HL2 player
+BEGIN_DATADESC( CHL2_Player )
+    DEFINE_FIELD( m_nControlClass, FIELD_INTEGER ),
     DEFINE_EMBEDDED( m_HL2Local ),
 
     DEFINE_FIELD( m_bSprintEnabled, FIELD_BOOLEAN ),
+    DEFINE_FIELD( m_flTimeAllSuitDevicesOff, FIELD_TIME ),
     DEFINE_FIELD( m_fIsSprinting, FIELD_BOOLEAN ),
     DEFINE_FIELD( m_fIsWalking, FIELD_BOOLEAN ),
 
@@ -335,6 +343,9 @@ DEFINE_FIELD( m_bForceLadderMove, FIELD_BOOLEAN ),
 
     DEFINE_FIELD( m_flTimeIgnoreFallDamage, FIELD_TIME ),
     DEFINE_FIELD( m_bIgnoreFallDamageResetAfterImpact, FIELD_BOOLEAN ),
+
+    // Suit power fields
+    DEFINE_FIELD( m_flSuitPowerLoad, FIELD_FLOAT ),
 
     DEFINE_FIELD( m_flIdleTime, FIELD_TIME ),
     DEFINE_FIELD( m_flMoveTime, FIELD_TIME ),
@@ -373,10 +384,11 @@ DEFINE_FIELD( m_bForceLadderMove, FIELD_BOOLEAN ),
     DEFINE_FIELD( m_flTimeNextLadderHint, FIELD_TIME ),
 
     // DEFINE_FIELD( m_hPlayerProxy, FIELD_EHANDLE ), //Shut up class check!
+END_DATADESC()
 
-    END_DATADESC()
+static bool WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
 
-        CHL2_Player::CHL2_Player()
+CHL2_Player::CHL2_Player()
 {
     m_nNumMissPositions = 0;
     m_pPlayerAISquad = 0;
@@ -391,7 +403,7 @@ DEFINE_FIELD( m_bForceLadderMove, FIELD_BOOLEAN ),
 //
 #define SUITPOWER_CHARGE_RATE 12.5  // 100 units in 8 seconds
 
-#ifdef HL2MP
+#if defined( HL2MP ) || defined( EXPERIMENT_SOURCE )
 CSuitPowerDevice SuitDeviceSprint( bits_SUIT_DEVICE_SPRINT, 25.0f );  // 100 units in 4 seconds
 #else
 CSuitPowerDevice SuitDeviceSprint( bits_SUIT_DEVICE_SPRINT, 12.5f );  // 100 units in 8 seconds
@@ -404,22 +416,26 @@ CSuitPowerDevice SuitDeviceFlashlight( bits_SUIT_DEVICE_FLASHLIGHT, 2.222 );  //
 #endif
 CSuitPowerDevice SuitDeviceBreather( bits_SUIT_DEVICE_BREATHER, 6.7f );  // 100 units in 15 seconds (plus three padded seconds)
 
-IMPLEMENT_SERVERCLASS_ST( CHL2_Player, DT_HL2_Player )
-SendPropDataTable( SENDINFO_DT( m_HL2Local ), &REFERENCE_SEND_TABLE( DT_HL2Local ), SendProxy_SendLocalDataTable ),
-    SendPropBool( SENDINFO( m_fIsSprinting ) ),
-    END_SEND_TABLE()
+// clang-format off
 
-        BEGIN_SEND_TABLE_NOBASE( LadderMove_t, DT_LadderMove )
-            SendPropBool( SENDINFO( m_bForceLadderMove ) ),
+IMPLEMENT_SERVERCLASS_ST( CHL2_Player, DT_HL2_Player )
+    SendPropDataTable( SENDINFO_DT( m_HL2Local ), &REFERENCE_SEND_TABLE( DT_HL2Local ), SendProxy_SendLocalDataTable ),
+    SendPropBool( SENDINFO( m_fIsSprinting ) ),
+END_SEND_TABLE()
+
+BEGIN_SEND_TABLE_NOBASE( LadderMove_t, DT_LadderMove )
+    SendPropBool( SENDINFO( m_bForceLadderMove ) ),
     SendPropBool( SENDINFO( m_bForceMount ) ),
     SendPropFloat( SENDINFO( m_flStartTime ) ),
     SendPropFloat( SENDINFO( m_flArrivalTime ) ),
     SendPropVector( SENDINFO( m_vecGoalPosition ) ),
     SendPropVector( SENDINFO( m_vecStartPosition ) ),
-    END_SEND_TABLE()
+END_SEND_TABLE()
 
-        BEGIN_ENT_SCRIPTDESC( CHL2_Player, CBasePlayer, "Half-Life 2 Player" )
-            END_SCRIPTDESC();
+BEGIN_ENT_SCRIPTDESC( CHL2_Player, CBasePlayer, "Half-Life 2 Player" )
+END_SCRIPTDESC();
+
+static bool WORKAROUND_NASTY_FORMATTING_BUG2;  // clang-format on
 
 void CHL2_Player::Precache( void )
 {
@@ -635,7 +651,6 @@ void CHL2_Player::PreThink( void )
         UpdateClientData();
         CheckTimeBasedDamage();
 
-        // Allow the suit to recharge when in the vehicle.
         CheckSuitUpdate();
         CheckSuitZoom();
 
@@ -687,7 +702,6 @@ void CHL2_Player::PreThink( void )
     }
 
     VPROF_SCOPE_BEGIN( "CHL2_Player::PreThink-Speed" );
-
 #ifdef HL2_EPISODIC
     HandleArmorReduction();
 #endif
@@ -1153,7 +1167,7 @@ void CHL2_Player::PlayerRunCommand( CUserCmd *ucmd, IMoveHelper *moveHelper )
 //-----------------------------------------------------------------------------
 void CHL2_Player::Spawn( void )
 {
-#ifndef HL2MP
+#if !defined( HL2MP ) && !defined( EXPERIMENT_SOURCE )
 #ifndef PORTAL
     SetModel( "models/player.mdl" );
 #endif
@@ -1253,7 +1267,13 @@ void CHL2_Player::EnableSprint( bool bEnable )
 //-----------------------------------------------------------------------------
 void CHL2_Player::StartWalking( void )
 {
+#if defined( EXPERIMENT_SOURCE )
+    SetMaxSpeed( GetWalkSpeed() );
+#elif defined( HL2MP )
     SetMaxSpeed( HL2_WALK_SPEED );
+#else
+    SetMaxSpeed( hl2_walkspeed.GetFloat() );
+#endif
     m_fIsWalking = true;
 }
 
@@ -1261,7 +1281,13 @@ void CHL2_Player::StartWalking( void )
 //-----------------------------------------------------------------------------
 void CHL2_Player::StopWalking( void )
 {
+#if defined( EXPERIMENT_SOURCE )
+    SetMaxSpeed( GetNormalSpeed() );
+#elif defined( HL2MP )
     SetMaxSpeed( HL2_NORM_SPEED );
+#else
+    SetMaxSpeed( hl2_normspeed.GetFloat() );
+#endif
     m_fIsWalking = false;
 }
 
@@ -2010,14 +2036,16 @@ bool CHL2_Player::ApplyBattery( float powerMultiplier )
                 gameeventmanager->FireEvent( event );
             }
         }
+
         return true;
     }
+
     return false;
 }
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-int CHL2_Player::FlashlightIsOn( void )
+bool CHL2_Player::FlashlightIsOn( void )
 {
     return IsEffectActive( EF_DIMLIGHT );
 }
@@ -2188,6 +2216,14 @@ bool CHL2_Player::PassesDamageFilter( const CTakeDamageInfo &info )
 void CHL2_Player::SetFlashlightEnabled( bool bState )
 {
     m_bFlashlightDisabled = !bState;
+}
+
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
+bool CHL2_Player::GetFlashlightEnabled()
+{
+    return m_bFlashlightDisabled;
 }
 
 //-----------------------------------------------------------------------------
@@ -2633,7 +2669,7 @@ int CHL2_Player::GiveAmmo( int nCount, int nAmmoIndex, bool bSuppressSound )
 //-----------------------------------------------------------------------------
 bool CHL2_Player::Weapon_CanUse( CBaseCombatWeapon *pWeapon )
 {
-#ifndef HL2MP
+#if !defined( HL2MP ) && !defined( EXPERIMENT_SOURCE )
     if ( pWeapon->ClassMatches( "weapon_stunstick" ) )
     {
         if ( ApplyBattery( 0.5 ) )
@@ -2649,8 +2685,15 @@ bool CHL2_Player::Weapon_CanUse( CBaseCombatWeapon *pWeapon )
 // Purpose:
 // Input  : *pWeapon -
 //-----------------------------------------------------------------------------
-void CHL2_Player::Weapon_Equip( CBaseCombatWeapon *pWeapon )
+void CHL2_Player::Weapon_Equip( CBaseCombatWeapon *pWeapon, bool bGiveAmmo /*= true*/ )
 {
+#if LUA_SDK
+    LUA_CALL_HOOK_BEGIN( "Weapon_Equip" );
+    CBasePlayer::PushLuaInstanceSafe( L, this );
+    CBaseCombatWeapon::PushLuaInstanceSafe( L, pWeapon );
+    LUA_CALL_HOOK_END( 2, 0 );
+#endif
+
 #if HL2_SINGLE_PRIMARY_WEAPON_MODE
 
     if ( pWeapon->GetSlot() == WEAPON_PRIMARY_SLOT )
@@ -2665,7 +2708,7 @@ void CHL2_Player::Weapon_Equip( CBaseCombatWeapon *pWeapon )
         m_HL2Local.m_bWeaponLowered = false;
     }
 
-    BaseClass::Weapon_Equip( pWeapon );
+    BaseClass::Weapon_Equip( pWeapon, bGiveAmmo );
 }
 
 //-----------------------------------------------------------------------------
@@ -3154,6 +3197,11 @@ float CHL2_Player::GetHeldObjectMass( IPhysicsObject *pHeldObject )
         mass = PhysCannonGetHeldObjectMass( GetActiveWeapon(), pHeldObject );
     }
     return mass;
+}
+
+CBaseEntity *CHL2_Player::GetHeldObject( void )
+{
+    return PhysCannonGetHeldEntity( GetActiveWeapon() );
 }
 
 //-----------------------------------------------------------------------------

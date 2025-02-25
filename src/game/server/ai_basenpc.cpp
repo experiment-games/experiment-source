@@ -298,6 +298,10 @@ int CAI_BaseNPC::gm_nSpawnedThisFrame;
 
 CSimpleSimTimer CAI_BaseNPC::m_AnyUpdateEnemyPosTimer;
 
+// Experiment; added these for gmod compatibility
+static ConVar ai_disabled( "ai_disabled", "0", FCVAR_NOTIFY, "If set to 1, disables all AI logic routines and puts all NPCs into their idle animations.  Can be used to get NPCs out of your way and to test effect of AI logic routines on frame rate" );
+static ConVar ai_ignoreplayers( "ai_ignoreplayers", "0", FCVAR_NOTIFY, "If set to 1, disables NPC interactions with players." );
+
 //
 //	Deferred Navigation calls go here
 //
@@ -1927,6 +1931,9 @@ bool CAI_BaseNPC::QueryHearSound( CSound *pSound )
             return false;
     }
 
+    if ( ai_ignoreplayers.GetBool() && pSound->IsSoundType( SOUND_PLAYER ) )
+        return false;
+
     if ( pSound->IsSoundType( SOUND_PLAYER ) && GetState() == NPC_STATE_IDLE && !FVisible( pSound->GetSoundReactOrigin() ) )
     {
         // NPC's that are IDLE should disregard player movement sounds if they can't see them.
@@ -1954,6 +1961,9 @@ bool CAI_BaseNPC::QueryHearSound( CSound *pSound )
 
 bool CAI_BaseNPC::QuerySeeEntity( CBaseEntity *pEntity, bool bOnlyHateOrFearIfNPC )
 {
+    if ( ai_ignoreplayers.GetBool() && pEntity->IsPlayer() )
+        return false;
+
     if ( bOnlyHateOrFearIfNPC && pEntity->IsNPC() )
     {
         Disposition_t disposition = IRelationType( pEntity );
@@ -2930,6 +2940,11 @@ bool CAI_BaseNPC::PreThink( void )
         SetActivity( ACT_IDLE );
         return false;
     }
+    else if ( ai_disabled.GetBool() )
+    {
+        SetActivity( ACT_IDLE );
+        return false;
+    }
 
     // --------------------------------------------------------
     //	If debug stepping
@@ -3216,7 +3231,11 @@ void CAI_BaseNPC::UpdateEfficiency( bool bInPVS )
                 }
             }
 
-            iSound = pCurrentSound->NextSound();
+            // Experiment; applied fix by ZehMatt (https://github.com/ValveSoftware/source-sdk-2013/pull/381/files)
+            if ( pCurrentSound )
+                iSound = pCurrentSound->NextSound();
+            else
+                break;
         }
     }
 
@@ -3402,7 +3421,11 @@ void CAI_BaseNPC::UpdateSleepState( bool bInPVS )
                             break;
                         }
 
-                        iSound = pCurrentSound->NextSound();
+                        // Experiment; applied fix by ZehMatt (https://github.com/ValveSoftware/source-sdk-2013/pull/381/files)
+                        if ( pCurrentSound )
+                            iSound = pCurrentSound->NextSound();
+                        else
+                            break;
                     }
                 }
             }
@@ -12163,7 +12186,7 @@ bool CAI_BaseNPC::OnUpcomingPropDoor( AILocalMoveGoal_t *pMoveGoal,
             }
 
             // Attach the door to the waypoint so we open it when we get there.
-            // dvs: FIXME: this is kind of bad, I need to find the exact waypoint to open the door
+            // dvs: FIXME: this is kind of bullshit, I need to find the exact waypoint to open the door
             //		should I just walk the path until I find it?
             pOpenDoorRoute->m_hData = pDoor;
 

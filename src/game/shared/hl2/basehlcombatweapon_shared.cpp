@@ -227,7 +227,7 @@ void CBaseHLCombatWeapon::WeaponIdle( void )
 float g_lateralBob;
 float g_verticalBob;
 
-#if defined( CLIENT_DLL ) && ( !defined( HL2MP ) && !defined( PORTAL ) )
+#if defined( CLIENT_DLL ) && ( !defined( HL2MP ) && !defined( PORTAL ) && !defined( EXPERIMENT_SOURCE ) )
 
 #define HL2_BOB_CYCLE_MIN 1.0f
 #define HL2_BOB_CYCLE_MAX 0.45f
@@ -271,7 +271,7 @@ float CBaseHLCombatWeapon::CalcViewmodelBob( void )
     float speed = player->GetLocalVelocity().Length2D();
 
     // FIXME: This maximum speed value must come from the server.
-    //		 MaxSpeed() is not sufficient for dealing with sprinting - jdw
+    //		 GetMaxSpeed() is not sufficient for dealing with sprinting - jdw
 
     speed = clamp( speed, -320, 320 );
 

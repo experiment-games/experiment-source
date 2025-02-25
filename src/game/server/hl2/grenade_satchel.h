@@ -15,7 +15,12 @@
 #endif
 
 #include "basegrenade_shared.h"
+#ifdef HL2MP
 #include "hl2mp/weapon_slam.h"
+#endif
+#ifdef EXPERIMENT_SOURCE
+#include "experiment/weapon_slam.h"
+#endif
 
 class CSoundPatch;
 

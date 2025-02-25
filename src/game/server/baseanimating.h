@@ -16,6 +16,10 @@
 #include "datacache/idatacache.h"
 #include "tier0/threadtools.h"
 
+#ifdef LUA_SDK
+#include <luamanager.h>
+#endif
+
 struct animevent_t;
 struct matrix3x4_t;
 class CIKContext;
@@ -27,6 +31,10 @@ FORWARD_DECLARE_HANDLE( memhandle_t );
 
 class CBaseAnimating : public CBaseEntity
 {
+#ifdef LUA_SDK
+    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( CBaseAnimating, LUA_BASEANIMATINGLIBNAME )
+#endif
+
    public:
     DECLARE_CLASS( CBaseAnimating, CBaseEntity );
 
@@ -443,6 +451,44 @@ class CBaseAnimating : public CBaseEntity
 
     bool PrefetchSequence( int iSequence );
 
+    void SetMaterialOverride( const char *pMaterialName )
+    {
+        Q_strncpy( m_MaterialOverride.GetForModify(), pMaterialName, MAX_PATH );
+    }
+
+    void GetMaterialOverride( char *pOut, int nLength )
+    {
+        Q_strncpy( pOut, m_MaterialOverride.Get(), nLength );
+    }
+
+    void SetSubMaterialOverride( int iIndex, const char *pMaterialName )
+    {
+        if ( iIndex < 0 || iIndex >= MAX_SUB_MATERIAL_OVERRIDES )
+            return;
+
+        // Experiment; TODO: Won't this cause a memory leak?
+        m_SubMaterialOverrides.Set( iIndex, AllocPooledString( pMaterialName ) );
+    }
+
+    void ClearSubMaterialOverrides()
+    {
+        for ( int i = 0; i < MAX_SUB_MATERIAL_OVERRIDES; i++ )
+        {
+            m_SubMaterialOverrides.Set( i, NULL_STRING );
+        }
+    }
+
+    void GetSubMaterialOverride( int iIndex, char *pOut, int nLength )
+    {
+        if ( iIndex < 0 || iIndex >= MAX_SUB_MATERIAL_OVERRIDES )
+        {
+            pOut[0] = 0;
+            return;
+        }
+
+        Q_strncpy( pOut, STRING( m_SubMaterialOverrides[iIndex] ), nLength );
+    }
+
    private:
     void LockStudioHdr();
     void UnlockStudioHdr();
@@ -529,6 +575,10 @@ class CBaseAnimating : public CBaseEntity
     CNetworkVar( float, m_fadeMinDist );  // Point at which fading is absolute
     CNetworkVar( float, m_fadeMaxDist );  // Point at which fading is inactive
     CNetworkVar( float, m_flFadeScale );  // Scale applied to min / max
+
+    // Experiment; Material overrides
+    CNetworkString( m_MaterialOverride, MAX_PATH );
+    CNetworkArray( string_t, m_SubMaterialOverrides, MAX_SUB_MATERIAL_OVERRIDES );
 
    public:
     COutputEvent m_OnIgnite;

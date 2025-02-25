@@ -39,6 +39,10 @@
 #include "hl2_player.h"
 #endif
 
+#ifdef LUA_SDK
+#include "luamanager.h"
+#endif
+
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
@@ -1369,6 +1373,13 @@ DEFINE_AUTO_ARRAY( m_szMapName, FIELD_CHARACTER ),
             Assert( 0 );
         }
         Q_strncpy( m_szMapName, szValue, sizeof( m_szMapName ) );
+
+#ifdef LUA_SDK
+        LUA_GET_REF_TABLE( L, this );
+        lua_pushstring( L, m_szMapName );
+        lua_setfield( L, -2, "m_szMapName" );
+        lua_pop( L, 1 );
+#endif
     }
     else if ( FStrEq( szKeyName, "landmark" ) )
     {
@@ -1379,6 +1390,13 @@ DEFINE_AUTO_ARRAY( m_szMapName, FIELD_CHARACTER ),
         }
 
         Q_strncpy( m_szLandmarkName, szValue, sizeof( m_szLandmarkName ) );
+
+#ifdef LUA_SDK
+        LUA_GET_REF_TABLE( L, this );
+        lua_pushstring( L, m_szLandmarkName );
+        lua_setfield( L, -2, "m_szLandmarkName" );
+        lua_pop( L, 1 );
+#endif
     }
     else
         return BaseClass::KeyValue( szKeyName, szValue );
@@ -3688,14 +3706,14 @@ class CPhysicsWind : public IMotionEvent
     float m_flWindSpeed;
 };
 
+// clang-format off
+
 BEGIN_SIMPLE_DATADESC( CPhysicsWind )
-
-DEFINE_FIELD( m_nWindYaw, FIELD_INTEGER ),
+    DEFINE_FIELD( m_nWindYaw, FIELD_INTEGER ),
     DEFINE_FIELD( m_flWindSpeed, FIELD_FLOAT ),
+END_DATADESC()
 
-    END_DATADESC()
-
-        extern short g_sModelIndexSmoke;
+extern short g_sModelIndexSmoke;  // clang-format on
 extern float GetFloorZ( const Vector &origin );
 #define WIND_THINK_CONTEXT "WindThinkContext"
 

@@ -59,9 +59,13 @@ class CHalfLife2 : public CSingleplayRules
 
     CHalfLife2();
     virtual ~CHalfLife2() {}
+#endif
 
+#if defined( LUA_SDK ) || !defined( CLIENT_DLL )
     virtual void Think( void );
+#endif
 
+#ifndef CLIENT_DLL
     virtual bool ClientCommand( CBaseEntity *pEdict, const CCommand &args );
     virtual void PlayerSpawn( CBasePlayer *pPlayer );
 
@@ -111,7 +115,7 @@ class CHalfLife2 : public CSingleplayRules
 //-----------------------------------------------------------------------------
 inline CHalfLife2 *HL2GameRules()
 {
-#if ( !defined( HL2_DLL ) && !defined( HL2_CLIENT_DLL ) ) || defined( HL2MP )
+#if ( !defined( HL2_DLL ) && !defined( HL2_CLIENT_DLL ) ) || ( defined( HL2MP ) || defined( EXPERIMENT_SOURCE ) )
     Assert( 0 );  // g_pGameRules is NOT an instance of CHalfLife2 and bad things happen
 #endif
 

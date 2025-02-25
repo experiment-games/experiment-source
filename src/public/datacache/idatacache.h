@@ -1,11 +1,11 @@
-//========= Copyright Valve Corporation, All rights reserved. ============//
+//===== Copyright � 1996-2005, Valve Corporation, All rights reserved. ======//
 //
 // Purpose:
 //
 // $Workfile:     $
 // $Date:         $
 // $NoKeywords: $
-//=============================================================================//
+//===========================================================================//
 
 #ifndef IDATACACHE_H
 #define IDATACACHE_H
@@ -15,7 +15,8 @@
 #endif
 
 #include "tier0/dbg.h"
-#include "appframework/IAppSystem.h"
+#include "appframework/iappsystem.h"
+#include "tier3/tier3.h"
 
 class IDataCache;
 
@@ -34,7 +35,7 @@ class IDataCache;
 //---------------------------------------------------------
 // Unique (per section) identifier for a cache item defined by client
 //---------------------------------------------------------
-typedef uintp DataCacheClientID_t;
+typedef uint32 DataCacheClientID_t;
 
 //---------------------------------------------------------
 // Cache-defined handle for a cache item
@@ -48,11 +49,11 @@ typedef memhandle_t DataCacheHandle_t;
 //---------------------------------------------------------
 struct DataCacheLimits_t
 {
-    DataCacheLimits_t( unsigned _nMaxBytes = ( unsigned )-1, unsigned _nMaxItems = ( unsigned )-1, unsigned _nMinBytes = 0, unsigned _nMinItems = 0 )
-        : nMaxBytes( _nMaxBytes ),
-          nMaxItems( _nMaxItems ),
-          nMinBytes( _nMinBytes ),
-          nMinItems( _nMinItems )
+    DataCacheLimits_t( unsigned nMaxBytes = ( unsigned )-1, unsigned nMaxItems = ( unsigned )-1, unsigned nMinBytes = 0, unsigned nMinItems = 0 )
+        : nMaxBytes( nMaxBytes ),
+          nMaxItems( nMaxItems ),
+          nMinBytes( nMinBytes ),
+          nMinItems( nMinItems )
     {
     }
 
@@ -91,6 +92,7 @@ enum DataCacheOptions_t
     DC_FORCE_RELOCATE = ( 1 << 1 ),
     DC_ALWAYS_MISS = ( 1 << 2 ),
     DC_VALIDATE = ( 1 << 3 ),
+    DC_NO_USER_FORCE_FLUSH = ( 1 << 4 )
 };
 
 //---------------------------------------------------------
@@ -101,6 +103,7 @@ enum DataCacheReportType_t
     DC_SUMMARY_REPORT,
     DC_DETAIL_REPORT,
     DC_DETAIL_REPORT_LRU,
+    DC_DETAIL_REPORT_VXCONSOLE,
 };
 
 //---------------------------------------------------------
@@ -172,9 +175,6 @@ enum DataCacheAddFlags_t
 abstract_class IDataCacheSection
 {
    public:
-    // misyl: Cannot add this without breaking ABI. Sad!
-    //	virtual ~IDataCacheSection() {}
-
     //--------------------------------------------------------
 
     virtual IDataCache *GetSharedCache() = 0;
@@ -294,6 +294,11 @@ abstract_class IDataCacheSection
     // Purpose: Add an item to the cache.  Purges old items if over budget, returns false if item was already in cache.
     //--------------------------------------------------------
     virtual bool AddEx( DataCacheClientID_t clientId, const void *pItemData, unsigned size, unsigned flags, DataCacheHandle_t *pHandle ) = 0;
+
+    virtual unsigned int GetOptions() = 0;
+
+    // Batch oriented get/lock
+    virtual void GetAndLockMultiple( void **ppData, int nCount, DataCacheHandle_t *pHandles ) = 0;
 };
 
 //-----------------------------------------------------------------------------
@@ -395,6 +400,9 @@ abstract_class IDataCache : public IAppSystem
     // Purpose: Output the state of the cache
     //--------------------------------------------------------
     virtual void OutputReport( DataCacheReportType_t reportType = DC_SUMMARY_REPORT, const char *pszSection = NULL ) = 0;
+
+    virtual int GetSectionCount() = 0;
+    virtual const char *GetSectionName( int iIndex ) = 0;
 };
 
 //-----------------------------------------------------------------------------
@@ -434,6 +442,19 @@ class CManagedDataCacheClient : public CDefaultDataCacheClient
         return ( LOCK_TYPE )( ( ( STORAGE_TYPE * )m_pCache->Get( handle, bFrameLock ) )->GetData() );
     }
 
+    void CacheGetAndLockMultiple( LOCK_TYPE *pData, int nCount, DataCacheHandle_t *pHandles )
+    {
+        m_pCache->GetAndLockMultiple( ( void ** )pData, nCount, pHandles );
+        for ( int i = 0; i < nCount; ++i )
+        {
+            STORAGE_TYPE *pTypedData = pData[i];
+            if ( pTypedData )
+            {
+                pData[i] = ( LOCK_TYPE )( pTypedData->GetData() );
+            }
+        }
+    }
+
     LOCK_TYPE CacheGetNoTouch( DataCacheHandle_t handle )
     {
         return ( LOCK_TYPE )( ( ( STORAGE_TYPE * )m_pCache->GetNoTouch( handle ) )->GetData() );
@@ -468,6 +489,10 @@ class CManagedDataCacheClient : public CDefaultDataCacheClient
     {
         m_pCache->EnsureCapacity( STORAGE_TYPE::EstimatedSize( createParams ) );
         STORAGE_TYPE *pStore = STORAGE_TYPE::CreateResource( createParams );
+        if ( !pStore )
+        {
+            return DC_INVALID_HANDLE;
+        }
         DataCacheHandle_t handle;
         m_pCache->AddEx( ( DataCacheClientID_t )pStore, pStore, pStore->Size(), flags, &handle );
         return handle;
@@ -493,8 +518,9 @@ class CManagedDataCacheClient : public CDefaultDataCacheClient
             {
                 STORAGE_TYPE *p = ( STORAGE_TYPE * )notification.clientId;
                 p->DestroyResource();
-            }
+
                 return true;
+            }
             default:
                 return CDefaultDataCacheClient::HandleCacheNotification( notification );
         }

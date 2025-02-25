@@ -23,6 +23,10 @@
 #include "vscript/ivscript.h"
 #include "vscript_server.h"
 
+#ifdef LUA_SDK
+#include "luamanager.h"
+#endif
+
 class CDamageModifier;
 class CDmgAccumulator;
 
@@ -232,6 +236,17 @@ enum Class_T
 
 #endif
 
+namespace USABILITY_TYPE
+{
+enum TYPE
+{
+    CONTINUOUS = 0,  // FCAP_CONTINUOUS_USE
+    ON_OFF,          // FCAP_ONOFF_USE
+    DIRECTIONAL,     // FCAP_DIRECTIONAL_USE
+    IMPULSE,         // FCAP_IMPULSE_USE
+};
+}
+
 //
 // Structure passed to input handlers.
 //
@@ -373,6 +388,10 @@ struct rotatingpushmove_t;
 //
 class CBaseEntity : public IServerEntity
 {
+#ifdef LUA_SDK
+    LUA_DECLARE_SINGLE_LUA_INSTANCE( CBaseEntity, LUA_BASEENTITYMETANAME );
+#endif
+
    public:
     DECLARE_CLASS_NOBASE( CBaseEntity );
 
@@ -402,6 +421,12 @@ class CBaseEntity : public IServerEntity
     CBaseEntity( bool bServerOnly = false );
     virtual ~CBaseEntity();
 
+#ifdef LUA_SDK
+    virtual void SetupRefTable( lua_State *L );
+#endif
+
+    virtual void SetUseType( USABILITY_TYPE::TYPE useType );
+
     // prediction system
     DECLARE_PREDICTABLE();
     // network data
@@ -410,6 +435,16 @@ class CBaseEntity : public IServerEntity
     DECLARE_DATADESC();
     // script description
     DECLARE_ENT_SCRIPTDESC();
+
+#ifdef LUA_SDK
+    CNetworkArray( bool, m_LuaVariables_bool, LUA_MAX_NETWORK_VARIABLES );
+    CNetworkArray( int, m_LuaVariables_int, LUA_MAX_NETWORK_VARIABLES );
+    CNetworkArray( float, m_LuaVariables_float, LUA_MAX_NETWORK_VARIABLES );
+    CNetworkArray( Vector, m_LuaVariables_Vector, LUA_MAX_NETWORK_VARIABLES );
+    CNetworkArray( QAngle, m_LuaVariables_QAngle, LUA_MAX_NETWORK_VARIABLES );
+    CNetworkArray( string_t, m_LuaVariables_String, LUA_MAX_NETWORK_VARIABLES_STRING );
+    CNetworkArray( EHANDLE, m_LuaVariables_Entity, LUA_MAX_NETWORK_VARIABLES );
+#endif
 
     // memory handling
     void *operator new( size_t stAllocateBlock );
@@ -531,9 +566,16 @@ class CBaseEntity : public IServerEntity
     HSCRIPT GetScriptOwnerEntity();
     virtual void SetScriptOwnerEntity( HSCRIPT pOwner );
 
+    void AddDeleteOnRemove( CBaseEntity *pEntity );
+    void RemoveDeleteOnRemove( CBaseEntity *pEntity );
+
     // Only CBaseEntity implements these. CheckTransmit calls the virtual ShouldTransmit to see if the
     // entity wants to be sent. If so, it calls SetTransmit, which will mark any dependents for transmission too.
     virtual int ShouldTransmit( const CCheckTransmitInfo *pInfo );
+    virtual void SetPreventTransmit( CRecipientFilter &filter, bool bPreventTransmitting );
+    virtual void SetPreventTransmit( CBasePlayer *filter, bool bPreventTransmitting );
+    virtual void SetTransmitWithParent( bool bTransmitWithParent );
+    virtual bool GetTransmitWithParent();
 
     // update the global transmit state if a transmission rule changed
     int SetTransmitState( int nFlag );
@@ -936,6 +978,27 @@ class CBaseEntity : public IServerEntity
     // used so we know when things are no longer touching
     int touchStamp;
 
+#ifdef LUA_SDK
+    // Andrew; This is used to determine an entity's reference in Lua's
+    // LUA_REGISTRYINDEX. I'd rather do this than create a struct and pass
+    // that to each bounded function, plus it'll save some perf for massive
+    // executions, like Think funcs.
+    int m_nTableReference;
+
+    // Henry; There's an IsPlayer and IsWorld and such, why not an IsWeapon?
+    virtual bool IsWeapon( void ) const
+    {
+        return false;
+    }
+
+    virtual bool IsVehicle( void );
+
+    virtual bool IsScripted( void ) const
+    {
+        return false;
+    }
+#endif
+
    protected:
     // think function handling
     enum thinkmethods_t
@@ -946,6 +1009,8 @@ class CBaseEntity : public IServerEntity
     };
     int GetIndexForThinkContext( const char *pszContext );
     CUtlVector< thinkfunc_t > m_aThinkFunctions;
+    CRecipientFilter *m_rfPreventTransmitEntities;
+    bool m_bTransmitWithParent = false;
 
 #ifdef _DEBUG
     int m_iCurrentThinkContext;
@@ -1020,7 +1085,7 @@ class CBaseEntity : public IServerEntity
         return true;
     }
 
-    // returns the amount of damage inflicted
+    // returns the amount of damage inflicted (this is wrong, seems to return 0 if the damage is fatal or not taken, 1 otherwise)
     virtual int OnTakeDamage( const CTakeDamageInfo &info );
 
     // This is what you should call to apply damage to an entity.
@@ -1166,6 +1231,8 @@ class CBaseEntity : public IServerEntity
     bool InSameTeam( const CBaseEntity *pEntity ) const;  // Returns true if the specified entity is on the same team as this one
     bool IsInAnyTeam( void ) const;                       // Returns true if this entity is in any team
     const char *TeamID( void ) const;                     // Returns the name of the team this entity is on.
+    void SetNoCollidingWithTeammates( bool );
+    bool GetNoCollidingWithTeammates( void );
 
     // Entity events... these are events targetted to a particular entity
     // Each event defines its own well-defined event data structure
@@ -2063,6 +2130,7 @@ class CBaseEntity : public IServerEntity
     // Team handling
     int m_iInitialTeamNum;           // Team number of this entity's team read from file
     CNetworkVar( int, m_iTeamNum );  // Team number of this entity's team.
+    CNetworkVar( bool, m_bNoCollidingWithTeammates );
 
     // Sets water type + level for physics objects
     unsigned char m_nWaterTouch;
@@ -2110,6 +2178,8 @@ class CBaseEntity : public IServerEntity
     // A counter to help quickly build a list of potentially pushed objects for physics
     int m_nPushEnumCount;
 
+    int m_UsabilityType;
+
     Vector m_vecAbsOrigin;
     CNetworkVectorForDerived( m_vecVelocity );
 
@@ -2134,6 +2204,8 @@ class CBaseEntity : public IServerEntity
 
     // was pev->view_ofs ( FIXME:  Move somewhere up the hierarch, CBaseAnimating, etc. )
     CNetworkVectorForDerived( m_vecViewOffset );
+
+    CUtlVector< EHANDLE > m_EntitiesToDeleteOnRemove;
 
    private:
     // dynamic model state tracking
@@ -2173,7 +2245,7 @@ class CBaseEntity : public IServerEntity
     static int PrecacheModel( const char *name, bool bPreload = true );
     static bool PrecacheSound( const char *name );
     static void PrefetchSound( const char *name );
-    void Remove();  // UTIL_Remove( this );
+    virtual void Remove();  // UTIL_Remove( this );
 
    private:
     // This is a random seed used by the networking code to allow client - side prediction code
@@ -2274,6 +2346,10 @@ class CBaseEntity : public IServerEntity
 // Send tables exposed in this module.
 EXTERN_SEND_TABLE( DT_Edict );
 EXTERN_SEND_TABLE( DT_BaseEntity );
+
+#ifdef LUA_SDK  // NetworkVariables
+EXTERN_SEND_TABLE( DT_BaseEntityLuaVariables );
+#endif
 
 // Ugly technique to override base member functions
 // Normally it's illegal to cast a pointer to a member function of a derived class to a pointer to a

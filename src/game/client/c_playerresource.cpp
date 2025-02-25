@@ -13,13 +13,19 @@
 #include "hl2mp_gamerules.h"
 #endif
 
+#ifdef EXPERIMENT_SOURCE
+#include "experiment_gamerules.h"
+#endif
+
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
 const float PLAYER_RESOURCE_THINK_INTERVAL = 0.2f;
 
+// clang-format off
+
 IMPLEMENT_CLIENTCLASS_DT_NOBASE( C_PlayerResource, DT_PlayerResource, CPlayerResource )
-RecvPropArray3( RECVINFO_ARRAY( m_iPing ), RecvPropInt( RECVINFO( m_iPing[0] ) ) ),
+    RecvPropArray3( RECVINFO_ARRAY( m_iPing ), RecvPropInt( RECVINFO( m_iPing[0] ) ) ),
     RecvPropArray3( RECVINFO_ARRAY( m_iScore ), RecvPropInt( RECVINFO( m_iScore[0] ) ) ),
     RecvPropArray3( RECVINFO_ARRAY( m_iDeaths ), RecvPropInt( RECVINFO( m_iDeaths[0] ) ) ),
     RecvPropArray3( RECVINFO_ARRAY( m_bConnected ), RecvPropInt( RECVINFO( m_bConnected[0] ) ) ),
@@ -29,11 +35,11 @@ RecvPropArray3( RECVINFO_ARRAY( m_iPing ), RecvPropInt( RECVINFO( m_iPing[0] ) )
     RecvPropArray3( RECVINFO_ARRAY( m_iAccountID ), RecvPropInt( RECVINFO( m_iAccountID[0] ) ) ),
     RecvPropArray3( RECVINFO_ARRAY( m_bValid ), RecvPropInt( RECVINFO( m_bValid[0] ) ) ),
     RecvPropArray3( RECVINFO_ARRAY( m_iUserID ), RecvPropInt( RECVINFO( m_iUserID[0] ) ) ),
-    END_RECV_TABLE()
+END_RECV_TABLE()
 
-        BEGIN_PREDICTION_DATA( C_PlayerResource )
+BEGIN_PREDICTION_DATA( C_PlayerResource )
 
-            DEFINE_PRED_ARRAY( m_szName, FIELD_STRING, MAX_PLAYERS_ARRAY_SAFE, FTYPEDESC_PRIVATE ),
+    DEFINE_PRED_ARRAY( m_szName, FIELD_STRING, MAX_PLAYERS_ARRAY_SAFE, FTYPEDESC_PRIVATE ),
     DEFINE_PRED_ARRAY( m_iPing, FIELD_INTEGER, MAX_PLAYERS_ARRAY_SAFE, FTYPEDESC_PRIVATE ),
     DEFINE_PRED_ARRAY( m_iScore, FIELD_INTEGER, MAX_PLAYERS_ARRAY_SAFE, FTYPEDESC_PRIVATE ),
     DEFINE_PRED_ARRAY( m_iDeaths, FIELD_INTEGER, MAX_PLAYERS_ARRAY_SAFE, FTYPEDESC_PRIVATE ),
@@ -45,9 +51,11 @@ RecvPropArray3( RECVINFO_ARRAY( m_iPing ), RecvPropInt( RECVINFO( m_iPing[0] ) )
     DEFINE_PRED_ARRAY( m_bValid, FIELD_BOOLEAN, MAX_PLAYERS_ARRAY_SAFE, FTYPEDESC_PRIVATE ),
     DEFINE_PRED_ARRAY( m_iUserID, FIELD_INTEGER, MAX_PLAYERS_ARRAY_SAFE, FTYPEDESC_PRIVATE ),
 
-    END_PREDICTION_DATA()
+END_PREDICTION_DATA()
 
-        C_PlayerResource *g_PR;
+static bool WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
+
+C_PlayerResource *g_PR;
 
 IGameResources *GameResources( void )
 {
@@ -77,7 +85,7 @@ C_PlayerResource::C_PlayerResource()
         m_Colors[i] = COLOR_GREY;
     }
 
-#ifdef HL2MP
+#if defined( HL2MP ) || defined( EXPERIMENT_SOURCE )
     m_Colors[TEAM_COMBINE] = COLOR_BLUE;
     m_Colors[TEAM_REBELS] = COLOR_RED;
     m_Colors[TEAM_UNASSIGNED] = COLOR_YELLOW;

@@ -62,7 +62,11 @@ class CheckButton : public ToggleButton
     DECLARE_CLASS_SIMPLE( CheckButton, ToggleButton );
 
    public:
+#ifdef LUA_SDK
+    CheckButton( Panel *parent, const char *panelName, const char *text, lua_State *L = nullptr );
+#else
     CheckButton( Panel *parent, const char *panelName, const char *text );
+#endif
     ~CheckButton();
 
     // Check the button

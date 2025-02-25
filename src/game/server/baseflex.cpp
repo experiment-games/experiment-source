@@ -53,12 +53,14 @@ void *SendProxy_FlexWeights( const SendProp *pProp, const void *pStruct, const v
         return NULL;
 }
 
+// clang-format off
+
 REGISTER_SEND_PROXY_NON_MODIFIED_POINTER( SendProxy_FlexWeights );
 
 // SendTable stuff.
 IMPLEMENT_SERVERCLASS_ST( CBaseFlex, DT_BaseFlex )
-// Note we can't totally disabled flexweights transmission since some things like blink and eye tracking are still done by the server
-SendPropArray3( SENDINFO_ARRAY3( m_flexWeight ), SendPropFloat( SENDINFO_ARRAY( m_flexWeight ), 12, SPROP_ROUNDDOWN, 0.0f, 1.0f ) /*, SendProxy_FlexWeights*/ ),
+    // Note we can't totally disabled flexweights transmission since some things like blink and eye tracking are still done by the server
+    SendPropArray3( SENDINFO_ARRAY3( m_flexWeight ), SendPropFloat( SENDINFO_ARRAY( m_flexWeight ), 12, SPROP_ROUNDDOWN, 0.0f, 1.0f ) /*, SendProxy_FlexWeights*/ ),
     SendPropInt( SENDINFO( m_blinktoggle ), 1, SPROP_UNSIGNED ),
     SendPropVector( SENDINFO( m_viewtarget ), -1, SPROP_COORD ),
 #ifdef HL2_DLL
@@ -69,11 +71,9 @@ SendPropArray3( SENDINFO_ARRAY3( m_flexWeight ), SendPropFloat( SENDINFO_ARRAY( 
     SendPropVector( SENDINFO( m_vecLean ), -1, SPROP_COORD ),
     SendPropVector( SENDINFO( m_vecShift ), -1, SPROP_COORD ),
 #endif
+END_SEND_TABLE()
 
-    END_SEND_TABLE()
-
-        BEGIN_DATADESC( CBaseFlex )
-
+BEGIN_DATADESC( CBaseFlex )
     //						m_blinktoggle
     DEFINE_ARRAY( m_flexWeight, FIELD_FLOAT, MAXSTUDIOFLEXCTRL ),
     DEFINE_FIELD( m_viewtarget, FIELD_POSITION_VECTOR ),
@@ -91,16 +91,17 @@ SendPropArray3( SENDINFO_ARRAY3( m_flexWeight ), SendPropFloat( SENDINFO_ARRAY( 
     DEFINE_FIELD( m_vecLean, FIELD_VECTOR ),
     DEFINE_FIELD( m_vecShift, FIELD_VECTOR ),
 #endif
+END_DATADESC()
 
-    END_DATADESC()
-
-        BEGIN_ENT_SCRIPTDESC( CBaseFlex, CBaseAnimating, "Animated characters who have vertex flex capability." )
+BEGIN_ENT_SCRIPTDESC( CBaseFlex, CBaseAnimating, "Animated characters who have vertex flex capability." )
 #if 0
 	DEFINE_SCRIPTFUNC_NAMED( ScriptGetOldestScene, "GetCurrentScene", "Returns the instance of the oldest active scene entity (if any)." )
 	DEFINE_SCRIPTFUNC_NAMED( ScriptGetSceneByIndex, "GetSceneByIndex", "Returns the instance of the scene entity at the specified index." )
 #endif
-            DEFINE_SCRIPTFUNC_NAMED( ScriptPlayScene, "PlayScene", "Play the specified .vcd file." )
-                END_SCRIPTDESC();
+    DEFINE_SCRIPTFUNC_NAMED( ScriptPlayScene, "PlayScene", "Play the specified .vcd file." )
+END_SCRIPTDESC();
+
+// clang-format on
 
 #if 0
 //--------------------------------------------------------------------------------------------------
@@ -120,13 +121,13 @@ HSCRIPT CBaseFlex::ScriptGetOldestScene( void )
 }
 
 //--------------------------------------------------------------------------------------------------
-// Returns the script instance of the scene at the specified index, or null if index >= count 
+// Returns the script instance of the scene at the specified index, or null if index >= count
 //--------------------------------------------------------------------------------------------------
 HSCRIPT CBaseFlex::ScriptGetSceneByIndex( int index )
 {
 	if ( m_SceneEvents.IsValidIndex( index ) )
 	{
-		CSceneEventInfo curScene = m_SceneEvents.Element( index ); 
+		CSceneEventInfo curScene = m_SceneEvents.Element( index );
 		return ToHScript( (CBaseEntity*)(curScene.m_hSceneEntity.Get()) );
 	}
 	else
@@ -829,6 +830,9 @@ void CBaseFlex::RemoveSceneEvent( CChoreoScene *scene, CChoreoEvent *event, bool
             info->m_bStarted = false;
 
             m_SceneEvents.Remove( i );
+
+            // Experiment; TODO: The following line isn't in the TF2 SDK (do we need it?):
+            return;
         }
     }
 

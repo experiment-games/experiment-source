@@ -91,6 +91,11 @@ class C_BaseTempEntity : public IClientUnknown, public IClientNetworkable
     void NetworkStateChanged() {}
     void NetworkStateChanged( void *pVar ) {}
 
+#ifdef LUA_SDK
+    // Dummy for scripted weapons.
+    void SetClassname( const char *classname ) {}
+#endif
+
     virtual bool Init( int entnum, int iSerialNum );
 
     virtual void Precache( void );

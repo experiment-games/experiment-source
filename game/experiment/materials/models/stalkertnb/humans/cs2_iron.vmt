@@ -1,0 +1,7 @@
+"VertexlitGeneric"
+{
+	"$basetexture" 				"models/stalkertnb/humans/cs2_iron"
+	"$bumpmap" 					"models/stalkertnb/humans/cs2_normal"
+	"$model" "1"
+
+}

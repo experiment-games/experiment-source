@@ -55,6 +55,10 @@
 #include "studio_stats.h"
 #include "tier1/callqueue.h"
 
+#ifdef LUA_SDK
+#include <luamanager.h>
+#endif
+
 #ifdef TF_CLIENT_DLL
 #include "c_tf_player.h"
 #include "c_baseobject.h"
@@ -78,6 +82,11 @@ const float RUN_SPEED_ESTIMATE_SQR = 150.0f * 150.0f;
 #ifdef DEBUG
 static ConVar dbganimmodel( "dbganimmodel", "" );
 #endif
+
+#if defined( STAGING_ONLY )
+static ConVar dbg_bonestack_perturb( "dbg_bonestack_perturb", "0", 0 );
+static CInterlockedInt dbg_bonestack_reentrant_count = 0;
+#endif  // STAGING_ONLY
 
 mstudioevent_t *GetEventIndexForSequence( mstudioseqdesc_t &seqdesc );
 
@@ -145,11 +154,13 @@ const unsigned int FCLIENTANIM_SEQUENCE_CYCLE = 0x00000001;
 
 static CUtlVector< clientanimating_t > g_ClientSideAnimationList;
 
-BEGIN_RECV_TABLE_NOBASE( C_BaseAnimating, DT_ServerAnimationData )
-RecvPropFloat( RECVINFO( m_flCycle ) ),
-    END_RECV_TABLE()
+// clang-format off
 
-        void RecvProxy_Sequence( const CRecvProxyData *pData, void *pStruct, void *pOut )
+BEGIN_RECV_TABLE_NOBASE( C_BaseAnimating, DT_ServerAnimationData )
+    RecvPropFloat( RECVINFO( m_flCycle ) ),
+END_RECV_TABLE()
+
+void RecvProxy_Sequence( const CRecvProxyData *pData, void *pStruct, void *pOut )
 {
     // Have the regular proxy store the data.
     RecvProxy_Int32ToInt32( pData, pStruct, pOut );
@@ -166,7 +177,7 @@ RecvPropFloat( RECVINFO( m_flCycle ) ),
 }
 
 IMPLEMENT_CLIENTCLASS_DT( C_BaseAnimating, DT_BaseAnimating, CBaseAnimating )
-RecvPropInt( RECVINFO( m_nSequence ), 0, RecvProxy_Sequence ),
+    RecvPropInt( RECVINFO( m_nSequence ), 0, RecvProxy_Sequence ),
     RecvPropInt( RECVINFO( m_nForceBone ) ),
     RecvPropVector( RECVINFO( m_vecForce ) ),
     RecvPropInt( RECVINFO( m_nSkin ) ),
@@ -199,11 +210,15 @@ RecvPropInt( RECVINFO( m_nSequence ), 0, RecvProxy_Sequence ),
     RecvPropFloat( RECVINFO( m_fadeMaxDist ) ),
     RecvPropFloat( RECVINFO( m_flFadeScale ) ),
 
-    END_RECV_TABLE()
+    // Experiment; Material override and submaterial override
+	RecvPropString( RECVINFO( m_MaterialOverride ) ),
+    RecvPropArray( RecvPropString( RECVINFO(m_SubMaterialOverrides[0]) ), m_SubMaterialOverrides ),
 
-        BEGIN_PREDICTION_DATA( C_BaseAnimating )
+END_RECV_TABLE()
 
-            DEFINE_PRED_FIELD( m_nSkin, FIELD_INTEGER, FTYPEDESC_INSENDTABLE ),
+BEGIN_PREDICTION_DATA( C_BaseAnimating )
+
+    DEFINE_PRED_FIELD( m_nSkin, FIELD_INTEGER, FTYPEDESC_INSENDTABLE ),
     DEFINE_PRED_FIELD( m_nBody, FIELD_INTEGER, FTYPEDESC_INSENDTABLE ),
     //	DEFINE_PRED_FIELD( m_nHitboxSet, FIELD_INTEGER, FTYPEDESC_INSENDTABLE ),
     //	DEFINE_PRED_FIELD( m_flModelScale, FIELD_FLOAT, FTYPEDESC_INSENDTABLE ),
@@ -247,12 +262,12 @@ RecvPropInt( RECVINFO( m_nSequence ), 0, RecvProxy_Sequence ),
 
     // DEFINE_FIELD( C_BaseFlex, m_iEyeAttachment, FIELD_INTEGER ),
 
-    END_PREDICTION_DATA()
+END_PREDICTION_DATA()
 
-        LINK_ENTITY_TO_CLASS( client_ragdoll, C_ClientRagdoll );
+LINK_ENTITY_TO_CLASS( client_ragdoll, C_ClientRagdoll );
 
 BEGIN_DATADESC( C_ClientRagdoll )
-DEFINE_FIELD( m_bFadeOut, FIELD_BOOLEAN ),
+    DEFINE_FIELD( m_bFadeOut, FIELD_BOOLEAN ),
     DEFINE_FIELD( m_bImportant, FIELD_BOOLEAN ),
     DEFINE_FIELD( m_iCurrentFriction, FIELD_INTEGER ),
     DEFINE_FIELD( m_iMinFriction, FIELD_INTEGER ),
@@ -274,9 +289,11 @@ DEFINE_FIELD( m_bFadeOut, FIELD_BOOLEAN ),
     DEFINE_AUTO_ARRAY( m_flScaleTimeEnd, FIELD_FLOAT ),
     DEFINE_EMBEDDEDBYREF( m_pRagdoll ),
 
-    END_DATADESC()
+END_DATADESC()
 
-        C_ClientRagdoll::C_ClientRagdoll( bool bRestoring )
+static bool WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
+
+C_ClientRagdoll::C_ClientRagdoll( bool bRestoring )
 {
     m_iCurrentFriction = 0;
     m_iFrictionAnimState = RAGDOLL_FRICTION_NONE;
@@ -892,7 +909,7 @@ void C_BaseAnimating::RemoveBaseAnimatingInterpolatedVars()
     RemoveVar( m_flEncodedController, false );
     RemoveVar( m_flPoseParameter, false );
 
-#ifdef HL2MP
+#if defined( HL2MP ) || defined( EXPERIMENT_SOURCE )
     // HACK:  Don't want to remove interpolation for predictables in hl2dm, though
     // The animation state stuff sets the pose parameters -- so they should interp
     //  but m_flCycle is not touched, so it's only set during prediction (which occurs on tick boundaries)
@@ -1366,6 +1383,11 @@ void C_BaseAnimating::GetBoneControllers( float controllers[MAXSTUDIOBONECTRLS] 
     {
         controllers[i] = m_flEncodedController[i];
     }
+}
+
+float C_BaseAnimating::GetPoseParameter( const char *szName )
+{
+    return GetPoseParameter( LookupPoseParameter( szName ) );
 }
 
 float C_BaseAnimating::GetPoseParameter( int iPoseParameter )
@@ -3185,6 +3207,11 @@ int C_BaseAnimating::DrawModel( int flags )
         // Necessary for lighting blending
         CreateModelInstance();
 
+        if ( m_MaterialOverrideReference.IsValid() )
+        {
+            modelrender->ForcedMaterialOverride( m_MaterialOverrideReference );
+        }
+
         if ( !IsFollowingEntity() )
         {
             drawn = InternalDrawModel( flags | extraFlags );
@@ -3206,6 +3233,11 @@ int C_BaseAnimating::DrawModel( int flags )
                     drawn = InternalDrawModel( STUDIO_RENDER | extraFlags );
                 }
             }
+        }
+
+        if ( m_MaterialOverrideReference.IsValid() )
+        {
+            modelrender->ForcedMaterialOverride( NULL );
         }
     }
 
@@ -3304,6 +3336,7 @@ void C_BaseAnimating::DoInternalDrawModel( ClientModelRenderInfo_t *pInfo, DrawM
     }
 }
 
+// Experiment; TODO: Use this to override materials instead of our custom fields like m_SubMaterialOverridesReferences and m_SubMaterialOverrides
 #ifdef TF_CLIENT_DLL
 // Move this elsewhere if we ever need it again.
 class MaterialOverrideRestore
@@ -3450,6 +3483,23 @@ int C_BaseAnimating::InternalDrawModel( int flags )
     matrix3x4_t *pBoneToWorld = NULL;
     bool bMarkAsDrawn = modelrender->DrawModelSetup( *pInfo, &state, NULL, &pBoneToWorld );
 
+    // Experiment; TODO: Should the material override that is global also be moved here for consistency?
+    // Experiment; After DrawModelSetup 'g_pMDLCache->GetHardwareData' sets the m_pStudioHWData, we can override it to set custom materials
+    for ( int i = 0; i < MAX_SUB_MATERIAL_OVERRIDES; i++ )
+    {
+        if ( m_SubMaterialOverridesReferences[i].IsValid() )
+        {
+            // Experiment; We set material overrides for all LODs so they're always visible no matter the distance
+            for ( int lod = 0; lod < state.m_pStudioHWData->m_NumLODs; lod++ )
+            {
+                if ( i < state.m_pStudioHWData->m_pLODs[lod].numMaterials )
+                {
+                    state.m_pStudioHWData->m_pLODs[lod].ppMaterials[i] = m_SubMaterialOverridesReferences[i];
+                }
+            }
+        }
+    }
+
     // Scale the base transform if we don't have a bone hierarchy
     if ( IsModelScaled() )
     {
@@ -3550,7 +3600,7 @@ void C_BaseAnimating::DoAnimationEvents( CStudioHdr *pStudioHdr )
     int nSeqNum = GetSequence();
     if ( nSeqNum >= nStudioNumSeq )
     {
-#ifndef HL2MP
+#ifdef TF_CLIENT_DLL
         // This can happen e.g. while reloading Heavy's shotgun, switch to the minigun.
         Warning( "%s[%d]: Playing sequence %d but there's only %d in total?\n", GetDebugName(), entindex(), nSeqNum, nStudioNumSeq );
 #endif
@@ -4758,8 +4808,8 @@ C_BaseAnimating *C_BaseAnimating::CreateRagdollCopy()
 
     TermRopes();
 
-    const model_t *pModel = GetModel();
-    const char *pModelName = modelinfo->GetModelName( pModel );
+    const model_t *model = GetModel();
+    const char *pModelName = modelinfo->GetModelName( model );
 
     if ( pRagdoll->InitializeAsClientEntity( pModelName, RENDER_GROUP_OPAQUE_ENTITY ) == false )
     {
@@ -4805,6 +4855,15 @@ C_BaseAnimating *C_BaseAnimating::CreateRagdollCopy()
 
     pRagdoll->SetModelName( AllocPooledString( pModelName ) );
     pRagdoll->SetModelScale( GetModelScale() );
+
+    if ( L )
+    {
+        LUA_CALL_HOOK_BEGIN( "CreateClientSideRagdoll" );
+        this->PushLuaInstance( L );      // doc: entity
+        pRagdoll->PushLuaInstance( L );  // doc: ragdollEntity
+        LUA_CALL_HOOK_END( 2, 0 );
+    }
+
     return pRagdoll;
 }
 
@@ -5000,6 +5059,29 @@ void C_BaseAnimating::OnDataChanged( DataUpdateType_t updateType )
         // Remove ragdoll info
         delete m_pRagdollInfo;
         m_pRagdollInfo = NULL;
+    }
+
+    if ( m_MaterialOverrideReference.IsValid() )
+    {
+        m_MaterialOverrideReference.Shutdown();
+    }
+
+    if ( m_MaterialOverride[0] != 0 )
+    {
+        m_MaterialOverrideReference.Init( m_MaterialOverride, TEXTURE_GROUP_MODEL );
+    }
+
+    for ( int i = 0; i < MAX_SUB_MATERIAL_OVERRIDES; i++ )
+    {
+        if ( m_SubMaterialOverridesReferences[i].IsValid() )
+        {
+            m_SubMaterialOverridesReferences[i].Shutdown();
+        }
+
+        if ( m_SubMaterialOverrides[i][0] != 0 )
+        {
+            m_SubMaterialOverridesReferences[i].Init( m_SubMaterialOverrides[i], TEXTURE_GROUP_MODEL );
+        }
     }
 }
 

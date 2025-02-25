@@ -1,0 +1,13 @@
+*.o
+*.so
+*.so.*
+*.obj
+*.user
+*.sdf
+Debug
+Release
+*.manifest
+*.swp
+*.suo
+x64
+

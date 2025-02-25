@@ -69,6 +69,9 @@ extern IVTex *g_pVTex;
 void ConnectTier3Libraries( CreateInterfaceFn *pFactoryList, int nFactoryCount );
 void DisconnectTier3Libraries();
 
+// Experiment: Our own hacky additions to tier3
+void ConnectCustomTier3Libraries( CreateInterfaceFn *pFactoryList, int nFactoryCount );
+
 //-----------------------------------------------------------------------------
 // Helper empty implementation of an IAppSystem for tier2 libraries
 //-----------------------------------------------------------------------------

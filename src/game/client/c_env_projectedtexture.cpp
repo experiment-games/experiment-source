@@ -20,6 +20,10 @@
 static ConVar mat_slopescaledepthbias_shadowmap( "mat_slopescaledepthbias_shadowmap", "16", FCVAR_CHEAT );
 static ConVar mat_depthbias_shadowmap( "mat_depthbias_shadowmap", "0.0005", FCVAR_CHEAT );
 
+// Experiment: TODO:    This has not yet been updated to how mapbase implements projected textures:
+//                      https://github.com/mapbase-source/source-sdk-2013/blob/471a840ed98c7206237cb579671a6d6fda9fd4f9/sp/src/game/client/c_env_projectedtexture.cpp#L8
+//                      https://github.com/search?q=repo%3Amapbase-source%2Fsource-sdk-2013+ASW_PROJECTED_TEXTURES&type=code
+
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------

@@ -14,11 +14,13 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
+// clang-format off
+
 BEGIN_SEND_TABLE_NOBASE( CHL2PlayerLocalData, DT_HL2Local )
-// misyl: SPROP_NOSCALE looks a bit overkill here, but I get pred errors without it.
-// Getting this as accurate as impossible is important... If we get out of sync with
-// this, we can get pred errors going in/out of sprint which is SUPER JANKY!!!
-SendPropFloat( SENDINFO( m_flSuitPower ), -1, SPROP_NOSCALE, 0.0, 100.0 ),
+    // misyl: SPROP_NOSCALE looks a bit overkill here, but I get pred errors without it.
+    // Getting this as accurate as impossible is important... If we get out of sync with
+    // this, we can get pred errors going in/out of sprint which is SUPER JANKY!!!
+    SendPropFloat( SENDINFO( m_flSuitPower ), -1, SPROP_NOSCALE, 0.0, 100.0 ),
     SendPropFloat( SENDINFO( m_flSuitPowerLoad ), -1, SPROP_NOSCALE, 0.0, 100.0 ),
     SendPropFloat( SENDINFO( m_flTimeAllSuitDevicesOff ), -1, SPROP_NOSCALE ),
     SendPropInt( SENDINFO( m_bNewSprinting ), 1, SPROP_UNSIGNED ),
@@ -39,10 +41,10 @@ SendPropFloat( SENDINFO( m_flSuitPower ), -1, SPROP_NOSCALE, 0.0, 100.0 ),
     SendPropVector( SENDINFO( m_vecLocatorOrigin ) ),
 #endif
     SendPropDataTable( SENDINFO_DT( m_LadderMove ), &REFERENCE_SEND_TABLE( DT_LadderMove ), SendProxy_SendLocalDataTable ),
-    END_SEND_TABLE()
+END_SEND_TABLE()
 
-        BEGIN_SIMPLE_DATADESC( CHL2PlayerLocalData )
-            DEFINE_FIELD( m_flSuitPower, FIELD_FLOAT ),
+BEGIN_SIMPLE_DATADESC( CHL2PlayerLocalData )
+    DEFINE_FIELD( m_flSuitPower, FIELD_FLOAT ),
     DEFINE_FIELD( m_flSuitPowerLoad, FIELD_FLOAT ),
     DEFINE_FIELD( m_flTimeAllSuitDevicesOff, FIELD_FLOAT ),
     DEFINE_FIELD( m_bZooming, FIELD_BOOLEAN ),
@@ -61,9 +63,11 @@ SendPropFloat( SENDINFO( m_flSuitPower ), -1, SPROP_NOSCALE, 0.0, 100.0 ),
     // Ladder related stuff
     DEFINE_FIELD( m_hLadder, FIELD_EHANDLE ),
     DEFINE_EMBEDDED( m_LadderMove ),
-    END_DATADESC()
+END_DATADESC()
 
-        CHL2PlayerLocalData::CHL2PlayerLocalData()
+static bool WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
+
+CHL2PlayerLocalData::CHL2PlayerLocalData()
 {
     m_flSuitPower = 0.0f;
     m_flSuitPowerLoad = 0.0f;

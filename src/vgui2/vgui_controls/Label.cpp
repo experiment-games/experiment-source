@@ -36,8 +36,13 @@ DECLARE_BUILD_FACTORY_DEFAULT_TEXT( Label, Label );
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
+#ifdef LUA_SDK
+Label::Label( Panel *parent, const char *panelName, const char *text, lua_State *L /* = nullptr */ )
+    : BaseClass( parent, panelName, L )
+#else
 Label::Label( Panel *parent, const char *panelName, const char *text )
     : BaseClass( parent, panelName )
+#endif
 {
     Init();
 
@@ -262,6 +267,10 @@ void Label::OnMousePressed( MouseCode code )
     {
         _associate->RequestFocus();
     }
+
+    // Experiment;  we call the base class function to ensure Lua hooks are called.
+    //              I hope this doesn't break anything.
+    BaseClass::OnMousePressed( code );
 }
 
 //-----------------------------------------------------------------------------
@@ -499,6 +508,10 @@ void Label::ComputeAlignment( int &tx0, int &ty0, int &tx1, int &ty1 )
 //-----------------------------------------------------------------------------
 void Label::Paint()
 {
+    // Experiment;  we call the base class function to ensure Lua hooks are called.
+    //              I hope this doesn't break anything.
+    BaseClass::Paint();
+
     int tx0, ty0, tx1, ty1;
     ComputeAlignment( tx0, ty0, tx1, ty1 );
 
@@ -1148,6 +1161,7 @@ void Label::GetSettings( KeyValues *outResourceData )
         outResourceData->SetInt( "textinsetx", _textInset[0] );
         outResourceData->SetInt( "textinsety", _textInset[1] );
     }
+
     outResourceData->SetInt( "auto_wide_tocontents", ( m_bAutoWideToContents ? 1 : 0 ) );
     outResourceData->SetInt( "auto_tall_tocontents", ( m_bAutoTallToContents ? 1 : 0 ) );
     outResourceData->SetInt( "use_proportional_insets", ( m_bUseProportionalInsets ? 1 : 0 ) );
@@ -1323,6 +1337,10 @@ const char *Label::GetDescription( void )
 //-----------------------------------------------------------------------------
 void Label::PerformLayout()
 {
+    // Experiment;  we call the base class function to ensure Lua hooks are called.
+    //              I hope this doesn't break anything.
+    BaseClass::PerformLayout();
+
     int wide, tall;
     Panel::GetSize( wide, tall );
     wide -= _textInset[0];  // take inset into account

@@ -39,7 +39,7 @@ class ISteamVideo
     virtual bool GetOPFStringForApp( AppId_t unVideoAppID, char *pchBuffer, int32 *pnBufferSize ) = 0;
 };
 
-#define STEAMVIDEO_INTERFACE_VERSION "STEAMVIDEO_INTERFACE_V007"
+#define STEAMVIDEO_INTERFACE_VERSION "STEAMVIDEO_INTERFACE_V002"
 
 // Global interface accessor
 inline ISteamVideo *SteamVideo();

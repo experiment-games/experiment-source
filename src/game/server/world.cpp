@@ -32,6 +32,10 @@
 #include "particle_parse.h"
 #include "globalstate.h"
 
+#ifdef LUA_SDK
+#include "luamanager.h"
+#endif
+
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
@@ -450,19 +454,24 @@ CWorld::CWorld()
 {
     AddEFlags( EFL_NO_AUTO_EDICT_ATTACH | EFL_KEEP_ON_RECREATE_ENTITIES );
     NetworkProp()->AttachEdict( INDEXENT( RequiredEdictIndex() ) );
+#ifndef LUA_SDK
     ActivityList_Init();
+#endif
     EventList_Init();
 
     SetSolid( SOLID_BSP );
     SetMoveType( MOVETYPE_NONE );
 
     m_bColdWorld = false;
+    SetClassname( "worldspawn" );
 }
 
 CWorld::~CWorld()
 {
-    EventList_Free();
+#ifndef LUA_SDK
     ActivityList_Free();
+#endif
+    EventList_Free();
     if ( g_pGameRules )
     {
         g_pGameRules->LevelShutdown();
@@ -496,7 +505,11 @@ void CWorld::DecalTrace( trace_t *pTrace, char const *decalName )
 
 void CWorld::RegisterSharedActivities( void )
 {
+#ifndef LUA_SDK
+    // Experiment; Note that ACT_* ActivityList registrations
+    // were moved to luamanager.cpp
     ActivityList_RegisterSharedActivities();
+#endif
 }
 
 void CWorld::RegisterSharedEvents( void )
@@ -563,6 +576,8 @@ const char *GetDefaultLightstyleString( int styleIndex )
 
 void CWorld::Precache( void )
 {
+    CBaseEntity::PrecacheModel( "models/error.mdl", true );
+
     g_WorldEntity = this;
     g_fGameOver = false;
     g_pLastSpawn = NULL;
@@ -597,7 +612,9 @@ void CWorld::Precache( void )
     // =================================================
     //	Activities
     // =================================================
+#ifndef LUA_SDK
     ActivityList_Free();
+#endif
     RegisterSharedActivities();
 
     EventList_Free();

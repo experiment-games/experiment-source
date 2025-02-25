@@ -508,7 +508,7 @@ void C_HLTVCamera::FixupMovmentParents()
     }
 }
 
-void C_HLTVCamera::CalcView( Vector &origin, QAngle &angles, float &fov )
+void C_HLTVCamera::CalcView( CViewSetup &setupView )
 {
     if ( m_bEntityPacketReceived )
     {
@@ -522,9 +522,8 @@ void C_HLTVCamera::CalcView( Vector &origin, QAngle &angles, float &fov )
         C_BasePlayer *pCameraMan = UTIL_PlayerByIndex( m_iCameraMan );
         if ( pCameraMan )
         {
-            float zNear, zFar;
-            pCameraMan->CalcView( origin, angles, zNear, zFar, fov );
-            pCameraMan->CalcViewModelView( origin, angles );
+            pCameraMan->CalcView( setupView );
+            pCameraMan->CalcViewModelView( setupView.origin, setupView.angles );
             return;
         }
     }
@@ -532,19 +531,19 @@ void C_HLTVCamera::CalcView( Vector &origin, QAngle &angles, float &fov )
     switch ( m_nCameraMode )
     {
         case OBS_MODE_ROAMING:
-            CalcRoamingView( origin, angles, fov );
+            CalcRoamingView( setupView.origin, setupView.angles, setupView.fov );
             break;
 
         case OBS_MODE_FIXED:
-            CalcFixedView( origin, angles, fov );
+            CalcFixedView( setupView.origin, setupView.angles, setupView.fov );
             break;
 
         case OBS_MODE_IN_EYE:
-            CalcInEyeCamView( origin, angles, fov );
+            CalcInEyeCamView( setupView.origin, setupView.angles, setupView.fov );
             break;
 
         case OBS_MODE_CHASE:
-            CalcChaseCamView( origin, angles, fov );
+            CalcChaseCamView( setupView.origin, setupView.angles, setupView.fov );
             break;
     }
 }
@@ -664,6 +663,27 @@ void C_HLTVCamera::SpecPlayerByPredicate( const char *szSearch )
 
     SetPrimaryTarget( pPlayer->entindex() );
     return;
+}
+
+void C_HLTVCamera::SpecNamedPlayer( const char *szPlayerName )
+{
+    for ( int index = 1; index <= gpGlobals->maxClients; ++index )
+    {
+        C_BasePlayer *pPlayer = UTIL_PlayerByIndex( index );
+
+        if ( !pPlayer )
+            continue;
+
+        if ( !FStrEq( szPlayerName, pPlayer->GetPlayerName() ) )
+            continue;
+
+        // only follow living players or dedicated spectators
+        if ( pPlayer->IsObserver() && pPlayer->GetTeamNumber() != TEAM_SPECTATOR )
+            continue;
+
+        SetPrimaryTarget( index );
+        return;
+    }
 }
 
 void C_HLTVCamera::FireGameEvent( IGameEvent *event )

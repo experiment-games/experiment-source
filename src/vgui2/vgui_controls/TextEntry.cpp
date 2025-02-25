@@ -44,8 +44,13 @@ DECLARE_BUILD_FACTORY( TextEntry );
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
+#ifdef LUA_SDK
+TextEntry::TextEntry( Panel *parent, const char *panelName, lua_State *L /* = nullptr */ )
+    : BaseClass( parent, panelName, L )
+#else
 TextEntry::TextEntry( Panel *parent, const char *panelName )
     : BaseClass( parent, panelName )
+#endif
 {
     SetTriplePressAllowed( true );
 
@@ -633,17 +638,24 @@ void TextEntry::PaintBackground()
 {
     BaseClass::PaintBackground();
 
+    PaintText( GetFgColor(), _selectionColor, _cursorColor );
+}
+
+void TextEntry::PaintText( Color foregroundColor, Color highlightColor, Color cursorColor )
+{
+    _selectionColor = highlightColor;
+    _cursorColor = cursorColor;
+
     // draw background
-    Color col;
+    Color bgColor;
     if ( IsEnabled() )
     {
-        col = GetBgColor();
+        bgColor = GetBgColor();
     }
     else
     {
-        col = _disabledBgColor;
+        bgColor = _disabledBgColor;
     }
-    Color saveBgColor = col;
 
     int wide, tall;
     GetSize( wide, tall );
@@ -688,15 +700,17 @@ void TextEntry::PaintBackground()
     HFont useFont = _font;
 
     surface()->DrawSetTextFont( useFont );
-    if ( IsEnabled() )
-    {
-        col = GetFgColor();
-    }
-    else
-    {
-        col = _disabledFgColor;
-    }
-    surface()->DrawSetTextColor( col );
+
+    // Experiment; TODO: Check if our fixes are correct. I thought foregroundColor should be used here instead of this hardcoded logic:
+    // if (IsEnabled())
+    //{
+    //	col = GetFgColor();
+    // }
+    // else
+    //{
+    //	col = _disabledFgColor;
+    // }
+    surface()->DrawSetTextColor( foregroundColor );
     _pixelsIndent = 0;
 
     int lineBreakIndexIndex = 0;
@@ -787,19 +801,19 @@ void TextEntry::PaintBackground()
                 if ( iscompositionchar )
                 {
                     // Set the underline color to the text color
-                    surface()->DrawSetColor( col );
+                    surface()->DrawSetColor( foregroundColor );
 
                     int w = getCharWidth( useFont, ch );
 
                     if ( invertcomposition )
                     {
                         // Invert color
-                        surface()->DrawSetTextColor( saveBgColor );
-                        surface()->DrawSetColor( col );
+                        surface()->DrawSetTextColor( bgColor );
+                        surface()->DrawSetColor( foregroundColor );
 
                         surface()->DrawFilledRect( x, 0, x + w, tall );
                         // Set the underline color to the text color
-                        surface()->DrawSetColor( saveBgColor );
+                        surface()->DrawSetColor( bgColor );
                     }
 
                     surface()->DrawFilledRect( x, tall - 2, x + w, tall - 1 );
@@ -810,7 +824,7 @@ void TextEntry::PaintBackground()
             x += DrawChar( ch, useFont, i, x, y );
 
             // Restore color
-            surface()->DrawSetTextColor( col );
+            surface()->DrawSetTextColor( foregroundColor );
         }
         if ( endIndex < m_TextStream.Count() )  // add an elipsis
         {
@@ -849,17 +863,17 @@ void TextEntry::PaintBackground()
                 if ( iscompositionchar )
                 {
                     // Set the underline color to the text color
-                    surface()->DrawSetColor( col );
+                    surface()->DrawSetColor( foregroundColor );
 
                     int w = getCharWidth( useFont, ch );
 
                     if ( invertcomposition )
                     {
                         // Invert color
-                        surface()->DrawSetTextColor( saveBgColor );
+                        surface()->DrawSetTextColor( bgColor );
                         surface()->DrawFilledRect( x, 0, x + w, tall );
                         // Set the underline color to the text color
-                        surface()->DrawSetColor( saveBgColor );
+                        surface()->DrawSetColor( bgColor );
                     }
 
                     surface()->DrawFilledRect( x, tall - 2, x + w, tall - 1 );
@@ -870,7 +884,7 @@ void TextEntry::PaintBackground()
             x += DrawChar( ch, useFont, i, x, y );
 
             // Restore color
-            surface()->DrawSetTextColor( col );
+            surface()->DrawSetTextColor( foregroundColor );
         }
     }
 
@@ -914,12 +928,12 @@ void TextEntry::PaintBackground()
             x = wide - m_nLangInset;
         }
 
-        surface()->DrawSetColor( col );
+        surface()->DrawSetColor( foregroundColor );
 
         surface()->DrawFilledRect( x, 2, x + m_nLangInset - 2, tall - 2 );
 
-        saveBgColor[3] = 255;
-        surface()->DrawSetTextColor( saveBgColor );
+        bgColor[3] = 255;
+        surface()->DrawSetTextColor( bgColor );
 
         x += 1;
 

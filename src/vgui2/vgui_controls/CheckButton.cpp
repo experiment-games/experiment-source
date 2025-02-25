@@ -62,8 +62,13 @@ DECLARE_BUILD_FACTORY_DEFAULT_TEXT( CheckButton, CheckButton );
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
+#ifdef LUA_SDK
+CheckButton::CheckButton( Panel *parent, const char *panelName, const char *text, lua_State *L /* = nullptr */ )
+    : ToggleButton( parent, panelName, text, L )
+#else
 CheckButton::CheckButton( Panel *parent, const char *panelName, const char *text )
     : ToggleButton( parent, panelName, text )
+#endif
 {
     SetContentAlignment( a_west );
     m_bCheckButtonCheckable = true;

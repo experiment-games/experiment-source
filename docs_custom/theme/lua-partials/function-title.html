@@ -1,0 +1,23 @@
+<span class="lua__symbol">
+    {%- if functionPrefix -%}{{ functionPrefix }}{%- endif -%}
+    {%- if not noLibrary -%}
+    <a href="{{ config.site_url }}{{ conceptDirectory }}/{{ page.meta.lua.library }}">
+        {{- page.meta.lua.library -}}
+    </a>
+    {{- functionSeparator -}}<wbr>
+    {%- endif -%}
+    {{- page.meta.lua.function -}}<wbr>({% for argument in arguments -%}
+    {%- if argument.type -%}
+    {{- argument.type -}}
+    {%- elif argument.types -%}
+    {%- for argumentVariation in argument.types -%}
+    {{- argumentVariation.type -}}
+    {%- if not loop.last -%}|{%- endif -%}
+    {%- endfor -%}
+    {%- endif -%}
+    {%- if argument.nillable -%}?{% endif -%}
+    {%- if argument.default %} = {{ argument.default -}}
+    {%- endif -%}
+    {%- if not loop.last -%}, <wbr>{%- endif -%}
+    {%- endfor -%})
+</span>

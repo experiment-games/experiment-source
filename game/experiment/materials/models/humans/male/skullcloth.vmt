@@ -1,0 +1,15 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/Humans/Male/skullcloth"
+	"$bumpmap" "models/Humans/Male/skullcloth_n"
+
+	"$phong" "1"
+	"$phongboost" "1"
+	"$phongexponent" 5
+	"$phongalbedotint" "1"								
+	"$phongfresnelranges"	"[0.01 0.3 0.5]"
+
+	"$halflambert" 1
+
+
+}

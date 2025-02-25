@@ -31,6 +31,10 @@
 #include "hl2mp_gamerules.h"
 #endif
 
+#ifdef EXPERIMENT_SOURCE
+#include "experiment_gamerules.h"
+#endif
+
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
@@ -49,43 +53,46 @@ short g_sModelIndexBubbles;     // holds the index for the bubbles model
 short g_sModelIndexBloodDrop;   // holds the sprite index for the initial blood
 short g_sModelIndexBloodSpray;  // holds the sprite index for splattered blood
 
+// clang-format off
 BEGIN_ENT_SCRIPTDESC( CBaseCombatWeapon, BASECOMBATWEAPON_DERIVED_FROM, "Base Combat Weapon" )
-DEFINE_SCRIPTFUNC( SetCustomViewModel, "Sets a custom view model for this weapon by model name" )
-DEFINE_SCRIPTFUNC( SetCustomViewModelModelIndex, "Sets a custom view model for this weapon by modelindex" )
-DEFINE_SCRIPTFUNC( GetSubType, "Get the weapon subtype" )
-DEFINE_SCRIPTFUNC( SetSubType, "Set the weapon subtype" )
-DEFINE_SCRIPTFUNC( IsAllowedToSwitch, "Are we allowed to switch to this weapon?" )
-DEFINE_SCRIPTFUNC( CanBeSelected, "Can this weapon be selected" )
-DEFINE_SCRIPTFUNC( VisibleInWeaponSelection, "Is this weapon visible in weapon selection" )
-DEFINE_SCRIPTFUNC( HasAnyAmmo, "Do we have any ammo?" )
-DEFINE_SCRIPTFUNC( HasPrimaryAmmo, "Do we have any primary ammo?" )
-DEFINE_SCRIPTFUNC( HasSecondaryAmmo, "Do we have any secondary ammo?" )
-DEFINE_SCRIPTFUNC( UsesPrimaryAmmo, "Do we use primary ammo?" )
-DEFINE_SCRIPTFUNC( UsesSecondaryAmmo, "Do we use secondary ammo?" )
-DEFINE_SCRIPTFUNC( UsesClipsForAmmo1, "Do we use clips for ammo 1?" )
-DEFINE_SCRIPTFUNC( UsesClipsForAmmo2, "Do we use clips for ammo 2?" )
-DEFINE_SCRIPTFUNC( PrimaryAttack, "Force a primary attack" )
-DEFINE_SCRIPTFUNC( SecondaryAttack, "Force a secondary attack" )
-DEFINE_SCRIPTFUNC( GetMaxClip1, "Max size of clip1" )
-DEFINE_SCRIPTFUNC( GetMaxClip2, "Max size of clip2" )
-DEFINE_SCRIPTFUNC( GetDefaultClip1, "Default size of clip1" )
-DEFINE_SCRIPTFUNC( GetDefaultClip2, "Default size of clip2" )
-DEFINE_SCRIPTFUNC( GetWeight, "Get the weapon weighting/importance" )
-DEFINE_SCRIPTFUNC( GetWeaponFlags, "Get the weapon flags" )
-DEFINE_SCRIPTFUNC( GetSlot, "Gets the weapon's current slot" )
-DEFINE_SCRIPTFUNC( GetPosition, "Gets the weapon's current position" )
-DEFINE_SCRIPTFUNC( GetName, "Gets the weapon's name" )
-DEFINE_SCRIPTFUNC( GetPrintName, "Gets the weapon's print name" )
-DEFINE_SCRIPTFUNC( IsMeleeWeapon, "Returns whether this is a melee weapon" )
-DEFINE_SCRIPTFUNC( GetPrimaryAmmoType, "Returns the primary ammo type" )
-DEFINE_SCRIPTFUNC( GetSecondaryAmmoType, "Returns the secondary ammo type" )
-DEFINE_SCRIPTFUNC( Clip1, "Current ammo in clip1" )
-DEFINE_SCRIPTFUNC( Clip2, "Current ammo in clip2" )
-DEFINE_SCRIPTFUNC( SetClip1, "Set current ammo in clip1" )
-DEFINE_SCRIPTFUNC( SetClip2, "Set current ammo in clip2" )
-DEFINE_SCRIPTFUNC( GetPrimaryAmmoCount, "Current primary ammo count if no clip is used or to give a player if they pick up this weapon legacy style (not TF)" )
-DEFINE_SCRIPTFUNC( GetSecondaryAmmoCount, "Current secondary ammo count if no clip is used or to give a player if they pick up this weapon legacy style (not TF)" )
+    DEFINE_SCRIPTFUNC( SetCustomViewModel, "Sets a custom view model for this weapon by model name" )
+    DEFINE_SCRIPTFUNC( SetCustomViewModelModelIndex, "Sets a custom view model for this weapon by modelindex" )
+    DEFINE_SCRIPTFUNC( GetSubType, "Get the weapon subtype" )
+    DEFINE_SCRIPTFUNC( SetSubType, "Set the weapon subtype" )
+    DEFINE_SCRIPTFUNC( IsAllowedToSwitch, "Are we allowed to switch to this weapon?" )
+    DEFINE_SCRIPTFUNC( CanBeSelected, "Can this weapon be selected" )
+    DEFINE_SCRIPTFUNC( VisibleInWeaponSelection, "Is this weapon visible in weapon selection" )
+    DEFINE_SCRIPTFUNC( HasAnyAmmo, "Do we have any ammo?" )
+    DEFINE_SCRIPTFUNC( HasPrimaryAmmo, "Do we have any primary ammo?" )
+    DEFINE_SCRIPTFUNC( HasSecondaryAmmo, "Do we have any secondary ammo?" )
+    DEFINE_SCRIPTFUNC( UsesPrimaryAmmo, "Do we use primary ammo?" )
+    DEFINE_SCRIPTFUNC( UsesSecondaryAmmo, "Do we use secondary ammo?" )
+    DEFINE_SCRIPTFUNC( UsesClipsForAmmo1, "Do we use clips for ammo 1?" )
+    DEFINE_SCRIPTFUNC( UsesClipsForAmmo2, "Do we use clips for ammo 2?" )
+    DEFINE_SCRIPTFUNC( PrimaryAttack, "Force a primary attack" )
+    DEFINE_SCRIPTFUNC( SecondaryAttack, "Force a secondary attack" )
+    DEFINE_SCRIPTFUNC( GetMaxClip1, "Max size of clip1" )
+    DEFINE_SCRIPTFUNC( GetMaxClip2, "Max size of clip2" )
+    DEFINE_SCRIPTFUNC( GetDefaultClip1, "Default size of clip1" )
+    DEFINE_SCRIPTFUNC( GetDefaultClip2, "Default size of clip2" )
+    DEFINE_SCRIPTFUNC( GetWeight, "Get the weapon weighting/importance" )
+    DEFINE_SCRIPTFUNC( GetWeaponFlags, "Get the weapon flags" )
+    DEFINE_SCRIPTFUNC( GetSlot, "Gets the weapon's current slot" )
+    DEFINE_SCRIPTFUNC( GetPosition, "Gets the weapon's current position" )
+    DEFINE_SCRIPTFUNC( GetName, "Gets the weapon's name" )
+    DEFINE_SCRIPTFUNC( GetPrintName, "Gets the weapon's print name" )
+    DEFINE_SCRIPTFUNC( IsMeleeWeapon, "Returns whether this is a melee weapon" )
+    DEFINE_SCRIPTFUNC( GetPrimaryAmmoType, "Returns the primary ammo type" )
+    DEFINE_SCRIPTFUNC( GetSecondaryAmmoType, "Returns the secondary ammo type" )
+    DEFINE_SCRIPTFUNC( Clip1, "Current ammo in clip1" )
+    DEFINE_SCRIPTFUNC( Clip2, "Current ammo in clip2" )
+    DEFINE_SCRIPTFUNC( SetClip1, "Set current ammo in clip1" )
+    DEFINE_SCRIPTFUNC( SetClip2, "Set current ammo in clip2" )
+    DEFINE_SCRIPTFUNC( GetPrimaryAmmoCount, "Current primary ammo count if no clip is used or to give a player if they pick up this weapon legacy style (not TF)" )
+    DEFINE_SCRIPTFUNC( GetSecondaryAmmoCount, "Current secondary ammo count if no clip is used or to give a player if they pick up this weapon legacy style (not TF)" )
 END_SCRIPTDESC();
+
+static bool WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
 
 ConVar weapon_showproficiency( "weapon_showproficiency", "0" );
 extern ConVar ai_debug_shoot_positions;
@@ -602,7 +609,7 @@ void CBaseCombatWeapon::Materialize( void )
     if ( IsEffectActive( EF_NODRAW ) )
     {
         // changing from invisible state to visible.
-#ifdef HL2MP
+#if defined( HL2MP ) || defined( EXPERIMENT_SOURCE )
         EmitSound( "AlyxEmp.Charge" );
 #else
         EmitSound( "BaseCombatWeapon.WeaponMaterialize" );
@@ -611,13 +618,13 @@ void CBaseCombatWeapon::Materialize( void )
         RemoveEffects( EF_NODRAW );
         DoMuzzleFlash();
     }
-#ifdef HL2MP
+#if defined( HL2MP ) || defined( EXPERIMENT_SOURCE )
     if ( HasSpawnFlags( SF_NORESPAWN ) == false )
     {
         VPhysicsInitNormal( SOLID_BBOX, GetSolidFlags() | FSOLID_TRIGGER, false );
         SetMoveType( MOVETYPE_VPHYSICS );
 
-        HL2MPRules()->AddLevelDesignerPlacedObject( this );
+        ExperimentRules()->AddLevelDesignerPlacedObject( this );
     }
 #else
     SetSolid( SOLID_BBOX );

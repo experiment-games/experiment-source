@@ -169,12 +169,15 @@ class CSceneManager : public CBaseEntity
 //---------------------------------------------------------
 // Save/Restore
 //---------------------------------------------------------
+
+// clang-format off
+
 BEGIN_DATADESC( CSceneManager )
-
-DEFINE_UTLVECTOR( m_ActiveScenes, FIELD_EHANDLE ),
+    DEFINE_UTLVECTOR( m_ActiveScenes, FIELD_EHANDLE ),
     // DEFINE_FIELD( m_QueuedSceneSounds, CUtlVector < CRestoreSceneSound > ),  // Don't save/restore this, it's created and used by OnRestore only
+END_DATADESC()
 
-    END_DATADESC()
+// clang-format on
 
 #ifdef DISABLE_DEBUG_HISTORY
 #define LocalScene_Printf Scene_Printf
@@ -638,23 +641,24 @@ class CSceneEntity : public CPointEntity, public IChoreoEventCallback
     bool IsBackground( void );
 };
 
+// clang-format off
+
 LINK_ENTITY_TO_CLASS( logic_choreographed_scene, CSceneEntity );
 LINK_ENTITY_TO_CLASS( scripted_scene, CSceneEntity );
 
 IMPLEMENT_SERVERCLASS_ST_NOBASE( CSceneEntity, DT_SceneEntity )
-SendPropInt( SENDINFO( m_nSceneStringIndex ), MAX_CHOREO_SCENES_STRING_BITS, SPROP_UNSIGNED ),
+    SendPropInt( SENDINFO( m_nSceneStringIndex ), MAX_CHOREO_SCENES_STRING_BITS, SPROP_UNSIGNED ),
     SendPropBool( SENDINFO( m_bIsPlayingBack ) ),
     SendPropBool( SENDINFO( m_bPaused ) ),
     SendPropBool( SENDINFO( m_bMultiplayer ) ),
     SendPropFloat( SENDINFO( m_flForceClientTime ) ),
     SendPropUtlVector(
-        SENDINFO_UTLVECTOR( m_hActorList ),
-        MAX_ACTORS_IN_SCENE,  // max elements
-        SendPropEHandle( NULL, 0 ) ),
-    END_SEND_TABLE()
+    SENDINFO_UTLVECTOR( m_hActorList ),
+    MAX_ACTORS_IN_SCENE,  // max elements
+    SendPropEHandle( NULL, 0 ) ),
+END_SEND_TABLE()
 
-        BEGIN_DATADESC( CSceneEntity )
-
+BEGIN_DATADESC( CSceneEntity )
     // Keys
     DEFINE_KEYFIELD( m_iszSceneFile, FIELD_STRING, "SceneFile" ),
     DEFINE_KEYFIELD( m_iszResumeSceneFile, FIELD_STRING, "ResumeSceneFile" ),
@@ -771,17 +775,19 @@ SendPropInt( SENDINFO( m_nSceneStringIndex ), MAX_CHOREO_SCENES_STRING_BITS, SPR
     DEFINE_OUTPUT( m_OnTrigger14, "OnTrigger14" ),
     DEFINE_OUTPUT( m_OnTrigger15, "OnTrigger15" ),
     DEFINE_OUTPUT( m_OnTrigger16, "OnTrigger16" ),
-    END_DATADESC()
+END_DATADESC()
 
-        BEGIN_ENT_SCRIPTDESC( CSceneEntity, CBaseEntity, "Choreographed scene which controls animation and/or dialog on one or more actors." )
-            DEFINE_SCRIPTFUNC( EstimateLength, "Returns length of this scene in seconds." )
-                DEFINE_SCRIPTFUNC( IsPlayingBack, "If this scene is currently playing." )
-                    DEFINE_SCRIPTFUNC( IsPaused, "If this scene is currently paused." )
-                        DEFINE_SCRIPTFUNC( AddBroadcastTeamTarget, "Adds a team (by index) to the broadcast list" )
-                            DEFINE_SCRIPTFUNC( RemoveBroadcastTeamTarget, "Removes a team (by index) from the broadcast list" )
-                                DEFINE_SCRIPTFUNC_NAMED( ScriptFindNamedEntity, "FindNamedEntity", "given an entity reference, such as !target, get actual entity from scene object" )
-                                    DEFINE_SCRIPTFUNC_NAMED( ScriptLoadSceneFromString, "LoadSceneFromString", "given a dummy scene name and a vcd string, load the scene" )
-                                        END_SCRIPTDESC();
+BEGIN_ENT_SCRIPTDESC( CSceneEntity, CBaseEntity, "Choreographed scene which controls animation and/or dialog on one or more actors." )
+    DEFINE_SCRIPTFUNC( EstimateLength, "Returns length of this scene in seconds." )
+    DEFINE_SCRIPTFUNC( IsPlayingBack, "If this scene is currently playing." )
+    DEFINE_SCRIPTFUNC( IsPaused, "If this scene is currently paused." )
+    DEFINE_SCRIPTFUNC( AddBroadcastTeamTarget, "Adds a team (by index) to the broadcast list" )
+    DEFINE_SCRIPTFUNC( RemoveBroadcastTeamTarget, "Removes a team (by index) from the broadcast list" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptFindNamedEntity, "FindNamedEntity", "given an entity reference, such as !target, get actual entity from scene object" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptLoadSceneFromString, "LoadSceneFromString", "given a dummy scene name and a vcd string, load the scene" )
+END_SCRIPTDESC();
+
+// clang-format on
 
 const ConVar *CSceneEntity::m_pcvSndMixahead = NULL;
 

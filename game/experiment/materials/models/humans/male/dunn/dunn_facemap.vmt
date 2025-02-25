@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/humans/male/dunn/dunn_facemap"
+ 	"$halflambert"		"1"
+
+}

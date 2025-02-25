@@ -49,7 +49,7 @@ class CInput : public IInput
     virtual int GetButtonBits( int );
     virtual void CreateMove( int sequence_number, float input_sample_frametime, bool active );
     virtual void ExtraMouseSample( float frametime, bool active );
-    virtual bool WriteUsercmdDeltaToBuffer( bf_write *buf, int from, int to, bool isnewcommand );
+    virtual bool WriteUsercmdDeltaToBuffer( bf_write *buf, int from, int to, bool isNewCommand );
     virtual void EncodeUserCmdToBuffer( bf_write &buf, int slot );
     virtual void DecodeUserCmdFromBuffer( bf_read &buf, int slot );
 

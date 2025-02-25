@@ -1210,7 +1210,7 @@ SendPropVector( SENDINFO( m_vecRagdollOrigin ), -1, SPROP_COORD ),
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-int CHL2MP_Player::FlashlightIsOn( void )
+bool CHL2MP_Player::FlashlightIsOn( void )
 {
     return IsEffectActive( EF_DIMLIGHT );
 }

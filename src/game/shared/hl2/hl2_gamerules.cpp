@@ -224,7 +224,7 @@ ConVar alyx_darkness_force( "alyx_darkness_force", "0", FCVAR_CHEAT | FCVAR_REPL
 
 extern bool g_fGameOver;
 
-#if !( defined( HL2MP ) || defined( PORTAL_MP ) )
+#if !( defined( HL2MP ) || defined( PORTAL_MP ) || defined( EXPERIMENT_SOURCE ) )
 class CVoiceGameMgrHelper : public IVoiceGameMgrHelper
 {
    public:
@@ -1343,8 +1343,12 @@ void CHalfLife2::PlayerThink( CBasePlayer *pPlayer )
 {
 }
 
+#endif
+
+#if defined( LUA_SDK ) || !defined( CLIENT_DLL )
 void CHalfLife2::Think( void )
 {
+#ifndef CLIENT_DLL
     BaseClass::Think();
 
     if ( physcannon_mega_enabled.GetBool() == true )
@@ -1356,8 +1360,11 @@ void CHalfLife2::Think( void )
         // FIXME: Is there a better place for this?
         m_bMegaPhysgun = ( GlobalEntity_GetState( "super_phys_gun" ) == GLOBAL_ON );
     }
+#endif
 }
+#endif
 
+#ifndef CLIENT_DLL
 //-----------------------------------------------------------------------------
 // Purpose: Returns how much damage the given ammo type should do to the victim
 //			when fired by the attacker.
@@ -1792,7 +1799,7 @@ bool CHalfLife2::ShouldBurningPropsEmitLight()
 // Global functions.
 // ------------------------------------------------------------------------------------ //
 
-#ifndef HL2MP
+#if !defined( HL2MP ) && !defined( EXPERIMENT_SOURCE )
 #ifndef PORTAL
 
 // shared ammo definition

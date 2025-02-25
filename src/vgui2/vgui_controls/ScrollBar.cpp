@@ -404,7 +404,8 @@ void ScrollBar::SetButton( Button *button, int index )
 {
     if ( _button[index] != null )
     {
-        _button[index]->SetParent( ( Panel * )NULL );
+        // Experiment; fix by ZombieRoxtar applied (https://github.com/ValveSoftware/source-sdk-2013/pull/336/files)
+        _button[index]->DeletePanel();
     }
     _button[index] = button;
     _button[index]->SetParent( this );
@@ -430,7 +431,8 @@ void ScrollBar::SetSlider( ScrollBarSlider *slider )
 {
     if ( _slider != null )
     {
-        _slider->SetParent( ( Panel * )NULL );
+        // Experiment; fix by ZombieRoxtar applied (https://github.com/ValveSoftware/source-sdk-2013/pull/336/files)
+        _slider->DeletePanel();
     }
     _slider = slider;
     _slider->AddActionSignalTarget( this );

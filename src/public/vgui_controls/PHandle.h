@@ -54,7 +54,9 @@ class PHandle
         return Get() != 0;
     }
 
+#ifndef LUA_SDK
    private:
+#endif
     HPanel m_iPanelID;
 };
 

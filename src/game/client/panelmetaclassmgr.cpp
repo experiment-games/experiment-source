@@ -233,6 +233,13 @@ CPanelMetaClassMgrImp::CPanelMetaClassMgrImp()
 
 CPanelMetaClassMgrImp::~CPanelMetaClassMgrImp()
 {
+    // Experiment; fix by ZombieRoxtar applied (https://github.com/ValveSoftware/source-sdk-2013/pull/336/files)
+    while ( m_MetaClassKeyValues.Count() > 0 )
+    {
+        if ( m_MetaClassKeyValues[0] )
+            m_MetaClassKeyValues[0]->deleteThis();
+        m_MetaClassKeyValues.RemoveAt( 0 );
+    }
 }
 
 //-----------------------------------------------------------------------------

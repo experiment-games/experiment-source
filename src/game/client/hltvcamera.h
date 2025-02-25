@@ -11,6 +11,7 @@
 #endif
 
 #include "GameEventListener.h"
+#include "view_shared.h"
 
 class C_HLTVCamera : CGameEventListener
 {
@@ -21,7 +22,7 @@ class C_HLTVCamera : CGameEventListener
     void Init();
     void Reset();
 
-    void CalcView( Vector& origin, QAngle& angles, float& fov );
+    void CalcView( CViewSetup& setupView );
     void FireGameEvent( IGameEvent* event );
 
     void SetMode( int iMode );
@@ -29,6 +30,7 @@ class C_HLTVCamera : CGameEventListener
     void SpecNextPlayer( bool bInverse );
     // See UTIL_PlayerByCommandArg for what all might go in here.
     void SpecPlayerByPredicate( const char* szPlayerSearch );
+    void SpecNamedPlayer( const char* szPlayerName );
     void ToggleChaseAsFirstPerson();
     bool IsPVSLocked();
     void SetAutoDirector( bool bActive );

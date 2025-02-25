@@ -15,9 +15,10 @@
 //-----------------------------------------------------------------------------
 // Save/load
 //-----------------------------------------------------------------------------
-BEGIN_DATADESC( CPathTrack )
+// clang-format off
 
-DEFINE_FIELD( m_pnext, FIELD_EHANDLE ),
+BEGIN_DATADESC( CPathTrack )
+    DEFINE_FIELD( m_pnext, FIELD_EHANDLE ),
     DEFINE_FIELD( m_pprevious, FIELD_EHANDLE ),
     DEFINE_FIELD( m_paltpath, FIELD_EHANDLE ),
 
@@ -41,10 +42,11 @@ DEFINE_FIELD( m_pnext, FIELD_EHANDLE ),
     // Outputs
     DEFINE_OUTPUT( m_OnPass, "OnPass" ),
     DEFINE_OUTPUT( m_OnTeleport, "OnTeleport" ),
+END_DATADESC()
 
-    END_DATADESC()
+LINK_ENTITY_TO_CLASS( path_track, CPathTrack );
 
-        LINK_ENTITY_TO_CLASS( path_track, CPathTrack );
+// clang-format on
 
 //-----------------------------------------------------------------------------
 // Finds circular paths

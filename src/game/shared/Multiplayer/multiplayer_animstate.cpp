@@ -761,6 +761,16 @@ void CMultiPlayerAnimState::AddVCDSequenceToGestureSlot( int iGestureSlot, int i
 #endif
 }
 
+void CMultiPlayerAnimState::SetGestureWeight( int iGestureSlot, float flWeight )
+{
+    Assert( iGestureSlot >= 0 && iGestureSlot < GESTURE_SLOT_COUNT );
+
+    if ( !VerifyAnimLayerInSlot( iGestureSlot ) )
+        return;
+
+    m_aGestureSlots[iGestureSlot].m_pAnimLayer->m_flWeight = flWeight;
+}
+
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
@@ -1215,6 +1225,15 @@ void CMultiPlayerAnimState::ComputeMainSequence()
         ResetGroundSpeed();
     }
 #endif
+}
+
+bool CMultiPlayerAnimState::ShouldResetMainSequence( int iCurrentSequence, int iNewSequence )
+{
+    if ( !m_pPlayer )
+        return false;
+
+    return m_pPlayer->GetSequenceActivity( iCurrentSequence ) !=
+           m_pPlayer->GetSequenceActivity( iNewSequence );
 }
 
 //-----------------------------------------------------------------------------
@@ -2002,9 +2021,16 @@ void CMultiPlayerAnimState::DebugShowEyeYaw( void )
     // Draw a red triangle on the ground for the eye yaw.
     if ( debugoverlay )
     {
-    debugoverlay->AddTriangleOverlay( ( vecPos + vecRight * flBaseSize / 2.0f ), 
-			( vecPos - vecRight * flBaseSize / 2.0f ), 
-			( vecPos + vecForward * flHeight, 255, 0, 0, 255, false, 0.01f );
+        debugoverlay->AddTriangleOverlay(
+            ( vecPos + vecRight * flBaseSize / 2.0f ),
+            ( vecPos - vecRight * flBaseSize / 2.0f ),
+            ( vecPos + vecForward * flHeight ),
+            255,
+            0,
+            0,
+            255,
+            false,
+            0.01f );
     }
 
 #endif

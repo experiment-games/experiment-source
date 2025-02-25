@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/cyberpunk/outfit/extras/nvgogglesglow4"
+	"$selfillum" 1
+}

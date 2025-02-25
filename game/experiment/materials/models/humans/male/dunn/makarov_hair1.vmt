@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/humans/male/dunn/makarov_hair1"
+	"$translucent" 1
+	"$nocull" 1
+}

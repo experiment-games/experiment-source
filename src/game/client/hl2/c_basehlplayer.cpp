@@ -28,38 +28,42 @@ extern ConVar sensitivity;
 ConVar cl_npc_speedmod_intime( "cl_npc_speedmod_intime", "0.25", FCVAR_CLIENTDLL | FCVAR_ARCHIVE );
 ConVar cl_npc_speedmod_outtime( "cl_npc_speedmod_outtime", "1.5", FCVAR_CLIENTDLL | FCVAR_ARCHIVE );
 
-IMPLEMENT_CLIENTCLASS_DT( C_BaseHLPlayer, DT_HL2_Player, CHL2_Player )
-RecvPropDataTable( RECVINFO_DT( m_HL2Local ), 0, &REFERENCE_RECV_TABLE( DT_HL2Local ) ),
-    RecvPropBool( RECVINFO( m_fIsSprinting ) ),
-    END_RECV_TABLE()
+// clang-format off
 
-        BEGIN_PREDICTION_DATA( C_BaseHLPlayer )
-            DEFINE_PRED_TYPEDESCRIPTION( m_HL2Local, C_HL2PlayerLocalData ),
-    DEFINE_PRED_FIELD( m_fIsSprinting, FIELD_BOOLEAN, FTYPEDESC_INSENDTABLE ),
-    END_PREDICTION_DATA()
+IMPLEMENT_CLIENTCLASS_DT(C_BaseHLPlayer, DT_HL2_Player, CHL2_Player)
+	RecvPropDataTable( RECVINFO_DT(m_HL2Local),0, &REFERENCE_RECV_TABLE(DT_HL2Local) ),
+	RecvPropBool( RECVINFO( m_fIsSprinting ) ),
+END_RECV_TABLE()
 
-        BEGIN_RECV_TABLE_NOBASE( LadderMove_t, DT_LadderMove )
-            RecvPropBool( RECVINFO( m_bForceLadderMove ) ),
-    RecvPropBool( RECVINFO( m_bForceMount ) ),
-    RecvPropFloat( RECVINFO( m_flStartTime ) ),
-    RecvPropFloat( RECVINFO( m_flArrivalTime ) ),
-    RecvPropVector( RECVINFO( m_vecGoalPosition ) ),
-    RecvPropVector( RECVINFO( m_vecStartPosition ) ),
-    END_RECV_TABLE()
+BEGIN_PREDICTION_DATA( C_BaseHLPlayer )
+	DEFINE_PRED_TYPEDESCRIPTION( m_HL2Local, C_HL2PlayerLocalData ),
+	DEFINE_PRED_FIELD( m_fIsSprinting, FIELD_BOOLEAN, FTYPEDESC_INSENDTABLE ),
+END_PREDICTION_DATA()
 
-        BEGIN_PREDICTION_DATA_NO_BASE( LadderMove_t )
-            DEFINE_PRED_FIELD( m_bForceLadderMove, FIELD_BOOLEAN, FTYPEDESC_INSENDTABLE ),
-    DEFINE_PRED_FIELD( m_bForceMount, FIELD_BOOLEAN, FTYPEDESC_INSENDTABLE ),
-    DEFINE_PRED_FIELD_TOL( m_flStartTime, FIELD_FLOAT, FTYPEDESC_INSENDTABLE, 0.02f ),
-    DEFINE_PRED_FIELD_TOL( m_flArrivalTime, FIELD_FLOAT, FTYPEDESC_INSENDTABLE, 0.02f ),
-    DEFINE_PRED_FIELD( m_vecGoalPosition, FIELD_VECTOR, FTYPEDESC_INSENDTABLE | FTYPEDESC_NOERRORCHECK ),
-    DEFINE_PRED_FIELD( m_vecStartPosition, FIELD_VECTOR, FTYPEDESC_INSENDTABLE | FTYPEDESC_NOERRORCHECK ),
-    END_PREDICTION_DATA()
+BEGIN_RECV_TABLE_NOBASE( LadderMove_t, DT_LadderMove )
+	RecvPropBool( RECVINFO( m_bForceLadderMove ) ),
+	RecvPropBool( RECVINFO( m_bForceMount ) ),
+	RecvPropFloat( RECVINFO( m_flStartTime ) ),
+	RecvPropFloat( RECVINFO( m_flArrivalTime ) ),
+	RecvPropVector( RECVINFO( m_vecGoalPosition ) ),
+	RecvPropVector( RECVINFO( m_vecStartPosition ) ),
+END_RECV_TABLE()
 
-    //-----------------------------------------------------------------------------
-    // Purpose: Drops player's primary weapon
-    //-----------------------------------------------------------------------------
-    void CC_DropPrimary( void )
+BEGIN_PREDICTION_DATA_NO_BASE( LadderMove_t )
+	DEFINE_PRED_FIELD( m_bForceLadderMove, FIELD_BOOLEAN, FTYPEDESC_INSENDTABLE ),
+	DEFINE_PRED_FIELD( m_bForceMount, FIELD_BOOLEAN, FTYPEDESC_INSENDTABLE ),
+	DEFINE_PRED_FIELD_TOL( m_flStartTime, FIELD_FLOAT, FTYPEDESC_INSENDTABLE, 0.02f ),
+	DEFINE_PRED_FIELD_TOL( m_flArrivalTime, FIELD_FLOAT, FTYPEDESC_INSENDTABLE, 0.02f ),
+	DEFINE_PRED_FIELD( m_vecGoalPosition, FIELD_VECTOR, FTYPEDESC_INSENDTABLE | FTYPEDESC_NOERRORCHECK ),
+	DEFINE_PRED_FIELD( m_vecStartPosition, FIELD_VECTOR, FTYPEDESC_INSENDTABLE | FTYPEDESC_NOERRORCHECK ),
+END_PREDICTION_DATA()
+
+static bool WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
+
+//-----------------------------------------------------------------------------
+// Purpose: Drops player's primary weapon
+//-----------------------------------------------------------------------------
+void CC_DropPrimary( void )
 {
     C_BasePlayer *pPlayer = ( C_BasePlayer * )C_BasePlayer::GetLocalPlayer();
 
@@ -70,6 +74,11 @@ RecvPropDataTable( RECVINFO_DT( m_HL2Local ), 0, &REFERENCE_RECV_TABLE( DT_HL2Lo
 }
 
 static ConCommand dropprimary( "dropprimary", CC_DropPrimary, "dropprimary: Drops the primary weapon of the player." );
+
+// Tony; link to the correct class.
+#if !defined( EXPERIMENT_SOURCE )
+LINK_ENTITY_TO_CLASS( player, C_BaseHLPlayer );
+#endif
 
 //-----------------------------------------------------------------------------
 // Constructor

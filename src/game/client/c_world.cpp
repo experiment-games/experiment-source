@@ -7,7 +7,9 @@
 #include "cbase.h"
 #include "c_world.h"
 #include "ivmodemanager.h"
+#ifndef LUA_SDK
 #include "activitylist.h"
+#endif
 #include "decals.h"
 #include "engine/ivmodelinfo.h"
 #include "ivieweffects.h"
@@ -15,6 +17,11 @@
 #include "eventlist.h"
 // NVNT haptic include for notification of world precache
 #include "haptics/haptic_utils.h"
+
+#ifdef LUA_SDK
+#include "luamanager.h"
+#endif
+
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
@@ -46,8 +53,10 @@ static IClientNetworkable *ClientWorldFactory( int entnum, int serialNum )
 
 IMPLEMENT_CLIENTCLASS_FACTORY( C_World, DT_World, CWorld, ClientWorldFactory );
 
+// clang-format off
+
 BEGIN_RECV_TABLE( C_World, DT_World )
-RecvPropFloat( RECVINFO( m_flWaveHeight ) ),
+    RecvPropFloat( RECVINFO( m_flWaveHeight ) ),
     RecvPropVector( RECVINFO( m_WorldMins ) ),
     RecvPropVector( RECVINFO( m_WorldMaxs ) ),
     RecvPropInt( RECVINFO( m_bStartDark ) ),
@@ -57,10 +66,13 @@ RecvPropFloat( RECVINFO( m_flWaveHeight ) ),
     RecvPropFloat( RECVINFO( m_flMinPropScreenSpaceWidth ) ),
     RecvPropString( RECVINFO( m_iszDetailSpriteMaterial ) ),
     RecvPropInt( RECVINFO( m_bColdWorld ) ),
-    END_RECV_TABLE()
+END_RECV_TABLE()
 
-        C_World::C_World( void )
+static bool WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
+
+C_World::C_World( void )
 {
+    SetClassname( "worldspawn" );
 }
 
 C_World::~C_World( void )
@@ -70,7 +82,9 @@ C_World::~C_World( void )
 bool C_World::Init( int entnum, int iSerialNum )
 {
     m_flWaveHeight = 0.0f;
+#ifndef LUA_SDK
     ActivityList_Init();
+#endif
     EventList_Init();
 
     return BaseClass::Init( entnum, iSerialNum );
@@ -78,7 +92,9 @@ bool C_World::Init( int entnum, int iSerialNum )
 
 void C_World::Release()
 {
+#ifndef LUA_SDK
     ActivityList_Free();
+#endif
     Term();
 }
 
@@ -121,7 +137,10 @@ void C_World::OnDataChanged( DataUpdateType_t updateType )
 
 void C_World::RegisterSharedActivities( void )
 {
+#ifndef LUA_SDK
     ActivityList_RegisterSharedActivities();
+#endif
+
     EventList_RegisterSharedEvents();
 }
 
@@ -161,7 +180,9 @@ void C_World::Precache( void )
     // =================================================
     //	Activities
     // =================================================
+#ifndef LUA_SDK
     ActivityList_Free();
+#endif
     EventList_Free();
 
     RegisterSharedActivities();

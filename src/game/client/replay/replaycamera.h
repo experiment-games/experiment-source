@@ -43,6 +43,7 @@ class C_ReplayCamera : public CGameEventListener,
     void SpecNextPlayer( bool bInverse );
     // See UTIL_PlayerByCommandArg for what all might go in here.
     void SpecPlayerByPredicate( const char* szPlayerSearch );
+    void SpecNamedPlayer( const char* szPlayerName );
     bool IsPVSLocked();
     void SetAutoDirector( bool bActive );
 

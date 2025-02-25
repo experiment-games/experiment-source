@@ -78,7 +78,7 @@ class CHL2MP_Player : public CHL2_Player
     virtual void DeathSound( const CTakeDamageInfo &info );
     virtual CBaseEntity *EntSelectSpawnPoint( void );
 
-    int FlashlightIsOn( void );
+    bool FlashlightIsOn( void );
     void FlashlightTurnOn( void );
     void FlashlightTurnOff( void );
     void PrecacheFootStepSounds( void );

@@ -1,0 +1,18 @@
+"VertexlitGeneric"
+{
+	"$basetexture" 				"models/stalkertnb/humans/banditboss_black"
+	"$bumpmap" 					"models/stalkertnb/humans/banditboss_normal"
+	
+
+	
+    "$phong" 					"1"
+	"$phongexponenttexture" 	"models/stalkertnb/humans/banditboss_normal"
+	"$phongboost"				"0.1"
+	"$phongfresnelranges"		"[0.1 0.1 0.1]"
+	"$rimlight" 				"1"
+	"$rimlightexponenttexture" 	"models/stalkertnb/humans/banditboss_normal"									
+	"$rimlightexponent" 		"10"								
+	"$rimlightboost" 			"0.1"
+
+
+}

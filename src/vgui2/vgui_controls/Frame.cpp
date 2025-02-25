@@ -741,8 +741,13 @@ class FrameSystemButton : public MenuButton
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
+#ifdef LUA_SDK
+Frame::Frame( Panel *parent, const char *panelName, bool showTaskbarIcon /*=true*/, bool bPopup /*=true*/, lua_State *L /* = nullptr */ )
+    : EditablePanel( parent, panelName, L )
+#else
 Frame::Frame( Panel *parent, const char *panelName, bool showTaskbarIcon /*=true*/, bool bPopup /*=true*/ )
     : EditablePanel( parent, panelName )
+#endif
 {
     // frames start invisible, to avoid having window flicker in on taskbar
     SetVisible( false );
@@ -1208,10 +1213,10 @@ void Frame::PerformLayout()
     GetSize( wide, tall );
 
 #if !defined( _X360 )
-    int DRAGGER_SIZE = QuickPropScale( GetDraggerSize() );
-    int CORNER_SIZE = QuickPropScale( GetCornerSize() );
+    int DRAGGER_SIZE = GetDraggerSize();
+    int CORNER_SIZE = GetCornerSize();
     int CORNER_SIZE2 = CORNER_SIZE * 2;
-    int BOTTOMRIGHTSIZE = QuickPropScale( GetBottomRightSize() );
+    int BOTTOMRIGHTSIZE = GetBottomRightSize();
 
     _topGrip->SetBounds( CORNER_SIZE, 0, wide - CORNER_SIZE2, DRAGGER_SIZE );
     _leftGrip->SetBounds( 0, CORNER_SIZE, DRAGGER_SIZE, tall - CORNER_SIZE2 );

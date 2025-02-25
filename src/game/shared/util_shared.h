@@ -53,6 +53,8 @@ float UTIL_VecToYaw( const matrix3x4_t &matrix, const Vector &vec );
 float UTIL_VecToPitch( const matrix3x4_t &matrix, const Vector &vec );
 Vector UTIL_YawToVector( float yaw );
 
+Vector UTIL_PointOnLineNearestPoint( const Vector &vStartPos, const Vector &vEndPos, const Vector &vPoint, bool clampEnds = false );
+
 //-----------------------------------------------------------------------------
 // Shared random number generators for shared/predicted code:
 // whenever generating random numbers in shared/predicted code, these functions
@@ -358,6 +360,8 @@ void UTIL_StringToIntArray( int *pVector, int count, const char *pString );
 void UTIL_StringToFloatArray( float *pVector, int count, const char *pString );
 void UTIL_StringToColor32( color32 *color, const char *pString );
 
+float UTIL_WaterLevel( const Vector &position, float minz, float maxz );
+
 CBasePlayer *UTIL_PlayerByIndex( int entindex );
 // Helper for use with console commands and the like.
 // Returns NULL if not found or if the provided arg would match multiple players.
@@ -374,6 +378,7 @@ CBasePlayer *UTIL_PlayerByCommandArg( const char *arg );
 
 CBasePlayer *UTIL_PlayerByUserId( int userID );
 CBasePlayer *UTIL_PlayerByName( const char *name );  // not case sensitive
+CBasePlayer *UTIL_PlayerBySteamID( const CSteamID &steamID );
 // Finds a player who has this non-ambiguous substring.  Also not case sensitive.
 CBasePlayer *UTIL_PlayerByPartialName( const char *name );
 

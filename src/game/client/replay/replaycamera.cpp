@@ -845,6 +845,27 @@ void C_ReplayCamera::SpecPlayerByPredicate( const char* szSearch )
     return;
 }
 
+void C_ReplayCamera::SpecNamedPlayer( const char* szPlayerName )
+{
+    for ( int index = 1; index <= gpGlobals->maxClients; ++index )
+    {
+        C_BasePlayer* pPlayer = UTIL_PlayerByIndex( index );
+
+        if ( !pPlayer )
+            continue;
+
+        if ( !FStrEq( szPlayerName, pPlayer->GetPlayerName() ) )
+            continue;
+
+        // only follow living players or dedicated spectators
+        if ( pPlayer->IsObserver() && pPlayer->GetTeamNumber() != TEAM_SPECTATOR )
+            continue;
+
+        SetPrimaryTarget( index );
+        return;
+    }
+}
+
 void C_ReplayCamera::FireGameEvent( IGameEvent* event )
 {
     if ( !g_pEngineClientReplay->IsPlayingReplayDemo() )

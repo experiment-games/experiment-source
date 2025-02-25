@@ -1,0 +1,14 @@
+{
+    // Markdownlint configuration
+    "default": true,
+
+    // For the docs we want to allow examples without a H1 (since that's set by the template)
+    "MD041": false,
+
+    // Mostly used for our .lua__search__keywords hidden keyword list
+    "MD033": {
+        "allowed_elements": [
+            "div"
+        ]
+    }
+}

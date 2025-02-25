@@ -130,6 +130,8 @@ abstract_class IQueuedLoader : public IAppSystem
     virtual void DynamicLoadMapResource( const char *pFilename, DynamicResourceCallback_t pCallback, void *pContext, void *pContext2 ) = 0;
     virtual void QueueDynamicLoadFunctor( CFunctor * pFunctor ) = 0;
     virtual bool CompleteDynamicLoad() = 0;
+
+    // Experiment; TODO: The following two lines aren't in the Source SDK 2013 nor TF2 SDK. Where did they come from and are they needed?
     virtual void QueueCleanupDynamicLoadFunctor( CFunctor * pFunctor ) = 0;
     virtual bool CleanupDynamicLoad() = 0;
 

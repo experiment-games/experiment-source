@@ -21,7 +21,7 @@
 #define CHAR_TEX_GRATE 'G'
 #define CHAR_TEX_ALIENFLESH 'H'
 #define CHAR_TEX_CLIP 'I'
-// #define CHAR_TEX_UNUSED		'J'
+#define CHAR_TEX_SNOW 'J'  // Experiment; GMOD compatibility
 // #define CHAR_TEX_UNUSED		'K'
 #define CHAR_TEX_PLASTIC 'L'
 #define CHAR_TEX_METAL 'M'
@@ -32,10 +32,10 @@
 // #define CHAR_TEX_UNUSED		'R'
 #define CHAR_TEX_SLOSH 'S'
 #define CHAR_TEX_TILE 'T'
-// #define CHAR_TEX_UNUSED		'U'
+#define CHAR_TEX_GRASS 'U'  // Experiment; GMOD compatibility
 #define CHAR_TEX_VENT 'V'
 #define CHAR_TEX_WOOD 'W'
-// #define CHAR_TEX_UNUSED		'X'
+#define CHAR_TEX_DEFAULT 'X'  // Experiment; GMOD compatibility - documented as: Skybox or nodraw texture
 #define CHAR_TEX_GLASS 'Y'
 #define CHAR_TEX_WARPSHIELD 'Z'  ///< wierd-looking jello effect for advisor shield.
 

@@ -419,6 +419,28 @@ void CBaseViewModel::CalcViewModelView( CBasePlayer *owner, const Vector &eyePos
         g_ClientVirtualReality.OverrideViewModelTransform( vmorigin, vmangles, pWeapon && pWeapon->ShouldUseLargeViewModelVROverride() );
     }
 
+#ifdef LUA_SDK
+    if ( !prediction->InPrediction() )
+    {
+        LUA_CALL_HOOK_BEGIN( "CalcViewModelView", "Allows overriding the view model's position and angles." );
+        CBaseCombatWeapon::PushLuaInstanceSafe( L, pWeapon );  // doc: weapon
+        CBaseEntity::PushLuaInstanceSafe( L, this );           // doc: viewModel
+        lua_pushvector( L, eyePosition );                      // doc: eyePosition
+        lua_pushangle( L, eyeAngles );                         // doc: eyeAngles
+        lua_pushvector( L, vmorigin );                         // doc: viewModelOrigin
+        lua_pushangle( L, vmangles );                          // doc: viewModelAngles
+        LUA_CALL_HOOK_END( 6, 2 );                             // doc: Vector (replacement origin), Angle (replacement angles)
+
+        if ( lua_isvector( L, -2 ) && lua_isangle( L, -1 ) )
+        {
+            vmorigin = luaL_checkvector( L, -2 );
+            vmangles = luaL_checkangle( L, -1 );
+        }
+
+        lua_pop( L, 2 );  // pop the return values
+    }
+#endif
+
     SetLocalOrigin( vmorigin );
     SetLocalAngles( vmangles );
 
@@ -447,8 +469,8 @@ void CBaseViewModel::CalcViewModelView( CBasePlayer *owner, const Vector &eyePos
 
         SetLocalAngles( vmangles );
     }
-#endif
-#endif
+#endif  // SIXENSE
+#endif  // CLIENT_DLL
 }
 
 //-----------------------------------------------------------------------------

@@ -18,6 +18,8 @@
 
 #ifdef HL2MP
 #include "hl2mp/weapon_crowbar.h"
+#elif defined( EXPERIMENT_SOURCE )
+#include "experiment/weapon_crowbar.h"
 #else
 #include "weapon_crowbar.h"
 #endif
@@ -2593,7 +2595,7 @@ void CNPC_Citizen::MoveOrder( const Vector &vecDest, CAI_BaseNPC **Allies, int n
         ClearFollowTarget();
 #if 0
 		if ( ( pPlayer->GetAbsOrigin() - GetAbsOrigin() ).LengthSqr() < Square( 180 ) &&
-			 ( ( vecDest - pPlayer->GetAbsOrigin() ).LengthSqr() < Square( 120 ) || 
+			 ( ( vecDest - pPlayer->GetAbsOrigin() ).LengthSqr() < Square( 120 ) ||
 			   ( vecDest - GetAbsOrigin() ).LengthSqr() < Square( 120 ) ) )
 		{
 			if ( pClosest == this )

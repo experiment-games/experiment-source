@@ -1,0 +1,8 @@
+"VertexLitGeneric"
+{
+	// Original shader: VertexLitTexture
+	"$basetexture" "models\stalkertnb\humans/lower"
+	"$bumpmap" "models\stalkertnb\humans/lower_n"
+	
+$nocull 1
+}

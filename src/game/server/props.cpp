@@ -725,12 +725,14 @@ static ConCommand prop_debug( "prop_debug", CC_Prop_Debug, "Toggle prop debug mo
 //=============================================================================================================
 // BREAKABLE PROPS
 //=============================================================================================================
+
+// clang-format off
+
 IMPLEMENT_SERVERCLASS_ST( CBreakableProp, DT_BreakableProp )
 END_SEND_TABLE()
 
 BEGIN_DATADESC( CBreakableProp )
-
-DEFINE_KEYFIELD( m_explodeDamage, FIELD_FLOAT, "ExplodeDamage" ),
+    DEFINE_KEYFIELD( m_explodeDamage, FIELD_FLOAT, "ExplodeDamage" ),
     DEFINE_KEYFIELD( m_explodeRadius, FIELD_FLOAT, "ExplodeRadius" ),
     DEFINE_KEYFIELD( m_iMinHealthDmg, FIELD_INTEGER, "minhealthdmg" ),
     DEFINE_FIELD( m_createTick, FIELD_INTEGER ),
@@ -797,13 +799,14 @@ DEFINE_KEYFIELD( m_explodeDamage, FIELD_FLOAT, "ExplodeDamage" ),
     // Damage
     DEFINE_FIELD( m_hLastAttacker, FIELD_EHANDLE ),
     DEFINE_FIELD( m_hFlareEnt, FIELD_EHANDLE ),
+END_DATADESC()
 
-    END_DATADESC()
+static bool WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
 
-    //-----------------------------------------------------------------------------
-    // Constructor:
-    //-----------------------------------------------------------------------------
-    CBreakableProp::CBreakableProp()
+//-----------------------------------------------------------------------------
+// Constructor:
+//-----------------------------------------------------------------------------
+CBreakableProp::CBreakableProp()
 {
     m_fadeMinDist = -1;
     m_fadeMaxDist = 0;
@@ -830,7 +833,7 @@ void CBreakableProp::Spawn()
 
     // jmd: I am guessing that the call to Spawn will set any flags that should be set anyway; this
     // clears flags we don't want (specifically the FL_ONFIRE for explosive barrels in HL2MP)]
-#ifdef HL2MP
+#if defined( HL2MP ) || defined( EXPERIMENT_SOURCE )
     ClearFlags();
 #endif
 
@@ -1713,7 +1716,7 @@ void CBreakableProp::Break( CBaseEntity *pBreaker, const CTakeDamageInfo &info )
         WRITE_ANGLES( GetAbsAngles() );
         MessageEnd();
 
-#ifndef HL2MP
+#if !defined( HL2MP ) && !defined( EXPERIMENT_SOURCE )
         UTIL_Remove( this );
 #endif
         return;
@@ -1779,7 +1782,7 @@ void CBreakableProp::Break( CBaseEntity *pBreaker, const CTakeDamageInfo &info )
         }
     }
 
-#ifndef HL2MP
+#if !defined( HL2MP ) && !defined( EXPERIMENT_SOURCE )
     UTIL_Remove( this );
 #endif
 }
@@ -1817,6 +1820,7 @@ DEFINE_KEYFIELD( m_iszDefaultAnim, FIELD_STRING, "DefaultAnim" ),
     DEFINE_INPUTFUNC( FIELD_VOID, "Disable", InputTurnOff ),
     DEFINE_INPUTFUNC( FIELD_VOID, "EnableCollision", InputEnableCollision ),
     DEFINE_INPUTFUNC( FIELD_VOID, "DisableCollision", InputDisableCollision ),
+    DEFINE_INPUTFUNC( FIELD_FLOAT, "SetPlaybackRate", InputSetPlaybackRate ),
 
     // Outputs
     DEFINE_OUTPUT( m_pOutputAnimBegun, "OnAnimationBegun" ),
@@ -2224,6 +2228,14 @@ void CDynamicProp::InputSetAnimation( inputdata_t &inputdata )
 void CDynamicProp::InputSetDefaultAnimation( inputdata_t &inputdata )
 {
     m_iszDefaultAnim = inputdata.value.StringID();
+}
+
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
+void CDynamicProp::InputSetPlaybackRate( inputdata_t &inputdata )
+{
+    SetPlaybackRate( inputdata.value.Float() );
 }
 
 //-----------------------------------------------------------------------------
@@ -4683,8 +4695,10 @@ class CPropDoorRotating : public CBasePropDoor
     CHandle< CEntityBlocker > m_hDoorBlocker;
 };
 
+// clang-format off
+
 BEGIN_DATADESC( CPropDoorRotating )
-DEFINE_KEYFIELD( m_eSpawnPosition, FIELD_INTEGER, "spawnpos" ),
+    DEFINE_KEYFIELD( m_eSpawnPosition, FIELD_INTEGER, "spawnpos" ),
     DEFINE_KEYFIELD( m_eOpenDirection, FIELD_INTEGER, "opendir" ),
     DEFINE_KEYFIELD( m_vecAxis, FIELD_VECTOR, "axis" ),
     DEFINE_KEYFIELD( m_flDistance, FIELD_FLOAT, "distance" ),
@@ -4700,9 +4714,11 @@ DEFINE_KEYFIELD( m_eSpawnPosition, FIELD_INTEGER, "spawnpos" ),
     // m_vecForwardBoundsMax
     // m_vecBackBoundsMin
     // m_vecBackBoundsMax
-    END_DATADESC()
+END_DATADESC()
 
-        LINK_ENTITY_TO_CLASS( prop_door_rotating, CPropDoorRotating );
+LINK_ENTITY_TO_CLASS( prop_door_rotating, CPropDoorRotating );
+
+// clang-format on
 
 //-----------------------------------------------------------------------------
 // Destructor

@@ -17,8 +17,10 @@
 
 #include "mathlib/math_pfns.h"
 
+#if defined( PLATFORM_INTEL )
 // For MMX intrinsics
 #include <xmmintrin.h>
+#endif
 
 // XXX remove me
 #undef clamp
@@ -99,6 +101,11 @@ FORCEINLINE float clamp( float val, float minVal, float maxVal )
         return minVal;
     else if ( val > maxVal )
         return maxVal;
+    // Experiment; Let's handle NaN and Inf so we never get that as a result
+    else if ( isnan( ( float )val ) )
+        return minVal;
+    else if ( isinf( ( float )val ) )
+        return maxVal;
     else
         return val;
 }
@@ -131,6 +138,11 @@ inline T clamp( T const &val, T const &minVal, T const &maxVal )
     else if ( val < minVal )
         return minVal;
     else if ( val > maxVal )
+        return maxVal;
+    // Experiment; Let's handle NaN and Inf so we never get that as a result
+    else if ( isnan( ( float )val ) )
+        return minVal;
+    else if ( isinf( ( float )val ) )
         return maxVal;
     else
         return val;
@@ -234,6 +246,8 @@ void GeneratePerspectiveFrustum( const Vector &origin, const Vector &forward, co
 bool R_CullBox( const Vector &mins, const Vector &maxs, const Frustum_t &frustum );
 bool R_CullBoxSkipNear( const Vector &mins, const Vector &maxs, const Frustum_t &frustum );
 
+class matrix3x4a_t;
+
 struct matrix3x4_t
 {
     matrix3x4_t() = default;
@@ -326,6 +340,19 @@ struct matrix3x4_t
     }
 
     float m_flMatVal[3][4];
+};
+
+class ALIGN16 matrix3x4a_t : public matrix3x4_t
+{
+   public:
+    /*
+    matrix3x4a_t() { if (((size_t)Base()) % 16 != 0) { Error( "matrix3x4a_t missaligned" ); } }
+    */
+    matrix3x4a_t &operator=( const matrix3x4_t &src )
+    {
+        memcpy( Base(), src.Base(), sizeof( float ) * 3 * 4 );
+        return *this;
+    };
 };
 
 #ifndef M_PI
@@ -2192,7 +2219,7 @@ inline bool CloseEnough( const Vector &a, const Vector &b, float epsilon = EQUAL
 // Fast compare
 // maxUlps is the maximum error in terms of Units in the Last Place. This
 // specifies how big an error we are willing to accept in terms of the value
-// of the least significant digit of the floating point number�s
+// of the least significant digit of the floating point number’s
 // representation. maxUlps can also be interpreted in terms of how many
 // representable floats we are willing to accept between A and B.
 // This function will allow maxUlps-1 floats between A and B.

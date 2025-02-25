@@ -281,7 +281,7 @@ class CTFPlayer : public CBaseMultiplayerPlayer, public IHasAttributes, public I
     void HandleFadeToBlack( void );
 
     // Flashlight controls for SFM - JasonM
-    virtual int FlashlightIsOn( void );
+    virtual bool FlashlightIsOn( void );
     virtual void FlashlightTurnOn( void );
     virtual void FlashlightTurnOff( void );
 

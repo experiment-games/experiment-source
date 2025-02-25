@@ -13,7 +13,7 @@
 
 #ifndef WEAPONSLAM_H
 #define WEAPONSLAM_H
-#ifndef HL2MP
+#if !defined( HL2MP ) && !defined( EXPERIMENT_SOURCE )
 
 #include "basegrenade_shared.h"
 #include "basehlcombatweapon.h"

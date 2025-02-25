@@ -15,6 +15,12 @@
 #include "iclientmode.h"
 #include "GameEventListener.h"
 #include <baseviewport.h>
+#include <mapload_background.h>
+
+#ifdef LUA_SDK
+#include <scriptedhudviewport.h>
+#include <scriptedclientluapanel.h>
+#endif
 
 class CBaseHudChat;
 class CBaseHudWeaponSelection;
@@ -40,7 +46,8 @@ class Panel;
 
 class CReplayReminderPanel;
 
-#define USERID2PLAYER( i ) ToBasePlayer( ClientEntityList().GetEnt( engine->GetPlayerForUserID( i ) ) )
+#define USERID2PLAYER( i ) \
+    ToBasePlayer( ClientEntityList().GetEnt( engine->GetPlayerForUserID( i ) ) )
 
 extern IClientMode *GetClientModeNormal();  // must be implemented
 
@@ -86,6 +93,10 @@ class ClientModeShared : public IClientMode, public CGameEventListener
 
     // Input
     virtual int KeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding );
+#ifdef ARGG
+    virtual bool OverrideViewAngles( void );
+#endif
+
     virtual int HudElementKeyInput( int down, ButtonCode_t keynum, const char *pszCurrentBinding );
     virtual void OverrideMouseInput( float *x, float *y );
     virtual void StartMessageMode( int iMessageModeType );
@@ -141,13 +152,19 @@ class ClientModeShared : public IClientMode, public CGameEventListener
 
     virtual bool DoPostScreenSpaceEffects( const CViewSetup *pSetup );
 
-    virtual void DisplayReplayMessage( const char *pLocalizeName, float flDuration, bool bUrgent, const char *pSound, bool bDlg );
+    virtual void DisplayReplayMessage( const char *pLocalizeName,
+                                       float flDuration,
+                                       bool bUrgent,
+                                       const char *pSound,
+                                       bool bDlg );
 
     virtual bool IsInfoPanelAllowed() OVERRIDE
     {
         return true;
     }
-    virtual void InfoPanelDisplayed() OVERRIDE {}
+    virtual void InfoPanelDisplayed() OVERRIDE
+    {
+    }
     virtual bool IsHTMLInfoPanelAllowed() OVERRIDE
     {
         return true;
@@ -166,6 +183,9 @@ class ClientModeShared : public IClientMode, public CGameEventListener
     virtual void OnDemoRecordStop() OVERRIDE {}
 
    protected:
+#ifdef LUA_SDK
+    CScriptedHudViewport *m_pScriptedViewport;
+#endif
     CBaseViewport *m_pViewport;
 
     void DisplayReplayReminder();

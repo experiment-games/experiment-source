@@ -29,6 +29,8 @@
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
+#include <lmovedata.h>
+#include <lusercmd.h>
 
 IPredictionSystem *IPredictionSystem::g_pPredictionSystems = NULL;
 
@@ -470,8 +472,6 @@ void CPrediction::PostNetworkDataReceived( int commands_acknowledged )
                 if ( ent->PostNetworkDataReceived( m_nServerCommandsAcknowledged ) )
                 {
                     m_bPreviousAckHadErrors = true;
-                    m_bPreviousAckErrorTriggersFullLatchReset |= ent->PredictionErrorShouldResetLatchedForAllPredictables() ? 1 : 0;
-                    m_EntsWithPredictionErrorsInLastAck.AddToTail( ent );
                 }
             }
 
@@ -670,6 +670,14 @@ void CPrediction::SetupMove( C_BasePlayer *player, CUserCmd *ucmd, IMoveHelper *
     pHLMove->m_bIsSprinting = pHLPlayer->IsSprinting();
 #endif
 #endif
+
+#ifdef LUA_SDK
+    LUA_CALL_HOOK_BEGIN( "SetupMove" );
+    CBasePlayer::PushLuaInstanceSafe( L, player );
+    lua_pushmovedata( L, move );
+    lua_pushusercmd( L, ucmd );
+    LUA_CALL_HOOK_END( 3, 0 );
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -679,6 +687,15 @@ void CPrediction::SetupMove( C_BasePlayer *player, CUserCmd *ucmd, IMoveHelper *
 //-----------------------------------------------------------------------------
 void CPrediction::FinishMove( C_BasePlayer *player, CUserCmd *ucmd, CMoveData *move )
 {
+#ifdef LUA_SDK
+    LUA_CALL_HOOK_BEGIN( "FinishMove" );
+    CBasePlayer::PushLuaInstanceSafe( L, player );
+    lua_pushmovedata( L, move );
+    LUA_CALL_HOOK_END( 2, 1 );
+
+    LUA_RETURN_NONE_IF_FALSE();
+#endif
+
 #if !defined( NO_ENTITY_PREDICTION )
     VPROF( "CPrediction::FinishMove" );
 
@@ -735,6 +752,13 @@ void CPrediction::StartCommand( C_BasePlayer *player, CUserCmd *cmd )
     C_BaseEntity::SetPredictionRandomSeed( cmd );
     C_BaseEntity::SetPredictionPlayer( player );
 #endif
+
+#ifdef LUA_SDK
+    LUA_CALL_HOOK_BEGIN( "StartCommand" );
+    CBasePlayer::PushLuaInstanceSafe( L, player );
+    lua_pushusercmd( L, cmd );
+    LUA_CALL_HOOK_END( 2, 0 );
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -766,9 +790,45 @@ void CPrediction::RunPreThink( C_BasePlayer *player )
     if ( !player->PhysicsRunThink() )
         return;
 
-    // Called every frame to let game rules do any specific think logic for the player
-    // FIXME:  Do we need to set up a client side version of the gamerules???
-    // g_pGameRules->PlayerThink( player );
+        // Called every frame to let game rules do any specific think logic for the player
+        // FIXME:  Do we need to set up a client side version of the gamerules???
+        // g_pGameRules->PlayerThink( player );
+
+#ifdef LUA_SDK
+    // Andrew; Yes. At least for mods using the Source Engine Lua SDK, we
+    // do.
+    //
+    //=========================================================================
+    // SOURCE ENGINE LUA SDK GAMERULES THINK
+    //
+    // Below, we call Think() on the global gamerules object. This needs to
+    // be done by our SDK, and our SDK only, simply because without this
+    // call, only GAME_LUA has a Think hook. This isn't helpful for many
+    // game logic situations, considering this SDK extends functionality for
+    // developers.
+    //
+    // The issue is that while this is fine to call, where we do it may not
+    // be. There's a specific chain of calls made during every frame, and
+    // depending on what scripters do in their hooks for the CLIENT_LUA
+    // Think hook, they could be unintentionally causing senarios to arise
+    // which do not behave well with other game events, or logic set out
+    // internally. In one case, someone's hook may not work at all, and in
+    // another, it may break prediction, or prevent critical events from
+    // being fired properly.
+    //
+    // In the end, caution will simply need to be taken when using this
+    // hook, and careful observation will need to be made when controlling
+    // things like a player's view for cinematic purposes, or the creation
+    // and placement of entities for a gamemode.
+    //
+    // This isn't the only client-side thinking hook we're providing, so, in
+    // worst-case scenarios, if functionality of something breaks, you may
+    // just need to implement your feature or write your logic in other
+    // calls to create harmony with the frame function call sequence.
+    //
+    //=========================================================================
+    g_pGameRules->Think();
+#endif
 
     player->PreThink();
 #endif
@@ -814,6 +874,12 @@ void CPrediction::RunPostThink( C_BasePlayer *player )
 
     // Run post-think
     player->PostThink();
+#endif
+
+#ifdef LUA_SDK
+    LUA_CALL_HOOK_BEGIN( "PlayerPostThink" );
+    CBasePlayer::PushLuaInstanceSafe( L, player );
+    LUA_CALL_HOOK_END( 1, 0 );
 #endif
 }
 

@@ -1,0 +1,5 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "Models/cyberpunk/heads/claire/claire_hair_b1"
+	"$translucent" 1
+}

@@ -81,6 +81,10 @@
 #include "bonetoworldarray.h"
 #include "cmodel.h"
 
+#ifdef ASW_PROJECTED_TEXTURES
+#include "flashlighteffect.h"
+#endif
+
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
@@ -89,7 +93,7 @@ static ConVar r_flashlightmodels( "r_flashlightmodels", "1" );
 static ConVar r_shadowrendertotexture( "r_shadowrendertotexture", "0" );
 static ConVar r_flashlight_version2( "r_flashlight_version2", "0", FCVAR_CHEAT | FCVAR_DEVELOPMENTONLY );
 
-ConVar r_flashlightdepthtexture( "r_flashlightdepthtexture", "1", FCVAR_ALLOWED_IN_COMPETITIVE );
+ConVar r_flashlightdepthtexture( "r_flashlightdepthtexture", "1" );
 
 #if defined( _X360 )
 ConVar r_flashlightdepthres( "r_flashlightdepthres", "512" );
@@ -97,7 +101,18 @@ ConVar r_flashlightdepthres( "r_flashlightdepthres", "512" );
 ConVar r_flashlightdepthres( "r_flashlightdepthres", "1024" );
 #endif
 
+#ifdef ASW_PROJECTED_TEXTURES
+ConVar r_threaded_client_shadow_manager( "r_threaded_client_shadow_manager", "1" );
+#else
 ConVar r_threaded_client_shadow_manager( "r_threaded_client_shadow_manager", "0" );
+#endif
+
+#ifdef ASW_PROJECTED_TEXTURES
+static ConVar r_shadow_lightpos_lerptime( "r_shadow_lightpos_lerptime", "0.5" );
+static ConVar r_shadowfromworldlights_debug( "r_shadowfromworldlights_debug", "0", FCVAR_CHEAT );
+static ConVar r_shadow_shortenfactor( "r_shadow_shortenfactor", "2", 0, "Makes shadows cast from local lights shorter" );
+static ConVar r_shadow_mincastintensity( "r_shadow_mincastintensity", "0.3", FCVAR_CHEAT, "Minimum brightness of a light to be classed as shadow casting", true, 0, false, 0 );
+#endif
 
 #ifdef _WIN32
 #pragma warning( disable : 4701 )
@@ -120,7 +135,8 @@ enum
 class CTextureAllocator
 {
    public:
-    // Initialize the allocator with something that knows how to refresh the bits
+    // Initialize the allocator with something that knows how to refresh the
+    // bits
     void Init();
     void Shutdown();
 
@@ -163,7 +179,8 @@ class CTextureAllocator
 #if !defined( _X360 )
         MIN_TEXTURE_POWER = 4,
 #else
-        MIN_TEXTURE_POWER = 5,  // per resolve requirements to ensure 32x32 aligned offsets
+        MIN_TEXTURE_POWER =
+            5,  // per resolve requirements to ensure 32x32 aligned offsets
 #endif
         MAX_TEXTURE_SIZE = ( 1 << MAX_TEXTURE_POWER ),
         MIN_TEXTURE_SIZE = ( 1 << MIN_TEXTURE_POWER ),
@@ -240,18 +257,22 @@ void CTextureAllocator::Init()
 
 #if !defined( _X360 )
     // don't need depth buffer for shadows
-    m_TexturePage.InitRenderTarget( TEXTURE_PAGE_SIZE, TEXTURE_PAGE_SIZE, RT_SIZE_NO_CHANGE, IMAGE_FORMAT_ARGB8888, MATERIAL_RT_DEPTH_NONE, false, "_rt_Shadows" );
+    m_TexturePage.InitRenderTarget(
+        TEXTURE_PAGE_SIZE, TEXTURE_PAGE_SIZE, RT_SIZE_NO_CHANGE, IMAGE_FORMAT_ARGB8888, MATERIAL_RT_DEPTH_NONE, false, "_rt_Shadows" );
 #else
     // unfortunate explicit management required for this render target
-    // 32bpp edram is only largest shadow fragment, but resolved to actual shadow atlas
-    // because full-res 1024x1024 shadow buffer is too large for EDRAM
-    m_TexturePage.InitRenderTargetTexture( TEXTURE_PAGE_SIZE, TEXTURE_PAGE_SIZE, RT_SIZE_NO_CHANGE, IMAGE_FORMAT_ARGB8888, MATERIAL_RT_DEPTH_NONE, false, "_rt_Shadows" );
+    // 32bpp edram is only largest shadow fragment, but resolved to actual
+    // shadow atlas because full-res 1024x1024 shadow buffer is too large for
+    // EDRAM
+    m_TexturePage.InitRenderTargetTexture(
+        TEXTURE_PAGE_SIZE, TEXTURE_PAGE_SIZE, RT_SIZE_NO_CHANGE, IMAGE_FORMAT_ARGB8888, MATERIAL_RT_DEPTH_NONE, false, "_rt_Shadows" );
 
     // edram footprint is only 256x256x4 = 256K
     m_TexturePage.InitRenderTargetSurface( MAX_TEXTURE_SIZE, MAX_TEXTURE_SIZE, IMAGE_FORMAT_ARGB8888, false );
 
-    // due to texture/surface size mismatch, ensure texture page is entirely cleared translucent
-    // otherwise border artifacts at edge of shadows due to pixel shader averaging of unwanted bits
+    // due to texture/surface size mismatch, ensure texture page is entirely
+    // cleared translucent otherwise border artifacts at edge of shadows due to
+    // pixel shader averaging of unwanted bits
     m_TexturePage->ClearTexture( 0, 0, 0, 0 );
 #endif
 }
@@ -274,20 +295,26 @@ void CTextureAllocator::Reset()
     // Set up the block sizes....
     // FIXME: Improve heuristic?!?
 #if !defined( _X360 )
-    m_Blocks[0].m_FragmentPower = MAX_TEXTURE_POWER - 4;  // 128 cells at ExE resolution
+    m_Blocks[0].m_FragmentPower =
+        MAX_TEXTURE_POWER - 4;  // 128 cells at ExE resolution
 #else
-    m_Blocks[0].m_FragmentPower = MAX_TEXTURE_POWER - 3;  // 64 cells at DxD resolution
+    m_Blocks[0].m_FragmentPower =
+        MAX_TEXTURE_POWER - 3;  // 64 cells at DxD resolution
 #endif
-    m_Blocks[1].m_FragmentPower = MAX_TEXTURE_POWER - 3;  // 64 cells at DxD resolution
-    m_Blocks[2].m_FragmentPower = MAX_TEXTURE_POWER - 2;  // 32 cells at CxC resolution
+    m_Blocks[1].m_FragmentPower =
+        MAX_TEXTURE_POWER - 3;  // 64 cells at DxD resolution
+    m_Blocks[2].m_FragmentPower =
+        MAX_TEXTURE_POWER - 2;  // 32 cells at CxC resolution
     m_Blocks[3].m_FragmentPower = MAX_TEXTURE_POWER - 2;
-    m_Blocks[4].m_FragmentPower = MAX_TEXTURE_POWER - 1;  // 24 cells at BxB resolution
+    m_Blocks[4].m_FragmentPower =
+        MAX_TEXTURE_POWER - 1;  // 24 cells at BxB resolution
     m_Blocks[5].m_FragmentPower = MAX_TEXTURE_POWER - 1;
     m_Blocks[6].m_FragmentPower = MAX_TEXTURE_POWER - 1;
     m_Blocks[7].m_FragmentPower = MAX_TEXTURE_POWER - 1;
     m_Blocks[8].m_FragmentPower = MAX_TEXTURE_POWER - 1;
     m_Blocks[9].m_FragmentPower = MAX_TEXTURE_POWER - 1;
-    m_Blocks[10].m_FragmentPower = MAX_TEXTURE_POWER;  // 6 cells at AxA resolution
+    m_Blocks[10].m_FragmentPower =
+        MAX_TEXTURE_POWER;  // 6 cells at AxA resolution
     m_Blocks[11].m_FragmentPower = MAX_TEXTURE_POWER;
     m_Blocks[12].m_FragmentPower = MAX_TEXTURE_POWER;
     m_Blocks[13].m_FragmentPower = MAX_TEXTURE_POWER;
@@ -301,7 +328,8 @@ void CTextureAllocator::Reset()
         m_Cache[i].m_List = m_Fragments.CreateList();
     }
 
-    // Now that the block sizes are allocated, create LRUs for the various block sizes
+    // Now that the block sizes are allocated, create LRUs for the various block
+    // sizes
     for ( i = 0; i < BLOCK_COUNT; ++i )
     {
         // Initialize LRU
@@ -334,8 +362,16 @@ void CTextureAllocator::DebugPrintCache( void )
 
     for ( int f = 0; f < nNumFragments; f++ )
     {
-        if ( ( m_Fragments[f].m_FrameUsed != 0 ) && ( m_Fragments[f].m_Texture != INVALID_TEXTURE_HANDLE ) )
-            Warning( "Fragment %d, Block: %d, Index: %d, Texture: %d Frame Used: %d\n", f, m_Fragments[f].m_Block, m_Fragments[f].m_Index, m_Fragments[f].m_Texture, m_Fragments[f].m_FrameUsed );
+        if ( ( m_Fragments[f].m_FrameUsed != 0 ) &&
+             ( m_Fragments[f].m_Texture != INVALID_TEXTURE_HANDLE ) )
+            Warning(
+                "Fragment %d, Block: %d, Index: %d, Texture: %d Frame Used: "
+                "%d\n",
+                f,
+                m_Fragments[f].m_Block,
+                m_Fragments[f].m_Index,
+                m_Fragments[f].m_Texture,
+                m_Fragments[f].m_FrameUsed );
         else
             nNumInvalidFragments++;
     }
@@ -376,7 +412,8 @@ void CTextureAllocator::AddBlockToLRU( int block )
 //-----------------------------------------------------------------------------
 // Unlink fragment from cache
 //-----------------------------------------------------------------------------
-void CTextureAllocator::UnlinkFragmentFromCache( Cache_t& cache, FragmentHandle_t fragment )
+void CTextureAllocator::UnlinkFragmentFromCache( Cache_t& cache,
+                                                 FragmentHandle_t fragment )
 {
     m_Fragments.Unlink( cache.m_List, fragment );
 }
@@ -449,7 +486,8 @@ void CTextureAllocator::DeallocateTexture( TextureHandle_t h )
     if ( m_Textures[h].m_Fragment != INVALID_FRAGMENT_HANDLE )
     {
         MarkUnused( m_Textures[h].m_Fragment );
-        m_Fragments[m_Textures[h].m_Fragment].m_FrameUsed = 0xFFFFFFFF;  // non-zero frame
+        m_Fragments[m_Textures[h].m_Fragment].m_FrameUsed =
+            0xFFFFFFFF;  // non-zero frame
         DisconnectTextureFromFragment( m_Textures[h].m_Fragment );
     }
     m_Textures.Remove( h );
@@ -520,7 +558,8 @@ bool CTextureAllocator::UseTexture( TextureHandle_t h, bool bWillRedraw, float f
         // If the current fragment is at or near the desired power, we're done
         nCurrentPower = GetFragmentPower( info.m_Fragment );
         Assert( nCurrentPower <= info.m_Power );
-        bool bShouldKeepTexture = ( !bWillRedraw ) && ( nDesiredPower < 8 ) && ( nDesiredPower - nCurrentPower <= 1 );
+        bool bShouldKeepTexture = ( !bWillRedraw ) && ( nDesiredPower < 8 ) &&
+                                  ( nDesiredPower - nCurrentPower <= 1 );
         if ( ( nCurrentPower == nDesiredPower ) || bShouldKeepTexture )
         {
             // Move to the back of the LRU
@@ -545,7 +584,8 @@ bool CTextureAllocator::UseTexture( TextureHandle_t h, bool bWillRedraw, float f
         // This represents an overflow condition (used too many textures of
         // the same size in a single frame). It that happens, just use a texture
         // of lower res.
-        if ( ( f != m_Fragments.InvalidIndex() ) && ( m_Fragments[f].m_FrameUsed != m_CurrentFrame ) )
+        if ( ( f != m_Fragments.InvalidIndex() ) &&
+             ( m_Fragments[f].m_FrameUsed != m_CurrentFrame ) )
         {
             done = true;
         }
@@ -607,8 +647,9 @@ int CTextureAllocator::GetFragmentPower( FragmentHandle_t f ) const
 //-----------------------------------------------------------------------------
 void CTextureAllocator::AdvanceFrame()
 {
-    // Be sure that this is called as infrequently as possible (i.e. once per frame,
-    // NOT once per view) to prevent cache thrash when rendering multiple views in a single frame
+    // Be sure that this is called as infrequently as possible (i.e. once per
+    // frame, NOT once per view) to prevent cache thrash when rendering multiple
+    // views in a single frame
     m_CurrentFrame++;
 }
 
@@ -662,7 +703,8 @@ void CTextureAllocator::GetTextureRect( TextureHandle_t handle, int& x, int& y, 
 
 static ConVar r_shadows( "r_shadows", "1" );  // hook into engine's cvars..
 static ConVar r_shadowmaxrendered( "r_shadowmaxrendered", "32" );
-static ConVar r_shadows_gamecontrol( "r_shadows_gamecontrol", "-1", FCVAR_CHEAT );  // hook into engine's cvars..
+static ConVar r_shadows_gamecontrol( "r_shadows_gamecontrol", "-1",
+                                     FCVAR_CHEAT );  // hook into engine's cvars..
 
 //-----------------------------------------------------------------------------
 // The class responsible for dealing with shadows on the client side
@@ -681,11 +723,17 @@ class CClientShadowMgr : public IClientShadowMgr
 
     // Inherited from IClientShadowMgr
     virtual bool Init();
-    virtual void PostInit() {}
+    virtual void PostInit()
+    {
+    }
     virtual void Shutdown();
     virtual void LevelInitPreEntity();
-    virtual void LevelInitPostEntity() {}
-    virtual void LevelShutdownPreEntity() {}
+    virtual void LevelInitPostEntity()
+    {
+    }
+    virtual void LevelShutdownPreEntity()
+    {
+    }
     virtual void LevelShutdownPostEntity();
 
     virtual bool IsPerFrame()
@@ -694,28 +742,43 @@ class CClientShadowMgr : public IClientShadowMgr
     }
 
     virtual void PreRender();
-    virtual void Update( float frametime ) {}
-    virtual void PostRender() {}
+    virtual void Update( float frametime )
+    {
+    }
+    virtual void PostRender()
+    {
+    }
 
-    virtual void OnSave() {}
-    virtual void OnRestore() {}
-    virtual void SafeRemoveIfDesired() {}
+    virtual void OnSave()
+    {
+    }
+    virtual void OnRestore()
+    {
+    }
+    virtual void SafeRemoveIfDesired()
+    {
+    }
 
-    virtual ClientShadowHandle_t CreateShadow( ClientEntityHandle_t entity, int flags );
+    virtual ClientShadowHandle_t CreateShadow( ClientEntityHandle_t entity,
+                                               int flags );
     virtual void DestroyShadow( ClientShadowHandle_t handle );
 
     // Create flashlight (projected texture light source)
-    virtual ClientShadowHandle_t CreateFlashlight( const FlashlightState_t& lightState );
-    virtual void UpdateFlashlightState( ClientShadowHandle_t shadowHandle, const FlashlightState_t& lightState );
+    virtual ClientShadowHandle_t CreateFlashlight(
+        const FlashlightState_t& lightState );
+    virtual void UpdateFlashlightState( ClientShadowHandle_t shadowHandle,
+                                        const FlashlightState_t& lightState );
     virtual void DestroyFlashlight( ClientShadowHandle_t shadowHandle );
 
     // Update a shadow
-    virtual void UpdateProjectedTexture( ClientShadowHandle_t handle, bool force );
+    virtual void UpdateProjectedTexture( ClientShadowHandle_t handle,
+                                         bool force );
 
     void ComputeBoundingSphere( IClientRenderable* pRenderable, Vector& origin, float& radius );
 
     virtual void AddToDirtyShadowList( ClientShadowHandle_t handle, bool bForce );
-    virtual void AddToDirtyShadowList( IClientRenderable* pRenderable, bool force );
+    virtual void AddToDirtyShadowList( IClientRenderable* pRenderable,
+                                       bool force );
 
     // Marks the render-to-texture shadow as needing to be re-rendered
     virtual void MarkRenderToTextureShadowDirty( ClientShadowHandle_t handle );
@@ -726,9 +789,11 @@ class CClientShadowMgr : public IClientShadowMgr
                               ShadowReceiver_t type );
 
     // deals with shadows being added to shadow receivers
-    void RemoveAllShadowsFromReceiver( IClientRenderable* pRenderable, ShadowReceiver_t type );
+    void RemoveAllShadowsFromReceiver( IClientRenderable* pRenderable,
+                                       ShadowReceiver_t type );
 
-    // Re-renders all shadow textures for shadow casters that lie in the leaf list
+    // Re-renders all shadow textures for shadow casters that lie in the leaf
+    // list
     void ComputeShadowTextures( const CViewSetup& view, int leafCount, LeafIndex_t* pLeafList );
 
     // Kicks off rendering into shadow depth maps (if any)
@@ -763,12 +828,17 @@ class CClientShadowMgr : public IClientShadowMgr
     float GetBlobbyCutoffArea() const;
 
     // Set the darkness falloff bias
-    virtual void SetFalloffBias( ClientShadowHandle_t handle, unsigned char ucBias );
+    virtual void SetFalloffBias( ClientShadowHandle_t handle,
+                                 unsigned char ucBias );
 
     void RestoreRenderState();
 
     // Computes a rough bounding box encompassing the volume of the shadow
-    void ComputeShadowBBox( IClientRenderable* pRenderable, const Vector& vecAbsCenter, float flRadius, Vector* pAbsMins, Vector* pAbsMaxs );
+    void ComputeShadowBBox( IClientRenderable* pRenderable,
+                            const Vector& vecAbsCenter,
+                            float flRadius,
+                            Vector* pAbsMins,
+                            Vector* pAbsMaxs );
 
     bool WillParentRenderBlobbyShadow( IClientRenderable* pRenderable );
 
@@ -807,8 +877,10 @@ class CClientShadowMgr : public IClientShadowMgr
 
    private:
     // Shadow update functions
-    void UpdateStudioShadow( IClientRenderable* pRenderable, ClientShadowHandle_t handle );
-    void UpdateBrushShadow( IClientRenderable* pRenderable, ClientShadowHandle_t handle );
+    void UpdateStudioShadow( IClientRenderable* pRenderable,
+                             ClientShadowHandle_t handle );
+    void UpdateBrushShadow( IClientRenderable* pRenderable,
+                            ClientShadowHandle_t handle );
     void UpdateShadow( ClientShadowHandle_t handle, bool force );
 
     // Gets the entity whose shadow this shadow will render into
@@ -818,7 +890,9 @@ class CClientShadowMgr : public IClientShadowMgr
     void AddChildBounds( matrix3x4_t& matWorldToBBox, IClientRenderable* pParent, Vector& vecMins, Vector& vecMaxs );
 
     // Compute a bounds for the entity + children
-    void ComputeHierarchicalBounds( IClientRenderable* pRenderable, Vector& vecMins, Vector& vecMaxs );
+    void ComputeHierarchicalBounds( IClientRenderable* pRenderable,
+                                    Vector& vecMins,
+                                    Vector& vecMaxs );
 
     // Builds matrices transforming from world space to shadow space
     void BuildGeneralWorldToShadowMatrix( VMatrix& matWorldToShadow,
@@ -827,12 +901,21 @@ class CClientShadowMgr : public IClientShadowMgr
                                           const Vector& xvec,
                                           const Vector& yvec );
 
-    void BuildWorldToShadowMatrix( VMatrix& matWorldToShadow, const Vector& origin, const Quaternion& quatOrientation );
+    void BuildWorldToShadowMatrix( VMatrix& matWorldToShadow,
+                                   const Vector& origin,
+                                   const Quaternion& quatOrientation );
 
-    void BuildPerspectiveWorldToFlashlightMatrix( VMatrix& matWorldToShadow, const FlashlightState_t& flashlightState );
+    void BuildPerspectiveWorldToFlashlightMatrix(
+        VMatrix& matWorldToShadow,
+        const FlashlightState_t& flashlightState );
+
+#ifdef ASW_PROJECTED_TEXTURES
+    void BuildOrthoWorldToFlashlightMatrix( VMatrix& matWorldToShadow, const FlashlightState_t& flashlightState );
+#endif
 
     // Update a shadow
-    void UpdateProjectedTextureInternal( ClientShadowHandle_t handle, bool force );
+    void UpdateProjectedTextureInternal( ClientShadowHandle_t handle,
+                                         bool force );
 
     // Compute the shadow origin and attenuation start distance
     float ComputeLocalShadowOrigin( IClientRenderable* pRenderable,
@@ -845,12 +928,16 @@ class CClientShadowMgr : public IClientShadowMgr
     // Remove a shadow from the dirty list
     void RemoveShadowFromDirtyList( ClientShadowHandle_t handle );
 
-    // NOTE: this will ONLY return SHADOWS_NONE, SHADOWS_SIMPLE, or SHADOW_RENDER_TO_TEXTURE.
+    // NOTE: this will ONLY return SHADOWS_NONE, SHADOWS_SIMPLE, or
+    // SHADOW_RENDER_TO_TEXTURE.
     ShadowType_t GetActualShadowCastType( ClientShadowHandle_t handle ) const;
     ShadowType_t GetActualShadowCastType( IClientRenderable* pRenderable ) const;
 
     // Builds a simple blobby shadow
-    void BuildOrthoShadow( IClientRenderable* pRenderable, ClientShadowHandle_t handle, const Vector& mins, const Vector& maxs );
+    void BuildOrthoShadow( IClientRenderable* pRenderable,
+                           ClientShadowHandle_t handle,
+                           const Vector& mins,
+                           const Vector& maxs );
 
     // Builds a more complex shadow...
     void BuildRenderToTextureShadow( IClientRenderable* pRenderable,
@@ -878,29 +965,43 @@ class CClientShadowMgr : public IClientShadowMgr
     void AddExtraClipPlane( ClientShadowHandle_t h, const Vector& normal, float dist );
 
     // Cull if the origin is on the wrong side of a shadow clip plane....
-    bool CullReceiver( ClientShadowHandle_t handle, IClientRenderable* pRenderable, IClientRenderable* pSourceRenderable );
+    bool CullReceiver( ClientShadowHandle_t handle,
+                       IClientRenderable* pRenderable,
+                       IClientRenderable* pSourceRenderable );
 
-    bool ComputeSeparatingPlane( IClientRenderable* pRend1, IClientRenderable* pRend2, cplane_t* pPlane );
+    bool ComputeSeparatingPlane( IClientRenderable* pRend1,
+                                 IClientRenderable* pRend2,
+                                 cplane_t* pPlane );
 
     // Causes all shadows to be re-updated
     void UpdateAllShadows();
 
-    // One of these gets called with every shadow that potentially will need to re-render
-    bool DrawRenderToTextureShadow( unsigned short clientShadowHandle, float flArea );
+    // One of these gets called with every shadow that potentially will need to
+    // re-render
+    bool DrawRenderToTextureShadow( unsigned short clientShadowHandle,
+                                    float flArea );
     void DrawRenderToTextureShadowLOD( unsigned short clientShadowHandle );
 
     // Draws all children shadows into our own
-    bool DrawShadowHierarchy( IClientRenderable* pRenderable, const ClientShadow_t& shadow, bool bChild = false );
+    bool DrawShadowHierarchy( IClientRenderable* pRenderable,
+                              const ClientShadow_t& shadow,
+                              bool bChild = false );
 
     // Setup stage for threading
-    bool BuildSetupListForRenderToTextureShadow( unsigned short clientShadowHandle, float flArea );
-    bool BuildSetupShadowHierarchy( IClientRenderable* pRenderable, const ClientShadow_t& shadow, bool bChild = false );
+    bool BuildSetupListForRenderToTextureShadow(
+        unsigned short clientShadowHandle,
+        float flArea );
+    bool BuildSetupShadowHierarchy( IClientRenderable* pRenderable,
+                                    const ClientShadow_t& shadow,
+                                    bool bChild = false );
 
     // Computes + sets the render-to-texture texcoords
     void SetRenderToTextureShadowTexCoords( ShadowHandle_t handle, int x, int y, int w, int h );
 
     // Visualization....
-    void DrawRenderToTextureDebugInfo( IClientRenderable* pRenderable, const Vector& mins, const Vector& maxs );
+    void DrawRenderToTextureDebugInfo( IClientRenderable* pRenderable,
+                                       const Vector& mins,
+                                       const Vector& maxs );
 
     // Advance frame
     void AdvanceFrame();
@@ -917,30 +1018,49 @@ class CClientShadowMgr : public IClientShadowMgr
     void InitRenderToTextureShadows();
     void ShutdownRenderToTextureShadows();
 
-    static bool ShadowHandleCompareFunc( const ClientShadowHandle_t& lhs, const ClientShadowHandle_t& rhs )
+    static bool ShadowHandleCompareFunc( const ClientShadowHandle_t& lhs,
+                                         const ClientShadowHandle_t& rhs )
     {
         return lhs < rhs;
     }
 
-    ClientShadowHandle_t CreateProjectedTexture( ClientEntityHandle_t entity, int flags );
+    ClientShadowHandle_t CreateProjectedTexture( ClientEntityHandle_t entity,
+                                                 int flags );
 
-    // Lock down the usage of a shadow depth texture...must be unlocked use on subsequent views / frames
+    // Lock down the usage of a shadow depth texture...must be unlocked use on
+    // subsequent views / frames
     bool LockShadowDepthTexture( CTextureReference* shadowDepthTexture );
     void UnlockAllShadowDepthTextures();
 
     // Set and clear flashlight target renderable
-    void SetFlashlightTarget( ClientShadowHandle_t shadowHandle, EHANDLE targetEntity );
+    void SetFlashlightTarget( ClientShadowHandle_t shadowHandle,
+                              EHANDLE targetEntity );
+
+#ifdef ASW_PROJECTED_TEXTURES
+    // Get current frustum extents
+    void GetFrustumExtents( ClientShadowHandle_t handle, Vector& vecMin, Vector& vecMax );
+#endif
 
     // Set flashlight light world flag
-    void SetFlashlightLightWorld( ClientShadowHandle_t shadowHandle, bool bLightWorld );
+    void SetFlashlightLightWorld( ClientShadowHandle_t shadowHandle,
+                                  bool bLightWorld );
 
-    bool IsFlashlightTarget( ClientShadowHandle_t shadowHandle, IClientRenderable* pRenderable );
+    bool IsFlashlightTarget( ClientShadowHandle_t shadowHandle,
+                             IClientRenderable* pRenderable );
 
     // Builds a list of active shadows requiring shadow depth renders
-    int BuildActiveShadowDepthList( const CViewSetup& viewSetup, int nMaxDepthShadows, ClientShadowHandle_t* pActiveDepthShadows );
+    int BuildActiveShadowDepthList( const CViewSetup& viewSetup,
+                                    int nMaxDepthShadows,
+                                    ClientShadowHandle_t* pActiveDepthShadows );
+
+#ifdef ASW_PROJECTED_TEXTURES
+    // Builds a list of active flashlights
+    int BuildActiveFlashlightList( const CViewSetup& viewSetup, int nMaxFlashlights, ClientShadowHandle_t* pActiveFlashlights );
+#endif
 
     // Sets the view's active flashlight render state
-    void SetViewFlashlightState( int nActiveFlashlightCount, ClientShadowHandle_t* pActiveFlashlights );
+    void SetViewFlashlightState( int nActiveFlashlightCount,
+                                 ClientShadowHandle_t* pActiveFlashlights );
 
    private:
     Vector m_SimpleShadowDir;
@@ -961,8 +1081,13 @@ class CClientShadowMgr : public IClientShadowMgr
     CUtlRBTree< ClientShadowHandle_t, unsigned short > m_DirtyShadows;
     CUtlVector< ClientShadowHandle_t > m_TransparentShadows;
 
-    // These members maintain current state of depth texturing (size and global active state)
-    // If either changes in a frame, PreRender() will catch it and do the appropriate allocation, deallocation or reallocation
+#ifdef ASW_PROJECTED_TEXTURES
+    int m_nPrevFrameCount;
+#endif
+
+    // These members maintain current state of depth texturing (size and global
+    // active state) If either changes in a frame, PreRender() will catch it and
+    // do the appropriate allocation, deallocation or reallocation
     bool m_bDepthTextureActive;
     int m_nDepthTextureResolution;  // Assume square (height == width)
 
@@ -1040,10 +1165,12 @@ const VisibleShadowInfo_t& CVisibleShadowList::GetVisibleShadow( int i ) const
 //-----------------------------------------------------------------------------
 // CVisibleShadowList - Computes approximate screen area of the shadow
 //-----------------------------------------------------------------------------
-float CVisibleShadowList::ComputeScreenArea( const Vector& vecCenter, float r ) const
+float CVisibleShadowList::ComputeScreenArea( const Vector& vecCenter,
+                                             float r ) const
 {
     CMatRenderContextPtr pRenderContext( materials );
-    float flScreenDiameter = pRenderContext->ComputePixelDiameterOfSphere( vecCenter, r );
+    float flScreenDiameter =
+        pRenderContext->ComputePixelDiameterOfSphere( vecCenter, r );
     return flScreenDiameter * flScreenDiameter;
 }
 
@@ -1052,14 +1179,23 @@ float CVisibleShadowList::ComputeScreenArea( const Vector& vecCenter, float r ) 
 //-----------------------------------------------------------------------------
 void CVisibleShadowList::EnumShadow( unsigned short clientShadowHandle )
 {
-    CClientShadowMgr::ClientShadow_t& shadow = s_ClientShadowMgr.m_Shadows[clientShadowHandle];
+    CClientShadowMgr::ClientShadow_t& shadow =
+        s_ClientShadowMgr.m_Shadows[clientShadowHandle];
 
-    // Don't bother if we rendered it this frame, no matter which view it was rendered for
+    // Don't bother if we rendered it this frame, no matter which view it was
+    // rendered for
     if ( shadow.m_nRenderFrame == gpGlobals->framecount )
         return;
 
+#ifdef ASW_PROJECTED_TEXTURES
+    // Don't bother with flashlights
+    if ( ( shadow.m_Flags & SHADOW_FLAGS_FLASHLIGHT ) != 0 )
+        return;
+#endif
+
     // We don't need to bother with it if it's not render-to-texture
-    if ( s_ClientShadowMgr.GetActualShadowCastType( clientShadowHandle ) != SHADOWS_RENDER_TO_TEXTURE )
+    if ( s_ClientShadowMgr.GetActualShadowCastType( clientShadowHandle ) !=
+         SHADOWS_RENDER_TO_TEXTURE )
         return;
 
     // Don't bother with it if the shadow is totally transparent
@@ -1067,11 +1203,14 @@ void CVisibleShadowList::EnumShadow( unsigned short clientShadowHandle )
     if ( shadowInfo.m_FalloffBias == 255 )
         return;
 
-    IClientRenderable* pRenderable = ClientEntityList().GetClientRenderableFromHandle( shadow.m_Entity );
+    IClientRenderable* pRenderable =
+        ClientEntityList().GetClientRenderableFromHandle( shadow.m_Entity );
     Assert( pRenderable );
 
-    // Don't bother with children of hierarchy; they will be drawn with their parents
-    if ( s_ClientShadowMgr.ShouldUseParentShadow( pRenderable ) || s_ClientShadowMgr.WillParentRenderBlobbyShadow( pRenderable ) )
+    // Don't bother with children of hierarchy; they will be drawn with their
+    // parents
+    if ( s_ClientShadowMgr.ShouldUseParentShadow( pRenderable ) ||
+         s_ClientShadowMgr.WillParentRenderBlobbyShadow( pRenderable ) )
         return;
 
     // Compute a sphere surrounding the shadow
@@ -1096,9 +1235,9 @@ void CVisibleShadowList::EnumShadow( unsigned short clientShadowHandle )
     m_ShadowsInView[i].m_flArea = ComputeScreenArea( vecAbsCenter, flRadius );
 
     // Har, har. When water is rendering (or any multipass technique),
-    // we may well initially render from a viewpoint which doesn't include this shadow.
-    // That doesn't mean we shouldn't check it again though. Sucks that we need to compute
-    // the sphere + bbox multiply times though.
+    // we may well initially render from a viewpoint which doesn't include this
+    // shadow. That doesn't mean we shouldn't check it again though. Sucks that
+    // we need to compute the sphere + bbox multiply times though.
     shadow.m_nRenderFrame = gpGlobals->framecount;
 }
 
@@ -1140,7 +1279,8 @@ void CVisibleShadowList::PrioritySort()
 //-----------------------------------------------------------------------------
 int CVisibleShadowList::FindShadows( const CViewSetup* pView, int nLeafCount, LeafIndex_t* pLeafList )
 {
-    VPROF_BUDGET( "CVisibleShadowList::FindShadows", VPROF_BUDGETGROUP_SHADOW_RENDERING );
+    VPROF_BUDGET( "CVisibleShadowList::FindShadows",
+                  VPROF_BUDGETGROUP_SHADOW_RENDERING );
 
     m_ShadowsInView.RemoveAll();
     ClientLeafSystem()->EnumerateShadowsInLeaves( nLeafCount, pLeafList, this );
@@ -1158,6 +1298,9 @@ int CVisibleShadowList::FindShadows( const CViewSetup* pView, int nLeafCount, Le
 //-----------------------------------------------------------------------------
 CClientShadowMgr::CClientShadowMgr()
     : m_DirtyShadows( 0, 0, ShadowHandleCompareFunc ),
+#ifdef ASW_PROJECTED_TEXTURES
+      m_nPrevFrameCount( -1 ),
+#endif
       m_RenderToTextureActive( false ),
       m_bDepthTextureActive( false )
 {
@@ -1281,7 +1424,9 @@ bool CClientShadowMgr::Init()
     SetShadowBlobbyCutoffArea( 0.005 );
 
     bool bTools = CommandLine()->CheckParm( "-tools" ) != NULL;
-    m_nMaxDepthTextureShadows = bTools ? 4 : 1;  // Just one shadow depth texture in games, more in tools
+    m_nMaxDepthTextureShadows =
+        bTools ? 4
+               : 1;  // Just one shadow depth texture in games, more in tools
 
     bool bLowEnd = ( g_pMaterialSystemHardwareConfig->GetDXSupportLevel() < 80 );
 
@@ -1290,8 +1435,10 @@ bool CClientShadowMgr::Init()
         InitRenderToTextureShadows();
     }
 
-    // If someone turned shadow depth mapping on but we can't do it, force it off
-    if ( r_flashlightdepthtexture.GetBool() && !materials->SupportsShadowDepthTextures() )
+    // If someone turned shadow depth mapping on but we can't do it, force it
+    // off
+    if ( r_flashlightdepthtexture.GetBool() &&
+         !materials->SupportsShadowDepthTextures() )
     {
         r_flashlightdepthtexture.SetValue( 0 );
         ShutdownDepthTextureShadows();
@@ -1323,25 +1470,35 @@ void CClientShadowMgr::Shutdown()
 //-----------------------------------------------------------------------------
 void CClientShadowMgr::InitDepthTextureShadows()
 {
-    VPROF_BUDGET( "CClientShadowMgr::InitDepthTextureShadows", VPROF_BUDGETGROUP_SHADOW_DEPTH_TEXTURING );
+    VPROF_BUDGET( "CClientShadowMgr::InitDepthTextureShadows",
+                  VPROF_BUDGETGROUP_SHADOW_DEPTH_TEXTURING );
 
     if ( !m_bDepthTextureActive )
     {
         m_bDepthTextureActive = true;
 
-        ImageFormat dstFormat = materials->GetShadowDepthTextureFormat();  // Vendor-dependent depth texture format
+        ImageFormat dstFormat =
+            materials->GetShadowDepthTextureFormat();  // Vendor-dependent depth
+                                                       // texture format
 #if !defined( _X360 )
-        ImageFormat nullFormat = materials->GetNullTextureFormat();  // Vendor-dependent null texture format (takes as little memory as possible)
+        ImageFormat nullFormat =
+            materials->GetNullTextureFormat();  // Vendor-dependent null texture
+                                                // format (takes as little
+                                                // memory as possible)
 #endif
         materials->BeginRenderTargetAllocation();
 
 #if defined( _X360 )
-        // For the 360, we'll be rendering depth directly into the dummy depth and Resolve()ing to the depth texture.
-        // only need the dummy surface, don't care about color results
-        m_DummyColorTexture.InitRenderTargetTexture( r_flashlightdepthres.GetInt(), r_flashlightdepthres.GetInt(), RT_SIZE_OFFSCREEN, IMAGE_FORMAT_BGR565, MATERIAL_RT_DEPTH_SHARED, false, "_rt_ShadowDummy" );
-        m_DummyColorTexture.InitRenderTargetSurface( r_flashlightdepthres.GetInt(), r_flashlightdepthres.GetInt(), IMAGE_FORMAT_BGR565, true );
+        // For the 360, we'll be rendering depth directly into the dummy depth
+        // and Resolve()ing to the depth texture. only need the dummy surface,
+        // don't care about color results
+        m_DummyColorTexture.InitRenderTargetTexture(
+            r_flashlightdepthres.GetInt(), r_flashlightdepthres.GetInt(), RT_SIZE_OFFSCREEN, IMAGE_FORMAT_BGR565, MATERIAL_RT_DEPTH_SHARED, false, "_rt_ShadowDummy" );
+        m_DummyColorTexture.InitRenderTargetSurface(
+            r_flashlightdepthres.GetInt(), r_flashlightdepthres.GetInt(), IMAGE_FORMAT_BGR565, true );
 #else
-        m_DummyColorTexture.InitRenderTarget( r_flashlightdepthres.GetInt(), r_flashlightdepthres.GetInt(), RT_SIZE_OFFSCREEN, nullFormat, MATERIAL_RT_DEPTH_NONE, false, "_rt_ShadowDummy" );
+        m_DummyColorTexture.InitRenderTarget(
+            r_flashlightdepthres.GetInt(), r_flashlightdepthres.GetInt(), RT_SIZE_OFFSCREEN, nullFormat, MATERIAL_RT_DEPTH_NONE, false, "_rt_ShadowDummy" );
 #endif
 
         // Create some number of depth-stencil textures
@@ -1356,17 +1513,25 @@ void CClientShadowMgr::InitDepthTextureShadows()
             Q_snprintf( strRTName, ARRAYSIZE( strRTName ), "_rt_ShadowDepthTexture_%d", i );
 
 #if defined( _X360 )
-            // create a render target to use as a resolve target to get the shared depth buffer
-            // surface is effectively never used
-            depthTex.InitRenderTargetTexture( m_nDepthTextureResolution, m_nDepthTextureResolution, RT_SIZE_OFFSCREEN, dstFormat, MATERIAL_RT_DEPTH_NONE, false, strRTName );
+            // create a render target to use as a resolve target to get the
+            // shared depth buffer surface is effectively never used
+            depthTex.InitRenderTargetTexture(
+                m_nDepthTextureResolution, m_nDepthTextureResolution, RT_SIZE_OFFSCREEN, dstFormat, MATERIAL_RT_DEPTH_NONE, false, strRTName );
             depthTex.InitRenderTargetSurface( 1, 1, dstFormat, false );
 #else
-            depthTex.InitRenderTarget( m_nDepthTextureResolution, m_nDepthTextureResolution, RT_SIZE_OFFSCREEN, dstFormat, MATERIAL_RT_DEPTH_NONE, false, strRTName );
+            depthTex.InitRenderTarget( m_nDepthTextureResolution,
+                                       m_nDepthTextureResolution,
+                                       RT_SIZE_OFFSCREEN,
+                                       dstFormat,
+                                       MATERIAL_RT_DEPTH_NONE,
+                                       false,
+                                       strRTName );
 #endif
 
             if ( i == 0 )
             {
-                // Shadow may be resized during allocation (due to resolution constraints etc)
+                // Shadow may be resized during allocation (due to resolution
+                // constraints etc)
                 m_nDepthTextureResolution = depthTex->GetActualWidth();
                 r_flashlightdepthres.SetValue( m_nDepthTextureResolution );
             }
@@ -1407,7 +1572,8 @@ void CClientShadowMgr::InitRenderToTextureShadows()
     {
         m_RenderToTextureActive = true;
         m_RenderShadow.Init( "decals/rendershadow", TEXTURE_GROUP_DECAL );
-        m_RenderModelShadow.Init( "decals/rendermodelshadow", TEXTURE_GROUP_DECAL );
+        m_RenderModelShadow.Init( "decals/rendermodelshadow",
+                                  TEXTURE_GROUP_DECAL );
         m_ShadowAllocator.Init();
 
         m_ShadowAllocator.Reset();
@@ -1420,7 +1586,9 @@ void CClientShadowMgr::InitRenderToTextureShadows()
         m_RenderModelShadow->ColorModulate( fr, fg, fb );
 
         // Iterate over all existing textures and allocate shadow textures
-        for ( ClientShadowHandle_t i = m_Shadows.Head(); i != m_Shadows.InvalidIndex(); i = m_Shadows.Next( i ) )
+        for ( ClientShadowHandle_t i = m_Shadows.Head();
+              i != m_Shadows.InvalidIndex();
+              i = m_Shadows.Next( i ) )
         {
             ClientShadow_t& shadow = m_Shadows[i];
             if ( shadow.m_Flags & SHADOW_FLAGS_USE_RENDER_TO_TEXTURE )
@@ -1429,7 +1597,8 @@ void CClientShadowMgr::InitRenderToTextureShadows()
                 MarkRenderToTextureShadowDirty( i );
 
                 // Switch the material to use render-to-texture shadows
-                shadowmgr->SetShadowMaterial( shadow.m_ShadowHandle, m_RenderShadow, m_RenderModelShadow, ( void* )( uintp )i );
+                shadowmgr->SetShadowMaterial(
+                    shadow.m_ShadowHandle, m_RenderShadow, m_RenderModelShadow, ( void* )( uintp )i );
             }
         }
     }
@@ -1440,7 +1609,9 @@ void CClientShadowMgr::ShutdownRenderToTextureShadows()
     if ( m_RenderToTextureActive )
     {
         // Iterate over all existing textures and deallocate shadow textures
-        for ( ClientShadowHandle_t i = m_Shadows.Head(); i != m_Shadows.InvalidIndex(); i = m_Shadows.Next( i ) )
+        for ( ClientShadowHandle_t i = m_Shadows.Head();
+              i != m_Shadows.InvalidIndex();
+              i = m_Shadows.Next( i ) )
         {
             CleanUpRenderToTextureShadow( i );
 
@@ -1553,7 +1724,8 @@ void CClientShadowMgr::RestoreRenderState()
 {
     // Mark all shadows dirty; they need to regenerate their state
     ClientShadowHandle_t h;
-    for ( h = m_Shadows.Head(); h != m_Shadows.InvalidIndex(); h = m_Shadows.Next( h ) )
+    for ( h = m_Shadows.Head(); h != m_Shadows.InvalidIndex();
+          h = m_Shadows.Next( h ) )
     {
         m_Shadows[h].m_Flags |= SHADOW_FLAGS_TEXTURE_DIRTY;
     }
@@ -1570,7 +1742,8 @@ void CClientShadowMgr::SetupRenderToTextureShadow( ClientShadowHandle_t h )
     // First, compute how much texture memory we want to use.
     ClientShadow_t& shadow = m_Shadows[h];
 
-    IClientRenderable* pRenderable = ClientEntityList().GetClientRenderableFromHandle( shadow.m_Entity );
+    IClientRenderable* pRenderable =
+        ClientEntityList().GetClientRenderableFromHandle( shadow.m_Entity );
     if ( !pRenderable )
         return;
 
@@ -1595,13 +1768,15 @@ void CClientShadowMgr::SetupRenderToTextureShadow( ClientShadowHandle_t h )
         textureSize <<= 1;
     }
 
-    shadow.m_ShadowTexture = m_ShadowAllocator.AllocateTexture( textureSize, textureSize );
+    shadow.m_ShadowTexture =
+        m_ShadowAllocator.AllocateTexture( textureSize, textureSize );
 }
 
 void CClientShadowMgr::CleanUpRenderToTextureShadow( ClientShadowHandle_t h )
 {
     ClientShadow_t& shadow = m_Shadows[h];
-    if ( m_RenderToTextureActive && ( shadow.m_Flags & SHADOW_FLAGS_USE_RENDER_TO_TEXTURE ) )
+    if ( m_RenderToTextureActive &&
+         ( shadow.m_Flags & SHADOW_FLAGS_USE_RENDER_TO_TEXTURE ) )
     {
         m_ShadowAllocator.DeallocateTexture( shadow.m_ShadowTexture );
         shadow.m_ShadowTexture = INVALID_TEXTURE_HANDLE;
@@ -1613,7 +1788,9 @@ void CClientShadowMgr::CleanUpRenderToTextureShadow( ClientShadowHandle_t h )
 //-----------------------------------------------------------------------------
 void CClientShadowMgr::UpdateAllShadows()
 {
-    for ( ClientShadowHandle_t i = m_Shadows.Head(); i != m_Shadows.InvalidIndex(); i = m_Shadows.Next( i ) )
+    for ( ClientShadowHandle_t i = m_Shadows.Head();
+          i != m_Shadows.InvalidIndex();
+          i = m_Shadows.Next( i ) )
     {
         ClientShadow_t& shadow = m_Shadows[i];
 
@@ -1621,7 +1798,8 @@ void CClientShadowMgr::UpdateAllShadows()
         if ( ( shadow.m_Flags & SHADOW_FLAGS_FLASHLIGHT ) != 0 )
             continue;
 
-        IClientRenderable* pRenderable = ClientEntityList().GetClientRenderableFromHandle( shadow.m_Entity );
+        IClientRenderable* pRenderable =
+            ClientEntityList().GetClientRenderableFromHandle( shadow.m_Entity );
         if ( !pRenderable )
             continue;
 
@@ -1657,23 +1835,27 @@ const Vector& CClientShadowMgr::GetShadowDirection() const
 //-----------------------------------------------------------------------------
 // Gets shadow information for a particular renderable
 //-----------------------------------------------------------------------------
-float CClientShadowMgr::GetShadowDistance( IClientRenderable* pRenderable ) const
+float CClientShadowMgr::GetShadowDistance(
+    IClientRenderable* pRenderable ) const
 {
     float flDist = m_flShadowCastDist;
 
     // Allow the renderable to override the default
-    pRenderable->GetShadowCastDistance( &flDist, GetActualShadowCastType( pRenderable ) );
+    pRenderable->GetShadowCastDistance( &flDist,
+                                        GetActualShadowCastType( pRenderable ) );
 
     return flDist;
 }
 
-const Vector& CClientShadowMgr::GetShadowDirection( IClientRenderable* pRenderable ) const
+const Vector& CClientShadowMgr::GetShadowDirection(
+    IClientRenderable* pRenderable ) const
 {
     Vector& vecResult = AllocTempVector();
     vecResult = GetShadowDirection();
 
     // Allow the renderable to override the default
-    pRenderable->GetShadowCastDirection( &vecResult, GetActualShadowCastType( pRenderable ) );
+    pRenderable->GetShadowCastDirection( &vecResult,
+                                         GetActualShadowCastType( pRenderable ) );
 
     return vecResult;
 }
@@ -1708,7 +1890,8 @@ float CClientShadowMgr::GetBlobbyCutoffArea() const
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CClientShadowMgr::SetFalloffBias( ClientShadowHandle_t handle, unsigned char ucBias )
+void CClientShadowMgr::SetFalloffBias( ClientShadowHandle_t handle,
+                                       unsigned char ucBias )
 {
     shadowmgr->SetFalloffBias( m_Shadows[handle].m_ShadowHandle, ucBias );
 }
@@ -1771,12 +1954,15 @@ void CClientShadowMgr::RenderShadowTexture( int w, int h )
 //-----------------------------------------------------------------------------
 // Create/destroy a shadow
 //-----------------------------------------------------------------------------
-ClientShadowHandle_t CClientShadowMgr::CreateProjectedTexture( ClientEntityHandle_t entity, int flags )
+ClientShadowHandle_t CClientShadowMgr::CreateProjectedTexture(
+    ClientEntityHandle_t entity,
+    int flags )
 {
     // We need to know if it's a brush model for shadows
     if ( !( flags & SHADOW_FLAGS_FLASHLIGHT ) )
     {
-        IClientRenderable* pRenderable = ClientEntityList().GetClientRenderableFromHandle( entity );
+        IClientRenderable* pRenderable =
+            ClientEntityList().GetClientRenderableFromHandle( entity );
         if ( !pRenderable )
             return m_Shadows.InvalidIndex();
 
@@ -1803,7 +1989,8 @@ ClientShadowHandle_t CClientShadowMgr::CreateProjectedTexture( ClientEntityHandl
     IMaterial* pShadowModelMaterial = m_SimpleShadow;
     void* pShadowProxyData = ( void* )CLIENTSHADOW_INVALID_HANDLE;
 
-    if ( m_RenderToTextureActive && ( flags & SHADOW_FLAGS_USE_RENDER_TO_TEXTURE ) )
+    if ( m_RenderToTextureActive &&
+         ( flags & SHADOW_FLAGS_USE_RENDER_TO_TEXTURE ) )
     {
         SetupRenderToTextureShadow( h );
 
@@ -1812,31 +1999,45 @@ ClientShadowHandle_t CClientShadowMgr::CreateProjectedTexture( ClientEntityHandl
         pShadowProxyData = ( void* )( uintp )h;
     }
 
+#ifdef ASW_PROJECTED_TEXTURES
+    if ( ( flags & SHADOW_FLAGS_USE_DEPTH_TEXTURE ) || ( flags & ( SHADOW_FLAGS_FLASHLIGHT ) ) )
+    {
+        pShadowMaterial = NULL;  // these materials aren't used for shadow depth texture shadows.
+        pShadowModelMaterial = NULL;
+        pShadowProxyData = ( void* )( uintp )h;
+    }
+#else
     if ( flags & SHADOW_FLAGS_USE_DEPTH_TEXTURE )
     {
         pShadowMaterial = m_RenderShadow;
         pShadowModelMaterial = m_RenderModelShadow;
         pShadowProxyData = ( void* )( uintp )h;
     }
+#endif
 
     int createShadowFlags;
     if ( flags & SHADOW_FLAGS_FLASHLIGHT )
     {
-        // don't use SHADOW_CACHE_VERTS with projective lightsources since we expect that they will change every frame.
-        // FIXME: might want to make it cache optionally if it's an entity light that is static.
+        // don't use SHADOW_CACHE_VERTS with projective lightsources since we
+        // expect that they will change every frame.
+        // FIXME: might want to make it cache optionally if it's an entity light
+        // that is static.
         createShadowFlags = SHADOW_FLASHLIGHT;
     }
     else
     {
         createShadowFlags = SHADOW_CACHE_VERTS;
     }
-    shadow.m_ShadowHandle = shadowmgr->CreateShadowEx( pShadowMaterial, pShadowModelMaterial, pShadowProxyData, createShadowFlags );
+    shadow.m_ShadowHandle =
+        shadowmgr->CreateShadowEx( pShadowMaterial, pShadowModelMaterial, pShadowProxyData, createShadowFlags );
     return h;
 }
 
-ClientShadowHandle_t CClientShadowMgr::CreateFlashlight( const FlashlightState_t& lightState )
+ClientShadowHandle_t CClientShadowMgr::CreateFlashlight(
+    const FlashlightState_t& lightState )
 {
-    // We don't really need a model entity handle for a projective light source, so use an invalid one.
+    // We don't really need a model entity handle for a projective light source,
+    // so use an invalid one.
     static ClientEntityHandle_t invalidHandle = INVALID_CLIENTENTITY_HANDLE;
 
     int shadowFlags = SHADOW_FLAGS_FLASHLIGHT | SHADOW_FLAGS_LIGHT_WORLD;
@@ -1845,21 +2046,25 @@ ClientShadowHandle_t CClientShadowMgr::CreateFlashlight( const FlashlightState_t
         shadowFlags |= SHADOW_FLAGS_USE_DEPTH_TEXTURE;
     }
 
-    ClientShadowHandle_t shadowHandle = CreateProjectedTexture( invalidHandle, shadowFlags );
+    ClientShadowHandle_t shadowHandle =
+        CreateProjectedTexture( invalidHandle, shadowFlags );
 
     UpdateFlashlightState( shadowHandle, lightState );
     UpdateProjectedTexture( shadowHandle, true );
     return shadowHandle;
 }
 
-ClientShadowHandle_t CClientShadowMgr::CreateShadow( ClientEntityHandle_t entity, int flags )
+ClientShadowHandle_t CClientShadowMgr::CreateShadow( ClientEntityHandle_t entity,
+                                                     int flags )
 {
-    // We don't really need a model entity handle for a projective light source, so use an invalid one.
+    // We don't really need a model entity handle for a projective light source,
+    // so use an invalid one.
     flags &= ~SHADOW_FLAGS_PROJECTED_TEXTURE_TYPE_MASK;
     flags |= SHADOW_FLAGS_SHADOW | SHADOW_FLAGS_TEXTURE_DIRTY;
     ClientShadowHandle_t shadowHandle = CreateProjectedTexture( entity, flags );
 
-    IClientRenderable* pRenderable = ClientEntityList().GetClientRenderableFromHandle( entity );
+    IClientRenderable* pRenderable =
+        ClientEntityList().GetClientRenderableFromHandle( entity );
     if ( pRenderable )
     {
         Assert( !pRenderable->IsShadowDirty() );
@@ -1867,7 +2072,8 @@ ClientShadowHandle_t CClientShadowMgr::CreateShadow( ClientEntityHandle_t entity
     }
 
     // NOTE: We *have* to call the version that takes a shadow handle
-    // even if we have an entity because this entity hasn't set its shadow handle yet
+    // even if we have an entity because this entity hasn't set its shadow
+    // handle yet
     AddToDirtyShadowList( shadowHandle, true );
     return shadowHandle;
 }
@@ -1877,9 +2083,30 @@ ClientShadowHandle_t CClientShadowMgr::CreateShadow( ClientEntityHandle_t entity
 //-----------------------------------------------------------------------------
 void CClientShadowMgr::UpdateFlashlightState( ClientShadowHandle_t shadowHandle, const FlashlightState_t& flashlightState )
 {
-    VPROF_BUDGET( "CClientShadowMgr::UpdateFlashlightState", VPROF_BUDGETGROUP_SHADOW_DEPTH_TEXTURING );
+    VPROF_BUDGET( "CClientShadowMgr::UpdateFlashlightState",
+                  VPROF_BUDGETGROUP_SHADOW_DEPTH_TEXTURING );
 
+#ifdef ASW_PROJECTED_TEXTURES
+    if ( flashlightState.m_bEnableShadows && r_flashlightdepthtexture.GetBool() )
+    {
+        m_Shadows[shadowHandle].m_Flags |= SHADOW_FLAGS_USE_DEPTH_TEXTURE;
+    }
+    else
+    {
+        m_Shadows[shadowHandle].m_Flags &= ~SHADOW_FLAGS_USE_DEPTH_TEXTURE;
+    }
+
+    if ( flashlightState.m_bOrtho )
+    {
+        BuildOrthoWorldToFlashlightMatrix( m_Shadows[shadowHandle].m_WorldToShadow, flashlightState );
+    }
+    else
+    {
+        BuildPerspectiveWorldToFlashlightMatrix( m_Shadows[shadowHandle].m_WorldToShadow, flashlightState );
+    }
+#else
     BuildPerspectiveWorldToFlashlightMatrix( m_Shadows[shadowHandle].m_WorldToShadow, flashlightState );
+#endif
 
     shadowmgr->UpdateFlashlightState( m_Shadows[shadowHandle].m_ShadowHandle, flashlightState );
 }
@@ -1898,7 +2125,9 @@ void CClientShadowMgr::RemoveShadowFromDirtyList( ClientShadowHandle_t handle )
     if ( idx != m_DirtyShadows.InvalidIndex() )
     {
         // Clean up the shadow update bit.
-        IClientRenderable* pRenderable = ClientEntityList().GetClientRenderableFromHandle( m_Shadows[handle].m_Entity );
+        IClientRenderable* pRenderable =
+            ClientEntityList().GetClientRenderableFromHandle(
+                m_Shadows[handle].m_Entity );
         if ( pRenderable )
         {
             pRenderable->MarkShadowDirty( false );
@@ -1915,7 +2144,8 @@ void CClientShadowMgr::DestroyShadow( ClientShadowHandle_t handle )
     Assert( m_Shadows.IsValidIndex( handle ) );
     RemoveShadowFromDirtyList( handle );
     shadowmgr->DestroyShadow( m_Shadows[handle].m_ShadowHandle );
-    ClientLeafSystem()->RemoveShadow( m_Shadows[handle].m_ClientLeafShadowHandle );
+    ClientLeafSystem()->RemoveShadow(
+        m_Shadows[handle].m_ClientLeafShadowHandle );
     CleanUpRenderToTextureShadow( handle );
     m_Shadows.Remove( handle );
 }
@@ -1923,11 +2153,12 @@ void CClientShadowMgr::DestroyShadow( ClientShadowHandle_t handle )
 //-----------------------------------------------------------------------------
 // Build the worldtotexture matrix
 //-----------------------------------------------------------------------------
-void CClientShadowMgr::BuildGeneralWorldToShadowMatrix( VMatrix& matWorldToShadow,
-                                                        const Vector& origin,
-                                                        const Vector& dir,
-                                                        const Vector& xvec,
-                                                        const Vector& yvec )
+void CClientShadowMgr::BuildGeneralWorldToShadowMatrix(
+    VMatrix& matWorldToShadow,
+    const Vector& origin,
+    const Vector& dir,
+    const Vector& xvec,
+    const Vector& yvec )
 {
     // We're assuming here that xvec + yvec aren't necessary perpendicular
 
@@ -1936,14 +2167,18 @@ void CClientShadowMgr::BuildGeneralWorldToShadowMatrix( VMatrix& matWorldToShado
     // and the vectors in the columns...
     matWorldToShadow.SetBasisVectors( xvec, yvec, dir );
     matWorldToShadow.SetTranslation( origin );
-    matWorldToShadow[3][0] = matWorldToShadow[3][1] = matWorldToShadow[3][2] = 0.0f;
+    matWorldToShadow[3][0] = matWorldToShadow[3][1] = matWorldToShadow[3][2] =
+        0.0f;
     matWorldToShadow[3][3] = 1.0f;
 
     // Now do a general inverse to get matWorldToShadow
     MatrixInverseGeneral( matWorldToShadow, matWorldToShadow );
 }
 
-void CClientShadowMgr::BuildWorldToShadowMatrix( VMatrix& matWorldToShadow, const Vector& origin, const Quaternion& quatOrientation )
+void CClientShadowMgr::BuildWorldToShadowMatrix(
+    VMatrix& matWorldToShadow,
+    const Vector& origin,
+    const Quaternion& quatOrientation )
 {
     // The shadow->world matrix is pretty simple:
     // Just stick the origin in the translation component
@@ -1952,14 +2187,17 @@ void CClientShadowMgr::BuildWorldToShadowMatrix( VMatrix& matWorldToShadow, cons
     // and the translational component =  - (rotation transpose) * origin
 
     matrix3x4_t matOrientation;
-    QuaternionMatrix( quatOrientation, matOrientation );  // Convert quat to matrix3x4
-    PositionMatrix( vec3_origin, matOrientation );        // Zero out translation elements
+    QuaternionMatrix( quatOrientation,
+                      matOrientation );  // Convert quat to matrix3x4
+    PositionMatrix( vec3_origin,
+                    matOrientation );  // Zero out translation elements
 
     VMatrix matBasis( matOrientation );  // Convert matrix3x4 to VMatrix
 
     Vector vForward, vLeft, vUp;
     matBasis.GetBasisVectors( vForward, vLeft, vUp );
-    matBasis.SetForward( vLeft );  // Bizarre vector flip inherited from earlier code, WTF?
+    matBasis.SetForward(
+        vLeft );  // Bizarre vector flip inherited from earlier code, WTF?
     matBasis.SetLeft( vUp );
     matBasis.SetUp( vForward );
     matWorldToShadow = matBasis.Transpose();  // Transpose
@@ -1971,11 +2209,33 @@ void CClientShadowMgr::BuildWorldToShadowMatrix( VMatrix& matWorldToShadow, cons
     matWorldToShadow.SetTranslation( translation );
 
     // The the bottom row.
-    matWorldToShadow[3][0] = matWorldToShadow[3][1] = matWorldToShadow[3][2] = 0.0f;
+    matWorldToShadow[3][0] = matWorldToShadow[3][1] = matWorldToShadow[3][2] =
+        0.0f;
     matWorldToShadow[3][3] = 1.0f;
 }
 
 void CClientShadowMgr::BuildPerspectiveWorldToFlashlightMatrix( VMatrix& matWorldToShadow, const FlashlightState_t& flashlightState )
+{
+    VPROF_BUDGET( "CClientShadowMgr::BuildPerspectiveWorldToFlashlightMatrix",
+                  VPROF_BUDGETGROUP_SHADOW_DEPTH_TEXTURING );
+
+    // Buildworld to shadow matrix, then perspective projection and concatenate
+    VMatrix matWorldToShadowView, matPerspective;
+    BuildWorldToShadowMatrix( matWorldToShadowView,
+                              flashlightState.m_vecLightOrigin,
+                              flashlightState.m_quatOrientation );
+
+    MatrixBuildPerspective( matPerspective,
+                            flashlightState.m_fHorizontalFOVDegrees,
+                            flashlightState.m_fVerticalFOVDegrees,
+                            flashlightState.m_NearZ,
+                            flashlightState.m_FarZ );
+
+    MatrixMultiply( matPerspective, matWorldToShadowView, matWorldToShadow );
+}
+
+#ifdef ASW_PROJECTED_TEXTURES
+void CClientShadowMgr::BuildOrthoWorldToFlashlightMatrix( VMatrix& matWorldToShadow, const FlashlightState_t& flashlightState )
 {
     VPROF_BUDGET( "CClientShadowMgr::BuildPerspectiveWorldToFlashlightMatrix", VPROF_BUDGETGROUP_SHADOW_DEPTH_TEXTURING );
 
@@ -1983,20 +2243,44 @@ void CClientShadowMgr::BuildPerspectiveWorldToFlashlightMatrix( VMatrix& matWorl
     VMatrix matWorldToShadowView, matPerspective;
     BuildWorldToShadowMatrix( matWorldToShadowView, flashlightState.m_vecLightOrigin, flashlightState.m_quatOrientation );
 
-    MatrixBuildPerspective( matPerspective, flashlightState.m_fHorizontalFOVDegrees, flashlightState.m_fVerticalFOVDegrees, flashlightState.m_NearZ, flashlightState.m_FarZ );
+    MatrixBuildOrtho( matPerspective,
+                      flashlightState.m_fOrthoLeft,
+                      flashlightState.m_fOrthoTop,
+                      flashlightState.m_fOrthoRight,
+                      flashlightState.m_fOrthoBottom,
+                      flashlightState.m_NearZ,
+                      flashlightState.m_FarZ );
+
+    // Shift it z/y to 0 to -2 space
+    VMatrix addW;
+    addW.Identity();
+    addW[0][3] = -1.0f;
+    addW[1][3] = -1.0f;
+    addW[2][3] = 0.0f;
+    MatrixMultiply( addW, matPerspective, matPerspective );
+
+    // Flip x/y to positive 0 to 1... flip z to negative
+    VMatrix scaleHalf;
+    scaleHalf.Identity();
+    scaleHalf[0][0] = -0.5f;
+    scaleHalf[1][1] = -0.5f;
+    scaleHalf[2][2] = -1.0f;
+    MatrixMultiply( scaleHalf, matPerspective, matPerspective );
 
     MatrixMultiply( matPerspective, matWorldToShadowView, matWorldToShadow );
 }
+#endif
 
 //-----------------------------------------------------------------------------
 // Compute the shadow origin and attenuation start distance
 //-----------------------------------------------------------------------------
-float CClientShadowMgr::ComputeLocalShadowOrigin( IClientRenderable* pRenderable,
-                                                  const Vector& mins,
-                                                  const Vector& maxs,
-                                                  const Vector& localShadowDir,
-                                                  float backupFactor,
-                                                  Vector& origin )
+float CClientShadowMgr::ComputeLocalShadowOrigin(
+    IClientRenderable* pRenderable,
+    const Vector& mins,
+    const Vector& maxs,
+    const Vector& localShadowDir,
+    float backupFactor,
+    Vector& origin )
 {
     // Compute the centroid of the object...
     Vector vecCentroid;
@@ -2007,23 +2291,24 @@ float CClientShadowMgr::ComputeLocalShadowOrigin( IClientRenderable* pRenderable
     VectorSubtract( maxs, mins, vecSize );
     float flRadius = vecSize.Length() * 0.5f;
 
-    // NOTE: The *origin* of the shadow cast is a point on a line passing through
-    // the centroid of the caster. The direction of this line is the shadow cast direction,
-    // and the point on that line corresponds to the endpoint of the box that is
-    // furthest *back* along the shadow direction
+    // NOTE: The *origin* of the shadow cast is a point on a line passing
+    // through the centroid of the caster. The direction of this line is the
+    // shadow cast direction, and the point on that line corresponds to the
+    // endpoint of the box that is furthest *back* along the shadow direction
 
     // For the first point at which the shadow could possibly start falling off,
     // we need to use the point at which the ray described above leaves the
-    // bounding sphere surrounding the entity. This is necessary because otherwise,
-    // tall, thin objects would have their shadows appear + disappear as then spun about their origin
+    // bounding sphere surrounding the entity. This is necessary because
+    // otherwise, tall, thin objects would have their shadows appear + disappear
+    // as then spun about their origin
 
     // Figure out the corner corresponding to the min + max projection
     // along the shadow direction
 
-    // We're basically finding the point on the cube that has the largest and smallest
-    // dot product with the local shadow dir. Then we're taking the dot product
-    // of that with the localShadowDir. lastly, we're subtracting out the
-    // centroid projection to give us a distance along the localShadowDir to
+    // We're basically finding the point on the cube that has the largest and
+    // smallest dot product with the local shadow dir. Then we're taking the dot
+    // product of that with the localShadowDir. lastly, we're subtracting out
+    // the centroid projection to give us a distance along the localShadowDir to
     // the front and back of the cube along the direction of the ray.
     float centroidProjection = DotProduct( vecCentroid, localShadowDir );
     float minDist = -centroidProjection;
@@ -2134,7 +2419,9 @@ void CClientShadowMgr::ClearExtraClipPlanes( ClientShadowHandle_t h )
     shadowmgr->ClearExtraClipPlanes( m_Shadows[h].m_ShadowHandle );
 }
 
-void CClientShadowMgr::AddExtraClipPlane( ClientShadowHandle_t h, const Vector& normal, float dist )
+void CClientShadowMgr::AddExtraClipPlane( ClientShadowHandle_t h,
+                                          const Vector& normal,
+                                          float dist )
 {
     shadowmgr->AddExtraClipPlane( m_Shadows[h].m_ShadowHandle, normal, dist );
 }
@@ -2180,7 +2467,8 @@ void CClientShadowMgr::ComputeExtraClipPlanes( IClientRenderable* pRenderable,
     }
 
     ClientShadow_t& shadow = m_Shadows[handle];
-    C_BaseEntity* pEntity = ClientEntityList().GetBaseEntityFromHandle( shadow.m_Entity );
+    C_BaseEntity* pEntity =
+        ClientEntityList().GetBaseEntityFromHandle( shadow.m_Entity );
     if ( pEntity && pEntity->m_bEnableRenderingClipPlane )
     {
         normal[0] = -pEntity->m_fRenderingClipPlane[0];
@@ -2190,7 +2478,8 @@ void CClientShadowMgr::ComputeExtraClipPlanes( IClientRenderable* pRenderable,
     }
 }
 
-inline ShadowType_t CClientShadowMgr::GetActualShadowCastType( ClientShadowHandle_t handle ) const
+inline ShadowType_t CClientShadowMgr::GetActualShadowCastType(
+    ClientShadowHandle_t handle ) const
 {
     if ( handle == CLIENTSHADOW_INVALID_HANDLE )
     {
@@ -2199,7 +2488,8 @@ inline ShadowType_t CClientShadowMgr::GetActualShadowCastType( ClientShadowHandl
 
     if ( m_Shadows[handle].m_Flags & SHADOW_FLAGS_USE_RENDER_TO_TEXTURE )
     {
-        return ( m_RenderToTextureActive ? SHADOWS_RENDER_TO_TEXTURE : SHADOWS_SIMPLE );
+        return ( m_RenderToTextureActive ? SHADOWS_RENDER_TO_TEXTURE
+                                         : SHADOWS_SIMPLE );
     }
     else if ( m_Shadows[handle].m_Flags & SHADOW_FLAGS_USE_DEPTH_TEXTURE )
     {
@@ -2211,7 +2501,8 @@ inline ShadowType_t CClientShadowMgr::GetActualShadowCastType( ClientShadowHandl
     }
 }
 
-inline ShadowType_t CClientShadowMgr::GetActualShadowCastType( IClientRenderable* pEnt ) const
+inline ShadowType_t CClientShadowMgr::GetActualShadowCastType(
+    IClientRenderable* pEnt ) const
 {
     return GetActualShadowCastType( pEnt->GetShadowHandle() );
 }
@@ -2293,7 +2584,8 @@ void CClientShadowMgr::BuildOrthoShadow( IClientRenderable* pRenderable,
     VectorSubtract( maxs, mins, boxSize );
 
     // We project the two longest sides into the vectors perpendicular
-    // to the projection direction, then add in the projection of the perp direction
+    // to the projection direction, then add in the projection of the perp
+    // direction
     Vector2D size( boxSize[vecIdx[0]], boxSize[vecIdx[1]] );
     size.x *= fabs( DotProduct( vec[vecIdx[0]], xvec ) );
     size.y *= fabs( DotProduct( vec[vecIdx[1]], yvec ) );
@@ -2327,38 +2619,54 @@ void CClientShadowMgr::BuildOrthoShadow( IClientRenderable* pRenderable,
 
     // NOTE: We gotta use the general matrix because xvec and yvec aren't perp
     VMatrix matWorldToShadow, matWorldToTexture;
-    BuildGeneralWorldToShadowMatrix( m_Shadows[handle].m_WorldToShadow, worldOrigin, vecShadowDir, xvec, yvec );
+    BuildGeneralWorldToShadowMatrix( m_Shadows[handle].m_WorldToShadow,
+                                     worldOrigin,
+                                     vecShadowDir,
+                                     xvec,
+                                     yvec );
     BuildWorldToTextureMatrix( m_Shadows[handle].m_WorldToShadow, size, matWorldToTexture );
     Vector2DCopy( size, m_Shadows[handle].m_WorldSize );
 
     // Compute the falloff attenuation
-    // Area computation isn't exact since xvec is not perp to yvec, but close enough
+    // Area computation isn't exact since xvec is not perp to yvec, but close
+    // enough
     //	float shadowArea = size.x * size.y;
 
     // The entity may be overriding our shadow cast distance
     float flShadowCastDistance = GetShadowDistance( pRenderable );
-    float maxHeight = flShadowCastDistance + falloffStart;  // 3.0f * sqrt( shadowArea );
+    float maxHeight =
+        flShadowCastDistance + falloffStart;  // 3.0f * sqrt( shadowArea );
 
     CShadowLeafEnum leafList;
     BuildShadowLeafList( &leafList, worldOrigin, vecShadowDir, size, maxHeight );
     int nCount = leafList.m_LeafList.Count();
     const int* pLeafList = leafList.m_LeafList.Base();
 
-    shadowmgr->ProjectShadow( m_Shadows[handle].m_ShadowHandle, worldOrigin, vecShadowDir, matWorldToTexture, size, nCount, pLeafList, maxHeight, falloffStart, MAX_FALLOFF_AMOUNT, pRenderable->GetRenderOrigin() );
+    shadowmgr->ProjectShadow(
+        m_Shadows[handle].m_ShadowHandle, worldOrigin, vecShadowDir, matWorldToTexture, size, nCount, pLeafList, maxHeight, falloffStart, MAX_FALLOFF_AMOUNT, pRenderable->GetRenderOrigin() );
 
     // Compute extra clip planes to prevent poke-thru
-    // FIXME!!!!!!!!!!!!!!  Removing this for now since it seems to mess up the blobby shadows.
-    //	ComputeExtraClipPlanes( pEnt, handle, vec, mins, maxs, localShadowDir );
+    // FIXME!!!!!!!!!!!!!!  Removing this for now since it seems to mess up the
+    // blobby shadows.
+#ifdef ASW_PROJECTED_TEXTURES
+    ComputeExtraClipPlanes( pRenderable, handle, vec, mins, maxs, localShadowDir );
+#else
+//	ComputeExtraClipPlanes( pEnt, handle, vec, mins, maxs, localShadowDir );
+#endif
 
     // Add the shadow to the client leaf system so it correctly marks
     // leafs as being affected by a particular shadow
-    ClientLeafSystem()->ProjectShadow( m_Shadows[handle].m_ClientLeafShadowHandle, nCount, pLeafList );
+    ClientLeafSystem()->ProjectShadow(
+        m_Shadows[handle].m_ClientLeafShadowHandle, nCount, pLeafList );
 }
 
 //-----------------------------------------------------------------------------
 // Visualization....
 //-----------------------------------------------------------------------------
-void CClientShadowMgr::DrawRenderToTextureDebugInfo( IClientRenderable* pRenderable, const Vector& mins, const Vector& maxs )
+void CClientShadowMgr::DrawRenderToTextureDebugInfo(
+    IClientRenderable* pRenderable,
+    const Vector& mins,
+    const Vector& maxs )
 {
     if ( !debugoverlay )
         return;
@@ -2432,14 +2740,16 @@ extern ConVar cl_shadowtextureoverlaysize;
 //-----------------------------------------------------------------------------
 // Builds a more complex shadow...
 //-----------------------------------------------------------------------------
-void CClientShadowMgr::BuildRenderToTextureShadow( IClientRenderable* pRenderable,
-                                                   ClientShadowHandle_t handle,
-                                                   const Vector& mins,
-                                                   const Vector& maxs )
+void CClientShadowMgr::BuildRenderToTextureShadow(
+    IClientRenderable* pRenderable,
+    ClientShadowHandle_t handle,
+    const Vector& mins,
+    const Vector& maxs )
 {
     if ( cl_drawshadowtexture.GetInt() )
     {
-        // Red wireframe bounding box around objects whose RTT shadows are being updated that frame
+        // Red wireframe bounding box around objects whose RTT shadows are being
+        // updated that frame
         DrawRenderToTextureDebugInfo( pRenderable, mins, maxs );
     }
 
@@ -2468,8 +2778,10 @@ void CClientShadowMgr::BuildRenderToTextureShadow( IClientRenderable* pRenderabl
     float fProjMax = 0.0f;
     for ( int i = 0; i != 3; ++i )
     {
-        Vector test = vec[i] - ( vecShadowDir * DotProduct( vecShadowDir, vec[i] ) );
-        test *= boxSize[i];  // doing after the projection to simplify projection math
+        Vector test =
+            vec[i] - ( vecShadowDir * DotProduct( vecShadowDir, vec[i] ) );
+        test *= boxSize[i];  // doing after the projection to simplify
+                             // projection math
         float fLengthSqr = test.LengthSqr();
         if ( fLengthSqr > fProjMax )
         {
@@ -2485,7 +2797,8 @@ void CClientShadowMgr::BuildRenderToTextureShadow( IClientRenderable* pRenderabl
     CrossProduct( yvec, vecShadowDir, xvec );
 
     // We project the two longest sides into the vectors perpendicular
-    // to the projection direction, then add in the projection of the perp direction
+    // to the projection direction, then add in the projection of the perp
+    // direction
     Vector2D size;
     size.x = boxSize.x * fabs( DotProduct( vec[0], xvec ) ) +
              boxSize.y * fabs( DotProduct( vec[1], xvec ) ) +
@@ -2508,35 +2821,48 @@ void CClientShadowMgr::BuildRenderToTextureShadow( IClientRenderable* pRenderabl
     VectorMA( worldOrigin, org.z, vec[2], worldOrigin );
 
     VMatrix matWorldToTexture;
-    BuildOrthoWorldToShadowMatrix( m_Shadows[handle].m_WorldToShadow, worldOrigin, vecShadowDir, xvec, yvec );
+    BuildOrthoWorldToShadowMatrix( m_Shadows[handle].m_WorldToShadow,
+                                   worldOrigin,
+                                   vecShadowDir,
+                                   xvec,
+                                   yvec );
     BuildWorldToTextureMatrix( m_Shadows[handle].m_WorldToShadow, size, matWorldToTexture );
     Vector2DCopy( size, m_Shadows[handle].m_WorldSize );
 
     // Compute the falloff attenuation
-    // Area computation isn't exact since xvec is not perp to yvec, but close enough
-    // Extra factor of 4 in the maxHeight due to the size being half as big
+    // Area computation isn't exact since xvec is not perp to yvec, but close
+    // enough Extra factor of 4 in the maxHeight due to the size being half as
+    // big
     //	float shadowArea = size.x * size.y;
 
     // The entity may be overriding our shadow cast distance
     float flShadowCastDistance = GetShadowDistance( pRenderable );
-    float maxHeight = flShadowCastDistance + falloffStart;  // 3.0f * sqrt( shadowArea );
+    float maxHeight =
+        flShadowCastDistance + falloffStart;  // 3.0f * sqrt( shadowArea );
 
     CShadowLeafEnum leafList;
     BuildShadowLeafList( &leafList, worldOrigin, vecShadowDir, size, maxHeight );
     int nCount = leafList.m_LeafList.Count();
     const int* pLeafList = leafList.m_LeafList.Base();
 
-    shadowmgr->ProjectShadow( m_Shadows[handle].m_ShadowHandle, worldOrigin, vecShadowDir, matWorldToTexture, size, nCount, pLeafList, maxHeight, falloffStart, MAX_FALLOFF_AMOUNT, pRenderable->GetRenderOrigin() );
+    shadowmgr->ProjectShadow(
+        m_Shadows[handle].m_ShadowHandle, worldOrigin, vecShadowDir, matWorldToTexture, size, nCount, pLeafList, maxHeight, falloffStart, MAX_FALLOFF_AMOUNT, pRenderable->GetRenderOrigin() );
 
     // Compute extra clip planes to prevent poke-thru
     ComputeExtraClipPlanes( pRenderable, handle, vec, mins, maxs, localShadowDir );
 
     // Add the shadow to the client leaf system so it correctly marks
     // leafs as being affected by a particular shadow
-    ClientLeafSystem()->ProjectShadow( m_Shadows[handle].m_ClientLeafShadowHandle, nCount, pLeafList );
+    ClientLeafSystem()->ProjectShadow(
+        m_Shadows[handle].m_ClientLeafShadowHandle, nCount, pLeafList );
 }
 
-static void LineDrawHelper( const Vector& startShadowSpace, const Vector& endShadowSpace, const VMatrix& shadowToWorld, unsigned char r = 255, unsigned char g = 255, unsigned char b = 255 )
+static void LineDrawHelper( const Vector& startShadowSpace,
+                            const Vector& endShadowSpace,
+                            const VMatrix& shadowToWorld,
+                            unsigned char r = 255,
+                            unsigned char g = 255,
+                            unsigned char b = 255 )
 {
     Vector startWorldSpace, endWorldSpace;
     Vector3DMultiplyPositionProjective( shadowToWorld, startShadowSpace, startWorldSpace );
@@ -2554,7 +2880,8 @@ static void LineDrawHelper( const Vector& startShadowSpace, const Vector& endSha
     }
 }
 
-static void DebugDrawFrustum( const Vector& vOrigin, const VMatrix& matWorldToFlashlight )
+static void DebugDrawFrustum( const Vector& vOrigin,
+                              const VMatrix& matWorldToFlashlight )
 {
     VMatrix flashlightToWorld;
     MatrixInverseGeneral( matWorldToFlashlight, flashlightToWorld );
@@ -2582,7 +2909,8 @@ static void DebugDrawFrustum( const Vector& vOrigin, const VMatrix& matWorldToFl
 //-----------------------------------------------------------------------------
 // Builds a list of leaves inside the flashlight volume
 //-----------------------------------------------------------------------------
-static void BuildFlashlightLeafList( CShadowLeafEnum* pEnum, const VMatrix& worldToShadow )
+static void BuildFlashlightLeafList( CShadowLeafEnum* pEnum,
+                                     const VMatrix& worldToShadow )
 {
     // Use an AABB around the frustum to enumerate leaves.
     Vector mins, maxs;
@@ -2598,12 +2926,17 @@ void CClientShadowMgr::BuildFlashlight( ClientShadowHandle_t handle )
     ClientShadow_t& shadow = m_Shadows[handle];
     if ( IsX360() || r_flashlight_version2.GetInt() )
     {
-        // This will update the matrices, but not do work to add the flashlight to surfaces
-        shadowmgr->ProjectFlashlight( shadow.m_ShadowHandle, shadow.m_WorldToShadow, 0, NULL );
+        // This will update the matrices, but not do work to add the flashlight
+        // to surfaces
+        shadowmgr->ProjectFlashlight( shadow.m_ShadowHandle,
+                                      shadow.m_WorldToShadow,
+                                      0,
+                                      NULL );
         return;
     }
 
-    VPROF_BUDGET( "CClientShadowMgr::BuildFlashlight", VPROF_BUDGETGROUP_SHADOW_DEPTH_TEXTURING );
+    VPROF_BUDGET( "CClientShadowMgr::BuildFlashlight",
+                  VPROF_BUDGETGROUP_SHADOW_DEPTH_TEXTURING );
 
     bool bLightModels = r_flashlightmodels.GetBool();
     bool bLightSpecificEntity = shadow.m_hTargetEntity.Get() != NULL;
@@ -2621,7 +2954,10 @@ void CClientShadowMgr::BuildFlashlight( ClientShadowHandle_t handle )
 
     if ( bLightWorld )
     {
-        shadowmgr->ProjectFlashlight( shadow.m_ShadowHandle, shadow.m_WorldToShadow, nCount, pLeafList );
+        shadowmgr->ProjectFlashlight( shadow.m_ShadowHandle,
+                                      shadow.m_WorldToShadow,
+                                      nCount,
+                                      pLeafList );
     }
     else
     {
@@ -2637,11 +2973,14 @@ void CClientShadowMgr::BuildFlashlight( ClientShadowHandle_t handle )
     {
         // Add the shadow to the client leaf system so it correctly marks
         // leafs as being affected by a particular shadow
-        ClientLeafSystem()->ProjectFlashlight( shadow.m_ClientLeafShadowHandle, nCount, pLeafList );
+        ClientLeafSystem()->ProjectFlashlight( shadow.m_ClientLeafShadowHandle,
+                                               nCount,
+                                               pLeafList );
         return;
     }
 
-    // We know what we are focused on, so just add the shadow directly to that receiver
+    // We know what we are focused on, so just add the shadow directly to that
+    // receiver
     Assert( shadow.m_hTargetEntity->GetModel() );
 
     C_BaseEntity* pChild = shadow.m_hTargetEntity->FirstMoveChild();
@@ -2674,7 +3013,10 @@ void CClientShadowMgr::BuildFlashlight( ClientShadowHandle_t handle )
 //-----------------------------------------------------------------------------
 // Adds the child bounds to the bounding box
 //-----------------------------------------------------------------------------
-void CClientShadowMgr::AddChildBounds( matrix3x4_t& matWorldToBBox, IClientRenderable* pParent, Vector& vecMins, Vector& vecMaxs )
+void CClientShadowMgr::AddChildBounds( matrix3x4_t& matWorldToBBox,
+                                       IClientRenderable* pParent,
+                                       Vector& vecMins,
+                                       Vector& vecMaxs )
 {
     Vector vecChildMins, vecChildMaxs;
     Vector vecNewChildMins, vecNewChildMaxs;
@@ -2688,7 +3030,9 @@ void CClientShadowMgr::AddChildBounds( matrix3x4_t& matWorldToBBox, IClientRende
         if ( GetActualShadowCastType( pChild ) != SHADOWS_NONE )
         {
             pChild->GetShadowRenderBounds( vecChildMins, vecChildMaxs, SHADOWS_RENDER_TO_TEXTURE );
-            ConcatTransforms( matWorldToBBox, pChild->RenderableToWorldTransform(), childToBBox );
+            ConcatTransforms( matWorldToBBox,
+                              pChild->RenderableToWorldTransform(),
+                              childToBBox );
             TransformAABB( childToBBox, vecChildMins, vecChildMaxs, vecNewChildMins, vecNewChildMaxs );
             VectorMin( vecMins, vecNewChildMins, vecMins );
             VectorMax( vecMaxs, vecNewChildMaxs, vecMaxs );
@@ -2702,7 +3046,9 @@ void CClientShadowMgr::AddChildBounds( matrix3x4_t& matWorldToBBox, IClientRende
 //-----------------------------------------------------------------------------
 // Compute a bounds for the entity + children
 //-----------------------------------------------------------------------------
-void CClientShadowMgr::ComputeHierarchicalBounds( IClientRenderable* pRenderable, Vector& vecMins, Vector& vecMaxs )
+void CClientShadowMgr::ComputeHierarchicalBounds( IClientRenderable* pRenderable,
+                                                  Vector& vecMins,
+                                                  Vector& vecMaxs )
 {
     ShadowType_t shadowType = GetActualShadowCastType( pRenderable );
 
@@ -2718,7 +3064,8 @@ void CClientShadowMgr::ComputeHierarchicalBounds( IClientRenderable* pRenderable
         if ( pChild && shadowType != SHADOWS_SIMPLE )
         {
             matrix3x4_t matWorldToBBox;
-            MatrixInvert( pRenderable->RenderableToWorldTransform(), matWorldToBBox );
+            MatrixInvert( pRenderable->RenderableToWorldTransform(),
+                          matWorldToBBox );
             AddChildBounds( matWorldToBBox, pRenderable, vecMins, vecMaxs );
         }
     }
@@ -2727,7 +3074,8 @@ void CClientShadowMgr::ComputeHierarchicalBounds( IClientRenderable* pRenderable
 //-----------------------------------------------------------------------------
 // Shadow update functions
 //-----------------------------------------------------------------------------
-void CClientShadowMgr::UpdateStudioShadow( IClientRenderable* pRenderable, ClientShadowHandle_t handle )
+void CClientShadowMgr::UpdateStudioShadow( IClientRenderable* pRenderable,
+                                           ClientShadowHandle_t handle )
 {
     if ( !( m_Shadows[handle].m_Flags & SHADOW_FLAGS_FLASHLIGHT ) )
     {
@@ -2750,7 +3098,8 @@ void CClientShadowMgr::UpdateStudioShadow( IClientRenderable* pRenderable, Clien
     }
 }
 
-void CClientShadowMgr::UpdateBrushShadow( IClientRenderable* pRenderable, ClientShadowHandle_t handle )
+void CClientShadowMgr::UpdateBrushShadow( IClientRenderable* pRenderable,
+                                          ClientShadowHandle_t handle )
 {
     if ( !( m_Shadows[handle].m_Flags & SHADOW_FLAGS_FLASHLIGHT ) )
     {
@@ -2770,7 +3119,8 @@ void CClientShadowMgr::UpdateBrushShadow( IClientRenderable* pRenderable, Client
     }
     else
     {
-        VPROF_BUDGET( "CClientShadowMgr::UpdateBrushShadow", VPROF_BUDGETGROUP_SHADOW_DEPTH_TEXTURING );
+        VPROF_BUDGET( "CClientShadowMgr::UpdateBrushShadow",
+                      VPROF_BUDGETGROUP_SHADOW_DEPTH_TEXTURING );
 
         BuildFlashlight( handle );
     }
@@ -2789,7 +3139,8 @@ static ConCommand r_shadowbreak( "r_shadowbreak", ShadowBreak_f );
 
 #endif  // _DEBUG
 
-bool CClientShadowMgr::WillParentRenderBlobbyShadow( IClientRenderable* pRenderable )
+bool CClientShadowMgr::WillParentRenderBlobbyShadow(
+    IClientRenderable* pRenderable )
 {
     if ( !pRenderable )
         return false;
@@ -2798,7 +3149,8 @@ bool CClientShadowMgr::WillParentRenderBlobbyShadow( IClientRenderable* pRendera
     if ( !pShadowParent )
         return false;
 
-    // If there's *no* shadow casting type, then we want to see if we can render into its parent
+    // If there's *no* shadow casting type, then we want to see if we can render
+    // into its parent
     ShadowType_t shadowType = GetActualShadowCastType( pShadowParent );
     if ( shadowType == SHADOWS_NONE )
         return WillParentRenderBlobbyShadow( pShadowParent );
@@ -2823,7 +3175,8 @@ bool CClientShadowMgr::ShouldUseParentShadow( IClientRenderable* pRenderable )
     if ( shadowType == SHADOWS_SIMPLE )
         return false;
 
-    // If there's *no* shadow casting type, then we want to see if we can render into its parent
+    // If there's *no* shadow casting type, then we want to see if we can render
+    // into its parent
     if ( shadowType == SHADOWS_NONE )
         return ShouldUseParentShadow( pShadowParent );
 
@@ -2837,6 +3190,14 @@ bool CClientShadowMgr::ShouldUseParentShadow( IClientRenderable* pRenderable )
 void CClientShadowMgr::PreRender()
 {
     VPROF_BUDGET( "CClientShadowMgr::PreRender", VPROF_BUDGETGROUP_SHADOW_RENDERING );
+
+#ifdef ASW_PROJECTED_TEXTURES
+    // only update shadows once per frame
+    if ( gpGlobals->framecount == m_nPrevFrameCount )
+        return;
+    m_nPrevFrameCount = gpGlobals->framecount;
+#endif
+
     MDLCACHE_CRITICAL_SECTION();
 
     //
@@ -2845,10 +3206,13 @@ void CClientShadowMgr::PreRender()
 
     {
         // VPROF scope
-        VPROF_BUDGET( "CClientShadowMgr::PreRender", VPROF_BUDGETGROUP_SHADOW_DEPTH_TEXTURING );
+        VPROF_BUDGET( "CClientShadowMgr::PreRender",
+                      VPROF_BUDGETGROUP_SHADOW_DEPTH_TEXTURING );
 
-        // If someone turned shadow depth mapping on but we can't do it, force it off
-        if ( r_flashlightdepthtexture.GetBool() && !materials->SupportsShadowDepthTextures() )
+        // If someone turned shadow depth mapping on but we can't do it, force
+        // it off
+        if ( r_flashlightdepthtexture.GetBool() &&
+             !materials->SupportsShadowDepthTextures() )
         {
             r_flashlightdepthtexture.SetValue( 0 );
             ShutdownDepthTextureShadows();
@@ -2857,11 +3221,15 @@ void CClientShadowMgr::PreRender()
         bool bDepthTextureActive = r_flashlightdepthtexture.GetBool();
         int nDepthTextureResolution = r_flashlightdepthres.GetInt();
 
-        // If shadow depth texture size or enable/disable changed, do appropriate deallocation/(re)allocation
-        if ( ( bDepthTextureActive != m_bDepthTextureActive ) || ( nDepthTextureResolution != m_nDepthTextureResolution ) )
+        // If shadow depth texture size or enable/disable changed, do
+        // appropriate deallocation/(re)allocation
+        if ( ( bDepthTextureActive != m_bDepthTextureActive ) ||
+             ( nDepthTextureResolution != m_nDepthTextureResolution ) )
         {
-            // If shadow depth texturing remains on, but resolution changed, shut down and reinitialize depth textures
-            if ( ( bDepthTextureActive == true ) && ( m_bDepthTextureActive == true ) &&
+            // If shadow depth texturing remains on, but resolution changed,
+            // shut down and reinitialize depth textures
+            if ( ( bDepthTextureActive == true ) &&
+                 ( m_bDepthTextureActive == true ) &&
                  ( nDepthTextureResolution != m_nDepthTextureResolution ) )
             {
                 ShutdownDepthTextureShadows();
@@ -2869,11 +3237,14 @@ void CClientShadowMgr::PreRender()
             }
             else
             {
-                if ( m_bDepthTextureActive && !bDepthTextureActive )  // Turning off shadow depth texturing
+                if ( m_bDepthTextureActive &&
+                     !bDepthTextureActive )  // Turning off shadow depth texturing
                 {
                     ShutdownDepthTextureShadows();
                 }
-                else if ( bDepthTextureActive && !m_bDepthTextureActive )  // Turning on shadow depth mapping
+                else if ( bDepthTextureActive &&
+                          !m_bDepthTextureActive )  // Turning on shadow depth
+                                                    // mapping
                 {
                     InitDepthTextureShadows();
                 }
@@ -2906,6 +3277,7 @@ void CClientShadowMgr::PreRender()
     unsigned short i = m_DirtyShadows.FirstInorder();
     while ( i != m_DirtyShadows.InvalidIndex() )
     {
+        MDLCACHE_CRITICAL_SECTION();
         ClientShadowHandle_t& handle = m_DirtyShadows[i];
         Assert( m_Shadows.IsValidIndex( handle ) );
         UpdateProjectedTextureInternal( handle, false );
@@ -2915,7 +3287,7 @@ void CClientShadowMgr::PreRender()
 
     // Transparent shadows must remain dirty, since they were not re-projected
     int nCount = m_TransparentShadows.Count();
-    for ( i = 0; i < nCount; ++i )
+    for ( int i = 0; i < nCount; ++i )
     {
         m_DirtyShadows.Insert( m_TransparentShadows[i] );
     }
@@ -2927,10 +3299,12 @@ void CClientShadowMgr::PreRender()
 //-----------------------------------------------------------------------------
 // Gets the entity whose shadow this shadow will render into
 //-----------------------------------------------------------------------------
-IClientRenderable* CClientShadowMgr::GetParentShadowEntity( ClientShadowHandle_t handle )
+IClientRenderable* CClientShadowMgr::GetParentShadowEntity(
+    ClientShadowHandle_t handle )
 {
     ClientShadow_t& shadow = m_Shadows[handle];
-    IClientRenderable* pRenderable = ClientEntityList().GetClientRenderableFromHandle( shadow.m_Entity );
+    IClientRenderable* pRenderable =
+        ClientEntityList().GetClientRenderableFromHandle( shadow.m_Entity );
     if ( pRenderable )
     {
         if ( ShouldUseParentShadow( pRenderable ) )
@@ -2950,11 +3324,13 @@ IClientRenderable* CClientShadowMgr::GetParentShadowEntity( ClientShadowHandle_t
 //-----------------------------------------------------------------------------
 // Marks a shadow as needing re-projection
 //-----------------------------------------------------------------------------
-void CClientShadowMgr::AddToDirtyShadowList( ClientShadowHandle_t handle, bool bForce )
+void CClientShadowMgr::AddToDirtyShadowList( ClientShadowHandle_t handle,
+                                             bool bForce )
 {
     // Don't add to the dirty shadow list while we're iterating over it
-    // The only way this can happen is if a child is being rendered into a parent
-    // shadow, and we don't need it to be added to the dirty list in that case.
+    // The only way this can happen is if a child is being rendered into a
+    // parent shadow, and we don't need it to be added to the dirty list in that
+    // case.
     if ( m_bUpdatingDirtyShadows )
         return;
 
@@ -2981,11 +3357,13 @@ void CClientShadowMgr::AddToDirtyShadowList( ClientShadowHandle_t handle, bool b
 //-----------------------------------------------------------------------------
 // Marks a shadow as needing re-projection
 //-----------------------------------------------------------------------------
-void CClientShadowMgr::AddToDirtyShadowList( IClientRenderable* pRenderable, bool bForce )
+void CClientShadowMgr::AddToDirtyShadowList( IClientRenderable* pRenderable,
+                                             bool bForce )
 {
     // Don't add to the dirty shadow list while we're iterating over it
-    // The only way this can happen is if a child is being rendered into a parent
-    // shadow, and we don't need it to be added to the dirty list in that case.
+    // The only way this can happen is if a child is being rendered into a
+    // parent shadow, and we don't need it to be added to the dirty list in that
+    // case.
     if ( m_bUpdatingDirtyShadows )
         return;
 
@@ -3001,7 +3379,9 @@ void CClientShadowMgr::AddToDirtyShadowList( IClientRenderable* pRenderable, boo
     // Make sure everything's consistent
     if ( handle != CLIENTSHADOW_INVALID_HANDLE )
     {
-        IClientRenderable* pShadowRenderable = ClientEntityList().GetClientRenderableFromHandle( m_Shadows[handle].m_Entity );
+        IClientRenderable* pShadowRenderable =
+            ClientEntityList().GetClientRenderableFromHandle(
+                m_Shadows[handle].m_Entity );
         Assert( pRenderable == pShadowRenderable );
     }
 #endif
@@ -3013,7 +3393,8 @@ void CClientShadowMgr::AddToDirtyShadowList( IClientRenderable* pRenderable, boo
 //-----------------------------------------------------------------------------
 // Marks the render-to-texture shadow as needing to be re-rendered
 //-----------------------------------------------------------------------------
-void CClientShadowMgr::MarkRenderToTextureShadowDirty( ClientShadowHandle_t handle )
+void CClientShadowMgr::MarkRenderToTextureShadowDirty(
+    ClientShadowHandle_t handle )
 {
     // Don't add bogus handles!
     if ( handle != CLIENTSHADOW_INVALID_HANDLE )
@@ -3043,7 +3424,8 @@ void CClientShadowMgr::UpdateShadow( ClientShadowHandle_t handle, bool force )
     ClientShadow_t& shadow = m_Shadows[handle];
 
     // Get the client entity....
-    IClientRenderable* pRenderable = ClientEntityList().GetClientRenderableFromHandle( shadow.m_Entity );
+    IClientRenderable* pRenderable =
+        ClientEntityList().GetClientRenderableFromHandle( shadow.m_Entity );
     if ( !pRenderable )
     {
         // Retire the shadow if the entity is gone
@@ -3077,8 +3459,10 @@ void CClientShadowMgr::UpdateShadow( ClientShadowHandle_t handle, bool force )
     }
 #endif
     // Hierarchical children shouldn't be projecting shadows...
-    // Check to see if it's a child of an entity with a render-to-texture shadow...
-    if ( ShouldUseParentShadow( pRenderable ) || WillParentRenderBlobbyShadow( pRenderable ) )
+    // Check to see if it's a child of an entity with a render-to-texture
+    // shadow...
+    if ( ShouldUseParentShadow( pRenderable ) ||
+         WillParentRenderBlobbyShadow( pRenderable ) )
     {
         shadowmgr->EnableShadow( shadow.m_ShadowHandle, false );
         pRenderable->MarkShadowDirty( false );
@@ -3093,7 +3477,8 @@ void CClientShadowMgr::UpdateShadow( ClientShadowHandle_t handle, bool force )
     const Vector& origin = pRenderable->GetRenderOrigin();
     const QAngle& angles = pRenderable->GetRenderAngles();
 
-    if ( force || ( origin != shadow.m_LastOrigin ) || ( angles != shadow.m_LastAngles ) )
+    if ( force || ( origin != shadow.m_LastOrigin ) ||
+         ( angles != shadow.m_LastAngles ) )
     {
         // Store off the new pos/orientation
         VectorCopy( origin, shadow.m_LastOrigin );
@@ -3122,28 +3507,33 @@ void CClientShadowMgr::UpdateShadow( ClientShadowHandle_t handle, bool force )
     }
 
     // NOTE: We can't do this earlier because pEnt->GetRenderOrigin() can
-    // provoke a recomputation of render origin, which, for aiments, can cause everything
-    // to be marked as dirty. So don't clear the flag until this point.
+    // provoke a recomputation of render origin, which, for aiments, can cause
+    // everything to be marked as dirty. So don't clear the flag until this
+    // point.
     pRenderable->MarkShadowDirty( false );
 }
 
 //-----------------------------------------------------------------------------
 // Update a shadow
 //-----------------------------------------------------------------------------
-void CClientShadowMgr::UpdateProjectedTextureInternal( ClientShadowHandle_t handle, bool force )
+void CClientShadowMgr::UpdateProjectedTextureInternal(
+    ClientShadowHandle_t handle,
+    bool force )
 {
     ClientShadow_t& shadow = m_Shadows[handle];
 
     if ( shadow.m_Flags & SHADOW_FLAGS_FLASHLIGHT )
     {
-        VPROF_BUDGET( "CClientShadowMgr::UpdateProjectedTextureInternal", VPROF_BUDGETGROUP_SHADOW_DEPTH_TEXTURING );
+        VPROF_BUDGET( "CClientShadowMgr::UpdateProjectedTextureInternal",
+                      VPROF_BUDGETGROUP_SHADOW_DEPTH_TEXTURING );
 
         Assert( ( shadow.m_Flags & SHADOW_FLAGS_SHADOW ) == 0 );
-        ClientShadow_t& shadowClient = m_Shadows[handle];
+        ClientShadow_t& shadow = m_Shadows[handle];
 
-        shadowmgr->EnableShadow( shadowClient.m_ShadowHandle, true );
+        shadowmgr->EnableShadow( shadow.m_ShadowHandle, true );
 
-        // FIXME: What's the difference between brush and model shadows for light projectors? Answer: nothing.
+        // FIXME: What's the difference between brush and model shadows for
+        // light projectors? Answer: nothing.
         UpdateBrushShadow( NULL, handle );
     }
     else
@@ -3157,19 +3547,24 @@ void CClientShadowMgr::UpdateProjectedTextureInternal( ClientShadowHandle_t hand
 //-----------------------------------------------------------------------------
 // Update a shadow
 //-----------------------------------------------------------------------------
-void CClientShadowMgr::UpdateProjectedTexture( ClientShadowHandle_t handle, bool force )
+void CClientShadowMgr::UpdateProjectedTexture( ClientShadowHandle_t handle,
+                                               bool force )
 {
-    VPROF_BUDGET( "CClientShadowMgr::UpdateProjectedTexture", VPROF_BUDGETGROUP_SHADOW_DEPTH_TEXTURING );
+    VPROF_BUDGET( "CClientShadowMgr::UpdateProjectedTexture",
+                  VPROF_BUDGETGROUP_SHADOW_DEPTH_TEXTURING );
 
     if ( handle == CLIENTSHADOW_INVALID_HANDLE )
         return;
 
-    // NOTE: This can only work for flashlights, since UpdateProjectedTextureInternal
-    // depends on the falloff offset to cull shadows.
+    // NOTE: This can only work for flashlights, since
+    // UpdateProjectedTextureInternal depends on the falloff offset to cull
+    // shadows.
     ClientShadow_t& shadow = m_Shadows[handle];
     if ( ( shadow.m_Flags & SHADOW_FLAGS_FLASHLIGHT ) == 0 )
     {
-        Warning( "CClientShadowMgr::UpdateProjectedTexture can only be used with flashlights!\n" );
+        Warning(
+            "CClientShadowMgr::UpdateProjectedTexture can only be used with "
+            "flashlights!\n" );
         return;
     }
 
@@ -3180,7 +3575,9 @@ void CClientShadowMgr::UpdateProjectedTexture( ClientShadowHandle_t handle, bool
 //-----------------------------------------------------------------------------
 // Computes bounding sphere
 //-----------------------------------------------------------------------------
-void CClientShadowMgr::ComputeBoundingSphere( IClientRenderable* pRenderable, Vector& origin, float& radius )
+void CClientShadowMgr::ComputeBoundingSphere( IClientRenderable* pRenderable,
+                                              Vector& origin,
+                                              float& radius )
 {
     Assert( pRenderable );
     Vector mins, maxs;
@@ -3208,7 +3605,11 @@ void CClientShadowMgr::ComputeBoundingSphere( IClientRenderable* pRenderable, Ve
 //-----------------------------------------------------------------------------
 // Computes a rough AABB encompassing the volume of the shadow
 //-----------------------------------------------------------------------------
-void CClientShadowMgr::ComputeShadowBBox( IClientRenderable* pRenderable, const Vector& vecAbsCenter, float flRadius, Vector* pAbsMins, Vector* pAbsMaxs )
+void CClientShadowMgr::ComputeShadowBBox( IClientRenderable* pRenderable,
+                                          const Vector& vecAbsCenter,
+                                          float flRadius,
+                                          Vector* pAbsMins,
+                                          Vector* pAbsMaxs )
 {
     // This is *really* rough. Basically we simply determine the
     // maximum shadow casting length and extrude the box by that distance
@@ -3235,7 +3636,9 @@ void CClientShadowMgr::ComputeShadowBBox( IClientRenderable* pRenderable, const 
 //-----------------------------------------------------------------------------
 // Compute a separating axis...
 //-----------------------------------------------------------------------------
-bool CClientShadowMgr::ComputeSeparatingPlane( IClientRenderable* pRend1, IClientRenderable* pRend2, cplane_t* pPlane )
+bool CClientShadowMgr::ComputeSeparatingPlane( IClientRenderable* pRend1,
+                                               IClientRenderable* pRend2,
+                                               cplane_t* pPlane )
 {
     Vector min1, max1, min2, max2;
     pRend1->GetShadowRenderBounds( min1, max1, GetActualShadowCastType( pRend1 ) );
@@ -3247,15 +3650,19 @@ bool CClientShadowMgr::ComputeSeparatingPlane( IClientRenderable* pRend1, IClien
 //-----------------------------------------------------------------------------
 // Cull shadows based on rough bounding volumes
 //-----------------------------------------------------------------------------
-bool CClientShadowMgr::CullReceiver( ClientShadowHandle_t handle, IClientRenderable* pRenderable, IClientRenderable* pSourceRenderable )
+bool CClientShadowMgr::CullReceiver( ClientShadowHandle_t handle,
+                                     IClientRenderable* pRenderable,
+                                     IClientRenderable* pSourceRenderable )
 {
     // check flags here instead and assert !pSourceRenderable
     if ( m_Shadows[handle].m_Flags & SHADOW_FLAGS_FLASHLIGHT )
     {
-        VPROF_BUDGET( "CClientShadowMgr::CullReceiver", VPROF_BUDGETGROUP_SHADOW_DEPTH_TEXTURING );
+        VPROF_BUDGET( "CClientShadowMgr::CullReceiver",
+                      VPROF_BUDGETGROUP_SHADOW_DEPTH_TEXTURING );
 
         Assert( !pSourceRenderable );
-        const Frustum_t& frustum = shadowmgr->GetFlashlightFrustum( m_Shadows[handle].m_ShadowHandle );
+        const Frustum_t& frustum =
+            shadowmgr->GetFlashlightFrustum( m_Shadows[handle].m_ShadowHandle );
 
         Vector mins, maxs;
         pRenderable->GetRenderBoundsWorldspace( mins, maxs );
@@ -3300,7 +3707,8 @@ bool CClientShadowMgr::CullReceiver( ClientShadowHandle_t handle, IClientRendera
     }
     else
     {
-        foundSeparatingPlane = ComputeSeparatingPlane( pRenderable, pSourceRenderable, &plane );
+        foundSeparatingPlane =
+            ComputeSeparatingPlane( pRenderable, pSourceRenderable, &plane );
     }
 
     if ( foundSeparatingPlane )
@@ -3316,15 +3724,21 @@ bool CClientShadowMgr::CullReceiver( ClientShadowHandle_t handle, IClientRendera
             if ( receiverDot <= sourceDot )
             {
                 //				Vector dest;
-                //				VectorMA( pSourceRenderable->GetRenderOrigin(), 50, plane.normal, dest );
-                //				debugoverlay->AddLineOverlay( pSourceRenderable->GetRenderOrigin(), dest, 255, 255, 0, true, 1.0f );
+                //				VectorMA(
+                // pSourceRenderable->GetRenderOrigin(), 50, plane.normal, dest
+                //); 				debugoverlay->AddLineOverlay(
+                // pSourceRenderable->GetRenderOrigin(), dest, 255, 255, 0,
+                // true, 1.0f );
                 return true;
             }
             else
             {
                 //				Vector dest;
-                //				VectorMA( pSourceRenderable->GetRenderOrigin(), 50, plane.normal, dest );
-                //				debugoverlay->AddLineOverlay( pSourceRenderable->GetRenderOrigin(), dest, 255, 0, 0, true, 1.0f );
+                //				VectorMA(
+                // pSourceRenderable->GetRenderOrigin(), 50, plane.normal, dest
+                //); 				debugoverlay->AddLineOverlay(
+                // pSourceRenderable->GetRenderOrigin(), dest, 255, 0, 0,
+                // true, 1.0f );
             }
         }
         else
@@ -3332,15 +3746,21 @@ bool CClientShadowMgr::CullReceiver( ClientShadowHandle_t handle, IClientRendera
             if ( receiverDot >= sourceDot )
             {
                 //				Vector dest;
-                //				VectorMA( pSourceRenderable->GetRenderOrigin(), -50, plane.normal, dest );
-                //				debugoverlay->AddLineOverlay( pSourceRenderable->GetRenderOrigin(), dest, 255, 255, 0, true, 1.0f );
+                //				VectorMA(
+                // pSourceRenderable->GetRenderOrigin(), -50, plane.normal, dest
+                //); 				debugoverlay->AddLineOverlay(
+                // pSourceRenderable->GetRenderOrigin(), dest, 255, 255, 0,
+                // true, 1.0f );
                 return true;
             }
             else
             {
                 //				Vector dest;
-                //				VectorMA( pSourceRenderable->GetRenderOrigin(), 50, plane.normal, dest );
-                //				debugoverlay->AddLineOverlay( pSourceRenderable->GetRenderOrigin(), dest, 255, 0, 0, true, 1.0f );
+                //				VectorMA(
+                // pSourceRenderable->GetRenderOrigin(), 50, plane.normal, dest
+                //); 				debugoverlay->AddLineOverlay(
+                // pSourceRenderable->GetRenderOrigin(), dest, 255, 0, 0,
+                // true, 1.0f );
             }
         }
     }
@@ -3348,15 +3768,15 @@ bool CClientShadowMgr::CullReceiver( ClientShadowHandle_t handle, IClientRendera
     // No additional clip planes? ok then it's a valid receiver
     /*
     if (shadow.m_ClipPlaneCount == 0)
-      return false;
+            return false;
 
     // Check the additional cull planes
     int i;
     for ( i = 0; i < shadow.m_ClipPlaneCount; ++i)
     {
-      // Fast sphere cull
-      if (DotProduct( origin, shadow.m_ClipPlane[i] ) - radius > shadow.m_ClipDist[i])
-        return true;
+            // Fast sphere cull
+            if (DotProduct( origin, shadow.m_ClipPlane[i] ) - radius >
+    shadow.m_ClipDist[i]) return true;
     }
 
     // More expensive box on plane side cull...
@@ -3368,16 +3788,17 @@ bool CClientShadowMgr::CullReceiver( ClientShadowHandle_t handle, IClientRendera
 
     for ( i = 0; i < shadow.m_ClipPlaneCount; ++i)
     {
-      // Transform the plane into the space of the receiver
-      plane.normal.x = DotProduct( vec[0], shadow.m_ClipPlane[i] );
-      plane.normal.y = DotProduct( vec[1], shadow.m_ClipPlane[i] );
-      plane.normal.z = DotProduct( vec[2], shadow.m_ClipPlane[i] );
+            // Transform the plane into the space of the receiver
+            plane.normal.x = DotProduct( vec[0], shadow.m_ClipPlane[i] );
+            plane.normal.y = DotProduct( vec[1], shadow.m_ClipPlane[i] );
+            plane.normal.z = DotProduct( vec[2], shadow.m_ClipPlane[i] );
 
-      plane.dist = shadow.m_ClipDist[i] - DotProduct( shadow.m_ClipPlane[i], pRenderable->GetRenderOrigin() );
+            plane.dist = shadow.m_ClipDist[i] - DotProduct(
+    shadow.m_ClipPlane[i], pRenderable->GetRenderOrigin() );
 
-      // If the box is on the front side of the plane, we're done.
-      if (BoxOnPlaneSide2( mins, maxs, &plane, 3.0f ) == 1)
-        return true;
+            // If the box is on the front side of the plane, we're done.
+            if (BoxOnPlaneSide2( mins, maxs, &plane, 3.0f ) == 1)
+                    return true;
     }
     */
 
@@ -3394,14 +3815,18 @@ void CClientShadowMgr::AddShadowToReceiver( ClientShadowHandle_t handle,
     ClientShadow_t& shadow = m_Shadows[handle];
 
     // Don't add a shadow cast by an object to itself...
-    IClientRenderable* pSourceRenderable = ClientEntityList().GetClientRenderableFromHandle( shadow.m_Entity );
+    IClientRenderable* pSourceRenderable =
+        ClientEntityList().GetClientRenderableFromHandle( shadow.m_Entity );
 
-    // NOTE: if pSourceRenderable == NULL, the source is probably a flashlight since there is no entity.
+    // NOTE: if pSourceRenderable == NULL, the source is probably a flashlight
+    // since there is no entity.
     if ( pSourceRenderable == pRenderable )
         return;
 
-    // Don't bother if this renderable doesn't receive shadows or light from flashlights
-    if ( !pRenderable->ShouldReceiveProjectedTextures( SHADOW_FLAGS_PROJECTED_TEXTURE_TYPE_MASK ) )
+    // Don't bother if this renderable doesn't receive shadows or light from
+    // flashlights
+    if ( !pRenderable->ShouldReceiveProjectedTextures(
+             SHADOW_FLAGS_PROJECTED_TEXTURE_TYPE_MASK ) )
         return;
 
     // Cull if the origin is on the wrong side of a shadow clip plane....
@@ -3415,24 +3840,29 @@ void CClientShadowMgr::AddShadowToReceiver( ClientShadowHandle_t handle,
 
             if ( shadow.m_Flags & SHADOW_FLAGS_FLASHLIGHT )
             {
-                VPROF_BUDGET( "CClientShadowMgr::AddShadowToReceiver", VPROF_BUDGETGROUP_SHADOW_DEPTH_TEXTURING );
+                VPROF_BUDGET( "CClientShadowMgr::AddShadowToReceiver",
+                              VPROF_BUDGETGROUP_SHADOW_DEPTH_TEXTURING );
 
-                if ( ( !shadow.m_hTargetEntity ) || IsFlashlightTarget( handle, pRenderable ) )
+                if ( ( !shadow.m_hTargetEntity ) ||
+                     IsFlashlightTarget( handle, pRenderable ) )
                 {
-                    shadowmgr->AddShadowToBrushModel( shadow.m_ShadowHandle,
-                                                      const_cast< model_t* >( pRenderable->GetModel() ),
-                                                      pRenderable->GetRenderOrigin(),
-                                                      pRenderable->GetRenderAngles() );
+                    shadowmgr->AddShadowToBrushModel(
+                        shadow.m_ShadowHandle,
+                        const_cast< model_t* >( pRenderable->GetModel() ),
+                        pRenderable->GetRenderOrigin(),
+                        pRenderable->GetRenderAngles() );
 
-                    shadowmgr->AddFlashlightRenderable( shadow.m_ShadowHandle, pRenderable );
+                    shadowmgr->AddFlashlightRenderable( shadow.m_ShadowHandle,
+                                                        pRenderable );
                 }
             }
             else
             {
-                shadowmgr->AddShadowToBrushModel( shadow.m_ShadowHandle,
-                                                  const_cast< model_t* >( pRenderable->GetModel() ),
-                                                  pRenderable->GetRenderOrigin(),
-                                                  pRenderable->GetRenderAngles() );
+                shadowmgr->AddShadowToBrushModel(
+                    shadow.m_ShadowHandle,
+                    const_cast< model_t* >( pRenderable->GetModel() ),
+                    pRenderable->GetRenderOrigin(),
+                    pRenderable->GetRenderAngles() );
             }
             break;
 
@@ -3442,21 +3872,27 @@ void CClientShadowMgr::AddShadowToReceiver( ClientShadowHandle_t handle,
             {
                 // Also don't add them unless an NPC or player casts them..
                 // They are wickedly expensive!!!
-                C_BaseEntity* pEnt = pSourceRenderable->GetIClientUnknown()->GetBaseEntity();
+                C_BaseEntity* pEnt =
+                    pSourceRenderable->GetIClientUnknown()->GetBaseEntity();
                 if ( pEnt && ( pEnt->GetFlags() & ( FL_NPC | FL_CLIENT ) ) )
                 {
-                    staticpropmgr->AddShadowToStaticProp( shadow.m_ShadowHandle, pRenderable );
+                    staticpropmgr->AddShadowToStaticProp( shadow.m_ShadowHandle,
+                                                          pRenderable );
                 }
             }
             else if ( shadow.m_Flags & SHADOW_FLAGS_FLASHLIGHT )
             {
-                VPROF_BUDGET( "CClientShadowMgr::AddShadowToReceiver", VPROF_BUDGETGROUP_SHADOW_DEPTH_TEXTURING );
+                VPROF_BUDGET( "CClientShadowMgr::AddShadowToReceiver",
+                              VPROF_BUDGETGROUP_SHADOW_DEPTH_TEXTURING );
 
-                if ( ( !shadow.m_hTargetEntity ) || IsFlashlightTarget( handle, pRenderable ) )
+                if ( ( !shadow.m_hTargetEntity ) ||
+                     IsFlashlightTarget( handle, pRenderable ) )
                 {
-                    staticpropmgr->AddShadowToStaticProp( shadow.m_ShadowHandle, pRenderable );
+                    staticpropmgr->AddShadowToStaticProp( shadow.m_ShadowHandle,
+                                                          pRenderable );
 
-                    shadowmgr->AddFlashlightRenderable( shadow.m_ShadowHandle, pRenderable );
+                    shadowmgr->AddFlashlightRenderable( shadow.m_ShadowHandle,
+                                                        pRenderable );
                 }
             }
             break;
@@ -3464,13 +3900,17 @@ void CClientShadowMgr::AddShadowToReceiver( ClientShadowHandle_t handle,
         case SHADOW_RECEIVER_STUDIO_MODEL:
             if ( shadow.m_Flags & SHADOW_FLAGS_FLASHLIGHT )
             {
-                VPROF_BUDGET( "CClientShadowMgr::AddShadowToReceiver", VPROF_BUDGETGROUP_SHADOW_DEPTH_TEXTURING );
+                VPROF_BUDGET( "CClientShadowMgr::AddShadowToReceiver",
+                              VPROF_BUDGETGROUP_SHADOW_DEPTH_TEXTURING );
 
-                if ( ( !shadow.m_hTargetEntity ) || IsFlashlightTarget( handle, pRenderable ) )
+                if ( ( !shadow.m_hTargetEntity ) ||
+                     IsFlashlightTarget( handle, pRenderable ) )
                 {
                     pRenderable->CreateModelInstance();
-                    shadowmgr->AddShadowToModel( shadow.m_ShadowHandle, pRenderable->GetModelInstance() );
-                    shadowmgr->AddFlashlightRenderable( shadow.m_ShadowHandle, pRenderable );
+                    shadowmgr->AddShadowToModel(
+                        shadow.m_ShadowHandle, pRenderable->GetModelInstance() );
+                    shadowmgr->AddFlashlightRenderable( shadow.m_ShadowHandle,
+                                                        pRenderable );
                 }
             }
             break;
@@ -3486,7 +3926,8 @@ void CClientShadowMgr::RemoveAllShadowsFromReceiver(
     ShadowReceiver_t type )
 {
     // Don't bother if this renderable doesn't receive shadows
-    if ( !pRenderable->ShouldReceiveProjectedTextures( SHADOW_FLAGS_PROJECTED_TEXTURE_TYPE_MASK ) )
+    if ( !pRenderable->ShouldReceiveProjectedTextures(
+             SHADOW_FLAGS_PROJECTED_TEXTURE_TYPE_MASK ) )
         return;
 
     // Do different things depending on the receiver type
@@ -3504,23 +3945,29 @@ void CClientShadowMgr::RemoveAllShadowsFromReceiver(
             break;
 
         case SHADOW_RECEIVER_STUDIO_MODEL:
-            if ( pRenderable && pRenderable->GetModelInstance() != MODEL_INSTANCE_INVALID )
+            if ( pRenderable &&
+                 pRenderable->GetModelInstance() != MODEL_INSTANCE_INVALID )
             {
-                shadowmgr->RemoveAllShadowsFromModel( pRenderable->GetModelInstance() );
+                shadowmgr->RemoveAllShadowsFromModel(
+                    pRenderable->GetModelInstance() );
             }
             break;
 
             //	default:
-            //		// FIXME: How do deal with this stuff? Add a method to IClientRenderable?
-            //		C_BaseEntity* pEnt = static_cast<C_BaseEntity*>(pRenderable);
-            //		pEnt->RemoveAllShadows();
+            //		// FIXME: How do deal with this stuff? Add a method to
+            // IClientRenderable? 		C_BaseEntity* pEnt =
+            // static_cast<C_BaseEntity*>(pRenderable); 		pEnt->RemoveAllShadows();
     }
 }
 
 //-----------------------------------------------------------------------------
 // Computes + sets the render-to-texture texcoords
 //-----------------------------------------------------------------------------
-void CClientShadowMgr::SetRenderToTextureShadowTexCoords( ShadowHandle_t handle, int x, int y, int w, int h )
+void CClientShadowMgr::SetRenderToTextureShadowTexCoords( ShadowHandle_t handle,
+                                                          int x,
+                                                          int y,
+                                                          int w,
+                                                          int h )
 {
     // Let the shadow mgr know about the texture coordinates...
     // That way it'll be able to batch rendering better.
@@ -3541,7 +3988,9 @@ void CClientShadowMgr::SetRenderToTextureShadowTexCoords( ShadowHandle_t handle,
 //-----------------------------------------------------------------------------
 // Setup all children shadows
 //-----------------------------------------------------------------------------
-bool CClientShadowMgr::BuildSetupShadowHierarchy( IClientRenderable* pRenderable, const ClientShadow_t& shadow, bool bChild )
+bool CClientShadowMgr::BuildSetupShadowHierarchy( IClientRenderable* pRenderable,
+                                                  const ClientShadow_t& shadow,
+                                                  bool bChild )
 {
     bool bDrewTexture = false;
 
@@ -3555,7 +4004,8 @@ bool CClientShadowMgr::BuildSetupShadowHierarchy( IClientRenderable* pRenderable
         bool bDrawModelShadow;
         if ( !bChild )
         {
-            bDrawModelShadow = ( ( shadow.m_Flags & SHADOW_FLAGS_BRUSH_MODEL ) == 0 );
+            bDrawModelShadow =
+                ( ( shadow.m_Flags & SHADOW_FLAGS_BRUSH_MODEL ) == 0 );
         }
         else
         {
@@ -3565,16 +4015,19 @@ bool CClientShadowMgr::BuildSetupShadowHierarchy( IClientRenderable* pRenderable
 
         if ( bDrawModelShadow )
         {
-            C_BaseEntity* pEntity = pRenderable->GetIClientUnknown()->GetBaseEntity();
+            C_BaseEntity* pEntity =
+                pRenderable->GetIClientUnknown()->GetBaseEntity();
             if ( pEntity )
             {
                 if ( pEntity->IsNPC() )
                 {
-                    s_NPCShadowBoneSetups.AddToTail( assert_cast< C_BaseAnimating* >( pEntity ) );
+                    s_NPCShadowBoneSetups.AddToTail(
+                        assert_cast< C_BaseAnimating* >( pEntity ) );
                 }
                 else if ( pEntity->GetBaseAnimating() )
                 {
-                    s_NonNPCShadowBoneSetups.AddToTail( assert_cast< C_BaseAnimating* >( pEntity ) );
+                    s_NonNPCShadowBoneSetups.AddToTail(
+                        assert_cast< C_BaseAnimating* >( pEntity ) );
                 }
             }
             bDrewTexture = true;
@@ -3585,7 +4038,8 @@ bool CClientShadowMgr::BuildSetupShadowHierarchy( IClientRenderable* pRenderable
         return bDrewTexture;
 
     IClientRenderable* pChild;
-    for ( pChild = pRenderable->FirstShadowChild(); pChild; pChild = pChild->NextShadowPeer() )
+    for ( pChild = pRenderable->FirstShadowChild(); pChild;
+          pChild = pChild->NextShadowPeer() )
     {
         if ( BuildSetupShadowHierarchy( pChild, shadow, true ) )
         {
@@ -3598,7 +4052,9 @@ bool CClientShadowMgr::BuildSetupShadowHierarchy( IClientRenderable* pRenderable
 //-----------------------------------------------------------------------------
 // Draws all children shadows into our own
 //-----------------------------------------------------------------------------
-bool CClientShadowMgr::DrawShadowHierarchy( IClientRenderable* pRenderable, const ClientShadow_t& shadow, bool bChild )
+bool CClientShadowMgr::DrawShadowHierarchy( IClientRenderable* pRenderable,
+                                            const ClientShadow_t& shadow,
+                                            bool bChild )
 {
     bool bDrewTexture = false;
 
@@ -3613,7 +4069,8 @@ bool CClientShadowMgr::DrawShadowHierarchy( IClientRenderable* pRenderable, cons
         bool bDrawBrushShadow;
         if ( !bChild )
         {
-            bDrawModelShadow = ( ( shadow.m_Flags & SHADOW_FLAGS_BRUSH_MODEL ) == 0 );
+            bDrawModelShadow =
+                ( ( shadow.m_Flags & SHADOW_FLAGS_BRUSH_MODEL ) == 0 );
             bDrawBrushShadow = !bDrawModelShadow;
         }
         else
@@ -3626,7 +4083,8 @@ bool CClientShadowMgr::DrawShadowHierarchy( IClientRenderable* pRenderable, cons
         if ( bDrawModelShadow )
         {
             DrawModelInfo_t info;
-            matrix3x4_t* pBoneToWorld = modelrender->DrawModelShadowSetup( pRenderable, pRenderable->GetBody(), pRenderable->GetSkin(), &info );
+            matrix3x4_t* pBoneToWorld = modelrender->DrawModelShadowSetup(
+                pRenderable, pRenderable->GetBody(), pRenderable->GetSkin(), &info );
             if ( pBoneToWorld )
             {
                 modelrender->DrawModelShadow( pRenderable, info, pBoneToWorld );
@@ -3644,7 +4102,8 @@ bool CClientShadowMgr::DrawShadowHierarchy( IClientRenderable* pRenderable, cons
         return bDrewTexture;
 
     IClientRenderable* pChild;
-    for ( pChild = pRenderable->FirstShadowChild(); pChild; pChild = pChild->NextShadowPeer() )
+    for ( pChild = pRenderable->FirstShadowChild(); pChild;
+          pChild = pChild->NextShadowPeer() )
     {
         if ( DrawShadowHierarchy( pChild, shadow, true ) )
         {
@@ -3657,11 +4116,15 @@ bool CClientShadowMgr::DrawShadowHierarchy( IClientRenderable* pRenderable, cons
 //-----------------------------------------------------------------------------
 // This gets called with every shadow that potentially will need to re-render
 //-----------------------------------------------------------------------------
-bool CClientShadowMgr::BuildSetupListForRenderToTextureShadow( unsigned short clientShadowHandle, float flArea )
+bool CClientShadowMgr::BuildSetupListForRenderToTextureShadow(
+    unsigned short clientShadowHandle,
+    float flArea )
 {
     ClientShadow_t& shadow = m_Shadows[clientShadowHandle];
     bool bDirtyTexture = ( shadow.m_Flags & SHADOW_FLAGS_TEXTURE_DIRTY ) != 0;
-    bool bNeedsRedraw = m_ShadowAllocator.UseTexture( shadow.m_ShadowTexture, bDirtyTexture, flArea );
+    bool bNeedsRedraw = m_ShadowAllocator.UseTexture( shadow.m_ShadowTexture,
+                                                      bDirtyTexture,
+                                                      flArea );
     if ( bNeedsRedraw || bDirtyTexture )
     {
         shadow.m_Flags |= SHADOW_FLAGS_TEXTURE_DIRTY;
@@ -3670,7 +4133,8 @@ bool CClientShadowMgr::BuildSetupListForRenderToTextureShadow( unsigned short cl
             return false;
 
         // shadow to be redrawn; for now, we'll always do it.
-        IClientRenderable* pRenderable = ClientEntityList().GetClientRenderableFromHandle( shadow.m_Entity );
+        IClientRenderable* pRenderable =
+            ClientEntityList().GetClientRenderableFromHandle( shadow.m_Entity );
 
         if ( BuildSetupShadowHierarchy( pRenderable, shadow ) )
             return true;
@@ -3681,12 +4145,15 @@ bool CClientShadowMgr::BuildSetupListForRenderToTextureShadow( unsigned short cl
 //-----------------------------------------------------------------------------
 // This gets called with every shadow that potentially will need to re-render
 //-----------------------------------------------------------------------------
-bool CClientShadowMgr::DrawRenderToTextureShadow( unsigned short clientShadowHandle, float flArea )
+bool CClientShadowMgr::DrawRenderToTextureShadow(
+    unsigned short clientShadowHandle,
+    float flArea )
 {
     ClientShadow_t& shadow = m_Shadows[clientShadowHandle];
 
     // If we were previously using the LOD shadow, set the material
-    bool bPreviouslyUsingLODShadow = ( shadow.m_Flags & SHADOW_FLAGS_USING_LOD_SHADOW ) != 0;
+    bool bPreviouslyUsingLODShadow =
+        ( shadow.m_Flags & SHADOW_FLAGS_USING_LOD_SHADOW ) != 0;
     shadow.m_Flags &= ~SHADOW_FLAGS_USING_LOD_SHADOW;
     if ( bPreviouslyUsingLODShadow )
     {
@@ -3696,7 +4163,10 @@ bool CClientShadowMgr::DrawRenderToTextureShadow( unsigned short clientShadowHan
     // Mark texture as being used...
     bool bDirtyTexture = ( shadow.m_Flags & SHADOW_FLAGS_TEXTURE_DIRTY ) != 0;
     bool bDrewTexture = false;
-    bool bNeedsRedraw = ( !m_bThreaded && m_ShadowAllocator.UseTexture( shadow.m_ShadowTexture, bDirtyTexture, flArea ) );
+    bool bNeedsRedraw =
+        ( !m_bThreaded && m_ShadowAllocator.UseTexture( shadow.m_ShadowTexture,
+                                                        bDirtyTexture,
+                                                        flArea ) );
 
     if ( !m_ShadowAllocator.HasValidTexture( shadow.m_ShadowTexture ) )
     {
@@ -3707,7 +4177,8 @@ bool CClientShadowMgr::DrawRenderToTextureShadow( unsigned short clientShadowHan
     if ( bNeedsRedraw || bDirtyTexture )
     {
         // shadow to be redrawn; for now, we'll always do it.
-        IClientRenderable* pRenderable = ClientEntityList().GetClientRenderableFromHandle( shadow.m_Entity );
+        IClientRenderable* pRenderable =
+            ClientEntityList().GetClientRenderableFromHandle( shadow.m_Entity );
 
         CMatRenderContextPtr pRenderContext( materials );
 
@@ -3720,7 +4191,8 @@ bool CClientShadowMgr::DrawRenderToTextureShadow( unsigned short clientShadowHan
         pRenderContext->ClearBuffers( true, false );
 
         pRenderContext->MatrixMode( MATERIAL_VIEW );
-        pRenderContext->LoadMatrix( shadowmgr->GetInfo( shadow.m_ShadowHandle ).m_WorldToShadow );
+        pRenderContext->LoadMatrix(
+            shadowmgr->GetInfo( shadow.m_ShadowHandle ).m_WorldToShadow );
 
         if ( DrawShadowHierarchy( pRenderable, shadow ) )
         {
@@ -3730,14 +4202,18 @@ bool CClientShadowMgr::DrawRenderToTextureShadow( unsigned short clientShadowHan
                 // resolve render target to system memory texture
                 Rect_t srcRect = { 0, 0, w, h };
                 Rect_t dstRect = { x, y, w, h };
-                pRenderContext->CopyRenderTargetToTextureEx( m_ShadowAllocator.GetTexture(), 0, &srcRect, &dstRect );
+                pRenderContext->CopyRenderTargetToTextureEx(
+                    m_ShadowAllocator.GetTexture(), 0, &srcRect, &dstRect );
             }
         }
         else
         {
-            // NOTE: Think the flags reset + texcoord set should only happen in DrawShadowHierarchy
-            // but it's 2 days before 360 ship.. not going to change this now.
-            DevMsg( "Didn't draw shadow hierarchy.. bad shadow texcoords probably going to happen..grab Brian!\n" );
+            // NOTE: Think the flags reset + texcoord set should only happen in
+            // DrawShadowHierarchy but it's 2 days before 360 ship.. not going
+            // to change this now.
+            DevMsg(
+                "Didn't draw shadow hierarchy.. bad shadow texcoords probably "
+                "going to happen..grab Brian!\n" );
         }
 
         // Only clear the dirty flag if the caster isn't animating
@@ -3751,7 +4227,8 @@ bool CClientShadowMgr::DrawRenderToTextureShadow( unsigned short clientShadowHan
     else if ( bPreviouslyUsingLODShadow )
     {
         // In this case, we were previously using the LOD shadow, but we didn't
-        // have to reconstitute the texture. In this case, we need to reset the texcoord
+        // have to reconstitute the texture. In this case, we need to reset the
+        // texcoord
         int x, y, w, h;
         m_ShadowAllocator.GetTextureRect( shadow.m_ShadowTexture, x, y, w, h );
         SetRenderToTextureShadowTexCoords( shadow.m_ShadowHandle, x, y, w, h );
@@ -3763,14 +4240,18 @@ bool CClientShadowMgr::DrawRenderToTextureShadow( unsigned short clientShadowHan
 //-----------------------------------------------------------------------------
 // "Draws" the shadow LOD, which really means just set up the blobby shadow
 //-----------------------------------------------------------------------------
-void CClientShadowMgr::DrawRenderToTextureShadowLOD( unsigned short clientShadowHandle )
+void CClientShadowMgr::DrawRenderToTextureShadowLOD(
+    unsigned short clientShadowHandle )
 {
     ClientShadow_t& shadow = m_Shadows[clientShadowHandle];
     if ( ( shadow.m_Flags & SHADOW_FLAGS_USING_LOD_SHADOW ) == 0 )
     {
         shadowmgr->SetShadowMaterial( shadow.m_ShadowHandle, m_SimpleShadow, m_SimpleShadow, ( void* )CLIENTSHADOW_INVALID_HANDLE );
         shadowmgr->SetShadowTexCoord( shadow.m_ShadowHandle, 0, 0, 1, 1 );
-        ClearExtraClipPlanes( clientShadowHandle );  // this was ClearExtraClipPlanes( shadow.m_ShadowHandle ), fix is from Joe Demers
+        ClearExtraClipPlanes(
+            clientShadowHandle );  // this was ClearExtraClipPlanes(
+                                   // shadow.m_ShadowHandle ), fix is from Joe
+                                   // Demers
         shadow.m_Flags |= SHADOW_FLAGS_USING_LOD_SHADOW;
     }
 }
@@ -3787,18 +4268,28 @@ void CClientShadowMgr::AdvanceFrame()
 //-----------------------------------------------------------------------------
 // Re-render shadow depth textures that lie in the leaf list
 //-----------------------------------------------------------------------------
-int CClientShadowMgr::BuildActiveShadowDepthList( const CViewSetup& viewSetup, int nMaxDepthShadows, ClientShadowHandle_t* pActiveDepthShadows )
+int CClientShadowMgr::BuildActiveShadowDepthList(
+    const CViewSetup& viewSetup,
+    int nMaxDepthShadows,
+    ClientShadowHandle_t* pActiveDepthShadows )
 {
+#ifdef ASW_PROJECTED_TEXTURES
+    Frustum_t viewFrustum;
+    GeneratePerspectiveFrustum( viewSetup.origin, viewSetup.angles, viewSetup.zNear, viewSetup.zFar, viewSetup.fov, viewSetup.m_flAspectRatio, viewFrustum );
+#endif
+
     int nActiveDepthShadowCount = 0;
     for ( ClientShadowHandle_t i = m_Shadows.Head(); i != m_Shadows.InvalidIndex(); i = m_Shadows.Next( i ) )
     {
         ClientShadow_t& shadow = m_Shadows[i];
 
-        // If this is not a flashlight which should use a shadow depth texture, skip!
+        // If this is not a flashlight which should use a shadow depth texture,
+        // skip!
         if ( ( shadow.m_Flags & SHADOW_FLAGS_USE_DEPTH_TEXTURE ) == 0 )
             continue;
 
-        const FlashlightState_t& flashlightState = shadowmgr->GetFlashlightState( shadow.m_ShadowHandle );
+        const FlashlightState_t& flashlightState =
+            shadowmgr->GetFlashlightState( shadow.m_ShadowHandle );
 
         // Bail if this flashlight doesn't want shadows
         if ( !flashlightState.m_bEnableShadows )
@@ -3809,11 +4300,16 @@ int CClientShadowMgr::BuildActiveShadowDepthList( const CViewSetup& viewSetup, i
         CalculateAABBFromProjectionMatrix( shadow.m_WorldToShadow, &vecAbsMins, &vecAbsMaxs );
 
         Frustum_t viewFrustum;
-        GeneratePerspectiveFrustum( viewSetup.origin, viewSetup.angles, viewSetup.zNear, viewSetup.zFar, viewSetup.fov, viewSetup.m_flAspectRatio, viewFrustum );
+        GeneratePerspectiveFrustum(
+            viewSetup.origin, viewSetup.angles, viewSetup.zNear, viewSetup.zFar, viewSetup.fov, viewSetup.m_flAspectRatio, viewFrustum );
 
-        // FIXME: Could do other sorts of culling here, such as frustum-frustum test, distance etc.
-        // If it's not in the view frustum, move on
+        // FIXME: Could do other sorts of culling here, such as frustum-frustum
+        // test, distance etc. If it's not in the view frustum, move on
+#if ASW_PROJECTED_TEXTURES
+        if ( !flashlightState.m_bOrtho && R_CullBox( vecAbsMins, vecAbsMaxs, viewFrustum ) )
+#else
         if ( R_CullBox( vecAbsMins, vecAbsMaxs, viewFrustum ) )
+#endif
         {
             shadowmgr->SetFlashlightDepthTexture( shadow.m_ShadowHandle, NULL, 0 );
             continue;
@@ -3837,21 +4333,71 @@ int CClientShadowMgr::BuildActiveShadowDepthList( const CViewSetup& viewSetup, i
     return nActiveDepthShadowCount;
 }
 
+#ifdef ASW_PROJECTED_TEXTURES
+//-----------------------------------------------------------------------------
+// Re-render shadow depth textures that lie in the leaf list
+//-----------------------------------------------------------------------------
+int CClientShadowMgr::BuildActiveFlashlightList( const CViewSetup& viewSetup, int nMaxFlashlights, ClientShadowHandle_t* pActiveFlashlights )
+{
+    int nActiveFlashlightCount = 0;
+    for ( ClientShadowHandle_t i = m_Shadows.Head(); i != m_Shadows.InvalidIndex(); i = m_Shadows.Next( i ) )
+    {
+        ClientShadow_t& shadow = m_Shadows[i];
+
+        if ( ( shadow.m_Flags & SHADOW_FLAGS_FLASHLIGHT ) == 0 )
+            continue;
+
+        // Calculate an AABB around the shadow frustum
+        Vector vecAbsMins, vecAbsMaxs;
+        CalculateAABBFromProjectionMatrix( shadow.m_WorldToShadow, &vecAbsMins, &vecAbsMaxs );
+
+        Frustum_t viewFrustum;
+        GeneratePerspectiveFrustum( viewSetup.origin, viewSetup.angles, viewSetup.zNear, viewSetup.zFar, viewSetup.fov, viewSetup.m_flAspectRatio, viewFrustum );
+
+        // FIXME: Could do other sorts of culling here, such as frustum-frustum test, distance etc.
+        // If it's not in the view frustum, move on
+        if ( R_CullBox( vecAbsMins, vecAbsMaxs, viewFrustum ) )
+        {
+            continue;
+        }
+
+        if ( nActiveFlashlightCount >= nMaxFlashlights )
+        {
+            static bool s_bOverflowWarning = false;
+            if ( !s_bOverflowWarning )
+            {
+                Warning( "Too many flashlights rendered in a single view!\n" );
+                Assert( 0 );
+                s_bOverflowWarning = true;
+            }
+            // shadowmgr->SetFlashlightDepthTexture( shadow.m_ShadowHandle, NULL, 0 );
+            continue;
+        }
+
+        pActiveFlashlights[nActiveFlashlightCount++] = i;
+    }
+    return nActiveFlashlightCount;
+}
+#endif
+
 //-----------------------------------------------------------------------------
 // Sets the view's active flashlight render state
 //-----------------------------------------------------------------------------
-void CClientShadowMgr::SetViewFlashlightState( int nActiveFlashlightCount, ClientShadowHandle_t* pActiveFlashlights )
+void CClientShadowMgr::SetViewFlashlightState(
+    int nActiveFlashlightCount,
+    ClientShadowHandle_t* pActiveFlashlights )
 {
     // NOTE: On the 360, we render the entire scene with the flashlight state
-    // set and don't render flashlights additively in the shadow mgr at a far later time
-    // because the CPU costs are prohibitive
+    // set and don't render flashlights additively in the shadow mgr at a far
+    // later time because the CPU costs are prohibitive
     if ( !IsX360() && !r_flashlight_version2.GetInt() )
         return;
 
     Assert( nActiveFlashlightCount <= 1 );
     if ( nActiveFlashlightCount > 0 )
     {
-        Assert( ( m_Shadows[pActiveFlashlights[0]].m_Flags & SHADOW_FLAGS_FLASHLIGHT ) != 0 );
+        Assert( ( m_Shadows[pActiveFlashlights[0]].m_Flags &
+                  SHADOW_FLAGS_FLASHLIGHT ) != 0 );
         shadowmgr->SetFlashlightRenderState( pActiveFlashlights[0] );
     }
     else
@@ -3860,19 +4406,65 @@ void CClientShadowMgr::SetViewFlashlightState( int nActiveFlashlightCount, Clien
     }
 }
 
+#ifdef ASW_PROJECTED_TEXTURES
+void AddPointToExtentsHelper( const VMatrix& flashlightToWorld, const Vector& vecPos, Vector& vecMin, Vector& vecMax )
+{
+    Vector worldSpacePos;
+
+    Vector3DMultiplyPositionProjective( flashlightToWorld, vecPos, worldSpacePos );
+    VectorMin( vecMin, worldSpacePos, vecMin );
+    VectorMax( vecMax, worldSpacePos, vecMax );
+}
+
+void CClientShadowMgr::GetFrustumExtents( ClientShadowHandle_t handle, Vector& vecMin, Vector& vecMax )
+{
+    Assert( m_Shadows.IsValidIndex( handle ) );
+
+    CClientShadowMgr::ClientShadow_t& shadow = m_Shadows[handle];
+
+    VMatrix flashlightToWorld;
+    MatrixInverseGeneral( shadow.m_WorldToShadow, flashlightToWorld );
+
+    vecMin = Vector( FLT_MAX, FLT_MAX, FLT_MAX );
+    vecMax = Vector( -FLT_MAX, -FLT_MAX, -FLT_MAX );
+
+    AddPointToExtentsHelper( flashlightToWorld, Vector( 0.0f, 0.0f, 0.0f ), vecMin, vecMax );
+    AddPointToExtentsHelper( flashlightToWorld, Vector( 0.0f, 0.0f, 1.0f ), vecMin, vecMax );
+    AddPointToExtentsHelper( flashlightToWorld, Vector( 0.0f, 1.0f, 0.0f ), vecMin, vecMax );
+    AddPointToExtentsHelper( flashlightToWorld, Vector( 1.0f, 0.0f, 0.0f ), vecMin, vecMax );
+    AddPointToExtentsHelper( flashlightToWorld, Vector( 0.0f, 1.0f, 1.0f ), vecMin, vecMax );
+    AddPointToExtentsHelper( flashlightToWorld, Vector( 1.0f, 0.0f, 1.0f ), vecMin, vecMax );
+    AddPointToExtentsHelper( flashlightToWorld, Vector( 1.0f, 1.0f, 0.0f ), vecMin, vecMax );
+    AddPointToExtentsHelper( flashlightToWorld, Vector( 1.0f, 1.0f, 1.0f ), vecMin, vecMax );
+}
+#endif
+
 //-----------------------------------------------------------------------------
 // Re-render shadow depth textures that lie in the leaf list
 //-----------------------------------------------------------------------------
 void CClientShadowMgr::ComputeShadowDepthTextures( const CViewSetup& viewSetup )
 {
-    VPROF_BUDGET( "CClientShadowMgr::ComputeShadowDepthTextures", VPROF_BUDGETGROUP_SHADOW_DEPTH_TEXTURING );
+    VPROF_BUDGET( "CClientShadowMgr::ComputeShadowDepthTextures",
+                  VPROF_BUDGETGROUP_SHADOW_DEPTH_TEXTURING );
+
+#ifdef ASW_PROJECTED_TEXTURES
+    if ( !r_flashlightdepthtexture.GetBool() )
+    {
+        // Build list of active flashlights
+        ClientShadowHandle_t pActiveFlashlights[16];
+        int nActiveFlashlights = BuildActiveFlashlightList( viewSetup, ARRAYSIZE( pActiveFlashlights ), pActiveFlashlights );
+        SetViewFlashlightState( nActiveFlashlights, pActiveFlashlights );
+        return;
+    }
+#endif
 
     CMatRenderContextPtr pRenderContext( materials );
     PIXEVENT( pRenderContext, "Shadow Depth Textures" );
 
     // Build list of active render-to-texture shadows
     ClientShadowHandle_t pActiveDepthShadows[1024];
-    int nActiveDepthShadowCount = BuildActiveShadowDepthList( viewSetup, ARRAYSIZE( pActiveDepthShadows ), pActiveDepthShadows );
+    int nActiveDepthShadowCount = BuildActiveShadowDepthList(
+        viewSetup, ARRAYSIZE( pActiveDepthShadows ), pActiveDepthShadows );
 
     // Iterate over all existing textures and allocate shadow textures
     bool bDebugFrustum = r_flashlightdrawfrustum.GetBool();
@@ -3880,16 +4472,22 @@ void CClientShadowMgr::ComputeShadowDepthTextures( const CViewSetup& viewSetup )
     {
         ClientShadow_t& shadow = m_Shadows[pActiveDepthShadows[j]];
 
+#ifdef ASW_PROJECTED_TEXTURES
+        FlashlightState_t& flashlightState = const_cast< FlashlightState_t& >( shadowmgr->GetFlashlightState( shadow.m_ShadowHandle ) );
+#endif
+
         CTextureReference shadowDepthTexture;
-        bool bGotShadowDepthTexture = LockShadowDepthTexture( &shadowDepthTexture );
+        bool bGotShadowDepthTexture =
+            LockShadowDepthTexture( &shadowDepthTexture );
         if ( !bGotShadowDepthTexture )
         {
-            // If we don't get one, that means we have too many this frame so bind no depth texture
-            static int mapCount = 0;
-            if ( mapCount < 10 )
+            // If we don't get one, that means we have too many this frame so
+            // bind no depth texture
+            static int bitchCount = 0;
+            if ( bitchCount < 10 )
             {
                 Warning( "Too many shadow maps this frame!\n" );
-                mapCount++;
+                bitchCount++;
             }
 
             Assert( 0 );
@@ -3902,11 +4500,30 @@ void CClientShadowMgr::ComputeShadowDepthTextures( const CViewSetup& viewSetup )
         shadowView.x = shadowView.y = 0;
         shadowView.width = shadowDepthTexture->GetActualWidth();
         shadowView.height = shadowDepthTexture->GetActualHeight();
+#ifndef ASW_PROJECTED_TEXTURES
         shadowView.m_bOrtho = false;
         shadowView.m_bDoBloomAndToneMapping = false;
+#endif
 
         // Copy flashlight parameters
+#ifdef ASW_PROJECTED_TEXTURES
+        if ( !flashlightState.m_bOrtho )
+        {
+            shadowView.m_bOrtho = false;
+        }
+        else
+        {
+            shadowView.m_bOrtho = true;
+            shadowView.m_OrthoLeft = flashlightState.m_fOrthoLeft;
+            shadowView.m_OrthoTop = flashlightState.m_fOrthoTop;
+            shadowView.m_OrthoRight = flashlightState.m_fOrthoRight;
+            shadowView.m_OrthoBottom = flashlightState.m_fOrthoBottom;
+        }
+
+        shadowView.m_bDoBloomAndToneMapping = false;
+#else
         const FlashlightState_t& flashlightState = shadowmgr->GetFlashlightState( shadow.m_ShadowHandle );
+#endif
         shadowView.fov = shadowView.fovViewmodel = flashlightState.m_fHorizontalFOVDegrees;
         shadowView.origin = flashlightState.m_vecLightOrigin;
         QuaternionAngles( flashlightState.m_quatOrientation, shadowView.angles );  // Convert from Quaternion to QAngle
@@ -3914,21 +4531,27 @@ void CClientShadowMgr::ComputeShadowDepthTextures( const CViewSetup& viewSetup )
         shadowView.zNear = shadowView.zNearViewmodel = flashlightState.m_NearZ;
         shadowView.zFar = shadowView.zFarViewmodel = flashlightState.m_FarZ;
 
-        // Can turn on all light frustum overlays or per light with flashlightState parameter...
+        // Can turn on all light frustum overlays or per light with
+        // flashlightState parameter...
         if ( bDebugFrustum || flashlightState.m_bDrawShadowFrustum )
         {
             DebugDrawFrustum( shadowView.origin, shadow.m_WorldToShadow );
         }
 
         // Set depth bias factors specific to this flashlight
-        CMatRenderContextPtr pRenderContextMat( materials );
-        pRenderContextMat->SetShadowDepthBiasFactors( flashlightState.m_flShadowSlopeScaleDepthBias, flashlightState.m_flShadowDepthBias );
+        CMatRenderContextPtr pRenderContext( materials );
+        pRenderContext->SetShadowDepthBiasFactors(
+            flashlightState.m_flShadowSlopeScaleDepthBias,
+            flashlightState.m_flShadowDepthBias );
 
         // Render to the shadow depth texture with appropriate view
         view->UpdateShadowDepthTexture( m_DummyColorTexture, shadowDepthTexture, shadowView );
 
-        // Associate the shadow depth texture and stencil bit with the flashlight for use during scene rendering
-        shadowmgr->SetFlashlightDepthTexture( shadow.m_ShadowHandle, shadowDepthTexture, 0 );
+        // Associate the shadow depth texture and stencil bit with the
+        // flashlight for use during scene rendering
+        shadowmgr->SetFlashlightDepthTexture( shadow.m_ShadowHandle,
+                                              shadowDepthTexture,
+                                              0 );
     }
 
     SetViewFlashlightState( nActiveDepthShadowCount, pActiveDepthShadows );
@@ -3942,18 +4565,26 @@ static void SetupBonesOnBaseAnimating( C_BaseAnimating*& pBaseAnimating )
     pBaseAnimating->SetupBones( NULL, -1, -1, gpGlobals->curtime );
 }
 
-void CClientShadowMgr::ComputeShadowTextures( const CViewSetup& viewShadow, int leafCount, LeafIndex_t* pLeafList )
+void CClientShadowMgr::ComputeShadowTextures( const CViewSetup& view,
+                                              int leafCount,
+                                              LeafIndex_t* pLeafList )
 {
-    VPROF_BUDGET( "CClientShadowMgr::ComputeShadowTextures", VPROF_BUDGETGROUP_SHADOW_RENDERING );
+    VPROF_BUDGET( "CClientShadowMgr::ComputeShadowTextures",
+                  VPROF_BUDGETGROUP_SHADOW_RENDERING );
 
-    if ( !m_RenderToTextureActive || ( r_shadows.GetInt() == 0 ) || r_shadows_gamecontrol.GetInt() == 0 )
+    if ( !m_RenderToTextureActive || ( r_shadows.GetInt() == 0 ) ||
+         r_shadows_gamecontrol.GetInt() == 0 )
         return;
 
+#ifdef ASW_PROJECTED_TEXTURES
+    m_bThreaded = ( r_threaded_client_shadow_manager.GetBool() && g_pThreadPool->NumIdleThreads() );
+#else
     m_bThreaded = false;  //( r_threaded_client_shadow_manager.GetBool() && g_pThreadPool->NumIdleThreads() );
+#endif
 
     MDLCACHE_CRITICAL_SECTION();
     // First grab all shadow textures we may want to render
-    int nCount = s_VisibleShadowList.FindShadows( &viewShadow, leafCount, pLeafList );
+    int nCount = s_VisibleShadowList.FindShadows( &view, leafCount, pLeafList );
     if ( nCount == 0 )
         return;
 
@@ -3968,7 +4599,8 @@ void CClientShadowMgr::ComputeShadowTextures( const CViewSetup& viewShadow, int 
     pRenderContext->ClearColor4ub( 255, 255, 255, 0 );
 
     // No height clip mode please.
-    MaterialHeightClipMode_t oldHeightClipMode = pRenderContext->GetHeightClipMode();
+    MaterialHeightClipMode_t oldHeightClipMode =
+        pRenderContext->GetHeightClipMode();
     pRenderContext->SetHeightClipMode( MATERIAL_HEIGHTCLIPMODE_DISABLE );
 
     // No projection matrix (orthographic mode)
@@ -4002,10 +4634,12 @@ void CClientShadowMgr::ComputeShadowTextures( const CViewSetup& viewShadow, int 
 
         for ( i = 0; i < nCount; ++i )
         {
-            const VisibleShadowInfo_t& info = s_VisibleShadowList.GetVisibleShadow( i );
+            const VisibleShadowInfo_t& info =
+                s_VisibleShadowList.GetVisibleShadow( i );
             if ( nModelsRendered < nMaxShadows )
             {
-                if ( BuildSetupListForRenderToTextureShadow( info.m_hShadow, info.m_flArea ) )
+                if ( BuildSetupListForRenderToTextureShadow( info.m_hShadow,
+                                                             info.m_flArea ) )
                 {
                     ++nModelsRendered;
                 }
@@ -4013,14 +4647,16 @@ void CClientShadowMgr::ComputeShadowTextures( const CViewSetup& viewShadow, int 
         }
 
         ParallelProcess( "NPCShadowBoneSetups", s_NPCShadowBoneSetups.Base(), s_NPCShadowBoneSetups.Count(), &SetupBonesOnBaseAnimating );
-        ParallelProcess( "NonNPCShadowBoneSetups", s_NonNPCShadowBoneSetups.Base(), s_NonNPCShadowBoneSetups.Count(), &SetupBonesOnBaseAnimating );
+        ParallelProcess(
+            "NonNPCShadowBoneSetups", s_NonNPCShadowBoneSetups.Base(), s_NonNPCShadowBoneSetups.Count(), &SetupBonesOnBaseAnimating );
 
         nModelsRendered = 0;
     }
 
     for ( i = 0; i < nCount; ++i )
     {
-        const VisibleShadowInfo_t& info = s_VisibleShadowList.GetVisibleShadow( i );
+        const VisibleShadowInfo_t& info =
+            s_VisibleShadowList.GetVisibleShadow( i );
         if ( nModelsRendered < nMaxShadows )
         {
             if ( DrawRenderToTextureShadow( info.m_hShadow, info.m_flArea ) )
@@ -4053,11 +4689,14 @@ void CClientShadowMgr::ComputeShadowTextures( const CViewSetup& viewShadow, int 
 }
 
 //-------------------------------------------------------------------------------------------------------
-// Lock down the usage of a shadow depth texture...must be unlocked for use on subsequent views / frames
+// Lock down the usage of a shadow depth texture...must be unlocked for use on
+// subsequent views / frames
 //-------------------------------------------------------------------------------------------------------
-bool CClientShadowMgr::LockShadowDepthTexture( CTextureReference* shadowDepthTexture )
+bool CClientShadowMgr::LockShadowDepthTexture(
+    CTextureReference* shadowDepthTexture )
 {
-    for ( int i = 0; i < m_DepthTextureCache.Count(); i++ )  // Search for cached shadow depth texture
+    for ( int i = 0; i < m_DepthTextureCache.Count();
+          i++ )  // Search for cached shadow depth texture
     {
         if ( m_DepthTextureCacheLocks[i] == false )  // If a free one is found
         {
@@ -4082,7 +4721,8 @@ void CClientShadowMgr::UnlockAllShadowDepthTextures()
     SetViewFlashlightState( 0, NULL );
 }
 
-void CClientShadowMgr::SetFlashlightTarget( ClientShadowHandle_t shadowHandle, EHANDLE targetEntity )
+void CClientShadowMgr::SetFlashlightTarget( ClientShadowHandle_t shadowHandle,
+                                            EHANDLE targetEntity )
 {
     Assert( m_Shadows.IsValidIndex( shadowHandle ) );
 
@@ -4094,7 +4734,9 @@ void CClientShadowMgr::SetFlashlightTarget( ClientShadowHandle_t shadowHandle, E
     shadow.m_hTargetEntity = targetEntity;
 }
 
-void CClientShadowMgr::SetFlashlightLightWorld( ClientShadowHandle_t shadowHandle, bool bLightWorld )
+void CClientShadowMgr::SetFlashlightLightWorld(
+    ClientShadowHandle_t shadowHandle,
+    bool bLightWorld )
 {
     Assert( m_Shadows.IsValidIndex( shadowHandle ) );
 
@@ -4112,7 +4754,8 @@ void CClientShadowMgr::SetFlashlightLightWorld( ClientShadowHandle_t shadowHandl
     }
 }
 
-bool CClientShadowMgr::IsFlashlightTarget( ClientShadowHandle_t shadowHandle, IClientRenderable* pRenderable )
+bool CClientShadowMgr::IsFlashlightTarget( ClientShadowHandle_t shadowHandle,
+                                           IClientRenderable* pRenderable )
 {
     ClientShadow_t& shadow = m_Shadows[shadowHandle];
 
@@ -4169,7 +4812,8 @@ bool CShadowProxy::Init( IMaterial* pMaterial, KeyValues* pKeyValues )
 
 void CShadowProxy::OnBind( void* pProxyData )
 {
-    unsigned short clientShadowHandle = ( unsigned short )( intp )pProxyData & 0xffff;
+    unsigned short clientShadowHandle =
+        ( unsigned short )( int )pProxyData & 0xffff;
     ITexture* pTex = s_ClientShadowMgr.GetShadowTexture( clientShadowHandle );
     m_BaseTextureVar->SetTextureValue( pTex );
     if ( ToolsEnabled() )
@@ -4232,19 +4876,23 @@ bool CShadowModelProxy::Init( IMaterial* pMaterial, KeyValues* pKeyValues )
     m_BaseTextureVar = pMaterial->FindVar( "$basetexture", &foundVar, false );
     if ( !foundVar )
         return false;
-    m_BaseTextureOffsetVar = pMaterial->FindVar( "$basetextureoffset", &foundVar, false );
+    m_BaseTextureOffsetVar =
+        pMaterial->FindVar( "$basetextureoffset", &foundVar, false );
     if ( !foundVar )
         return false;
-    m_BaseTextureScaleVar = pMaterial->FindVar( "$basetexturescale", &foundVar, false );
+    m_BaseTextureScaleVar =
+        pMaterial->FindVar( "$basetexturescale", &foundVar, false );
     if ( !foundVar )
         return false;
-    m_BaseTextureMatrixVar = pMaterial->FindVar( "$basetexturetransform", &foundVar, false );
+    m_BaseTextureMatrixVar =
+        pMaterial->FindVar( "$basetexturetransform", &foundVar, false );
     if ( !foundVar )
         return false;
     m_FalloffOffsetVar = pMaterial->FindVar( "$falloffoffset", &foundVar, false );
     if ( !foundVar )
         return false;
-    m_FalloffDistanceVar = pMaterial->FindVar( "$falloffdistance", &foundVar, false );
+    m_FalloffDistanceVar =
+        pMaterial->FindVar( "$falloffdistance", &foundVar, false );
     if ( !foundVar )
         return false;
     m_FalloffAmountVar = pMaterial->FindVar( "$falloffamount", &foundVar, false );
@@ -4253,11 +4901,13 @@ bool CShadowModelProxy::Init( IMaterial* pMaterial, KeyValues* pKeyValues )
 
 void CShadowModelProxy::OnBind( void* pProxyData )
 {
-    unsigned short clientShadowHandle = ( unsigned short )( ( intp )pProxyData & 0xffff );
+    unsigned short clientShadowHandle =
+        ( unsigned short )( ( int )pProxyData & 0xffff );
     ITexture* pTex = s_ClientShadowMgr.GetShadowTexture( clientShadowHandle );
     m_BaseTextureVar->SetTextureValue( pTex );
 
-    const ShadowInfo_t& info = s_ClientShadowMgr.GetShadowInfo( clientShadowHandle );
+    const ShadowInfo_t& info =
+        s_ClientShadowMgr.GetShadowInfo( clientShadowHandle );
     m_BaseTextureMatrixVar->SetMatrixValue( info.m_WorldToShadow );
     m_BaseTextureOffsetVar->SetVecValue( info.m_TexOrigin.Base(), 2 );
     m_BaseTextureScaleVar->SetVecValue( info.m_TexSize.Base(), 2 );

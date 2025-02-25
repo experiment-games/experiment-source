@@ -36,6 +36,10 @@
 #include "hl2mp_gamerules.h"
 #endif
 
+#ifdef EXPERIMENT_SOURCE
+#include "experiment_gamerules.h"
+#endif
+
 #endif
 
 #include "vprof.h"
@@ -251,67 +255,74 @@ void CBaseCombatWeapon::Precache( void )
 #endif
     m_iPrimaryAmmoType = m_iSecondaryAmmoType = -1;
 
-    // Add this weapon to the weapon registry, and get our index into it
-    // Get weapon data from script file
-    if ( ReadWeaponDataFromFileForSlot( filesystem, GetClassname(), &m_hWeaponFileInfo, GetEncryptionKey() ) )
+#if defined( LUA_SDK )
+    if ( !IsScripted() )
     {
-        // Get the ammo indexes for the ammo's specified in the data file
-        if ( GetWpnData().szAmmo1[0] )
+#endif
+        // Add this weapon to the weapon registry, and get our index into it
+        // Get weapon data from script file
+        if ( ReadWeaponDataFromFileForSlot( filesystem, GetClassname(), &m_hWeaponFileInfo, GetEncryptionKey() ) )
         {
-            m_iPrimaryAmmoType = GetAmmoDef()->Index( GetWpnData().szAmmo1 );
-            if ( m_iPrimaryAmmoType == -1 )
+            // Get the ammo indexes for the ammo's specified in the data file
+            if ( GetWpnData().szAmmo1[0] )
             {
-                Msg( "ERROR: Weapon (%s) using undefined primary ammo type (%s)\n", GetClassname(), GetWpnData().szAmmo1 );
-            }
+                m_iPrimaryAmmoType = GetAmmoDef()->Index( GetWpnData().szAmmo1 );
+                if ( m_iPrimaryAmmoType == -1 )
+                {
+                    Msg( "ERROR: Weapon (%s) using undefined primary ammo type (%s)\n", GetClassname(), GetWpnData().szAmmo1 );
+                }
 #if defined( TF_DLL ) || defined( TF_CLIENT_DLL )
-            // Ammo override
-            int iModUseMetalOverride = 0;
-            CALL_ATTRIB_HOOK_INT( iModUseMetalOverride, mod_use_metal_ammo_type );
-            if ( iModUseMetalOverride )
-            {
-                m_iPrimaryAmmoType = ( int )TF_AMMO_METAL;
-            }
+                // Ammo override
+                int iModUseMetalOverride = 0;
+                CALL_ATTRIB_HOOK_INT( iModUseMetalOverride, mod_use_metal_ammo_type );
+                if ( iModUseMetalOverride )
+                {
+                    m_iPrimaryAmmoType = ( int )TF_AMMO_METAL;
+                }
 #endif
-        }
-        if ( GetWpnData().szAmmo2[0] )
-        {
-            m_iSecondaryAmmoType = GetAmmoDef()->Index( GetWpnData().szAmmo2 );
-            if ( m_iSecondaryAmmoType == -1 )
-            {
-                Msg( "ERROR: Weapon (%s) using undefined secondary ammo type (%s)\n", GetClassname(), GetWpnData().szAmmo2 );
             }
-        }
+            if ( GetWpnData().szAmmo2[0] )
+            {
+                m_iSecondaryAmmoType = GetAmmoDef()->Index( GetWpnData().szAmmo2 );
+                if ( m_iSecondaryAmmoType == -1 )
+                {
+                    Msg( "ERROR: Weapon (%s) using undefined secondary ammo type (%s)\n", GetClassname(), GetWpnData().szAmmo2 );
+                }
+            }
 #if defined( CLIENT_DLL )
-        gWR.LoadWeaponSprites( GetWeaponFileInfoHandle() );
+            gWR.LoadWeaponSprites( GetWeaponFileInfoHandle() );
 #endif
-        // Precache models (preload to avoid hitch)
-        m_iViewModelIndex = 0;
-        m_iWorldModelIndex = 0;
-        if ( GetViewModel() && GetViewModel()[0] )
-        {
-            m_iViewModelIndex = CBaseEntity::PrecacheModel( GetViewModel() );
-        }
-        if ( GetWorldModel() && GetWorldModel()[0] )
-        {
-            m_iWorldModelIndex = CBaseEntity::PrecacheModel( GetWorldModel() );
-        }
-
-        // Precache sounds, too
-        for ( int i = 0; i < NUM_SHOOT_SOUND_TYPES; ++i )
-        {
-            const char *shootsound = GetShootSound( i );
-            if ( shootsound && shootsound[0] )
+            // Precache models (preload to avoid hitch)
+            m_iViewModelIndex = 0;
+            m_iWorldModelIndex = 0;
+            if ( GetViewModel() && GetViewModel()[0] )
             {
-                CBaseEntity::PrecacheScriptSound( shootsound );
+                m_iViewModelIndex = CBaseEntity::PrecacheModel( GetViewModel() );
+            }
+            if ( GetWorldModel() && GetWorldModel()[0] )
+            {
+                m_iWorldModelIndex = CBaseEntity::PrecacheModel( GetWorldModel() );
+            }
+
+            // Precache sounds, too
+            for ( int i = 0; i < NUM_SHOOT_SOUND_TYPES; ++i )
+            {
+                const char *shootsound = GetShootSound( i );
+                if ( shootsound && shootsound[0] )
+                {
+                    CBaseEntity::PrecacheScriptSound( shootsound );
+                }
             }
         }
+        else
+        {
+            // Couldn't read data file, remove myself
+            Warning( "Error reading weapon data file for: %s\n", GetClassname() );
+            //	Remove( );	//don't remove, this gets released soon!
+        }
+#if defined( LUA_SDK )
     }
-    else
-    {
-        // Couldn't read data file, remove myself
-        Warning( "Error reading weapon data file for: %s\n", GetClassname() );
-        //	Remove( );	//don't remove, this gets released soon!
-    }
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -769,6 +780,10 @@ void CBaseCombatWeapon::OnPickedUp( CBaseCombatCharacter *pNewOwner )
     HL2MPRules()->RemoveLevelDesignerPlacedObject( this );
 #endif
 
+#ifdef EXPERIMENT_SOURCE
+    ExperimentRules()->RemoveLevelDesignerPlacedObject( this );
+#endif
+
     // Someone picked me up, so make it so that I can't be removed.
     SetRemoveable( false );
 #endif
@@ -1017,7 +1032,7 @@ void CBaseCombatWeapon::Equip( CBaseCombatCharacter *pOwner )
 void CBaseCombatWeapon::SetActivity( Activity act, float duration )
 {
     // Adrian: Oh man...
-#if !defined( CLIENT_DLL ) && ( defined( HL2MP ) || defined( PORTAL ) )
+#if !defined( CLIENT_DLL ) && ( defined( HL2MP ) || defined( PORTAL ) || defined( EXPERIMENT_SOURCE ) )
     SetModel( GetWorldModel() );
 #endif
 
@@ -1028,7 +1043,7 @@ void CBaseCombatWeapon::SetActivity( Activity act, float duration )
         sequence = SelectWeightedSequence( ACT_VM_IDLE );
 
         // Adrian: Oh man again...
-#if !defined( CLIENT_DLL ) && ( defined( HL2MP ) || defined( PORTAL ) )
+#if !defined( CLIENT_DLL ) && ( defined( HL2MP ) || defined( PORTAL ) || defined( EXPERIMENT_SOURCE ) )
     SetModel( GetViewModel() );
 #endif
 
@@ -1463,6 +1478,7 @@ bool CBaseCombatWeapon::DefaultDeploy( char *szViewModel, char *szWeaponModel, i
 bool CBaseCombatWeapon::Deploy()
 {
     MDLCACHE_CRITICAL_SECTION();
+
     bool bResult = DefaultDeploy( ( char * )GetViewModel(), ( char * )GetWorldModel(), GetDrawActivity(), ( char * )GetAnimPrefix() );
 
     return bResult;
@@ -2554,9 +2570,10 @@ void CDmgAccumulator::Process( void )
 
 #if defined( CLIENT_DLL )
 
-BEGIN_PREDICTION_DATA( CBaseCombatWeapon )
+// clang-format off
 
-DEFINE_PRED_FIELD( m_nNextThinkTick, FIELD_INTEGER, FTYPEDESC_INSENDTABLE | FTYPEDESC_NOERRORCHECK ),
+BEGIN_PREDICTION_DATA( CBaseCombatWeapon )
+    DEFINE_PRED_FIELD( m_nNextThinkTick, FIELD_INTEGER, FTYPEDESC_INSENDTABLE ),
     // Networked
     DEFINE_PRED_FIELD( m_hOwner, FIELD_EHANDLE, FTYPEDESC_INSENDTABLE ),
     // DEFINE_FIELD( m_hWeaponFileInfo, FIELD_SHORT ),
@@ -2576,6 +2593,8 @@ DEFINE_PRED_FIELD( m_nNextThinkTick, FIELD_INTEGER, FTYPEDESC_INSENDTABLE | FTYP
 
     // Not networked
 
+    // Experiment; TODO: The following line isn't in the TF2 SDK. Is it needed?
+    DEFINE_PRED_FIELD( m_flTimeWeaponIdle, FIELD_FLOAT, FTYPEDESC_INSENDTABLE ),
     DEFINE_FIELD( m_bInReload, FIELD_BOOLEAN ),
     DEFINE_FIELD( m_bFireOnEmpty, FIELD_BOOLEAN ),
     DEFINE_FIELD( m_bFiringWholeClip, FIELD_BOOLEAN ),
@@ -2602,20 +2621,19 @@ DEFINE_PRED_FIELD( m_nNextThinkTick, FIELD_INTEGER, FTYPEDESC_INSENDTABLE | FTYP
     // DEFINE_FIELD( m_OnPlayerPickup, COutputEvent ),
     // DEFINE_FIELD( m_pConstraint, FIELD_INTEGER ),
 
-    END_PREDICTION_DATA()
+END_PREDICTION_DATA()
 
 #endif  // ! CLIENT_DLL
 
-    // Special hack since we're aliasing the name C_BaseCombatWeapon with a macro on the client
-    IMPLEMENT_NETWORKCLASS_ALIASED( BaseCombatWeapon, DT_BaseCombatWeapon )
+// Special hack since we're aliasing the name C_BaseCombatWeapon with a macro on the client
+IMPLEMENT_NETWORKCLASS_ALIASED( BaseCombatWeapon, DT_BaseCombatWeapon )
 
 #if !defined( CLIENT_DLL )
-    //-----------------------------------------------------------------------------
-    // Purpose: Save Data for Base Weapon object
-    //-----------------------------------------------------------------------------//
-    BEGIN_DATADESC( CBaseCombatWeapon )
-
-        DEFINE_FIELD( m_flNextPrimaryAttack, FIELD_TIME ),
+//-----------------------------------------------------------------------------
+// Purpose: Save Data for Base Weapon object
+//-----------------------------------------------------------------------------//
+BEGIN_DATADESC( CBaseCombatWeapon )
+    DEFINE_FIELD( m_flNextPrimaryAttack, FIELD_TIME ),
     DEFINE_FIELD( m_flNextSecondaryAttack, FIELD_TIME ),
     DEFINE_FIELD( m_flTimeWeaponIdle, FIELD_TIME ),
 
@@ -2691,18 +2709,19 @@ DEFINE_PRED_FIELD( m_nNextThinkTick, FIELD_INTEGER, FTYPEDESC_INSENDTABLE | FTYP
     DEFINE_OUTPUT( m_OnPlayerPickup, "OnPlayerPickup" ),
     DEFINE_OUTPUT( m_OnNPCPickup, "OnNPCPickup" ),
     DEFINE_OUTPUT( m_OnCacheInteraction, "OnCacheInteraction" ),
+END_DATADESC()
 
-    END_DATADESC()
+static bool WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
 
-    //-----------------------------------------------------------------------------
-    // Purpose: Only send to local player if this weapon is the active weapon
-    // Input  : *pStruct -
-    //			*pVarData -
-    //			*pRecipients -
-    //			objectID -
-    // Output : void*
-    //-----------------------------------------------------------------------------
-    void *SendProxy_SendActiveLocalWeaponDataTable( const SendProp *pProp, const void *pStruct, const void *pVarData, CSendProxyRecipients *pRecipients, int objectID )
+//-----------------------------------------------------------------------------
+// Purpose: Only send to local player if this weapon is the active weapon
+// Input  : *pStruct -
+//			*pVarData -
+//			*pRecipients -
+//			objectID -
+// Output : void*
+//-----------------------------------------------------------------------------
+void *SendProxy_SendActiveLocalWeaponDataTable( const SendProp *pProp, const void *pStruct, const void *pVarData, CSendProxyRecipients *pRecipients, int objectID )
 {
     // Get the weapon entity
     CBaseCombatWeapon *pWeapon = ( CBaseCombatWeapon * )pVarData;
@@ -2798,9 +2817,12 @@ static void RecvProxy_WeaponOwner( const CRecvProxyData *pData, void *pStruct, v
 //-----------------------------------------------------------------------------
 // Purpose: Propagation data for weapons. Only sent when a player's holding it.
 //-----------------------------------------------------------------------------
+
+// clang-format off
+
 BEGIN_NETWORK_TABLE_NOBASE( CBaseCombatWeapon, DT_LocalActiveWeaponData )
 #if !defined( CLIENT_DLL )
-SendPropTime( SENDINFO( m_flNextPrimaryAttack ) ),
+    SendPropTime( SENDINFO( m_flNextPrimaryAttack ) ),
     SendPropTime( SENDINFO( m_flNextSecondaryAttack ) ),
     SendPropInt( SENDINFO( m_nNextThinkTick ) ),
     SendPropTime( SENDINFO( m_flTimeWeaponIdle ) ),
@@ -2810,19 +2832,19 @@ SendPropTime( SENDINFO( m_flNextPrimaryAttack ) ),
 #endif
 
 #else
-RecvPropTime( RECVINFO( m_flNextPrimaryAttack ) ),
+    RecvPropTime( RECVINFO( m_flNextPrimaryAttack ) ),
     RecvPropTime( RECVINFO( m_flNextSecondaryAttack ) ),
     RecvPropInt( RECVINFO( m_nNextThinkTick ) ),
     RecvPropTime( RECVINFO( m_flTimeWeaponIdle ) ),
 #endif
-    END_NETWORK_TABLE()
+END_NETWORK_TABLE()
 
-    //-----------------------------------------------------------------------------
-    // Purpose: Propagation data for weapons. Only sent when a player's holding it.
-    //-----------------------------------------------------------------------------
-    BEGIN_NETWORK_TABLE_NOBASE( CBaseCombatWeapon, DT_LocalWeaponData )
+//-----------------------------------------------------------------------------
+// Purpose: Propagation data for weapons. Only sent when a player's holding it.
+//-----------------------------------------------------------------------------
+BEGIN_NETWORK_TABLE_NOBASE( CBaseCombatWeapon, DT_LocalWeaponData )
 #if !defined( CLIENT_DLL )
-        SendPropIntWithMinusOneFlag( SENDINFO( m_iClip1 ), 8 ),
+    SendPropIntWithMinusOneFlag( SENDINFO( m_iClip1 ), 8 ),
     SendPropIntWithMinusOneFlag( SENDINFO( m_iClip2 ), 8 ),
     SendPropInt( SENDINFO( m_iPrimaryAmmoType ), 8 ),
     SendPropInt( SENDINFO( m_iSecondaryAmmoType ), 8 ),
@@ -2837,7 +2859,7 @@ RecvPropTime( RECVINFO( m_flNextPrimaryAttack ) ),
 #endif
 
 #else
-        RecvPropIntWithMinusOneFlag( RECVINFO( m_iClip1 ) ),
+    RecvPropIntWithMinusOneFlag( RECVINFO( m_iClip1 ) ),
     RecvPropIntWithMinusOneFlag( RECVINFO( m_iClip2 ) ),
     RecvPropInt( RECVINFO( m_iPrimaryAmmoType ) ),
     RecvPropInt( RECVINFO( m_iSecondaryAmmoType ) ),
@@ -2848,22 +2870,24 @@ RecvPropTime( RECVINFO( m_flNextPrimaryAttack ) ),
     RecvPropBool( RECVINFO( m_bFlipViewModel ) ),
 
 #endif
-    END_NETWORK_TABLE()
+END_NETWORK_TABLE()
 
-        BEGIN_NETWORK_TABLE( CBaseCombatWeapon, DT_BaseCombatWeapon )
+BEGIN_NETWORK_TABLE( CBaseCombatWeapon, DT_BaseCombatWeapon )
 #if !defined( CLIENT_DLL )
-            SendPropDataTable( "LocalWeaponData", 0, &REFERENCE_SEND_TABLE( DT_LocalWeaponData ), SendProxy_SendLocalWeaponDataTable ),
+    SendPropDataTable( "LocalWeaponData", 0, &REFERENCE_SEND_TABLE( DT_LocalWeaponData ), SendProxy_SendLocalWeaponDataTable ),
     SendPropDataTable( "LocalActiveWeaponData", 0, &REFERENCE_SEND_TABLE( DT_LocalActiveWeaponData ), SendProxy_SendActiveLocalWeaponDataTable ),
     SendPropModelIndex( SENDINFO( m_iViewModelIndex ) ),
     SendPropModelIndex( SENDINFO( m_iWorldModelIndex ) ),
     SendPropInt( SENDINFO( m_iState ), 8, SPROP_UNSIGNED ),
     SendPropEHandle( SENDINFO( m_hOwner ) ),
 #else
-            RecvPropDataTable( "LocalWeaponData", 0, 0, &REFERENCE_RECV_TABLE( DT_LocalWeaponData ) ),
+    RecvPropDataTable( "LocalWeaponData", 0, 0, &REFERENCE_RECV_TABLE( DT_LocalWeaponData ) ),
     RecvPropDataTable( "LocalActiveWeaponData", 0, 0, &REFERENCE_RECV_TABLE( DT_LocalActiveWeaponData ) ),
     RecvPropInt( RECVINFO( m_iViewModelIndex ) ),
     RecvPropInt( RECVINFO( m_iWorldModelIndex ) ),
     RecvPropInt( RECVINFO( m_iState ), 0, &CBaseCombatWeapon::RecvProxy_WeaponState ),
     RecvPropEHandle( RECVINFO( m_hOwner ), RecvProxy_WeaponOwner ),
 #endif
-    END_NETWORK_TABLE()
+END_NETWORK_TABLE()
+
+static bool WORKAROUND_NASTY_FORMATTING_BUG2;  // clang-format on

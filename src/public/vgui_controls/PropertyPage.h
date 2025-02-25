@@ -26,7 +26,11 @@ class PropertyPage : public EditablePanel
     DECLARE_CLASS_SIMPLE( PropertyPage, EditablePanel );
 
    public:
+#ifdef LUA_SDK
+    PropertyPage( Panel *parent, const char *panelName, lua_State *L = nullptr );
+#else
     PropertyPage( Panel *parent, const char *panelName );
+#endif
     ~PropertyPage();
 
     // Called when page is loaded.  Data should be reloaded from document into controls.

@@ -87,7 +87,11 @@ class TextEntry : public Panel
     DECLARE_CLASS_SIMPLE( TextEntry, Panel );
 
    public:
+#ifdef LUA_SDK
+    TextEntry( Panel *parent, const char *panelName, lua_State *L = nullptr );
+#else
     TextEntry( Panel *parent, const char *panelName );
+#endif
     virtual ~TextEntry();
 
     virtual void SetText( const wchar_t *wszText );
@@ -229,6 +233,16 @@ class TextEntry : public Panel
     void SetSelectionUnfocusedBgColor( const Color &clr );
 
     void SetUseFallbackFont( bool bState, HFont hFallback );
+
+    virtual void PaintText( Color foregroundColor, Color highlightColor, Color cursorColor );
+    virtual int GetCursorPos() const
+    {
+        return _cursorPos;
+    }
+    virtual void SetCursorPos( int position )
+    {
+        _cursorPos = position;
+    }
 
    protected:
     virtual void ResetCursorBlink();

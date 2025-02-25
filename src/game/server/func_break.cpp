@@ -135,10 +135,12 @@ const char *pFGDPropData[] =
         "Glass.Window",
 };
 
-LINK_ENTITY_TO_CLASS( func_breakable, CBreakable );
-BEGIN_DATADESC( CBreakable )
+// clang-format off
 
-DEFINE_FIELD( m_Material, FIELD_INTEGER ),
+LINK_ENTITY_TO_CLASS( func_breakable, CBreakable );
+
+BEGIN_DATADESC( CBreakable )
+    DEFINE_FIELD( m_Material, FIELD_INTEGER ),
     DEFINE_KEYFIELD( m_Explosion, FIELD_INTEGER, "explosion" ),
     DEFINE_KEYFIELD( m_GibDir, FIELD_VECTOR, "gibdir" ),
     DEFINE_FIELD( m_hBreaker, FIELD_EHANDLE ),
@@ -187,10 +189,11 @@ DEFINE_FIELD( m_Material, FIELD_INTEGER ),
     // Physics Influence
     DEFINE_FIELD( m_hPhysicsAttacker, FIELD_EHANDLE ),
     DEFINE_FIELD( m_flLastPhysicsInfluenceTime, FIELD_TIME ),
+END_DATADESC()
 
-    END_DATADESC()
+IMPLEMENT_AUTO_LIST( IBreakablePropAutoList );
 
-        IMPLEMENT_AUTO_LIST( IBreakablePropAutoList );
+// clang-format on
 
 //-----------------------------------------------------------------------------
 // Purpose:

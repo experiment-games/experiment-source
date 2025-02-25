@@ -43,6 +43,11 @@
 
 #include "tier0/vprof.h"
 
+#ifdef LUA_SDK
+#include <luamanager.h>
+#include "scripted_controls/lPanel.h"
+#endif
+
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
 
@@ -646,11 +651,115 @@ Panel::Panel( Panel *parent, const char *panelName, HScheme scheme )
     SetScheme( scheme );
 }
 
+#ifdef LUA_SDK
+//-----------------------------------------------------------------------------
+// Purpose: Constructor for Lua create Panels
+//-----------------------------------------------------------------------------
+Panel::Panel( Panel *parent, const char *panelName, lua_State *L )
+{
+    m_lua_State = L;
+    Init( 0, 0, 64, 24 );
+    SetName( panelName );
+    SetParent( parent );
+    SetBuildModeEditable( true );
+}
+
+void *Panel::CreateLuaInstance( lua_State *L, Panel *pInstance )
+{
+    if ( pInstance )
+        pInstance->m_nRefCount++;
+
+    PHandle *_pPanelHandle = ( PHandle * )lua_newuserdata( L, sizeof( PHandle ) );
+    _pPanelHandle->Set( pInstance );
+
+    return _pPanelHandle;
+}
+
+/// <summary>
+///
+/// </summary>
+/// <param name="L"></param>
+/// <param name="panel"></param>
+[[deprecated]]
+void Panel::PushVPanelLuaInstance( lua_State *L, VPANEL panel )
+{
+    Panel *pPanel = ipanel()->GetPanel( panel, GetControlsModuleName() );
+
+    // We push non Lua panels as NULL (happens for internal panels like the root/gameui panels)
+    if ( !pPanel || pPanel->m_lua_State == nullptr )
+    {
+        PHandle *_pPanelHandle = ( PHandle * )lua_newuserdata( L, sizeof( PHandle ) );
+        _pPanelHandle->Set( ( Panel * )0 );
+        luaL_getmetatable( L, "Panel" );
+        lua_setmetatable( L, -2 );
+        return;
+    }
+
+    AssertMsg( pPanel->m_lua_State == L, "Lua Panel with wrong Lua state" );
+
+    pPanel->PushLuaInstance( L );
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: Initialize any variables in the reference table
+//-----------------------------------------------------------------------------
+void Panel::SetupRefTable( lua_State *L )
+{
+    if ( m_lua_State == nullptr )
+        m_lua_State = L;
+
+    // Some panels may not have a Lua state yet, so we set it. But in any
+    // case it should always be the same lua state as the one passed to this
+    // function.
+    Assert( m_lua_State == L );
+
+    lua_newtable( L );
+    m_nTableReference = luaL_ref( L, LUA_REGISTRYINDEX );
+}
+
+void Panel::Prepare()
+{
+    lua_rawgeti( m_lua_State, LUA_REGISTRYINDEX, m_nTableReference );
+    lua_pushnil( m_lua_State );
+    while ( lua_next( m_lua_State, -2 ) != 0 )
+    {
+        if ( lua_isfunction( m_lua_State, -1 ) )
+        {
+            const char *functionName = lua_tostring( m_lua_State, -2 );
+            if ( !IsFunctionPrepared( functionName ) )
+            {
+                m_PreparedFunctions.Insert( functionName, 0 );
+            }
+        }
+        lua_pop( m_lua_State, 1 );
+    }
+    lua_pop( m_lua_State, 1 );
+
+    // If we have a parent AND it has had OnChildAdded prepared, call it for this
+    // panel.
+    Panel *pParent = GetParent();
+
+    // TODO:    HACK, find out how/when prepare whatever ChildAdded should be called
+    //          safely. See IsFunctionPrepared for details on bug this works around.
+    if ( pParent && pParent->IsFunctionPrepared( "OnChildAdded" ) )
+    {
+        LUA_CALL_PANEL_METHOD_FOR_BEGIN( pParent, "OnChildAdded" );
+        this->PushLuaInstance( m_lua_State );
+        LUA_CALL_PANEL_METHOD_END( 1, 0 );
+    }
+}
+#endif
+
 //-----------------------------------------------------------------------------
 // Purpose: Setup
 //-----------------------------------------------------------------------------
 void Panel::Init( int x, int y, int wide, int tall )
 {
+#ifdef LUA_SDK
+    m_nTableReference = LUA_NOREF;
+    m_nRefCount = 0;
+#endif  // LUA_SDK
+
     _panelName = NULL;
     _tooltipText = NULL;
     _pinToSibling = NULL;
@@ -783,6 +892,14 @@ Panel::~Panel()
             ipanel()->SetParent( child, NULL );
         }
     }
+
+#ifdef LUA_SDK
+    if ( m_lua_State )
+    {
+        lua_unref( m_lua_State, m_nTableReference );
+        m_lua_State = NULL;
+    }
+#endif  // LUA_SDK
 
     // delete VPanel
     ivgui()->FreePanel( _vpanel );
@@ -925,8 +1042,8 @@ int Panel::GetYPos()
 //-----------------------------------------------------------------------------
 void Panel::SetSize( int wide, int tall )
 {
-    tmZone( TELEMETRY_LEVEL0, TMZF_NONE, "%s - %s", __FUNCTION__, GetName() );
-    Assert( abs( wide ) < 32768 && abs( tall ) < 32768 );
+    // Experiment; Commented out this assert, because scrollable panels may be way larger than 32768
+    // Assert( abs( wide ) < 32768 && abs( tall ) < 32768 );
     ipanel()->SetSize( GetVPanel(), wide, tall );
 }
 
@@ -1020,6 +1137,13 @@ void Panel::OnScreenSizeChanged( int nOldWide, int nOldTall )
 
     // invalidate our settings
     InvalidateLayout();
+
+#ifdef LUA_SDK
+    LUA_CALL_PANEL_METHOD_BEGIN( "OnScreenSizeChanged" );
+    lua_pushinteger( m_lua_State, nOldWide );
+    lua_pushinteger( m_lua_State, nOldTall );
+    LUA_CALL_PANEL_METHOD_END( 2, 0 );
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -1096,10 +1220,19 @@ void Panel::Think()
         {
             m_pTooltips->PerformLayout();
         }
+
         if ( _flags.IsFlagSet( NEEDS_LAYOUT ) )
         {
             InternalPerformLayout();
         }
+
+#ifdef LUA_SDK
+        LUA_CALL_PANEL_METHOD_BEGIN( "Think" );
+        LUA_CALL_PANEL_METHOD_END( 0, 0 );
+
+        LUA_CALL_PANEL_METHOD_BEGIN( "AnimationThink" );
+        LUA_CALL_PANEL_METHOD_END( 0, 0 );
+#endif
     }
 
     OnThink();
@@ -1197,9 +1330,7 @@ void Panel::PaintTraverse( bool repaint, bool allowForce )
         // draw the front of the panel with the inset
         if ( _flags.IsFlagSet( PAINT_ENABLED ) )
         {
-            surface()->PushMakeCurrent( vpanel, true );
-            Paint();
-            surface()->PopMakeCurrent( vpanel );
+            PaintManual();
         }
     }
 
@@ -1211,24 +1342,27 @@ void Panel::PaintTraverse( bool repaint, bool allowForce )
         VPANEL child = children[i];
         bool bVisible = ipanel()->IsVisible( child );
 
-        if ( surface()->ShouldPaintChildPanel( child ) )
+        // Experiment;  We've commented these checks, since they prevented popups
+        //              from drawing back to front. Let's hope this doesn't break
+        //              anything else.
+        // if ( surface()->ShouldPaintChildPanel( child ) )
         {
             if ( bVisible )
             {
                 ipanel()->PaintTraverse( child, repaint, allowForce );
             }
         }
-        else
-        {
-            // Invalidate the child panel so that it gets redrawn
-            surface()->Invalidate( child );
+        // else
+        //{
+        //     // Invalidate the child panel so that it gets redrawn
+        //     surface()->Invalidate( child );
 
-            // keep traversing the tree, just don't allow anyone to paint after here
-            if ( bVisible )
-            {
-                ipanel()->PaintTraverse( child, false, false );
-            }
-        }
+        //    // keep traversing the tree, just don't allow anyone to paint after here
+        //    if ( bVisible )
+        //    {
+        //        ipanel()->PaintTraverse( child, false, false );
+        //    }
+        //}
     }
 
     // draw the border last
@@ -1246,7 +1380,6 @@ void Panel::PaintTraverse( bool repaint, bool allowForce )
         // IsBuildGroupEnabled recurses up all the parents and ends up being very expensive as it wanders all over memory
         if ( GetBuildModeDialogCount() && IsBuildGroupEnabled() )  //&& HasFocus() )
         {
-            // outline all selected panels
             // outline all selected panels
             CUtlVector< PHandle > *controlGroup = _buildGroup->GetControlGroup();
             for ( int i = 0; i < controlGroup->Size(); ++i )
@@ -1267,6 +1400,15 @@ void Panel::PaintTraverse( bool repaint, bool allowForce )
             PostChildPaint();
             surface()->PopMakeCurrent( vpanel );
         }
+
+#ifdef LUA_SDK
+        surface()->PushMakeCurrent( vpanel, false );
+        LUA_CALL_PANEL_METHOD_BEGIN( "PaintOver" );
+        lua_pushinteger( m_lua_State, GetWide() );
+        lua_pushinteger( m_lua_State, GetTall() );
+        LUA_CALL_PANEL_METHOD_END( 2, 0 );
+        surface()->PopMakeCurrent( vpanel );
+#endif
     }
 
     surface()->DrawSetAlphaMultiplier( oldAlphaMultiplier );
@@ -1277,6 +1419,9 @@ void Panel::PaintTraverse( bool repaint, bool allowForce )
     {
         surface()->PopFullscreenViewport();
     }
+
+    input()->GetCursorPos( m_nLastLocalCursorX, m_nLastLocalCursorY );
+    ScreenToLocal( m_nLastLocalCursorX, m_nLastLocalCursorY );
 }
 
 //-----------------------------------------------------------------------------
@@ -1285,6 +1430,11 @@ void Panel::PaintTraverse( bool repaint, bool allowForce )
 void Panel::PaintBorder()
 {
     _border->Paint( GetVPanel() );
+
+#ifdef LUA_SDK
+    LUA_CALL_PANEL_METHOD_BEGIN( "PaintBorder" );
+    LUA_CALL_PANEL_METHOD_END( 0, 0 );
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -1356,6 +1506,41 @@ void Panel::Paint()
 }
 
 //-----------------------------------------------------------------------------
+// Purpose: Called only if PAINT_ENABLED is set
+//-----------------------------------------------------------------------------
+void Panel::PaintManual()
+{
+    VPANEL vpanel = GetVPanel();
+    surface()->PushMakeCurrent( vpanel, true );
+
+#ifdef LUA_SDK
+    LUA_CALL_PANEL_METHOD_BEGIN( "Paint" );
+    lua_pushinteger( m_lua_State, GetWide() );
+    lua_pushinteger( m_lua_State, GetTall() );
+    LUA_CALL_PANEL_METHOD_END( 2, 1 );
+
+    bool paintOverride = false;
+
+    if ( m_lua_State && m_nTableReference >= 0 )
+    {
+        paintOverride = lua_isboolean( m_lua_State, -1 ) && lua_toboolean( m_lua_State, -1 );
+        lua_pop( m_lua_State, 1 );
+    }
+
+    if ( !paintOverride )
+    {
+#endif
+
+        Paint();
+
+#ifdef LUA_SDK
+    }
+#endif
+
+    surface()->PopMakeCurrent( vpanel );
+}
+
+//-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
 void Panel::PostChildPaint()
@@ -1364,6 +1549,11 @@ void Panel::PostChildPaint()
     // This is called if _postChildPaintEnabled is true and allows painting to
     //  continue on the surface after all of the panel's children have painted
     //  themselves.  Allows drawing an overlay on top of the children, etc.
+
+#ifdef LUA_SDK  // Except for Lua
+    LUA_CALL_PANEL_METHOD_BEGIN( "PostChildPaint" );
+    LUA_CALL_PANEL_METHOD_END( 0, 0 );
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -1371,6 +1561,13 @@ void Panel::PostChildPaint()
 //-----------------------------------------------------------------------------
 void Panel::PaintBuildOverlay()
 {
+#ifdef LUA_SDK
+    LUA_CALL_PANEL_METHOD_BEGIN( "PaintBuildOverlay" );
+    LUA_CALL_PANEL_METHOD_END( 0, 1 );
+
+    LUA_RETURN_PANEL_NONE();
+#endif
+
     int wide, tall;
     GetSize( wide, tall );
     surface()->DrawSetColor( 0, 0, 0, 255 );
@@ -1449,6 +1646,29 @@ void Panel::SetParent( VPANEL newParent )
         ipanel()->SetParent( GetVPanel(), NULL );
     }
 
+    // Experiment; The following section is commented after merging the TF2 SDK. Test if this no works.
+    /*if ( GetVParent() && !IsPopup() )
+    {
+        SetProportional( ipanel()->IsProportional( GetVParent() ) );
+
+        // Experiment;  the following logic is disabled as it caused an issue when MakePopup is
+        //              called on a panel which already has children created in :Init()
+        //              The children would get SetParent here and IsPopup would be false after
+        //              which the code below recursively copies the parent's keyboard and mouse
+        //              input settings to all children.
+        //              When MakePopup is called, for some reason the children are not focusable
+        //              :/ There might be an easier fix, but I couldn't find it.
+        // // most of the time KBInput == parents kbinput
+        // if ( ipanel()->IsKeyBoardInputEnabled( GetVParent() ) != IsKeyBoardInputEnabled() )
+        // {
+        //     SetKeyBoardInputEnabled( ipanel()->IsKeyBoardInputEnabled( GetVParent() ) );
+        // }
+        //
+        // if ( ipanel()->IsMouseInputEnabled( GetVParent() ) != IsMouseInputEnabled() )
+        // {
+        //     SetMouseInputEnabled( ipanel()->IsMouseInputEnabled( GetVParent() ) );
+        // }
+    }*/
     if ( GetVParent() )
     {
         SetProportional( ipanel()->IsProportional( GetVParent() ) );
@@ -1483,6 +1703,24 @@ void Panel::OnChildAdded( VPANEL child )
         auto idx = m_dictChidlren.Insert( pChild->GetName() );
         m_dictChidlren[idx].Set( child );
     }
+
+#ifdef LUA_SDK
+    // When OnChildAdded is called for the panel, it may not have its Lua state
+    // initialized yet. So we need to check if it has a Lua state and if it does,
+    // only then call OnChildAdded with it as an argument.
+    Panel *pPanel = ipanel()->GetPanel( child, GetControlsModuleName() );
+
+    // Additionally, the panel we push must have already been pushed once, so its
+    // metatable is set up by the most specific subclass of Panel that it is.
+    // Otherwise we might push it as Panel, meaning less specific methods will be
+    // available.
+    if ( pPanel && pPanel->m_lua_State != NULL && pPanel->m_pLuaInstance != nullptr )
+    {
+        LUA_CALL_PANEL_METHOD_BEGIN( "OnChildAdded" );
+        pPanel->PushLuaInstance( m_lua_State );
+        LUA_CALL_PANEL_METHOD_END( 1, 0 );
+    }
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -1497,6 +1735,12 @@ void Panel::OnChildRemoved( Panel *pChild )
 //-----------------------------------------------------------------------------
 void Panel::OnSizeChanged( int newWide, int newTall )
 {
+#ifdef LUA_SDK
+    LUA_CALL_PANEL_METHOD_BEGIN( "OnSizeChanged" );
+    lua_pushinteger( m_lua_State, newWide );
+    lua_pushinteger( m_lua_State, newTall );
+    LUA_CALL_PANEL_METHOD_END( 2, 0 );
+#endif
     InvalidateLayout();  // our size changed so force us to layout again
 }
 
@@ -1530,6 +1774,21 @@ void Panel::SetAlpha( int alpha )
 int Panel::GetAlpha()
 {
     return ( int )m_flAlpha;
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: Moves the panel to the back of the z-order
+//-----------------------------------------------------------------------------
+void Panel::MoveToBack( void )
+{
+    if ( IsPopup() )
+    {
+        surface()->MovePopupToBack( GetVPanel() );
+    }
+    else
+    {
+        ipanel()->MoveToBack( GetVPanel() );
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -2967,6 +3226,7 @@ void Panel::InternalSetCursor()
 //-----------------------------------------------------------------------------
 void Panel::OnThink()
 {
+#ifndef LUA_SDK
 #if defined( VGUI_USEDRAGDROP )
     if ( IsPC() &&
          m_pDragDrop->m_bDragEnabled &&
@@ -3048,11 +3308,18 @@ void Panel::OnThink()
         }
     }
 #endif
+#endif
 }
 
 // input messages handlers (designed for override)
 void Panel::OnCursorMoved( int x, int y )
 {
+#ifdef LUA_SDK
+    LUA_CALL_PANEL_METHOD_BEGIN( "OnCursorMoved" );
+    lua_pushinteger( m_lua_State, x );
+    lua_pushinteger( m_lua_State, y );
+    LUA_CALL_PANEL_METHOD_END( 2, 0 );
+#else
     if ( ParentNeedsCursorMoveEvents() )
     {
         // figure out x and y in parent space
@@ -3060,30 +3327,75 @@ void Panel::OnCursorMoved( int x, int y )
         ipanel()->GetPos( GetVPanel(), thisX, thisY );
         CallParentFunction( new KeyValues( "OnCursorMoved", "x", x + thisX, "y", y + thisY ) );
     }
+#endif
 }
 
 void Panel::OnCursorEntered()
 {
+#ifdef LUA_SDK
+    if ( m_lua_State )
+    {
+        LUA_GET_REF_TABLE( m_lua_State, this );
+        lua_pushboolean( m_lua_State, true );
+        lua_setfield( m_lua_State, -2, "Hovered" );
+        lua_pop( m_lua_State, 1 );
+    }
+
+    LUA_CALL_PANEL_METHOD_BEGIN( "OnCursorEntered" );
+    LUA_CALL_PANEL_METHOD_END( 0, 0 );
+#endif
 }
 
 void Panel::OnCursorExited()
 {
+#ifdef LUA_SDK
+    if ( m_lua_State )
+    {
+        LUA_GET_REF_TABLE( m_lua_State, this );
+        lua_pushboolean( m_lua_State, false );
+        lua_setfield( m_lua_State, -2, "Hovered" );
+        lua_pop( m_lua_State, 1 );
+    }
+
+    LUA_CALL_PANEL_METHOD_BEGIN( "OnCursorExited" );
+    LUA_CALL_PANEL_METHOD_END( 0, 0 );
+#endif
 }
 
 void Panel::OnMousePressed( MouseCode code )
 {
+#ifdef LUA_SDK
+    LUA_CALL_PANEL_METHOD_BEGIN( "OnMousePressed" );
+    lua_pushinteger( m_lua_State, code );
+    LUA_CALL_PANEL_METHOD_END( 1, 0 );
+#endif
 }
 
 void Panel::OnMouseDoublePressed( MouseCode code )
 {
+#ifdef LUA_SDK
+    LUA_CALL_PANEL_METHOD_BEGIN( "OnMouseDoublePressed" );
+    lua_pushinteger( m_lua_State, code );
+    LUA_CALL_PANEL_METHOD_END( 1, 0 );
+#endif
 }
 
 void Panel::OnMouseTriplePressed( MouseCode code )
 {
+#ifdef LUA_SDK
+    LUA_CALL_PANEL_METHOD_BEGIN( "OnMouseTriplePressed" );
+    lua_pushinteger( m_lua_State, code );
+    LUA_CALL_PANEL_METHOD_END( 1, 0 );
+#endif
 }
 
 void Panel::OnMouseReleased( MouseCode code )
 {
+#ifdef LUA_SDK
+    LUA_CALL_PANEL_METHOD_BEGIN( "OnMouseReleased" );
+    lua_pushinteger( m_lua_State, code );
+    LUA_CALL_PANEL_METHOD_END( 1, 0 );
+#endif
 }
 
 void Panel::OnMouseMismatchedRelease( MouseCode code, Panel *pPressedPanel )
@@ -3092,12 +3404,28 @@ void Panel::OnMouseMismatchedRelease( MouseCode code, Panel *pPressedPanel )
 
 void Panel::OnMouseWheeled( int delta )
 {
+#ifdef LUA_SDK
+    LUA_CALL_PANEL_METHOD_BEGIN( "OnMouseWheeled" );
+    lua_pushinteger( m_lua_State, delta );
+    LUA_CALL_PANEL_METHOD_END( 1, 1 );
+
+    LUA_RETURN_PANEL_NONE();
+#endif
+
     CallParentFunction( new KeyValues( "MouseWheeled", "delta", delta ) );
 }
 
 // base implementation forwards Key messages to the Panel's parent - override to 'swallow' the input
 void Panel::OnKeyCodePressed( KeyCode code )
 {
+#ifdef LUA_SDK
+    LUA_CALL_PANEL_METHOD_BEGIN( "OnKeyCodePressed" );
+    lua_pushinteger( m_lua_State, code );
+    LUA_CALL_PANEL_METHOD_END( 1, 1 );
+
+    LUA_RETURN_PANEL_NONE();
+#endif
+
     static ConVarRef vgui_nav_lock( "vgui_nav_lock" );
 
     bool handled = false;
@@ -3171,6 +3499,14 @@ void Panel::OnKeyCodePressed( KeyCode code )
 void Panel::OnKeyCodeTyped( KeyCode keycode )
 {
     vgui::KeyCode code = GetBaseButtonCode( keycode );
+
+#ifdef LUA_SDK
+    LUA_CALL_PANEL_METHOD_BEGIN( "OnKeyCodeTyped" );
+    lua_pushinteger( m_lua_State, code );
+    LUA_CALL_PANEL_METHOD_END( 1, 1 );
+
+    LUA_RETURN_PANEL_NONE();
+#endif
 
     // handle focus change
     if ( IsX360() || IsConsoleStylePanel() )
@@ -3277,16 +3613,38 @@ void Panel::OnKeyTyped( wchar_t unichar )
 
 void Panel::OnKeyCodeReleased( KeyCode code )
 {
+#ifdef LUA_SDK
+    LUA_CALL_PANEL_METHOD_BEGIN( "OnKeyCodeReleased" );
+    lua_pushinteger( m_lua_State, code );
+    LUA_CALL_PANEL_METHOD_END( 1, 1 );
+
+    LUA_RETURN_PANEL_NONE();
+#endif
+
     CallParentFunction( new KeyValues( "KeyCodeReleased", "code", code ) );
 }
 
 void Panel::OnKeyFocusTicked()
 {
+#ifdef LUA_SDK
+    LUA_CALL_PANEL_METHOD_BEGIN( "OnKeyFocusTicked" );
+    LUA_CALL_PANEL_METHOD_END( 0, 1 );
+
+    LUA_RETURN_PANEL_NONE();
+#endif
+
     CallParentFunction( new KeyValues( "KeyFocusTicked" ) );
 }
 
 void Panel::OnMouseFocusTicked()
 {
+#ifdef LUA_SDK
+    LUA_CALL_PANEL_METHOD_BEGIN( "OnMouseFocusTicked" );
+    LUA_CALL_PANEL_METHOD_END( 0, 1 );
+
+    LUA_RETURN_PANEL_NONE();
+#endif
+
     CallParentFunction( new KeyValues( "OnMouseFocusTicked" ) );
 }
 
@@ -3514,6 +3872,16 @@ bool Panel::IsBuildModeActive()
 //-----------------------------------------------------------------------------
 void Panel::GetClipRect( int &x0, int &y0, int &x1, int &y1 )
 {
+#ifdef LUA_SDK
+    if ( !m_bIsPaintClipping )
+    {
+        // If we're not clipping, then return the entire screen
+        x0 = 0;
+        y0 = 0;
+        surface()->GetScreenSize( x1, y1 );
+        return;
+    }
+#endif
     ipanel()->GetClipRect( GetVPanel(), x0, y0, x1, y1 );
 }
 
@@ -3544,6 +3912,250 @@ CUtlVector< VPANEL > &Panel::GetChildren()
 {
     return ipanel()->GetChildren( GetVPanel() );
 }
+
+#ifdef LUA_SDK
+void Panel::GetChildrenSize( int &wide, int &tall )
+{
+    wide = 0;
+    tall = 0;
+
+    // If we need laying out, do it now
+    if ( _flags.IsFlagSet( NEEDS_LAYOUT ) && !_flags.IsFlagSet( IN_PERFORM_LAYOUT ) )
+    {
+        InternalPerformLayout();
+    }
+
+    for ( int i = 0; i < GetChildCount(); i++ )
+    {
+        Panel *child = GetChild( i );
+
+        if ( !child->IsVisible() )
+        {
+            continue;
+        }
+
+        // If the child needs laying out, do it now
+        if ( child->_flags.IsFlagSet( NEEDS_LAYOUT ) && !child->_flags.IsFlagSet( IN_PERFORM_LAYOUT ) )
+        {
+            // child->InternalPerformLayout();
+        }
+
+        int x, y, childWide, childTall;
+        child->GetBounds( x, y, childWide, childTall );
+
+        wide = MAX( wide, x + childWide );
+        tall = MAX( tall, y + childTall );
+    }
+}
+
+void Panel::SizeToChildren( bool sizeWide /* = false */, bool sizeTall /* = false */ )
+{
+    // If we need laying out, do it now
+    // TODO: This feels like a hack, but we need it to have the spawnmenu AND derma_controls layout to get the correct height on init.
+    RecurseInternalPerformChildrenLayout();
+
+    int wide = 0, tall = 0;
+    GetChildrenSize( wide, tall );
+
+    SetSize( sizeWide ? wide : GetWide(), sizeTall ? tall : GetTall() );
+}
+
+void Panel::SetDockPadding( Thickness padding )
+{
+    if ( m_DockPadding.left == padding.left &&
+         m_DockPadding.top == padding.top &&
+         m_DockPadding.right == padding.right &&
+         m_DockPadding.bottom == padding.bottom )
+        return;
+
+    m_DockPadding = padding;
+
+    InvalidateLayout();
+    InvalidateParentLayout();
+}
+
+Thickness Panel::GetDockPadding()
+{
+    return m_DockPadding;
+}
+
+void Panel::SetDockMargin( Thickness margin )
+{
+    if ( m_DockMargin.left == margin.left &&
+         m_DockMargin.top == margin.top &&
+         m_DockMargin.right == margin.right &&
+         m_DockMargin.bottom == margin.bottom )
+        return;
+
+    m_DockMargin = margin;
+
+    InvalidateLayout();
+    InvalidateParentLayout();
+}
+
+Thickness Panel::GetDockMargin()
+{
+    return m_DockMargin;
+}
+
+void Panel::SetDock( Dock::Type dockStyle )
+{
+    if ( m_DockStyle == dockStyle )
+        return;
+
+    m_DockStyle = dockStyle;
+
+    InvalidateLayout();
+    InvalidateParentLayout();
+}
+
+Dock::Type Panel::GetDock()
+{
+    return m_DockStyle;
+}
+
+/*
+** Based on GWEN's Docking system:
+** https://github.com/garrynewman/GWEN/blob/ca010e87e3df13749d7a9420918c566f99a28021/gwen/src/Controls/Base.cpp#L704
+*/
+void Panel::RecurseLayout()
+{
+    // if ( _flags.IsFlagSet( NEEDS_LAYOUT ) )
+    //{
+    //     InternalPerformLayout();
+    // }
+
+    // Start calculating the dock layout sizes
+    // Assume 0, 0 as the starting point. True positioning will occur in PostLayout
+    int wide, tall;
+    GetSize( wide, tall );
+    Size renderBounds( 0, 0, wide, tall );
+    renderBounds.x += m_DockPadding.left;
+    renderBounds.y += m_DockPadding.top;
+    renderBounds.wide -= m_DockPadding.left + m_DockPadding.right;
+    renderBounds.tall -= m_DockPadding.top + m_DockPadding.bottom;
+
+    for ( int i = 0; i < GetChildCount(); i++ )
+    {
+        Panel *pChild = GetChild( i );
+
+        if ( !pChild->IsVisible() )
+            continue;
+
+        Dock::Type dock = pChild->GetDock();
+
+        // We'll handle fill after this loop
+        if ( dock == Dock::Fill )
+            continue;
+
+        if ( dock == Dock::Top )
+        {
+            const Thickness margin = pChild->GetDockMargin();
+            pChild->SetBounds( renderBounds.x + margin.left, renderBounds.y + margin.top, renderBounds.wide - margin.left - margin.right, pChild->GetTall() );
+            int iHeight = margin.top + pChild->GetTall() + margin.bottom;
+            renderBounds.y += iHeight;
+            renderBounds.tall -= iHeight;
+        }
+        else if ( dock == Dock::Left )
+        {
+            const Thickness margin = pChild->GetDockMargin();
+            pChild->SetBounds( renderBounds.x + margin.left, renderBounds.y + margin.top, pChild->GetWide(), renderBounds.tall - margin.top - margin.bottom );
+            int iWidth = margin.left + margin.right + pChild->GetWide();
+            renderBounds.x += iWidth;
+            renderBounds.wide -= iWidth;
+        }
+        else if ( dock == Dock::Right )
+        {
+            const Thickness margin = pChild->GetDockMargin();
+            pChild->SetBounds( ( renderBounds.x + renderBounds.wide ) - pChild->GetWide() - margin.right, renderBounds.y + margin.top, pChild->GetWide(), renderBounds.tall - margin.top - margin.bottom );
+            int iWidth = margin.left + margin.right + pChild->GetWide();
+            renderBounds.wide -= iWidth;
+        }
+        else if ( dock == Dock::Bottom )
+        {
+            const Thickness margin = pChild->GetDockMargin();
+            pChild->SetBounds( renderBounds.x + margin.left, ( renderBounds.y + renderBounds.tall ) - pChild->GetTall() - margin.bottom, renderBounds.wide - margin.left - margin.right, pChild->GetTall() );
+            int iHeight = pChild->GetTall() - margin.bottom - margin.top;
+            renderBounds.tall -= iHeight;
+        }
+
+        pChild->RecurseLayout();
+    }
+
+    m_InnerBounds = renderBounds;
+
+    // Fill the left over space
+    for ( int i = 0; i < ipanel()->GetChildCount( GetVPanel() ); i++ )
+    {
+        Panel *pChild = GetChild( i );
+        Dock::Type dock = pChild->GetDock();
+
+        if ( dock == Dock::Fill )
+        {
+            const Thickness margin = pChild->GetDockMargin();
+            pChild->SetBounds( renderBounds.x + margin.left, renderBounds.y + margin.top, renderBounds.wide - margin.left - margin.right, renderBounds.tall - margin.top - margin.bottom );
+            pChild->RecurseLayout();
+        }
+    }
+
+    PostLayout();
+}
+
+void Panel::Position( int alignmentBitmask, int xpadding /* = 0*/, int ypadding /* = 0*/ )
+{
+    const Size &bounds = m_InnerBounds;
+    const Thickness &margin = GetDockMargin();
+    int x, y;
+    GetPos( x, y );
+
+    if ( alignmentBitmask & Alignment::Left )
+    {
+        x = bounds.x + xpadding + margin.left;
+    }
+
+    if ( alignmentBitmask & Alignment::Right )
+    {
+        x = bounds.x + ( bounds.wide - GetWide() - xpadding - margin.right );
+    }
+
+    if ( alignmentBitmask & Alignment::CenterHorizontal )
+    {
+        x = bounds.x + ( bounds.wide - GetWide() ) * 0.5;
+    }
+
+    if ( alignmentBitmask & Alignment::Top )
+    {
+        y = bounds.y + ypadding;
+    }
+
+    if ( alignmentBitmask & Alignment::Bottom )
+    {
+        y = bounds.y + ( bounds.tall - GetTall() - ypadding );
+    }
+
+    if ( alignmentBitmask & Alignment::CenterVertical )
+    {
+        y = bounds.y + ( bounds.tall - GetTall() ) * 0.5;
+    }
+
+    SetPos( x, y );
+}
+
+void Panel::PostLayout()
+{
+    for ( int i = 0; i < GetChildCount(); i++ )
+    {
+        Panel *pChild = GetChild( i );
+
+        if ( pChild->GetDock() != Dock::None )
+        {
+            continue;
+        }
+
+        pChild->Position( m_AlignmentMask );
+    }
+}
+#endif
 
 //-----------------------------------------------------------------------------
 // Purpose: moves the key focus back
@@ -3577,10 +4189,11 @@ bool Panel::RequestFocusNext( VPANEL panel )
 //-----------------------------------------------------------------------------
 void Panel::RequestFocus( int direction )
 {
-    // NOTE: This doesn't make any sense if we don't have keyboard input enabled
-    // NOTE: Well, maybe it does if you have a steam controller...
+    // Commented because this assertion caused a crash in the game when presisng TAB
+    // // NOTE: This doesn't make any sense if we don't have keyboard input enabled
+    // // NOTE: Well, maybe it does if you have a steam controller...
     // Assert( ( IsX360() || IsConsoleStylePanel() ) || IsKeyBoardInputEnabled() );
-    //	ivgui()->DPrintf2("RequestFocus(%s, %s)\n", GetName(), GetClassName());
+    // ivgui()->DPrintf2("RequestFocus(%s, %s)\n", GetName(), GetClassName());
     OnRequestFocus( GetVPanel(), NULL );
 }
 
@@ -3589,6 +4202,15 @@ void Panel::RequestFocus( int direction )
 //-----------------------------------------------------------------------------
 void Panel::OnRequestFocus( VPANEL subFocus, VPANEL defaultPanel )
 {
+#ifdef LUA_SDK
+    LUA_CALL_PANEL_METHOD_BEGIN( "OnRequestFocus" );
+    PushVPanelLuaInstance( m_lua_State, subFocus );
+    PushVPanelLuaInstance( m_lua_State, defaultPanel );
+    LUA_CALL_PANEL_METHOD_END( 2, 1 );
+
+    LUA_RETURN_PANEL_NONE();
+#endif
+
     // Josh: SDK compat.
 #ifdef PLATFORM_64BITS
     KeyValues *p = new KeyValues( "OnRequestFocus" );
@@ -3655,6 +4277,13 @@ void Panel::InternalFocusChanged( bool lost )
 //-----------------------------------------------------------------------------
 void Panel::OnMouseCaptureLost()
 {
+#ifdef LUA_SDK
+    LUA_CALL_PANEL_METHOD_BEGIN( "OnMouseCaptureLost" );
+    LUA_CALL_PANEL_METHOD_END( 0, 1 );
+
+    LUA_RETURN_PANEL_NONE();
+#endif
+
     if ( m_pTooltips )
     {
         m_pTooltips->ResetDelay();
@@ -3882,6 +4511,19 @@ void Panel::InternalPerformLayout()
 void Panel::PerformLayout()
 {
     // this should be overridden to relayout controls
+
+#ifdef LUA_SDK
+    // We initiate perform layout inside RecurseLayout (recursively for children too)
+    RecurseLayout();
+
+    int wide, tall;
+    Panel::GetSize( wide, tall );
+
+    LUA_CALL_PANEL_METHOD_BEGIN( "PerformLayout" );
+    lua_pushinteger( m_lua_State, wide );
+    lua_pushinteger( m_lua_State, tall );
+    LUA_CALL_PANEL_METHOD_END( 2, 0 );
+#endif
 }
 
 void Panel::InvalidateLayout( bool layoutNow, bool reloadScheme )
@@ -3940,6 +4582,14 @@ bool Panel::IsCursorOver( void )
 //-----------------------------------------------------------------------------
 void Panel::OnCommand( const char *command )
 {
+#ifdef LUA_SDK
+    LUA_CALL_PANEL_METHOD_BEGIN( "OnCommand" );
+    lua_pushstring( m_lua_State, command );
+    LUA_CALL_PANEL_METHOD_END( 1, 1 );
+
+    LUA_RETURN_PANEL_NONE();
+#endif
+
     if ( !Q_stricmp( "performlayout", command ) )
     {
         InvalidateLayout();
@@ -3962,6 +4612,13 @@ void Panel::OnCommand( const char *command )
 //-----------------------------------------------------------------------------
 void Panel::OnSetFocus()
 {
+#ifdef LUA_SDK
+    LUA_CALL_PANEL_METHOD_BEGIN( "OnSetFocus" );
+    LUA_CALL_PANEL_METHOD_END( 0, 1 );
+
+    LUA_RETURN_PANEL_NONE();
+#endif
+
     Repaint();
 }
 
@@ -3970,6 +4627,13 @@ void Panel::OnSetFocus()
 //-----------------------------------------------------------------------------
 void Panel::OnKillFocus()
 {
+#ifdef LUA_SDK
+    LUA_CALL_PANEL_METHOD_BEGIN( "OnKillFocus" );
+    LUA_CALL_PANEL_METHOD_END( 0, 1 );
+
+    LUA_RETURN_PANEL_NONE();
+#endif
+
     Repaint();
 }
 
@@ -4639,6 +5303,11 @@ void Panel::ApplySettings( KeyValues *inResourceData )
     }
 
     OnChildSettingsApplied( inResourceData, this );
+
+#ifdef LUA_SDK
+    LUA_CALL_PANEL_METHOD_BEGIN( "ApplySettings" );
+    LUA_CALL_PANEL_METHOD_END( 0, 0 );
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -4861,6 +5530,10 @@ void Panel::InternalInvalidateLayout()
 //-----------------------------------------------------------------------------
 void Panel::OnMove()
 {
+#ifdef LUA_SDK
+    LUA_CALL_PANEL_METHOD_BEGIN( "OnMove" );
+    LUA_CALL_PANEL_METHOD_END( 0, 0 );
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -4881,6 +5554,10 @@ void Panel::InternalMove()
 //-----------------------------------------------------------------------------
 void Panel::OnTick()
 {
+#ifdef LUA_SDK
+    LUA_CALL_PANEL_METHOD_BEGIN( "OnTick" );
+    LUA_CALL_PANEL_METHOD_END( 0, 0 );
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -4961,6 +5638,14 @@ void PreparePanelMessageMap( PanelMessageMap *panelMap )
 //-----------------------------------------------------------------------------
 void Panel::OnMessage( const KeyValues *params, VPANEL ifromPanel )
 {
+#ifdef LUA_SDK
+    LUA_CALL_PANEL_METHOD_BEGIN( "OnMessage" );
+    PushVPanelLuaInstance( m_lua_State, ifromPanel );
+    LUA_CALL_PANEL_METHOD_END( 1, 1 );
+
+    LUA_RETURN_PANEL_NONE();
+#endif
+
     PanelMessageMap *panelMap = GetMessageMap();
     bool bFound = false;
     int iMessageName = params->GetNameSymbol();
@@ -5498,6 +6183,11 @@ void Panel::PreparePanelMap( PanelMap_t *panelMap )
 //-----------------------------------------------------------------------------
 void Panel::OnDelete()
 {
+#ifdef LUA_SDK
+    LUA_CALL_PANEL_METHOD_BEGIN( "OnDelete" );
+    LUA_CALL_PANEL_METHOD_END( 0, 0 );
+#endif
+
 #ifdef WIN32
     Assert( IsX360() || ( IsPC() && _heapchk() == _HEAPOK ) );
 #endif

@@ -29,7 +29,7 @@ class CGlobalVarsBase
 
    public:
     // Absolute time (per frame still - Use Plat_FloatTime() for a high precision real time
-    //  perf clock, but not that it doesn't obey host_timescale/host_framerate)
+    //  perf clock, but note that it doesn't obey host_timescale/host_framerate)
     float realtime;
     // Absolute frame counter
     int framecount;

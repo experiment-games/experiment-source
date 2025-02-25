@@ -1,0 +1,2 @@
+// This file exists purely to allow sounds to be created from lua using Sounds.Add
+// That function will reference this file as the soundscript to use for the sound

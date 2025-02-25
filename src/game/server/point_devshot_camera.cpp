@@ -43,16 +43,20 @@ class CPointDevShotCamera : public CBaseEntity
     int m_iFOV;
 };
 
+// clang-format off
+
 BEGIN_DATADESC( CPointDevShotCamera )
-DEFINE_FUNCTION( DevShotThink_Setup ),
+    DEFINE_FUNCTION( DevShotThink_Setup ),
     DEFINE_FUNCTION( DevShotThink_TakeShot ),
     DEFINE_FUNCTION( DevShotThink_PostShot ),
 
     DEFINE_KEYFIELD( m_iszCameraName, FIELD_STRING, "cameraname" ),
     DEFINE_KEYFIELD( m_iFOV, FIELD_INTEGER, "FOV" ),
-    END_DATADESC()
+END_DATADESC()
 
-        LINK_ENTITY_TO_CLASS( point_devshot_camera, CPointDevShotCamera );
+LINK_ENTITY_TO_CLASS( point_devshot_camera, CPointDevShotCamera );
+
+// clang-format on
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -225,6 +229,8 @@ class CDevShotSystem : public CAutoGameSystemPerFrame
                     // Move to next camera
                     pkvCamera = pkvCamera->GetNextKey();
                 }
+
+                pkvMapCameras->deleteThis();
             }
 
             if ( !g_iDevShotCameraCount )

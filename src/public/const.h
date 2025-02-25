@@ -62,7 +62,8 @@
 #define SP_MODEL_INDEX_BITS 13
 
 // How many bits to use to encode an edict.
-#define MAX_EDICT_BITS 11  // # of bits needed to represent max edicts
+// Experiment; Increased from 11 -> 12 to support 8192 entities
+#define MAX_EDICT_BITS 12  // # of bits needed to represent max edicts
 // Max # of edicts in a level
 #define MAX_EDICTS ( 1 << MAX_EDICT_BITS )
 
@@ -77,6 +78,9 @@
 #define NUM_ENT_ENTRY_BITS ( MAX_EDICT_BITS + 2 )
 #define NUM_ENT_ENTRIES ( 1 << NUM_ENT_ENTRY_BITS )
 #define INVALID_EHANDLE_INDEX 0xFFFFFFFF
+
+// Experiment; TODO: Test if this commented line is correct as opposed to '16'
+// #define ENT_ENTRY_MASK ( NUM_ENT_ENTRIES - 1 )
 
 #define NUM_SERIAL_NUM_BITS 16  // (32 - NUM_ENT_ENTRY_BITS)
 #define NUM_SERIAL_NUM_SHIFT_BITS ( 32 - NUM_SERIAL_NUM_BITS )
@@ -106,7 +110,7 @@
 // CBaseEntity::m_fFlags
 // PLAYER SPECIFIC FLAGS FIRST BECAUSE WE USE ONLY A FEW BITS OF NETWORK PRECISION
 // This top block is for singleplayer games only....no HL2:DM (which defines HL2_DLL)
-#if !defined( HL2MP ) && ( defined( PORTAL ) || defined( HL2_EPISODIC ) || defined( HL2_DLL ) || defined( HL2_LOSTCOAST ) )
+#if !defined( HL2MP ) && !defined( EXPERIMENT_SOURCE ) && ( defined( PORTAL ) || defined( HL2_EPISODIC ) || defined( HL2_DLL ) || defined( HL2_LOSTCOAST ) )
 #define FL_ONGROUND ( 1 << 0 )    // At rest / on the ground
 #define FL_DUCKING ( 1 << 1 )     // Player flag -- Player is fully crouched
 #define FL_WATERJUMP ( 1 << 2 )   // player jumping out of water
@@ -277,7 +281,7 @@ inline bool IsSolid( SolidType_t solidType, int nSolidFlags )
 #define LIFE_DISCARDBODY 4
 
 // entity effects
-enum
+enum ENTITY_EFFECT
 {
     EF_BONEMERGE = 0x001,           // Performs bone merge on client side
     EF_BRIGHTLIGHT = 0x002,         // DLIGHT centered at entity origin

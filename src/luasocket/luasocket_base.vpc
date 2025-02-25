@@ -1,0 +1,128 @@
+//-----------------------------------------------------------------------------
+//	LUASOCKET_BASE.VPC
+//
+//	Project Script
+//-----------------------------------------------------------------------------
+
+$IgnoreRedundancyWarning	"ON"
+
+$macro SRCDIR		".."
+$Macro GAMENAME     "experiment"
+
+$Macro OUTBINDIR	"$SRCDIR\..\game\$GAMENAME\bin"
+$Macro OUTBINNAME	"luasocket"
+
+$MacroRequired		"OUTDLLEXT" "$_DLL_EXT"
+
+$Include "$SRCDIR\vpc_scripts\source_dll_base.vpc"
+$Include "$SRCDIR\tier0\tier0_exclude.vpc"
+$Include "$SRCDIR\vstdlib\vstdlib_exclude.vpc"
+
+$MacroRequired PLATSUBDIR
+$MacroRequired OUTLIBNAME   "$OUTBINNAME"
+$MacroRequired OUTLIBDIR	"$SRCDIR\lib\public$PLATSUBDIR"
+
+$Configuration	"Debug"
+{
+    $General
+    {
+        $OutputDirectory			".\Debug_$GAMENAME"			[$WINDOWS]
+        $IntermediateDirectory		".\Debug_$GAMENAME"			[$WINDOWS]
+
+        $OutputDirectory			".\Debug_$GAMENAME_360"		[$X360]
+        $IntermediateDirectory		".\Debug_$GAMENAME_360"		[$X360]
+    }
+
+    $Compiler
+    {
+        $PreprocessorDefinitions        "$BASE;LUASOCKET_DEBUG"
+    }
+}
+
+$Configuration	"Release"
+{
+    $General
+    {
+        $OutputDirectory			".\Release_$GAMENAME"		[$WINDOWS]
+        $IntermediateDirectory		".\Release_$GAMENAME"		[$WINDOWS]
+
+        $OutputDirectory			".\Release_$GAMENAME_360"	[$X360]
+        $IntermediateDirectory		".\Release_$GAMENAME_360"	[$X360]
+    }
+}
+
+$Configuration
+{
+    $General
+    {
+        $AdditionalProjectDependencies			"lua54"
+	  }
+
+    $Compiler
+    {
+        $AdditionalIncludeDirectories       "$BASE;$(SRCDIR)\luasocket\src;$SRCDIR\lua"
+        $PreprocessorDefinitions            "$BASE;_CRT_SECURE_NO_WARNINGS"
+        $DisableSpecificWarnings	"$BASE;4127"
+
+        "$CompileAs"    "Compile as C Code (/TC)"
+    }
+
+    $Linker
+    {
+        $AdditionalDependencies          "$BASE ws2_32.lib"
+    }
+
+    $CustomBuildStep
+    {
+        $Description	"Copying .lib to $OUTLIBDIR"
+        $CommandLine	"copy /Y $QUOTE$(OutDir)$(TargetName).lib$QUOTE $QUOTE$OUTLIBDIR\$OUTBINNAME.lib$QUOTE" [$WINDOWS]
+        $CommandLine	"cp $QUOTE$(OutDir)$(TargetName).lib$QUOTE $QUOTE$OUTLIBDIR/$OUTBINNAME.lib$QUOTE" [$LINUX]
+        $Outputs        "$OUTLIBDIR\$OUTBINNAME.lib"
+        $ExecuteAfter  "BuildLink"
+    }
+}
+
+$Project "luasocket"
+{
+    $Folder	"Source Files"
+    {
+        $File	"src/auxiliar.c"
+        $File	"src/auxiliar.h"
+        $File	"src/buffer.c"
+        $File	"src/buffer.h"
+        $File	"src/compat.c"
+        $File	"src/compat.h"
+        $File	"src/except.c"
+        $File	"src/except.h"
+        $File	"src/inet.c"
+        $File	"src/inet.h"
+        $File	"src/io.c"
+        $File	"src/io.h"
+        $File	"src/luasocket.c"
+        $File	"src/luasocket.h"
+        $File	"src/mime.c"
+        $File	"src/mime.h"
+        $File	"src/options.c"
+        $File	"src/options.h"
+        $File	"src/select.c"
+        $File	"src/select.h"
+        $File	"src/socket.h"
+        $File	"src/tcp.c"
+        $File	"src/tcp.h"
+        $File	"src/timeout.c"
+        $File	"src/timeout.h"
+        $File	"src/udp.c"
+        $File	"src/udp.h"
+        $File	"src/unix.h"
+        $File	"src/unixdgram.h"
+        $File	"src/unixstream.h"
+        $File	"src/usocket.h"
+        $File	"src/wsocket.c"
+        $File	"src/wsocket.h"
+    }
+
+    $Folder	"Link Libraries"
+    {
+        $Lib	"lua54"
+    }
+}

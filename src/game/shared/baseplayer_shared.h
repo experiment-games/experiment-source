@@ -32,6 +32,27 @@
 
 #define DEATH_ANIMATION_TIME 3.0f
 
+#if defined( EXPERIMENT_SOURCE )
+#define EXPERIMENT_WALK_SPEED 90.0f           // ALT-key (slow walk)
+#define EXPERIMENT_NORMAL_SPEED 150.0f        // no modifiers (light jog)
+#define EXPERIMENT_RUN_SPEED 320.0f           // SHIFT-key (full sprint)
+#define EXPERIMENT_CROUCH_WALK_FRACTION 0.5f  // CTRL-key (crouch walk)
+#elif defined( HL2MP )
+#define HL2_WALK_SPEED 150
+#define HL2_NORM_SPEED 190
+#define HL2_SPRINT_SPEED 320
+#else
+extern ConVar hl2_walkspeed;
+extern ConVar hl2_normspeed;
+extern ConVar hl2_sprintspeed;
+#define HL2_WALK_SPEED hl2_walkspeed.GetFloat()
+#define HL2_NORM_SPEED hl2_normspeed.GetFloat()
+#define HL2_SPRINT_SPEED hl2_sprintspeed.GetFloat()
+#endif
+
+// When moving this fast, we play run anim.
+#define ARBITRARY_RUN_SPEED 175.0f
+
 typedef struct
 {
     Vector m_vecAutoAimDir;    // The direction autoaim wishes to point.

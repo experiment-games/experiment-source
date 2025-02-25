@@ -1,0 +1,13 @@
+"vertexlitgeneric"
+{
+	"$baseTexture"		"Models/Rebels/SKIN_02/helmet_05"
+	"$bumpmap"		"Models/Rebels/SHARED/helmet_05_normal"
+
+ 	"$halflambert"		"1"
+
+	"$phong"			"1"
+	"$phongboost"		"1"
+	"$phongfresnelranges"	"[0.01]"
+	"$phongexponent"		"20"
+	"$phongalbedotint"		"1"
+}

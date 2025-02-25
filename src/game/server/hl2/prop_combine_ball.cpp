@@ -1149,7 +1149,7 @@ bool CPropCombineBall::DissolveEntity( CBaseEntity *pEntity )
     if ( pEntity->IsEFlagSet( EFL_NO_DISSOLVE ) )
         return false;
 
-#ifdef HL2MP
+#if defined( HL2MP ) || defined( EXPERIMENT_SOURCE )
     if ( pEntity->IsPlayer() )
     {
         m_bStruckEntity = true;
@@ -1341,7 +1341,7 @@ bool CPropCombineBall::IsAttractiveTarget( CBaseEntity *pEntity )
     }
     else
     {
-#ifndef HL2MP
+#if !defined( HL2MP ) && !defined( EXPERIMENT_SOURCE )
         if ( GetOwnerEntity() )
         {
             // Things we check if this ball has an owner that's not an NPC.

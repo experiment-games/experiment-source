@@ -1,0 +1,26 @@
+{% extends "main.html" %}
+
+{% block content %}
+<div class="lua">
+    <div class="lua__title">
+        <h1>
+            {{ page.meta.lua.library }}
+        </h1>
+    </div>
+
+    {{ page.meta.lua.description }}
+
+    <ul class="lua__variable_list">
+        {% for key, value in page.meta.lua.enumerations.items() %}
+        <li class="lua__variable_list__enum">
+            <span class="lua__variable_list__enum__key">{{ key }}</span>
+            <span class="lua__variable_list__enum__value">{{ value }}</span>
+        </li>
+        {% endfor %}
+    </ul>
+
+    {% if page.content %}
+    {{ page.content }}
+    {% endif %}
+</div>
+{% endblock %}

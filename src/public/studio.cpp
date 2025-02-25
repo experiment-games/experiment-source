@@ -1,4 +1,4 @@
-//========= Copyright Valve Corporation, All rights reserved. ============//
+//========= Copyright © 1996-2008, Valve Corporation, All rights reserved. ============//
 //
 // Purpose:
 //
@@ -10,6 +10,8 @@
 #include "datacache/idatacache.h"
 #include "datacache/imdlcache.h"
 #include "convar.h"
+#include "tier1/utlmap.h"
+#include "tier0/vprof.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -42,24 +44,24 @@ mstudioanimdesc_t &studiohdr_t::pAnimdesc( int i ) const
 // Purpose:
 //-----------------------------------------------------------------------------
 
-mstudioanim_t *mstudioanimdesc_t::pAnimBlock( int block, int index ) const
+mstudio_rle_anim_t *mstudioanimdesc_t::pAnimBlock( int block, int index ) const
 {
     if ( block == -1 )
     {
-        return ( mstudioanim_t * )NULL;
+        return ( mstudio_rle_anim_t * )NULL;
     }
     if ( block == 0 )
     {
-        return ( mstudioanim_t * )( ( ( byte * )this ) + index );
+        return ( ( ( mstudio_rle_anim_t * )this ) + index );
     }
 
-    byte *pAnimBlock = pStudiohdr()->GetAnimBlock( block );
+    mstudio_rle_anim_t *pAnimBlock = ( mstudio_rle_anim_t * )pStudiohdr()->GetAnimBlock( block );
     if ( pAnimBlock )
     {
-        return ( mstudioanim_t * )( pAnimBlock + index );
+        return pAnimBlock + index;
     }
 
-    return ( mstudioanim_t * )NULL;
+    return ( mstudio_rle_anim_t * )NULL;
 }
 
 //-----------------------------------------------------------------------------
@@ -67,15 +69,15 @@ mstudioanim_t *mstudioanimdesc_t::pAnimBlock( int block, int index ) const
 //-----------------------------------------------------------------------------
 
 static ConVar mod_load_showstall( "mod_load_showstall", "0", 0, "1 - show hitches , 2 - show stalls" );
-mstudioanim_t *mstudioanimdesc_t::pAnim( int *piFrame ) const
+mstudio_rle_anim_t *mstudioanimdesc_t::pAnim( int *piFrame ) const
 {
     float flStall;
     return pAnim( piFrame, flStall );
 }
 
-mstudioanim_t *mstudioanimdesc_t::pAnim( int *piFrame, float &flStall ) const
+mstudio_rle_anim_t *mstudioanimdesc_t::pAnim( int *piFrame, float &flStall ) const
 {
-    mstudioanim_t *panim = NULL;
+    mstudio_rle_anim_t *panim = NULL;
 
     int block = animblock;
     int index = animindex;
@@ -173,7 +175,7 @@ mstudioanim_t *mstudioanimdesc_t::pAnim( int *piFrame, float &flStall ) const
         Msg( "[%8.3f] stall on %s:%s:%d:%d\n", Plat_FloatTime(), pStudiohdr()->pszName(), pszName(), section, block );
     }
 
-    return panim;
+    return ( mstudioanim_t * )panim;
 }
 
 mstudioikrule_t *mstudioanimdesc_t::pIKRule( int i ) const
@@ -828,7 +830,7 @@ const studiohdr_t *CStudioHdr::GroupStudioHdr( int i )
     if ( !m_pStudioHdrCache.IsValidIndex( i ) )
     {
         const char *pszName = ( m_pStudioHdr ) ? m_pStudioHdr->pszName() : "<<null>>";
-        ExecuteNTimes( 5, Warning( "Invalid index passed to CStudioHdr(%s)::GroupStudioHdr(): %d, but max is %d\n", pszName, i, m_pStudioHdrCache.Count() ) );
+        ExecuteNTimes( 5, Warning( "Invalid index passed to CStudioHdr(%s)::GroupStudioHdr(): %d [%d]\n", pszName, i, m_pStudioHdrCache.Count() ) );
         DebuggerBreakIfDebugging();
         return m_pStudioHdr;  // return something known to probably exist, certainly things will be messed up, but hopefully not crash before the warning is noticed
     }
@@ -837,7 +839,9 @@ const studiohdr_t *CStudioHdr::GroupStudioHdr( int i )
 
     if ( pStudioHdr == NULL )
     {
+#if !defined( POSIX )
         Assert( !m_pVModel->m_Lock.GetOwnerId() );
+#endif
         virtualgroup_t *pGroup = &m_pVModel->m_group[i];
         pStudioHdr = pGroup->GetStudioHdr();
         m_pStudioHdrCache[i] = pStudioHdr;
@@ -1360,7 +1364,7 @@ int CStudioHdr::RemapAnimBone( int iAnim, int iLocalBone ) const
 // Purpose: run the interpreted FAC's expressions, converting flex_controller
 //			values into FAC weights
 //-----------------------------------------------------------------------------
-void CStudioHdr::RunFlexRules( const float *src, float *dest )
+void CStudioHdr::RunFlexRulesOld( const float *src, float *dest )
 {
     // FIXME: this shouldn't be needed, flex without rules should be stripped in studiomdl
     for ( int i = 0; i < numflexdesc(); i++ )
@@ -1583,6 +1587,14 @@ void CStudioHdr::RunFlexRules( const float *src, float *dest )
                     const mstudioflexcontroller_t *const pCloseLid = pFlexcontroller( static_cast< LocalFlexController_t >( ( int )stack[k - 1] ) );
                     const float flCloseLid = RemapValClamped( src[pCloseLid->localToGlobal], pCloseLid->min, pCloseLid->max, 0.0f, 1.0f );
 
+                    int nBlinkIndex = static_cast< int >( stack[k - 2] );
+                    float flBlink = 0.0f;
+                    if ( nBlinkIndex >= 0 )
+                    {
+                        const mstudioflexcontroller_t *const pBlink = pFlexcontroller( static_cast< LocalFlexController_t >( ( int )stack[k - 2] ) );
+                        flBlink = RemapValClamped( src[pBlink->localToGlobal], pBlink->min, pBlink->max, 0.0f, 1.0f );
+                    }
+
                     int nEyeUpDownIndex = static_cast< int >( stack[k - 3] );
                     float flEyeUpDown = 0.0f;
                     if ( nEyeUpDownIndex >= 0 )
@@ -1614,6 +1626,14 @@ void CStudioHdr::RunFlexRules( const float *src, float *dest )
 
                     const mstudioflexcontroller_t *const pCloseLid = pFlexcontroller( static_cast< LocalFlexController_t >( ( int )stack[k - 1] ) );
                     const float flCloseLid = RemapValClamped( src[pCloseLid->localToGlobal], pCloseLid->min, pCloseLid->max, 0.0f, 1.0f );
+
+                    int nBlinkIndex = static_cast< int >( stack[k - 2] );
+                    float flBlink = 0.0f;
+                    if ( nBlinkIndex >= 0 )
+                    {
+                        const mstudioflexcontroller_t *const pBlink = pFlexcontroller( static_cast< LocalFlexController_t >( ( int )stack[k - 2] ) );
+                        flBlink = RemapValClamped( src[pBlink->localToGlobal], pBlink->min, pBlink->max, 0.0f, 1.0f );
+                    }
 
                     int nEyeUpDownIndex = static_cast< int >( stack[k - 3] );
                     float flEyeUpDown = 0.0f;
@@ -1662,6 +1682,267 @@ void CStudioHdr::RunFlexRules( const float *src, float *dest )
         //*/
         // end JasonM hack
     }
+}
+
+void CStudioHdr::RunFlexRulesNew( const float *src, float *dest )
+{
+    // FIXME: this shouldn't be needed, flex without rules should be stripped in studiomdl
+    memset( dest, 0, sizeof( dest[0] ) * numflexdesc() );
+
+    for ( int i = 0; i < numflexrules(); i++ )
+    {
+        float stack[32];
+        float *pSP = stack + ARRAYSIZE( stack );
+        mstudioflexrule_t *prule = pFlexRule( i );
+
+        mstudioflexop_t *pops = prule->iFlexOp( 0 );
+
+        int nOps = prule->numops;
+        float flTOS = 0.;
+        if ( nOps )
+            do
+            {
+                switch ( pops->op )
+                {
+                    case STUDIO_ADD:
+                        flTOS += *( pSP++ );
+                        break;
+
+                    case STUDIO_SUB:
+                        flTOS = *( pSP++ ) - flTOS;
+                        break;
+
+                    case STUDIO_MUL:
+                        flTOS *= *( pSP++ );
+                        break;
+                    case STUDIO_DIV:
+                        if ( flTOS > 0.0001 )
+                        {
+                            flTOS = *( pSP ) / flTOS;
+                        }
+                        else
+                        {
+                            flTOS = 0.;
+                        }
+                        pSP++;
+                        break;
+
+                    case STUDIO_NEG:
+                        flTOS = -flTOS;
+                        break;
+
+                    case STUDIO_MAX:
+                    {
+                        float flNos = *( pSP++ );
+                        flTOS = MAX( flTOS, flNos );
+                        break;
+                    }
+
+                    case STUDIO_MIN:
+                    {
+                        float flNos = *( pSP++ );
+                        flTOS = MIN( flTOS, flNos );
+                        break;
+                    }
+                    case STUDIO_CONST:
+                        *( --pSP ) = flTOS;
+                        flTOS = pops->d.value;
+                        break;
+
+                    case STUDIO_FETCH1:
+                    {
+                        *( --pSP ) = flTOS;
+                        int m = pFlexcontroller( ( LocalFlexController_t )pops->d.index )->localToGlobal;
+                        flTOS = src[m];
+                        break;
+                    }
+
+                    case STUDIO_FETCH2:
+                    {
+                        *( --pSP ) = flTOS;
+                        flTOS = dest[pops->d.index];
+                        break;
+                    }
+                    case STUDIO_COMBO:
+                    {
+                        // tos = prod( top m elements on stack)
+                        int m = pops->d.index;
+                        while ( --m )
+                        {
+                            flTOS *= *( pSP++ );
+                        }
+                        break;
+                    }
+                    break;
+
+                    case STUDIO_DOMINATE:
+                    {
+                        // tos *= 1-prod( next top m elements on stack)
+                        int m = pops->d.index;
+                        float dv = *( pSP++ );
+                        while ( --m )
+                        {
+                            dv *= *( pSP++ );
+                        }
+                        flTOS *= 1.0 - dv;
+                        break;
+                    }
+                    break;
+                    case STUDIO_2WAY_0:
+                    {
+                        int m = pFlexcontroller( ( LocalFlexController_t )pops->d.index )->localToGlobal;
+                        *( --pSP ) = flTOS;
+                        flTOS = RemapValClamped( src[m], -1.0f, 0.0f, 1.0f, 0.0f );
+                    }
+                    break;
+
+                    case STUDIO_2WAY_1:
+                    {
+                        int m = pFlexcontroller( ( LocalFlexController_t )pops->d.index )->localToGlobal;
+                        *( --pSP ) = flTOS;
+                        flTOS = RemapValClamped( src[m], 0.0f, 1.0f, 0.0f, 1.0f );
+                    }
+                    break;
+
+                    case STUDIO_NWAY:
+                    {
+                        LocalFlexController_t valueControllerIndex = static_cast< LocalFlexController_t >( ( int )flTOS );
+                        int m = pFlexcontroller( valueControllerIndex )->localToGlobal;
+                        float flValue = src[m];
+                        int v = pFlexcontroller( ( LocalFlexController_t )pops->d.index )->localToGlobal;
+
+                        const Vector4D filterRamp( pSP[3], pSP[2], pSP[1], pSP[0] );
+
+                        // Apply multicontrol remapping
+                        if ( flValue <= filterRamp.x || flValue >= filterRamp.w )
+                        {
+                            flValue = 0.0f;
+                        }
+                        else if ( flValue < filterRamp.y )
+                        {
+                            flValue = RemapValClamped( flValue, filterRamp.x, filterRamp.y, 0.0f, 1.0f );
+                        }
+                        else if ( flValue > filterRamp.z )
+                        {
+                            flValue = RemapValClamped( flValue, filterRamp.z, filterRamp.w, 1.0f, 0.0f );
+                        }
+                        else
+                        {
+                            flValue = 1.0f;
+                        }
+
+                        pSP += 4;
+                        flTOS = flValue * src[v];
+                    }
+                    break;
+
+                    case STUDIO_DME_LOWER_EYELID:
+                    {
+                        const mstudioflexcontroller_t *const pCloseLidV =
+                            pFlexcontroller( ( LocalFlexController_t )pops->d.index );
+                        const float flCloseLidV =
+                            RemapValClamped( src[pCloseLidV->localToGlobal], pCloseLidV->min, pCloseLidV->max, 0.0f, 1.0f );
+
+                        const mstudioflexcontroller_t *const pCloseLid =
+                            pFlexcontroller( static_cast< LocalFlexController_t >( ( int )flTOS ) );
+                        const float flCloseLid =
+                            RemapValClamped( src[pCloseLid->localToGlobal], pCloseLid->min, pCloseLid->max, 0.0f, 1.0f );
+
+                        int nBlinkIndex = static_cast< int >( pSP[0] );
+                        float flBlink = 0.0f;
+                        if ( nBlinkIndex >= 0 )
+                        {
+                            const mstudioflexcontroller_t *const pBlink =
+                                pFlexcontroller( static_cast< LocalFlexController_t >( nBlinkIndex ) );
+                            flBlink = RemapValClamped( src[pBlink->localToGlobal], pBlink->min, pBlink->max, 0.0f, 1.0f );
+                        }
+
+                        int nEyeUpDownIndex = static_cast< int >( pSP[1] );
+                        float flEyeUpDown = 0.0f;
+                        if ( nEyeUpDownIndex >= 0 )
+                        {
+                            const mstudioflexcontroller_t *const pEyeUpDown =
+                                pFlexcontroller( static_cast< LocalFlexController_t >( nEyeUpDownIndex ) );
+                            flEyeUpDown = RemapValClamped( src[pEyeUpDown->localToGlobal], pEyeUpDown->min, pEyeUpDown->max, -1.0f, 1.0f );
+                        }
+
+                        if ( flEyeUpDown > 0.0 )
+                        {
+                            flTOS = ( 1.0f - flEyeUpDown ) * ( 1.0f - flCloseLidV ) * flCloseLid;
+                        }
+                        else
+                        {
+                            flTOS = ( 1.0f - flCloseLidV ) * flCloseLid;
+                        }
+                        pSP += 2;
+                    }
+                    break;
+
+                    case STUDIO_DME_UPPER_EYELID:
+                    {
+                        const mstudioflexcontroller_t *const pCloseLidV = pFlexcontroller( ( LocalFlexController_t )pops->d.index );
+                        const float flCloseLidV = RemapValClamped( src[pCloseLidV->localToGlobal], pCloseLidV->min, pCloseLidV->max, 0.0f, 1.0f );
+
+                        const mstudioflexcontroller_t *const pCloseLid = pFlexcontroller( static_cast< LocalFlexController_t >( ( int )flTOS ) );
+                        const float flCloseLid = RemapValClamped( src[pCloseLid->localToGlobal], pCloseLid->min, pCloseLid->max, 0.0f, 1.0f );
+
+                        int nBlinkIndex = static_cast< int >( pSP[0] );
+                        float flBlink = 0.0f;
+                        if ( nBlinkIndex >= 0 )
+                        {
+                            const mstudioflexcontroller_t *const pBlink = pFlexcontroller( static_cast< LocalFlexController_t >( nBlinkIndex ) );
+                            flBlink = RemapValClamped( src[pBlink->localToGlobal], pBlink->min, pBlink->max, 0.0f, 1.0f );
+                        }
+
+                        int nEyeUpDownIndex = static_cast< int >( pSP[1] );
+                        float flEyeUpDown = 0.0f;
+                        if ( nEyeUpDownIndex >= 0 )
+                        {
+                            const mstudioflexcontroller_t *const pEyeUpDown = pFlexcontroller( static_cast< LocalFlexController_t >( nEyeUpDownIndex ) );
+                            flEyeUpDown = RemapValClamped( src[pEyeUpDown->localToGlobal], pEyeUpDown->min, pEyeUpDown->max, -1.0f, 1.0f );
+                        }
+
+                        if ( flEyeUpDown < 0.0f )
+                        {
+                            flTOS = ( 1.0f + flEyeUpDown ) * flCloseLidV * flCloseLid;
+                        }
+                        else
+                        {
+                            flTOS = flCloseLidV * flCloseLid;
+                        }
+                        pSP += 2;
+                    }
+                    break;
+                }
+
+                pops++;
+            } while ( --nOps );
+        dest[prule->flex] = flTOS;
+    }
+}
+
+#define USE_OLD_FLEX_RULES_INTERPRETER
+
+void CStudioHdr::RunFlexRules( const float *src, float *dest )
+{
+#ifndef USE_OLD_FLEX_RULES_INTERPRETER
+    RunFlexRulesNew( src, dest );
+#else
+    RunFlexRulesOld( src, dest );
+#endif
+
+#if defined( _DEBUG ) && !defined( USE_OLD_FLEX_RULES_INTERPRETER )
+    float d1[MAXSTUDIOFLEXDESC];
+    RunFlexRulesOld( src, d1 );
+
+    for ( int i = 0; i < numflexdesc(); i++ )
+    {
+        if ( fabs( d1[i] - dest[i] ) > 0.001 )
+        {
+            Warning( "bad %d old =%f new=%f\n", i, dest[i], d1[i] );
+        }
+    }
+#endif  // _DEBUG
 }
 
 //-----------------------------------------------------------------------------

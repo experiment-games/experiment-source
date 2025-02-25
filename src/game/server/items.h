@@ -90,7 +90,7 @@ class CItem : public CBaseAnimating, public CDefaultPlayerPickupVPhysics
     bool CreateItemVPhysicsObject( void );
     virtual bool ItemCanBeTouchedByPlayer( CBasePlayer *pPlayer );
 
-#if defined( HL2MP ) || defined( TF_DLL )
+#if defined( HL2MP ) || defined( TF_DLL ) || defined( EXPERIMENT_SOURCE )
     void FallThink( void );
     float m_flNextResetCheckTime;
 #endif

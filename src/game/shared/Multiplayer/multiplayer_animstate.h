@@ -66,6 +66,7 @@ enum PlayerAnimEvent_t
     PLAYERANIMEVENT_PASSTIME_THROW_BEGIN,
     PLAYERANIMEVENT_PASSTIME_THROW_MIDDLE,
     PLAYERANIMEVENT_PASSTIME_THROW_END,
+    PLAYERANIMEVENT_PASSTIME_THROW_CANCEL,
     PLAYERANIMEVENT_CYOAPDA_BEGIN,
     PLAYERANIMEVENT_CYOAPDA_MIDDLE,
     PLAYERANIMEVENT_CYOAPDA_END,
@@ -76,9 +77,11 @@ enum PlayerAnimEvent_t
 };
 
 // Gesture Slots.
-enum
+enum GESTURE_SLOT
 {
-    GESTURE_SLOT_ATTACK_AND_RELOAD,
+    GESTURE_SLOT_INVALID = -1,
+
+    GESTURE_SLOT_ATTACK_AND_RELOAD = 0,
     GESTURE_SLOT_GRENADE,
     GESTURE_SLOT_JUMP,
     GESTURE_SLOT_SWIM,
@@ -88,8 +91,6 @@ enum
 
     GESTURE_SLOT_COUNT,
 };
-
-#define GESTURE_SLOT_INVALID -1
 
 struct GestureSlot_t
 {
@@ -214,9 +215,11 @@ class CMultiPlayerAnimState
     void ResetGestureSlots( void );
     void ResetGestureSlot( int iGestureSlot );
     void AddVCDSequenceToGestureSlot( int iGestureSlot, int iGestureSequence, float flCycle = 0.0f, bool bAutoKill = true );
+    void SetGestureWeight( int iGestureSlot, float flWeight );
     CAnimationLayer *GetGestureSlotLayer( int iGestureSlot );
     bool IsGestureSlotActive( int iGestureSlot );
     bool VerifyAnimLayerInSlot( int iGestureSlot );
+    virtual void RestartMainSequence();
 
     // Feet.
     // If you are forcing aim yaw, your code is almost definitely broken if you don't include a delay between
@@ -237,7 +240,6 @@ class CMultiPlayerAnimState
     {
         return GetBasePlayer()->SelectWeightedSequence( activity );
     }
-    virtual void RestartMainSequence();
 
     virtual void GetOuterAbsVelocity( Vector &vel );
     float GetOuterXYSpeed();
@@ -254,7 +256,14 @@ class CMultiPlayerAnimState
     void ShutdownGestureSlots( void );
     bool IsGestureSlotPlaying( int iGestureSlot, Activity iGestureActivity );
     void AddToGestureSlot( int iGestureSlot, Activity iGestureActivity, bool bAutoKill );
+
+#ifdef LUA_SDK
+   public:
+#endif
     virtual void RestartGesture( int iGestureSlot, Activity iGestureActivity, bool bAutoKill = true );
+#ifdef LUA_SDK
+   protected:
+#endif
     void ComputeGestureSequence( CStudioHdr *pStudioHdr );
     void UpdateGestureLayer( CStudioHdr *pStudioHdr, GestureSlot_t *pGesture );
     void DebugGestureInfo( void );
@@ -294,6 +303,8 @@ class CMultiPlayerAnimState
 
     void ComputeFireSequence();
     void ComputeDeployedSequence();
+
+    virtual bool ShouldResetMainSequence( int iCurrentSequence, int iNewSequence );
 
     virtual bool ShouldUpdateAnimState();
 

@@ -1,0 +1,27 @@
+//-----------------------------------------------------------------------------
+//	ENGINE_PATCHES_BASE.VPC
+//
+//	Project Script
+//-----------------------------------------------------------------------------
+
+$Configuration
+{
+	$Compiler
+	{
+		$PreprocessorDefinitions		"$BASE;WITH_ENGINE_PATCHES"
+	}
+}
+
+$Project
+{
+	$Folder "Engine Patches"
+	{
+		$File "$SRCDIR\engine\engine_patches.cpp"
+		$File "$SRCDIR\engine\engine_patches.h"
+    }
+
+	$Folder	"Link Libraries"
+	{
+        $Lib    "minhook"
+ 	}
+}

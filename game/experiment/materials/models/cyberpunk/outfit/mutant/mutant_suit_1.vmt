@@ -1,0 +1,16 @@
+"vertexlitGeneric"
+{
+	"$basetexture" 				"models/cyberpunk/outfit/mutant/mutant_suit_1"
+	"$bumpmap" 					"models/cyberpunk/outfit/mutant/mutant_suit_1_normal"
+
+	"$halflambert" 				"1"	
+	
+    "$phong" 					"1"
+	"$phongexponenttexture" 	"models/cyberpunk/outfit/mutant/mutant_suit_1_normal"
+	"$phongboost"				"2"
+	"$phongfresnelranges"		"[0.4 0.4 0.4]"
+	"$rimlight" 				"1"
+	"$rimlightexponenttexture" 	"models/cyberpunk/outfit/mutant/mutant_suit_1_normal"									
+	"$rimlightexponent" 		"0.5"								
+	"$rimlightboost" 			"0.1"
+}

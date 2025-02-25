@@ -18,6 +18,10 @@
 #include "client_virtualreality.h"
 #include "sourcevr/isourcevirtualreality.h"
 
+#ifdef LUA_SDK
+#include <weapon_experimentbase_scriptedweapon.h>
+#endif
+
 #ifdef SIXENSE
 #include "sixense/in_sixense.h"
 #endif
@@ -87,6 +91,9 @@ bool CHudCrosshair::ShouldDraw( void )
 
     C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
     if ( !pPlayer )
+        return false;
+
+    if ( pPlayer->m_Local.m_iHideHUD & HIDEHUD_CROSSHAIR )
         return false;
 
     C_BaseCombatWeapon *pWeapon = pPlayer->GetActiveWeapon();
@@ -247,10 +254,26 @@ void CHudCrosshair::Paint( void )
     if ( bBehindCamera )
         return;
 
+    C_BaseCombatWeapon *pWeapon = pPlayer->GetActiveWeapon();
+
+#ifdef LUA_SDK
+    CExperimentScriptedWeapon *pScriptedWeapon =
+        dynamic_cast< CExperimentScriptedWeapon * >( pWeapon );
+
+    if ( pScriptedWeapon != NULL )
+    {
+        LUA_CALL_WEAPON_HOOK_BEGIN( "DoDrawCrosshair", pScriptedWeapon );
+        lua_pushinteger( L, x );
+        lua_pushinteger( L, y );
+        LUA_CALL_WEAPON_HOOK_END( 2, 1 );
+
+        LUA_RETURN_NONE_IF_TRUE();
+    }
+#endif
+
     float flWeaponScale = 1.f;
     int iTextureW = m_pCrosshair->Width();
     int iTextureH = m_pCrosshair->Height();
-    C_BaseCombatWeapon *pWeapon = pPlayer->GetActiveWeapon();
     if ( pWeapon )
     {
         pWeapon->GetWeaponCrosshairScale( flWeaponScale );

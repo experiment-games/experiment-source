@@ -227,8 +227,8 @@ class CRendering3dView : public CBase3dView
     void DrawWorld( float waterZAdjust );
 
     // Draws all opaque/translucent renderables in leaves that were rendered
-    void DrawOpaqueRenderables( ERenderDepthMode DepthMode );
-    void DrawTranslucentRenderables( bool bInSkybox, bool bShadowDepth );
+    void DrawOpaqueRenderables( ERenderDepthMode DepthMode, bool bInSkybox, bool bSkyboxIs3D );
+    void DrawTranslucentRenderables( bool bInSkybox, bool bShadowDepth, bool bSkyboxIs3D );
 
     // Renders all translucent entities in the render list
     void DrawTranslucentRenderablesNoWorld( bool bInSkybox );
@@ -322,6 +322,11 @@ class CViewRender : public IViewRender,
 
     virtual void OnRenderStart();
     void DriftPitch( void );
+
+    virtual CViewSetup GetMonoViewSetup()
+    {
+        return GetView( STEREO_EYE_MONO );
+    }
 
     static CViewRender *GetMainView()
     {

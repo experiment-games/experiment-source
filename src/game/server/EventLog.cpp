@@ -121,7 +121,7 @@ bool CEventLog::PrintPlayerEvent( IGameEvent *event )
     {
         const int attackerid = event->GetInt( "attacker" );
 
-#ifdef HL2MP
+#if defined( HL2MP ) || defined( EXPERIMENT_SOURCE )
         const char *weapon = event->GetString( "weapon" );
 #endif
 
@@ -135,7 +135,7 @@ bool CEventLog::PrintPlayerEvent( IGameEvent *event )
         }
         if ( pPlayer == pAttacker && pPlayer )
         {
-#ifdef HL2MP
+#if defined( HL2MP ) || defined( EXPERIMENT_SOURCE )
             UTIL_LogPrintf( "\"%s<%i><%s><%s>\" committed suicide with \"%s\"\n",
                             pPlayer->GetPlayerName(),
                             userid,
@@ -155,7 +155,7 @@ bool CEventLog::PrintPlayerEvent( IGameEvent *event )
         {
             CTeam *attackerTeam = pAttacker->GetTeam();
 
-#ifdef HL2MP
+#if defined( HL2MP ) || defined( EXPERIMENT_SOURCE )
             UTIL_LogPrintf( "\"%s<%i><%s><%s>\" killed \"%s<%i><%s><%s>\" with \"%s\"\n",
                             pAttacker->GetPlayerName(),
                             attackerid,

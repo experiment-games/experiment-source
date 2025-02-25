@@ -26,7 +26,11 @@ class ToggleButton : public Button
     DECLARE_CLASS_SIMPLE( ToggleButton, Button );
 
    public:
+#ifdef LUA_SDK
+    ToggleButton( Panel *parent, const char *panelName, const char *text, lua_State *L = nullptr );
+#else
     ToggleButton( Panel *parent, const char *panelName, const char *text );
+#endif
 
     virtual void DoClick();
 

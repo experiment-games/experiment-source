@@ -27,6 +27,10 @@
 #include "tier0/threadtools.h"
 #include "datacache/idatacache.h"
 
+#ifdef LUA_SDK
+#include <luamanager.h>
+#endif
+
 #define LIPSYNC_POSEPARAM_NAME "mouth"
 #define NUM_HITBOX_FIRES 10
 
@@ -86,6 +90,10 @@ typedef unsigned int ClientSideAnimationListHandle_t;
 
 class C_BaseAnimating : public C_BaseEntity, private IModelLoadCallback
 {
+#ifdef LUA_SDK
+    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( C_BaseAnimating, LUA_BASEANIMATINGLIBNAME )
+#endif
+
    public:
     DECLARE_CLASS( C_BaseAnimating, C_BaseEntity );
     DECLARE_CLIENTCLASS();
@@ -216,6 +224,7 @@ class C_BaseAnimating : public C_BaseEntity, private IModelLoadCallback
         return SetPoseParameter( GetModelPtr(), iParameter, flValue );
     }
 
+    float GetPoseParameter( const char *szName );
     float GetPoseParameter( int iPoseParameter );
 
     bool GetPoseParameterRange( int iPoseParameter, float &minValue, float &maxValue );
@@ -500,6 +509,43 @@ class C_BaseAnimating : public C_BaseEntity, private IModelLoadCallback
     virtual bool IsViewModel() const;
     virtual void UpdateOnRemove( void );
 
+    void SetMaterialOverride( const char *pMaterialName )
+    {
+        Q_strncpy( m_MaterialOverride, pMaterialName, sizeof( m_MaterialOverride ) );
+    }
+
+    void GetMaterialOverride( char *pOut, int nLength )
+    {
+        Q_strncpy( pOut, m_MaterialOverride, nLength );
+    }
+
+    void SetSubMaterialOverride( int iIndex, const char *pMaterialName )
+    {
+        if ( iIndex < 0 || iIndex >= MAX_SUB_MATERIAL_OVERRIDES )
+            return;
+
+        Q_strncpy( m_SubMaterialOverrides[iIndex], pMaterialName, sizeof( m_SubMaterialOverrides[iIndex] ) );
+    }
+
+    void ClearSubMaterialOverrides()
+    {
+        for ( int i = 0; i < MAX_SUB_MATERIAL_OVERRIDES; i++ )
+        {
+            m_SubMaterialOverrides[i][0] = 0;
+        }
+    }
+
+    void GetSubMaterialOverride( int iIndex, char *pOut, int nLength )
+    {
+        if ( iIndex < 0 || iIndex >= MAX_SUB_MATERIAL_OVERRIDES )
+        {
+            pOut[0] = 0;
+            return;
+        }
+
+        Q_strncpy( pOut, m_SubMaterialOverrides[iIndex], nLength );
+    }
+
    protected:
     // View models scale their attachment positions to account for FOV. To get the unmodified
     // attachment position (like if you're rendering something else during the view model's DrawModel call),
@@ -597,6 +643,12 @@ class C_BaseAnimating : public C_BaseEntity, private IModelLoadCallback
     float m_fadeMaxDist;
     float m_flFadeScale;
 
+    // Experiment; Material override
+    char m_MaterialOverride[MAX_PATH];
+    CMaterialReference m_MaterialOverrideReference;
+    char m_SubMaterialOverrides[MAX_SUB_MATERIAL_OVERRIDES][MAX_PATH];
+    CMaterialReference m_SubMaterialOverridesReferences[MAX_SUB_MATERIAL_OVERRIDES];
+
    private:
     float m_flGroundSpeed;     // computed linear movement rate for current sequence
     float m_flLastEventCheck;  // cycle index of when events were last checked
@@ -627,10 +679,16 @@ class C_BaseAnimating : public C_BaseEntity, private IModelLoadCallback
     CInterpolatedVarArray< float, MAXSTUDIOBONECTRLS > m_iv_flEncodedController;
     float m_flOldEncodedController[MAXSTUDIOBONECTRLS];
 
+#ifdef LUA_SDK
+   public:
+#endif
     // Clientside animation
     bool m_bClientSideAnimation;
     bool m_bLastClientSideFrameReset;
 
+#ifdef LUA_SDK
+   private:
+#endif
     int m_nNewSequenceParity;
     int m_nResetEventsParity;
 
@@ -820,6 +878,9 @@ inline float C_BaseAnimating::GetCycle() const
 
 inline CStudioHdr *C_BaseAnimating::GetModelPtr() const
 {
+    // Experiment; TODO: The following line isn't in the TF2 SDK (do we need it?):
+    MDLCACHE_CRITICAL_SECTION();
+
     if ( IsDynamicModelLoading() )
         return NULL;
 

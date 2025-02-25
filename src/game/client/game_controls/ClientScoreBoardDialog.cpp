@@ -35,6 +35,7 @@
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
+#include <clientmode_shared.h>
 
 using namespace vgui;
 
@@ -94,6 +95,14 @@ CClientScoreBoardDialog::~CClientScoreBoardDialog()
         delete m_pImageList;
         m_pImageList = NULL;
     }
+}
+
+void CClientScoreBoardDialog::Paint()
+{
+#ifdef LUA_SDK
+    LUA_CALL_HOOK_BEGIN( "HUDDrawScoreBoard" );
+    LUA_CALL_HOOK_END( 0, 0 );
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -244,11 +253,12 @@ void CClientScoreBoardDialog::FireGameEvent( IGameEvent *event )
     {
         // We'll post the message ourselves instead of using SetControlString()
         // so we don't try to translate the hostname.
-        const char *hostname = event->GetString( "hostname" );
+        const char *pszHostName = event->GetString( "hostname" );
         Panel *control = FindChildByName( "ServerName" );
+
         if ( control )
         {
-            PostMessage( control, new KeyValues( "SetText", "text", hostname ) );
+            PostMessage( control, new KeyValues( "SetText", "text", pszHostName ) );
             control->MoveToFront();
         }
     }

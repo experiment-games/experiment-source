@@ -50,6 +50,21 @@ DECLARE_BUILD_FACTORY( EditablePanel );
 //-----------------------------------------------------------------------------
 #pragma warning( disable : 4355 )
 
+#ifdef LUA_SDK
+EditablePanel::EditablePanel( Panel *parent, const char *panelName, lua_State *L )
+    : Panel( parent, panelName, L ), m_NavGroup( this )
+{
+    _buildGroup = new BuildGroup( this, this );
+    m_pszConfigName = NULL;
+    m_iConfigID = 0;
+    m_pDialogVariables = NULL;
+    m_bShouldSkipAutoResize = false;
+
+    // add ourselves to the build group
+    SetBuildGroup( GetBuildGroup() );
+}
+#endif
+
 EditablePanel::EditablePanel( Panel *parent, const char *panelName )
     : Panel( parent, panelName ), m_NavGroup( this )
 {

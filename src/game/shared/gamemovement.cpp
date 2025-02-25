@@ -22,6 +22,10 @@
 #include "hl_movedata.h"
 #endif
 
+#ifdef LUA_SDK
+#include <lmovedata.h>
+#endif
+
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
@@ -1152,6 +1156,13 @@ void CGameMovement::ProcessMovement( CBasePlayer *pPlayer, CMoveData *pMove )
 
     mv = pMove;
     mv->m_flMaxSpeed = pPlayer->GetPlayerMaxSpeed();
+
+#ifdef LUA_SDK
+    LUA_CALL_HOOK_BEGIN( "PlayerTick" );
+    CBasePlayer::PushLuaInstanceSafe( L, player );
+    lua_pushmovedata( L, mv );
+    LUA_CALL_HOOK_END( 2, 0 );
+#endif
 
     // CheckV( player->CurrentCommandNumber(), "StartPos", mv->GetAbsOrigin() );
 
@@ -2425,13 +2436,15 @@ bool CGameMovement::CheckJumpButton( void )
     float flMul;
     if ( g_bMovementOptimizations )
     {
-#if defined( HL2_DLL ) || defined( HL2_CLIENT_DLL )
-        Assert( GetCurrentGravity() == 600.0f );
-        flMul = 160.0f;  // approx. 21 units.
-#else
-        Assert( GetCurrentGravity() == 800.0f );
-        flMul = 268.3281572999747f;
-#endif
+        flMul = player->GetJumpPower();
+        // Experiment; Commented these old hard-coded values in favor of the GetJumpPower configuration:
+        // #if defined( HL2_DLL ) || defined( HL2_CLIENT_DLL )
+        //         Assert( GetCurrentGravity() == 600.0f );
+        //         flMul = 160.0f;  // approx. 21 units.
+        // #else
+        //         Assert( GetCurrentGravity() == 800.0f );
+        //         flMul = 268.3281572999747f;
+        // #endif
     }
     else
     {
@@ -2548,7 +2561,7 @@ void CGameMovement::FullLadderMove()
 // Purpose:
 // Output : int
 //-----------------------------------------------------------------------------
-int CGameMovement::TryPlayerMove( Vector *pFirstDest, trace_t *pFirstTrace, float flSlideMultiplier /* = 0.f */ )
+int CGameMovement::TryPlayerMove( Vector *pFirstDest, trace_t *pFirstTrace, float flSlideMultiplier )
 {
     int bumpcount, numbumps;
     Vector dir;
@@ -2983,15 +2996,15 @@ bool CGameMovement::LadderMove( void )
             if ( angleDot < sv_ladder_angle.GetFloat() )
                 lateral = ( tmp * tmpDist ) + ( perp * sv_ladder_dampen.GetFloat() * perpDist );
 #endif  // CSTRIKE_DLL
-            //=============================================================================
-            // HPE_END
-            //=============================================================================
+        //=============================================================================
+        // HPE_END
+        //=============================================================================
 
             VectorMA( lateral, -normal, tmp, mv->m_vecVelocity );
 
             if ( onFloor && normal > 0 )  // On ground moving away from the ladder
             {
-                VectorMA( mv->m_vecVelocity, MAX_CLIMB_SPEED, pm.plane.normal, mv->m_vecVelocity );
+                VectorMA( mv->m_vecVelocity, ClimbSpeed(), pm.plane.normal, mv->m_vecVelocity );
             }
             // pev->velocity = lateral - (CrossProduct( trace.vecPlaneNormal, perp ) * normal);
         }
@@ -4130,16 +4143,20 @@ void CGameMovement::UpdateDuckJumpEyeOffset( void )
 {
     if ( player->m_Local.m_flDuckJumpTime != 0.0f )
     {
-        float flDuckMilliseconds = MAX( 0.0f, GAMEMOVEMENT_DUCK_TIME - ( float )player->m_Local.m_flDuckJumpTime );
-        float flDuckSeconds = flDuckMilliseconds / GAMEMOVEMENT_DUCK_TIME;
-        if ( flDuckSeconds > TIME_TO_UNDUCK )
+        float flDuckTimeMs = player->GetDuckSpeedInMilliseconds();
+        float flUnDuckFraction = player->GetUnDuckFraction();
+        float flUnDuckTime = flDuckTimeMs * flUnDuckFraction;
+        float flDuckMilliseconds = MAX( 0.0f, flDuckTimeMs - ( float )player->m_Local.m_flDuckJumpTime );
+        float flDuckSeconds = flDuckMilliseconds / flDuckTimeMs;
+
+        if ( flDuckSeconds > flUnDuckTime )
         {
             player->m_Local.m_flDuckJumpTime = 0.0f;
             SetDuckedEyeOffset( 0.0f );
         }
         else
         {
-            float flDuckFraction = SimpleSpline( 1.0f - ( flDuckSeconds / TIME_TO_UNDUCK ) );
+            float flDuckFraction = SimpleSpline( 1.0f - ( flDuckSeconds / flUnDuckTime ) );
             SetDuckedEyeOffset( flDuckFraction );
         }
     }
@@ -4281,10 +4298,14 @@ void CGameMovement::HandleDuckingSpeedCrop( void )
 {
     if ( !( m_iSpeedCropped & SPEED_CROPPED_DUCK ) && ( player->GetFlags() & FL_DUCKING ) && ( player->GetGroundEntity() != NULL ) )
     {
-        float frac = 0.33333333f;
-        mv->m_flForwardMove *= frac;
-        mv->m_flSideMove *= frac;
-        mv->m_flUpMove *= frac;
+#ifdef EXPERIMENT_SOURCE
+        float fraction = player->GetCrouchWalkFraction();
+#else
+        float fraction = 0.33333333f;
+#endif
+        mv->m_flForwardMove *= fraction;
+        mv->m_flSideMove *= fraction;
+        mv->m_flUpMove *= fraction;
         m_iSpeedCropped |= SPEED_CROPPED_DUCK;
     }
 }
@@ -4356,6 +4377,11 @@ void CGameMovement::Duck( void )
     // If the player is holding down the duck button, the player is in duck transition, ducking, or duck-jumping.
     if ( ( mv->m_nButtons & IN_DUCK ) || player->m_Local.m_bDucking || bInDuck || bDuckJump )
     {
+        float flDuckTimeMs = player->GetDuckSpeedInMilliseconds();
+        float flUnDuckFraction = player->GetUnDuckFraction();
+        float flUnDuckTimeMs = flDuckTimeMs * flUnDuckFraction;
+        float flUnDuckTimeInverse = flDuckTimeMs - flUnDuckTimeMs;
+
         // DUCK
         if ( ( mv->m_nButtons & IN_DUCK ) || bDuckJump )
         {
@@ -4374,25 +4400,26 @@ void CGameMovement::Duck( void )
             // Have the duck button pressed, but the player currently isn't in the duck position.
             if ( ( buttonsPressed & IN_DUCK ) && !bInDuck && !bDuckJump && !bDuckJumpTime )
             {
-                player->m_Local.m_flDucktime = GAMEMOVEMENT_DUCK_TIME;
+                player->m_Local.m_flDucktime = flDuckTimeMs;
                 player->m_Local.m_bDucking = true;
             }
 
             // The player is in duck transition and not duck-jumping.
             if ( player->m_Local.m_bDucking && !bDuckJump && !bDuckJumpTime )
             {
-                float flDuckMilliseconds = MAX( 0.0f, GAMEMOVEMENT_DUCK_TIME - ( float )player->m_Local.m_flDucktime );
-                float flDuckSeconds = flDuckMilliseconds * 0.001f;
+                float flCurrentDuckTimeMs = MAX( 0.0f, flDuckTimeMs - ( float )player->m_Local.m_flDucktime );
+                float flDuckTimeSeconds = flDuckTimeMs * 0.001f;
+                float flCurrentDuckSeconds = flCurrentDuckTimeMs * 0.001f;
 
                 // Finish in duck transition when transition time is over, in "duck", in air.
-                if ( ( flDuckSeconds > TIME_TO_DUCK ) || bInDuck || bInAir )
+                if ( ( flCurrentDuckSeconds >= flDuckTimeSeconds ) || bInDuck || bInAir )
                 {
                     FinishDuck();
                 }
                 else
                 {
                     // Calc parametric time
-                    float flDuckFraction = SimpleSpline( flDuckSeconds / TIME_TO_DUCK );
+                    float flDuckFraction = SimpleSpline( flCurrentDuckSeconds / flDuckTimeSeconds );
                     SetDuckedEyeOffset( flDuckFraction );
                 }
             }
@@ -4413,7 +4440,7 @@ void CGameMovement::Duck( void )
                         if ( CanUnDuckJump( trace ) )
                         {
                             FinishUnDuckJump( trace );
-                            player->m_Local.m_flDuckJumpTime = ( GAMEMOVEMENT_TIME_TO_UNDUCK * ( 1.0f - trace.fraction ) ) + GAMEMOVEMENT_TIME_TO_UNDUCK_INV;
+                            player->m_Local.m_flDuckJumpTime = ( flUnDuckTimeMs * ( 1.0f - trace.fraction ) ) + flUnDuckTimeInverse;
                         }
                     }
                 }
@@ -4434,7 +4461,7 @@ void CGameMovement::Duck( void )
 
                         if ( trace.fraction < 1.0f )
                         {
-                            player->m_Local.m_flDuckJumpTime = ( GAMEMOVEMENT_TIME_TO_UNDUCK * ( 1.0f - trace.fraction ) ) + GAMEMOVEMENT_TIME_TO_UNDUCK_INV;
+                            player->m_Local.m_flDuckJumpTime = ( flUnDuckTimeMs * ( 1.0f - trace.fraction ) ) + flUnDuckTimeInverse;
                         }
                     }
                 }
@@ -4451,24 +4478,26 @@ void CGameMovement::Duck( void )
             // NOTE: When not onground, you can always unduck
             if ( player->m_Local.m_bAllowAutoMovement || bInAir || player->m_Local.m_bDucking )
             {
+                float flDuckSpeedInMilliseconds = player->GetDuckSpeedInMilliseconds();
+
                 // We released the duck button, we aren't in "duck" and we are not in the air - start unduck transition.
                 if ( ( buttonsReleased & IN_DUCK ) )
                 {
                     if ( bInDuck && !bDuckJump )
                     {
-                        player->m_Local.m_flDucktime = GAMEMOVEMENT_DUCK_TIME;
+                        player->m_Local.m_flDucktime = flDuckSpeedInMilliseconds;
                     }
                     else if ( player->m_Local.m_bDucking && !player->m_Local.m_bDucked )
                     {
-                        // Invert time if release before fully ducked!!!
-                        float unduckMilliseconds = 1000.0f * TIME_TO_UNDUCK;
-                        float duckMilliseconds = 1000.0f * TIME_TO_DUCK;
-                        float elapsedMilliseconds = GAMEMOVEMENT_DUCK_TIME - player->m_Local.m_flDucktime;
+                        float unduckMilliseconds = flDuckSpeedInMilliseconds * flUnDuckFraction;
 
-                        float fracDucked = elapsedMilliseconds / duckMilliseconds;
+                        // Invert time if release before fully ducked!!!
+                        float elapsedMilliseconds = flDuckSpeedInMilliseconds - player->m_Local.m_flDucktime;
+
+                        float fracDucked = elapsedMilliseconds / flDuckSpeedInMilliseconds;
                         float remainingUnduckMilliseconds = fracDucked * unduckMilliseconds;
 
-                        player->m_Local.m_flDucktime = GAMEMOVEMENT_DUCK_TIME - unduckMilliseconds + remainingUnduckMilliseconds;
+                        player->m_Local.m_flDucktime = remainingUnduckMilliseconds;
                     }
                 }
 
@@ -4478,18 +4507,17 @@ void CGameMovement::Duck( void )
                     // or unducking
                     if ( ( player->m_Local.m_bDucking || player->m_Local.m_bDucked ) )
                     {
-                        float flDuckMilliseconds = MAX( 0.0f, GAMEMOVEMENT_DUCK_TIME - ( float )player->m_Local.m_flDucktime );
-                        float flDuckSeconds = flDuckMilliseconds * 0.001f;
+                        float flCurrentDuckTimeMilliseconds = MAX( 0.0f, flUnDuckTimeMs - ( float )player->m_Local.m_flDucktime );
 
                         // Finish ducking immediately if duck time is over or not on ground
-                        if ( flDuckSeconds > TIME_TO_UNDUCK || ( bInAir && !bDuckJump ) )
+                        if ( flCurrentDuckTimeMilliseconds >= flUnDuckTimeMs || ( bInAir && !bDuckJump ) )
                         {
                             FinishUnDuck();
                         }
                         else
                         {
                             // Calc parametric time
-                            float flDuckFraction = SimpleSpline( 1.0f - ( flDuckSeconds / TIME_TO_UNDUCK ) );
+                            float flDuckFraction = SimpleSpline( 1.0f - ( flCurrentDuckTimeMilliseconds / flUnDuckTimeMs ) );
                             SetDuckedEyeOffset( flDuckFraction );
                             player->m_Local.m_bDucking = true;
                         }
@@ -4499,10 +4527,10 @@ void CGameMovement::Duck( void )
                 {
                     // Still under something where we can't unduck, so make sure we reset this timer so
                     //  that we'll unduck once we exit the tunnel, etc.
-                    if ( player->m_Local.m_flDucktime != GAMEMOVEMENT_DUCK_TIME )
+                    if ( player->m_Local.m_flDucktime != flDuckSpeedInMilliseconds )
                     {
                         SetDuckedEyeOffset( 1.0f );
-                        player->m_Local.m_flDucktime = GAMEMOVEMENT_DUCK_TIME;
+                        player->m_Local.m_flDucktime = flDuckSpeedInMilliseconds;
                         player->m_Local.m_bDucked = true;
                         player->m_Local.m_bDucking = false;
                         player->AddFlag( FL_DUCKING );
@@ -4543,6 +4571,15 @@ static ConVar sv_optimizedmovement( "sv_optimizedmovement", "1", FCVAR_REPLICATE
 void CGameMovement::PlayerMove( void )
 {
     VPROF( "CGameMovement::PlayerMove" );
+
+#ifdef LUA_SDK
+    LUA_CALL_HOOK_BEGIN( "Move" );
+    CBasePlayer::PushLuaInstanceSafe( L, player );
+    lua_pushmovedata( L, mv );
+    LUA_CALL_HOOK_END( 2, 1 );
+
+    LUA_RETURN_NONE_IF_FALSE();
+#endif
 
     CheckParameters();
 
@@ -4629,16 +4666,46 @@ void CGameMovement::PlayerMove( void )
 	Msg("%i, %i, %s, player = %8x, move type = %2i, ground entity = %8x, velocity = (%f %f %f)\n",
 		player->CurrentCommandNumber(),
 		player->m_nTickBase,
-		player->IsServer() ? "SERVER" : "CLIENT", 
-		player, 
+		player->IsServer() ? "SERVER" : "CLIENT",
+		player,
 		player->GetMoveType(),
-		player->GetGroundEntity(), 
+		player->GetGroundEntity(),
 		mv->m_vecVelocity[0], mv->m_vecVelocity[1], mv->m_vecVelocity[2]);
 
 #endif
 
+    MoveType_t newMoveType = player->GetMoveType();
+
+#ifdef LUA_SDK
+    if ( newMoveType != m_nOldMoveType )
+    {
+        if ( newMoveType == MOVETYPE_NOCLIP || m_nOldMoveType == MOVETYPE_NOCLIP )
+        {
+            bool bNoClipDesired = newMoveType == MOVETYPE_NOCLIP;
+            LUA_CALL_HOOK_BEGIN( "PlayerNoClip" );
+            CBasePlayer::PushLuaInstanceSafe( L, player );
+            lua_pushboolean( L, bNoClipDesired );
+            LUA_CALL_HOOK_END( 2, 1 );
+
+            // On false, block the switch
+            if ( lua_isboolean( L, -1 ) && !lua_toboolean( L, -1 ) )
+            {
+                lua_pop( L, 1 );  // Pop the return value (must do this before SetMoveType or we'll get a stack corruption)
+                newMoveType = m_nOldMoveType;
+                player->SetMoveType( newMoveType );
+            }
+            else
+            {
+                lua_pop( L, 1 );  // Pop the return value
+            }
+        }
+    }
+#endif
+
+    m_nOldMoveType = newMoveType;
+
     // Handle movement modes.
-    switch ( player->GetMoveType() )
+    switch ( newMoveType )
     {
         case MOVETYPE_NONE:
             break;

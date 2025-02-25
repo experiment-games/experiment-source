@@ -20,8 +20,13 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
+#ifdef LUA_SDK
+PropertyDialog::PropertyDialog( Panel *parent, const char *panelName, lua_State *L /* = nullptr */ )
+    : Frame( parent, panelName, true, true, L )
+#else
 PropertyDialog::PropertyDialog( Panel *parent, const char *panelName )
     : Frame( parent, panelName )
+#endif
 {
     // create the property sheet
     _propertySheet = new PropertySheet( this, "Sheet" );

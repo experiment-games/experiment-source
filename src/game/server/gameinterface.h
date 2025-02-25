@@ -19,6 +19,10 @@ class IReplayFactory;
 extern INetworkStringTable *g_pStringTableInfoPanel;
 extern INetworkStringTable *g_pStringTableServerMapCycle;
 
+#ifdef LUA_SDK
+extern INetworkStringTable *g_pStringTableLuaNetworkStrings;
+#endif
+
 #ifdef TF_DLL
 extern INetworkStringTable *g_pStringTableServerPopFiles;
 #endif

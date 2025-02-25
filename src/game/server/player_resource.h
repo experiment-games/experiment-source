@@ -31,6 +31,10 @@ class CPlayerResource : public CBaseEntity
     virtual void UpdatePlayerData( void );
     virtual int UpdateTransmitState( void );
     virtual int GetTeam( int iIndex );
+    virtual bool IsConnected( int index );
+    virtual bool IsAlive( int index );
+
+    virtual int GetPing( int index );
 
    protected:
     virtual void UpdateConnectedPlayer( int iIndex, CBasePlayer *pPlayer );

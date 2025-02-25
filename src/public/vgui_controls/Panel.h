@@ -29,6 +29,13 @@
 #include "tier1/utlsymbol.h"
 #include "vgui_controls/BuildGroup.h"
 
+#ifdef LUA_SDK
+#include "lua.hpp"
+#include "luasrclib.h"
+#include "utldict.h"
+#include "lsingleluainstance.h"
+#endif
+
 // undefine windows function macros that overlap
 #ifdef PostMessage
 #undef PostMessage
@@ -123,6 +130,62 @@ class IForceVirtualInheritancePanel
     // declarations of points to members as used in MessageMap.
 };
 
+#ifdef LUA_SDK
+struct Thickness
+{
+    int left;
+    int top;
+    int right;
+    int bottom;
+
+    Thickness( int l = 0, int t = 0, int r = 0, int b = 0 )
+        : left( l ), top( t ), right( r ), bottom( b )
+    {
+    }
+};
+
+struct Size
+{
+    int x;
+    int y;
+    int wide;
+    int tall;
+
+    Size( int x = 0, int y = 0, int wide = 0, int tall = 0 )
+        : x( x ), y( y ), wide( wide ), tall( tall )
+    {
+    }
+};
+
+namespace Dock
+{
+enum Type
+{
+    None = 0,
+    Fill = 1,
+    Left = 2,
+    Right = 3,
+    Top = 4,
+    Bottom = 5,
+};
+}
+
+namespace Alignment
+{
+enum Type
+{
+    None = 0,
+    Left = ( 1 << 1 ),
+    Right = ( 1 << 2 ),
+    Top = ( 1 << 3 ),
+    Bottom = ( 1 << 4 ),
+    CenterVertical = ( 1 << 5 ),
+    CenterHorizontal = ( 1 << 6 ),
+    Center = CenterVertical | CenterHorizontal,
+};
+}
+#endif
+
 //=============================================================================
 // HPE_BEGIN:
 // [tj] bitwise defines for rounded corners
@@ -145,6 +208,11 @@ class Panel : public IClientPanel, virtual public IForceVirtualInheritancePanel
 {
     DECLARE_CLASS_SIMPLE_NOBASE( Panel );
 
+#ifdef LUA_SDK
+    LUA_DECLARE_SINGLE_LUA_INSTANCE( Panel, LUA_PANELMETANAME );
+    static void PushVPanelLuaInstance( lua_State *L, VPANEL panel );
+#endif
+
    public:
     // For property mapping
     static void InitPropertyConverters( void );
@@ -161,6 +229,154 @@ class Panel : public IClientPanel, virtual public IForceVirtualInheritancePanel
     Panel( Panel *parent, const char *panelName, HScheme scheme );
 
     virtual ~Panel();
+
+#ifdef LUA_SDK
+   protected:
+    bool m_bIsPaintClipping = true;
+    int m_nLastLocalCursorX = 0;
+    int m_nLastLocalCursorY = 0;
+    int m_AlignmentMask = Alignment::None;  // Let it be absolutely positioned by its x and y
+    Thickness m_DockPadding;
+    Thickness m_DockMargin;
+    Size m_InnerBounds;
+    Dock::Type m_DockStyle = Dock::None;
+    CUtlDict< int, int > m_PreparedFunctions;
+    bool m_bIsWorldClicker = false;
+
+   public:
+    lua_State *m_lua_State = nullptr;
+    int m_nTableReference;
+    int m_nRefCount;
+
+    Panel( Panel *parent, const char *panelName, lua_State *L );
+    virtual void SetupRefTable( lua_State *L );
+
+    virtual void RecurseLayout();
+    virtual void Position( int alignmentBitmask, int xpadding = 0, int ypadding = 0 );
+    virtual void PostLayout();
+
+    virtual void GetChildrenSize( int &wide, int &tall );
+    virtual void SizeToChildren( bool w = false, bool h = false );
+
+    void SetDock( Dock::Type dockStyle );
+    Dock::Type GetDock();
+
+    void SetDockPadding( Thickness padding );
+    Thickness GetDockPadding();
+
+    void SetDockMargin( Thickness padding );
+    Thickness GetDockMargin();
+
+    void SetAlignment( int alignmentBitmask )
+    {
+        if ( m_AlignmentMask == alignmentBitmask )
+        {
+            return;
+        }
+
+        m_AlignmentMask = alignmentBitmask;
+        InvalidateLayout();
+    }
+
+    int GetAlignment() const
+    {
+        return m_AlignmentMask;
+    }
+
+    void Center()
+    {
+        SetAlignment( Alignment::Center );
+    }
+
+    virtual void InvalidateParentLayout( bool layoutNow = false, bool reloadScheme = false )
+    {
+        Panel *parent = GetParent();
+        if ( parent )
+        {
+            parent->InvalidateLayout( layoutNow, reloadScheme );
+        }
+    }
+
+    virtual void InvalidateChildrenLayout( bool bRecursive = false )
+    {
+        for ( int i = 0; i < GetChildCount(); i++ )
+        {
+            Panel *child = GetChild( i );
+            if ( !child )
+                continue;
+
+            child->InvalidateLayout( true, false );
+
+            if ( bRecursive )
+            {
+                child->InvalidateChildrenLayout( true );
+            }
+        }
+    }
+
+    // Recursively go through the children, and perform layout on them if they need it
+    virtual void RecurseInternalPerformChildrenLayout( bool bForce = false )
+    {
+        for ( int i = 0; i < GetChildCount(); i++ )
+        {
+            Panel *child = GetChild( i );
+            if ( !child )
+                continue;
+
+            child->RecurseInternalPerformChildrenLayout( bForce );
+
+            if ( ( child->_flags.IsFlagSet( NEEDS_LAYOUT ) && !child->_flags.IsFlagSet( IN_PERFORM_LAYOUT ) ) || bForce )
+            {
+                child->InternalPerformLayout();
+            }
+        }
+    }
+
+    virtual void GetLocalCursorPosition( int &x, int &y )
+    {
+        x = m_nLastLocalCursorX;
+        y = m_nLastLocalCursorY;
+    }
+
+    virtual void SetPaintClippingEnabled( bool state )
+    {
+        m_bIsPaintClipping = state;
+    }
+
+    bool IsFunctionPrepared( const char *functionName )
+    {
+        // This whole mess is really only for OnChildAdded.
+        // Init may not have been finished calling yet, so we need to check if
+        // the Init of this panel has completed (signalled by PANEL:Prepare),
+        // Otherwise some derma panels which hook to OnChildAdded will expect
+        // panels created inside Init to exist and be ready to be used.
+        // See DScrollPanel for an example of this situation:
+        //  function PANEL:Init()
+        //      self.pnlCanvas = vgui.Create( "Panel", self )
+        //      // etc...
+        //  end
+        //  function PANEL:OnChildAdded( child )
+        //	    child:SetParent( self.pnlCanvas ) -- self.pnlCanvas does not exist if vgui.Create( "Panel", self ) calls OnChildAdded
+        //  end
+        if ( Q_strcmp( functionName, "OnChildAdded" ) == 0 )
+        {
+            return m_PreparedFunctions.Find( functionName ) != m_PreparedFunctions.InvalidIndex();
+        }
+        return true;
+    }
+
+    virtual void SetWorldClicker( bool state )
+    {
+        m_bIsWorldClicker = state;
+    }
+
+    virtual bool IsWorldClicker()
+    {
+        return m_bIsWorldClicker;
+    }
+
+    virtual void Prepare();
+#endif
 
     // returns pointer to Panel's vgui VPanel interface handle
     virtual VPANEL GetVPanel()
@@ -277,6 +493,7 @@ class Panel : public IClientPanel, virtual public IForceVirtualInheritancePanel
     virtual bool IsEnabled();
     virtual bool IsPopup();  // has a parent, but is in it's own space
     virtual void GetClipRect( int &x0, int &y0, int &x1, int &y1 );
+    virtual void MoveToBack();
     virtual void MoveToFront();
 
     // pin positions for auto-layout
@@ -505,6 +722,7 @@ class Panel : public IClientPanel, virtual public IForceVirtualInheritancePanel
     // message handlers that don't go through the message pump
     virtual void PaintBackground();
     virtual void Paint();
+    virtual void PaintManual();
     virtual void PaintBorder();
     virtual void PaintBuildOverlay();  // the extra drawing for when in build mode
     virtual void PostChildPaint();
@@ -745,6 +963,7 @@ class Panel : public IClientPanel, virtual public IForceVirtualInheritancePanel
 
     MESSAGE_FUNC_ENUM_ENUM( OnRequestFocus, "OnRequestFocus", VPANEL, subFocus, VPANEL, defaultPanel );
     MESSAGE_FUNC_INT_INT( OnScreenSizeChanged, "OnScreenSizeChanged", oldwide, oldtall );
+
     virtual void *QueryInterface( EInterfaceID id );
 
     void AddToOverridableColors( Color *pColor, char const *scriptname )
@@ -925,6 +1144,8 @@ class Panel : public IClientPanel, virtual public IForceVirtualInheritancePanel
 
     void FindDropTargetPanel_R( CUtlVector< VPANEL > &panelList, int x, int y, VPANEL check );
     Panel *FindDropTargetPanel();
+
+    int GetProportionalScaledValue( int rootTall, int normalizedValue );
 
 #if defined( VGUI_USEDRAGDROP )
     DragDrop_t *m_pDragDrop;
@@ -1115,7 +1336,6 @@ class CSortedPanelYLess
         return false;
     }
 };
-
 void VguiPanelGetSortedChildPanelList( Panel *pParentPanel, void *pSortedPanels );
 void VguiPanelGetSortedChildButtonList( Panel *pParentPanel, void *pSortedPanels, char *pchFilter = NULL, int nFilterType = 0 );
 int VguiPanelNavigateSortedChildButtonList( void *pSortedPanels, int nDir );

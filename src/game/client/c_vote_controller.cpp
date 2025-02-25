@@ -15,16 +15,19 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
+// clang-format off
+
 IMPLEMENT_CLIENTCLASS_DT( C_VoteController, DT_VoteController, CVoteController )
-RecvPropInt( RECVINFO( m_iActiveIssueIndex ), 0, C_VoteController::RecvProxy_VoteType ),
+    RecvPropInt( RECVINFO( m_iActiveIssueIndex ), 0, C_VoteController::RecvProxy_VoteType ),
     RecvPropInt( RECVINFO( m_nVoteIdx ) ),
     RecvPropInt( RECVINFO( m_iOnlyTeamToVote ) ),
-    RecvPropArray3( RECVINFO_ARRAY( m_nVoteOptionCount ), RecvPropInt( RECVINFO( m_nVoteOptionCount[0] ), 0, C_VoteController::RecvProxy_VoteOption ) ),
+    RecvPropArray3( RECVINFO_ARRAY( m_nVoteOptionCount ),
+    RecvPropInt( RECVINFO( m_nVoteOptionCount[0] ), 0, C_VoteController::RecvProxy_VoteOption ) ),
     RecvPropInt( RECVINFO( m_nPotentialVotes ) ),
     RecvPropBool( RECVINFO( m_bIsYesNoVote ) )
-        END_RECV_TABLE()
+END_RECV_TABLE()
 
-            ConVar sv_vote_holder_may_vote_no( "sv_vote_holder_may_vote_no", "0", FCVAR_REPLICATED, "1 = Vote caller is not forced to vote yes on yes/no votes." );
+static bool WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
 
 //-----------------------------------------------------------------------------
 // Purpose:

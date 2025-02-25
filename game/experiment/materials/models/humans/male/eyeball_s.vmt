@@ -1,0 +1,6 @@
+"eyes"
+{
+	"$basetexture" "models/Humans/male/eyeball_r"
+	"$iris" "models/Humans/male/pupil_s"
+	"$halflambert" 1
+}

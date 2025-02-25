@@ -1,0 +1,9 @@
+{% if page.meta.lua.remarks %}
+<h2>Remarks</h2>
+{% for remark in page.meta.lua.remarks %}
+<div class="admonition {{ remark.type }}">
+    <p class="admonition-title">{{ remark.title | default(remark.type | capitalize ) }}</p>
+    <p>{{ remark.content }}</p>
+</div>
+{% endfor %}
+{% endif %}

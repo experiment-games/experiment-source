@@ -291,6 +291,13 @@ bool CHudHistoryResource::ShouldDraw( void )
 //-----------------------------------------------------------------------------
 void CHudHistoryResource::Paint( void )
 {
+#ifdef LUA_SDK
+    LUA_CALL_HOOK_BEGIN( "HUDDrawPickupHistory" );
+    LUA_CALL_HOOK_END( 0, 1 );
+
+    LUA_RETURN_NONE_IF_FALSE();
+#endif
+
     if ( m_bDoNotDraw )
     {
         // this is to not draw things until the first rendered
@@ -336,7 +343,7 @@ void CHudHistoryResource::Paint( void )
                 case HISTSLOT_AMMO:
                 {
                     // Get the weapon we belong to
-#ifndef HL2MP
+#if !defined( HL2MP ) && !defined( EXPERIMENT_SOURCE )
                     const FileWeaponInfo_t *pWpnInfo = gWR.GetWeaponFromAmmo( m_PickupHistory[i].iId );
                     if ( pWpnInfo && ( pWpnInfo->iMaxClip1 >= 0 || pWpnInfo->iMaxClip2 >= 0 ) )
                     {
@@ -345,7 +352,7 @@ void CHudHistoryResource::Paint( void )
                         itemAmmoIcon = gWR.GetAmmoIconFromWeapon( m_PickupHistory[i].iId );
                     }
                     else
-#endif  // HL2MP
+#endif  // !HL2MP && !EXPERIMENT_SOURCE
                     {
                         itemIcon = gWR.GetAmmoIconFromWeapon( m_PickupHistory[i].iId );
                         itemAmmoIcon = NULL;
@@ -419,13 +426,13 @@ void CHudHistoryResource::Paint( void )
             int ypos = tall - ( m_flHistoryGap * ( i + 1 ) );
             int xpos = wide - itemIcon->Width() - m_flIconInset;
 
-#ifndef HL2MP
+#if !defined( HL2MP ) && !defined( EXPERIMENT_SOURCE )
             // Adjust for a half-height icon
             if ( bHalfHeight )
             {
                 ypos += itemIcon->Height() / 2;
             }
-#endif  // HL2MP
+#endif  // !HL2MP && !EXPERIMENT_SOURCE
 
             itemIcon->DrawSelf( xpos, ypos, clr );
 

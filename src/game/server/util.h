@@ -43,6 +43,21 @@ class IEntityFactory;
 #define SETUP_EXTERNC( mapClassName )
 #endif
 
+#ifdef LUA_SDK
+// Experiment; TODO: This feels hacky, but we want some sort of way to know if ScriptedWeapons/Entities are to be got from Lua.
+// This is set just before we create a weapon or entity
+const char *g_szLuaExpectedScriptedLibrary = nullptr;
+
+// Macro to ensure we're in the right library when we're creating a scripted entity.
+#define LUA_EXPECTED_SCRIPTED_LIBRARY_BEGIN( libname )                                                                  \
+    AssertMsg( g_szLuaExpectedScriptedLibrary == nullptr, "LUA_EXPECTED_SCRIPTED_LIBRARY_END call missing somewhere" ); \
+    g_szLuaExpectedScriptedLibrary = libname;
+
+#define LUA_EXPECTED_SCRIPTED_LIBRARY_END( libname )                                                                                     \
+    AssertMsg( Q_strcmp( g_szLuaExpectedScriptedLibrary, libname ) == 0, "LUA_EXPECTED_SCRIPTED_LIBRARY_BEGIN call missing somewhere" ); \
+    g_szLuaExpectedScriptedLibrary = nullptr;
+#endif
+
 //
 // How did I ever live without ASSERT?
 //
@@ -95,6 +110,10 @@ abstract_class IEntityFactoryDictionary
 {
    public:
     virtual void InstallFactory( IEntityFactory * pFactory, const char *pClassName ) = 0;
+#ifdef LUA_SDK
+    virtual void RemoveFactory( IEntityFactory * pFactory,
+                                const char *pClassName ) = 0;
+#endif
     virtual IServerNetworkable *Create( const char *pClassName ) = 0;
     virtual void Destroy( const char *pClassName, IServerNetworkable *pNetworkable ) = 0;
     virtual IEntityFactory *FindFactory( const char *pClassName ) = 0;
@@ -123,7 +142,17 @@ class CEntityFactory : public IEntityFactory
     CEntityFactory( const char *pClassName )
     {
         EntityFactoryDictionary()->InstallFactory( this, pClassName );
+#ifdef LUA_SDK
+        strcpy( classname, pClassName );
+#endif
     }
+
+#ifdef LUA_SDK
+    ~CEntityFactory()
+    {
+        EntityFactoryDictionary()->RemoveFactory( this, classname );
+    }
+#endif
 
     IServerNetworkable *Create( const char *pClassName )
     {
@@ -143,6 +172,11 @@ class CEntityFactory : public IEntityFactory
     {
         return sizeof( T );
     }
+
+#ifdef LUA_SDK
+   private:
+    char classname[255];
+#endif
 };
 
 #define LINK_ENTITY_TO_CLASS( mapClassName, DLLClassName ) \
@@ -192,7 +226,7 @@ inline bool FStrEq( const char *sz1, const char *sz2 )
 // UNDONE: Remove/alter MAKE_STRING so we can do this?
 inline bool FStrEq( string_t str1, string_t str2 )
 {
-	// now that these are pooled, we can compare them with 
+	// now that these are pooled, we can compare them with
 	// integer equality
 	return str1 == str2;
 }
@@ -218,7 +252,6 @@ float UTIL_GetSimulationInterval();
 // NOTENOTE: Use UTIL_GetLocalPlayer instead of UTIL_PlayerByIndex IF you're in single player
 // and you want the player.
 CBasePlayer *UTIL_PlayerByIndex( int playerIndex );
-CBasePlayer *UTIL_PlayerBySteamID( const CSteamID &steamID );
 
 // NOTENOTE: Use this instead of UTIL_PlayerByIndex IF you're in single player
 // and you want the player.
@@ -228,7 +261,9 @@ CBasePlayer *UTIL_GetLocalPlayer( void );
 // get the local player on a listen server
 CBasePlayer *UTIL_GetListenServerHost( void );
 
-// Convenience function so we don't have to make this check all over
+//-----------------------------------------------------------------------------
+// Purpose: Convenience function so we don't have to make this check all over
+//-----------------------------------------------------------------------------
 inline CBasePlayer *UTIL_GetLocalPlayerOrListenServerHost( void )
 {
     if ( gpGlobals->maxClients > 1 )
@@ -361,7 +396,6 @@ void UTIL_ShowMessageAll( const char *pString );
 void UTIL_ScreenFadeAll( const color32 &color, float fadeTime, float holdTime, int flags );
 void UTIL_ScreenFade( CBaseEntity *pEntity, const color32 &color, float fadeTime, float fadeHold, int flags );
 void UTIL_MuzzleFlash( const Vector &origin, const QAngle &angles, int scale, int type );
-Vector UTIL_PointOnLineNearestPoint( const Vector &vStartPos, const Vector &vEndPos, const Vector &vPoint, bool clampEnds = false );
 
 int UTIL_EntityInSolid( CBaseEntity *ent );
 
@@ -392,9 +426,6 @@ void UTIL_PointAtNamedEntity( CBaseEntity *pEnt, string_t strTarget );
 
 // Copy the pose parameter values from one entity to the other
 bool UTIL_TransferPoseParameters( CBaseEntity *pSourceEntity, CBaseEntity *pDestEntity );
-
-// Search for water transition along a vertical line
-float UTIL_WaterLevel( const Vector &position, float minz, float maxz );
 
 // Like UTIL_WaterLevel, but *way* less expensive.
 // I didn't replace UTIL_WaterLevel everywhere to avoid breaking anything.

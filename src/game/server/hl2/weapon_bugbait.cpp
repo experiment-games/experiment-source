@@ -79,7 +79,7 @@ IMPLEMENT_SERVERCLASS_ST( CWeaponBugBait, DT_WeaponBugBait )
 END_SEND_TABLE()
 
 LINK_ENTITY_TO_CLASS( weapon_bugbait, CWeaponBugBait );
-#ifndef HL2MP
+#if !defined( HL2MP ) && !defined( EXPERIMENT_SOURCE )
 PRECACHE_WEAPON_REGISTER( weapon_bugbait );
 #endif
 

@@ -21,6 +21,8 @@
 
 #include "OfflineMode.h"
 
+#include <experiment/util/jsontokv.h>
+
 // memdbgon must be the last include file in a .cpp file
 #include "tier0/memdbgon.h"
 
@@ -123,8 +125,13 @@ class HTMLPopup : public vgui::Frame
 // Old code, stricter compiler
 #pragma warning( disable : 4355 )  // warning C4355: 'this': used in base member initializer list
 #endif
+#ifdef LUA_SDK
+HTML::HTML( Panel *parent, const char *name, bool allowJavaScript, bool bPopupWindow, lua_State *L /* = nullptr */ )
+    : Panel( parent, name, L ),
+#else
 HTML::HTML( Panel *parent, const char *name, bool allowJavaScript, bool bPopupWindow )
     : Panel( parent, name ),
+#endif
       m_NeedsPaint( this, &HTML::BrowserNeedsPaint ),
       m_StartRequest( this, &HTML::BrowserStartRequest ),
       m_URLChanged( this, &HTML::BrowserURLChanged ),
@@ -169,7 +176,7 @@ HTML::HTML( Panel *parent, const char *name, bool allowJavaScript, bool bPopupWi
     }
     else
     {
-        Warning( "Unable to access SteamHTMLSurface" );
+        Warning( "Unable to access SteamHTMLSurface\n" );
     }
     m_iScrollBorderX = m_iScrollBorderY = 0;
     m_bScrollBarEnabled = true;
@@ -204,7 +211,11 @@ HTML::HTML( Panel *parent, const char *name, bool allowJavaScript, bool bPopupWi
     m_pContextMenu->AddMenuItem( "#TextEntry_Paste", new KeyValues( "Command", "command", "paste" ), this );
     m_pContextMenu->AddSeparator();
     m_nViewSourceAllowedIndex = m_pContextMenu->AddMenuItem( "#vgui_HTMLViewSource", new KeyValues( "Command", "command", "viewsource" ), this );
+
+    AddActionSignalTarget( this );
 }
+
+#pragma warning( default : 4355 )
 
 //-----------------------------------------------------------------------------
 // Purpose: browser is ready to show pages
@@ -239,6 +250,161 @@ HTML::~HTML()
         //		surface()->DeleteCursor( m_vecHCursor[i].m_Cursor );
     }
     m_vecHCursor.RemoveAll();
+}
+
+/// <summary>
+/// Adds an object to the browser's javascript context
+/// </summary>
+/// <param name="pszObjectName"></param>
+void HTML::AddJavascriptObject( const char *pszObjectName )
+{
+    if ( !m_SteamAPIContext.SteamHTMLSurface() )
+        return;
+
+    char szScript[1024];
+    Q_snprintf( szScript, sizeof( szScript ), "window.%s = new Object();", pszObjectName );
+
+    m_SteamAPIContext.SteamHTMLSurface()->ExecuteJavascript( m_unBrowserHandle, szScript );
+}
+
+/// <summary>
+/// </summary>
+void HTML::InstallInteropStubs()
+{
+    if ( !m_SteamAPIContext.SteamHTMLSurface() )
+        return;
+
+    // Let's set up a message queue so any return values that are returned from the callback, can be sent back
+    char szScript[8096];
+
+    // The last argument is the callback function if it is a function. The rest are arguments. Only store
+    // the callback and get its id so we can later call it with new return values
+    Q_snprintf( szScript, sizeof( szScript ),
+                // Library where we store Interop functions
+                "window.g_Interop = window.g_Interop ? window.g_Interop : {}; "
+
+                // Place to store callbacks so they can be called later by their id
+                "window.g_Interop.__callbackQueue = window.g_Interop.__callbackQueue ? window.g_Interop.__callbackQueue : []; "
+
+                // Dispatches an event to mark the page as ready (and these stubs having been installed)
+                "window.g_Interop.__isReady = typeof window.g_Interop.__isReady === 'boolean' ? window.g_Interop.__isReady : false; "
+                "if ( !window.g_Interop.__isReady ) {"
+                "   window.g_Interop.DispatchReadyEvent = function() { "
+                "      if (window.g_Interop.__isReady) return; "
+                "      window.g_Interop.__isReady = true; "
+                "      window.dispatchEvent(new Event('interop:ready')); "
+                "   }; "
+                // Redirect error messages to C++
+                "   window.addEventListener('error', function(e) { alert('%s' + JSON.stringify({type:e.type,message:e.message,file:e.filename,line:e.lineno,column:e.colno})); }); "
+                // Redirect log messages to C++
+                "   (function() {"
+                "      let oldLog = console.log;"
+                "      console.log = function() {"
+                "          oldLog.apply(console, arguments);"
+                "          alert('%s' + JSON.stringify({type:'log',arguments:Array.prototype.slice.call(arguments)}));"
+                "      };"
+                "   })(); "
+                "} "
+                /* start of printf parameter values */,
+                HTML_ERROR_PREFIX,
+                HTML_LOG_PREFIX );
+
+    m_SteamAPIContext.SteamHTMLSurface()->ExecuteJavascript( m_unBrowserHandle, szScript );
+
+    // Give classes deriving from HTML a chance to install interop before we mark interop as ready
+    // e.g: AddJavascriptObject( "GameUI" );
+    //      AddJavascriptObjectCallback( "GameUI", "LoadMountableContentInfo" );
+    OnInstallJavaScriptInterop();
+
+    // Mark the page as ready
+    m_SteamAPIContext.SteamHTMLSurface()->ExecuteJavascript( m_unBrowserHandle, "window.g_Interop.DispatchReadyEvent();" );
+}
+
+/// <summary>
+/// Adds a function field to the specified object. When this field is called, it will use
+/// 'alert' to signal the browser that the function was called.
+/// </summary>
+/// <param name="pszObjectName"></param>
+/// <param name="pszPropertyName"></param>
+void HTML::AddJavascriptObjectCallback( const char *pszObjectName, const char *pszPropertyName )
+{
+    if ( !m_SteamAPIContext.SteamHTMLSurface() )
+        return;
+
+    // Let's set up a message queue so any return values that are returned from the callback, can be sent back
+    char szScript[8096];
+
+    // The last argument is the callback function if it is a function. The rest are arguments. Only store
+    // the callback and get its id so we can later call it with new return values
+    Q_snprintf( szScript, sizeof( szScript ),
+                "window.%s.%s = function() { "
+                "   let callback = typeof arguments[arguments.length-1] === 'function' ? arguments[arguments.length-1] : null; "
+                "   let args; "
+                "   if (callback) {"
+                "       args = Array.prototype.slice.call(arguments, 0, -1); "
+                "   } else { "
+                "       args = Array.prototype.slice.call(arguments); "
+                "   } "
+                "   let __cId = window.g_Interop.__callbackQueue.push(callback)-1; "
+                "   console.log('Callback ID: ' + __cId + ' with args: ' + JSON.stringify(args)); "
+                "   alert('%s' + JSON.stringify({object:'%s',property:'%s',arguments:args,callbackId:__cId})); "
+                "}; ",
+                pszObjectName,
+                pszPropertyName,
+                HTML_INTEROP_PREFIX,
+                pszObjectName,
+                pszPropertyName );
+
+    m_SteamAPIContext.SteamHTMLSurface()->ExecuteJavascript( m_unBrowserHandle, szScript );
+}
+
+/// <summary>
+/// Calls the callback in JS for the given callback id. Sends the provided arguments to the callback.
+/// </summary>
+/// <param name="callbackId"></param>
+/// <param name="args"></param>
+void HTML::CallJavascriptObjectCallback( int callbackId, KeyValues *args )
+{
+    if ( !m_SteamAPIContext.SteamHTMLSurface() )
+        return;
+
+    char szJson[8096];
+    CJsonToKeyValues::ConvertKeyValuesToJson( args, szJson, sizeof( szJson ) );
+
+    char szScript[8096];
+    Q_snprintf( szScript, sizeof( szScript ), "if (typeof window.g_Interop.__callbackQueue[%i] === 'function') window.g_Interop.__callbackQueue[%i].apply(null, Object.values(%s));", callbackId, callbackId, szJson );
+
+    m_SteamAPIContext.SteamHTMLSurface()->ExecuteJavascript( m_unBrowserHandle, szScript );
+}
+
+/// <summary>
+/// Override this in a subclass to customize how to handle javascript callbacks
+/// </summary>
+/// <param name="pData"></param>
+void HTML::OnJavaScriptCallback( KeyValues *pData )
+{
+    // const char *pszObject = pData->GetString( "object" );
+    // const char *pszProperty = pData->GetString( "property" );
+    // KeyValues *pArguments = pData->FindKey( "arguments" );
+
+    // for ( KeyValues *pArg = pArguments->GetFirstSubKey(); pArg; pArg = pArg->GetNextKey() )
+    //{
+    //     lua_pushstring( L, pArg->GetName() );
+    //     lua_pushstring( L, pArg->GetString() );
+    //     lua_settable( L, -3 );
+    // }
+}
+
+/// <summary>
+/// Called to mark the request as having finished. When overriding this function, make sure to call the base class function
+/// first. Since this installs the interop stubs required for JS to C++ communication.
+/// </summary>
+/// <param name="url"></param>
+/// <param name="pageTitle"></param>
+/// <param name="headers"></param>
+void HTML::OnFinishRequest( const char *url, const char *pageTitle, const CUtlMap< CUtlString, CUtlString > &headers )
+{
+    InstallInteropStubs();
 }
 
 //-----------------------------------------------------------------------------
@@ -365,6 +531,20 @@ void HTML::OpenURL( const char *URL, const char *postData, bool force )
 //-----------------------------------------------------------------------------
 void HTML::PostURL( const char *URL, const char *pchPostData, bool force )
 {
+#ifdef EXPERIMENT_SOURCE
+    // If the url starts with "asset://", then we need to resolve the path relative to the mod's root directory
+    if ( Q_strncmp( URL, "asset://", 8 ) == 0 )
+    {
+        char assetPath[MAX_PATH];
+        Q_snprintf( assetPath, sizeof( assetPath ), "..\\%s", URL + 8 );
+
+        char fullPath[MAX_PATH];
+        g_pFullFileSystem->RelativePathToFullPath_safe( assetPath, "GAME", fullPath );
+
+        URL = fullPath;
+    }
+#endif
+
     if ( m_unBrowserHandle == INVALID_HTMLBROWSER )
     {
         m_sPendingURLLoad = URL;
@@ -387,7 +567,7 @@ void HTML::PostURL( const char *URL, const char *pchPostData, bool force )
                 Q_snprintf( otherName, sizeof( otherName ), "%senglish.html", OFFLINE_FILE );
                 baseDir = otherName;
             }
-            g_pFullFileSystem->GetLocalCopy( baseDir );  // put this file on disk for IE to load
+            g_pFullFileSystem->GetLocalCopy( baseDir );  // put this file on disk for browser to load
 
             g_pFullFileSystem->GetLocalPath( baseDir, fileLocation, sizeof( fileLocation ) );
             Q_snprintf( htmlLocation, sizeof( htmlLocation ), "file://%s", fileLocation );
@@ -469,6 +649,14 @@ bool HTML::BCanGoFoward()
 {
     return m_bCanGoForward;
 }
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
+void HTML::PerformMouseMove( int x, int y )
+{
+    if ( m_SteamAPIContext.SteamHTMLSurface() )
+        m_SteamAPIContext.SteamHTMLSurface()->MouseMove( m_unBrowserHandle, x, y );
+}
 
 //-----------------------------------------------------------------------------
 // Purpose: handle resizing
@@ -486,6 +674,15 @@ void HTML::RunJavascript( const char *pchScript )
 {
     if ( m_SteamAPIContext.SteamHTMLSurface() )
         m_SteamAPIContext.SteamHTMLSurface()->ExecuteJavascript( m_unBrowserHandle, pchScript );
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: Open the developer tools window
+//-----------------------------------------------------------------------------
+void HTML::OpenDeveloperTools()
+{
+    if ( m_SteamAPIContext.SteamHTMLSurface() )
+        m_SteamAPIContext.SteamHTMLSurface()->OpenDeveloperTools( m_unBrowserHandle );
 }
 
 //-----------------------------------------------------------------------------
@@ -1183,6 +1380,10 @@ void HTML::CHTMLFindBar::OnCommand( const char *pchCmd )
 //-----------------------------------------------------------------------------
 void HTML::BrowserNeedsPaint( HTML_NeedsPaint_t *pCallback )
 {
+    // Experiment; STEAM_CALLBACKs are called for every instance :/ So we need to check if this is for us.
+    if ( pCallback->unBrowserHandle != m_unBrowserHandle )
+        return;
+
     int tw = 0, tt = 0;
     if ( m_iHTMLTextureID != 0 )
     {
@@ -1284,6 +1485,10 @@ bool HTML::OnStartRequest( const char *url, const char *target, const char *pchP
 //-----------------------------------------------------------------------------
 void HTML::BrowserStartRequest( HTML_StartRequest_t *pCmd )
 {
+    // Experiment; STEAM_CALLBACKs are called for every instance :/ So we need to check if this is for us.
+    if ( pCmd->unBrowserHandle != m_unBrowserHandle )
+        return;
+
     bool bRes = OnStartRequest( pCmd->pchURL, pCmd->pchTarget, pCmd->pchPostData, pCmd->bIsRedirect );
 
     if ( m_SteamAPIContext.SteamHTMLSurface() )
@@ -1295,6 +1500,10 @@ void HTML::BrowserStartRequest( HTML_StartRequest_t *pCmd )
 //-----------------------------------------------------------------------------
 void HTML::BrowserURLChanged( HTML_URLChanged_t *pCmd )
 {
+    // Experiment; STEAM_CALLBACKs are called for every instance :/ So we need to check if this is for us.
+    if ( pCmd->unBrowserHandle != m_unBrowserHandle )
+        return;
+
     m_sCurrentURL = pCmd->pchURL;
 
     KeyValues *pMessage = new KeyValues( "OnURLChanged" );
@@ -1312,6 +1521,10 @@ void HTML::BrowserURLChanged( HTML_URLChanged_t *pCmd )
 //-----------------------------------------------------------------------------
 void HTML::BrowserFinishedRequest( HTML_FinishedRequest_t *pCmd )
 {
+    // Experiment; STEAM_CALLBACKs are called for every instance :/ So we need to check if this is for us.
+    if ( pCmd->unBrowserHandle != m_unBrowserHandle )
+        return;
+
     PostActionSignal( new KeyValues( "OnFinishRequest", "url", pCmd->pchURL ) );
     if ( pCmd->pchPageTitle && pCmd->pchPageTitle[0] )
         PostActionSignal( new KeyValues( "PageTitleChange", "title", pCmd->pchPageTitle ) );
@@ -1337,6 +1550,10 @@ void HTML::BrowserOpenNewTab( HTML_OpenLinkInNewTab_t *pCmd )
 //-----------------------------------------------------------------------------
 void HTML::BrowserPopupHTMLWindow( HTML_NewWindow_t *pCmd )
 {
+    // Experiment; STEAM_CALLBACKs are called for every instance :/ So we need to check if this is for us.
+    if ( pCmd->unBrowserHandle != m_unBrowserHandle )
+        return;
+
     HTMLPopup *p = new HTMLPopup( this, pCmd->pchURL, "" );
     int wide = pCmd->unWide;
     int tall = pCmd->unTall;
@@ -1358,6 +1575,10 @@ void HTML::BrowserPopupHTMLWindow( HTML_NewWindow_t *pCmd )
 //-----------------------------------------------------------------------------
 void HTML::BrowserSetHTMLTitle( HTML_ChangedTitle_t *pCmd )
 {
+    // Experiment; STEAM_CALLBACKs are called for every instance :/ So we need to check if this is for us.
+    if ( pCmd->unBrowserHandle != m_unBrowserHandle )
+        return;
+
     PostMessage( GetParent(), new KeyValues( "OnSetHTMLTitle", "title", pCmd->pchTitle ) );
     OnSetHTMLTitle( pCmd->pchTitle );
 }
@@ -1367,6 +1588,10 @@ void HTML::BrowserSetHTMLTitle( HTML_ChangedTitle_t *pCmd )
 //-----------------------------------------------------------------------------
 void HTML::BrowserStatusText( HTML_StatusText_t *pCmd )
 {
+    // Experiment; STEAM_CALLBACKs are called for every instance :/ So we need to check if this is for us.
+    if ( pCmd->unBrowserHandle != m_unBrowserHandle )
+        return;
+
     PostActionSignal( new KeyValues( "OnSetStatusText", "status", pCmd->pchMsg ) );
 }
 
@@ -1375,6 +1600,10 @@ void HTML::BrowserStatusText( HTML_StatusText_t *pCmd )
 //-----------------------------------------------------------------------------
 void HTML::BrowserSetCursor( HTML_SetCursor_t *pCmd )
 {
+    // Experiment; STEAM_CALLBACKs are called for every instance :/ So we need to check if this is for us.
+    if ( pCmd->unBrowserHandle != m_unBrowserHandle )
+        return;
+
     vgui::CursorCode cursor = dc_last;
 
     switch ( pCmd->eMouseCursor )
@@ -1518,6 +1747,10 @@ void HTML::BrowserSetCursor( HTML_SetCursor_t *pCmd )
 //-----------------------------------------------------------------------------
 void HTML::BrowserFileLoadDialog( HTML_FileOpenDialog_t *pCmd )
 {
+    // Experiment; STEAM_CALLBACKs are called for every instance :/ So we need to check if this is for us.
+    if ( pCmd->unBrowserHandle != m_unBrowserHandle )
+        return;
+
     // couldn't access an OS-specific dialog, use the internal one
     if ( m_hFileOpenDialog.Get() )
     {
@@ -1536,6 +1769,10 @@ void HTML::BrowserFileLoadDialog( HTML_FileOpenDialog_t *pCmd )
 //-----------------------------------------------------------------------------
 void HTML::BrowserShowToolTip( HTML_ShowToolTip_t *pCmd )
 {
+    // Experiment; STEAM_CALLBACKs are called for every instance :/ So we need to check if this is for us.
+    if ( pCmd->unBrowserHandle != m_unBrowserHandle )
+        return;
+
     /*
       BR FIXME
       Tooltip *tip = GetTooltip();
@@ -1552,6 +1789,10 @@ void HTML::BrowserShowToolTip( HTML_ShowToolTip_t *pCmd )
 //-----------------------------------------------------------------------------
 void HTML::BrowserUpdateToolTip( HTML_UpdateToolTip_t *pCmd )
 {
+    // Experiment; STEAM_CALLBACKs are called for every instance :/ So we need to check if this is for us.
+    if ( pCmd->unBrowserHandle != m_unBrowserHandle )
+        return;
+
     //	GetTooltip()->SetText( pCmd->text().c_str() );
 }
 
@@ -1560,6 +1801,10 @@ void HTML::BrowserUpdateToolTip( HTML_UpdateToolTip_t *pCmd )
 //-----------------------------------------------------------------------------
 void HTML::BrowserHideToolTip( HTML_HideToolTip_t *pCmd )
 {
+    // Experiment; STEAM_CALLBACKs are called for every instance :/ So we need to check if this is for us.
+    if ( pCmd->unBrowserHandle != m_unBrowserHandle )
+        return;
+
     //	GetTooltip()->HideTooltip();
     //	DeleteToolTip();
 }
@@ -1569,6 +1814,10 @@ void HTML::BrowserHideToolTip( HTML_HideToolTip_t *pCmd )
 //-----------------------------------------------------------------------------
 void HTML::BrowserSearchResults( HTML_SearchResults_t *pCmd )
 {
+    // Experiment; STEAM_CALLBACKs are called for every instance :/ So we need to check if this is for us.
+    if ( pCmd->unBrowserHandle != m_unBrowserHandle )
+        return;
+
     if ( pCmd->unResults == 0 )
         m_pFindBar->HideCountLabel();
     else
@@ -1586,6 +1835,10 @@ void HTML::BrowserSearchResults( HTML_SearchResults_t *pCmd )
 //-----------------------------------------------------------------------------
 void HTML::BrowserClose( HTML_CloseBrowser_t *pCmd )
 {
+    // Experiment; STEAM_CALLBACKs are called for every instance :/ So we need to check if this is for us.
+    if ( pCmd->unBrowserHandle != m_unBrowserHandle )
+        return;
+
     PostActionSignal( new KeyValues( "OnCloseWindow" ) );
 }
 
@@ -1594,6 +1847,10 @@ void HTML::BrowserClose( HTML_CloseBrowser_t *pCmd )
 //-----------------------------------------------------------------------------
 void HTML::BrowserHorizontalScrollBarSizeResponse( HTML_HorizontalScroll_t *pCmd )
 {
+    // Experiment; STEAM_CALLBACKs are called for every instance :/ So we need to check if this is for us.
+    if ( pCmd->unBrowserHandle != m_unBrowserHandle )
+        return;
+
     ScrollData_t scrollHorizontal;
     scrollHorizontal.m_nScroll = pCmd->unScrollCurrent;
     scrollHorizontal.m_nMax = pCmd->unScrollMax;
@@ -1615,6 +1872,10 @@ void HTML::BrowserHorizontalScrollBarSizeResponse( HTML_HorizontalScroll_t *pCmd
 //-----------------------------------------------------------------------------
 void HTML::BrowserVerticalScrollBarSizeResponse( HTML_VerticalScroll_t *pCmd )
 {
+    // Experiment; STEAM_CALLBACKs are called for every instance :/ So we need to check if this is for us.
+    if ( pCmd->unBrowserHandle != m_unBrowserHandle )
+        return;
+
     ScrollData_t scrollVertical;
     scrollVertical.m_nScroll = pCmd->unScrollCurrent;
     scrollVertical.m_nMax = pCmd->unScrollMax;
@@ -1636,6 +1897,10 @@ void HTML::BrowserVerticalScrollBarSizeResponse( HTML_VerticalScroll_t *pCmd )
 //-----------------------------------------------------------------------------
 void HTML::BrowserLinkAtPositionResponse( HTML_LinkAtPosition_t *pCmd )
 {
+    // Experiment; STEAM_CALLBACKs are called for every instance :/ So we need to check if this is for us.
+    if ( pCmd->unBrowserHandle != m_unBrowserHandle )
+        return;
+
     m_LinkAtPos.m_sURL = pCmd->pchURL;
     m_LinkAtPos.m_nX = pCmd->x;
     m_LinkAtPos.m_nY = pCmd->y;
@@ -1669,10 +1934,43 @@ void HTML::BrowserLinkAtPositionResponse( HTML_LinkAtPosition_t *pCmd )
 //-----------------------------------------------------------------------------
 void HTML::BrowserJSAlert( HTML_JSAlert_t *pCmd )
 {
-    MessageBox *pDlg = new MessageBox( m_sCurrentURL, ( const char * )pCmd->pchMessage, this );
-    pDlg->AddActionSignalTarget( this );
-    pDlg->SetCommand( new KeyValues( "DismissJSDialog", "result", false ) );
-    pDlg->DoModal();
+    // Experiment; STEAM_CALLBACKs are called for every instance :/ So we need to check if this is for us.
+    if ( pCmd->unBrowserHandle != m_unBrowserHandle )
+        return;
+
+    // We don't want to show the alert to the user in every case. Given special prefixes we may
+    // abuse these JS alerts to enable interop between JS and C++ code.
+    if ( Q_strncmp( pCmd->pchMessage, HTML_INTEROP_PREFIX, Q_strlen( HTML_INTEROP_PREFIX ) ) == 0 )
+    {
+        KeyValues *pKv = new KeyValues( "JavaScriptCallback" );
+
+        const char *json = pCmd->pchMessage + Q_strlen( HTML_INTEROP_PREFIX );
+        if ( !CJsonToKeyValues::ConvertJsonToKeyValues( json, pKv ) )
+        {
+            DevWarning( "Failed to convert JSON to KeyValues during HTML Interop\n" );
+            return;
+        }
+
+        PostActionSignal( pKv );
+    }
+    else if ( Q_strncmp( pCmd->pchMessage, HTML_LOG_PREFIX, Q_strlen( HTML_LOG_PREFIX ) ) == 0 )
+    {
+        DevMsg( "HTML Log: %s\n", pCmd->pchMessage + Q_strlen( HTML_LOG_PREFIX ) );
+    }
+    else if ( Q_strncmp( pCmd->pchMessage, HTML_ERROR_PREFIX, Q_strlen( HTML_ERROR_PREFIX ) ) == 0 )
+    {
+        DevWarning( "HTML Error: %s\n", pCmd->pchMessage + Q_strlen( HTML_ERROR_PREFIX ) );
+    }
+    else
+    {
+        QueryBox *pDlg = new QueryBox( m_sCurrentURL, ( const char * )pCmd->pchMessage, this );
+        pDlg->AddActionSignalTarget( this );
+        pDlg->SetOKCommand( new KeyValues( "DismissJSDialog", "result", true ) );
+        pDlg->DoModal();
+    }
+
+    // This must be called!
+    DismissJSDialog( true );
 }
 
 //-----------------------------------------------------------------------------
@@ -1680,6 +1978,10 @@ void HTML::BrowserJSAlert( HTML_JSAlert_t *pCmd )
 //-----------------------------------------------------------------------------
 void HTML::BrowserJSConfirm( HTML_JSConfirm_t *pCmd )
 {
+    // Experiment; STEAM_CALLBACKs are called for every instance :/ So we need to check if this is for us.
+    if ( pCmd->unBrowserHandle != m_unBrowserHandle )
+        return;
+
     QueryBox *pDlg = new QueryBox( m_sCurrentURL, ( const char * )pCmd->pchMessage, this );
     pDlg->AddActionSignalTarget( this );
     pDlg->SetOKCommand( new KeyValues( "DismissJSDialog", "result", true ) );
@@ -1701,6 +2003,10 @@ void HTML::DismissJSDialog( int bResult )
 //-----------------------------------------------------------------------------
 void HTML::BrowserCanGoBackandForward( HTML_CanGoBackAndForward_t *pCmd )
 {
+    // Experiment; STEAM_CALLBACKs are called for every instance :/ So we need to check if this is for us.
+    if ( pCmd->unBrowserHandle != m_unBrowserHandle )
+        return;
+
     m_bCanGoBack = pCmd->bCanGoBack;
     m_bCanGoForward = pCmd->bCanGoForward;
 }

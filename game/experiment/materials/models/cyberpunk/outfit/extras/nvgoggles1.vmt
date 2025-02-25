@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" 		"models/cyberpunk/outfit/extras/nvgoggles1"
+	"$nocull" 1 	
+}

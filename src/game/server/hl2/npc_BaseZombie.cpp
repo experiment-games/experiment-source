@@ -538,7 +538,7 @@ int CNPC_BaseZombie::MeleeAttack1Conditions( float flDot, float flDist )
         // Translate a hit vehicle into its passenger if found
         if ( GetEnemy() != NULL )
         {
-#if defined( HL2_DLL ) && !defined( HL2MP )
+#if defined( HL2_DLL ) && !defined( HL2MP ) && !defined( EXPERIMENT_SOURCE )
             // If the player is holding an object, knock it down.
             if ( GetEnemy()->IsPlayer() )
             {

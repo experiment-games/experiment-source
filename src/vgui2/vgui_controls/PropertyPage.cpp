@@ -21,8 +21,13 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
+#ifdef LUA_SDK
+PropertyPage::PropertyPage( Panel *parent, const char *panelName, lua_State *L /* = nullptr */ )
+    : EditablePanel( parent, panelName, L )
+#else
 PropertyPage::PropertyPage( Panel *parent, const char *panelName )
     : EditablePanel( parent, panelName )
+#endif
 {
 }
 

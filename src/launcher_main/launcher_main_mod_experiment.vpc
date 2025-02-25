@@ -1,0 +1,22 @@
+$Macro OUTBINNAME "experiment"
+
+$Conditional "MOD_LAUNCHER" "1"
+
+$Include "launcher_main.vpc"
+
+$Configuration
+{
+	$Compiler
+	{
+		$PreprocessorDefinitions	"$BASE;MOD_APPID=243750" // Replace with your appid if you ship on Steam.
+	}
+}
+
+$Project "Launcher Main (Experiment)"
+{
+    $Folder "Resource Files" [$WINDOWS]
+    {
+        $File   "launcher_main_experiment.rc"
+        $File   "res\experiment.ico"
+    }
+}

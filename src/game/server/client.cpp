@@ -45,6 +45,11 @@
 #include "weapon_physcannon.h"
 #endif
 
+#ifdef LUA_SDK
+#include "luamanager.h"
+#include "lbaseplayer_shared.h"
+#endif
+
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
@@ -94,8 +99,8 @@ ConVar sv_allow_point_servercommand( "sv_allow_point_servercommand",
                                      // The default value here should match the default of the convar
                                      "official",
 #else
-                                      // Other games may use this in their official maps, and only TF exposes IsValveMap() currently
-                                      "always",
+                                     // Other games may use this in their official maps, and only TF exposes IsValveMap() currently
+                                     "always",
 #endif  // TF_DLL
                                      FCVAR_NONE,
                                      "Allow use of point_servercommand entities in map. Potentially dangerous for untrusted maps.\n"
@@ -248,6 +253,35 @@ void Host_Say( edict_t *pEdict, const CCommand &args, bool teamonly )
         Assert( strlen( pPlayer->GetPlayerName() ) > 0 );
 
         bSenderDead = ( pPlayer->m_lifeState != LIFE_ALIVE );
+
+#ifdef LUA_SDK
+        LUA_CALL_HOOK_BEGIN( "PlayerSay" );
+        CBasePlayer::PushLuaInstanceSafe( L, pPlayer );  // doc: speaker (The player who is speaking)
+        lua_pushstring( L, p );                          // doc: chatMessage
+        lua_pushboolean( L, teamonly );                  // doc: isTeamOnly
+        LUA_CALL_HOOK_END( 3, 1 );                       // doc: string (return a replacement string or an empty string to block the message)
+
+        if ( lua_isboolean( L, -1 ) )
+        {
+            bool res = ( bool )luaL_checkboolean( L, -1 );
+            lua_pop( L, 1 );  // pop the result
+
+            if ( !res )
+                return;
+        }
+        else if ( lua_isstring( L, -1 ) )
+        {
+            p = ( char * )luaL_checkstring( L, -1 );
+            lua_pop( L, 1 );  // pop the result
+
+            if ( !p )
+                return;
+        }
+        else
+        {
+            lua_pop( L, 1 );  // pop the result
+        }
+#endif
     }
     else
     {
@@ -395,9 +429,9 @@ void ClientPrecache( void )
     CBaseEntity::PrecacheModel( "sprites/purpleglow1.vmt" );
     CBaseEntity::PrecacheModel( "sprites/purplelaser1.vmt" );
 
-#ifndef HL2MP
+#if !defined( HL2MP ) && !defined( EXPERIMENT_SOURCE )
     CBaseEntity::PrecacheScriptSound( "Hud.Hint" );
-#endif  // HL2MP
+#endif  // !HL2MP && !EXPERIMENT_SOURCE
     CBaseEntity::PrecacheScriptSound( "Player.FallDamage" );
     CBaseEntity::PrecacheScriptSound( "Player.Swim" );
 
@@ -665,11 +699,15 @@ void CPointServerCommand::InputCommand( inputdata_t &inputdata )
     }
 }
 
-BEGIN_DATADESC( CPointServerCommand )
-DEFINE_INPUTFUNC( FIELD_STRING, "Command", InputCommand ),
-    END_DATADESC()
+// clang-format off
 
-        LINK_ENTITY_TO_CLASS( point_servercommand, CPointServerCommand );
+BEGIN_DATADESC( CPointServerCommand )
+    DEFINE_INPUTFUNC( FIELD_STRING, "Command", InputCommand ),
+END_DATADESC()
+
+LINK_ENTITY_TO_CLASS( point_servercommand, CPointServerCommand );
+
+// clang-format on
 
 //------------------------------------------------------------------------------
 // Purpose : Draw a line betwen two points.  White if no world collisions, red if collisions
@@ -1104,6 +1142,69 @@ void CC_Player_Use( const CCommand &args )
     }
 }
 static ConCommand use( "use", CC_Player_Use, "Use a particular weapon\t\nArguments: <weapon_name>" );
+
+// For Garry's Mod compatibility we implement gm_showhelp (F1), gm_showteam (F2), gm_showspare1 (F3), gm_showspare2 (F4)
+#ifdef EXPERIMENT_SOURCE
+void CC_ShowHelp( const CCommand &args )
+{
+    CBasePlayer *pPlayer = ToBasePlayer( UTIL_GetCommandClient() );
+
+    if ( !pPlayer || !L )
+    {
+        return;
+    }
+
+    LUA_CALL_HOOK_BEGIN( "ShowHelp" );
+    CBasePlayer::PushLuaInstanceSafe( L, pPlayer );
+    LUA_CALL_HOOK_END( 1, 0 );
+}
+static ConCommand gm_showhelp( "gm_showhelp", CC_ShowHelp );
+
+void CC_ShowTeam( const CCommand &args )
+{
+    CBasePlayer *pPlayer = ToBasePlayer( UTIL_GetCommandClient() );
+
+    if ( !pPlayer || !L )
+    {
+        return;
+    }
+
+    LUA_CALL_HOOK_BEGIN( "ShowTeam" );
+    CBasePlayer::PushLuaInstanceSafe( L, pPlayer );
+    LUA_CALL_HOOK_END( 1, 0 );
+}
+static ConCommand gm_showteam( "gm_showteam", CC_ShowTeam );
+
+void CC_ShowSpare1( const CCommand &args )
+{
+    CBasePlayer *pPlayer = ToBasePlayer( UTIL_GetCommandClient() );
+
+    if ( !pPlayer || !L )
+    {
+        return;
+    }
+
+    LUA_CALL_HOOK_BEGIN( "ShowSpare1" );
+    CBasePlayer::PushLuaInstanceSafe( L, pPlayer );
+    LUA_CALL_HOOK_END( 1, 0 );
+}
+static ConCommand gm_showspare1( "gm_showspare1", CC_ShowSpare1 );
+
+void CC_ShowSpare2( const CCommand &args )
+{
+    CBasePlayer *pPlayer = ToBasePlayer( UTIL_GetCommandClient() );
+
+    if ( !pPlayer || !L )
+    {
+        return;
+    }
+
+    LUA_CALL_HOOK_BEGIN( "ShowSpare2" );
+    CBasePlayer::PushLuaInstanceSafe( L, pPlayer );
+    LUA_CALL_HOOK_END( 1, 0 );
+}
+static ConCommand gm_showspare2( "gm_showspare2", CC_ShowSpare2 );
+#endif
 
 //------------------------------------------------------------------------------
 // A small wrapper around SV_Move that never clips against the supplied entity.

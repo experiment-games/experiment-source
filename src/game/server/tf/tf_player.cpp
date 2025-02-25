@@ -2418,7 +2418,7 @@ extern ConVar flashlight;
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-int CTFPlayer::FlashlightIsOn( void )
+bool CTFPlayer::FlashlightIsOn( void )
 {
     return IsEffectActive( EF_DIMLIGHT );
 }

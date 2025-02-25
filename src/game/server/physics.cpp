@@ -458,6 +458,15 @@ int CCollisionEvent::ShouldCollide_2( IPhysicsObject *pObj0, IPhysicsObject *pOb
     if ( !pEntity0 || !pEntity1 )
         return 1;
 
+#if defined( LUA_SDK )
+    LUA_CALL_HOOK_BEGIN( "ShouldCollide", "Called when two entities are about to collide. Return false to prevent the collision." );
+    CBaseEntity::PushLuaInstanceSafe( L, pEntity0 );  // doc: entity1 (The entity colliding)
+    CBaseEntity::PushLuaInstanceSafe( L, pEntity1 );  // doc: entity2 (The entity colliding with entity1)
+    LUA_CALL_HOOK_END( 2, 1 );
+
+    LUA_RETURN_BOOLEAN();
+#endif
+
     unsigned short gameFlags0 = pObj0->GetGameFlags();
     unsigned short gameFlags1 = pObj1->GetGameFlags();
 
@@ -2135,8 +2144,8 @@ void CCollisionEvent::UpdateDamageEvents( void )
         iEntBits |= event.pEntity->IsMarkedForDeletion() ? 0x0002 : 0;
         iEntBits |= ( event.pEntity->GetSolidFlags() & FSOLID_NOT_SOLID ) ? 0x0004 : 0;
 #if 0
-		// Go ahead and compute the current static stress when hit by a large object (with a force high enough to do damage).  
-		// That way you die from the impact rather than the stress of the object resting on you whenever possible. 
+		// Go ahead and compute the current static stress when hit by a large object (with a force high enough to do damage).
+		// That way you die from the impact rather than the stress of the object resting on you whenever possible.
 		// This makes the damage effects cleaner.
 		if ( event.pInflictorPhysics && event.pInflictorPhysics->GetMass() > VPHYSICS_LARGE_OBJECT_MASS )
 		{
@@ -2612,6 +2621,7 @@ void PhysCollisionDust( gamevcollisionevent_t *pEvent, surfacedata_t *phit )
     {
         case CHAR_TEX_SAND:
         case CHAR_TEX_DIRT:
+        case CHAR_TEX_SNOW:  // Experiment; added this for Gmod compatibility and made sense to work like sand.
 
             if ( pEvent->collisionSpeed < 200.0f )
                 return;
@@ -2845,7 +2855,7 @@ void DebugDrawContactPoints( IPhysicsObject *pPhysics )
 
 #include "filesystem.h"
 //-----------------------------------------------------------------------------
-// Purpose: This will append a collide to a glview file.  Then you can view the 
+// Purpose: This will append a collide to a glview file.  Then you can view the
 //			collisionmodels with glview.
 // Input  : *pCollide - collision model
 //			&origin - position of the instance of this model

@@ -1,0 +1,136 @@
+//-----------------------------------------------------------------------------
+//	LUA_BASE.VPC
+//
+//	Project Script
+//-----------------------------------------------------------------------------
+
+$IgnoreRedundancyWarning	"ON"
+
+$Macro SRCDIR		".."
+$Macro GAMENAME     "experiment"
+
+$Macro OUTBINDIR	"$SRCDIR\..\game\$GAMENAME\bin"
+$Macro OUTBINNAME	"lua54"
+
+$MacroRequired		"OUTDLLEXT" "$_DLL_EXT"
+
+$Include "$SRCDIR\vpc_scripts\source_dll_base.vpc"
+$Include "$SRCDIR\tier0\tier0_exclude.vpc"
+$Include "$SRCDIR\vstdlib\vstdlib_exclude.vpc"
+
+$MacroRequired PLATSUBDIR
+$MacroRequired OUTLIBNAME   "$OUTBINNAME"
+$MacroRequired OUTLIBDIR	"$SRCDIR\lib\public$PLATSUBDIR"
+
+$Configuration	"Debug"
+{
+	$General
+	{
+		$OutputDirectory			".\Debug_$GAMENAME"			[$WINDOWS]
+		$IntermediateDirectory		".\Debug_$GAMENAME"			[$WINDOWS]
+
+		$OutputDirectory			".\Debug_$GAMENAME_360"		[$X360]
+		$IntermediateDirectory		".\Debug_$GAMENAME_360"		[$X360]
+	}
+}
+
+$Configuration	"Release"
+{
+	$General
+	{
+		$OutputDirectory			".\Release_$GAMENAME"		[$WINDOWS]
+		$IntermediateDirectory		".\Release_$GAMENAME"		[$WINDOWS]
+
+		$OutputDirectory			".\Release_$GAMENAME_360"	[$X360]
+		$IntermediateDirectory		".\Release_$GAMENAME_360"	[$X360]
+	}
+}
+
+$Configuration
+{
+	$Compiler
+	{
+        $PreprocessorDefinitions        "$BASE;LUA_BUILD_AS_DLL"
+		$RuntimeLibrary						"Multi-threaded DLL (/MD)"
+		$WarningLevel						"Level 3 (/W3)"
+        $EnableC++Exceptions	"Yes (/EHsc)" [!$X360]
+
+		"$CompileAs"    "Compile as C Code (/TC)"
+	}
+
+    $CustomBuildStep
+    {
+        $Description	"Copying .lib to $OUTLIBDIR"
+        $CommandLine	"copy /Y $QUOTE$(OutDir)$(TargetName).lib$QUOTE $QUOTE$OUTLIBDIR\$OUTBINNAME.lib$QUOTE" [$WINDOWS]
+        $CommandLine	"cp $QUOTE$(OutDir)$(TargetName).lib$QUOTE $QUOTE$OUTLIBDIR/$OUTBINNAME.lib$QUOTE" [$LINUX]
+        $Outputs        "$OUTLIBDIR\$OUTBINNAME.lib"
+        $ExecuteAfter  "BuildLink"
+    }
+}
+
+$Project "lua54"
+{
+	$Folder	"Source Files"
+	{
+        $File	"lapi.c"
+        $File   "lapi.h"
+        $File   "lauxlib.c"
+        $File   "lauxlib.h"
+        $File   "lbaselib.c"
+        $File   "lcode.c"
+        $File   "lcode.h"
+        $File   "lcorolib.c"
+        $File   "lctype.c"
+        $File   "lctype.h"
+        $File   "ldblib.c"
+        $File   "ldebug.c"
+        $File   "ldebug.h"
+        $File   "ldo.c"
+        $File   "ldo.h"
+        $File   "ldump.c"
+        $File   "lfunc.c"
+        $File   "lfunc.h"
+        $File   "lgc.c"
+        $File   "lgc.h"
+        $File   "linit.c"
+        $File   "liolib.c"
+        $File   "ljumptab.h"
+        $File   "llex.c"
+        $File   "llex.h"
+        $File   "llimits.h"
+        $File   "lmathlib.c"
+        $File   "lmem.c"
+        $File   "lmem.h"
+        $File   "loadlib.c"
+        $File   "lobject.c"
+        $File   "lobject.h"
+        $File   "lopcodes.c"
+        $File   "lopcodes.h"
+        $File   "lopnames.h"
+        $File   "loslib.c"
+        $File   "lparser.c"
+        $File   "lparser.h"
+        $File   "lprefix.h"
+        $File   "lstate.c"
+        $File   "lstate.h"
+        $File   "lstring.c"
+        $File   "lstring.h"
+        $File   "lstrlib.c"
+        $File   "ltable.c"
+        $File   "ltable.h"
+        $File   "ltablib.c"
+        $File   "ltests.c"
+        $File   "ltm.c"
+        $File   "ltm.h"
+        $File   "lua.h"
+        $File   "luaconf.h"
+        $File   "lualib.h"
+        $File   "lundump.c"
+        $File   "lundump.h"
+        $File   "lutf8lib.c"
+        $File   "lvm.c"
+        $File   "lvm.h"
+        $File   "lzio.c"
+        $File   "lzio.h"
+    }
+}

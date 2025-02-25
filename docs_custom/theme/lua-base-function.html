@@ -1,0 +1,17 @@
+{% extends "main.html" %}
+
+{% block content %}
+<div class="lua">
+    {% include "lua-partials/function-title-wrapper.html" %}
+
+    {{ page.meta.lua.description }}
+
+    {% include "lua-partials/arguments.html" %}
+
+    {% include "lua-partials/returns.html" %}
+
+    {% include "lua-partials/remarks.html" %}
+
+    {% include "lua-partials/content.html" %}
+</div>
+{% endblock %}

@@ -34,8 +34,13 @@ DECLARE_BUILD_FACTORY_DEFAULT_TEXT( Button, Button );
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
+#ifdef LUA_SDK
+Button::Button( Panel *parent, const char *panelName, const char *text, Panel *pActionSignalTarget, const char *pCmd, lua_State *L /* = nullptr */ )
+    : Label( parent, panelName, text, L )
+#else
 Button::Button( Panel *parent, const char *panelName, const char *text, Panel *pActionSignalTarget, const char *pCmd )
     : Label( parent, panelName, text )
+#endif
 {
     Init();
     if ( pActionSignalTarget && pCmd )

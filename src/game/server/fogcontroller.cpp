@@ -26,11 +26,12 @@ CFogSystem *FogSystem( void )
     return &s_FogSystem;
 }
 
+// clang-format off
+
 LINK_ENTITY_TO_CLASS( env_fog_controller, CFogController );
 
 BEGIN_DATADESC( CFogController )
-
-DEFINE_INPUTFUNC( FIELD_FLOAT, "SetStartDist", InputSetStartDist ),
+    DEFINE_INPUTFUNC( FIELD_FLOAT, "SetStartDist", InputSetStartDist ),
     DEFINE_INPUTFUNC( FIELD_FLOAT, "SetEndDist", InputSetEndDist ),
     DEFINE_INPUTFUNC( FIELD_FLOAT, "SetMaxDensity", InputSetMaxDensity ),
     DEFINE_INPUTFUNC( FIELD_VOID, "TurnOn", InputTurnOn ),
@@ -72,10 +73,9 @@ DEFINE_INPUTFUNC( FIELD_FLOAT, "SetStartDist", InputSetStartDist ),
     DEFINE_FIELD( m_fog.colorSecondaryLerpTo, FIELD_COLOR32 ),
     DEFINE_FIELD( m_fog.startLerpTo, FIELD_FLOAT ),
     DEFINE_FIELD( m_fog.endLerpTo, FIELD_FLOAT ),
+END_DATADESC()
 
-    END_DATADESC()
-
-        IMPLEMENT_SERVERCLASS_ST_NOBASE( CFogController, DT_FogController )
+IMPLEMENT_SERVERCLASS_ST_NOBASE( CFogController, DT_FogController )
     // fog data
     SendPropInt( SENDINFO_STRUCTELEM( m_fog.enable ), 1, SPROP_UNSIGNED ),
     SendPropInt( SENDINFO_STRUCTELEM( m_fog.blend ), 1, SPROP_UNSIGNED ),
@@ -94,9 +94,11 @@ DEFINE_INPUTFUNC( FIELD_FLOAT, "SetStartDist", InputSetStartDist ),
     SendPropFloat( SENDINFO_STRUCTELEM( m_fog.endLerpTo ), 0, SPROP_NOSCALE ),
     SendPropFloat( SENDINFO_STRUCTELEM( m_fog.lerptime ), 0, SPROP_NOSCALE ),
     SendPropFloat( SENDINFO_STRUCTELEM( m_fog.duration ), 0, SPROP_NOSCALE ),
-    END_SEND_TABLE()
+END_SEND_TABLE()
 
-        CFogController::CFogController()
+static bool WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
+
+CFogController::CFogController()
 {
     // Make sure that old maps without fog fields don't get wacked out fog values.
     m_fog.enable = false;

@@ -56,6 +56,16 @@ CBaseEntity *CreateEntityByName( const char *className, int iForceEdictIndex )
 		g_VScriptGameEventListener.RunGameEventCallbacks( "OnEntityCreated", ToHScript( pEntity ) );
 #endif
 
+#if defined( LUA_SDK )
+    // Experiment; In c_baseentity is the other half of this hook
+    if ( L )
+    {
+        LUA_CALL_HOOK_BEGIN( "OnEntityCreated" );
+        CBaseEntity::PushLuaInstanceSafe( L, pEntity );
+        LUA_CALL_HOOK_END( 1, 0 );
+    }
+#endif
+
     return pEntity;
 }
 

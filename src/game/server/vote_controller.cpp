@@ -22,21 +22,25 @@
 
 #define MAX_VOTER_HISTORY 64
 
+// clang-format off
+
 // Datatable
 IMPLEMENT_SERVERCLASS_ST( CVoteController, DT_VoteController )
-SendPropInt( SENDINFO( m_iActiveIssueIndex ) ),
+    SendPropInt( SENDINFO( m_iActiveIssueIndex ) ),
     SendPropInt( SENDINFO( m_nVoteIdx ) ),
     SendPropInt( SENDINFO( m_iOnlyTeamToVote ) ),
     SendPropArray3( SENDINFO_ARRAY3( m_nVoteOptionCount ), SendPropInt( SENDINFO_ARRAY( m_nVoteOptionCount ), 8, SPROP_UNSIGNED ) ),
     SendPropInt( SENDINFO( m_nPotentialVotes ) ),
     SendPropBool( SENDINFO( m_bIsYesNoVote ) )
-        END_SEND_TABLE()
+END_SEND_TABLE()
 
-            BEGIN_DATADESC( CVoteController )
-                DEFINE_THINKFUNC( VoteControllerThink ),
-    END_DATADESC()
+BEGIN_DATADESC( CVoteController )
+    DEFINE_THINKFUNC( VoteControllerThink ),
+END_DATADESC()
 
-        LINK_ENTITY_TO_CLASS( vote_controller, CVoteController );
+LINK_ENTITY_TO_CLASS( vote_controller, CVoteController );
+
+// clang-format on
 
 CVoteController *g_voteControllerGlobal = NULL;
 CVoteController *g_voteControllerRed = NULL;
@@ -64,7 +68,7 @@ static const int k_nKickWatchListMaxDuration = 300;
 static int s_nVoteIdx = 0;
 
 //-----------------------------------------------------------------------------
-// Purpose:
+// Purpose: Game system to detect maps without cameras in them, and move on
 //-----------------------------------------------------------------------------
 class CVoteControllerSystem : public CAutoGameSystemPerFrame
 {
@@ -1127,6 +1131,9 @@ void CVoteController::AddPlayerToNameLockedList( CSteamID steamID, float flDurat
     VoteControllerSystem.AddPlayerToNameLockedList( steamID, flDuration );
 }
 
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
 bool CVoteController::HasIssue( const char *pszIssue )
 {
     for ( int issueIndex = 0; issueIndex < m_potentialIssues.Count(); ++issueIndex )

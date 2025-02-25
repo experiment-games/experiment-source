@@ -1,0 +1,68 @@
+site_name: Developer Portal
+site_url: https://experiment-games.github.io/experiment-source
+extra_css:
+  - stylesheets/extra.css
+theme:
+  name: material
+  custom_dir: docs_custom/theme
+  logo: logo-white.png
+  palette:
+    scheme: slate
+    primary: custom
+  features:
+    - navigation.footer
+    - content.action.edit
+    - content.action.view
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.path
+    - navigation.indexes
+    - toc.follow
+    - toc.integrate
+    - navigation.top
+    - content.code.copy
+repo_url: https://github.com/experiment-games/experiment-source
+edit_uri: edit/experiment-main/docs/
+copyright: Copyright &copy; 2024 - experiment.games
+not_in_nav: /index.md
+use_directory_urls: true
+extra:
+  social:
+    - icon: fontawesome/solid/house
+      link: https://experiment.games
+      name: Experiment.games Homepage
+plugins:
+  - awesome-pages:
+      enabled: true
+      filename: .pages.yml
+  - redirects:
+      enabled: true
+      redirect_maps:
+        'index.md': 'general/welcome.md'
+        'general/standard-types/integer.md': 'general/standard-types/number.md'
+  - search:
+      enabled: true
+  - privacy:
+      enabled: true
+  - tags:
+      enabled: true
+      tags_file: general/tags.md
+markdown_extensions:
+  - admonition
+  - attr_list
+  - pymdownx.details
+  - pymdownx.tasklist
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - toc:
+      permalink: 🔗

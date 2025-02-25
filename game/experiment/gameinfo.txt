@@ -1,0 +1,52 @@
+gameinfo
+{
+	game	"Experiment"
+	icon	"icon_experiment"
+	title	"Experiment"
+	title2	""
+	type	"multiplayer_only"
+	nomodels	"1"
+	nohimodel	"1"
+	nocrosshair	"1"
+	nodifficulty	"1"
+	hasportals	"0"
+	advcrosshair	"0"
+	supportsvr	"0"
+	hidden_maps
+	{
+		test_speakers	"1"
+		test_hardware	"1"
+	}
+	filesystem
+	{
+		steamappid	"243750"
+		searchpaths
+		{
+			game+mod		"experiment/addons/*"
+
+			game			"experiment"
+
+			game+mod+mod_write+default_write_path	"|gameinfo_path|."
+			gamebin	"|gameinfo_path|bin"
+
+			game+mod	"|all_source_engine_paths|engine/hl2mp_pak.vpk"
+			game	"|all_source_engine_paths|engine/hl2_textures.vpk"
+			game	"|all_source_engine_paths|engine/hl2_sound_vo_english.vpk"
+			game	"|all_source_engine_paths|engine/hl2_sound_misc.vpk"
+			game	"|all_source_engine_paths|engine/hl2_misc.vpk"
+
+			game_write	"|gameinfo_path|"
+			gamebin	"|gameinfo_path|bin"
+			game	"|all_source_engine_paths|engine"
+
+			data	"|gameinfo_path|data"
+			lua	"|gameinfo_path|scripts/lua"
+			lua	"|gameinfo_path|gamemodes"
+
+			game+mod+download	"|gameinfo_path|download"
+
+			platform	"|all_source_engine_paths|platform/platform_misc.vpk"
+			platform	"|all_source_engine_paths|platform"
+		}
+	}
+}

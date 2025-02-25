@@ -1,0 +1,8 @@
+VertexLitGeneric
+{
+	"$basetexture"			"models/stalkertnb/humans/beret_mili"
+
+	"$model" 1
+	"$surfaceprop" "carpet"
+	"$halflambert" 1
+}

@@ -32,7 +32,7 @@ ConVar sk_npc_dmg_crowbar( "sk_npc_dmg_crowbar", "0" );
 IMPLEMENT_SERVERCLASS_ST( CWeaponCrowbar, DT_WeaponCrowbar )
 END_SEND_TABLE()
 
-#ifndef HL2MP
+#if !defined( HL2MP ) && !defined( EXPERIMENT_SOURCE )
 LINK_ENTITY_TO_CLASS( weapon_crowbar, CWeaponCrowbar );
 PRECACHE_WEAPON_REGISTER( weapon_crowbar );
 #endif

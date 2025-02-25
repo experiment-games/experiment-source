@@ -1,0 +1,9 @@
+"vertexlitgeneric"
+{
+	"$baseTexture" "models/zkane/zarafalls"	
+	"$translucent" 1
+	"$nocull" 1
+
+	
+
+}

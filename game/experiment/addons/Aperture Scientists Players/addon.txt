@@ -1,0 +1,15 @@
+"AddonInfo"
+{
+	"name" "Aperture Scientists Players"
+	"author_name" "Author Name"
+	"info" "
+{
+	"description": "Description",
+	"type": "model",
+	"tags": 
+	[
+		"fun",
+		"roleplay"
+	]
+}"
+}

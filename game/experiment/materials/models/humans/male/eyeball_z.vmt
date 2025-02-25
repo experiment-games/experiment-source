@@ -1,0 +1,15 @@
+"unlitgeneric"
+{
+	"$basetexture" "effects/prisonmap_disp"
+//	"$basetexture" "models/humans/male/pupil_z"
+	"$selfillum" "1"
+   "Proxies"
+   {
+      "AnimatedTexture"
+      {
+         "animatedtexturevar" "$basetexture"
+         "animatedtextureframenumvar" "$frame"
+         "animatedtextureframerate" "20"
+      }
+   }
+}

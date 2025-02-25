@@ -29,6 +29,23 @@ bool CBaseCombatCharacter::SwitchToNextBestWeapon( CBaseCombatWeapon *pCurrent )
     return false;
 }
 
+// UNDONE: Should these operate on a list of weapon/items
+Activity CBaseCombatCharacter::Weapon_TranslateActivity( Activity baseAct, bool *pRequired )
+{
+    Activity translated = baseAct;
+
+    if ( m_hActiveWeapon )
+    {
+        translated = m_hActiveWeapon->ActivityOverride( baseAct, pRequired );
+    }
+    else if ( pRequired )
+    {
+        *pRequired = false;
+    }
+
+    return translated;
+}
+
 //-----------------------------------------------------------------------------
 // Purpose: Switches to the given weapon (providing it has ammo)
 // Input  :

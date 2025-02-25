@@ -21,8 +21,13 @@ DECLARE_BUILD_FACTORY_DEFAULT_TEXT( ToggleButton, ToggleButton );
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
+#ifdef LUA_SDK
+ToggleButton::ToggleButton( Panel *parent, const char *panelName, const char *text, lua_State *L /* = nullptr */ )
+    : Button( parent, panelName, text, nullptr, nullptr, L )
+#else
 ToggleButton::ToggleButton( Panel *parent, const char *panelName, const char *text )
     : Button( parent, panelName, text )
+#endif
 {
     SetButtonActivationType( ACTIVATE_ONPRESSED );
 }

@@ -1,0 +1,27 @@
+---
+template: lua-library-function.html
+title: GetScreenSize
+icon: lua-client
+tags:
+  - lua
+  - client
+  - needs-verification
+  - needs-example
+lua:
+  library: Engines
+  function: GetScreenSize
+  realm: client
+  description: "Get the screen size."
+  
+  arguments:
+  
+  returns:
+    - type: integer
+      description: "The screen width."
+    - type: integer
+      description: "The screen height."
+---
+
+<div class="lua__search__keywords">
+Engines.GetScreenSize &#x2013; Get the screen size.
+</div>

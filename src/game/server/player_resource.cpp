@@ -12,10 +12,12 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
+// clang-format off
+
 // Datatable
 IMPLEMENT_SERVERCLASS_ST_NOBASE( CPlayerResource, DT_PlayerResource )
-//	SendPropArray( SendPropString( SENDINFO(m_szName[0]) ), SENDARRAYINFO(m_szName) ),
-SendPropArray3( SENDINFO_ARRAY3( m_iPing ), SendPropInt( SENDINFO_ARRAY( m_iPing ), 10, SPROP_UNSIGNED ) ),
+    //	SendPropArray( SendPropString( SENDINFO(m_szName[0]) ), SENDARRAYINFO(m_szName) ),
+    SendPropArray3( SENDINFO_ARRAY3( m_iPing ), SendPropInt( SENDINFO_ARRAY( m_iPing ), 10, SPROP_UNSIGNED ) ),
     //	SendPropArray( SendPropInt( SENDINFO_ARRAY(m_iPacketloss), 7, SPROP_UNSIGNED ), m_iPacketloss ),
     SendPropArray3( SENDINFO_ARRAY3( m_iScore ), SendPropInt( SENDINFO_ARRAY( m_iScore ), 12 ) ),
     SendPropArray3( SENDINFO_ARRAY3( m_iDeaths ), SendPropInt( SENDINFO_ARRAY( m_iDeaths ), 12 ) ),
@@ -26,10 +28,9 @@ SendPropArray3( SENDINFO_ARRAY3( m_iPing ), SendPropInt( SENDINFO_ARRAY( m_iPing
     SendPropArray3( SENDINFO_ARRAY3( m_iAccountID ), SendPropInt( SENDINFO_ARRAY( m_iAccountID ), 32, SPROP_UNSIGNED ) ),
     SendPropArray3( SENDINFO_ARRAY3( m_bValid ), SendPropInt( SENDINFO_ARRAY( m_bValid ), 1, SPROP_UNSIGNED ) ),
     SendPropArray3( SENDINFO_ARRAY3( m_iUserID ), SendPropInt( SENDINFO_ARRAY( m_iUserID ) ) ),
-    END_SEND_TABLE()
+END_SEND_TABLE()
 
-        BEGIN_DATADESC( CPlayerResource )
-
+BEGIN_DATADESC( CPlayerResource )
     // DEFINE_ARRAY( m_iPing, FIELD_INTEGER, MAX_PLAYERS_ARRAY_SAFE ),
     // DEFINE_ARRAY( m_iPacketloss, FIELD_INTEGER, MAX_PLAYERS_ARRAY_SAFE ),
     // DEFINE_ARRAY( m_iScore, FIELD_INTEGER, MAX_PLAYERS_ARRAY_SAFE ),
@@ -43,10 +44,11 @@ SendPropArray3( SENDINFO_ARRAY3( m_iPing ), SendPropInt( SENDINFO_ARRAY( m_iPing
 
     // Function Pointers
     DEFINE_FUNCTION( ResourceThink ),
+END_DATADESC()
 
-    END_DATADESC()
+LINK_ENTITY_TO_CLASS( player_manager, CPlayerResource );
 
-        LINK_ENTITY_TO_CLASS( player_manager, CPlayerResource );
+// clang-format on
 
 CPlayerResource *g_pPlayerResource;
 
@@ -65,6 +67,9 @@ void CPlayerResource::Spawn( void )
     m_nUpdateCounter = 0;
 }
 
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
 void CPlayerResource::Init( int iIndex )
 {
     m_iPing.Set( iIndex, 0 );
@@ -179,4 +184,34 @@ int CPlayerResource::GetTeam( int iIndex )
     {
         return m_iTeam[iIndex];
     }
+}
+
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
+bool CPlayerResource::IsConnected( int iIndex )
+{
+    if ( iIndex < 1 || iIndex > MAX_PLAYERS )
+        return false;
+    else
+        return m_bConnected[iIndex];
+}
+
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
+bool CPlayerResource::IsAlive( int iIndex )
+{
+    return m_bAlive[iIndex];
+}
+
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
+int CPlayerResource::GetPing( int index )
+{
+    if ( !IsConnected( index ) )
+        return 0;
+
+    return m_iPing[index];
 }

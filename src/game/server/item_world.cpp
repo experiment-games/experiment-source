@@ -25,6 +25,10 @@
 #include "tf_obj_teleporter.h"
 #endif
 
+#ifdef EXPERIMENT_SOURCE
+#include "experiment_gamerules.h"
+#endif
+
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
@@ -104,7 +108,7 @@ DEFINE_FIELD( m_bActivateWhenAtRest, FIELD_BOOLEAN ),
     DEFINE_THINKFUNC( Materialize ),
     DEFINE_THINKFUNC( ComeToRest ),
 
-#if defined( HL2MP ) || defined( TF_DLL )
+#if defined( HL2MP ) || defined( TF_DLL ) || defined( EXPERIMENT_SOURCE )
     DEFINE_FIELD( m_flNextResetCheckTime, FIELD_TIME ),
     DEFINE_THINKFUNC( FallThink ),
 #endif
@@ -207,7 +211,7 @@ void CItem::Spawn( void )
     }
 #endif  // CLIENT_DLL
 
-#if defined( HL2MP ) || defined( TF_DLL )
+#if defined( HL2MP ) || defined( TF_DLL ) || defined( EXPERIMENT_SOURCE )
     SetThink( &CItem::FallThink );
     SetNextThink( gpGlobals->curtime + 0.1f );
 #endif
@@ -274,7 +278,7 @@ void CItem::ComeToRest( void )
     }
 }
 
-#if defined( HL2MP ) || defined( TF_DLL )
+#if defined( HL2MP ) || defined( TF_DLL ) || defined( EXPERIMENT_SOURCE )
 
 //-----------------------------------------------------------------------------
 // Purpose: Items that have just spawned run this think to catch them when
@@ -286,7 +290,7 @@ void CItem::FallThink( void )
 {
     SetNextThink( gpGlobals->curtime + 0.1f );
 
-#if defined( HL2MP )
+#if defined( HL2MP ) || defined( EXPERIMENT_SOURCE )
     bool shouldMaterialize = false;
     IPhysicsObject *pPhysics = VPhysicsGetObject();
     if ( pPhysics )
@@ -305,9 +309,15 @@ void CItem::FallThink( void )
         m_vOriginalSpawnOrigin = GetAbsOrigin();
         m_vOriginalSpawnAngles = GetAbsAngles();
 
+#if defined( HL2MP )
         HL2MPRules()->AddLevelDesignerPlacedObject( this );
+#endif
+
+#if defined( EXPERIMENT_SOURCE )
+        ExperimentRules()->AddLevelDesignerPlacedObject( this );
+#endif
     }
-#endif  // HL2MP
+#endif  // HL2MP || EXPERIMENT_SOURCE
 
 #if defined( TF_DLL )
     // We only come here if ActivateWhenAtRest() is never called,
@@ -332,7 +342,7 @@ void CItem::FallThink( void )
 #endif  // TF
 }
 
-#endif  // HL2MP, TF
+#endif  // HL2MP, TF, EXPERIMENT_SOURCE
 
 //-----------------------------------------------------------------------------
 // Purpose: Used to tell whether an item may be picked up by the player.  This
@@ -483,6 +493,10 @@ void CItem::ItemTouch( CBaseEntity *pOther )
 #ifdef HL2MP
             HL2MPRules()->RemoveLevelDesignerPlacedObject( this );
 #endif
+
+#if defined( EXPERIMENT_SOURCE )
+            ExperimentRules()->RemoveLevelDesignerPlacedObject( this );
+#endif
         }
     }
     else if ( gEvilImpulse101 )
@@ -523,8 +537,7 @@ void CItem::Materialize( void )
     if ( IsEffectActive( EF_NODRAW ) )
     {
         // changing from invisible state to visible.
-
-#ifdef HL2MP
+#if defined( HL2MP ) || defined( EXPERIMENT_SOURCE )
         EmitSound( "AlyxEmp.Charge" );
 #else
         EmitSound( "Item.Materialize" );

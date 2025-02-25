@@ -776,7 +776,7 @@ static void CalcZeroframeData( const CStudioHdr *pStudioHdr, const studiohdr_t *
                 }
                 pData += sizeof( Vector48 );
             }
-            if ( pAnimbone[j].flags & BONE_HAS_SAVEFRAME_ROT )
+            if ( pAnimbone[j].flags & BONE_HAS_SAVEFRAME_ROT64 )
             {
                 if ( ( i >= 0 ) && ( pStudioHdr->boneFlags( i ) & boneMask ) )
                 {
@@ -825,7 +825,7 @@ static void CalcZeroframeData( const CStudioHdr *pStudioHdr, const studiohdr_t *
                 }
                 pData += sizeof( Vector48 ) * animdesc.zeroframecount;
             }
-            if ( pAnimbone[j].flags & BONE_HAS_SAVEFRAME_ROT )
+            if ( pAnimbone[j].flags & BONE_HAS_SAVEFRAME_ROT64 )
             {
                 if ( ( i >= 0 ) && ( pStudioHdr->boneFlags( i ) & boneMask ) )
                 {
@@ -2574,14 +2574,14 @@ class CIKSolver
             X[i] = P[i];
         normalize( X );
 
-        // Its y axis is perpendicular to P, so Y = unit( E - X(E·X) ).
+        // Its y axis is perpendicular to P, so Y = unit( E - X(EÂ·X) ).
 
         float dDOTx = dot( D, X );
         for ( i = 0; i < 3; i++ )
             Y[i] = D[i] - dDOTx * X[i];
         normalize( Y );
 
-        // Its z axis is perpendicular to both X and Y, so Z = X×Y.
+        // Its z axis is perpendicular to both X and Y, so Z = XÂ·Y.
 
         cross( X, Y, Z );
 

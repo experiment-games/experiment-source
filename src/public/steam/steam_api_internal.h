@@ -58,33 +58,34 @@ S_API void S_CALLTYPE SteamAPI_UnregisterCallback( class CCallbackBase *pCallbac
 S_API void S_CALLTYPE SteamAPI_RegisterCallResult( class CCallbackBase *pCallback, SteamAPICall_t hAPICall );
 S_API void S_CALLTYPE SteamAPI_UnregisterCallResult( class CCallbackBase *pCallback, SteamAPICall_t hAPICall );
 
+#define _STEAM_CALLBACK_OFFSETOF( type, member ) ( ( size_t )( ( char * )&( ( type * )0 )->member ) )
 #define _STEAM_CALLBACK_AUTO_HOOK( thisclass, func, param )
 #define _STEAM_CALLBACK_HELPER( _1, _2, SELECTED, ... ) _STEAM_CALLBACK_##SELECTED
 #define _STEAM_CALLBACK_SELECT( X, Y ) _STEAM_CALLBACK_HELPER X Y
-#define _STEAM_CALLBACK_3( extra_code, thisclass, func, param )                                                                                        \
-    struct CCallbackInternal_##func : private CCallbackImpl< sizeof( param ) >                                                                         \
-    {                                                                                                                                                  \
-        CCallbackInternal_##func()                                                                                                                     \
-        {                                                                                                                                              \
-            extra_code SteamAPI_RegisterCallback( this, param::k_iCallback );                                                                          \
-        }                                                                                                                                              \
-        CCallbackInternal_##func( const CCallbackInternal_##func & )                                                                                   \
-        {                                                                                                                                              \
-            extra_code SteamAPI_RegisterCallback( this, param::k_iCallback );                                                                          \
-        }                                                                                                                                              \
-        CCallbackInternal_##func &operator=( const CCallbackInternal_##func & )                                                                        \
-        {                                                                                                                                              \
-            return *this;                                                                                                                              \
-        }                                                                                                                                              \
-                                                                                                                                                       \
-       private:                                                                                                                                        \
-        virtual void Run( void *pvParam )                                                                                                              \
-        {                                                                                                                                              \
-            _STEAM_CALLBACK_AUTO_HOOK( thisclass, func, param )                                                                                        \
-            thisclass *pOuter = reinterpret_cast< thisclass * >( reinterpret_cast< char * >( this ) - offsetof( thisclass, m_steamcallback_##func ) ); \
-            pOuter->func( reinterpret_cast< param * >( pvParam ) );                                                                                    \
-        }                                                                                                                                              \
-    } m_steamcallback_##func;                                                                                                                          \
+#define _STEAM_CALLBACK_3( extra_code, thisclass, func, param )                                                                                                        \
+    struct CCallbackInternal_##func : private CCallbackImpl< sizeof( param ) >                                                                                         \
+    {                                                                                                                                                                  \
+        CCallbackInternal_##func()                                                                                                                                     \
+        {                                                                                                                                                              \
+            extra_code SteamAPI_RegisterCallback( this, param::k_iCallback );                                                                                          \
+        }                                                                                                                                                              \
+        CCallbackInternal_##func( const CCallbackInternal_##func & )                                                                                                   \
+        {                                                                                                                                                              \
+            extra_code SteamAPI_RegisterCallback( this, param::k_iCallback );                                                                                          \
+        }                                                                                                                                                              \
+        CCallbackInternal_##func &operator=( const CCallbackInternal_##func & )                                                                                        \
+        {                                                                                                                                                              \
+            return *this;                                                                                                                                              \
+        }                                                                                                                                                              \
+                                                                                                                                                                       \
+       private:                                                                                                                                                        \
+        virtual void Run( void *pvParam ) S_OVERRIDE                                                                                                                   \
+        {                                                                                                                                                              \
+            _STEAM_CALLBACK_AUTO_HOOK( thisclass, func, param )                                                                                                        \
+            thisclass *pOuter = reinterpret_cast< thisclass * >( reinterpret_cast< char * >( this ) - _STEAM_CALLBACK_OFFSETOF( thisclass, m_steamcallback_##func ) ); \
+            pOuter->func( reinterpret_cast< param * >( pvParam ) );                                                                                                    \
+        }                                                                                                                                                              \
+    } m_steamcallback_##func;                                                                                                                                          \
     void func( param *pParam )
 #define _STEAM_CALLBACK_4( _, thisclass, func, param, var ) \
     CCallback< thisclass, param > var;                      \
@@ -257,7 +258,6 @@ class ISteamPS3OverlayRender;
 class ISteamHTTP;
 class ISteamController;
 class ISteamUGC;
-class ISteamAppList;
 class ISteamHTMLSurface;
 class ISteamInventory;
 class ISteamVideo;
@@ -374,10 +374,6 @@ enum
 enum
 {
     k_iSteamStreamClientCallbacks = 3500
-};
-enum
-{
-    k_iSteamAppListCallbacks = 3900
 };
 enum
 {
@@ -529,10 +525,6 @@ class CSteamAPIContext
     {
         return m_pSteamUGC;
     }
-    ISteamAppList *SteamAppList() const
-    {
-        return m_pSteamAppList;
-    }
     ISteamMusic *SteamMusic() const
     {
         return m_pSteamMusic;
@@ -578,7 +570,6 @@ class CSteamAPIContext
     ISteamHTTP *m_pSteamHTTP;
     ISteamController *m_pController;
     ISteamUGC *m_pSteamUGC;
-    ISteamAppList *m_pSteamAppList;
     ISteamMusic *m_pSteamMusic;
     ISteamMusicRemote *m_pSteamMusicRemote;
     ISteamHTMLSurface *m_pSteamHTMLSurface;

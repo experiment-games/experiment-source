@@ -19,11 +19,15 @@
 #define CTEXTURESMAX 512     // max number of textures loaded
 #define CBTEXTURENAMEMAX 13  // only load first n chars of name
 
-#define GAMEMOVEMENT_DUCK_TIME 1000.0f                            // ms
-#define GAMEMOVEMENT_JUMP_TIME 510.0f                             // ms approx - based on the 21 unit height jump
-#define GAMEMOVEMENT_JUMP_HEIGHT 21.0f                            // units
-#define GAMEMOVEMENT_TIME_TO_UNDUCK ( TIME_TO_UNDUCK * 1000.0f )  // ms
-#define GAMEMOVEMENT_TIME_TO_UNDUCK_INV ( GAMEMOVEMENT_DUCK_TIME - GAMEMOVEMENT_TIME_TO_UNDUCK )
+#define GAMEMOVEMENT_JUMP_TIME 510.0f  // ms approx - based on the 21 unit height jump
+
+// Experiment; This is effectively unused since g_bMovementOptimizations is always true:
+#define GAMEMOVEMENT_JUMP_HEIGHT 21.0f  // units
+
+// Experiment; These have been moved to CBasePlayer::[GS]etDuckTime and ::[GS]etUnDuckFraction
+// #define GAMEMOVEMENT_DUCK_TIME 1000.0f                            // ms
+// #define GAMEMOVEMENT_TIME_TO_UNDUCK ( TIME_TO_UNDUCK * 1000.0f )  // ms
+// #define GAMEMOVEMENT_TIME_TO_UNDUCK_INV ( GAMEMOVEMENT_DUCK_TIME - GAMEMOVEMENT_TIME_TO_UNDUCK )
 
 enum
 {
@@ -183,7 +187,7 @@ class CGameMovement : public IGameMovement
     }
     virtual float ClimbSpeed( void ) const
     {
-        return MAX_CLIMB_SPEED;
+        return player->GetLadderClimbSpeed();
     }
     virtual float LadderLateralMultiplier( void ) const
     {
@@ -296,6 +300,8 @@ class CGameMovement : public IGameMovement
     int m_iSpeedCropped;
 
     float m_flStuckCheckTime[MAX_PLAYERS_ARRAY_SAFE][2];  // Last time we did a full test
+
+    MoveType_t m_nOldMoveType;
 
     // special function for teleport-with-duck for episodic
 #ifdef HL2_EPISODIC

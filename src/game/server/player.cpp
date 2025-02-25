@@ -82,6 +82,15 @@
 #include "weapon_physcannon.h"
 #endif
 
+#ifdef LUA_SDK
+#include "luamanager.h"
+#include "lbaseentity_shared.h"
+#include "lbaseplayer_shared.h"
+#include "lgametrace.h"
+#include "ltakedamageinfo.h"
+#include "mathlib/lvector.h"
+#endif
+
 ConVar autoaim_max_dist( "autoaim_max_dist", "2160" );  // 2160 = 180 feet
 ConVar autoaim_max_deflect( "autoaim_max_deflect", "0.99" );
 
@@ -330,6 +339,7 @@ DEFINE_FIELD( v_angle, FIELD_VECTOR ),
     DEFINE_FIELD( m_flStepSoundTime, FIELD_FLOAT ),
     DEFINE_ARRAY( m_szNetname, FIELD_CHARACTER, MAX_PLAYER_NAME_LENGTH ),
 
+    DEFINE_FIELD( m_hHandsEntity, FIELD_EHANDLE ),
     // DEFINE_FIELD( m_flgeigerRange, FIELD_FLOAT ),	// Don't restore, reset in Precache()
     // DEFINE_FIELD( m_flgeigerDelay, FIELD_FLOAT ),	// Don't restore, reset in Precache()
     // DEFINE_FIELD( m_igeigerRangePrev, FIELD_FLOAT ),	// Don't restore, reset in Precache()
@@ -380,6 +390,18 @@ DEFINE_FIELD( v_angle, FIELD_VECTOR ),
     DEFINE_AUTO_ARRAY( m_hViewModel, FIELD_EHANDLE ),
 
     DEFINE_FIELD( m_flMaxspeed, FIELD_FLOAT ),
+    DEFINE_FIELD( m_flWalkSpeed, FIELD_FLOAT ),
+    DEFINE_FIELD( m_flNormalSpeed, FIELD_FLOAT ),
+    DEFINE_FIELD( m_flRunSpeed, FIELD_FLOAT ),
+    DEFINE_FIELD( m_flLadderClimbSpeed, FIELD_FLOAT ),
+    DEFINE_FIELD( m_flCrouchWalkFraction, FIELD_FLOAT ),
+    DEFINE_FIELD( m_flJumpPower, FIELD_FLOAT ),
+
+    // Time in milliseconds to go from standing to fully ducked
+    DEFINE_FIELD( m_flDuckSpeed, FIELD_FLOAT ),
+    // Fraction of the duck speed to use when unducking
+    DEFINE_FIELD( m_flUnDuckFraction, FIELD_FLOAT ),
+
     DEFINE_FIELD( m_flWaterJumpTime, FIELD_TIME ),
     DEFINE_FIELD( m_vecWaterJumpVel, FIELD_VECTOR ),
     DEFINE_FIELD( m_nImpulse, FIELD_INTEGER ),
@@ -508,6 +530,20 @@ void CBasePlayer::CreateViewModel( int index /*=0*/ )
         DispatchSpawn( vm );
         vm->FollowEntity( this );
         m_hViewModel.Set( index, vm );
+    }
+}
+
+//-----------------------------------------------------------------------------
+// Purpose:
+//-----------------------------------------------------------------------------
+void CBasePlayer::CreateDefaultHandModel()
+{
+    CBaseViewModel *vm = ( CBaseViewModel * )CreateEntityByName( "hand_viewmodel" );
+
+    if ( vm )
+    {
+        DispatchSpawn( vm );
+        SetHands( vm );
     }
 }
 
@@ -754,7 +790,7 @@ bool CBasePlayer::WantsLagCompensationOnEntity( const CBasePlayer *pPlayer, cons
 
     // get max distance player could have moved within max lag compensation time,
     // multiply by 1.5 to to avoid "dead zones"  (sqrt(2) would be the exact value)
-    float maxDistance = 1.5 * pPlayer->MaxSpeed() * sv_maxunlag.GetFloat();
+    float maxDistance = 1.5 * pPlayer->GetMaxSpeed() * sv_maxunlag.GetFloat();
 
     // If the player is within this distance, lag compensate them in case they're running past us.
     if ( vHisOrigin.DistTo( vMyOrigin ) < maxDistance )
@@ -908,9 +944,27 @@ void CBasePlayer::DrawDebugGeometryOverlays( void )
 //=========================================================
 void CBasePlayer::TraceAttack( const CTakeDamageInfo &inputInfo, const Vector &vecDir, trace_t *ptr, CDmgAccumulator *pAccumulator )
 {
+#ifdef LUA_SDK
+    CTakeDamageInfo linputInfo = inputInfo;
+    Vector lvecDir = vecDir;
+
+    LUA_CALL_HOOK_BEGIN( "PlayerTraceAttack" );
+    CBasePlayer::PushLuaInstanceSafe( L, this );
+    lua_pushdamageinfo( L, linputInfo );
+    lua_pushvector( L, lvecDir );
+    lua_pushtrace( L, *ptr );
+    LUA_CALL_HOOK_END( 4, 1 );
+
+    LUA_RETURN_NONE_IF_TRUE();
+#endif
+
     if ( m_takedamage )
     {
+#ifdef LUA_SDK
+        CTakeDamageInfo info = linputInfo;
+#else
         CTakeDamageInfo info = inputInfo;
+#endif
 
         if ( info.GetAttacker() )
         {
@@ -2113,6 +2167,11 @@ void CBasePlayer::PlayerDeathThink( void )
 
     StopAnimation();
 
+    if ( GetHands() )
+    {
+        GetHands()->SetModel( "" );  // FIX: Removes hand model when the player is dead
+    }
+
     IncrementInterpolationFrame();
     m_flPlaybackRate = 0.0;
 
@@ -2794,6 +2853,16 @@ bool CBasePlayer::IsUseableEntity( CBaseEntity *pEntity, unsigned int requiredCa
 //-----------------------------------------------------------------------------
 bool CBasePlayer::CanPickupObject( CBaseEntity *pObject, float massLimit, float sizeLimit )
 {
+#ifdef LUA_SDK
+    LUA_CALL_HOOK_BEGIN( "PlayersCanPickupObject", "Checks if any player can pickup this type of object." );
+    CBaseEntity::PushLuaInstanceSafe( L, pObject );  // doc: entity (The entity that is being checked.)
+    lua_pushnumber( L, massLimit );                  // doc: massLimit (The mass limit of the object.)
+    lua_pushnumber( L, sizeLimit );                  // doc: sizeLimit (The size limit of the object.)
+    LUA_CALL_HOOK_END( 3, 1 );                       // doc: boolean (Whether or not the object can be picked up.)
+
+    LUA_RETURN_BOOLEAN();
+#endif
+
     // UNDONE: Make this virtual and move to HL2 player
 #ifdef HL2_DLL
     // Must be valid
@@ -2868,6 +2937,11 @@ bool CBasePlayer::CanPickupObject( CBaseEntity *pObject, float massLimit, float 
 float CBasePlayer::GetHeldObjectMass( IPhysicsObject *pHeldObject )
 {
     return 0;
+}
+
+CBaseEntity *CBasePlayer::GetHeldObject( void )
+{
+    return PhysCannonGetHeldEntity( GetActiveWeapon() );
 }
 
 //-----------------------------------------------------------------------------
@@ -3423,6 +3497,22 @@ void CBasePlayer::PhysicsSimulate( void )
     //  that they are in the timespace of the player?
     gpGlobals->curtime = savetime;
     gpGlobals->frametime = saveframetime;
+
+    // Experiment; The following section isn't in the TF2 SDK. It was already commented. Best to leave it commented.
+    // 	// Kick the player if they haven't sent a user command in awhile in order to prevent clients
+    // 	// from using packet-level manipulation to mess with gamestate.  Not sending usercommands seems
+    // 	// to have all kinds of bad effects, such as stalling a bunch of Think()'s and gamestate handling.
+    // 	// An example from TF: A medic stops sending commands after deploying an uber on another player.
+    // 	// As a result, invuln is permanently on the heal target because the maintenance code is stalled.
+    // 	if ( GetTimeSinceLastUserCommand() > player_usercommand_timeout.GetFloat() )
+    // 	{
+    // 		// If they have an active netchan, they're almost certainly messing with usercommands?
+    // 		INetChannelInfo *pNetChanInfo = engine->GetPlayerNetInfo( entindex() );
+    // 		if ( pNetChanInfo && pNetChanInfo->GetTimeSinceLastReceived() < 5.f )
+    // 		{
+    // 			engine->ServerCommand( UTIL_VarArgs( "kickid %d %s\n", GetUserID(), "UserCommand Timeout" ) );
+    // 		}
+    // 	}
 }
 
 unsigned int CBasePlayer::PhysicsSolidMaskForEntity() const
@@ -4970,6 +5060,12 @@ ReturnSpot:
 //-----------------------------------------------------------------------------
 void CBasePlayer::InitialSpawn( void )
 {
+#ifdef LUA_SDK
+    LUA_CALL_HOOK_BEGIN( "PlayerInitialSpawn" );
+    CBasePlayer::PushLuaInstanceSafe( L, this );
+    LUA_CALL_HOOK_END( 1, 0 );
+#endif
+
     m_iConnected = PlayerConnected;
     gamestats->Event_PlayerConnected( this );
 }
@@ -5082,6 +5178,7 @@ void CBasePlayer::Spawn( void )
     enginesound->SetPlayerDSP( user, 0, false );
 
     CreateViewModel();
+    // CreateDefaultHandModel();
 
     SetCollisionGroup( COLLISION_GROUP_PLAYER );
 
@@ -5377,7 +5474,7 @@ void CBasePlayer::AllowImmediateDecalPainting()
     m_flNextDecalTime = gpGlobals->curtime;
 }
 
-// Suicide...
+// Has the player die, being their own attacker
 void CBasePlayer::CommitSuicide( bool bExplode /*= false*/, bool bForce /*= false*/ )
 {
     MDLCACHE_CRITICAL_SECTION();
@@ -5402,7 +5499,7 @@ void CBasePlayer::CommitSuicide( bool bExplode /*= false*/, bool bForce /*= fals
     m_iSuicideCustomKillFlags = 0;
 }
 
-// Suicide with style...
+// Has the player die, being their own attacker. Applying a force to their ragdoll.
 void CBasePlayer::CommitSuicide( const Vector &vecForce, bool bExplode /*= false*/, bool bForce /*= false*/ )
 {
     MDLCACHE_CRITICAL_SECTION();
@@ -5428,6 +5525,124 @@ void CBasePlayer::CommitSuicide( const Vector &vecForce, bool bExplode /*= false
     info.SetDamageForce( vecForce );
     info.SetDamagePosition( WorldSpaceCenter() );
     TakeDamage( info );
+}
+
+// Experiment; TODO: Figure out how to make this silent without duplicating the code inside CommitSuicide into KillSilent
+void CBasePlayer::KillSilent()
+{
+    MDLCACHE_CRITICAL_SECTION();
+
+    if ( !IsAlive() )
+        return;
+
+    // don't let them suicide for 5 seconds after suiciding
+    m_fNextSuicideTime = gpGlobals->curtime + 5;
+
+    int fDamage = DMG_PREVENT_PHYSICS_FORCE | DMG_NEVERGIB;
+
+    m_iHealth = 0;
+    CTakeDamageInfo info( this, this, 0, fDamage, m_iSuicideCustomKillFlags );
+
+    // This next section is copied from Event_Killed
+
+    CSound *pSound;
+
+    if ( Hints() )
+    {
+        Hints()->ResetHintTimers();
+    }
+
+    // g_pGameRules->PlayerKilled( this, info );
+
+    // gamestats->Event_PlayerKilled( this, info );
+
+    RumbleEffect( RUMBLE_STOP_ALL, 0, RUMBLE_FLAGS_NONE );
+
+#if defined( WIN32 ) && !defined( _X360 )
+    // NVNT set the drag to zero in the case of underwater death.
+    HapticSetDrag( this, 0 );
+#endif
+    ClearUseEntity();
+
+    // this client isn't going to be thinking for a while, so reset the sound until they respawn
+    pSound = CSoundEnt::SoundPointerForIndex( CSoundEnt::ClientSoundIndex( edict() ) );
+    {
+        if ( pSound )
+        {
+            pSound->Reset();
+        }
+    }
+
+    // don't let the status bar glitch for players with <0 health.
+    if ( m_iHealth < -99 )
+    {
+        m_iHealth = 0;
+    }
+
+    // holster the current weapon
+    if ( GetActiveWeapon() )
+    {
+        GetActiveWeapon()->Holster();
+    }
+
+    SetAnimation( PLAYER_DIE );
+
+    if ( !IsObserver() )
+    {
+        SetViewOffset( VEC_DEAD_VIEWHEIGHT_SCALED( this ) );
+    }
+    m_lifeState = LIFE_DYING;
+
+    pl.deadflag = true;
+    AddSolidFlags( FSOLID_NOT_SOLID );
+    // force contact points to get flushed if no longer valid
+    // UNDONE: Always do this on RecheckCollisionFilter() ?
+    IPhysicsObject *pObject = VPhysicsGetObject();
+    if ( pObject )
+    {
+        pObject->RecheckContactPoints();
+    }
+
+    SetMoveType( MOVETYPE_FLYGRAVITY );
+    SetGroundEntity( NULL );
+
+    // clear out the suit message cache so we don't keep chattering
+    SetSuitUpdate( NULL, false, 0 );
+
+    // reset FOV
+    SetFOV( this, 0 );
+
+    if ( FlashlightIsOn() )
+    {
+        FlashlightTurnOff();
+    }
+
+    m_flDeathTime = gpGlobals->curtime;
+
+    ClearLastKnownArea();
+
+    // This next section is copied from Event_Dying
+
+    // DeathSound( info );
+
+    // The dead body rolls out of the vehicle.
+    if ( IsInAVehicle() )
+    {
+        LeaveVehicle();
+    }
+
+    QAngle angles = GetLocalAngles();
+
+    angles.x = 0;
+    angles.z = 0;
+
+    SetLocalAngles( angles );
+
+    SetThink( &CBasePlayer::PlayerDeathThink );
+    SetNextThink( gpGlobals->curtime + 0.1f );
+    // BaseClass::Event_Dying( info );
+
+    m_iSuicideCustomKillFlags = 0;
 }
 
 //==============================================
@@ -5469,6 +5684,17 @@ void CBasePlayer::VelocityPunch( const Vector &vecForce )
 //-----------------------------------------------------------------------------
 bool CBasePlayer::CanEnterVehicle( IServerVehicle *pVehicle, int nRole )
 {
+#ifdef LUA_SDK
+    LUA_CALL_HOOK_BEGIN( "CanEnterVehicle" );
+    CBasePlayer::PushLuaInstanceSafe( L, this );
+    // FIXME: implement lua_pushvehicle()!
+    CBaseEntity::PushLuaInstanceSafe( L, pVehicle->GetVehicleEnt() );
+    lua_pushinteger( L, nRole );
+    LUA_CALL_HOOK_END( 3, 1 );
+
+    LUA_RETURN_BOOLEAN();
+#endif
+
     // Must not have a passenger there already
     if ( pVehicle->GetPassenger( nRole ) )
         return false;
@@ -6941,7 +7167,7 @@ void CBasePlayer::UpdateClientData( void )
 			{
 				m_flFlashLightTime = FLASH_DRAIN_TIME + gpGlobals->curtime;
 				m_iFlashBattery--;
-				
+
 				if (!m_iFlashBattery)
 					FlashlightTurnOff();
 			}
@@ -7460,9 +7686,9 @@ void CBasePlayer::Weapon_DropSlot( int weaponSlot )
 //-----------------------------------------------------------------------------
 // Purpose: Override to add weapon to the hud
 //-----------------------------------------------------------------------------
-void CBasePlayer::Weapon_Equip( CBaseCombatWeapon *pWeapon )
+void CBasePlayer::Weapon_Equip( CBaseCombatWeapon *pWeapon, bool bGiveAmmo /*= true*/ )
 {
-    BaseClass::Weapon_Equip( pWeapon );
+    BaseClass::Weapon_Equip( pWeapon, bGiveAmmo );
 
     bool bShouldSwitch = g_pGameRules->FShouldSwitchWeapon( this, pWeapon );
 
@@ -7479,25 +7705,6 @@ void CBasePlayer::Weapon_Equip( CBaseCombatWeapon *pWeapon )
     {
         Weapon_Switch( pWeapon );
     }
-}
-
-//=========================================================
-// HasNamedPlayerItem Does the player already have this item?
-//=========================================================
-CBaseEntity *CBasePlayer::HasNamedPlayerItem( const char *pszItemName )
-{
-    for ( int i = 0; i < WeaponCount(); i++ )
-    {
-        if ( !GetWeapon( i ) )
-            continue;
-
-        if ( FStrEq( pszItemName, GetWeapon( i )->GetClassname() ) )
-        {
-            return GetWeapon( i );
-        }
-    }
-
-    return NULL;
 }
 
 #if defined USES_ECON_ITEMS
@@ -7616,7 +7823,7 @@ void CBasePlayer::ChangeTeam( int iTeamNum, bool bAutoTeam, bool bSilent, bool b
         gameeventmanager->FireEvent( event );
     }
 
-    // Remove him from his current team
+    // Remove them from their current team
     if ( GetTeam() )
     {
         GetTeam()->RemovePlayer( this );
@@ -7702,25 +7909,29 @@ class CStripWeapons : public CPointEntity
     DECLARE_DATADESC();
 };
 
+// clang-format off
+
 LINK_ENTITY_TO_CLASS( player_weaponstrip, CStripWeapons );
 
 BEGIN_DATADESC( CStripWeapons )
-DEFINE_INPUTFUNC( FIELD_VOID, "Strip", InputStripWeapons ),
+    DEFINE_INPUTFUNC( FIELD_VOID, "Strip", InputStripWeapons ),
     DEFINE_INPUTFUNC( FIELD_VOID, "StripWeaponsAndSuit", InputStripWeaponsAndSuit ),
-    END_DATADESC()
+END_DATADESC()
 
-        BEGIN_ENT_SCRIPTDESC( CBasePlayer, CBaseCombatCharacter, "The player entity." )
-            DEFINE_SCRIPTFUNC_NAMED( ScriptIsPlayerNoclipping, "IsNoclipping", "Returns true if the player is in noclip mode." )
-                DEFINE_SCRIPTFUNC( ViewPunch, "Ow! Punches the player's view" )
-                    DEFINE_SCRIPTFUNC( ViewPunchReset, "Reset's the player's view punch" )
-                        DEFINE_SCRIPTFUNC( SnapEyeAngles, "Snap the player's eye angles to this." )
-                            DEFINE_SCRIPTFUNC( GetPlayerMins, "" )
-                                DEFINE_SCRIPTFUNC( GetPlayerMaxs, "" )
-                                    DEFINE_SCRIPTFUNC( SetForceLocalDraw, "Forces the player to be drawn as if they are third person" )
-                                        DEFINE_SCRIPTFUNC( GetForceLocalDraw, "Gets the state of whether the player is being forced by SetForceLocalDraw to be drawn" )
-                                            DEFINE_SCRIPTFUNC( GetScriptOverlayMaterial, "Gets the current view overlay material" )
-                                                DEFINE_SCRIPTFUNC( SetScriptOverlayMaterial, "Sets a view overlay material" )
-                                                    END_SCRIPTDESC();
+BEGIN_ENT_SCRIPTDESC( CBasePlayer, CBaseCombatCharacter, "The player entity." )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptIsPlayerNoclipping, "IsNoclipping", "Returns true if the player is in noclip mode." )
+    DEFINE_SCRIPTFUNC( ViewPunch, "Ow! Punches the player's view" )
+    DEFINE_SCRIPTFUNC( ViewPunchReset, "Reset's the player's view punch" )
+    DEFINE_SCRIPTFUNC( SnapEyeAngles, "Snap the player's eye angles to this." )
+    DEFINE_SCRIPTFUNC( GetPlayerMins, "" )
+    DEFINE_SCRIPTFUNC( GetPlayerMaxs, "" )
+    DEFINE_SCRIPTFUNC( SetForceLocalDraw, "Forces the player to be drawn as if they are third person" )
+    DEFINE_SCRIPTFUNC( GetForceLocalDraw, "Gets the state of whether the player is being forced by SetForceLocalDraw to be drawn" )
+    DEFINE_SCRIPTFUNC( GetScriptOverlayMaterial, "Gets the current view overlay material" )
+    DEFINE_SCRIPTFUNC( SetScriptOverlayMaterial, "Sets a view overlay material" )
+END_SCRIPTDESC();
+
+// clang-format on
 
 void CStripWeapons::InputStripWeapons( inputdata_t &data )
 {
@@ -8142,7 +8353,17 @@ SendPropDataTable( SENDINFO_DT( m_AttributeList ), &REFERENCE_SEND_TABLE( DT_Att
     SendPropInt( SENDINFO( m_lifeState ), 3, SPROP_UNSIGNED ),
     SendPropInt( SENDINFO( m_iBonusProgress ), 15 ),
     SendPropInt( SENDINFO( m_iBonusChallenge ), 4 ),
-    SendPropFloat( SENDINFO( m_flMaxspeed ), 12, SPROP_ROUNDDOWN, 0.0f, 2048.0f ),  // CL
+
+    SendPropFloat( SENDINFO( m_flMaxspeed ), 12, SPROP_ROUNDDOWN, 0.0f, 2048.0f ),            // CL
+    SendPropFloat( SENDINFO( m_flWalkSpeed ), 12, SPROP_ROUNDDOWN, 0.0f, 2048.0f ),           // CL
+    SendPropFloat( SENDINFO( m_flNormalSpeed ), 12, SPROP_ROUNDDOWN, 0.0f, 2048.0f ),         // CL
+    SendPropFloat( SENDINFO( m_flRunSpeed ), 12, SPROP_ROUNDDOWN, 0.0f, 2048.0f ),            // CL
+    SendPropFloat( SENDINFO( m_flLadderClimbSpeed ), 12, SPROP_ROUNDDOWN, 0.0f, 2048.0f ),    // CL
+    SendPropFloat( SENDINFO( m_flCrouchWalkFraction ), 12, SPROP_ROUNDDOWN, 0.0f, 2048.0f ),  // CL
+    SendPropFloat( SENDINFO( m_flJumpPower ), 12, SPROP_ROUNDDOWN, 0.0f, 2048.0f ),           // CL
+    SendPropFloat( SENDINFO( m_flDuckSpeed ), 12, SPROP_ROUNDDOWN, 0.0f, 2048.0f ),           // CL
+    SendPropFloat( SENDINFO( m_flUnDuckFraction ), 12, SPROP_ROUNDDOWN, 0.0f, 10.0f ),        // CL
+
     SendPropInt( SENDINFO( m_fFlags ), PLAYER_FLAG_BITS, SPROP_UNSIGNED | SPROP_CHANGES_OFTEN, SendProxy_CropFlagsToPlayerFlagBitsLength ),
     SendPropInt( SENDINFO( m_iObserverMode ), 3, SPROP_UNSIGNED ),
     SendPropEHandle( SENDINFO( m_hObserverTarget ) ),
@@ -8157,6 +8378,8 @@ SendPropDataTable( SENDINFO_DT( m_AttributeList ), &REFERENCE_SEND_TABLE( DT_Att
 #if defined USES_ECON_ITEMS
     SendPropUtlVector( SENDINFO_UTLVECTOR( m_hMyWearables ), MAX_WEARABLES_SENT_FROM_SERVER, SendPropEHandle( NULL, 0 ) ),
 #endif  // USES_ECON_ITEMS
+
+    SendPropEHandle( SENDINFO( m_hHandsEntity ) ),
 
     // Data that only gets sent to the local player.
     SendPropDataTable( "localdata", 0, &REFERENCE_SEND_TABLE( DT_LocalPlayerExclusive ), SendProxy_SendLocalDataTable ),
@@ -9622,3 +9845,9 @@ void *SendProxy_SendNonLocalDataTable( const SendProp *pProp, const void *pStruc
     return ( void * )pVarData;
 }
 REGISTER_SEND_PROXY_NON_MODIFIED_POINTER( SendProxy_SendNonLocalDataTable );
+
+void SendProxy_String_tToString( const SendProp *pProp, const void *pStruct, const void *pData, DVariant *pOut, int iElement, int objectID )
+{
+    string_t *pString = ( string_t * )pData;
+    pOut->m_pString = ( char * )STRING( *pString );
+}

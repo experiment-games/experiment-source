@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+
+	"$basetexture" "models/Humans/Male/Group01/cona_facemap"
+	"$halflambert" 1
+}

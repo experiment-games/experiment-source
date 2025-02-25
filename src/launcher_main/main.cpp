@@ -28,8 +28,10 @@
 #include "tier0/basetypes.h"
 
 #ifdef WIN32
+#define PATH_SEPERATOR "\\"
 typedef int ( *LauncherMain_t )( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow );
 #elif POSIX
+#define PATH_SEPERATOR "/"
 typedef int ( *LauncherMain_t )( int argc, char **argv );
 #else
 #error
@@ -437,6 +439,7 @@ int APIENTRY WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 
     char szBuffer[4096];
 
+#ifndef _DEBUG
     // Use the .EXE name to determine the root directory
     char moduleName[MAX_PATH];
     if ( !GetModuleFileName( hInstance, moduleName, MAX_PATH ) )
@@ -447,14 +450,29 @@ int APIENTRY WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 
     // Get the root directory the .exe is in
     char *pRootDir = GetBaseDir( moduleName );
-    const char *pBinaryGameDir = pRootDir;
-    char szGameInstallDir[4096];
-    if ( !GetGameInstallDir( pRootDir, szGameInstallDir, 4096 ) )
+#else // Use the working directory to get the root dir (we set that in Project -> Properties -> Debugging)
+    char debugRootDir[MAX_PATH];
+    if ( !GetCurrentDirectory( MAX_PATH, debugRootDir ) )
     {
-        return 1;
+        MessageBox( 0, "Failed to get current directory", "Launcher Error", MB_OK );
+        return 0;
     }
 
-    pBinaryGameDir = szGameInstallDir;
+    char *pRootDir = debugRootDir;
+#endif
+    const char *pBinaryGameDir = pRootDir;
+
+    char szGameInstallDir[4096];
+    // Experiment; We commented this since we include the SDK content in our mod.
+    //if ( !GetGameInstallDir( pRootDir, szGameInstallDir, 4096 ) )
+    //{
+    //    return 1;
+    //}
+    //pBinaryGameDir = szGameInstallDir;
+
+    // Experiment; TODO: Is this risky? Anyone can just come in and change the contents of this directory.
+    //_snprintf( szGameInstallDir, sizeof( szGameInstallDir ), "%s%sexperiment", pRootDir, PATH_SEPERATOR );
+    strcpy_s( szGameInstallDir, pRootDir );
 
     SetEnvironmentVariableA( "SDK_EXEC_DIR", szGameInstallDir );
 

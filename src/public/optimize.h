@@ -1,4 +1,4 @@
-//========= Copyright Valve Corporation, All rights reserved. ============//
+//========= Copyright � 1996-2008, Valve Corporation, All rights reserved. ============//
 //
 // Purpose:
 //
@@ -53,7 +53,8 @@ struct Vertex_t
 enum StripHeaderFlags_t
 {
     STRIP_IS_TRILIST = 0x01,
-    STRIP_IS_TRISTRIP = 0x02
+    STRIP_IS_TRISTRIP = 0x02, // Regular sub-d quads
+    STRIP_IS_QUADLIST_EXTRA = 0x04  // Extraordinary sub-d quads
 };
 
 // a strip is a piece of a stripgroup that is divided by bones
@@ -61,6 +62,7 @@ enum StripHeaderFlags_t
 struct StripHeader_t
 {
     DECLARE_BYTESWAP_DATADESC();
+
     // indexOffset offsets into the mesh's index array.
     int numIndices;
     int indexOffset;
@@ -69,7 +71,7 @@ struct StripHeader_t
     int numVerts;
     int vertOffset;
 
-    // use this to enable/disable skinning.
+    // Use this to enable/disable skinning.
     // May decide (in optimize.cpp) to put all with 1 bone in a different strip
     // than those that need skinning.
     short numBones;
@@ -82,6 +84,10 @@ struct StripHeader_t
     {
         return ( BoneStateChangeHeader_t * )( ( ( byte * )this ) + boneStateChangeOffset ) + i;
     };
+
+    // These go last on purpose!
+    int numTopologyIndices;
+    int topologyOffset;
 };
 
 enum StripGroupFlags_t
@@ -90,6 +96,7 @@ enum StripGroupFlags_t
     STRIPGROUP_IS_HWSKINNED = 0x02,
     STRIPGROUP_IS_DELTA_FLEXED = 0x04,
     STRIPGROUP_SUPPRESS_HW_MORPH = 0x08,  // NOTE: This is a temporary flag used at run time.
+    STRIPGROUP_IS_MDL49 = 0x80,
 };
 
 // a locking group
@@ -121,13 +128,21 @@ struct StripGroupHeader_t
     };
 
     unsigned char flags;
+
+    int numTopologyIndices;
+    int topologyOffset;
+    inline unsigned short *pTopologyIndex( int i ) const
+    {
+        return ( unsigned short * )( ( ( byte * )this ) + topologyOffset ) + i;
+    };
 };
 
 enum MeshFlags_t
 {
     // these are both material properties, and a mesh has a single material.
     MESH_IS_TEETH = 0x01,
-    MESH_IS_EYES = 0x02
+    MESH_IS_EYES = 0x02,
+    MESH_IS_MDL49 = 0x80,
 };
 
 // a collection of locking groups:
@@ -223,11 +238,11 @@ struct FileHeader_t
     // hardware params that affect how the model is to be optimized.
     int vertCacheSize;
     unsigned short maxBonesPerStrip;
-    unsigned short maxBonesPerTri;
+    unsigned short maxBonesPerFace;
     int maxBonesPerVert;
 
     // must match checkSum in the .mdl
-    int checkSum;
+    long checkSum;
 
     int numLODs;  // garymcthack - this is also specified in ModelHeader_t and should match
 

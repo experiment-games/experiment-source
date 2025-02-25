@@ -1245,7 +1245,10 @@ bool CZipFile::FileExistsInZip( const char *pRelativeName )
 //-----------------------------------------------------------------------------
 void CZipFile::AddFileToZip( const char *relativename, const char *fullpath, IZip::eCompressionType compressionType )
 {
-    FILE *temp = fopen( fullpath, "rb" );
+    //FILE *temp = fopen( fullpath, "rb" );
+    FILE *temp;
+    fopen_s( &temp, fullpath, "rb" );
+
     if ( !temp )
         return;
 

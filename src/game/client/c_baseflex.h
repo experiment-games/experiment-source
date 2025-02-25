@@ -74,6 +74,8 @@ struct FS_LocalToGlobal_t
     FS_LocalToGlobal_t( const FS_LocalToGlobal_t &src )
     {
         m_Key = src.m_Key;
+        // Experiment; TODO: The following line isn't in the TF2 SDK (do we need it?):
+        // delete m_Mapping; // Commented out to find out if it's necessary
         m_Mapping = new int[src.m_nCount];
         Q_memcpy( m_Mapping, src.m_Mapping, src.m_nCount * sizeof( int ) );
 
@@ -123,6 +125,10 @@ struct Emphasized_Phoneme
 //-----------------------------------------------------------------------------
 class C_BaseFlex : public C_BaseAnimatingOverlay, public IHasLocalToGlobalFlexSettings
 {
+#ifdef LUA_SDK
+    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( C_BaseFlex, LUA_CBASEFLEXLIBNAME )
+#endif
+
     DECLARE_CLASS( C_BaseFlex, C_BaseAnimatingOverlay );
 
    public:
@@ -177,6 +183,7 @@ class C_BaseFlex : public C_BaseAnimatingOverlay, public IHasLocalToGlobalFlexSe
     // indexed by model local flexcontroller
     float m_flexWeight[MAXSTUDIOFLEXCTRL];
     CInterpolatedVarArray< float, MAXSTUDIOFLEXCTRL > m_iv_flexWeight;
+    RenderGroup_t m_RenderGroup;
 
     int m_blinktoggle;
 

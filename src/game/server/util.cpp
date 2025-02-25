@@ -37,6 +37,8 @@
 #include "util.h"
 #include "cdll_int.h"
 #include "vscript_server.h"
+#include <basescripted.h>
+#include <weapon_experimentbase_scriptedweapon.h>
 
 #ifdef PORTAL
 #include "PortalSimulation.h"
@@ -73,6 +75,10 @@ class CEntityFactoryDictionary : public IEntityFactoryDictionary
     CEntityFactoryDictionary();
 
     virtual void InstallFactory( IEntityFactory *pFactory, const char *pClassName );
+#ifdef LUA_SDK
+    virtual void RemoveFactory( IEntityFactory *pFactory,
+                                const char *pClassName );
+#endif
     virtual IServerNetworkable *Create( const char *pClassName );
     virtual void Destroy( const char *pClassName, IServerNetworkable *pNetworkable );
     virtual const char *GetCannonicalName( const char *pClassName );
@@ -150,17 +156,75 @@ void CEntityFactoryDictionary::InstallFactory( IEntityFactory *pFactory, const c
     m_Factories.Insert( pClassName, pFactory );
 }
 
+#ifdef LUA_SDK
+//-----------------------------------------------------------------------------
+// Remove an existing factory
+//-----------------------------------------------------------------------------
+void CEntityFactoryDictionary::RemoveFactory( IEntityFactory *pFactory,
+                                              const char *pClassName )
+{
+    m_Factories.Remove( pClassName );
+}
+#endif
+
 //-----------------------------------------------------------------------------
 // Instantiate something using a factory
 //-----------------------------------------------------------------------------
 IServerNetworkable *CEntityFactoryDictionary::Create( const char *pClassName )
 {
     IEntityFactory *pFactory = FindFactory( pClassName );
+
     if ( !pFactory )
     {
+#ifdef LUA_SDK
+        // Experiment; instead of the RegisterScriptedEntity/RegisterScriptedTrigger/RegisterScriptedWeapon we had before, we'll just ask Lua for the entity right now.
+        if ( L )
+        {
+            AssertMsg( g_szLuaExpectedScriptedLibrary != nullptr, "Expected a Lua factory library name to be set!" );
+            lua_getglobal( L, g_szLuaExpectedScriptedLibrary );
+            Assert( lua_istable( L, -1 ) );  // ScriptedEntities table must exist
+
+            lua_getfield( L, -1, "Get" );
+            Assert( lua_isfunction( L, -1 ) );  // ScriptedEntities.Get must be a function
+
+            lua_pushstring( L, pClassName );
+
+            if ( luasrc_pcall( L, 1, 1 ) == LUA_OK )
+            {
+                if ( lua_istable( L, -1 ) )
+                {
+                    // Experiment:
+                    // We have a table registered, create and return the scripted entity
+                    if ( Q_strcmp( g_szLuaExpectedScriptedLibrary, LUA_SCRIPTEDENTITIESLIBNAME ) == 0 )
+                    {
+                        CBaseScripted *pEnt = _CreateEntityTemplate( ( CBaseScripted * )NULL, pClassName );
+                        // TODO: CBaseScripted should probably get the same treatment that the scripted weapons got (with regards to setting up the reftable)
+                        return pEnt->NetworkProp();
+                    }
+                    else if ( Q_strcmp( g_szLuaExpectedScriptedLibrary, LUA_SCRIPTEDWEAPONSLIBNAME ) == 0 )
+                    {
+                        CExperimentScriptedWeapon *pEnt = _CreateEntityTemplate( ( CExperimentScriptedWeapon * )NULL, pClassName );
+                        return pEnt->NetworkProp();
+                    }
+                    else
+                    {
+                        Assert( !"Unknown Lua factory library name!" );
+                    }
+                }
+            }
+        }
+#endif
+
+#ifdef STAGING_ONLY
+        static ConVarRef tf_bot_use_items( "tf_bot_use_items" );
+        if ( tf_bot_use_items.IsValid() && tf_bot_use_items.GetInt() )
+            return NULL;
+#endif
         Warning( "Attempted to create unknown entity type %s!\n", pClassName );
+
         return NULL;
     }
+
 #if defined( TRACK_ENTITY_MEMORY ) && defined( USE_MEM_DEBUG )
     MEM_ALLOC_CREDIT_( m_Factories.GetElementName( m_Factories.Find( pClassName ) ) );
 #endif
@@ -339,7 +403,7 @@ int UTIL_DropToFloor( CBaseEntity *pEntity, unsigned int mask, CBaseEntity *pIgn
 
     trace_t trace;
 
-#ifndef HL2MP
+#if !defined( HL2MP ) && !defined( EXPERIMENT_SOURCE )
     // HACK: is this really the only sure way to detect crossing a terrain boundry?
     UTIL_TraceEntity( pEntity, pEntity->GetAbsOrigin(), pEntity->GetAbsOrigin(), mask, pIgnore, pEntity->GetCollisionGroup(), &trace );
     if ( trace.fraction == 0.0 )
@@ -494,6 +558,16 @@ void UTIL_Remove( CBaseEntity *oldObj )
 {
     if ( !oldObj )
         return;
+
+#ifdef LUA_SDK
+    if ( L )
+    {
+        LUA_CALL_HOOK_BEGIN( "EntityRemoved" );
+        CBaseEntity::PushLuaInstanceSafe( L, oldObj );
+        LUA_CALL_HOOK_END( 1, 0 );
+    }
+#endif
+
     UTIL_Remove( oldObj->NetworkProp() );
 }
 
@@ -543,25 +617,6 @@ void UTIL_RemoveImmediate( CBaseEntity *oldObj )
 #ifdef PORTAL
     CPortalSimulator::Post_UTIL_Remove( oldObj );
 #endif
-}
-
-// returns a CBaseEntity pointer to a player by index.  Only returns if the player is spawned and connected
-// otherwise returns NULL
-// Index is 1 based
-CBasePlayer *UTIL_PlayerByIndex( int playerIndex )
-{
-    CBasePlayer *pPlayer = NULL;
-
-    if ( playerIndex > 0 && playerIndex <= gpGlobals->maxClients )
-    {
-        edict_t *pPlayerEdict = INDEXENT( playerIndex );
-        if ( pPlayerEdict && !pPlayerEdict->IsFree() )
-        {
-            pPlayer = ( CBasePlayer * )GetContainingEntity( pPlayerEdict );
-        }
-    }
-
-    return pPlayer;
 }
 
 //
@@ -1447,36 +1502,6 @@ void UTIL_ClipPunchAngleOffset( QAngle &in, const QAngle &punch, const QAngle &c
     }
 }
 
-float UTIL_WaterLevel( const Vector &position, float minz, float maxz )
-{
-    Vector midUp = position;
-    midUp.z = minz;
-
-    if ( !( UTIL_PointContents( midUp ) & MASK_WATER ) )
-        return minz;
-
-    midUp.z = maxz;
-    if ( UTIL_PointContents( midUp ) & MASK_WATER )
-        return maxz;
-
-    float diff = maxz - minz;
-    while ( diff > 1.0 )
-    {
-        midUp.z = minz + diff / 2.0;
-        if ( UTIL_PointContents( midUp ) & MASK_WATER )
-        {
-            minz = midUp.z;
-        }
-        else
-        {
-            maxz = midUp.z;
-        }
-        diff = maxz - minz;
-    }
-
-    return midUp.z;
-}
-
 //-----------------------------------------------------------------------------
 // Like UTIL_WaterLevel, but *way* less expensive.
 // I didn't replace UTIL_WaterLevel everywhere to avoid breaking anything.
@@ -1682,7 +1707,9 @@ void UTIL_PrecacheOther( const char *szClassname, const char *modelName )
     }
 
     if ( pEntity )
+    {
         pEntity->Precache();
+    }
 
     UTIL_RemoveImmediate( pEntity );
 }
@@ -1798,6 +1825,7 @@ int DispatchSpawn( CBaseEntity *pEntity, bool bRunVScripts )
             MemAlloc_PushAllocDbgInfo( pszClassname, __LINE__ );
         }
 #endif
+
         bool bAsyncAnims = mdlcache->SetAsyncLoad( MDLCACHE_ANIMBLOCK, false );
         CBaseAnimating *pAnimating = pEntity->GetBaseAnimating();
         if ( !pAnimating )
@@ -2235,8 +2263,10 @@ CBaseEntity *UTIL_EntitiesInPVS( CBaseEntity *pPVSEntity, CBaseEntity *pStarting
     {
         org = pPVSEntity->EyePosition();
         int clusterIndex = engine->GetClusterForOrigin( org );
-        Assert( clusterIndex >= 0 );
-        engine->GetPVSForCluster( clusterIndex, sizeof( pvs ), pvs );
+        // Assert( clusterIndex >= 0 ); // Experiment; don't assert, let players fly out of bounds safely, just dont find anything there
+
+        if ( clusterIndex >= 0 )
+            engine->GetPVSForCluster( clusterIndex, sizeof( pvs ), pvs );
     }
 
     for ( CBaseEntity *pEntity = gEntList.NextEnt( pStartingEntity ); pEntity; pEntity = gEntList.NextEnt( pEntity ) )
@@ -2395,33 +2425,6 @@ void UTIL_MuzzleFlash( const Vector &origin, const QAngle &angles, int scale, in
 }
 
 //-----------------------------------------------------------------------------
-// Purpose:
-// Input  : vStartPos - start of the line
-//			vEndPos - end of the line
-//			vPoint - point to find nearest point to on specified line
-//			clampEnds - clamps returned points to being on the line segment specified
-// Output : Vector - nearest point on the specified line
-//-----------------------------------------------------------------------------
-Vector UTIL_PointOnLineNearestPoint( const Vector &vStartPos, const Vector &vEndPos, const Vector &vPoint, bool clampEnds )
-{
-    Vector vEndToStart = ( vEndPos - vStartPos );
-    Vector vOrgToStart = ( vPoint - vStartPos );
-    float fNumerator = DotProduct( vEndToStart, vOrgToStart );
-    float fDenominator = vEndToStart.Length() * vOrgToStart.Length();
-    float fIntersectDist = vOrgToStart.Length() * ( fNumerator / fDenominator );
-    float flLineLength = VectorNormalize( vEndToStart );
-
-    if ( clampEnds )
-    {
-        fIntersectDist = clamp( fIntersectDist, 0.0f, flLineLength );
-    }
-
-    Vector vIntersectPos = vStartPos + vEndToStart * fIntersectDist;
-
-    return vIntersectPos;
-}
-
-//-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 AngularImpulse WorldToLocalRotation( const VMatrix &localToWorld, const Vector &worldAxis, float rotation )
 {
@@ -2568,7 +2571,25 @@ void LoadAndSpawnEntities_ParseEntKVBlockHelper( CBaseEntity *pNode, KeyValues *
         }
         else
         {
-            pNode->KeyValue( pkvNodeData->GetName(), pkvNodeData->GetString() );
+            const char *szKeyName = pkvNodeData->GetName();
+            const char *szValue = pkvNodeData->GetString();
+#ifdef LUA_SDK
+            LUA_CALL_HOOK_BEGIN( "EntityKeyValue" );
+            CBaseEntity::PushLuaInstanceSafe( L, pNode );
+            lua_pushstring( L, szKeyName );
+            lua_pushstring( L, szValue );
+            LUA_CALL_HOOK_END( 3, 1 );
+
+            // If the hook returns a string, set that as the value
+            if ( lua_isstring( L, -1 ) )
+            {
+                szValue = lua_tostring( L, -1 );
+            }
+
+            lua_pop( L, 1 );
+#endif
+
+            pNode->KeyValue( szKeyName, szValue );
         }
 
         pkvNodeData = pkvNodeData->GetNextKey();

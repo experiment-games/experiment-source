@@ -108,11 +108,13 @@ class CMultiplayRules : public CGameRules
         return BaseClass::ShouldDrawHeadLabels();
     }
 
-#ifndef CLIENT_DLL
-    virtual void FrameUpdatePostEntityThink();
-
+#if defined( LUA_SDK ) || !defined( CLIENT_DLL )
     // GR_Think
     virtual void Think( void );
+#endif
+
+#ifndef CLIENT_DLL
+    virtual void FrameUpdatePostEntityThink();
     virtual void RefreshSkillData( bool forceUpdate );
     virtual bool IsAllowedToSpawn( CBaseEntity *pEntity );
     virtual bool FAllowFlashlight( void );

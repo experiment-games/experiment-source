@@ -1,0 +1,32 @@
+<li>
+    {% if argument.nillable or argument.default %}
+    <span class="lua__variable_list__nillable">Optional</span>
+    {% endif %}
+
+    {% if argument.type %}
+        <span class="lua__symbol">{{ argument.name }}</span>
+
+        {% with type=argument.type %}
+            {% include 'lua-partials/type.html' %}
+        {% endwith %}
+    {% elif argument.types %}
+        {% for argumentVariation in argument.types %}
+            <span class="lua__symbol">{{ argumentVariation.name }}</span>
+
+            {% with type=argumentVariation.type %}
+                {% include 'lua-partials/type.html' %}
+
+                {% if not loop.last %}
+                    <span class="lua__variable_list__separator">or</span>
+                {% endif %}
+            {% endwith %}
+        {% endfor %}
+    {% endif %}
+
+    {% if argument.description %}
+    <span class="lua__variable_list__description">{{ argument.description }}</span>
+    {% endif %}
+    {% if argument.default %}
+    <span class="lua__variable_list__default">{{ argument.default }}</span>
+    {% endif %}
+</li>

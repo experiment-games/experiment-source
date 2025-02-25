@@ -11,8 +11,7 @@ $MacroRequired				"OUTLIBNAME"	"$PROJECTNAME"
 $MacroRequired				"OUTLIBDIR"
 
 $Macro LIBPUBLIC	"$SRCDIR\lib\public$PLATSUBDIR"
-$Macro LIBCOMMON	"$SRCDIR\lib\common$PLATSUBDIR\2015\release" [!$WIN32]
-$Macro LIBCOMMON	"$SRCDIR\lib\common\win32\2015\release" [$WIN32]
+$Macro LIBCOMMON	"$SRCDIR\lib\common$PLATSUBDIR"
 
 $Include "$SRCDIR\vpc_scripts\source_lib_win32_debug.vpc"
 $Include "$SRCDIR\vpc_scripts\source_lib_win32_release.vpc"
@@ -41,7 +40,7 @@ $Configuration
 	{
 		$EnableEnhancedInstructionSet	"Streaming SIMD Extensions (/arch:SSE)"
 	}
-	
+
 	$PreBuildEvent
 	{
 		$CommandLine		"if EXIST $OUTLIBDIR\$(TargetName).lib ( for /f $QUOTEdelims=$QUOTE %%A in ('attrib $QUOTE$OUTLIBDIR\$(TargetName).lib$QUOTE') do set valveTmpIsReadOnly=$QUOTE%%A$QUOTE" "\n" \
@@ -52,12 +51,12 @@ $Configuration
 							"    $SRCDIR\devtools\bin\gnu\touch.exe -d $QUOTE1999-01-01$QUOTE $OUTLIBDIR\$(TargetName).lib" "\n" \
 							"    attrib +r $OUTLIBDIR\$(TargetName).lib" "\n" \
 							")" "\n" \
-							"$HOST_VPC_EXE -crc2 $QUOTE$VPC_OUTPUT_FILE$QUOTE" "\n" 			
+							"$HOST_VPC_EXE -crc2 $QUOTE$VPC_OUTPUT_FILE$QUOTE" "\n"
 	}
 
 	$PreLinkEvent [!$ANALYZE && !$SOURCESDK && !$JOSH]
 	{
-		$CommandLine		"call $SRCDIR\vpc_scripts\valve_p4_edit.cmd $OUTLIBDIR\$(TargetName).lib $SRCDIR" 
+		$CommandLine		"call $SRCDIR\vpc_scripts\valve_p4_edit.cmd $OUTLIBDIR\$(TargetName).lib $SRCDIR"
 	}
 
 	$Librarian

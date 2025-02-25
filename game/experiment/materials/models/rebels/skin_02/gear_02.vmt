@@ -1,0 +1,7 @@
+"vertexlitgeneric"
+{
+	"$baseTexture"		"Models\Rebels/SKIN_02/gear_02"
+
+ 	"$halflambert"		"1"
+
+}

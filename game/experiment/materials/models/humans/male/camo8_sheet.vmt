@@ -1,0 +1,10 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/Humans/Male/camo8_sheet"
+	"$bumpmap" "models/Humans/Male/scarf_n"
+	"$surfaceprop" "flesh"
+		"$phong" "1"
+	"$phongboost" "1"	
+	"$phongfresnelranges"	"[3 5 8]"
+	"$halflambert" 1
+}

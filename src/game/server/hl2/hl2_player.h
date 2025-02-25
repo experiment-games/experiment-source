@@ -14,6 +14,14 @@
 #include "simtimer.h"
 #include "soundenvelope.h"
 
+// Tony; In HL2MP we need to inherit from  BaseMultiplayerPlayer!
+#if defined( HL2MP ) || defined( EXPERIMENT_SOURCE )
+#include "basemultiplayerplayer.h"
+#define BASEPLAYERCLASS CBaseMultiplayerPlayer
+#else
+#define BASEPLAYERCLASS CBasePlayer
+#endif
+
 class CAI_Squad;
 class CPropCombineBall;
 
@@ -38,7 +46,8 @@ struct commandgoal_t
     CBaseEntity *m_pGoalEntity;
 };
 
-// Time between checks to determine whether NPCs are illuminated by the flashlight
+// Time between checks to determine whether NPCs are illuminated by the
+// flashlight
 #define FLASHLIGHT_NPC_CHECK_INTERVAL 0.4
 
 //----------------------------------------------------
@@ -62,8 +71,10 @@ class CSuitPowerDevice
     }
 
    private:
-    int m_bitsDeviceID;   // tells what the device is. DEVICE_SPRINT, DEVICE_FLASHLIGHT, etc. BITMASK!!!!!
-    float m_flDrainRate;  // how quickly does this device deplete suit power? ( percent per second )
+    int m_bitsDeviceID;   // tells what the device is. DEVICE_SPRINT,
+                          // DEVICE_FLASHLIGHT, etc. BITMASK!!!!!
+    float m_flDrainRate;  // how quickly does this device deplete suit power? (
+                          // percent per second )
 
    public:
     int GetDeviceID( void ) const
@@ -72,7 +83,9 @@ class CSuitPowerDevice
     }
     float GetDeviceDrainRate( void ) const
     {
-        if ( g_pGameRules->GetSkillLevel() == SKILL_EASY && hl2_episodic.GetBool() && !( GetDeviceID() & bits_SUIT_DEVICE_SPRINT ) )
+        if ( g_pGameRules->GetSkillLevel() == SKILL_EASY &&
+             hl2_episodic.GetBool() &&
+             !( GetDeviceID() & bits_SUIT_DEVICE_SPRINT ) )
             return m_flDrainRate * 0.5f;
         else
             return m_flDrainRate;
@@ -82,10 +95,10 @@ class CSuitPowerDevice
 //=============================================================================
 // >> HL2_PLAYER
 //=============================================================================
-class CHL2_Player : public CBasePlayer
+class CHL2_Player : public BASEPLAYERCLASS
 {
    public:
-    DECLARE_CLASS( CHL2_Player, CBasePlayer );
+    DECLARE_CLASS( CHL2_Player, BASEPLAYERCLASS );
 
     CHL2_Player();
     ~CHL2_Player( void );
@@ -131,7 +144,8 @@ class CHL2_Player : public CBasePlayer
     virtual bool ClientCommand( const CCommand &args );
 
     // from cbasecombatcharacter
-    void InitVCollision( const Vector &vecAbsOrigin, const Vector &vecAbsVelocity );
+    void InitVCollision( const Vector &vecAbsOrigin,
+                         const Vector &vecAbsVelocity );
     WeaponProficiency_t CalcWeaponProficiency( CBaseCombatWeapon *pWeapon );
 
     Class_T Classify( void );
@@ -158,6 +172,7 @@ class CHL2_Player : public CBasePlayer
     }
 
     void SetFlashlightEnabled( bool bState );
+    bool GetFlashlightEnabled();
 
     // Apply a battery
     bool ApplyBattery( float powerMultiplier = 1.0 );
@@ -241,7 +256,8 @@ class CHL2_Player : public CBasePlayer
 
     void CombineBallSocketed( CPropCombineBall *pCombineBall );
 
-    virtual void Event_KilledOther( CBaseEntity *pVictim, const CTakeDamageInfo &info );
+    virtual void Event_KilledOther( CBaseEntity *pVictim,
+                                    const CTakeDamageInfo &info );
 
     virtual void GetAutoaimVector( autoaim_params_t &params );
     bool ShouldKeepLockedAutoaimTarget( EHANDLE hLockedTarget );
@@ -255,10 +271,11 @@ class CHL2_Player : public CBasePlayer
     virtual bool BumpWeapon( CBaseCombatWeapon *pWeapon );
 
     virtual bool Weapon_CanUse( CBaseCombatWeapon *pWeapon );
-    virtual void Weapon_Equip( CBaseCombatWeapon *pWeapon );
+    virtual void Weapon_Equip( CBaseCombatWeapon *pWeapon, bool bGiveAmmo = true );
     virtual bool Weapon_Lower( void );
     virtual bool Weapon_Ready( void );
-    virtual bool Weapon_Switch( CBaseCombatWeapon *pWeapon, int viewmodelindex = 0 );
+    virtual bool Weapon_Switch( CBaseCombatWeapon *pWeapon,
+                                int viewmodelindex = 0 );
     virtual bool Weapon_CanSwitchTo( CBaseCombatWeapon *pWeapon );
 
     void FirePlayerProxyOutput( const char *pszOutputName, variant_t variant, CBaseEntity *pActivator, CBaseEntity *pCaller );
@@ -267,7 +284,7 @@ class CHL2_Player : public CBasePlayer
 
     // Flashlight Device
     void CheckFlashlight( void );
-    int FlashlightIsOn( void );
+    bool FlashlightIsOn( void );
     void FlashlightTurnOn( void );
     void FlashlightTurnOff( void );
     bool IsIlluminatedByFlashlight( CBaseEntity *pEntity, float *flReturnDot );
@@ -288,6 +305,7 @@ class CHL2_Player : public CBasePlayer
     virtual bool IsHoldingEntity( CBaseEntity *pEnt );
     virtual void ForceDropOfCarriedPhysObjects( CBaseEntity *pOnlyIfHoldindThis );
     virtual float GetHeldObjectMass( IPhysicsObject *pHeldObject );
+    virtual CBaseEntity *GetHeldObject( void );
 
     virtual bool IsFollowingPhysics( void )
     {
@@ -366,15 +384,20 @@ class CHL2_Player : public CBasePlayer
     //  the player and not to other players.
     CNetworkVarEmbedded( CHL2PlayerLocalData, m_HL2Local );
 
+    float m_flTimeAllSuitDevicesOff;
+
     bool m_bSprintEnabled;       // Used to disable sprint temporarily
     bool m_bIsAutoSprinting;     // A proxy for holding down the sprint key.
-    float m_fAutoSprintMinTime;  // Minimum time to maintain autosprint regardless of player speed.
+    float m_fAutoSprintMinTime;  // Minimum time to maintain autosprint
+                                 // regardless of player speed.
 
     CNetworkVar( bool, m_fIsSprinting );
     CNetworkVarForDerived( bool, m_fIsWalking );
 
-   protected:                  // Jeep: Portal_Player needs access to this variable to overload PlayerUse for picking up objects through portals
-    bool m_bPlayUseDenySound;  // Signaled by PlayerUse, but can be unset by HL2 ladder code...
+   protected:                  // Jeep: Portal_Player needs access to this variable to overload
+                               // PlayerUse for picking up objects through portals
+    bool m_bPlayUseDenySound;  // Signaled by PlayerUse, but can be unset by HL2
+                               // ladder code...
 
    private:
     CAI_Squad *m_pPlayerAISquad;
@@ -389,6 +412,8 @@ class CHL2_Player : public CBasePlayer
     bool m_bIgnoreFallDamageResetAfterImpact;
 
     // Suit power fields
+    float m_flSuitPowerLoad;  // net suit power drain (total of all device's
+                              // drainrates)
     float m_flAdmireGlovesAnimTime;
 
     float m_flNextFlashlightCheckTime;
@@ -415,9 +440,11 @@ class CHL2_Player : public CBasePlayer
 
     EHANDLE m_hLockedAutoAimEntity;
 
-    EHANDLE m_hLocatorTargetEntity;  // The entity that's being tracked by the suit locator.
+    EHANDLE m_hLocatorTargetEntity;  // The entity that's being tracked by the
+                                     // suit locator.
 
-    float m_flTimeNextLadderHint;  // Next time we're eligible to display a HUD hint about a ladder.
+    float m_flTimeNextLadderHint;  // Next time we're eligible to display a HUD
+                                   // hint about a ladder.
 
     friend class CHL2GameMovement;
 };

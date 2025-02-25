@@ -723,9 +723,9 @@ void CNPC_MetroPolice::Spawn( void )
 //-----------------------------------------------------------------------------
 // Update weapon ranges
 //-----------------------------------------------------------------------------
-void CNPC_MetroPolice::Weapon_Equip( CBaseCombatWeapon *pWeapon )
+void CNPC_MetroPolice::Weapon_Equip( CBaseCombatWeapon *pWeapon, bool bGiveAmmo /*= true*/ )
 {
-    BaseClass::Weapon_Equip( pWeapon );
+    BaseClass::Weapon_Equip( pWeapon, bGiveAmmo );
 
     if ( HasSpawnFlags( SF_METROPOLICE_MID_RANGE_ATTACK ) && GetActiveWeapon() )
     {
@@ -2828,7 +2828,7 @@ void CNPC_MetroPolice::OnAnimEventShove( void )
 //-----------------------------------------------------------------------------
 void CNPC_MetroPolice::OnAnimEventBatonOn( void )
 {
-#ifndef HL2MP
+#if !defined( HL2MP ) && !defined( EXPERIMENT_SOURCE )
 
     CWeaponStunStick *pStick = dynamic_cast< CWeaponStunStick * >( GetActiveWeapon() );
 
@@ -2844,7 +2844,7 @@ void CNPC_MetroPolice::OnAnimEventBatonOn( void )
 //-----------------------------------------------------------------------------
 void CNPC_MetroPolice::OnAnimEventBatonOff( void )
 {
-#ifndef HL2MP
+#if !defined( HL2MP ) && !defined( EXPERIMENT_SOURCE )
 
     CWeaponStunStick *pStick = dynamic_cast< CWeaponStunStick * >( GetActiveWeapon() );
 
@@ -4966,7 +4966,7 @@ bool CNPC_MetroPolice::HasBaton( void )
 //-----------------------------------------------------------------------------
 bool CNPC_MetroPolice::BatonActive( void )
 {
-#ifndef HL2MP
+#if !defined( HL2MP ) && !defined( EXPERIMENT_SOURCE )
 
     CWeaponStunStick *pStick = dynamic_cast< CWeaponStunStick * >( GetActiveWeapon() );
 

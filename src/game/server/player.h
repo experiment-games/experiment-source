@@ -18,6 +18,7 @@
 #include "hintsystem.h"
 #include "SoundEmitterSystem/isoundemittersystembase.h"
 #include "util_shared.h"
+#include <view_shared.h>
 
 #if defined USES_ECON_ITEMS
 #include "game_item_schema.h"
@@ -241,6 +242,10 @@ class CPlayerInfo : public IBotController, public IPlayerInfo
 
 class CBasePlayer : public CBaseCombatCharacter
 {
+#ifdef LUA_SDK
+    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( CBasePlayer, LUA_BASEPLAYERMETANAME )
+#endif
+
    public:
     DECLARE_CLASS( CBasePlayer, CBaseCombatCharacter );
 
@@ -275,7 +280,12 @@ class CBasePlayer : public CBaseCombatCharacter
     static CBasePlayer *CreatePlayer( const char *className, edict_t *ed );
 
     virtual void CreateViewModel( int viewmodelindex = 0 );
+    virtual void CreateDefaultHandModel( void );
     CBaseViewModel *GetViewModel( int viewmodelindex = 0, bool bObserverOK = true );
+    CBaseAnimating *GetHands();
+    void SetHands( CBaseAnimating *pHandsModel );
+
+   public:
     void HideViewModels( void );
     void DestroyViewModels( void );
 
@@ -446,7 +456,7 @@ class CBasePlayer : public CBaseCombatCharacter
     }
 
     // View model prediction setup
-    void CalcView( Vector &eyeOrigin, QAngle &eyeAngles, float &zNear, float &zFar, float &fov );
+    virtual void CalcView( CViewSetup &viewSetup );
 
     // Handle view smoothing when going up stairs
     void SmoothViewOnStairs( Vector &eyeOrigin );
@@ -476,7 +486,7 @@ class CBasePlayer : public CBaseCombatCharacter
     // Weapon stuff
     virtual Vector Weapon_ShootPosition();
     virtual bool Weapon_CanUse( CBaseCombatWeapon *pWeapon );
-    virtual void Weapon_Equip( CBaseCombatWeapon *pWeapon );
+    virtual void Weapon_Equip( CBaseCombatWeapon *pWeapon, bool bGiveAmmo = true );
     virtual void Weapon_Drop( CBaseCombatWeapon *pWeapon, const Vector *pvecTarget /* = NULL */, const Vector *pVelocity /* = NULL */ );
     virtual bool Weapon_Switch( CBaseCombatWeapon *pWeapon, int viewmodelindex = 0 );  // Switch to given weapon if has ammo (false if failed)
     virtual void Weapon_SetLast( CBaseCombatWeapon *pWeapon );
@@ -512,7 +522,12 @@ class CBasePlayer : public CBaseCombatCharacter
     virtual surfacedata_t *GetLadderSurface( const Vector &origin );
 
     virtual void SetFlashlightEnabled( bool bState ){};
-    virtual int FlashlightIsOn( void )
+    virtual bool GetFlashlightEnabled() const
+    {
+        return false;
+    }
+
+    virtual bool FlashlightIsOn( void )
     {
         return false;
     }
@@ -661,6 +676,7 @@ class CBasePlayer : public CBaseCombatCharacter
     virtual void PickupObject( CBaseEntity *pObject, bool bLimitMassAndSize = true ) {}
     virtual void ForceDropOfCarriedPhysObjects( CBaseEntity *pOnlyIfHoldindThis = NULL ) {}
     virtual float GetHeldObjectMass( IPhysicsObject *pHeldObject );
+    virtual CBaseEntity *GetHeldObject( void );
 
     void CheckSuitUpdate();
     void SetSuitUpdate( const char *name, int fgroup, int iNoRepeat );
@@ -852,10 +868,6 @@ class CBasePlayer : public CBaseCombatCharacter
     {
         return m_fInitHUD;
     }
-    float MaxSpeed() const
-    {
-        return m_flMaxspeed;
-    }
     Activity GetActivity() const
     {
         return m_Activity;
@@ -936,9 +948,90 @@ class CBasePlayer : public CBaseCombatCharacter
     }
     virtual void EquipSuit( bool bPlayEffects = true );
     virtual void RemoveSuit( void );
+
     void SetMaxSpeed( float flMaxSpeed )
     {
         m_flMaxspeed = flMaxSpeed;
+    }
+    float GetMaxSpeed() const
+    {
+        return m_flMaxspeed;
+    }
+
+    void SetWalkSpeed( float flSpeed )
+    {
+        m_flWalkSpeed = flSpeed;
+    }
+    float GetWalkSpeed( void )
+    {
+        return m_flWalkSpeed;
+    }
+
+    void SetNormalSpeed( float flSpeed )
+    {
+        m_flNormalSpeed = flSpeed;
+    }
+    float GetNormalSpeed( void )
+    {
+        return m_flNormalSpeed;
+    }
+
+    void SetRunSpeed( float flSpeed )
+    {
+        m_flRunSpeed = flSpeed;
+    }
+    float GetRunSpeed( void )
+    {
+        return m_flRunSpeed;
+    }
+
+    void SetLadderClimbSpeed( float flSpeed )
+    {
+        m_flLadderClimbSpeed = flSpeed;
+    }
+    float GetLadderClimbSpeed( void )
+    {
+        return m_flLadderClimbSpeed;
+    }
+
+    void SetCrouchWalkFraction( float flSpeed )
+    {
+        m_flCrouchWalkFraction = flSpeed;
+    }
+    float GetCrouchWalkFraction( void )
+    {
+        return m_flCrouchWalkFraction;
+    }
+
+    void SetJumpPower( float flPower )
+    {
+        m_flJumpPower = flPower;
+    }
+    float GetJumpPower( void )
+    {
+        return m_flJumpPower;
+    }
+
+    // Experiment; Note that this issue should be fixed in our implementation: https://github.com/Facepunch/garrysmod-issues/issues/2722
+    void SetDuckSpeedInMilliseconds( float flSpeed )
+    {
+        Assert( flSpeed >= 0.0f );
+
+        m_flDuckSpeed = flSpeed;
+    }
+    float GetDuckSpeedInMilliseconds( void )
+    {
+        return m_flDuckSpeed;
+    }
+    void SetUnDuckFraction( float flSpeed )
+    {
+        Assert( flSpeed >= 0.0f && flSpeed <= 1.0f );
+
+        m_flUnDuckFraction = flSpeed;
+    }
+    float GetUnDuckFraction( void )
+    {
+        return m_flUnDuckFraction;
     }
 
     void NotifyNearbyRadiationSource( float flRange );
@@ -958,9 +1051,9 @@ class CBasePlayer : public CBaseCombatCharacter
 
     void AllowImmediateDecalPainting();
 
-    // Suicide...
     virtual void CommitSuicide( bool bExplode = false, bool bForce = false );
     virtual void CommitSuicide( const Vector &vecForce, bool bExplode = false, bool bForce = false );
+    virtual void KillSilent();
 
     // For debugging...
     void ForceOrigin( const Vector &vecOrigin );
@@ -977,6 +1070,7 @@ class CBasePlayer : public CBaseCombatCharacter
 
     bool IsPredictingWeapons( void ) const;
     int CurrentCommandNumber() const;
+    int LastUserCommandNumber() const;
     const CUserCmd *GetCurrentUserCommand() const;
     int GetLockViewanglesTickNumber() const
     {
@@ -1053,6 +1147,7 @@ class CBasePlayer : public CBaseCombatCharacter
     // Steam handling
     bool GetSteamID( CSteamID *pID );
     uint64 GetSteamIDAsUInt64( void );
+    virtual uint GetUniqueID();
 #endif
 
     int GetRemainingMovementTicksForUserCmdProcessing() const
@@ -1199,10 +1294,12 @@ class CBasePlayer : public CBaseCombatCharacter
     float m_flLastObjectiveTime;  // Last curtime player touched/killed something the gamemode considers an objective
 
    protected:
-    void CalcPlayerView( Vector &eyeOrigin, QAngle &eyeAngles, float &fov );
-    void CalcVehicleView( IServerVehicle *pVehicle, Vector &eyeOrigin, QAngle &eyeAngles, float &zNear, float &zFar, float &fov );
+    void CalcPlayerView( CViewSetup &viewSetup, bool &bForceDrawLocalPlayer );
+    void CalcVehicleView( IServerVehicle *pVehicle, CViewSetup &viewSetup, bool &bForceDrawLocalPlayer );
     void CalcObserverView( Vector &eyeOrigin, QAngle &eyeAngles, float &fov );
     void CalcViewModelView( const Vector &eyeOrigin, const QAngle &eyeAngles );
+
+    bool m_bCalcViewForceDrawPlayer;
 
     virtual void Internal_HandleMapEvent( inputdata_t &inputdata ) {}
 
@@ -1215,6 +1312,8 @@ class CBasePlayer : public CBaseCombatCharacter
     Vector m_vecCameraPVSOrigin;
 
     CNetworkHandle( CBaseEntity, m_hUseEntity );  // the player is currently controlling this entity because of +USE latched, NULL if no entity
+
+    CNetworkHandle( CBaseEntity, m_hHandsEntity );
 
     int m_iTrain;  // Train control position
 
@@ -1371,7 +1470,17 @@ class CBasePlayer : public CBaseCombatCharacter
 
    private:
     // Replicated to all clients
-    CNetworkVar( float, m_flMaxspeed );
+    CNetworkVar( float, m_flMaxspeed );  // Current maximum speed
+
+    // Values to set m_flMaxspeed to when walking slowly, normally, and running.
+    CNetworkVar( float, m_flWalkSpeed );
+    CNetworkVar( float, m_flNormalSpeed );
+    CNetworkVar( float, m_flRunSpeed );
+    CNetworkVar( float, m_flLadderClimbSpeed );
+    CNetworkVar( float, m_flCrouchWalkFraction );
+    CNetworkVar( float, m_flJumpPower );
+    CNetworkVar( float, m_flDuckSpeed );
+    CNetworkVar( float, m_flUnDuckFraction );
 
     // Not transmitted
     float m_flWaterJumpTime;  // used to be called teleport_time
@@ -1542,6 +1651,9 @@ class CBasePlayer : public CBaseCombatCharacter
 
     bool m_autoKickDisabled;
 
+#if defined( LUA_SDK )
+   public:
+#endif
     struct StepSoundCache_t
     {
         StepSoundCache_t()
@@ -1552,6 +1664,9 @@ class CBasePlayer : public CBaseCombatCharacter
     // One for left and one for right side of step
     StepSoundCache_t m_StepSoundCache[2];
 
+#if defined( LUA_SDK )
+   private:
+#endif
     CUtlLinkedList< CPlayerSimInfo > m_vecPlayerSimInfo;
     CUtlLinkedList< CPlayerCmdInfo > m_vecPlayerCmdInfo;
 
@@ -1659,6 +1774,11 @@ inline const CUserCmd *CBasePlayer::GetCurrentUserCommand() const
 {
     Assert( m_pCurrentCommand );
     return m_pCurrentCommand;
+}
+
+inline int CBasePlayer::LastUserCommandNumber() const
+{
+    return m_LastCmd.command_number;
 }
 
 inline IServerVehicle *CBasePlayer::GetVehicle()
@@ -1904,5 +2024,7 @@ enum
 
 class CSendProxyRecipients;
 void *SendProxy_SendNonLocalDataTable( const SendProp *pProp, const void *pStruct, const void *pVarData, CSendProxyRecipients *pRecipients, int objectID );
+
+void SendProxy_String_tToString( const SendProp *pProp, const void *pStruct, const void *pData, DVariant *pOut, int iElement, int objectID );
 
 #endif  // PLAYER_H

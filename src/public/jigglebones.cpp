@@ -76,7 +76,12 @@ void CJiggleBones::BuildJiggleTransformations( int boneIndex, float currenttime,
 
     // if frames have been skipped since our last update, we were likely
     // disabled and re-enabled, so re-init
+    // Experiment; TODO: This #if was added in Alien Swarm, its not in TF2 SDK. Do we need it?
+#if defined( CLIENT_DLL ) || defined( GAME_DLL )
+    float timeTolerance = 1.2f * gpGlobals->frametime;
+#else
     float timeTolerance = 0.5f;
+#endif
 
     if ( currenttime - data->lastUpdate > timeTolerance )
     {
@@ -564,189 +569,6 @@ void CJiggleBones::BuildJiggleTransformations( int boneIndex, float currenttime,
         // update bone position
         MatrixSetColumn( data->basePos, 3, boneMX );
     }
-    else if ( jiggleInfo->flags & JIGGLE_IS_BOING )
-    {
-        // estimate velocity
-        Vector vel = goalBasePosition - data->lastBoingPos;
-
-#ifdef CLIENT_DLL
-        if ( cl_jiggle_bone_debug.GetBool() )
-        {
-            if ( debugoverlay )
-            {
-                debugoverlay->AddLineOverlay( data->lastBoingPos, goalBasePosition, 0, 128, ( gpGlobals->framecount & 0x1 ) ? 0 : 200, true, 999.9f );
-            }
-        }
-#endif
-
-        data->lastBoingPos = goalBasePosition;
-
-        float speed = vel.NormalizeInPlace();
-        if ( speed < 0.00001f )
-        {
-            vel = Vector( 0, 0, 1.0f );
-            speed = 0.0f;
-        }
-        else
-        {
-            speed /= deltaT;
-        }
-
-        data->boingTime += deltaT;
-
-        // if velocity changed a lot, we impacted and should *boing*
-        const float minSpeed = 5.0f;  // 15.0f;
-        const float minReBoingTime = 0.5f;
-        if ( ( speed > minSpeed || data->boingSpeed > minSpeed ) && data->boingTime > minReBoingTime )
-        {
-            if ( fabs( data->boingSpeed - speed ) > jiggleInfo->boingImpactSpeed || DotProduct( vel, data->boingVelDir ) < jiggleInfo->boingImpactAngle )
-            {
-                data->boingTime = 0.0f;
-                data->boingDir = -vel;
-
-#ifdef CLIENT_DLL
-                if ( cl_jiggle_bone_debug.GetBool() )
-                {
-                    if ( debugoverlay )
-                    {
-                        debugoverlay->AddLineOverlay( goalBasePosition, goalBasePosition + 5.0f * data->boingDir, 255, 255, 0, true, 999.9f );
-                        debugoverlay->AddLineOverlay( goalBasePosition, goalBasePosition + Vector( 0.1, 0, 0 ), 128, 128, 0, true, 999.9f );
-                        debugoverlay->AddLineOverlay( goalBasePosition, goalBasePosition + Vector( 0, 0.1, 0 ), 128, 128, 0, true, 999.9f );
-                        debugoverlay->AddLineOverlay( goalBasePosition, goalBasePosition + Vector( 0, 0, 0.1 ), 128, 128, 0, true, 999.9f );
-                    }
-                }
-#endif
-            }
-        }
-
-        data->boingVelDir = vel;
-        data->boingSpeed = speed;
-
-        float damping = 1.0f - ( jiggleInfo->boingDampingRate * data->boingTime );
-        if ( damping < 0.01f )
-        {
-            // boing has entirely damped out
-            boneMX = goalMX;
-        }
-        else
-        {
-            damping *= damping;
-            damping *= damping;
-
-            float flex = jiggleInfo->boingAmplitude * cos( jiggleInfo->boingFrequency * data->boingTime ) * damping;
-
-            float squash = 1.0f + flex;
-            float stretch = 1.0f - flex;
-
-            boneMX[0][0] = goalLeft.x;
-            boneMX[1][0] = goalLeft.y;
-            boneMX[2][0] = goalLeft.z;
-
-            boneMX[0][1] = goalUp.x;
-            boneMX[1][1] = goalUp.y;
-            boneMX[2][1] = goalUp.z;
-
-            boneMX[0][2] = goalForward.x;
-            boneMX[1][2] = goalForward.y;
-            boneMX[2][2] = goalForward.z;
-
-            boneMX[0][3] = 0.0f;
-            boneMX[1][3] = 0.0f;
-            boneMX[2][3] = 0.0f;
-
-            // build transform into "boing space", where Z is along primary boing axis
-            Vector boingSide;
-            if ( fabs( data->boingDir.x ) < 0.9f )
-            {
-                boingSide = CrossProduct( data->boingDir, Vector( 1.0f, 0, 0 ) );
-            }
-            else
-            {
-                boingSide = CrossProduct( data->boingDir, Vector( 0, 0, 1.0f ) );
-            }
-            boingSide.NormalizeInPlace();
-
-            Vector boingOtherSide = CrossProduct( data->boingDir, boingSide );
-
-            matrix3x4_t xfrmToBoingCoordsMX;
-
-            xfrmToBoingCoordsMX[0][0] = boingSide.x;
-            xfrmToBoingCoordsMX[0][1] = boingSide.y;
-            xfrmToBoingCoordsMX[0][2] = boingSide.z;
-
-            xfrmToBoingCoordsMX[1][0] = boingOtherSide.x;
-            xfrmToBoingCoordsMX[1][1] = boingOtherSide.y;
-            xfrmToBoingCoordsMX[1][2] = boingOtherSide.z;
-
-            xfrmToBoingCoordsMX[2][0] = data->boingDir.x;
-            xfrmToBoingCoordsMX[2][1] = data->boingDir.y;
-            xfrmToBoingCoordsMX[2][2] = data->boingDir.z;
-
-            xfrmToBoingCoordsMX[0][3] = 0.0f;
-            xfrmToBoingCoordsMX[1][3] = 0.0f;
-            xfrmToBoingCoordsMX[2][3] = 0.0f;
-
-            // build squash and stretch transform in "boing space"
-            matrix3x4_t boingMX;
-
-            boingMX[0][0] = squash;
-            boingMX[1][0] = 0.0f;
-            boingMX[2][0] = 0.0f;
-
-            boingMX[0][1] = 0.0f;
-            boingMX[1][1] = squash;
-            boingMX[2][1] = 0.0f;
-
-            boingMX[0][2] = 0.0f;
-            boingMX[1][2] = 0.0f;
-            boingMX[2][2] = stretch;
-
-            boingMX[0][3] = 0.0f;
-            boingMX[1][3] = 0.0f;
-            boingMX[2][3] = 0.0f;
-
-            // transform back from boing space (inverse is transpose since orthogonal)
-            matrix3x4_t xfrmFromBoingCoordsMX;
-            xfrmFromBoingCoordsMX[0][0] = xfrmToBoingCoordsMX[0][0];
-            xfrmFromBoingCoordsMX[1][0] = xfrmToBoingCoordsMX[0][1];
-            xfrmFromBoingCoordsMX[2][0] = xfrmToBoingCoordsMX[0][2];
-
-            xfrmFromBoingCoordsMX[0][1] = xfrmToBoingCoordsMX[1][0];
-            xfrmFromBoingCoordsMX[1][1] = xfrmToBoingCoordsMX[1][1];
-            xfrmFromBoingCoordsMX[2][1] = xfrmToBoingCoordsMX[1][2];
-
-            xfrmFromBoingCoordsMX[0][2] = xfrmToBoingCoordsMX[2][0];
-            xfrmFromBoingCoordsMX[1][2] = xfrmToBoingCoordsMX[2][1];
-            xfrmFromBoingCoordsMX[2][2] = xfrmToBoingCoordsMX[2][2];
-
-            xfrmFromBoingCoordsMX[0][3] = 0.0f;
-            xfrmFromBoingCoordsMX[1][3] = 0.0f;
-            xfrmFromBoingCoordsMX[2][3] = 0.0f;
-
-            // put it all together
-            matrix3x4_t xfrmMX;
-            MatrixMultiply( xfrmToBoingCoordsMX, boingMX, xfrmMX );
-            MatrixMultiply( xfrmMX, xfrmFromBoingCoordsMX, xfrmMX );
-            MatrixMultiply( boneMX, xfrmMX, boneMX );
-
-#ifdef CLIENT_DLL
-            if ( cl_jiggle_bone_debug.GetBool() )
-            {
-                float dT = 0.01f;
-                if ( debugoverlay )
-                {
-                    debugoverlay->AddLineOverlay( goalBasePosition, goalBasePosition + 50.0f * data->boingDir, 255, 255, 0, true, dT );
-                    debugoverlay->AddLineOverlay( goalBasePosition, goalBasePosition + 50.0f * boingSide, 255, 0, 255, true, dT );
-                    debugoverlay->AddLineOverlay( goalBasePosition, goalBasePosition + 50.0f * boingOtherSide, 0, 255, 255, true, dT );
-                }
-            }
-#endif
-
-            boneMX[0][3] = goalBasePosition.x;
-            boneMX[1][3] = goalBasePosition.y;
-            boneMX[2][3] = goalBasePosition.z;
-        }
-    }
     else if ( !( jiggleInfo->flags & ( JIGGLE_IS_FLEXIBLE | JIGGLE_IS_RIGID ) ) )
     {
         // no flex at all - just use goal matrix
@@ -850,14 +672,6 @@ void CJiggleBones::BuildJiggleTransformations( int boneIndex, float currenttime,
                                               255,
                                               true,
                                               dT );
-            }
-        }
-
-        if ( jiggleInfo->flags & JIGGLE_IS_BOING )
-        {
-            if ( cl_jiggle_bone_debug.GetInt() > 2 )
-            {
-                DevMsg( "  boingSpeed = %3.2f, boingVelDir( %3.2f, %3.2f, %3.2f )\n", data->boingVelDir.Length() / deltaT, data->boingVelDir.x, data->boingVelDir.y, data->boingVelDir.z );
             }
         }
     }

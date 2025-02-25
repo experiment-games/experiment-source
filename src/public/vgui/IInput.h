@@ -188,4 +188,16 @@ class IInput : public IBaseInterface
 
 }  // namespace vgui
 
+void ScreenToWorld(
+    int mousex,
+    int mousey,
+    float fov,
+    const QAngle &vecRenderAngles,
+    Vector &vecPickingRay,
+    int nScreenWidth = -1,
+    int nScreenHeight = -1 );
+
+Vector ScreenToWorld( int mousex,
+                      int mousey );
+
 #endif  // VGUI_IINPUT_H

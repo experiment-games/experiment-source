@@ -1,4 +1,4 @@
-//========= Copyright Valve Corporation, All rights reserved. ============//
+//===== Copyright © 1996-2008, Valve Corporation, All rights reserved. ======//
 //
 // Purpose:
 //
@@ -66,26 +66,29 @@ Studio models are position independent, so the cache manager can move them.
 ==============================================================================
 */
 
-#define STUDIO_VERSION 48
+#define STUDIO_VERSION 49
+
+struct studiohdr_t;
 
 #ifndef _XBOX
 #define MAXSTUDIOTRIANGLES 65536  // TODO: tune this
 #define MAXSTUDIOVERTS 65536      // TODO: tune this
 #define MAXSTUDIOFLEXVERTS 10000  // max number of verts that can be flexed per mesh.  TODO: tune this
 #else
-#define MAXSTUDIOTRIANGLES 25000
-#define MAXSTUDIOVERTS 10000
-#define MAXSTUDIOFLEXVERTS 1000
+#define MAXSTUDIOTRIANGLES 65536  //
+#define MAXSTUDIOVERTS 32768      // These numbers save memory in CCachedRenderData, but restrict usable model sizes on 360
+#define MAXSTUDIOFLEXVERTS 4096   //
 #endif
 #define MAXSTUDIOSKINS 32       // total textures
-#define MAXSTUDIOBONES 128      // total bones actually used
+#define MAXSTUDIOBONES 256      // total bones actually used
 #define MAXSTUDIOFLEXDESC 1024  // maximum number of low level flexes (actual morph targets)
 #define MAXSTUDIOFLEXCTRL 96    // maximum number of flexcontrollers (input sliders)
 #define MAXSTUDIOPOSEPARAM 24
 #define MAXSTUDIOBONECTRLS 4
 #define MAXSTUDIOANIMBLOCKS 256
 
-#define MAXSTUDIOBONEBITS 7  // NOTE: MUST MATCH MAXSTUDIOBONES
+// Experiment: upped to 8 from 7 to support increase of MAXSTUDIOBONES
+#define MAXSTUDIOBONEBITS 8  // NOTE: BITS MUST FIT MAXSTUDIOBONES VALUE
 
 // NOTE!!! : Changing this number also changes the vtx file format!!!!!
 #define MAX_NUM_BONES_PER_VERT 3
@@ -104,6 +107,8 @@ struct mstudiodata_t
 #define STUDIO_PROC_AIMATBONE 3
 #define STUDIO_PROC_AIMATATTACH 4
 #define STUDIO_PROC_JIGGLE 5
+#define STUDIO_PROC_TWIST_MASTER 6
+#define STUDIO_PROC_TWIST_SLAVE 7  // Multiple twist bones are computed at once for the same parent/child combo so TWIST_NULL do nothing
 
 // If you want to embed a pointer into one of the structures that is serialized, use this class! It will ensure that the pointers consume the
 // right amount of space and work correctly across 32 and 64 bit. It also makes sure that there is no surprise about how large the structure
@@ -207,7 +212,6 @@ struct mstudioquatinterpbone_t
 #define JIGGLE_HAS_ANGLE_CONSTRAINT 0x10
 #define JIGGLE_HAS_LENGTH_CONSTRAINT 0x20
 #define JIGGLE_HAS_BASE_SPRING 0x40
-#define JIGGLE_IS_BOING 0x80  // simple squash and stretch sinusoid "boing"
 
 struct mstudiojigglebone_t
 {
@@ -256,13 +260,6 @@ struct mstudiojigglebone_t
     float baseMaxForward;
     float baseForwardFriction;
 
-    // boing
-    float boingImpactSpeed;
-    float boingImpactAngle;
-    float boingDampingRate;
-    float boingFrequency;
-    float boingAmplitude;
-
    private:
     // No copy constructors allowed
     // mstudiojigglebone_t(const mstudiojigglebone_t& vOther);
@@ -283,6 +280,52 @@ struct mstudioaimatbone_t
    private:
     // No copy constructors allowed
     mstudioaimatbone_t( const mstudioaimatbone_t &vOther );
+};
+
+//-----------------------------------------------------------------------------
+//
+//-----------------------------------------------------------------------------
+struct mstudiotwistbonetarget_t
+{
+    DECLARE_BYTESWAP_DATADESC();
+
+    int m_nBone;
+    float m_flWeight;
+    Vector m_vBaseTranslate;
+    Quaternion m_qBaseRotation;
+
+    mstudiotwistbonetarget_t() {}
+
+   private:
+    // No copy constructors allowed
+    mstudiotwistbonetarget_t( const mstudiotwistbonetarget_t &vOther );
+};
+
+//-----------------------------------------------------------------------------
+//
+//-----------------------------------------------------------------------------
+struct mstudiotwistbone_t
+{
+    DECLARE_BYTESWAP_DATADESC();
+
+    bool m_bInverse;     // False: Apply child rotation to twist targets True: Apply parent rotation to twist targets
+    Vector m_vUpVector;  // In parent space, projected into plane defined by vector between parent & child
+    int m_nParentBone;
+    Quaternion m_qBaseInv;  // The base rotation of the parent, used if m_bInverse is true
+    int m_nChildBone;
+
+    int m_nTargetCount;
+    int m_nTargetIndex;
+    inline mstudiotwistbonetarget_t *pTarget( int i ) const
+    {
+        return ( mstudiotwistbonetarget_t * )( ( ( byte * )this ) + m_nTargetIndex ) + i;
+    }
+
+    mstudiotwistbone_t() {}
+
+   private:
+    // No copy constructors allowed
+    mstudiotwistbone_t( const mstudiotwistbone_t &vOther );
 };
 
 // bones
@@ -323,9 +366,14 @@ struct mstudiobone_t
     {
         return ( ( char * )this ) + surfacepropidx;
     }
-    int contents;  // See BSPFlags.h for the contents flags
+    inline int GetSurfaceProp( void ) const
+    {
+        return surfacepropLookup;
+    }
 
-    int unused[8];  // remove as appropriate
+    int contents;           // See BSPFlags.h for the contents flags
+    int surfacepropLookup;  // this index must be cached by the loader, not saved in the file
+    int unused[7];          // remove as appropriate
 
     mstudiobone_t() = default;
 
@@ -503,8 +551,9 @@ struct mstudioboneflexdriver_t
 #define BONE_TYPE_MASK 0x00F00000
 #define BONE_FIXED_ALIGNMENT 0x00100000  // bone can't spin 360 degrees, all interpolation is normalized around a fixed orientation
 
-#define BONE_HAS_SAVEFRAME_POS 0x00200000  // Vector48
-#define BONE_HAS_SAVEFRAME_ROT 0x00400000  // Quaternion64
+#define BONE_HAS_SAVEFRAME_POS 0x00200000    // Vector48
+#define BONE_HAS_SAVEFRAME_ROT64 0x00400000  // Quaternion64
+#define BONE_HAS_SAVEFRAME_ROT32 0x00800000  // Quaternion32 // Experiment; TODO: From Alien Swarm, not implemented yet
 
 // bone controllers
 struct mstudiobonecontroller_t
@@ -568,6 +617,7 @@ struct mstudiomodelgrouplookup_t
 };
 
 // events
+// NOTE: If you modify this struct you MUST also modify mstudioevent_for_client_server_t in npcevent.h!!!
 struct mstudioevent_t
 {
     DECLARE_BYTESWAP_DATADESC();
@@ -705,6 +755,16 @@ struct mstudioikrule_t
     mstudioikrule_t( const mstudioikrule_t &vOther );
 };
 
+struct mstudioikrulezeroframe_t
+{
+    short chain;
+    short slot;
+    float16 start;  // beginning of influence
+    float16 peak;   // start of full influence
+    float16 tail;   // end of full influence
+    float16 end;    // end of all influence
+};
+
 struct mstudioiklock_t
 {
     DECLARE_BYTESWAP_DATADESC();
@@ -769,8 +829,8 @@ struct mstudioanim_valueptr_t
 #define STUDIO_ANIM_DELTA 0x10
 #define STUDIO_ANIM_RAWROT2 0x20  // Quaternion64
 
-// per bone per animation DOF and weight pointers
-struct mstudioanim_t
+// per bone per animation DOF and weight pointers, RLE encoded
+struct mstudio_rle_anim_t
 {
     DECLARE_BYTESWAP_DATADESC();
     byte bone;
@@ -779,7 +839,7 @@ struct mstudioanim_t
     // valid for animating data only
     inline byte *pData( void ) const
     {
-        return ( ( ( byte * )this ) + sizeof( struct mstudioanim_t ) );
+        return ( ( ( byte * )this ) + sizeof( struct mstudio_rle_anim_t ) );
     };
     inline mstudioanim_valueptr_t *pRotV( void ) const
     {
@@ -805,13 +865,45 @@ struct mstudioanim_t
     };
 
     short nextoffset;
-    inline mstudioanim_t *pNext( void ) const
+    inline mstudio_rle_anim_t *pNext( void ) const
     {
         if ( nextoffset != 0 )
-            return ( mstudioanim_t * )( ( ( byte * )this ) + nextoffset );
+            return ( mstudio_rle_anim_t * )( ( ( byte * )this ) + nextoffset );
         else
             return NULL;
     };
+};
+#define mstudioanim_t mstudio_rle_anim_t
+
+#define STUDIO_FRAME_RAWPOS 0x01       // Vector48 in constants
+#define STUDIO_FRAME_RAWROT 0x02       // Quaternion48 in constants
+#define STUDIO_FRAME_ANIMPOS 0x04      // Vector48 in framedata
+#define STUDIO_FRAME_ANIMROT 0x08      // Quaternion48 in framedata
+#define STUDIO_FRAME_FULLANIMPOS 0x10  // Vector in framedata
+
+struct mstudio_frame_anim_t
+{
+    DECLARE_BYTESWAP_DATADESC();
+
+    inline byte *pBoneFlags( void ) const
+    {
+        return ( ( ( byte * )this ) + sizeof( struct mstudio_frame_anim_t ) );
+    };
+
+    int constantsoffset;
+    inline byte *pConstantData( void ) const
+    {
+        return ( ( ( byte * )this ) + constantsoffset );
+    };
+
+    int frameoffset;
+    int framelength;
+    inline byte *pFrameData( int iFrame ) const
+    {
+        return ( ( ( byte * )this ) + frameoffset + iFrame * framelength );
+    };
+
+    int unused[3];
 };
 
 struct mstudiomovement_t
@@ -877,16 +969,25 @@ struct mstudioanimdesc_t
         return ( mstudiomovement_t * )( ( ( byte * )this ) + movementindex ) + i;
     };
 
-    int unused1[6];  // remove as appropriate (and zero if loading older versions)
+    int ikrulezeroframeindex;
+    mstudioikrulezeroframe_t *pIKRuleZeroFrame( int i ) const
+    {
+        if ( ikrulezeroframeindex )
+            return ( mstudioikrulezeroframe_t * )( ( ( byte * )this ) + ikrulezeroframeindex ) + i;
+        else
+            return NULL;
+    };
+
+    int unused1[5];  // remove as appropriate (and zero if loading older versions)
 
     int animblock;
-    int animindex;                                               // non-zero when anim data isn't in sections
-    mstudioanim_t *pAnimBlock( int block, int index ) const;     // returns pointer to a specific anim block (local or external)
-    mstudioanim_t *pAnim( int *piFrame, float &flStall ) const;  // returns pointer to data and new frame index
-    mstudioanim_t *pAnim( int *piFrame ) const;                  // returns pointer to data and new frame index
+    int animindex;                                                    // non-zero when anim data isn't in sections
+    mstudio_rle_anim_t *pAnimBlock( int block, int index ) const;     // returns pointer to a specific anim block (local or external)
+    mstudio_rle_anim_t *pAnim( int *piFrame, float &flStall ) const;  // returns pointer to data and new frame index
+    mstudio_rle_anim_t *pAnim( int *piFrame ) const;                  // returns pointer to data and new frame index
 
     int numikrules;
-    int ikruleindex;           // non-zero when IK data is stored in the mdl
+    int ikruleindex;           // non-zero when IK rule is stored in the mdl
     int animblockikruleindex;  // non-zero when IK data is stored in animblock file
     mstudioikrule_t *pIKRule( int i ) const;
 
@@ -1544,7 +1645,12 @@ struct mstudioikchain_t
 
 struct mstudioiface_t
 {
-    unsigned short a, b, c;  // Indices to vertices
+    mstudioiface_t()
+    {
+        a = b = c = d = 0xFFFF;
+    }
+
+    unsigned short a, b, c, d;  // Indices to vertices (If d is 0xFFFF, this is a triangle, else it's a quad)
 };
 
 struct mstudiomodel_t;
@@ -1833,7 +1939,7 @@ enum studiomeshgroupflags_t
 };
 
 // ----------------------------------------------------------
-// runtime stuff
+// Runtime stuff
 // ----------------------------------------------------------
 
 struct studiomeshgroup_t
@@ -1844,8 +1950,9 @@ struct studiomeshgroup_t
     OptimizedModel::StripHeader_t *m_pStripData;
     unsigned short *m_pGroupIndexToMeshIndex;
     int m_NumVertices;
-    int *m_pUniqueTris;  // for performance measurements
+    int *m_pUniqueFaces;  // for performance measurements
     unsigned short *m_pIndices;
+    unsigned short *m_pTopologyIndices;
     bool m_MeshNeedsRestore;
     short m_ColorMeshID;
     IMorph *m_pMorph;
@@ -2047,7 +2154,7 @@ struct virtualmodel_t
     virtualgroup_t *pAnimGroup( int animation )
     {
         return &m_group[m_anim[animation].group];
-    }  // Note: user must manage mutex for this
+    };  // Note: user must manage mutex for this
     virtualgroup_t *pSeqGroup( int sequence )
     {
         // Check for out of range access that is causing crashes on some servers.
@@ -2060,7 +2167,7 @@ struct virtualmodel_t
             return 0;
         }
         return &m_group[m_seq[sequence].group];
-    }  // Note: user must manage mutex for this
+    };  // Note: user must manage mutex for this
 
     CThreadFastMutex m_Lock;
 
@@ -2183,15 +2290,35 @@ struct thinModelVertices_t
         float *pBaseWeight = m_boneWeights + vertIndex * numStoredWeights;
         char *pBaseIndex = m_boneIndices + vertIndex * m_numBoneInfluences;
         float sum = 0.0f;
+        // TODO: unroll this loop? It's only three. We could use a switch
+        // and code it explicitly for the various possible m_numBoneInfluences
+        // which would improve scheduling but bloat code.
         for ( int i = 0; i < MAX_NUM_BONES_PER_VERT; i++ )
         {
+            float weight;
             if ( i < ( m_numBoneInfluences - 1 ) )
-                pBoneWeights->weight[i] = pBaseWeight[i];
+            {
+                weight = pBaseWeight[i];
+                sum += weight;
+            }
             else
-                pBoneWeights->weight[i] = 1.0f - sum;
+            {
+                weight = 1.0f - sum;
+                sum = 1.0f;
+            }
+
+            pBoneWeights->weight[i] = weight;
+            pBoneWeights->bone[i] = ( i < m_numBoneInfluences ) ? pBaseIndex[i] : 0;
+
+            /*
+            if ( i < ( m_numBoneInfluences - 1 ) )
+              pBoneWeights->weight[i] = pBaseWeight[i];
+            else
+              pBoneWeights->weight[i] = 1.0f - sum;
             sum += pBoneWeights->weight[i];
 
             pBoneWeights->bone[i] = ( i < m_numBoneInfluences ) ? pBaseIndex[i] : 0;
+            */
         }
 
         // Treat 'zero weights' as '100% binding to bone zero':
@@ -2206,6 +2333,37 @@ struct thinModelVertices_t
 };
 
 // ----------------------------------------------------------
+// Studio Model Stream Data File
+// ----------------------------------------------------------
+
+// little-endian "IDSS"
+#define MODEL_STREAM_FILE_ID ( ( 'S' << 24 ) + ( 'S' << 16 ) + ( 'D' << 8 ) + 'I' )
+#define MODEL_STREAM_FILE_VERSION 1
+
+struct vertexStreamFileHeader_t
+{
+    DECLARE_BYTESWAP_DATADESC();
+    int id;              // MODEL_STREAM_FILE_ID
+    int version;         // MODEL_STREAM_FILE_VERSION
+    int checksum;        // same as studiohdr_t, ensures sync
+    int flags;           // flags
+    int numVerts;        // number of vertices
+    int uv2StreamStart;  // offset from base to uv2 stream
+    int uv2ElementSize;  // size of each uv2 element
+    int pad;             // pad
+
+   public:
+    // Accessor to uv2 stream
+    const void *GetStreamUv2() const
+    {
+        if ( ( id == MODEL_STREAM_FILE_ID ) && ( uv2StreamStart != 0 ) )
+            return ( void * )( uv2StreamStart + ( byte * )this );
+        else
+            return NULL;
+    }
+};
+
+// ----------------------------------------------------------
 // Studio Model Vertex Data File
 // Position independent flat data for cache manager
 // ----------------------------------------------------------
@@ -2215,6 +2373,8 @@ struct thinModelVertices_t
 #define MODEL_VERTEX_FILE_VERSION 4
 // this id (IDCV) is used once the vertex data has been compressed (see CMDLCache::CreateThinVertexes)
 #define MODEL_VERTEX_FILE_THIN_ID ( ( 'V' << 24 ) + ( 'C' << 16 ) + ( 'D' << 8 ) + 'I' )
+// this id (IDDV) is used once the vertex data has been discarded (see CMDLCache::CreateNullVertexes)
+#define MODEL_VERTEX_FILE_NULL_ID ( ( 'V' << 24 ) + ( 'D' << 16 ) + ( 'D' << 8 ) + 'I' )
 
 struct vertexFileHeader_t
 {
@@ -2296,74 +2456,83 @@ struct vertexFileFixup_t
 };
 
 // This flag is set if no hitbox information was specified
-#define STUDIOHDR_FLAGS_AUTOGENERATED_HITBOX 0x00000001
+#define STUDIOHDR_FLAGS_AUTOGENERATED_HITBOX ( 1 << 0 )
 
 // NOTE:  This flag is set at loadtime, not mdl build time so that we don't have to rebuild
 // models when we change materials.
-#define STUDIOHDR_FLAGS_USES_ENV_CUBEMAP 0x00000002
+#define STUDIOHDR_FLAGS_USES_ENV_CUBEMAP ( 1 << 1 )
 
 // Use this when there are translucent parts to the model but we're not going to sort it
-#define STUDIOHDR_FLAGS_FORCE_OPAQUE 0x00000004
+#define STUDIOHDR_FLAGS_FORCE_OPAQUE ( 1 << 2 )
 
 // Use this when we want to render the opaque parts during the opaque pass
 // and the translucent parts during the translucent pass
-#define STUDIOHDR_FLAGS_TRANSLUCENT_TWOPASS 0x00000008
+#define STUDIOHDR_FLAGS_TRANSLUCENT_TWOPASS ( 1 << 3 )
 
 // This is set any time the .qc files has $staticprop in it
 // Means there's no bones and no transforms
-#define STUDIOHDR_FLAGS_STATIC_PROP 0x00000010
+#define STUDIOHDR_FLAGS_STATIC_PROP ( 1 << 4 )
 
 // NOTE:  This flag is set at loadtime, not mdl build time so that we don't have to rebuild
 // models when we change materials.
-#define STUDIOHDR_FLAGS_USES_FB_TEXTURE 0x00000020
+#define STUDIOHDR_FLAGS_USES_FB_TEXTURE ( 1 << 5 )
 
 // This flag is set by studiomdl.exe if a separate "$shadowlod" entry was present
 //  for the .mdl (the shadow lod is the last entry in the lod list if present)
-#define STUDIOHDR_FLAGS_HASSHADOWLOD 0x00000040
+#define STUDIOHDR_FLAGS_HASSHADOWLOD ( 1 << 6 )
 
 // NOTE:  This flag is set at loadtime, not mdl build time so that we don't have to rebuild
 // models when we change materials.
-#define STUDIOHDR_FLAGS_USES_BUMPMAPPING 0x00000080
+#define STUDIOHDR_FLAGS_USES_BUMPMAPPING ( 1 << 7 )
 
 // NOTE:  This flag is set when we should use the actual materials on the shadow LOD
 // instead of overriding them with the default one (necessary for translucent shadows)
-#define STUDIOHDR_FLAGS_USE_SHADOWLOD_MATERIALS 0x00000100
+#define STUDIOHDR_FLAGS_USE_SHADOWLOD_MATERIALS ( 1 << 8 )
 
 // NOTE:  This flag is set when we should use the actual materials on the shadow LOD
 // instead of overriding them with the default one (necessary for translucent shadows)
-#define STUDIOHDR_FLAGS_OBSOLETE 0x00000200
+#define STUDIOHDR_FLAGS_OBSOLETE ( 1 << 9 )
 
-#define STUDIOHDR_FLAGS_UNUSED 0x00000400
+#define STUDIOHDR_FLAGS_UNUSED ( 1 << 10 )
 
 // NOTE:  This flag is set at mdl build time
-#define STUDIOHDR_FLAGS_NO_FORCED_FADE 0x00000800
+#define STUDIOHDR_FLAGS_NO_FORCED_FADE ( 1 << 11 )
 
 // NOTE:  The npc will lengthen the viseme check to always include two phonemes
-#define STUDIOHDR_FLAGS_FORCE_PHONEME_CROSSFADE 0x00001000
+#define STUDIOHDR_FLAGS_FORCE_PHONEME_CROSSFADE ( 1 << 12 )
 
 // This flag is set when the .qc has $constantdirectionallight in it
 // If set, we use constantdirectionallightdot to calculate light intensity
 // rather than the normal directional dot product
 // only valid if STUDIOHDR_FLAGS_STATIC_PROP is also set
-#define STUDIOHDR_FLAGS_CONSTANT_DIRECTIONAL_LIGHT_DOT 0x00002000
+#define STUDIOHDR_FLAGS_CONSTANT_DIRECTIONAL_LIGHT_DOT ( 1 << 13 )
 
 // Flag to mark delta flexes as already converted from disk format to memory format
-#define STUDIOHDR_FLAGS_FLEXES_CONVERTED 0x00004000
+#define STUDIOHDR_FLAGS_FLEXES_CONVERTED ( 1 << 14 )
 
 // Indicates the studiomdl was built in preview mode
-#define STUDIOHDR_FLAGS_BUILT_IN_PREVIEW_MODE 0x00008000
+#define STUDIOHDR_FLAGS_BUILT_IN_PREVIEW_MODE ( 1 << 15 )
 
 // Ambient boost (runtime flag)
-#define STUDIOHDR_FLAGS_AMBIENT_BOOST 0x00010000
+#define STUDIOHDR_FLAGS_AMBIENT_BOOST ( 1 << 16 )
 
 // Don't cast shadows from this model (useful on first-person models)
-#define STUDIOHDR_FLAGS_DO_NOT_CAST_SHADOWS 0x00020000
+#define STUDIOHDR_FLAGS_DO_NOT_CAST_SHADOWS ( 1 << 17 )
 
 // alpha textures should cast shadows in vrad on this model (ONLY prop_static!)
-#define STUDIOHDR_FLAGS_CAST_TEXTURE_SHADOWS 0x00040000
+#define STUDIOHDR_FLAGS_CAST_TEXTURE_SHADOWS ( 1 << 18 )
+
+// Model has a quad-only Catmull-Clark SubD cage
+#define STUDIOHDR_FLAGS_SUBDIVISION_SURFACE ( 1 << 19 )
 
 // flagged on load to indicate no animation events on this model
-#define STUDIOHDR_FLAGS_VERT_ANIM_FIXED_POINT_SCALE 0x00200000
+#define STUDIOHDR_FLAGS_NO_ANIM_EVENTS ( 1 << 20 )
+
+// If flag is set then studiohdr_t.flVertAnimFixedPointScale contains the
+// scale value for fixed point vert anim data, if not set then the
+// scale value is the default of 1.0 / 4096.0.  Regardless use
+// studiohdr_t::VertAnimFixedPointScale() to always retrieve the scale value
+#define STUDIOHDR_FLAGS_VERT_ANIM_FIXED_POINT_SCALE ( 1 << 21 )
 
 // NOTE! Next time we up the .mdl file format, remove studiohdr2_t
 // and insert all fields in this structure into studiohdr_t.
@@ -2665,6 +2834,10 @@ struct studiohdr_t
     {
         return ( ( char * )this ) + surfacepropindex;
     }
+    inline int GetSurfaceProp() const
+    {
+        return surfacepropLookup;
+    }
 
     // Key values
     int keyvalueindex;
@@ -2784,7 +2957,7 @@ struct studiohdr_t
         return ( flags & STUDIOHDR_FLAGS_VERT_ANIM_FIXED_POINT_SCALE ) ? flVertAnimFixedPointScale : 1.0f / 4096.0f;
     }
 
-    int unused3[1];
+    mutable int surfacepropLookup;  // this index must be cached by the loader, not saved in the file
 
     // FIXME: Remove when we up the model version. Move all fields of studiohdr2_t into studiohdr_t.
     int studiohdr2index;
@@ -3138,6 +3311,10 @@ class CStudioHdr
     {
         return m_pStudioHdr->pszSurfaceProp();
     };
+    inline int GetSurfaceProp() const
+    {
+        return m_pStudioHdr->surfacepropLookup;
+    }
 
     inline float mass() const
     {
@@ -3215,11 +3392,21 @@ class CStudioHdr
     float GetSequenceCycleRate( int iSequence );
 
     void RunFlexRules( const float *src, float *dest );
+    void RunFlexRulesOld( const float *src, float *dest );
+    void RunFlexRulesNew( const float *src, float *dest );
 
    public:
     inline int boneFlags( int iBone ) const
     {
         return m_boneFlags[iBone];
+    }
+    inline void setBoneFlags( int iBone, int flags )
+    {
+        m_boneFlags[iBone] |= flags;
+    }
+    inline void clearBoneFlags( int iBone, int flags )
+    {
+        m_boneFlags[iBone] &= ~flags;
     }
     inline int boneParent( int iBone ) const
     {
@@ -3705,21 +3892,24 @@ inline const mstudioflexcontroller_t *mstudioflexcontrollerui_t::pController( in
 #define STUDIO_RLOOP 0x00040000  // controller that wraps shortest distance
 
 // sequence and autolayer flags
-#define STUDIO_LOOPING 0x0001   // ending frame should be the same as the starting frame
-#define STUDIO_SNAP 0x0002      // do not interpolate between previous animation and this one
-#define STUDIO_DELTA 0x0004     // this sequence "adds" to the base sequences, not slerp blends
-#define STUDIO_AUTOPLAY 0x0008  // temporary flag that forces the sequence to always play
-#define STUDIO_POST 0x0010      //
-#define STUDIO_ALLZEROS 0x0020  // this animation/sequence has no real animation data
-//						0x0040
-#define STUDIO_CYCLEPOSE 0x0080  // cycle index is taken from a pose parameter index
-#define STUDIO_REALTIME 0x0100   // cycle index is taken from a real-time clock, not the animations cycle index
-#define STUDIO_LOCAL 0x0200      // sequence has a local context sequence
-#define STUDIO_HIDDEN 0x0400     // don't show in default selection views
-#define STUDIO_OVERRIDE 0x0800   // a forward declared sequence (empty)
-#define STUDIO_ACTIVITY 0x1000   // Has been updated at runtime to activity index
-#define STUDIO_EVENT 0x2000      // Has been updated at runtime to event index
-#define STUDIO_WORLD 0x4000      // sequence blends in worldspace
+#define STUDIO_LOOPING 0x0001        // ending frame should be the same as the starting frame
+#define STUDIO_SNAP 0x0002           // do not interpolate between previous animation and this one
+#define STUDIO_DELTA 0x0004          // this sequence "adds" to the base sequences, not slerp blends
+#define STUDIO_AUTOPLAY 0x0008       // temporary flag that forces the sequence to always play
+#define STUDIO_POST 0x0010           //
+#define STUDIO_ALLZEROS 0x0020       // this animation/sequence has no real animation data
+#define STUDIO_FRAMEANIM 0x0040      // animation is encoded as by frame x bone instead of RLE bone x frame
+#define STUDIO_CYCLEPOSE 0x0080      // cycle index is taken from a pose parameter index
+#define STUDIO_REALTIME 0x0100       // cycle index is taken from a real-time clock, not the animations cycle index
+#define STUDIO_LOCAL 0x0200          // sequence has a local context sequence
+#define STUDIO_HIDDEN 0x0400         // don't show in default selection views
+#define STUDIO_OVERRIDE 0x0800       // a forward declared sequence (empty)
+#define STUDIO_ACTIVITY 0x1000       // Has been updated at runtime to activity index
+#define STUDIO_EVENT 0x2000          // Has been updated at runtime to event index on server
+#define STUDIO_WORLD 0x4000          // sequence blends in worldspace
+#define STUDIO_NOFORCELOOP 0x8000    // do not force the animation loop
+#define STUDIO_EVENT_CLIENT 0x10000  // Has been updated at runtime to event index on client
+
 // autolayer flags
 //							0x0001
 //							0x0002
@@ -3737,16 +3927,19 @@ inline const mstudioflexcontroller_t *mstudioflexcontrollerui_t::pController( in
 //							0x2000
 #define STUDIO_AL_POSE 0x4000  // layer blends using a pose parameter instead of parent cycle
 
-// Insert this code anywhere that you need to allow for conversion from an old STUDIO_VERSION
-// to a new one.
+// Insert this code anywhere that you need to allow for conversion from an old STUDIO_VERSION to a new one.
 // If we only support the current version, this function should be empty.
 inline bool Studio_ConvertStudioHdrToNewVersion( studiohdr_t *pStudioHdr )
 {
-    COMPILE_TIME_ASSERT( STUDIO_VERSION == 48 );  //  put this to make sure this code is updated upon changing version.
+    COMPILE_TIME_ASSERT( STUDIO_VERSION == 49 );  //  put this to make sure this code is updated upon changing version.
 
     int version = pStudioHdr->version;
     if ( version == STUDIO_VERSION )
         return true;
+
+    // Experiment; Added this so newer versions aren't converted, yet keep their version number as is.
+    if ( version > STUDIO_VERSION )
+        return false;
 
     bool bResult = true;
     if ( version < 46 )
@@ -3771,7 +3964,7 @@ inline bool Studio_ConvertStudioHdrToNewVersion( studiohdr_t *pStudioHdr )
 
     if ( version < 47 )
     {
-        // used to contain zeroframe cache data
+        // now used to contain zeroframe cache data, make sure it's empty
         if ( pStudioHdr->unused4 != 0 )
         {
             pStudioHdr->unused4 = 0;
@@ -3786,6 +3979,7 @@ inline bool Studio_ConvertStudioHdrToNewVersion( studiohdr_t *pStudioHdr )
     }
     else if ( version == 47 )
     {
+        // clear out stale version of zeroframe cache data
         for ( int i = 0; i < pStudioHdr->numlocalanim; i++ )
         {
             mstudioanimdesc_t *pAnim = ( mstudioanimdesc_t * )pStudioHdr->pLocalAnimdesc( i );
@@ -3798,6 +3992,19 @@ inline bool Studio_ConvertStudioHdrToNewVersion( studiohdr_t *pStudioHdr )
         }
     }
 
+    if ( version < 49 )
+    {
+        // remove any frameanim flag settings that might be stale
+        for ( int i = 0; i < pStudioHdr->numlocalanim; i++ )
+        {
+            mstudioanimdesc_t *pAnim = ( mstudioanimdesc_t * )pStudioHdr->pLocalAnimdesc( i );
+            if ( pAnim->flags & STUDIO_FRAMEANIM )
+            {
+                pAnim->flags &= ~STUDIO_FRAMEANIM;
+                bResult = false;
+            }
+        }
+    }
     // for now, just slam the version number since they're compatible
     pStudioHdr->version = STUDIO_VERSION;
 

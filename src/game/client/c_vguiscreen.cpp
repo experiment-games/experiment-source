@@ -275,26 +275,35 @@ const char *C_VGuiScreen::PanelName() const
 // Given a field of view and mouse/screen positions as well as the current
 // render origin and angles, returns a unit vector through the mouse position
 // that can be used to trace into the world under the mouse click pixel.
-// Input :
-// mousex -
-// mousey -
-// fov -
-// vecRenderOrigin -
-// vecRenderAngles -
-// Output :
-// vecPickingRay
 //--------------------------------------------------------------------------
-void ScreenToWorld( int mousex, int mousey, float fov, const Vector &vecRenderOrigin, const QAngle &vecRenderAngles, Vector &vecPickingRay )
+void ScreenToWorld(
+    int mousex,
+    int mousey,
+    float fov,
+    const QAngle &vecRenderAngles,
+    Vector &vecPickingRay,
+    int nScreenWidth /* = -1*/,
+    int nScreenHeight /* = -1*/ )
 {
     float dx, dy;
     float c_x, c_y;
     float dist;
     Vector vpn, vup, vright;
 
+    if ( nScreenWidth == -1 )
+    {
+        nScreenWidth = ScreenWidth();
+    }
+
+    if ( nScreenHeight == -1 )
+    {
+        nScreenHeight = ScreenHeight();
+    }
+
     float scaled_fov = ScaleFOVByWidthRatio( fov, engine->GetScreenAspectRatio() * 0.75f );
 
-    c_x = ScreenWidth() / 2;
-    c_y = ScreenHeight() / 2;
+    c_x = ( float )nScreenWidth / 2;
+    c_y = ( float )nScreenHeight / 2;
 
     dx = ( float )mousex - c_x;
     // Invert Y
@@ -311,6 +320,23 @@ void ScreenToWorld( int mousex, int mousey, float fov, const Vector &vecRenderOr
 
     // Convert to unit vector
     VectorNormalize( vecPickingRay );
+}
+
+//--------------------------------------------------------------------------
+// Purpose:
+// Given a mouse position returns a world vector for the local player.
+//--------------------------------------------------------------------------
+Vector ScreenToWorld( int mousex,
+                      int mousey )
+{
+    CBasePlayer *pPlayer = CBasePlayer::GetLocalPlayer();
+    float fov = pPlayer->GetFOV();
+    QAngle vecRenderAngles = pPlayer->GetRenderAngles();
+
+    Vector vecPickingRay;
+    ScreenToWorld( mousex, mousey, fov, vecRenderAngles, vecPickingRay );
+
+    return vecPickingRay;
 }
 
 //-----------------------------------------------------------------------------

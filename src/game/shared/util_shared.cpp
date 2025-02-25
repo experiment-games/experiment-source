@@ -19,6 +19,9 @@
 #include "particle_parse.h"
 #include "KeyValues.h"
 #include "time.h"
+#ifdef CLIENT_DLL
+#include "clientsteamcontext.h"
+#endif
 
 #ifdef USES_ECON_ITEMS
 #include "econ_item_constants.h"
@@ -131,6 +134,33 @@ Vector UTIL_YawToVector( float yaw )
 }
 
 //-----------------------------------------------------------------------------
+// Purpose:
+// Input  : vStartPos - start of the line
+//			vEndPos - end of the line
+//			vPoint - point to find nearest point to on specified line
+//			clampEnds - clamps returned points to being on the line segment specified
+// Output : Vector - nearest point on the specified line
+//-----------------------------------------------------------------------------
+Vector UTIL_PointOnLineNearestPoint( const Vector &vStartPos, const Vector &vEndPos, const Vector &vPoint, bool clampEnds )
+{
+    Vector vEndToStart = ( vEndPos - vStartPos );
+    Vector vOrgToStart = ( vPoint - vStartPos );
+    float fNumerator = DotProduct( vEndToStart, vOrgToStart );
+    float fDenominator = vEndToStart.Length() * vOrgToStart.Length();
+    float fIntersectDist = vOrgToStart.Length() * ( fNumerator / fDenominator );
+    float flLineLength = VectorNormalize( vEndToStart );
+
+    if ( clampEnds )
+    {
+        fIntersectDist = clamp( fIntersectDist, 0.0f, flLineLength );
+    }
+
+    Vector vIntersectPos = vStartPos + vEndToStart * fIntersectDist;
+
+    return vIntersectPos;
+}
+
+//-----------------------------------------------------------------------------
 // Purpose: Helper function get get determinisitc random values for shared/prediction code
 // Input  : seedvalue -
 //			*module -
@@ -178,11 +208,11 @@ Vector SharedRandomVector( const char *sharedname, float minVal, float maxVal, i
     RandomSeed( seed );
     // HACK:  Can't call RandomVector/Angle because it uses rand() not vstlib Random*() functions!
     // Get a random vector.
-    Vector vRandom;
-    vRandom.x = RandomFloat( minVal, maxVal );
-    vRandom.y = RandomFloat( minVal, maxVal );
-    vRandom.z = RandomFloat( minVal, maxVal );
-    return vRandom;
+    Vector random;
+    random.x = RandomFloat( minVal, maxVal );
+    random.y = RandomFloat( minVal, maxVal );
+    random.z = RandomFloat( minVal, maxVal );
+    return random;
 }
 
 QAngle SharedRandomAngle( const char *sharedname, float minVal, float maxVal, int additionalSeed /*=0*/ )
@@ -194,11 +224,11 @@ QAngle SharedRandomAngle( const char *sharedname, float minVal, float maxVal, in
 
     // HACK:  Can't call RandomVector/Angle because it uses rand() not vstlib Random*() functions!
     // Get a random vector.
-    Vector vRandom;
-    vRandom.x = RandomFloat( minVal, maxVal );
-    vRandom.y = RandomFloat( minVal, maxVal );
-    vRandom.z = RandomFloat( minVal, maxVal );
-    return QAngle( vRandom.x, vRandom.y, vRandom.z );
+    Vector random;
+    random.x = RandomFloat( minVal, maxVal );
+    random.y = RandomFloat( minVal, maxVal );
+    random.z = RandomFloat( minVal, maxVal );
+    return QAngle( random.x, random.y, random.z );
 }
 
 //-----------------------------------------------------------------------------
@@ -293,12 +323,27 @@ bool CTraceFilterSimple::ShouldHitEntity( IHandleEntity *pHandleEntity, int cont
 
     // Don't test if the game code tells us we should ignore this collision...
     CBaseEntity *pEntity = EntityFromEntityHandle( pHandleEntity );
+
     if ( !pEntity )
         return false;
+
     if ( !pEntity->ShouldCollide( m_collisionGroup, contentsMask ) )
         return false;
+
+    // Experiment;  added this where if there's a filtered player and the entity is also a player,
+    //              we don't collide if we're in the same team
+    if ( m_pPassEnt && ( m_collisionGroup == COLLISION_GROUP_PLAYER || m_collisionGroup == COLLISION_GROUP_PLAYER_MOVEMENT ) &&
+         pEntity->IsPlayer() )
+    {
+        CBaseEntity *pPlayer = const_cast< CBaseEntity * >( EntityFromEntityHandle( m_pPassEnt ) );
+
+        if ( pPlayer && pPlayer->GetNoCollidingWithTeammates() && pPlayer->InSameTeam( pEntity ) )
+            return false;
+    }
+
     if ( pEntity && !g_pGameRules->ShouldCollide( m_collisionGroup, pEntity->GetCollisionGroup() ) )
         return false;
+
     if ( m_pExtraShouldHitCheckFunction &&
          ( !( m_pExtraShouldHitCheckFunction( pHandleEntity, contentsMask ) ) ) )
         return false;
@@ -1008,10 +1053,59 @@ float CountdownTimer::Now( void ) const
     return gpGlobals->curtime;
 }
 
+float UTIL_WaterLevel( const Vector &position, float minz, float maxz )
+{
+    Vector midUp = position;
+    midUp.z = minz;
+
+    if ( !( UTIL_PointContents( midUp ) & MASK_WATER ) )
+        return minz;
+
+    midUp.z = maxz;
+    if ( UTIL_PointContents( midUp ) & MASK_WATER )
+        return maxz;
+
+    float diff = maxz - minz;
+    while ( diff > 1.0 )
+    {
+        midUp.z = minz + diff / 2.0;
+        if ( UTIL_PointContents( midUp ) & MASK_WATER )
+        {
+            minz = midUp.z;
+        }
+        else
+        {
+            maxz = midUp.z;
+        }
+        diff = maxz - minz;
+    }
+
+    return midUp.z;
+}
+
 #ifdef CLIENT_DLL
 CBasePlayer *UTIL_PlayerByIndex( int entindex )
 {
     return ToBasePlayer( ClientEntityList().GetEnt( entindex ) );
+}
+#else
+// returns a CBaseEntity pointer to a player by index.  Only returns if the player is spawned and connected
+// otherwise returns NULL
+// Index is 1 based
+CBasePlayer *UTIL_PlayerByIndex( int playerIndex )
+{
+    CBasePlayer *pPlayer = NULL;
+
+    if ( playerIndex > 0 && playerIndex <= gpGlobals->maxClients )
+    {
+        edict_t *pPlayerEdict = INDEXENT( playerIndex );
+        if ( pPlayerEdict && !pPlayerEdict->IsFree() )
+        {
+            pPlayer = ( CBasePlayer * )GetContainingEntity( pPlayerEdict );
+        }
+    }
+
+    return pPlayer;
 }
 #endif
 

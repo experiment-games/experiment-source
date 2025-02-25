@@ -18,6 +18,11 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
+#ifdef LUA_SDK
+#include <lmovedata.h>
+#include <lusercmd.h>
+#endif
+
 class CHLPlayerMove : public CPlayerMove
 {
     DECLARE_CLASS( CHLPlayerMove, CPlayerMove );
@@ -103,10 +108,27 @@ void CHLPlayerMove::SetupMove( CBasePlayer *player, CUserCmd *ucmd, IMoveHelper 
             }
         }
     }
+
+#ifdef LUA_SDK
+    LUA_CALL_HOOK_BEGIN( "SetupMove" );
+    CBasePlayer::PushLuaInstanceSafe( L, player );
+    lua_pushmovedata( L, move );
+    lua_pushusercmd( L, ucmd );
+    LUA_CALL_HOOK_END( 3, 0 );
+#endif
 }
 
 void CHLPlayerMove::FinishMove( CBasePlayer *player, CUserCmd *ucmd, CMoveData *move )
 {
+#ifdef LUA_SDK
+    LUA_CALL_HOOK_BEGIN( "FinishMove" );
+    CBasePlayer::PushLuaInstanceSafe( L, player );
+    lua_pushmovedata( L, move );
+    LUA_CALL_HOOK_END( 2, 1 );
+
+    LUA_RETURN_NONE_IF_TRUE();
+#endif
+
     // Call the default FinishMove code.
     BaseClass::FinishMove( player, ucmd, move );
     if ( gpGlobals->frametime != 0 )

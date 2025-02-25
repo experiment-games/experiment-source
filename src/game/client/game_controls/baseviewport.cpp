@@ -56,6 +56,10 @@
 #include "replay/ienginereplay.h"
 #endif
 
+#ifdef LUA_SDK
+#include "luamanager.h"
+#endif
+
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
@@ -232,6 +236,16 @@ void CBaseViewport::OnScreenSizeChanged( int iOldWide, int iOldTall )
     {
         ShowPanel( PANEL_SPECGUI, true );
     }
+
+#ifdef LUA_SDK
+    if ( g_bLuaInitialized )
+    {
+        LUA_CALL_HOOK_BEGIN( "OnScreenSizeChanged" );
+        lua_pushinteger( L, iOldWide );
+        lua_pushinteger( L, iOldTall );
+        LUA_CALL_HOOK_END( 2, 0 );
+    }
+#endif
 }
 
 void CBaseViewport::CreateDefaultPanels( void )
@@ -677,6 +691,10 @@ void CBaseViewport::SetParent( vgui::VPANEL parent )
 //-----------------------------------------------------------------------------
 void CBaseViewport::ActivateClientUI()
 {
+#ifdef LUA_SDK
+    LUA_CALL_HOOK_BEGIN( "ActivateClientUI" );
+    LUA_CALL_HOOK_END( 0, 0 );
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -684,6 +702,10 @@ void CBaseViewport::ActivateClientUI()
 //-----------------------------------------------------------------------------
 void CBaseViewport::HideClientUI()
 {
+#ifdef LUA_SDK
+    LUA_CALL_HOOK_BEGIN( "HideClientUI" );
+    LUA_CALL_HOOK_END( 0, 0 );
+#endif
 }
 
 //-----------------------------------------------------------------------------

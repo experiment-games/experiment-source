@@ -2079,6 +2079,7 @@
 			"ordinals"
 			{
 				"AddIntermediateAssemblyToReferenceList"	"0"
+                "BuildLink"                                 "BuildLink"
 			}
 		}
 

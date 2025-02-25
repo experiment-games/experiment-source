@@ -25,6 +25,10 @@
 #include "hl2_player.h"
 #endif
 
+#ifdef LUA_SDK
+#include <lmovedata.h>
+#endif
+
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
@@ -1544,6 +1548,16 @@ void CBaseServerVehicle::SetupMove( CBasePlayer *player, CUserCmd *ucmd, IMoveHe
 //-----------------------------------------------------------------------------
 void CBaseServerVehicle::ProcessMovement( CBasePlayer *pPlayer, CMoveData *pMoveData )
 {
+#ifdef LUA_SDK
+    LUA_CALL_HOOK_BEGIN( "VehicleMove" );
+    CBasePlayer::PushLuaInstanceSafe( L, pPlayer );
+    CBaseEntity::PushLuaInstanceSafe( L, this->GetVehicleEnt() );
+    lua_pushmovedata( L, pMoveData );
+    LUA_CALL_HOOK_END( 3, 1 );
+
+    LUA_RETURN_NONE_IF_TRUE();
+#endif
+
     GetDrivableVehicle()->ProcessMovement( pPlayer, pMoveData );
 
     trace_t tr;

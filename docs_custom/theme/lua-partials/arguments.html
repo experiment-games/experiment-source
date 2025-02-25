@@ -1,0 +1,12 @@
+{% if page.meta.lua.arguments %}
+{% trans count=page.meta.lua.arguments|length %}
+<h2>Argument</h2>
+{% pluralize %}
+<h2>Arguments</h2>
+{% endtrans %}
+<ul class="lua__variable_list">
+    {% for argument in page.meta.lua.arguments %}
+    {% include 'lua-partials/argument.html' %}
+    {% endfor %}
+</ul>
+{% endif %}

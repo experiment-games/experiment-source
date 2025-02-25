@@ -1,0 +1,76 @@
+{% extends "main.html" %}
+
+{% macro page_item(item) %}
+{%
+    if item.is_page and (
+        not page.meta.include
+        or (
+                ( not page.meta.include.startsWith or item.url.startswith( page.meta.include.startsWith ) )
+            and ( not page.meta.include.endsWith or item.url.endswith( page.meta.include.endsWith ) )
+            and ( not page.meta.include.exact or item.url in page.meta.include.exact )
+            and ( not page.meta.include.isIndex or item.is_index )
+        )
+    )
+%}
+{%-
+    if not page.meta.exclude or not (
+            ( page.meta.exclude.startsWith and item.url.startswith( page.meta.exclude.startsWith ) )
+        or  ( page.meta.exclude.endsWith and item.url.endswith( page.meta.exclude.endsWith ) )
+        or  ( page.meta.exclude.exact and item.url in page.meta.exclude.exact )
+        or  ( page.meta.exclude.isIndex and item.is_index )
+    )
+%}
+<li>
+    {%- if item.meta.icon %}
+    {% include ".icons/" ~ item.meta.icon ~ ".svg" %}&nbsp;
+    {%- endif %}
+    {%- if item.url %}
+    <a href="{{ item.url|url }}">
+        {% if page.meta.format and page.meta.format.label %}
+        {{ page.meta.format.label | replace('%parentTitle%', item.parent.title) }}
+        {% else %}
+        {{ item.title }}
+        {% endif %}
+    </a>
+    {%- else %}
+    {{ item.title }}
+    {% endif %}
+    {%- if item.parent and not item.parent.active and ( not page.meta.format or not page.meta.format.hideParent ) %}
+    <small>&nbsp;({{ item.parent.title }})</small>
+    {%- endif -%}
+    {%- if item.children %}
+    <ul>
+        {%- for child in item.children %}
+        {{ page_item(child) }}
+        {%- endfor %}
+    </ul>
+    {%- endif %}
+</li>
+{%- endif %}
+{% else %}
+{%- if item.children %}
+{%- for child in item.children %}
+{{ page_item(child) }}
+{%- endfor %}
+{%- endif %}
+{%- endif %}
+{%- endmacro %}
+
+{% block content %}
+<div class="lua">
+    <h1>{{ page.meta.title }}</h1>
+
+    {{ page.content }}
+
+    <h2>{{ page.meta.childrenTitle }}</h2>
+    {%- if nav|length>1 %}
+    <ul class="lua__index__list">
+        {%- for item in nav %}
+        {{ page_item(item) }}
+        {%- endfor %}
+    </ul>
+    {%- else %}
+    <p>No pages to list here.</p>
+    {%- endif %}
+</div>
+{% endblock %}

@@ -26,6 +26,9 @@ class EditablePanel : public Panel
     DECLARE_CLASS_SIMPLE( EditablePanel, Panel );
 
    public:
+#ifdef LUA_SDK
+    EditablePanel( Panel *parent, const char *panelName, lua_State *L );
+#endif
     EditablePanel( Panel *parent, const char *panelName );
     EditablePanel( Panel *parent, const char *panelName, HScheme hScheme );
 

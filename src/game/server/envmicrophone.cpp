@@ -400,9 +400,12 @@ void CEnvMicrophone::Think( void )
                     fHearSound = true;
                 }
             }
-        }
 
-        nSound = pCurrentSound->NextSound();
+            // Experiment; applied fix by ZehMatt (https://github.com/ValveSoftware/source-sdk-2013/pull/381/files)
+            nSound = pCurrentSound->NextSound();
+        }
+        else
+            break;
     }
 
     if ( fHearSound )

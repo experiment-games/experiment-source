@@ -251,49 +251,26 @@ enum MaterialFindContext_t
 //-----------------------------------------------------------------------------
 #include "mathlib/lightdesc.h"
 
-#if 0
-enum LightType_t
+// Experiment; This enum and struct are from the AlienSwarm source code
+enum
 {
-	MATERIAL_LIGHT_DISABLE = 0,
-	MATERIAL_LIGHT_POINT,
-	MATERIAL_LIGHT_DIRECTIONAL,
-	MATERIAL_LIGHT_SPOT,
+    MATERIAL_MAX_LIGHT_COUNT = 4,
 };
 
-enum LightType_OptimizationFlags_t
+struct MaterialLightingState_t
 {
-	LIGHTTYPE_OPTIMIZATIONFLAGS_HAS_ATTENUATION0 = 1,
-	LIGHTTYPE_OPTIMIZATIONFLAGS_HAS_ATTENUATION1 = 2,
-	LIGHTTYPE_OPTIMIZATIONFLAGS_HAS_ATTENUATION2 = 4,
+    Vector m_vecAmbientCube[6];  // ambient, and lights that aren't in locallight[]
+    Vector m_vecLightingOrigin;  // The position from which lighting state was computed
+    int m_nLocalLightCount;
+    LightDesc_t m_pLocalLightDesc[MATERIAL_MAX_LIGHT_COUNT];
+
+    MaterialLightingState_t &operator=( const MaterialLightingState_t &src )
+    {
+        memcpy( this, &src, sizeof( MaterialLightingState_t ) - MATERIAL_MAX_LIGHT_COUNT * sizeof( LightDesc_t ) );
+        memcpy( m_pLocalLightDesc, &src.m_pLocalLightDesc, src.m_nLocalLightCount * sizeof( LightDesc_t ) );
+        return *this;
+    }
 };
-
-
-struct LightDesc_t 
-{
-	LightType_t		m_Type;
-	Vector			m_Color;
-	Vector	m_Position;
-	Vector  m_Direction;
-	float   m_Range;
-	float   m_Falloff;
-	float   m_Attenuation0;
-	float   m_Attenuation1;
-	float   m_Attenuation2;
-	float   m_Theta;
-	float   m_Phi;
-	// These aren't used by DX8. . used for software lighting.
-	float	m_ThetaDot;
-	float	m_PhiDot;
-	unsigned int	m_Flags;
-
-
-	LightDesc_t() {}
-
-private:
-	// No copy constructors allowed
-	LightDesc_t(const LightDesc_t& vOther);
-};
-#endif
 
 #define CREATERENDERTARGETFLAGS_HDR 0x00000001
 #define CREATERENDERTARGETFLAGS_AUTOMIPMAP 0x00000002
@@ -428,10 +405,19 @@ struct FlashlightState_t
     {
         m_bEnableShadows = false;  // Provide reasonable defaults for shadow depth mapping parameters
         m_bDrawShadowFrustum = false;
+
+#ifdef ASW_PROJECTED_TEXTURES
+        m_flShadowMapResolution = 2048.0f;
+        m_flShadowFilterSize = 0.5f;
+        m_flShadowSlopeScaleDepthBias = 16.0f;
+        m_flShadowDepthBias = 0.0005f;
+#else
         m_flShadowMapResolution = 1024.0f;
         m_flShadowFilterSize = 3.0f;
         m_flShadowSlopeScaleDepthBias = 16.0f;
         m_flShadowDepthBias = 0.0005f;
+#endif
+
         m_flShadowJitterSeed = 0.0f;
         m_flShadowAtten = 0.0f;
         m_bScissor = false;
@@ -440,6 +426,17 @@ struct FlashlightState_t
         m_nRight = -1;
         m_nBottom = -1;
         m_nShadowQuality = 0;
+
+#ifdef ASW_PROJECTED_TEXTURES
+        m_bOrtho = false;
+        m_fOrthoLeft = -1.0f;
+        m_fOrthoRight = 1.0f;
+        m_fOrthoTop = -1.0f;
+        m_fOrthoBottom = 1.0f;
+
+        m_fBrightnessScale = 1.0f;
+        m_pSpotlightTexture = NULL;
+#endif
     }
 
     Vector m_vecLightOrigin;
@@ -466,6 +463,16 @@ struct FlashlightState_t
     float m_flShadowAtten;
     int m_nShadowQuality;
 
+#ifdef ASW_PROJECTED_TEXTURES
+    bool m_bOrtho;
+    float m_fOrthoLeft;
+    float m_fOrthoRight;
+    float m_fOrthoTop;
+    float m_fOrthoBottom;
+
+    float m_fBrightnessScale;
+#endif
+
     // Getters for scissor members
     bool DoScissor()
     {
@@ -488,7 +495,12 @@ struct FlashlightState_t
         return m_nBottom;
     }
 
+#ifdef LUA_SDK
+   public:
+#else
    private:
+#endif
+
     friend class CShadowMgr;
 
     bool m_bScissor;

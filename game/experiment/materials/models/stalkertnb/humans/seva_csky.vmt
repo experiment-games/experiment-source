@@ -1,0 +1,11 @@
+"VertexlitGeneric"
+{
+	"$basetexture" 				"models/stalkertnb/humans/seva_csky"
+	"$bumpmap" 					"models/stalkertnb/humans/seva_normal"
+	
+	"$nocull" 		1 		
+	
+
+
+
+}

@@ -62,10 +62,15 @@
 #include "env_debughistory.h"
 #include "tier1/utlstring.h"
 #include "utlhashtable.h"
+#include "recipientfilter.h"
 #include "vscript_server.h"
 
 #if defined( TF_DLL )
 #include "tf_gamerules.h"
+#endif
+
+#ifdef LUA_SDK
+#include "luamanager.h"
 #endif
 
 // memdbgon must be the last include file in a .cpp file!!!
@@ -155,23 +160,26 @@ void *SendProxy_ClientSideAnimation( const SendProp *pProp, const void *pStruct,
     else
         return NULL;  // Don't send animtime unless the client needs it.
 }
+
+// clang-format off
+
 REGISTER_SEND_PROXY_NON_MODIFIED_POINTER( SendProxy_ClientSideAnimation );
 
 BEGIN_SEND_TABLE_NOBASE( CBaseEntity, DT_AnimTimeMustBeFirst )
-// NOTE:  Animtime must be sent before origin and angles ( from pev ) because it has a
-//  proxy on the client that stores off the old values before writing in the new values and
-//  if it is sent after the new values, then it will only have the new origin and studio model, etc.
-//  interpolation will be busted
-SendPropInt( SENDINFO( m_flAnimTime ), 8, SPROP_UNSIGNED | SPROP_CHANGES_OFTEN | SPROP_ENCODED_AGAINST_TICKCOUNT, SendProxy_AnimTime ),
-    END_SEND_TABLE()
+    // NOTE:  Animtime must be sent before origin and angles ( from pev ) because it has a
+    //  proxy on the client that stores off the old values before writing in the new values and
+    //  if it is sent after the new values, then it will only have the new origin and studio model, etc.
+    //  interpolation will be busted
+    SendPropInt( SENDINFO( m_flAnimTime ), 8, SPROP_UNSIGNED | SPROP_CHANGES_OFTEN | SPROP_ENCODED_AGAINST_TICKCOUNT, SendProxy_AnimTime ),
+END_SEND_TABLE()
 
 #if !defined( NO_ENTITY_PREDICTION )
-        BEGIN_SEND_TABLE_NOBASE( CBaseEntity, DT_PredictableId )
-            SendPropPredictableId( SENDINFO( m_PredictableID ) ),
+BEGIN_SEND_TABLE_NOBASE( CBaseEntity, DT_PredictableId )
+    SendPropPredictableId( SENDINFO( m_PredictableID ) ),
     SendPropInt( SENDINFO( m_bIsPlayerSimulated ), 1, SPROP_UNSIGNED ),
-    END_SEND_TABLE()
+END_SEND_TABLE()
 
-        static void *SendProxy_SendPredictableId( const SendProp *pProp, const void *pStruct, const void *pVarData, CSendProxyRecipients *pRecipients, int objectID )
+static void *SendProxy_SendPredictableId( const SendProp *pProp, const void *pStruct, const void *pVarData, CSendProxyRecipients *pRecipients, int objectID )
 {
     CBaseEntity *pEntity = ( CBaseEntity * )pStruct;
     if ( !pEntity || !pEntity->m_PredictableID->IsActive() )
@@ -184,6 +192,8 @@ SendPropInt( SENDINFO( m_flAnimTime ), 8, SPROP_UNSIGNED | SPROP_CHANGES_OFTEN |
 }
 REGISTER_SEND_PROXY_NON_MODIFIED_POINTER( SendProxy_SendPredictableId );
 #endif
+
+static bool WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
 
 void SendProxy_Origin( const SendProp *pProp, const void *pStruct, const void *pData, DVariant *pOut, int iElement, int objectID )
 {
@@ -256,9 +266,36 @@ void SendProxy_Angles( const SendProp *pProp, const void *pStruct, const void *p
     pOut->m_Vector[2] = anglemod( a->z );
 }
 
+// clang-format off
+
+#ifdef LUA_SDK // NetworkVariables
+
+void SendProxy_LuaVariableElement_String( const SendProp *pProp, const void *pStruct, const void *pVarData, DVariant *pOut, int iElement, int objectID )
+{
+#ifdef _DEBUG
+    CBaseEntity *entity = ( CBaseEntity * )pStruct;
+    Assert( entity );
+#endif
+
+	string_t *pString = (string_t*)pVarData;
+	pOut->m_pString = (char*)STRING( *pString );
+}
+
+BEGIN_SEND_TABLE_NOBASE( CBaseEntity, DT_BaseEntityLuaVariables )
+    SendPropArray( SendPropInt( SENDINFO_ARRAY( m_LuaVariables_bool ) ), m_LuaVariables_bool ),
+    SendPropArray( SendPropInt( SENDINFO_ARRAY( m_LuaVariables_int ) ), m_LuaVariables_int ),
+    SendPropArray( SendPropFloat( SENDINFO_ARRAY( m_LuaVariables_float ) ), m_LuaVariables_float ),
+    SendPropArray( SendPropVector( SENDINFO_ARRAY( m_LuaVariables_Vector ) ), m_LuaVariables_Vector ),
+    SendPropArray( SendPropVector( SENDINFO_ARRAY( m_LuaVariables_QAngle ) ), m_LuaVariables_QAngle ),
+    SendPropArray( SendPropString( SENDINFO_ARRAY( m_LuaVariables_String ), 0, SendProxy_LuaVariableElement_String ), m_LuaVariables_String ),
+    SendPropArray( SendPropEHandle( SENDINFO_ARRAY( m_LuaVariables_Entity ) ), m_LuaVariables_Entity ),
+END_SEND_TABLE()
+
+#endif // LUA_SDK NetworkVariables
+
 // This table encodes the CBaseEntity data.
 IMPLEMENT_SERVERCLASS_ST_NOBASE( CBaseEntity, DT_BaseEntity )
-SendPropDataTable( "AnimTimeMustBeFirst", 0, &REFERENCE_SEND_TABLE( DT_AnimTimeMustBeFirst ), SendProxy_ClientSideAnimation ),
+    SendPropDataTable( "AnimTimeMustBeFirst", 0, &REFERENCE_SEND_TABLE( DT_AnimTimeMustBeFirst ), SendProxy_ClientSideAnimation ),
     SendPropInt( SENDINFO( m_flSimulationTime ), SIMULATION_TIME_WINDOW_BITS, SPROP_UNSIGNED | SPROP_CHANGES_OFTEN | SPROP_ENCODED_AGAINST_TICKCOUNT, SendProxy_SimulationTime ),
 
 #if PREDICTION_ERROR_CHECK_LEVEL > 1
@@ -275,6 +312,7 @@ SendPropDataTable( "AnimTimeMustBeFirst", 0, &REFERENCE_SEND_TABLE( DT_AnimTimeM
     SendPropInt( SENDINFO( m_fEffects ), EF_MAX_BITS, SPROP_UNSIGNED ),
     SendPropInt( SENDINFO( m_clrRender ), 32, SPROP_UNSIGNED ),
     SendPropInt( SENDINFO( m_iTeamNum ), TEAMNUM_NUM_BITS, 0 ),
+    SendPropBool( SENDINFO( m_bNoCollidingWithTeammates ) ),
     SendPropInt( SENDINFO( m_CollisionGroup ), 5, SPROP_UNSIGNED ),
     SendPropFloat( SENDINFO( m_flElasticity ), 0, SPROP_COORD ),
     SendPropFloat( SENDINFO( m_flShadowCastDistance ), 12, SPROP_UNSIGNED ),
@@ -306,10 +344,16 @@ SendPropDataTable( "AnimTimeMustBeFirst", 0, &REFERENCE_SEND_TABLE( DT_AnimTimeM
     SendPropArray3( SENDINFO_ARRAY3( m_nModelIndexOverrides ), SendPropInt( SENDINFO_ARRAY( m_nModelIndexOverrides ), SP_MODEL_INDEX_BITS, 0 ) ),
 #endif
 
-    END_SEND_TABLE()
+#ifdef LUA_SDK // NetworkVariables
+    SendPropDataTable( "BaseEntityLuaVariables", 0, &REFERENCE_SEND_TABLE( DT_BaseEntityLuaVariables ) ),
+#endif // LUA_SDK NetworkVariables
 
-    // dynamic models
-    class CBaseEntityModelLoadProxy
+END_SEND_TABLE()
+
+static bool WORKAROUND_NASTY_FORMATTING_BUG2;  // clang-format on
+
+// dynamic models
+class CBaseEntityModelLoadProxy
 {
    protected:
     class Handler final : public IModelLoadCallback
@@ -386,6 +430,7 @@ CBaseEntity::CBaseEntity( bool bServerOnly )
     m_flShadowCastDistance = m_flDesiredShadowCastDistance = 0;
     SetRenderColor( 255, 255, 255, 255 );
     m_iTeamNum = m_iInitialTeamNum = TEAM_UNASSIGNED;
+    m_bNoCollidingWithTeammates = false;
     m_nLastThinkTick = gpGlobals->tickcount;
     m_nSimulationTick = -1;
     SetIdentityMatrix( m_rgflCoordinateFrame );
@@ -426,7 +471,21 @@ CBaseEntity::CBaseEntity( bool bServerOnly )
 #endif
 
     m_bTruceValidForEnt = false;
+
+#ifdef LUA_SDK
+    m_nTableReference = LUA_NOREF;
+#endif
 }
+
+#ifdef LUA_SDK
+void *CBaseEntity::CreateLuaInstance( lua_State *L, CBaseEntity *pInstance )
+{
+    CBaseHandle *hEntity =
+        ( CBaseHandle * )lua_newuserdata( L, sizeof( CBaseHandle ) );
+    hEntity->Set( pInstance );
+    return hEntity;
+}
+#endif
 
 //-----------------------------------------------------------------------------
 // Purpose: Scale up our physics hull and test against the new one
@@ -451,6 +510,12 @@ extern bool g_bDisableEhandleAccess;
 //-----------------------------------------------------------------------------
 CBaseEntity::~CBaseEntity()
 {
+    for ( int i = m_EntitiesToDeleteOnRemove.Count() - 1; i >= 0; i-- )
+    {
+        UTIL_Remove( m_EntitiesToDeleteOnRemove[i] );
+    }
+    m_EntitiesToDeleteOnRemove.RemoveAll();
+
     // FIXME: This can't be called from UpdateOnRemove! There's at least one
     // case where friction sounds are added between the call to UpdateOnRemove + ~CBaseEntity
     PhysCleanupFrictionSounds( this );
@@ -486,7 +551,33 @@ CBaseEntity::~CBaseEntity()
         // Remove this entity from the ent list (NOTE:  This Makes EHANDLES go NULL)
         gEntList.RemoveEntity( GetRefEHandle() );
     }
+
+#ifdef LUA_SDK
+    if ( L )
+    {
+        lua_unref( L, m_nTableReference );
+        lua_destroyuserdatainstance( L, m_pLuaInstance );
+    }
+    m_pLuaInstance = nullptr;
+#endif
+
+    if ( m_rfPreventTransmitEntities )
+    {
+        delete m_rfPreventTransmitEntities;
+        m_rfPreventTransmitEntities = NULL;
+    }
 }
+
+#ifdef LUA_SDK
+//-----------------------------------------------------------------------------
+// Purpose: Initialize any variables in the reference table
+//-----------------------------------------------------------------------------
+void CBaseEntity::SetupRefTable( lua_State *L )
+{
+    lua_newtable( L );
+    m_nTableReference = luaL_ref( L, LUA_REGISTRYINDEX );
+}
+#endif
 
 void CBaseEntity::PostConstructor( const char *szClassname )
 {
@@ -695,6 +786,11 @@ void CBaseEntity::StopFollowingEntity()
 bool CBaseEntity::IsFollowingEntity()
 {
     return IsEffectActive( EF_BONEMERGE ) && ( GetMoveType() == MOVETYPE_NONE ) && GetMoveParent();
+}
+
+bool CBaseEntity::IsVehicle( void )
+{
+    return GetServerVehicle() != nullptr;
 }
 
 CBaseEntity *CBaseEntity::GetFollowedEntity()
@@ -1762,6 +1858,7 @@ int CBaseEntity::TakeDamage( const CTakeDamageInfo &inputInfo )
 
         return OnTakeDamage( info );
     }
+
     return 0;
 }
 
@@ -1778,6 +1875,7 @@ float CBaseEntity::GetAttackDamageScale( CBaseEntity *pVictim )
             flScale *= m_DamageModifiers[i]->GetModifier();
         }
     }
+
     return flScale;
 }
 
@@ -1794,6 +1892,7 @@ float CBaseEntity::GetReceivedDamageScale( CBaseEntity *pAttacker )
             flScale *= m_DamageModifiers[i]->GetModifier();
         }
     }
+
     return flScale;
 }
 
@@ -1833,7 +1932,27 @@ int CBaseEntity::VPhysicsTakeDamage( const CTakeDamageInfo &info )
         if ( gameFlags & FVPHYSICS_PLAYER_HELD )
         {
             // if the player is holding the object, use it's real mass (player holding reduced the mass)
-            CBasePlayer *pPlayer = UTIL_GetLocalPlayer();
+            CBasePlayer *pPlayer = NULL;
+
+            if ( gpGlobals->maxClients == 1 )
+            {
+                pPlayer = UTIL_GetLocalPlayer();
+            }
+            else
+            {
+                // See which MP player is holding the physics object and then use that player to get the real mass of the object.
+                // This is ugly but better than having linkage between an object and its "holding" player.
+                for ( int i = 1; i <= gpGlobals->maxClients; i++ )
+                {
+                    CBasePlayer *tempPlayer = UTIL_PlayerByIndex( i );
+                    if ( tempPlayer && ( tempPlayer->GetHeldObject() == this ) )
+                    {
+                        pPlayer = tempPlayer;
+                        break;
+                    }
+                }
+            }
+
             if ( pPlayer )
             {
                 float mass = pPlayer->GetHeldObjectMass( VPhysicsGetObject() );
@@ -1999,26 +2118,23 @@ class CThinkContextsSaveDataOps : public CDefSaveRestoreOps
 CThinkContextsSaveDataOps g_ThinkContextsSaveDataOps;
 ISaveRestoreOps *thinkcontextFuncs = &g_ThinkContextsSaveDataOps;
 
-BEGIN_SIMPLE_DATADESC( thinkfunc_t )
+// clang-format off
 
-DEFINE_FIELD( m_iszContext, FIELD_STRING ),
+BEGIN_SIMPLE_DATADESC( thinkfunc_t )
+    DEFINE_FIELD( m_iszContext, FIELD_STRING ),
     // DEFINE_FIELD( m_pfnThink,		FIELD_FUNCTION ),		// Manually written
     DEFINE_FIELD( m_nNextThinkTick, FIELD_TICK ),
     DEFINE_FIELD( m_nLastThinkTick, FIELD_TICK ),
+END_DATADESC()
 
-    END_DATADESC()
-
-        BEGIN_SIMPLE_DATADESC( ResponseContext_t )
-
-            DEFINE_FIELD( m_iszName, FIELD_STRING ),
+BEGIN_SIMPLE_DATADESC( ResponseContext_t )
+    DEFINE_FIELD( m_iszName, FIELD_STRING ),
     DEFINE_FIELD( m_iszValue, FIELD_STRING ),
     DEFINE_FIELD( m_fExpirationTime, FIELD_TIME ),
+END_DATADESC()
 
-    END_DATADESC()
-
-        BEGIN_DATADESC_NO_BASE( CBaseEntity )
-
-            DEFINE_KEYFIELD( m_iClassname, FIELD_STRING, "classname" ),
+BEGIN_DATADESC_NO_BASE( CBaseEntity )
+    DEFINE_KEYFIELD( m_iClassname, FIELD_STRING, "classname" ),
     DEFINE_GLOBAL_KEYFIELD( m_iGlobalname, FIELD_STRING, "globalname" ),
     DEFINE_KEYFIELD( m_iParent, FIELD_STRING, "parentname" ),
 
@@ -2043,8 +2159,9 @@ DEFINE_FIELD( m_iszContext, FIELD_STRING ),
     DEFINE_KEYFIELD( m_clrRender, FIELD_COLOR32, "rendercolor" ),
     DEFINE_GLOBAL_KEYFIELD( m_nModelIndex, FIELD_SHORT, "modelindex" ),
 #if !defined( NO_ENTITY_PREDICTION )
-// DEFINE_FIELD( m_PredictableID, CPredictableId ),
+    // DEFINE_FIELD( m_PredictableID, CPredictableId ),
 #endif
+
     DEFINE_FIELD( touchStamp, FIELD_INTEGER ),
     DEFINE_CUSTOM_FIELD( m_aThinkFunctions, thinkcontextFuncs ),
     //								m_iCurrentThinkContext (not saved, debug field only, and think transient to boot)
@@ -2093,6 +2210,7 @@ DEFINE_FIELD( m_iszContext, FIELD_STRING ),
 
     DEFINE_INPUT( m_iInitialTeamNum, FIELD_INTEGER, "TeamNum" ),
     DEFINE_KEYFIELD( m_iTeamNum, FIELD_INTEGER, "teamnumber" ),
+    DEFINE_FIELD( m_bNoCollidingWithTeammates, FIELD_BOOLEAN ),
 
     //	DEFINE_FIELD( m_bSentLastFrame, FIELD_INTEGER ),
 
@@ -2137,8 +2255,8 @@ DEFINE_FIELD( m_iszContext, FIELD_STRING ),
 
     DEFINE_FIELD( m_fFlags, FIELD_INTEGER ),
 #if !defined( NO_ENTITY_PREDICTION )
-//	DEFINE_FIELD( m_bIsPlayerSimulated, FIELD_INTEGER ),
-//	DEFINE_FIELD( m_hPlayerSimulationOwner, FIELD_EHANDLE ),
+    //	DEFINE_FIELD( m_bIsPlayerSimulated, FIELD_INTEGER ),
+    //	DEFINE_FIELD( m_hPlayerSimulationOwner, FIELD_EHANDLE ),
 #endif
     // DEFINE_FIELD( m_pTimedOverlay, TimedOverlay_t* ),
     DEFINE_FIELD( m_nSimulationTick, FIELD_TICK ),
@@ -2216,195 +2334,196 @@ DEFINE_FIELD( m_iszContext, FIELD_STRING ),
 
     DEFINE_FIELD( m_hEffectEntity, FIELD_EHANDLE ),
 
-// DEFINE_FIELD( m_DamageModifiers, FIELD_?? ), // can't save?
-//  DEFINE_FIELD( m_fDataObjectTypes, FIELD_INTEGER ),
+    // DEFINE_FIELD( m_DamageModifiers, FIELD_?? ), // can't save?
+    //  DEFINE_FIELD( m_fDataObjectTypes, FIELD_INTEGER ),
 
 #ifdef TF_DLL
     DEFINE_ARRAY( m_nModelIndexOverrides, FIELD_INTEGER, MAX_VISION_MODES ),
 #endif
 
-    END_DATADESC()
+END_DATADESC()
 
-        DEFINE_SCRIPT_INSTANCE_HELPER( CBaseEntity, &g_BaseEntityScriptInstanceHelper )
+DEFINE_SCRIPT_INSTANCE_HELPER( CBaseEntity, &g_BaseEntityScriptInstanceHelper )
+    BEGIN_ENT_SCRIPTDESC_ROOT( CBaseEntity, "Root class of all server-side entities" )
+    DEFINE_SCRIPTFUNC_NAMED( ConnectOutputToScript, "ConnectOutput", "Adds an I/O connection that will call the named function when the specified output fires" )
+    DEFINE_SCRIPTFUNC_NAMED( DisconnectOutputFromScript, "DisconnectOutput", "Removes a connected script function from an I/O event." )
 
-            BEGIN_ENT_SCRIPTDESC_ROOT( CBaseEntity, "Root class of all server-side entities" )
-                DEFINE_SCRIPTFUNC_NAMED( ConnectOutputToScript, "ConnectOutput", "Adds an I/O connection that will call the named function when the specified output fires" )
-                    DEFINE_SCRIPTFUNC_NAMED( DisconnectOutputFromScript, "DisconnectOutput", "Removes a connected script function from an I/O event." )
+    DEFINE_SCRIPTFUNC( GetHealth, "" )
+    DEFINE_SCRIPTFUNC( SetHealth, "" )
+    DEFINE_SCRIPTFUNC( GetMaxHealth, "" )
+    DEFINE_SCRIPTFUNC( SetMaxHealth, "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptTakeDamage, "TakeDamage", "(flDamage, nDamageType, hAttacker)" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptTakeDamageEx, "TakeDamageEx", "(hInflictor, hAttacker, hWeapon, vecDamageForce, vecDamagePosition, flDamage, nDamageType)" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptTakeDamageCustom, "TakeDamageCustom", "(hInflictor, hAttacker, hWeapon, vecDamageForce, vecDamagePosition, flDamage, nDamageType, nCustomDamageType)" )
 
-                        DEFINE_SCRIPTFUNC( GetHealth, "" )
-                            DEFINE_SCRIPTFUNC( SetHealth, "" )
-                                DEFINE_SCRIPTFUNC( GetMaxHealth, "" )
-                                    DEFINE_SCRIPTFUNC( SetMaxHealth, "" )
-                                        DEFINE_SCRIPTFUNC_NAMED( ScriptTakeDamage, "TakeDamage", "(flDamage, nDamageType, hAttacker)" )
-                                            DEFINE_SCRIPTFUNC_NAMED( ScriptTakeDamageEx, "TakeDamageEx", "(hInflictor, hAttacker, hWeapon, vecDamageForce, vecDamagePosition, flDamage, nDamageType)" )
-                                                DEFINE_SCRIPTFUNC_NAMED( ScriptTakeDamageCustom, "TakeDamageCustom", "(hInflictor, hAttacker, hWeapon, vecDamageForce, vecDamagePosition, flDamage, nDamageType, nCustomDamageType)" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptGetModelName, "GetModelName", "Returns the name of the model" )
+    DEFINE_SCRIPTFUNC( SetModel, "Set a model for this entity" )
+    DEFINE_SCRIPTFUNC( IsPlayer, "" )
+    DEFINE_SCRIPTFUNC_NAMED( entindex, "GetEntityIndex", "" )
 
-                                                    DEFINE_SCRIPTFUNC_NAMED( ScriptGetModelName, "GetModelName", "Returns the name of the model" )
-                                                        DEFINE_SCRIPTFUNC( SetModel, "Set a model for this entity" )
-                                                            DEFINE_SCRIPTFUNC( IsPlayer, "" )
-                                                                DEFINE_SCRIPTFUNC_NAMED( entindex, "GetEntityIndex", "" )
-
-                                                                    DEFINE_SCRIPTFUNC_NAMED( ScriptPrecacheModel, "PrecacheModel", "" )
-                                                                        DEFINE_SCRIPTFUNC_NAMED( ScriptPrecacheScriptSound, "PrecacheScriptSound", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptPrecacheModel, "PrecacheModel", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptPrecacheScriptSound, "PrecacheScriptSound", "" )
     // dota had a SetModel here too, but i dont think we need it
 
     DEFINE_SCRIPTFUNC_NAMED( ScriptEmitSound, "EmitSound", "Plays a sound from this entity." )
-        DEFINE_SCRIPTFUNC_NAMED( ScriptStopSound, "StopSound", "Stops a sound on this entity." )
-            DEFINE_SCRIPTFUNC_NAMED( VScriptPrecacheScriptSound, "PrecacheSoundScript", "Precache a sound for later playing." )
-                DEFINE_SCRIPTFUNC_NAMED( ScriptSoundDuration, "GetSoundDuration", "Returns float duration of the sound. Takes soundname and optional actormodelname." )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptStopSound, "StopSound", "Stops a sound on this entity." )
+    DEFINE_SCRIPTFUNC_NAMED( VScriptPrecacheScriptSound, "PrecacheSoundScript", "Precache a sound for later playing." )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptSoundDuration, "GetSoundDuration", "Returns float duration of the sound. Takes soundname and optional actormodelname." )
 
-                    DEFINE_SCRIPTFUNC_NAMED( ScriptInputKill, "Kill", "" )
-                        DEFINE_SCRIPTFUNC( GetClassname, "" )
-                            DEFINE_SCRIPTFUNC_NAMED( GetEntityNameAsCStr, "GetName", "" )
-                                DEFINE_SCRIPTFUNC( GetPreTemplateName, "Get the entity name stripped of template unique decoration" )
-                                    DEFINE_SCRIPTFUNC_NAMED( ScriptGetEHandle, "GetEntityHandle", "Get the entity as an EHANDLE" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptInputKill, "Kill", "" )
+    DEFINE_SCRIPTFUNC( GetClassname, "" )
+    DEFINE_SCRIPTFUNC_NAMED( GetEntityNameAsCStr, "GetName", "" )
+    DEFINE_SCRIPTFUNC( GetPreTemplateName, "Get the entity name stripped of template unique decoration" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptGetEHandle, "GetEntityHandle", "Get the entity as an EHANDLE" )
 
-                                        DEFINE_SCRIPTFUNC_NAMED( GetAbsOrigin, "GetOrigin", "This is GetAbsOrigin with a funny script name for some reason. Not changing it for legacy compat though." )
-                                            DEFINE_SCRIPTFUNC( SetAbsOrigin, "SetAbsOrigin" )
-                                                DEFINE_SCRIPTFUNC_NAMED( ScriptSetOrigin, "SetOrigin", "THIS DOESNT CALL SetAbsOrigin IT CALLS Teleport" )
-                                                    DEFINE_SCRIPTFUNC_NAMED( ScriptGetForward, "GetForwardVector", "Get the forward vector of the entity" )
-                                                        DEFINE_SCRIPTFUNC_NAMED( ScriptGetRight, "GetRightVector", "Get the right vector of the entity" )
-                                                            DEFINE_SCRIPTFUNC_NAMED( ScriptGetLeft, "GetLeftVector", "!!!LEGACY FOR COMPAT!!! Get the **right** vector of the entity. This is purely for compatibility. DO NOT USE ME. Use GetRightVector!" )
-                                                                DEFINE_SCRIPTFUNC_NAMED( ScriptGetUp, "GetUpVector", "Get the up vector of the entity" )
-                                                                    DEFINE_SCRIPTFUNC_NAMED( ScriptSetForward, "SetForwardVector", "Set the orientation of the entity to have this forward vector" )
+    DEFINE_SCRIPTFUNC_NAMED( GetAbsOrigin, "GetOrigin", "This is GetAbsOrigin with a funny script name for some reason. Not changing it for legacy compat though." )
+    DEFINE_SCRIPTFUNC( SetAbsOrigin, "SetAbsOrigin" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptSetOrigin, "SetOrigin", "THIS DOESNT CALL SetAbsOrigin IT CALLS Teleport" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptGetForward, "GetForwardVector", "Get the forward vector of the entity" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptGetRight, "GetRightVector", "Get the right vector of the entity" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptGetLeft, "GetLeftVector", "!!!LEGACY FOR COMPAT!!! Get the **right** vector of the entity. This is purely for compatibility. DO NOT USE ME. Use GetRightVector!" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptGetUp, "GetUpVector", "Get the up vector of the entity" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptSetForward, "SetForwardVector", "Set the orientation of the entity to have this forward vector" )
 
     // im not sure these do anything useful...
     DEFINE_SCRIPTFUNC( GetAbsVelocity, "Returns the current absolute velocity of the entity" )
-        DEFINE_SCRIPTFUNC_NAMED( ScriptGetVelocity, "GetVelocity", "!!!LEGACY FOR COMPAT!!! Use GetAbsVelocity" )
-            DEFINE_SCRIPTFUNC( SetAbsVelocity, "Sets the current absolute velocity of the entity" )
-                DEFINE_SCRIPTFUNC_NAMED( ScriptSetVelocity, "SetVelocity", "!!!LEGACY FOR COMPAT!!! Use SetAbsVelocity" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptGetVelocity, "GetVelocity", "!!!LEGACY FOR COMPAT!!! Use GetAbsVelocity" )
+    DEFINE_SCRIPTFUNC( SetAbsVelocity, "Sets the current absolute velocity of the entity" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptSetVelocity, "SetVelocity", "!!!LEGACY FOR COMPAT!!! Use SetAbsVelocity" )
 
     // 	DEFINE_SCRIPTFUNC_NAMED( SetLocalVelocity, "SetLocalVelocity", ""  )
     DEFINE_SCRIPTFUNC( GetLocalVelocity, "Get Entity relative velocity" )
-        DEFINE_SCRIPTFUNC( GetBaseVelocity, "Get Base velocity" )
+    DEFINE_SCRIPTFUNC( GetBaseVelocity, "Get Base velocity" )
 
-            DEFINE_SCRIPTFUNC_NAMED( ScriptSetLocalAngularVelocity, "SetAngularVelocity", "Set the local angular velocity - takes float pitch,yaw,roll velocities" )
-                DEFINE_SCRIPTFUNC_NAMED( ScriptGetLocalAngularVelocity, "GetAngularVelocity", "Get the local angular velocity - returns a vector of pitch,yaw,roll" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptSetLocalAngularVelocity, "SetAngularVelocity", "Set the local angular velocity - takes float pitch,yaw,roll velocities" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptGetLocalAngularVelocity, "GetAngularVelocity", "Get the local angular velocity - returns a vector of pitch,yaw,roll" )
 
-                    DEFINE_SCRIPTFUNC( ApplyAbsVelocityImpulse, "Apply a Velocity Impulse" )
-                        DEFINE_SCRIPTFUNC( ApplyLocalAngularVelocityImpulse, "Apply an Ang Velocity Impulse" )
+    DEFINE_SCRIPTFUNC( ApplyAbsVelocityImpulse, "Apply a Velocity Impulse" )
+    DEFINE_SCRIPTFUNC( ApplyLocalAngularVelocityImpulse, "Apply an Ang Velocity Impulse" )
 
-                            DEFINE_SCRIPTFUNC( GetFriction, "Get PLAYER friction, ignored for objects" )
+    DEFINE_SCRIPTFUNC( GetFriction, "Get PLAYER friction, ignored for objects" )
 
-                                DEFINE_SCRIPTFUNC( SetFriction, "Set PLAYER friction, ignored for objects" )
-                                    DEFINE_SCRIPTFUNC( SetGravity, "Set PLAYER gravity, ignored for objects" )
-#if defined( ENABLE_FRICTION_OVERRIDE )
-                                        DEFINE_SCRIPTFUNC( OverrideFriction, "Takes duration, value for a temporary override" )
-#endif
+    DEFINE_SCRIPTFUNC( SetFriction, "Set PLAYER friction, ignored for objects" )
+    DEFINE_SCRIPTFUNC( SetGravity, "Set PLAYER gravity, ignored for objects" )
+    #if defined( ENABLE_FRICTION_OVERRIDE )
+    DEFINE_SCRIPTFUNC( OverrideFriction, "Takes duration, value for a temporary override" )
+    #endif
 
-                                            DEFINE_SCRIPTFUNC_NAMED( WorldSpaceCenter, "GetCenter", "Get vector to center of object - absolute coords" )
-                                                DEFINE_SCRIPTFUNC_NAMED( ScriptEyePosition, "EyePosition", "Get vector to eye position - absolute coords" )
+    DEFINE_SCRIPTFUNC_NAMED( WorldSpaceCenter, "GetCenter", "Get vector to center of object - absolute coords" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptEyePosition, "EyePosition", "Get vector to eye position - absolute coords" )
 
-                                                    DEFINE_SCRIPTFUNC( SetAbsAngles, "Set entity pitch, yaw, roll as QAngles" )
-                                                        DEFINE_SCRIPTFUNC( GetAbsAngles, "Get entity pitch, yaw, roll as QAngles" )
+    DEFINE_SCRIPTFUNC( SetAbsAngles, "Set entity pitch, yaw, roll as QAngles" )
+    DEFINE_SCRIPTFUNC( GetAbsAngles, "Get entity pitch, yaw, roll as QAngles" )
 
-                                                            DEFINE_SCRIPTFUNC( GetLocalOrigin, "" )
-                                                                DEFINE_SCRIPTFUNC( GetLocalAngles, "" )
-                                                                    DEFINE_SCRIPTFUNC( SetLocalOrigin, "" )
-                                                                        DEFINE_SCRIPTFUNC( SetLocalAngles, "" )
+    DEFINE_SCRIPTFUNC( GetLocalOrigin, "" )
+    DEFINE_SCRIPTFUNC( GetLocalAngles, "" )
+    DEFINE_SCRIPTFUNC( SetLocalOrigin, "" )
+    DEFINE_SCRIPTFUNC( SetLocalAngles, "" )
 
-                                                                            DEFINE_SCRIPTFUNC_NAMED( ScriptSetAngles, "SetAngles", "!!!LEGACY FOR COMPAT!!! DO NOT USE ME. Set entity pitch, yaw, roll" )
-                                                                                DEFINE_SCRIPTFUNC_NAMED( ScriptGetAngles, "GetAngles", "!!!LEGACY FOR COMPAT!!! DO NOT USE ME. Get entity pitch, yaw, roll as a vector" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptSetAngles, "SetAngles", "!!!LEGACY FOR COMPAT!!! DO NOT USE ME. Set entity pitch, yaw, roll" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptGetAngles, "GetAngles", "!!!LEGACY FOR COMPAT!!! DO NOT USE ME. Get entity pitch, yaw, roll as a vector" )
 
     // DEFINE_SCRIPTFUNC_NAMED( AddContextForScript, "SetContext", "SetContext( name , value, duration ): store any key/value pair in this entity's dialog contexts. Value must be a string. Will last for duration (set -1 to mean 'forever')." )
     // DEFINE_SCRIPTFUNC_NAMED( AddContextForScriptNumeric, "SetContextNum", "SetContext( name , value, duration ): store any key/value pair in this entity's dialog contexts. Value must be a number (int or float). Will last for duration (set -1 to mean 'forever')." )
     // DEFINE_SCRIPTFUNC_NAMED( GetContextForScript, "GetContext", "GetContext( name ): looks up a context and returns it if available. May return string, float, or null (if the context isn't found)" )
 
     DEFINE_SCRIPTFUNC_NAMED( ScriptSetSize, "SetSize", "" )
-        DEFINE_SCRIPTFUNC_NAMED( ScriptGetBoundingMins, "GetBoundingMins", "Get a vector containing min bounds, centered on object" )
-            DEFINE_SCRIPTFUNC_NAMED( ScriptGetBoundingMaxs, "GetBoundingMaxs", "Get a vector containing max bounds, centered on object" )
-                DEFINE_SCRIPTFUNC_NAMED( ScriptGetBoundingMinsOriented, "GetBoundingMinsOriented", "Get a vector containing min bounds, centered on object, taking the object's orientation into account" )
-                    DEFINE_SCRIPTFUNC_NAMED( ScriptGetBoundingMaxsOriented, "GetBoundingMaxsOriented", "Get a vector containing max bounds, centered on object, taking the object's orientation into account" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptGetBoundingMins, "GetBoundingMins", "Get a vector containing min bounds, centered on object" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptGetBoundingMaxs, "GetBoundingMaxs", "Get a vector containing max bounds, centered on object" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptGetBoundingMinsOriented, "GetBoundingMinsOriented", "Get a vector containing min bounds, centered on object, taking the object's orientation into account" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptGetBoundingMaxsOriented, "GetBoundingMaxsOriented", "Get a vector containing max bounds, centered on object, taking the object's orientation into account" )
 
-                        DEFINE_SCRIPTFUNC_NAMED( ScriptUtilRemove, "Destroy", "" )
-                            DEFINE_SCRIPTFUNC_NAMED( ScriptSetOwner, "SetOwner", "" )
-                                DEFINE_SCRIPTFUNC_NAMED( GetTeamNumber, "GetTeam", "" )
-                                    DEFINE_SCRIPTFUNC_NAMED( ChangeTeam, "SetTeam", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptUtilRemove, "Destroy", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptSetOwner, "SetOwner", "" )
+    DEFINE_SCRIPTFUNC_NAMED( GetTeamNumber, "GetTeam", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ChangeTeam, "SetTeam", "" )
 
-                                        DEFINE_SCRIPTFUNC_NAMED( ScriptGetMoveParent, "GetMoveParent", "If in hierarchy, retrieves the entity's parent" )
-                                            DEFINE_SCRIPTFUNC_NAMED( ScriptGetRootMoveParent, "GetRootMoveParent", "If in hierarchy, walks up the hierarchy to find the root parent" )
-                                                DEFINE_SCRIPTFUNC_NAMED( ScriptFirstMoveChild, "FirstMoveChild", "" )
-                                                    DEFINE_SCRIPTFUNC_NAMED( ScriptNextMovePeer, "NextMovePeer", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptGetMoveParent, "GetMoveParent", "If in hierarchy, retrieves the entity's parent" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptGetRootMoveParent, "GetRootMoveParent", "If in hierarchy, walks up the hierarchy to find the root parent" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptFirstMoveChild, "FirstMoveChild", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptNextMovePeer, "NextMovePeer", "" )
 
-                                                        DEFINE_SCRIPTFUNC_NAMED( KeyValueFromString, "__KeyValueFromString", SCRIPT_HIDE )
-                                                            DEFINE_SCRIPTFUNC_NAMED( KeyValueFromFloat, "__KeyValueFromFloat", SCRIPT_HIDE )
-                                                                DEFINE_SCRIPTFUNC_NAMED( KeyValueFromInt, "__KeyValueFromInt", SCRIPT_HIDE )
-                                                                    DEFINE_SCRIPTFUNC_NAMED( KeyValueFromVector, "__KeyValueFromVector", SCRIPT_HIDE )
+    DEFINE_SCRIPTFUNC_NAMED( KeyValueFromString, "__KeyValueFromString", SCRIPT_HIDE )
+    DEFINE_SCRIPTFUNC_NAMED( KeyValueFromFloat, "__KeyValueFromFloat", SCRIPT_HIDE )
+    DEFINE_SCRIPTFUNC_NAMED( KeyValueFromInt, "__KeyValueFromInt", SCRIPT_HIDE )
+    DEFINE_SCRIPTFUNC_NAMED( KeyValueFromVector, "__KeyValueFromVector", SCRIPT_HIDE )
 
-                                                                        DEFINE_SCRIPTFUNC( KeyValueFromString, "Executes KeyValue with a string" )
-                                                                            DEFINE_SCRIPTFUNC( KeyValueFromFloat, "Executes KeyValue with a float" )
-                                                                                DEFINE_SCRIPTFUNC( KeyValueFromInt, "Executes KeyValue with an int" )
-                                                                                    DEFINE_SCRIPTFUNC( KeyValueFromVector, "Executes KeyValue with a vector" )
+    DEFINE_SCRIPTFUNC( KeyValueFromString, "Executes KeyValue with a string" )
+    DEFINE_SCRIPTFUNC( KeyValueFromFloat, "Executes KeyValue with a float" )
+    DEFINE_SCRIPTFUNC( KeyValueFromInt, "Executes KeyValue with an int" )
+    DEFINE_SCRIPTFUNC( KeyValueFromVector, "Executes KeyValue with a vector" )
 
-                                                                                        DEFINE_SCRIPTFUNC_NAMED( ScriptGetModelKeyValues, "GetModelKeyValues", "Get a KeyValue class instance on this entity's model" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptGetModelKeyValues, "GetModelKeyValues", "Get a KeyValue class instance on this entity's model" )
 
-                                                                                            DEFINE_SCRIPTFUNC( ValidateScriptScope, "Ensure that an entity's script scope has been created" )
-                                                                                                DEFINE_SCRIPTFUNC( GetScriptScope, "Retrieve the script-side data associated with an entity" )
-                                                                                                    DEFINE_SCRIPTFUNC( GetScriptId, "Retrieve the unique identifier used to refer to the entity within the scripting system" )
-                                                                                                        DEFINE_SCRIPTFUNC( GetScriptThinkFunc, "Retrieve the name of the current script think func" )
-                                                                                                            DEFINE_SCRIPTFUNC_NAMED( GetScriptOwnerEntity, "GetOwner", "Gets this entity's owner" )
-                                                                                                                DEFINE_SCRIPTFUNC_NAMED( SetScriptOwnerEntity, "SetOwner", "Sets this entity's owner" )
-                                                                                                                    DEFINE_SCRIPTFUNC( entindex, "" )
+    DEFINE_SCRIPTFUNC( ValidateScriptScope, "Ensure that an entity's script scope has been created" )
+    DEFINE_SCRIPTFUNC( GetScriptScope, "Retrieve the script-side data associated with an entity" )
+    DEFINE_SCRIPTFUNC( GetScriptId, "Retrieve the unique identifier used to refer to the entity within the scripting system" )
+    DEFINE_SCRIPTFUNC( GetScriptThinkFunc, "Retrieve the name of the current script think func" )
+    DEFINE_SCRIPTFUNC_NAMED( GetScriptOwnerEntity, "GetOwner", "Gets this entity's owner" )
+    DEFINE_SCRIPTFUNC_NAMED( SetScriptOwnerEntity, "SetOwner", "Sets this entity's owner" )
+    DEFINE_SCRIPTFUNC( entindex, "" )
 
-                                                                                                                        DEFINE_SCRIPTFUNC_NAMED( ScriptEnableDraw, "EnableDraw", "Disable drawing (sets EF_NODRAW)" )
-                                                                                                                            DEFINE_SCRIPTFUNC_NAMED( ScriptDisableDraw, "DisableDraw", "Enable drawing (removes EF_NODRAW)" )
-                                                                                                                                DEFINE_SCRIPTFUNC_NAMED( ScriptSetDrawEnabled, "SetDrawEnabled", "Enables drawing if you pass true, disables drawing if you pass false." )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptEnableDraw, "EnableDraw", "Disable drawing (sets EF_NODRAW)" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptDisableDraw, "DisableDraw", "Enable drawing (removes EF_NODRAW)" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptSetDrawEnabled, "SetDrawEnabled", "Enables drawing if you pass true, disables drawing if you pass false." )
 
-                                                                                                                                    DEFINE_SCRIPTFUNC_NAMED( ScriptDispatchSpawn, "DispatchSpawn", "Alternative dispatch spawn, same as the one in CEntities, for convenience." )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptDispatchSpawn, "DispatchSpawn", "Alternative dispatch spawn, same as the one in CEntities, for convenience." )
 
-                                                                                                                                        DEFINE_SCRIPTFUNC_NAMED( ScriptEyeAngles, "EyeAngles", "Returns the entity's eye angles" )
-                                                                                                                                            DEFINE_SCRIPTFUNC_NAMED( ScriptLocalEyeAngles, "LocalEyeAngles", "Returns the entity's local eye angles" )
-                                                                                                                                                DEFINE_SCRIPTFUNC_NAMED( ScriptTeleport, "Teleport", "Teleports this entity" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptEyeAngles, "EyeAngles", "Returns the entity's eye angles" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptLocalEyeAngles, "LocalEyeAngles", "Returns the entity's local eye angles" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptTeleport, "Teleport", "Teleports this entity" )
 
-                                                                                                                                                    DEFINE_SCRIPTFUNC( GetPhysVelocity, "" )
-                                                                                                                                                        DEFINE_SCRIPTFUNC( GetPhysAngularVelocity, "" )
-                                                                                                                                                            DEFINE_SCRIPTFUNC( SetPhysVelocity, "" )
-                                                                                                                                                                DEFINE_SCRIPTFUNC( SetPhysAngularVelocity, "" )
-                                                                                                                                                                    DEFINE_SCRIPTFUNC_NAMED( ScriptGetMoveType, "GetMoveType", "" )
-                                                                                                                                                                        DEFINE_SCRIPTFUNC_NAMED( ScriptSetMoveType, "SetMoveType", "" )
+    DEFINE_SCRIPTFUNC( GetPhysVelocity, "" )
+    DEFINE_SCRIPTFUNC( GetPhysAngularVelocity, "" )
+    DEFINE_SCRIPTFUNC( SetPhysVelocity, "" )
+    DEFINE_SCRIPTFUNC( SetPhysAngularVelocity, "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptGetMoveType, "GetMoveType", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptSetMoveType, "SetMoveType", "" )
 
-                                                                                                                                                                            DEFINE_SCRIPTFUNC( AddFlag, "" )
-                                                                                                                                                                                DEFINE_SCRIPTFUNC( RemoveFlag, "" )
-                                                                                                                                                                                    DEFINE_SCRIPTFUNC( ToggleFlag, "" )
-                                                                                                                                                                                        DEFINE_SCRIPTFUNC( GetFlags, "" )
-                                                                                                                                                                                            DEFINE_SCRIPTFUNC( ClearFlags, "" )
+    DEFINE_SCRIPTFUNC( AddFlag, "" )
+    DEFINE_SCRIPTFUNC( RemoveFlag, "" )
+    DEFINE_SCRIPTFUNC( ToggleFlag, "" )
+    DEFINE_SCRIPTFUNC( GetFlags, "" )
+    DEFINE_SCRIPTFUNC( ClearFlags, "" )
 
-                                                                                                                                                                                                DEFINE_SCRIPTFUNC( GetEFlags, "" )
-                                                                                                                                                                                                    DEFINE_SCRIPTFUNC( SetEFlags, "" )
-                                                                                                                                                                                                        DEFINE_SCRIPTFUNC( AddEFlags, "" )
-                                                                                                                                                                                                            DEFINE_SCRIPTFUNC( RemoveEFlags, "" )
-                                                                                                                                                                                                                DEFINE_SCRIPTFUNC( IsEFlagSet, "" )
+    DEFINE_SCRIPTFUNC( GetEFlags, "" )
+    DEFINE_SCRIPTFUNC( SetEFlags, "" )
+    DEFINE_SCRIPTFUNC( AddEFlags, "" )
+    DEFINE_SCRIPTFUNC( RemoveEFlags, "" )
+    DEFINE_SCRIPTFUNC( IsEFlagSet, "" )
 
-                                                                                                                                                                                                                    DEFINE_SCRIPTFUNC( ClearSolidFlags, "" )
-                                                                                                                                                                                                                        DEFINE_SCRIPTFUNC( RemoveSolidFlags, "" )
-                                                                                                                                                                                                                            DEFINE_SCRIPTFUNC( AddSolidFlags, "" )
-                                                                                                                                                                                                                                DEFINE_SCRIPTFUNC( IsSolidFlagSet, "" )
-                                                                                                                                                                                                                                    DEFINE_SCRIPTFUNC( SetSolidFlags, "" )
-                                                                                                                                                                                                                                        DEFINE_SCRIPTFUNC( IsSolid, "" )
+    DEFINE_SCRIPTFUNC( ClearSolidFlags, "" )
+    DEFINE_SCRIPTFUNC( RemoveSolidFlags, "" )
+    DEFINE_SCRIPTFUNC( AddSolidFlags, "" )
+    DEFINE_SCRIPTFUNC( IsSolidFlagSet, "" )
+    DEFINE_SCRIPTFUNC( SetSolidFlags, "" )
+    DEFINE_SCRIPTFUNC( IsSolid, "" )
 
-                                                                                                                                                                                                                                            DEFINE_SCRIPTFUNC( GetCollisionGroup, "" )
-                                                                                                                                                                                                                                                DEFINE_SCRIPTFUNC( SetCollisionGroup, "" )
+    DEFINE_SCRIPTFUNC( GetCollisionGroup, "" )
+    DEFINE_SCRIPTFUNC( SetCollisionGroup, "" )
 
-                                                                                                                                                                                                                                                    DEFINE_SCRIPTFUNC( GetGravity, "" )
-                                                                                                                                                                                                                                                        DEFINE_SCRIPTFUNC( SetGravity, "" )
+    DEFINE_SCRIPTFUNC( GetGravity, "" )
+    DEFINE_SCRIPTFUNC( SetGravity, "" )
 
-                                                                                                                                                                                                                                                            DEFINE_SCRIPTFUNC( GetFriction, "" )
-                                                                                                                                                                                                                                                                DEFINE_SCRIPTFUNC( SetFriction, "" )
+    DEFINE_SCRIPTFUNC( GetFriction, "" )
+    DEFINE_SCRIPTFUNC( SetFriction, "" )
 
-                                                                                                                                                                                                                                                                    DEFINE_SCRIPTFUNC( GetWaterLevel, "" )
-                                                                                                                                                                                                                                                                        DEFINE_SCRIPTFUNC( SetWaterLevel, "" )
+    DEFINE_SCRIPTFUNC( GetWaterLevel, "" )
+    DEFINE_SCRIPTFUNC( SetWaterLevel, "" )
 
-                                                                                                                                                                                                                                                                            DEFINE_SCRIPTFUNC( GetWaterType, "" )
-                                                                                                                                                                                                                                                                                DEFINE_SCRIPTFUNC( SetWaterType, "" )
+    DEFINE_SCRIPTFUNC( GetWaterType, "" )
+    DEFINE_SCRIPTFUNC( SetWaterType, "" )
 
-                                                                                                                                                                                                                                                                                    DEFINE_SCRIPTFUNC_NAMED( ScriptGetSolid, "GetSolid", "" )
-                                                                                                                                                                                                                                                                                        DEFINE_SCRIPTFUNC_NAMED( ScriptSetSolid, "SetSolid", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptGetSolid, "GetSolid", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptSetSolid, "SetSolid", "" )
 
-                                                                                                                                                                                                                                                                                            DEFINE_SCRIPTFUNC( TerminateScriptScope, "Clear the current script scope for this entity" )
+    DEFINE_SCRIPTFUNC( TerminateScriptScope, "Clear the current script scope for this entity" )
 
-                                                                                                                                                                                                                                                                                                DEFINE_SCRIPTFUNC_NAMED( ScriptAcceptInput, "AcceptInput", "Generate a synchronous I/O event" )
-                                                                                                                                                                                                                                                                                                    DEFINE_SCRIPTFUNC( IsAlive, "" )
-                                                                                                                                                                                                                                                                                                        END_SCRIPTDESC();
+    DEFINE_SCRIPTFUNC_NAMED( ScriptAcceptInput, "AcceptInput", "Generate a synchronous I/O event" )
+    DEFINE_SCRIPTFUNC( IsAlive, "" )
+END_SCRIPTDESC();
+
+static void *WORKAROUND_NASTY_FORMATTING_BUG3;  // clang-format on
 
 // For code error checking
 extern bool g_bReceivedChainedUpdateOnRemove;
@@ -2536,13 +2655,15 @@ int CBaseEntity::ObjectCaps( void )
 #if 1
     model_t *pModel = GetModel();
     bool bIsBrush = ( pModel && modelinfo->GetModelType( pModel ) == mod_brush );
+    int caps;
 
     // We inherit our parent's use capabilities so that we can forward use commands
     // to our parent.
     CBaseEntity *pParent = GetParent();
+
     if ( pParent )
     {
-        int caps = pParent->ObjectCaps();
+        caps = pParent->ObjectCaps();
 
         if ( !bIsBrush )
             caps &= ( FCAP_ACROSS_TRANSITION | FCAP_IMPULSE_USE | FCAP_CONTINUOUS_USE | FCAP_ONOFF_USE | FCAP_DIRECTIONAL_USE );
@@ -2551,15 +2672,30 @@ int CBaseEntity::ObjectCaps( void )
 
         if ( pParent->IsPlayer() )
             caps |= FCAP_ACROSS_TRANSITION;
-
-        return caps;
     }
     else if ( !bIsBrush )
     {
-        return FCAP_ACROSS_TRANSITION;
+        caps |= FCAP_ACROSS_TRANSITION;
     }
 
-    return 0;
+    if ( m_UsabilityType == USABILITY_TYPE::CONTINUOUS )
+    {
+        caps |= FCAP_CONTINUOUS_USE;
+    }
+    else if ( m_UsabilityType == USABILITY_TYPE::ON_OFF )
+    {
+        caps |= FCAP_ONOFF_USE;
+    }
+    else if ( m_UsabilityType == USABILITY_TYPE::DIRECTIONAL )
+    {
+        caps |= FCAP_DIRECTIONAL_USE;
+    }
+    else if ( m_UsabilityType == USABILITY_TYPE::IMPULSE )
+    {
+        caps |= FCAP_IMPULSE_USE;
+    }
+
+    return caps;
 #else
     // We inherit our parent's use capabilities so that we can forward use commands
     // to our parent.
@@ -2647,6 +2783,11 @@ void CBaseEntity::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE u
             m_pParent->Use( pActivator, pCaller, useType, value );
         }
     }
+}
+
+void CBaseEntity::SetUseType( USABILITY_TYPE::TYPE useType )
+{
+    m_UsabilityType = useType;
 }
 
 static CBaseEntity *FindPhysicsBlocker( IPhysicsObject *pPhysics, physicspushlist_t &list, const Vector &pushVel )
@@ -3446,11 +3587,12 @@ FORCEINLINE bool NamesMatch( const char *pszQuery, string_t nameToMatch )
         unsigned char cName = *pszNameToMatch;
         unsigned char cQuery = *pszQuery;
         // simple ascii case conversion
+        // Experiment; applied fix by TotallyMehis (https://github.com/ValveSoftware/source-sdk-2013/pull/498)
         if ( cName == cQuery )
             ;
-        else if ( cName - 'A' <= ( unsigned char )'Z' - 'A' && cName - 'A' + 'a' == cQuery )
+        else if ( ( unsigned char )( cName - 'A' ) <= ( unsigned char )( 'Z' - 'A' ) && ( unsigned char )( cName - 'A' + 'a' ) == cQuery )
             ;
-        else if ( cName - 'a' <= ( unsigned char )'z' - 'a' && cName - 'a' + 'A' == cQuery )
+        else if ( ( unsigned char )( cName - 'a' ) <= ( unsigned char )( 'z' - 'a' ) && ( unsigned char )( cName - 'a' + 'A' ) == cQuery )
             ;
         else
             break;
@@ -3928,6 +4070,16 @@ CBaseEntity *CBaseEntity::Instance( const CBaseHandle &hEnt )
     return gEntList.GetBaseEntity( hEnt );
 }
 
+void CBaseEntity::AddDeleteOnRemove( CBaseEntity *pEntity )
+{
+    m_EntitiesToDeleteOnRemove.AddToTail( pEntity );
+}
+
+void CBaseEntity::RemoveDeleteOnRemove( CBaseEntity *pEntity )
+{
+    m_EntitiesToDeleteOnRemove.FindAndRemove( pEntity );
+}
+
 int CBaseEntity::GetTransmitState( void )
 {
     edict_t *ed = edict();
@@ -3963,6 +4115,19 @@ int CBaseEntity::UpdateTransmitState()
     // If you get this assert, you should be calling DispatchUpdateTransmitState
     // instead of UpdateTransmitState.
     Assert( g_nInsideDispatchUpdateTransmitState > 0 );
+
+    if ( m_bTransmitWithParent )
+    {
+        if ( GetParent() )
+        {
+            return GetParent()->UpdateTransmitState();
+        }
+    }
+
+    if ( m_rfPreventTransmitEntities && m_rfPreventTransmitEntities->GetRecipientCount() > 0 )
+    {
+        return SetTransmitState( FL_EDICT_FULLCHECK );  // TODO: Check if this never resets to a sensible value. If it doesn't, we must somehow reset it to something sensible when no prevent transmit players are left for optimization.
+    }
 
     // If an object is the moveparent of something else, don't skip it just because it's marked EF_NODRAW or else
     //  the client won't have a proper origin for the child since the hierarchy won't be correctly transmitted down
@@ -4062,6 +4227,39 @@ int CBaseEntity::ShouldTransmit( const CCheckTransmitInfo *pInfo )
     // by default do a PVS check
 
     return FL_EDICT_PVSCHECK;
+}
+
+void CBaseEntity::SetPreventTransmit( CBasePlayer *filter, bool bPreventTransmitting )
+{
+    if ( !m_rfPreventTransmitEntities )
+    {
+        m_rfPreventTransmitEntities = new CRecipientFilter();
+    }
+
+    Assert( filter );
+
+    if ( bPreventTransmitting )
+    {
+        m_rfPreventTransmitEntities->AddRecipient( filter );
+    }
+    else
+    {
+        m_rfPreventTransmitEntities->RemoveRecipient( filter );
+    }
+}
+
+void CBaseEntity::SetPreventTransmit( CRecipientFilter &filter, bool bPreventTransmitting )
+{
+    int c = filter.GetRecipientCount();
+
+    for ( int i = 0; i < c; i++ )
+    {
+        CBasePlayer *player = UTIL_PlayerByIndex( filter.GetRecipientIndex( i ) );
+        if ( !player )
+            continue;
+
+        SetPreventTransmit( player, bPreventTransmitting );
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -4536,6 +4734,8 @@ void CBaseEntity::InputSetDamageFilter( inputdata_t &inputdata )
     }
 }
 
+//-----------------------------------------------------------------------------
+// Purpose:
 //-----------------------------------------------------------------------------
 void CBaseEntity::ScriptInputKill( void )
 {
@@ -5369,6 +5569,9 @@ int CBaseEntity::PrecacheModel( const char *name, bool bPreload )
 {
     if ( !name || !*name )
     {
+#ifdef STAGING_ONLY
+        Msg( "Attempting to precache model, but model name is NULL\n" );
+#endif
         return -1;
     }
 
@@ -5377,7 +5580,8 @@ int CBaseEntity::PrecacheModel( const char *name, bool bPreload )
     {
         if ( !engine->IsModelPrecached( name ) )
         {
-            DevMsg( "Late precache of %s -- not necessarily a bug now that we allow ~everything to be dynamically loaded.\n", name );
+            // Experiment; Commented this useless warning since 'we allow ~everything to be dynamically loaded'
+            // DevMsg( "Late precache of %s -- not necessarily a bug now that we allow ~everything to be dynamically loaded.\n", name );
         }
     }
 #if defined( WATCHACCESS )

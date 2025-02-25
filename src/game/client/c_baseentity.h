@@ -35,6 +35,11 @@
 #include "particle_property.h"
 #include "toolframework/itoolentity.h"
 #include "tier0/threadtools.h"
+#include "soundstartparams.h"
+
+#ifdef LUA_SDK
+#include "luamanager.h"
+#endif
 
 class C_Team;
 class IPhysicsObject;
@@ -166,6 +171,11 @@ struct thinkfunc_t
 //-----------------------------------------------------------------------------
 class C_BaseEntity : public IClientEntity
 {
+#ifdef LUA_SDK
+    LUA_DECLARE_SINGLE_LUA_INSTANCE( C_BaseEntity, LUA_BASEENTITYMETANAME );
+#endif
+
+   public:
     // Construction
     DECLARE_CLASS_NOBASE( C_BaseEntity );
 
@@ -179,6 +189,19 @@ class C_BaseEntity : public IClientEntity
 
     C_BaseEntity();
     virtual ~C_BaseEntity();
+
+#ifdef LUA_SDK
+    virtual void SetupRefTable( lua_State *L );
+
+    // These match CNetworkArray in baseentity.h serverside:
+    bool m_LuaVariables_bool[LUA_MAX_NETWORK_VARIABLES];
+    int m_LuaVariables_int[LUA_MAX_NETWORK_VARIABLES];
+    float m_LuaVariables_float[LUA_MAX_NETWORK_VARIABLES];
+    Vector m_LuaVariables_Vector[LUA_MAX_NETWORK_VARIABLES];
+    QAngle m_LuaVariables_QAngle[LUA_MAX_NETWORK_VARIABLES];
+    char m_LuaVariables_String[LUA_MAX_NETWORK_VARIABLES_STRING][DT_MAX_STRING_BUFFERSIZE];
+    EHANDLE m_LuaVariables_Entity[LUA_MAX_NETWORK_VARIABLES];
+#endif
 
     static C_BaseEntity *CreatePredictedEntityByName( const char *classname, const char *module, int line, bool persist = false );
 
@@ -359,6 +382,8 @@ class C_BaseEntity : public IClientEntity
     // IClientNetworkable implementation.
    public:
     virtual void NotifyShouldTransmit( ShouldTransmitState_t state );
+    virtual void SetTransmitWithParent( bool bTransmitWithParent );
+    virtual bool GetTransmitWithParent();
 
     // save out interpolated values
     virtual void PreDataUpdate( DataUpdateType_t updateType );
@@ -615,6 +640,8 @@ class C_BaseEntity : public IClientEntity
     virtual int GetRenderTeamNumber( void );
     virtual bool InSameTeam( const C_BaseEntity *pEntity ) const;  // Returns true if the specified entity is on the same team as this one
     virtual bool InLocalTeam( void );
+    void SetNoCollidingWithTeammates( bool );
+    bool GetNoCollidingWithTeammates( void );
 
     // ID Target handling
     virtual bool IsValidIDTarget( void )
@@ -933,7 +960,7 @@ class C_BaseEntity : public IClientEntity
     static int PrecacheModel( const char *name );
     static bool PrecacheSound( const char *name );
     static void PrefetchSound( const char *name );
-    void Remove();  // UTIL_Remove( this );
+    virtual void Remove();  // UTIL_Remove( this );
 
    public:
     // Returns the attachment point index on our parent that our transform is relative to.
@@ -986,6 +1013,7 @@ class C_BaseEntity : public IClientEntity
 
    protected:
     static bool sm_bDisableTouchFuncs;  // Disables PhysicsTouch and PhysicsStartTouch function calls
+    bool m_bTransmitWithParent = false;
 
    public:
     touchlink_t *PhysicsMarkEntityAsTouched( C_BaseEntity *other );
@@ -1484,6 +1512,7 @@ class C_BaseEntity : public IClientEntity
 
     // Team Handling
     int m_iTeamNum;
+    bool m_bNoCollidingWithTeammates;
 
 #if !defined( NO_ENTITY_PREDICTION )
     // Certain entities (projectiles) can be created on the client
@@ -1823,6 +1852,26 @@ class C_BaseEntity : public IClientEntity
     float m_fRenderingClipPlane[4];     // world space clip plane when drawing
     bool m_bEnableRenderingClipPlane;   // true to use the custom clip plane when drawing
     float *GetRenderClipPlane( void );  // Rendering clip plane, should be 4 floats, return value of NULL indicates a disabled render clip plane
+
+#ifdef LUA_SDK
+    // Andrew; This is used to determine an entity's reference in Lua's
+    // LUA_REGISTRYINDEX. I'd rather do this than create a struct and pass
+    // that to each bounded function, plus it'll save some perf for massive
+    // executions, like Think funcs.
+    int m_nTableReference;
+    // Henry; There's an IsPlayer and IsWorld and such, why not an IsWeapon?
+    virtual bool IsWeapon( void ) const
+    {
+        return false;
+    }
+
+    virtual bool IsVehicle( void );
+
+    virtual bool IsScripted( void ) const
+    {
+        return false;
+    }
+#endif
 
    protected:
     void AddToInterpolationList();

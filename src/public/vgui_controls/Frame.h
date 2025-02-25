@@ -32,7 +32,11 @@ class Frame : public EditablePanel
     DECLARE_CLASS_SIMPLE( Frame, EditablePanel );
 
    public:
+#ifdef LUA_SDK
+    Frame( Panel *parent, const char *panelName, bool showTaskbarIcon = true, bool bPopup = true, lua_State *L = nullptr );
+#else
     Frame( Panel *parent, const char *panelName, bool showTaskbarIcon = true, bool bPopup = true );
+#endif
     virtual ~Frame();
 
     // Set the text in the title bar.  Set surfaceTitle=true if you want this to be the taskbar text as well.

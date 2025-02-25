@@ -41,6 +41,7 @@ void MP3Player_Destroy();
 vgui::IInputInternal *g_InputInternal = NULL;
 
 #include <vgui_controls/Controls.h>
+#include <mainmenu.h>
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -159,6 +160,8 @@ static void VGui_OneTimeInit()
     vgui::Panel::AddPropertyConverter( "CHudTextureHandle", &textureHandleConverter );
 
     g_pMaterialSystem->AddModeChangeCallBack( &VGui_VideoMode_AdjustForModeChange );
+
+    CBaseMenuPanel::Init();
 }
 
 bool VGui_Startup( CreateInterfaceFn appSystemFactory )
@@ -174,6 +177,11 @@ bool VGui_Startup( CreateInterfaceFn appSystemFactory )
     {
         return false;  // c_vguiscreen.cpp needs this!
     }
+
+#ifdef LUA_SDK
+    // Create the root panel for our scripted GameUI state
+    VGUI_CreateGameUIRootPanel();
+#endif
 
     VGui_OneTimeInit();
 
@@ -199,6 +207,7 @@ void VGui_CreateGlobalPanels( void )
 #if defined( TRACK_BLOCKING_IO )
     VPANEL gameDLLPanel = enginevgui->GetPanel( PANEL_GAMEDLL );
 #endif
+
     // Part of game
     internalCenterPrint->Create( gameToolParent );
     loadingdisc->Create( gameToolParent );
@@ -245,6 +254,10 @@ void VGui_Shutdown()
         g_pClientMode->VGui_Shutdown();
     }
 
+#ifdef LUA_SDK
+    VGUI_DestroyGameUIRootPanel();
+#endif
+
     // Make sure anything "marked for deletion"
     //  actually gets deleted before this dll goes away
     vgui::ivgui()->RunFrame();
@@ -273,10 +286,19 @@ void VGui_PreRender()
         loadingdisc->SetPausedVisible( bShowPausedImage, engine->GetPausedExpireTime() );
 #endif
     }
+
+#ifdef LUA_SDK
+    LUA_CALL_HOOK_BEGIN( "PreDrawHUD" );
+    LUA_CALL_HOOK_END( 0, 0 );
+#endif
 }
 
 void VGui_PostRender()
 {
+#ifdef LUA_SDK
+    LUA_CALL_HOOK_BEGIN( "PostDrawHUD" );
+    LUA_CALL_HOOK_END( 0, 0 );
+#endif
 }
 
 //-----------------------------------------------------------------------------

@@ -65,7 +65,8 @@ class CGameEvent;
 abstract_class IGameEventVisitor2{
     public :
         // return true to keep iterating, false to abort iteration
-        virtual bool VisitLocal( const char *name, const void *value ){ return true;
+        virtual bool VisitLocal( const char *name, const void *value ){
+            return true;
 }
 virtual bool VisitString( const char *name, const char *value )
 {
@@ -128,6 +129,10 @@ abstract_class IGameEvent
 
     // returns true if iteration aborted normally, false if it was aborted by the visitor callback
     virtual bool ForEventData( IGameEventVisitor2 * event ) const = 0;
+
+    // Experiment: TODO: Find a less hacky way to get the keyvalues (which we want to push to lua as a table)
+    void *m_pDescriptor;  // Unknown
+    KeyValues *m_pDataKeys;
 };
 
 abstract_class IGameEventListener2

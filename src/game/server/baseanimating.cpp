@@ -33,6 +33,9 @@
 
 ConVar ai_sequence_debug( "ai_sequence_debug", "0" );
 
+// Experiment; become a real ragdoll instead of a client-side ragdoll
+ConVar ai_serverragdolls( "ai_serverragdolls", "0", FCVAR_ARCHIVE, "If set to 1, NPCs will turn into server-side ragdolls when killed." );
+
 class CIKSaveRestoreOps : public CClassPtrSaveRestoreOps
 {
     // save data type interface
@@ -148,6 +151,8 @@ int CInfoLightingRelative::UpdateTransmitState( void )
 
 static CIKSaveRestoreOps s_IKSaveRestoreOp;
 
+// clang-format off
+
 BEGIN_DATADESC( CBaseAnimating )
 
 DEFINE_FIELD( m_flGroundSpeed, FIELD_FLOAT ),
@@ -209,25 +214,21 @@ DEFINE_FIELD( m_flGroundSpeed, FIELD_FLOAT ),
 
     DEFINE_KEYFIELD( m_flModelScale, FIELD_FLOAT, "modelscale" ),
     DEFINE_INPUTFUNC( FIELD_VECTOR, "SetModelScale", InputSetModelScale ),
-    DEFINE_INPUTFUNC( FIELD_STRING, "SetModel", InputSetModel ),
-    DEFINE_INPUTFUNC( FIELD_FLOAT, "SetCycle", InputSetCycle ),
-    DEFINE_INPUTFUNC( FIELD_FLOAT, "SetPlaybackRate", InputSetPlaybackRate ),
 
     DEFINE_FIELD( m_fBoneCacheFlags, FIELD_SHORT ),
+END_DATADESC()
 
-    END_DATADESC()
-
-    // Sendtable for fields we don't want to send to clientside animating entities
-    BEGIN_SEND_TABLE_NOBASE( CBaseAnimating, DT_ServerAnimationData )
+// Sendtable for fields we don't want to send to clientside animating entities
+BEGIN_SEND_TABLE_NOBASE( CBaseAnimating, DT_ServerAnimationData )
     // ANIMATION_CYCLE_BITS is defined in shareddefs.h
     SendPropFloat( SENDINFO( m_flCycle ), ANIMATION_CYCLE_BITS, SPROP_CHANGES_OFTEN | SPROP_ROUNDDOWN, 0.0f, 1.0f )
-        END_SEND_TABLE()
+END_SEND_TABLE()
 
-            void *SendProxy_ClientSideAnimation( const SendProp *pProp, const void *pStruct, const void *pVarData, CSendProxyRecipients *pRecipients, int objectID );
+void *SendProxy_ClientSideAnimation( const SendProp *pProp, const void *pStruct, const void *pVarData, CSendProxyRecipients *pRecipients, int objectID );
 
 // SendTable stuff.
 IMPLEMENT_SERVERCLASS_ST( CBaseAnimating, DT_BaseAnimating )
-SendPropInt( SENDINFO( m_nForceBone ), 8, 0 ),
+    SendPropInt( SENDINFO( m_nForceBone ), 8, 0 ),
     SendPropVector( SENDINFO( m_vecForce ), -1, SPROP_NOSCALE ),
 
     SendPropInt( SENDINFO( m_nSkin ), ANIMATION_SKIN_BITS ),
@@ -261,50 +262,56 @@ SendPropInt( SENDINFO( m_nForceBone ), 8, 0 ),
     SendPropFloat( SENDINFO( m_fadeMaxDist ), 0, SPROP_NOSCALE ),
     SendPropFloat( SENDINFO( m_flFadeScale ), 0, SPROP_NOSCALE ),
 
-    END_SEND_TABLE()
+    // Experiment; material override
+    SendPropString( SENDINFO( m_MaterialOverride ) ),
+	SendPropArray( SendPropString( SENDINFO_ARRAY( m_SubMaterialOverrides ), 0, SendProxy_String_tToString ), m_SubMaterialOverrides ),
 
-        BEGIN_ENT_SCRIPTDESC( CBaseAnimating, CBaseEntity, "Animating models" )
+END_SEND_TABLE()
+
+BEGIN_ENT_SCRIPTDESC( CBaseAnimating, CBaseEntity, "Animating models" )
 #ifdef PORTAL2
-            DEFINE_SCRIPTFUNC( GetObjectScaleLevel, "The scale size of the entity" )
+    DEFINE_SCRIPTFUNC( GetObjectScaleLevel, "The scale size of the entity" )
 #endif  // PORTAL2
-                DEFINE_SCRIPTFUNC( LookupAttachment, "Get the named attachement id" )
-                    DEFINE_SCRIPTFUNC( GetAttachmentBone, "Get the named attachement's parent bone index" )
-                        DEFINE_SCRIPTFUNC_NAMED( ScriptGetBoneOrigin, "GetBoneOrigin", "Get the bone id's origin vector" )
-                            DEFINE_SCRIPTFUNC_NAMED( ScriptGetBoneAngles, "GetBoneAngles", "Get the bone id's angles as a p,y,r vector" )
-                                DEFINE_SCRIPTFUNC( LookupActivity, "Get the named activity index" )
-                                    DEFINE_SCRIPTFUNC( LookupBone, "Get the named bone index" )
-                                        DEFINE_SCRIPTFUNC_NAMED( ScriptLookupSequence, "LookupSequence", "Looks up a sequence by sequence name or activity name" )
-                                            DEFINE_SCRIPTFUNC( SetSequence, "Set a sequence by id" )
-                                                DEFINE_SCRIPTFUNC( ResetSequence, "Reset a sequence by id. If the id is different than the current sequence, switch to the new sequence" )
-                                                    DEFINE_SCRIPTFUNC( GetSequence, "Get the current sequence id" )
-                                                        DEFINE_SCRIPTFUNC( GetSequenceActivityName, "Get the activity name for a sequence by id" )
-                                                            DEFINE_SCRIPTFUNC( GetSequenceName, "Get a sequence name by id" )
-                                                                DEFINE_SCRIPTFUNC_NAMED( ScriptGetSequenceDuration, "GetSequenceDuration", "Get a sequence duration by id" )
-                                                                    DEFINE_SCRIPTFUNC_NAMED( ScriptGetAttachmentOrigin, "GetAttachmentOrigin", "Get the attachement id's origin vector" )
-                                                                        DEFINE_SCRIPTFUNC_NAMED( ScriptGetAttachmentAngles, "GetAttachmentAngles", "Get the attachement id's angles as a p,y,r vector" )
-                                                                            DEFINE_SCRIPTFUNC( IsSequenceFinished, "Ask whether the main sequence is done playing" )
-                                                                                DEFINE_SCRIPTFUNC( SetBodygroup, "Sets a bodygroup" )
-                                                                                    DEFINE_SCRIPTFUNC( GetBodygroup, "Get a bodygroup by id" )
-                                                                                        DEFINE_SCRIPTFUNC( GetBodygroupName, "Get the bodygroup id's name" )
-                                                                                            DEFINE_SCRIPTFUNC( FindBodygroupByName, "Find a bodygroup id by name" )
-                                                                                                DEFINE_SCRIPTFUNC( GetBodygroupPartName, "Get name by group and part" )
-                                                                                                    DEFINE_SCRIPTFUNC( StopAnimation, "Stop the current animation (same as SetPlaybackRate 0.0)" )
-                                                                                                        DEFINE_SCRIPTFUNC( SetPlaybackRate, "Set the current playback rate." )
-                                                                                                            DEFINE_SCRIPTFUNC( GetPlaybackRate, "Set the current playback rate." )
-                                                                                                                DEFINE_SCRIPTFUNC( GetModelScale, "" )
-                                                                                                                    DEFINE_SCRIPTFUNC_NAMED( ScriptSetModelScale, "SetModelScale", "(scale, change_duration) Changes a model's scale over time" )
-                                                                                                                        DEFINE_SCRIPTFUNC_NAMED( ScriptSetPoseParameter, "SetPoseParameter", "(id, value) Sets a pose parameter value" )
-                                                                                                                            DEFINE_SCRIPTFUNC( GetSkin, "Gets the current skin index." )
-                                                                                                                                DEFINE_SCRIPTFUNC( SetSkin, "Sets the skin." )
-                                                                                                                                    DEFINE_SCRIPTFUNC_NAMED( ScriptSetModel, "SetModelSimple", "Set a model for this entity. Matches easier behaviour of the SetModel input, automatically precaches, maintains sequence/cycle if possible." )
-                                                                                                                                        DEFINE_SCRIPTFUNC( SetCycle, "Sets the models current cycle" )
-                                                                                                                                            DEFINE_SCRIPTFUNC( GetCycle, "Gets the models current cycle" )
-                                                                                                                                                DEFINE_SCRIPTFUNC( BecomeRagdollOnClient, "Becomes a ragdoll with a force" )
-                                                                                                                                                    DEFINE_SCRIPTFUNC( StudioFrameAdvance, "Advance animation frame to some time in the future with an automatically calculated interval" )
-                                                                                                                                                        DEFINE_SCRIPTFUNC( StudioFrameAdvanceManual, "Advance animation frame to some time in the future with a manual interval" )
-                                                                                                                                                            DEFINE_SCRIPTFUNC_NAMED( ScriptDispatchAnimEvents, "DispatchAnimEvents", "Dispatch animation events to a CBaseAnimating" )
-                                                                                                                                                                DEFINE_SCRIPTFUNC_WRAPPED( LookupPoseParameter, "Looks up a pose parameter index by name" );
+    DEFINE_SCRIPTFUNC( LookupAttachment, "Get the named attachement id" )
+    DEFINE_SCRIPTFUNC( GetAttachmentBone, "Get the named attachement's parent bone index" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptGetBoneOrigin, "GetBoneOrigin", "Get the bone id's origin vector" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptGetBoneAngles, "GetBoneAngles", "Get the bone id's angles as a p,y,r vector" )
+    DEFINE_SCRIPTFUNC( LookupActivity, "Get the named activity index" )
+    DEFINE_SCRIPTFUNC( LookupBone, "Get the named bone index" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptLookupSequence, "LookupSequence", "Looks up a sequence by sequence name or activity name" )
+    DEFINE_SCRIPTFUNC( SetSequence, "Set a sequence by id" )
+    DEFINE_SCRIPTFUNC( ResetSequence, "Reset a sequence by id. If the id is different than the current sequence, switch to the new sequence" )
+    DEFINE_SCRIPTFUNC( GetSequence, "Get the current sequence id" )
+    DEFINE_SCRIPTFUNC( GetSequenceActivityName, "Get the activity name for a sequence by id" )
+    DEFINE_SCRIPTFUNC( GetSequenceName, "Get a sequence name by id" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptGetSequenceDuration, "GetSequenceDuration", "Get a sequence duration by id" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptGetAttachmentOrigin, "GetAttachmentOrigin", "Get the attachement id's origin vector" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptGetAttachmentAngles, "GetAttachmentAngles", "Get the attachement id's angles as a p,y,r vector" )
+    DEFINE_SCRIPTFUNC( IsSequenceFinished, "Ask whether the main sequence is done playing" )
+    DEFINE_SCRIPTFUNC( SetBodygroup, "Sets a bodygroup" )
+    DEFINE_SCRIPTFUNC( GetBodygroup, "Get a bodygroup by id" )
+    DEFINE_SCRIPTFUNC( GetBodygroupName, "Get the bodygroup id's name" )
+    DEFINE_SCRIPTFUNC( FindBodygroupByName, "Find a bodygroup id by name" )
+    DEFINE_SCRIPTFUNC( GetBodygroupPartName, "Get name by group and part" )
+    DEFINE_SCRIPTFUNC( StopAnimation, "Stop the current animation (same as SetPlaybackRate 0.0)" )
+    DEFINE_SCRIPTFUNC( SetPlaybackRate, "Set the current playback rate." )
+    DEFINE_SCRIPTFUNC( GetPlaybackRate, "Set the current playback rate." )
+    DEFINE_SCRIPTFUNC( GetModelScale, "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptSetModelScale, "SetModelScale", "(scale, change_duration) Changes a model's scale over time" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptSetPoseParameter, "SetPoseParameter", "(id, value) Sets a pose parameter value" )
+    DEFINE_SCRIPTFUNC( GetSkin, "Gets the current skin index." )
+    DEFINE_SCRIPTFUNC( SetSkin, "Sets the skin." )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptSetModel, "SetModelSimple", "Set a model for this entity. Matches easier behaviour of the SetModel input, automatically precaches, maintains sequence/cycle if possible." )
+    DEFINE_SCRIPTFUNC( SetCycle, "Sets the models current cycle" )
+    DEFINE_SCRIPTFUNC( GetCycle, "Gets the models current cycle" )
+    DEFINE_SCRIPTFUNC( BecomeRagdollOnClient, "Becomes a ragdoll with a force" )
+    DEFINE_SCRIPTFUNC( StudioFrameAdvance, "Advance animation frame to some time in the future with an automatically calculated interval" )
+    DEFINE_SCRIPTFUNC( StudioFrameAdvanceManual, "Advance animation frame to some time in the future with a manual interval" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptDispatchAnimEvents, "DispatchAnimEvents", "Dispatch animation events to a CBaseAnimating" )
+    DEFINE_SCRIPTFUNC_WRAPPED( LookupPoseParameter, "Looks up a pose parameter index by name" );
 END_SCRIPTDESC();
+
+static bool WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
 
 CBaseAnimating::CBaseAnimating()
 {
@@ -905,6 +912,22 @@ bool CBaseAnimating::BecomeRagdollOnClient( const Vector &force )
     // If this character has a ragdoll animation, turn it over to the physics system
     if ( CanBecomeRagdoll() )
     {
+        // Experiment; become a real ragdoll instead of a client-side ragdoll
+        if ( ai_serverragdolls.GetBool() )
+        {
+            CTakeDamageInfo info;
+            CreateServerRagdoll( this, m_nForceBone, info, COLLISION_GROUP_PLAYER, true );
+
+            m_nRenderFX = kRenderFxNone;
+            AddEffects( EF_NODRAW );
+            RemoveFlag( FL_DISSOLVING | FL_ONFIRE );
+        }
+        else
+        {
+            m_nRenderFX = kRenderFxRagdoll;
+            AddFlag( FL_TRANSRAGDOLL );
+        }
+
         VPhysicsDestroyObject();
         AddSolidFlags( FSOLID_NOT_SOLID );
         m_nRenderFX = kRenderFxRagdoll;
@@ -1056,6 +1079,7 @@ float CBaseAnimating::GetSequenceCycleRate( CStudioHdr *pStudioHdr, int iSequenc
     {
         return 1.0f / t;
     }
+
     return t;
 }
 
@@ -1205,6 +1229,7 @@ void CBaseAnimating::DispatchAnimEvents( CBaseAnimating *eventHandler )
             (float)flCycleRate );
         }
         */
+
         if ( eventHandler )
             eventHandler->HandleAnimEvent( &event );
 
@@ -1301,7 +1326,8 @@ void CBaseAnimating::HandleAnimEvent( animevent_t *pEvent )
 float CBaseAnimating::SetPoseParameter( CStudioHdr *pStudioHdr, const char *szName, float flValue )
 {
     int poseParam = LookupPoseParameter( pStudioHdr, szName );
-    AssertMsg2( poseParam >= 0, "SetPoseParameter called with invalid argument %s by %s", szName, GetDebugName() );
+    // Experiment; TODO: Note that the model we are currently using doesn't have a move_yaw parameter. Hence we're getting this assert. For gmod compat we just commented this, since gmod doesnt complain either and does nothing
+    // AssertMsg2( poseParam >= 0, "SetPoseParameter called with invalid argument %s by %s", szName, GetDebugName() );
     return SetPoseParameter( pStudioHdr, poseParam, flValue );
 }
 
@@ -1717,9 +1743,9 @@ void CBaseAnimating::CalculateIKLocks( float currentTime )
                     /*
                     if ( debugoverlay )
                     {
-                      debugoverlay->AddBoxOverlay( p1, Vector(-r,-r,0), Vector(r,r,1), QAngle( 0, 0, 0 ), 255, 0, 0, 0, 1.0f );
-                      debugoverlay->AddBoxOverlay( trace.endpos, Vector(-r,-r,0), Vector(r,r,1), QAngle( 0, 0, 0 ), 255, 0, 0, 0, 1.0f );
-                      debugoverlay->AddLineOverlay( p1, trace.endpos, 255, 0, 0, 0, 1.0f );
+                        debugoverlay->AddBoxOverlay( p1, Vector(-r,-r,0), Vector(r,r,1), QAngle( 0, 0, 0 ), 255, 0, 0, 0, 1.0f );
+                        debugoverlay->AddBoxOverlay( trace.endpos, Vector(-r,-r,0), Vector(r,r,1), QAngle( 0, 0, 0 ), 255, 0, 0, 0, 1.0f );
+                        debugoverlay->AddLineOverlay( p1, trace.endpos, 255, 0, 0, 0, 1.0f );
                     }
                     */
 

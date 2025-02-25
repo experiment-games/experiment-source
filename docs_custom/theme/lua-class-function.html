@@ -1,0 +1,9 @@
+{% if page.meta.lua.static %}
+{% set functionSeparator = "." %}
+{% set functionPrefix = "_R." %}
+{% else %}
+{% set functionSeparator = ":" %}
+{% endif %}
+{% set conceptDirectory = "classes" %}
+{% extends "lua-base-function.html" %}
+

@@ -30,7 +30,11 @@ class Label : public Panel
 
    public:
     // Constructors
+#ifdef LUA_SDK
+    Label( Panel *parent, const char *panelName, const char *text, lua_State *L = nullptr );
+#else
     Label( Panel *parent, const char *panelName, const char *text );
+#endif
     Label( Panel *parent, const char *panelName, const wchar_t *wszText );
     ~Label();
 
@@ -156,8 +160,14 @@ class Label : public Panel
 
     void SetAllCaps( bool bAllCaps );
 
+#ifdef LUA_SDK
+    virtual void PerformLayout();
+
+   protected:
+#else
    protected:
     virtual void PerformLayout();
+#endif
     virtual wchar_t CalculateHotkey( const char *text );
     virtual wchar_t CalculateHotkey( const wchar_t *text );
     virtual void ComputeAlignment( int &tx0, int &ty0, int &tx1, int &ty1 );

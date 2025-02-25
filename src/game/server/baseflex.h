@@ -40,6 +40,10 @@ class CFlexSceneFile
 //-----------------------------------------------------------------------------
 class CBaseFlex : public CBaseAnimatingOverlay
 {
+#ifdef LUA_SDK
+    LUA_OVERRIDE_SINGLE_LUA_INSTANCE_METATABLE( CBaseFlex, LUA_CBASEFLEXLIBNAME )
+#endif
+
     DECLARE_CLASS( CBaseFlex, CBaseAnimatingOverlay );
 
    public:
@@ -148,9 +152,9 @@ class CBaseFlex : public CBaseAnimatingOverlay
 
    public:
 #if 0
-	// Returns the script instance of the scene entity associated with our oldest ("top level") scene event
-	HSCRIPT		ScriptGetOldestScene( void );
-	HSCRIPT		ScriptGetSceneByIndex( int index );
+    // Returns the script instance of the scene entity associated with our oldest ("top level") scene event
+    HSCRIPT		ScriptGetOldestScene( void );
+    HSCRIPT		ScriptGetSceneByIndex( int index );
 #endif
     float ScriptPlayScene( const char *pszScene, float flDelay = 0.0f );
 
@@ -222,6 +226,7 @@ class CBaseFlex : public CBaseAnimatingOverlay
         FS_LocalToGlobal_t( const FS_LocalToGlobal_t &src )
         {
             m_Key = src.m_Key;
+            delete m_Mapping;
             m_Mapping = new LocalFlexController_t[src.m_nCount];
             Q_memcpy( m_Mapping, src.m_Mapping, src.m_nCount * sizeof( int ) );
 

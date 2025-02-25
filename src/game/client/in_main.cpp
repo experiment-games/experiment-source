@@ -36,6 +36,11 @@
 #include "haptics/haptic_utils.h"
 #include <vgui/ISurface.h>
 
+#ifdef LUA_SDK
+#include <lusercmd.h>
+#include <vgui/IInput.h>
+#endif
+
 extern ConVar in_joystick;
 extern ConVar cam_idealpitch;
 extern ConVar cam_idealyaw;
@@ -707,6 +712,14 @@ void IN_ScoreDown( const CCommand &args )
     KeyDown( &in_score, args[1] );
     if ( gViewPortInterface )
     {
+        if ( L )
+        {
+            LUA_CALL_HOOK_BEGIN( "ScoreboardShow" );
+            LUA_CALL_HOOK_END( 0, 1 );
+
+            LUA_RETURN_NONE_IF_TRUE();
+        }
+
         gViewPortInterface->ShowPanel( PANEL_SCOREBOARD, true );
     }
 }
@@ -716,6 +729,12 @@ void IN_ScoreUp( const CCommand &args )
     KeyUp( &in_score, args[1] );
     if ( gViewPortInterface )
     {
+        if ( L )
+        {
+            LUA_CALL_HOOK_BEGIN( "ScoreboardHide" );
+            LUA_CALL_HOOK_END( 0, 0 );
+        }
+
         gViewPortInterface->ShowPanel( PANEL_SCOREBOARD, false );
         GetClientVoiceMgr()->StopSquelchMode();
     }
@@ -1379,48 +1398,64 @@ void CInput::CreateMove( int sequence_number, float input_sample_frametime, bool
         VectorCopy( m_angPreviousViewAngles, cmd->viewangles );
     }
 
-    // Let the move manager override anything it wants to.
-    if ( g_pClientMode->CreateMove( input_sample_frametime, cmd ) )
+#ifdef LUA_SDK
+    LUA_CALL_HOOK_BEGIN( "CreateMove" );
+    lua_pushusercmd( L, cmd );
+    LUA_CALL_HOOK_END( 1, 1 );
+
+    bool bLuaOverride = lua_isboolean( L, -1 ) && lua_toboolean( L, -1 );
+    lua_pop( L, 1 );
+
+    if ( !bLuaOverride )
     {
-        // Get current view angles after the client mode tweaks with it
-#ifdef SIXENSE
-        // Only set the engine angles if sixense is not enabled. It is done in SixenseInput::SetView otherwise.
-        if ( !g_pSixenseInput->IsEnabled() )
+#endif
+
+        // Let the move manager override anything it wants to.
+        if ( g_pClientMode->CreateMove( input_sample_frametime, cmd ) )
         {
-            engine->SetViewAngles( cmd->viewangles );
-        }
+            // Get current view angles after the client mode tweaks with it
+#ifdef SIXENSE
+            // Only set the engine angles if sixense is not enabled. It is done in SixenseInput::SetView otherwise.
+            if ( !g_pSixenseInput->IsEnabled() )
+            {
+                engine->SetViewAngles( cmd->viewangles );
+            }
 #else
         engine->SetViewAngles( cmd->viewangles );
 
 #endif
 
-        if ( UseVR() )
-        {
-            C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
-            if ( pPlayer && !pPlayer->GetVehicle() )
+            if ( UseVR() )
             {
-                QAngle curViewangles, newViewangles;
-                Vector curMotion, newMotion;
-                engine->GetViewAngles( curViewangles );
-                curMotion.Init(
-                    cmd->forwardmove,
-                    cmd->sidemove,
-                    cmd->upmove );
-                g_ClientVirtualReality.OverridePlayerMotion( input_sample_frametime, originalViewangles, curViewangles, curMotion, &newViewangles, &newMotion );
-                engine->SetViewAngles( newViewangles );
-                cmd->forwardmove = newMotion[0];
-                cmd->sidemove = newMotion[1];
-                cmd->upmove = newMotion[2];
-                cmd->viewangles = newViewangles;
-            }
-            else
-            {
-                Vector vPos;
-                g_ClientVirtualReality.GetTorsoRelativeAim( &vPos, &cmd->viewangles );
-                engine->SetViewAngles( cmd->viewangles );
+                C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
+                if ( pPlayer && !pPlayer->GetVehicle() )
+                {
+                    QAngle curViewangles, newViewangles;
+                    Vector curMotion, newMotion;
+                    engine->GetViewAngles( curViewangles );
+                    curMotion.Init(
+                        cmd->forwardmove,
+                        cmd->sidemove,
+                        cmd->upmove );
+                    g_ClientVirtualReality.OverridePlayerMotion( input_sample_frametime, originalViewangles, curViewangles, curMotion, &newViewangles, &newMotion );
+                    engine->SetViewAngles( newViewangles );
+                    cmd->forwardmove = newMotion[0];
+                    cmd->sidemove = newMotion[1];
+                    cmd->upmove = newMotion[2];
+                    cmd->viewangles = newViewangles;
+                }
+                else
+                {
+                    Vector vPos;
+                    g_ClientVirtualReality.GetTorsoRelativeAim( &vPos, &cmd->viewangles );
+                    engine->SetViewAngles( cmd->viewangles );
+                }
             }
         }
-    }
+
+#ifdef LUA_SDK
+    }  // if ( !bLuaOverride )
+#endif
 
     m_flLastForwardMove = cmd->forwardmove;
 
@@ -1489,7 +1524,7 @@ void CInput::ValidateUserCmd( CUserCmd *usercmd, int sequence_number )
 //			from -
 //			to -
 //-----------------------------------------------------------------------------
-bool CInput::WriteUsercmdDeltaToBuffer( bf_write *buf, int from, int to, bool isnewcommand )
+bool CInput::WriteUsercmdDeltaToBuffer( bf_write *buf, int from, int to, bool isNewCommand )
 {
     Assert( m_pCommands );
 

@@ -79,10 +79,12 @@ ConVar ai_use_visibility_cache( "ai_use_visibility_cache", "1" );
 #define ShouldUseVisibilityCache() true
 #endif
 
+// clang-format off
+
 BEGIN_DATADESC( CBaseCombatCharacter )
 
 #ifdef INVASION_DLL
-DEFINE_FIELD( m_iPowerups, FIELD_INTEGER ),
+    DEFINE_FIELD( m_iPowerups, FIELD_INTEGER ),
     DEFINE_ARRAY( m_flPowerupAttemptTimes, FIELD_TIME, MAX_POWERUPS ),
     DEFINE_ARRAY( m_flPowerupEndTimes, FIELD_TIME, MAX_POWERUPS ),
     DEFINE_FIELD( m_flFractionalBoost, FIELD_FLOAT ),
@@ -111,20 +113,21 @@ DEFINE_FIELD( m_iPowerups, FIELD_INTEGER ),
     DEFINE_FIELD( m_bPreventWeaponPickup, FIELD_BOOLEAN ),
 
     DEFINE_INPUTFUNC( FIELD_VOID, "KilledNPC", InputKilledNPC ),
+END_DATADESC()
 
-    END_DATADESC()
-
-        BEGIN_SIMPLE_DATADESC( Relationship_t )
-            DEFINE_FIELD( entity, FIELD_EHANDLE ),
+BEGIN_SIMPLE_DATADESC( Relationship_t )
+    DEFINE_FIELD( entity, FIELD_EHANDLE ),
     DEFINE_FIELD( classType, FIELD_INTEGER ),
     DEFINE_FIELD( disposition, FIELD_INTEGER ),
     DEFINE_FIELD( priority, FIELD_INTEGER ),
-    END_DATADESC()
+END_DATADESC()
 
-    //-----------------------------------------------------------------------------
-    // Init static variables
-    //-----------------------------------------------------------------------------
-    int CBaseCombatCharacter::m_lastInteraction = 0;
+static bool WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
+
+//-----------------------------------------------------------------------------
+// Init static variables
+//-----------------------------------------------------------------------------
+int CBaseCombatCharacter::m_lastInteraction = 0;
 Relationship_t **CBaseCombatCharacter::m_DefaultRelationship = NULL;
 
 //-----------------------------------------------------------------------------
@@ -185,17 +188,19 @@ void *SendProxy_SendBaseCombatCharacterLocalDataTable( const SendProp *pProp, co
 }
 REGISTER_SEND_PROXY_NON_MODIFIED_POINTER( SendProxy_SendBaseCombatCharacterLocalDataTable );
 
+// clang-format off
+
 // Only send active weapon index to local player
 BEGIN_SEND_TABLE_NOBASE( CBaseCombatCharacter, DT_BCCLocalPlayerExclusive )
-SendPropTime( SENDINFO( m_flNextAttack ) ),
-    END_SEND_TABLE();
+    SendPropTime( SENDINFO( m_flNextAttack ) ),
+END_SEND_TABLE();
 
 //-----------------------------------------------------------------------------
 // This table encodes the CBaseCombatCharacter
 //-----------------------------------------------------------------------------
 IMPLEMENT_SERVERCLASS_ST( CBaseCombatCharacter, DT_BaseCombatCharacter )
 #ifdef GLOWS_ENABLE
-SendPropBool( SENDINFO( m_bGlowEnabled ) ),
+    SendPropBool( SENDINFO( m_bGlowEnabled ) ),
 #endif  // GLOWS_ENABLE
     // Data that only gets sent to the local player.
     SendPropDataTable( "bcc_localdata", 0, &REFERENCE_SEND_TABLE( DT_BCCLocalPlayerExclusive ), SendProxy_SendBaseCombatCharacterLocalDataTable ),
@@ -207,12 +212,14 @@ SendPropBool( SENDINFO( m_bGlowEnabled ) ),
     SendPropInt( SENDINFO( m_iPowerups ), MAX_POWERUPS, SPROP_UNSIGNED ),
 #endif
 
-    END_SEND_TABLE()
+END_SEND_TABLE()
 
-    //-----------------------------------------------------------------------------
-    // Interactions
-    //-----------------------------------------------------------------------------
-    void CBaseCombatCharacter::InitInteractionSystem()
+static bool WORKAROUND_NASTY_FORMATTING_BUG2;  // clang-format on
+
+//-----------------------------------------------------------------------------
+// Interactions
+//-----------------------------------------------------------------------------
+void CBaseCombatCharacter::InitInteractionSystem()
 {
     // interaction ids continue to go up with every map load, otherwise you get
     // collisions if a future map has a different set of NPCs from a current map
@@ -743,6 +750,7 @@ CBaseCombatCharacter::CBaseCombatCharacter( void )
     m_impactEnergyScale = 1.0f;
 
     m_bForceServerRagdoll = ai_force_serverside_ragdoll.GetBool();
+    m_bDropActiveWeaponOnDeath = true;
 
 #ifdef GLOWS_ENABLE
     m_bGlowEnabled.Set( false );
@@ -1025,23 +1033,6 @@ Activity CBaseCombatCharacter::GetDeathActivity( void )
     }
 
     return deathActivity;
-}
-
-// UNDONE: Should these operate on a list of weapon/items
-Activity CBaseCombatCharacter::Weapon_TranslateActivity( Activity baseAct, bool *pRequired )
-{
-    Activity translated = baseAct;
-
-    if ( m_hActiveWeapon )
-    {
-        translated = m_hActiveWeapon->ActivityOverride( baseAct, pRequired );
-    }
-    else if ( pRequired )
-    {
-        *pRequired = false;
-    }
-
-    return translated;
 }
 
 //-----------------------------------------------------------------------------
@@ -1538,9 +1529,9 @@ bool CBaseCombatCharacter::BecomeRagdoll( const CTakeDamageInfo &info, const Vec
 #ifdef HL2_DLL
 
     bool bMegaPhyscannonActive = false;
-#if !defined( HL2MP )
+#if !defined( HL2MP ) && !defined( EXPERIMENT_SOURCE )
     bMegaPhyscannonActive = HL2GameRules()->MegaPhyscannonActive();
-#endif  // !HL2MP
+#endif  // !HL2MP && !EXPERIMENT_SOURCE
 
     // Mega physgun requires everything to be a server-side ragdoll
     if ( m_bForceServerRagdoll == true || ( ( bMegaPhyscannonActive == true ) && !IsPlayer() && Classify() != CLASS_PLAYER_ALLY_VITAL && Classify() != CLASS_PLAYER_ALLY ) )
@@ -1590,17 +1581,22 @@ void CBaseCombatCharacter::Event_Killed( const CTakeDamageInfo &info )
         forceVector += pMagnet->GetForceVector( this );
     }
 
-    CBaseCombatWeapon *pDroppedWeapon = m_hActiveWeapon.Get();
+    CBaseCombatWeapon *pDroppedWeapon = nullptr;
 
-    // Drop any weapon that I own
-    if ( VPhysicsGetObject() )
+    if ( m_bDropActiveWeaponOnDeath )
     {
-        Vector weaponForce = forceVector * VPhysicsGetObject()->GetInvMass();
-        Weapon_Drop( m_hActiveWeapon, NULL, &weaponForce );
-    }
-    else
-    {
-        Weapon_Drop( m_hActiveWeapon );
+        pDroppedWeapon = m_hActiveWeapon.Get();
+
+        // Drop the active weapon that I own
+        if ( VPhysicsGetObject() )
+        {
+            Vector weaponForce = forceVector * VPhysicsGetObject()->GetInvMass();
+            Weapon_Drop( m_hActiveWeapon, NULL, &weaponForce );
+        }
+        else
+        {
+            Weapon_Drop( m_hActiveWeapon );
+        }
     }
 
     // if flagged to drop a health kit
@@ -2055,7 +2051,7 @@ void CBaseCombatCharacter::SetLightingOriginRelative( CBaseEntity *pLightingOrig
 // Purpose:	Add new weapon to the character
 // Input  : New weapon
 //-----------------------------------------------------------------------------
-void CBaseCombatCharacter::Weapon_Equip( CBaseCombatWeapon *pWeapon )
+void CBaseCombatCharacter::Weapon_Equip( CBaseCombatWeapon *pWeapon, bool bGiveAmmo /* = true*/ )
 {
     // Add the weapon to my weapon inventory
     for ( int i = 0; i < MAX_WEAPONS; i++ )
@@ -2070,46 +2066,49 @@ void CBaseCombatCharacter::Weapon_Equip( CBaseCombatWeapon *pWeapon )
     // Weapon is now on my team
     pWeapon->ChangeTeam( GetTeamNumber() );
 
-    // ----------------------
-    //  Give Primary Ammo
-    // ----------------------
-    // If gun doesn't use clips, just give ammo
-    if ( pWeapon->GetMaxClip1() == -1 )
+    if ( bGiveAmmo )
     {
-#ifdef HL2_DLL
-        if ( FStrEq( STRING( gpGlobals->mapname ), "d3_c17_09" ) && FClassnameIs( pWeapon, "weapon_rpg" ) && pWeapon->NameMatches( "player_spawn_items" ) )
+        // ----------------------
+        //  Give Primary Ammo
+        // ----------------------
+        // If gun doesn't use clips, just give ammo
+        if ( pWeapon->GetMaxClip1() == -1 )
         {
-            // !!!HACK - Don't give any ammo with the spawn equipment RPG in d3_c17_09. This is a chapter
-            // start and the map is way to easy if you start with 3 RPG rounds. It's fine if a player conserves
-            // them and uses them here, but it's not OK to start with enough ammo to bypass the snipers completely.
-            GiveAmmo( 0, pWeapon->m_iPrimaryAmmoType );
-        }
-        else
+#ifdef HL2_DLL
+            if ( FStrEq( STRING( gpGlobals->mapname ), "d3_c17_09" ) && FClassnameIs( pWeapon, "weapon_rpg" ) && pWeapon->NameMatches( "player_spawn_items" ) )
+            {
+                // !!!HACK - Don't give any ammo with the spawn equipment RPG in d3_c17_09. This is a chapter
+                // start and the map is way to easy if you start with 3 RPG rounds. It's fine if a player conserves
+                // them and uses them here, but it's not OK to start with enough ammo to bypass the snipers completely.
+                GiveAmmo( 0, pWeapon->m_iPrimaryAmmoType );
+            }
+            else
 #endif  // HL2_DLL
-            GiveAmmo( pWeapon->GetDefaultClip1(), pWeapon->m_iPrimaryAmmoType );
-    }
-    // If default ammo given is greater than clip
-    // size, fill clips and give extra ammo
-    else if ( pWeapon->GetDefaultClip1() > pWeapon->GetMaxClip1() )
-    {
-        pWeapon->m_iClip1 = pWeapon->GetMaxClip1();
-        GiveAmmo( ( pWeapon->GetDefaultClip1() - pWeapon->GetMaxClip1() ), pWeapon->m_iPrimaryAmmoType );
-    }
+                GiveAmmo( pWeapon->GetDefaultClip1(), pWeapon->m_iPrimaryAmmoType );
+        }
+        // If default ammo given is greater than clip
+        // size, fill clips and give extra ammo
+        else if ( pWeapon->GetDefaultClip1() > pWeapon->GetMaxClip1() )
+        {
+            pWeapon->m_iClip1 = pWeapon->GetMaxClip1();
+            GiveAmmo( ( pWeapon->GetDefaultClip1() - pWeapon->GetMaxClip1() ), pWeapon->m_iPrimaryAmmoType );
+        }
 
-    // ----------------------
-    //  Give Secondary Ammo
-    // ----------------------
-    // If gun doesn't use clips, just give ammo
-    if ( pWeapon->GetMaxClip2() == -1 )
-    {
-        GiveAmmo( pWeapon->GetDefaultClip2(), pWeapon->m_iSecondaryAmmoType );
-    }
-    // If default ammo given is greater than clip
-    // size, fill clips and give extra ammo
-    else if ( pWeapon->GetDefaultClip2() > pWeapon->GetMaxClip2() )
-    {
-        pWeapon->m_iClip2 = pWeapon->GetMaxClip2();
-        GiveAmmo( ( pWeapon->GetDefaultClip2() - pWeapon->GetMaxClip2() ), pWeapon->m_iSecondaryAmmoType );
+        // ----------------------
+        //  Give Secondary Ammo
+        // ----------------------
+        // If gun doesn't use clips, just give ammo
+        if ( pWeapon->GetMaxClip2() == -1 )
+        {
+            GiveAmmo( pWeapon->GetDefaultClip2(), pWeapon->m_iSecondaryAmmoType );
+        }
+        // If default ammo given is greater than clip
+        // size, fill clips and give extra ammo
+        else if ( pWeapon->GetDefaultClip2() > pWeapon->GetMaxClip2() )
+        {
+            pWeapon->m_iClip2 = pWeapon->GetMaxClip2();
+            GiveAmmo( ( pWeapon->GetDefaultClip2() - pWeapon->GetMaxClip2() ), pWeapon->m_iSecondaryAmmoType );
+        }
     }
 
     pWeapon->Equip( this );
@@ -2310,7 +2309,13 @@ bool CBaseCombatCharacter::Weapon_CanUse( CBaseCombatWeapon *pWeapon )
 //-----------------------------------------------------------------------------
 CBaseCombatWeapon *CBaseCombatCharacter::Weapon_Create( const char *pWeaponName )
 {
+#ifdef LUA_SDK
+    LUA_EXPECTED_SCRIPTED_LIBRARY_BEGIN( LUA_SCRIPTEDWEAPONSLIBNAME );
+#endif
     CBaseCombatWeapon *pWeapon = static_cast< CBaseCombatWeapon * >( Create( pWeaponName, GetLocalOrigin(), GetLocalAngles(), this ) );
+#ifdef LUA_SDK
+    LUA_EXPECTED_SCRIPTED_LIBRARY_END( LUA_SCRIPTEDWEAPONSLIBNAME );
+#endif
 
     return pWeapon;
 }
@@ -3095,12 +3100,12 @@ void CBaseCombatCharacter::VPhysicsShadowCollision( int index, gamevcollisioneve
     // which can occur owing to ordering issues it appears.
     float flOtherAttackerTime = 0.0f;
 
-#if defined( HL2_DLL ) && !defined( HL2MP )
+#if defined( HL2_DLL ) && !defined( HL2MP ) && !defined( EXPERIMENT_SOURCE )
     if ( HL2GameRules()->MegaPhyscannonActive() == true )
     {
         flOtherAttackerTime = 1.0f;
     }
-#endif  // HL2_DLL && !HL2MP
+#endif  // HL2_DLL && !HL2MP && !EXPERIMENT_SOURCE
 
     if ( this == pOther->HasPhysicsAttacker( flOtherAttackerTime ) )
         return;

@@ -308,6 +308,12 @@ FORCEINLINE void SetFlashLightColorFromState( FlashlightState_t const &state, IS
         flFlashlightScale *= 2.5f;  // Magic number that works well on the NVIDIA 8800
     }
 
+#ifdef ASW_PROJECTED_TEXTURES
+    // INSOLENCE: This causes very odd projected texture flickering bugs, so it's commented out for now
+    // Experiment: Uncommented to test if the flickering is fixed
+    flFlashlightScale *= state.m_fBrightnessScale;
+#endif
+
     // Generate pixel shader constant
     float const *pFlashlightColor = state.m_Color;
     float vPsConst[4] = { flFlashlightScale * pFlashlightColor[0], flFlashlightScale * pFlashlightColor[1], flFlashlightScale * pFlashlightColor[2], pFlashlightColor[3] };
@@ -331,7 +337,8 @@ FORCEINLINE float ShadowAttenFromState( FlashlightState_t const &state )
 FORCEINLINE float ShadowFilterFromState( FlashlightState_t const &state )
 {
     // We developed shadow maps at 1024, so we expect the penumbra size to have been tuned relative to that
-    return state.m_flShadowFilterSize / 1024.0f;
+    // INSOLENCE: Get the shadow map resolution from the same place we get the shadow filter size
+    return state.m_flShadowFilterSize / state.m_flShadowMapResolution;
 }
 
 // convenient material variable access functions for helpers to use.

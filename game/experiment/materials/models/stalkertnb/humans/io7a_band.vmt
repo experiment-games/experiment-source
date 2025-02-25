@@ -1,0 +1,6 @@
+"VertexlitGeneric"
+{
+	"$basetexture" 				"models/stalkertnb/humans/io7a_band"
+	"$bumpmap" 					"models/stalkertnb/humans/io7a_normal"
+
+}

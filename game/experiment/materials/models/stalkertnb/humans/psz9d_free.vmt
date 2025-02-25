@@ -1,0 +1,16 @@
+"VertexlitGeneric"
+{
+	"$basetexture" 				"models/stalkertnb/humans/psz9d_free"
+	"$bumpmap" 					"models/stalkertnb/humans/psz9d_normal"
+
+    "$phong" 					"1"
+	"$phongexponenttexture" 	"models/stalkertnb/humans/psz9d_normal"
+	"$phongboost"				"0.1"
+	"$phongfresnelranges"		"[0.4 0.4 0.4]"
+	"$rimlight" 				"1"
+	"$rimlightexponenttexture" 	"models/stalkertnb/humans/psz9d_normal"									
+	"$rimlightexponent" 		"0.5"								
+	"$rimlightboost" 			"0.1"
+
+		
+}

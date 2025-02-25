@@ -263,7 +263,7 @@ abstract_class IMDLCache : public IAppSystem
 
     virtual void MarkFrame() = 0;
 
-    virtual bool TouchAllData( MDLHandle_t handle ) = 0;
+    virtual void TouchAllData( MDLHandle_t handle ) = 0;
 };
 
 //-----------------------------------------------------------------------------

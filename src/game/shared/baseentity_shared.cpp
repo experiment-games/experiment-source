@@ -20,6 +20,10 @@
 #include "coordsize.h"
 #include "vphysics/performance.h"
 
+#ifdef LUA_SDK
+#include "lbaseentity_shared.h"
+#endif
+
 #ifdef CLIENT_DLL
 #include "c_te_effect_dispatch.h"
 #else
@@ -32,6 +36,10 @@
 
 #ifdef HL2MP
 #include "te_hl2mp_shotgun_shot.h"
+#endif
+
+#ifdef EXPERIMENT_SOURCE
+#include "te_experiment_shotgun_shot.h"
 #endif
 
 #include "gamestats.h"
@@ -104,6 +112,16 @@ void SpawnBlood( Vector vecSpot, const Vector &vecDir, int bloodColor, float flD
     UTIL_BloodDrips( vecSpot, vecDir, bloodColor, ( int )flDamage );
 }
 
+void CBaseEntity::SetTransmitWithParent( bool bTransmitWithParent )
+{
+    m_bTransmitWithParent = bTransmitWithParent;
+}
+
+bool CBaseEntity::GetTransmitWithParent()
+{
+    return m_bTransmitWithParent;
+}
+
 #if !defined( NO_ENTITY_PREDICTION )
 //-----------------------------------------------------------------------------
 // The player drives simulation of this entity
@@ -125,6 +143,16 @@ void CBaseEntity::UnsetPlayerSimulated( void )
     m_bIsPlayerSimulated = false;
 }
 #endif
+
+bool CBaseEntity::GetNoCollidingWithTeammates( void )
+{
+    return m_bNoCollidingWithTeammates;
+}
+
+void CBaseEntity::SetNoCollidingWithTeammates( bool bNoCollide )
+{
+    m_bNoCollidingWithTeammates = bNoCollide;
+}
 
 // position of eyes
 Vector CBaseEntity::EyePosition( void )
@@ -407,8 +435,11 @@ bool CBaseEntity::KeyValue( const char *szKeyName, const char *szValue )
             Q_strncpy( szBuf, "90 0 0", sizeof( szBuf ) );
         }
 
-        // Do this so inherited classes looking for 'angles' don't have to bother with 'angle'
-        return KeyValue( szKeyName, szBuf );
+        // Do this so inherited classes looking for 'angles' don't have to bother
+        // with 'angle'
+        // Experiment; ZehMatt fix applied
+        // (https://github.com/ValveSoftware/source-sdk-2013/pull/380/files)
+        return KeyValue( "angles", szBuf );
     }
 
     // NOTE: Have to do these separate because they set two values instead of one
@@ -653,14 +684,14 @@ void CBaseEntity::SetPredictionRandomSeed( const CUserCmd *cmd )
 //------------------------------------------------------------------------------
 void CBaseEntity::DecalTrace( trace_t *pTrace, char const *decalName )
 {
-    int indexD = decalsystem->GetDecalIndexForName( decalName );
-    if ( indexD < 0 )
+    int index = decalsystem->GetDecalIndexForName( decalName );
+    if ( index < 0 )
         return;
 
     Assert( pTrace->m_pEnt );
 
     CBroadcastRecipientFilter filter;
-    te->Decal( filter, 0.0, &pTrace->endpos, &pTrace->startpos, pTrace->GetEntityIndex(), pTrace->hitbox, indexD );
+    te->Decal( filter, 0.0, &pTrace->endpos, &pTrace->startpos, pTrace->GetEntityIndex(), pTrace->hitbox, index );
 }
 
 //-----------------------------------------------------------------------------
@@ -1596,7 +1627,7 @@ void CBaseEntity::FireBullets( const FireBulletsInfo_t &info )
 
     bool bDoServerEffects = true;
 
-#if defined( HL2MP ) && defined( GAME_DLL )
+#if ( defined( HL2MP ) || defined( EXPERIMENT_SOURCE ) ) && defined( GAME_DLL )
     bDoServerEffects = false;
 #endif
 
@@ -1675,7 +1706,7 @@ void CBaseEntity::FireBullets( const FireBulletsInfo_t &info )
         iSeed = CBaseEntity::GetPredictionRandomSeed( info.m_bUseServerRandomSeed ) & 255;
     }
 
-#if defined( HL2MP ) && defined( GAME_DLL )
+#if ( defined( HL2MP ) || defined( EXPERIMENT_SOURCE ) ) && defined( GAME_DLL )
     int iEffectSeed = iSeed;
 #endif
     //-----------------------------------------------------
@@ -1961,7 +1992,20 @@ void CBaseEntity::FireBullets( const FireBulletsInfo_t &info )
                 }
 #endif  // #ifdef PORTAL
 
-                MakeTracer( vecTracerSrc, Tracer, pAmmoDef->TracerType( info.m_iAmmoType ) );
+#ifdef EXPERIMENT_SOURCE
+                if ( info.m_pszTracerType && info.m_pszTracerType[0] != 0 )
+                {
+                    Vector vNewSrc = vecTracerSrc;
+                    int iAttachment = GetTracerAttachment();
+                    UTIL_Tracer( vNewSrc, Tracer.endpos, entindex(), iAttachment, 0.0f, false, info.m_pszTracerType );
+                }
+                else
+                {
+#endif
+                    MakeTracer( vecTracerSrc, Tracer, pAmmoDef->TracerType( info.m_iAmmoType ) );
+#ifdef EXPERIMENT_SOURCE
+                }
+#endif
 
 #ifdef PORTAL
                 if ( pShootThroughPortal )
@@ -2009,6 +2053,11 @@ void CBaseEntity::FireBullets( const FireBulletsInfo_t &info )
     if ( bDoServerEffects == false )
     {
         TE_HL2MPFireBullets( entindex(), tr.startpos, info.m_vecDirShooting, info.m_iAmmoType, iEffectSeed, info.m_iShots, info.m_vecSpread.x, bDoTracers, bDoImpacts );
+    }
+#elif defined( EXPERIMENT_SOURCE ) && defined( GAME_DLL )
+    if ( bDoServerEffects == false )
+    {
+        TE_ExperimentFireBullets( entindex(), tr.startpos, info.m_vecDirShooting, info.m_iAmmoType, iEffectSeed, info.m_iShots, info.m_vecSpread.x, bDoTracers, bDoImpacts );
     }
 #endif
 
@@ -2150,7 +2199,7 @@ void CBaseEntity::DoImpactEffect( trace_t &tr, int nDamageType )
 //-----------------------------------------------------------------------------
 void CBaseEntity::ComputeTracerStartPosition( const Vector &vecShotSrc, Vector *pVecTracerStart )
 {
-#ifndef HL2MP
+#if !defined( HL2MP ) && !defined( EXPERIMENT_SOURCE )
     if ( g_pGameRules->IsMultiplayer() )
     {
         // NOTE: we do this because in MakeTracer, we force it to use the attachment position

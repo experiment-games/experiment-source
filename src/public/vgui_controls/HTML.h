@@ -24,6 +24,10 @@
 #endif
 #include "steam/steam_api.h"
 
+#define HTML_INTEROP_PREFIX "HTMLINTEROP:"
+#define HTML_ERROR_PREFIX "ERRORINTEROP:"
+#define HTML_LOG_PREFIX "LOGINTEROP:"
+
 namespace vgui
 {
 
@@ -39,7 +43,11 @@ class HTML : public Panel
     // TODO::STYLE
     // DECLARE_STYLE_BASE( "HTML" );
    public:
+#ifdef LUA_SDK
+    HTML( Panel *parent, const char *name, bool allowJavaScript = false, bool bPopupWindow = false, lua_State *L = nullptr );
+#else
     HTML( Panel *parent, const char *name, bool allowJavaScript = false, bool bPopupWindow = false );
+#endif
     ~HTML();
 
     // IHTML pass through functions
@@ -47,15 +55,16 @@ class HTML : public Panel
     virtual bool StopLoading();
     virtual bool Refresh();
     virtual void OnMove();
-    virtual void RunJavascript( const char *pchScript );
+    virtual void OpenDeveloperTools();
     virtual void GoBack();
     virtual void GoForward();
     virtual bool BCanGoBack();
     virtual bool BCanGoFoward();
+    virtual void PerformMouseMove( int x, int y );
 
     // event functions you can override and specialize behavior of
     virtual bool OnStartRequest( const char *url, const char *target, const char *pchPostData, bool bIsRedirect );
-    virtual void OnFinishRequest( const char *url, const char *pageTitle, const CUtlMap< CUtlString, CUtlString > &headers ) {}
+    virtual void OnFinishRequest( const char *url, const char *pageTitle, const CUtlMap< CUtlString, CUtlString > &headers );
     virtual void OnSetHTMLTitle( const char *pchTitle ) {}
     virtual void OnLinkAtPosition( const char *pchURL ) {}
     virtual void OnURLChanged( const char *url, const char *pchPostData, bool bIsRedirect ) {}
@@ -165,7 +174,18 @@ class HTML : public Panel
             m_SteamAPIContext.SteamHTMLSurface()->MouseMove( m_unBrowserHandle, x, y );
     }
 
+    // Javascript interop
+    virtual void InstallInteropStubs();
+    virtual void OnInstallJavaScriptInterop(){};
+    virtual void RunJavascript( const char *pchScript );
+    virtual void AddJavascriptObject( const char *pszObjectName );
+    virtual void AddJavascriptObjectCallback( const char *pszObjectName, const char *pszPropertyName );
+    virtual void CallJavascriptObjectCallback( int callbackId, KeyValues *args );
+    // Override OnJavaScriptCallback in a subclass to customize how to react to the callback
+
    protected:
+    MESSAGE_FUNC_PARAMS( OnJavaScriptCallback, "JavaScriptCallback", pKV );
+
     virtual void ApplySchemeSettings( IScheme *pScheme );
 
     vgui::Menu *m_pContextMenu;

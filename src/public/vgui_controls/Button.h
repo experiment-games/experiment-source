@@ -30,7 +30,11 @@ class Button : public Label
 
    public:
     // You can optionally pass in the panel to send the click message to and the name of the command to send to that panel.
+#ifdef LUA_SDK
+    Button( Panel *parent, const char *panelName, const char *text, Panel *pActionSignalTarget = NULL, const char *pCmd = NULL, lua_State *L = nullptr );
+#else
     Button( Panel *parent, const char *panelName, const char *text, Panel *pActionSignalTarget = NULL, const char *pCmd = NULL );
+#endif
     Button( Panel *parent, const char *panelName, const wchar_t *text, Panel *pActionSignalTarget = NULL, const char *pCmd = NULL );
     ~Button();
 
