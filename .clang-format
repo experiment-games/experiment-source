@@ -18,6 +18,7 @@ SpacesInConditionalStatement: true
 ColumnLimit: 0
 AlignTrailingComments: true
 IndentCaseLabels: true
+AccessModifierOffset: -1
 
 AllowShortFunctionsOnASingleLine: Empty
 BinPackArguments: false

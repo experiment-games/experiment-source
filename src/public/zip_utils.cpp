@@ -97,7 +97,7 @@ DEFINE_FIELD( signature, FIELD_INTEGER ),
     //-----------------------------------------------------------------------------
     class CWin32File
 {
-    public:
+   public:
     static HANDLE CreateTempFile( CUtlString &WritePath, CUtlString &FileName )
     {
         char tempFileName[MAX_PATH];
@@ -171,7 +171,7 @@ DEFINE_FIELD( signature, FIELD_INTEGER ),
 #else
         class CWin32File
 {
-    public:
+   public:
     static HANDLE CreateTempFile( CUtlString &WritePath, CUtlString &FileName )
     {
         FILE *hFile = ( FILE * )INVALID_HANDLE_VALUE;
@@ -245,7 +245,7 @@ DEFINE_FIELD( signature, FIELD_INTEGER ),
 //-----------------------------------------------------------------------------
 abstract_class IWriteStream
 {
-    public:
+   public:
     virtual void Put( const void *pMem, int size ) = 0;
     virtual unsigned int Tell( void ) = 0;
 };
@@ -255,7 +255,7 @@ abstract_class IWriteStream
 //-----------------------------------------------------------------------------
 class CBufferStream : public IWriteStream
 {
-    public:
+   public:
     CBufferStream( CUtlBuffer &buff )
         : IWriteStream(), m_buff( &buff ) {}
 
@@ -271,7 +271,7 @@ class CBufferStream : public IWriteStream
         return m_buff->TellPut();
     }
 
-    private:
+   private:
     CUtlBuffer *m_buff;
 };
 
@@ -280,7 +280,7 @@ class CBufferStream : public IWriteStream
 //-----------------------------------------------------------------------------
 class CFileStream : public IWriteStream
 {
-    public:
+   public:
     CFileStream( FILE *fout )
         : IWriteStream(), m_file( fout ), m_hFile( INVALID_HANDLE_VALUE ) {}
     CFileStream( HANDLE hOutFile )
@@ -319,7 +319,7 @@ class CFileStream : public IWriteStream
         }
     }
 
-    private:
+   private:
     FILE *m_file;
     HANDLE m_hFile;
 };
@@ -331,7 +331,7 @@ class CFileStream : public IWriteStream
 //-----------------------------------------------------------------------------
 class CZipFile
 {
-    public:
+   public:
     // Construction
     CZipFile( const char *pDiskCacheWritePath, bool bSortByName );
     ~CZipFile( void );
@@ -385,7 +385,7 @@ class CZipFile
     void SetBigEndian( bool bigEndian );
     void ActivateByteSwapping( bool bActivate );
 
-    private:
+   private:
     enum
     {
         MAX_FILES_IN_ZIP = 32768,
@@ -414,7 +414,7 @@ class CZipFile
     // Internal entry for faster searching, etc.
     class CZipEntry
     {
-        public:
+       public:
         CZipEntry( void );
         ~CZipEntry( void );
 
@@ -707,7 +707,7 @@ void CZipFile::ParseFromBuffer( void *buffer, int bufferlength )
         buf.GetObjects( &zipFileHeader );
         Assert( zipFileHeader.signature == PKID( 1, 2 ) );
         if ( zipFileHeader.compressionMethod != IZip::eCompressionType_None &&
-            zipFileHeader.compressionMethod != IZip::eCompressionType_LZMA )
+             zipFileHeader.compressionMethod != IZip::eCompressionType_LZMA )
         {
             Assert( false );
             Warning( "Opening ZIP file with unsupported compression type\n" );
@@ -723,9 +723,9 @@ void CZipFile::ParseFromBuffer( void *buffer, int bufferlength )
         newfiles[i].uncompressedLen = zipFileHeader.uncompressedSize;
         newfiles[i].crc32 = zipFileHeader.crc32;
         newfiles[i].filepos = zipFileHeader.relativeOffsetOfLocalHeader +
-                            sizeof( ZIP_LocalFileHeader ) +
-                            zipFileHeader.fileNameLength +
-                            zipFileHeader.extraFieldLength;
+                              sizeof( ZIP_LocalFileHeader ) +
+                              zipFileHeader.fileNameLength +
+                              zipFileHeader.extraFieldLength;
         newfiles[i].compressionType = ( IZip::eCompressionType )zipFileHeader.compressionMethod;
 
         int nextOffset;
@@ -888,9 +888,9 @@ HANDLE CZipFile::ParseFromDisk( const char *pFilename )
         e.m_nUncompressedSize = zipFileHeader.uncompressedSize;
         e.m_ZipCRC = zipFileHeader.crc32;
         e.m_SourceDiskOffset = zipFileHeader.relativeOffsetOfLocalHeader +
-                                sizeof( ZIP_LocalFileHeader ) +
-                                zipFileHeader.fileNameLength +
-                                zipFileHeader.extraFieldLength;
+                               sizeof( ZIP_LocalFileHeader ) +
+                               zipFileHeader.fileNameLength +
+                               zipFileHeader.extraFieldLength;
         e.m_eCompressionType = ( IZip::eCompressionType )zipFileHeader.compressionMethod;
 
         // Add to tree
@@ -1190,8 +1190,8 @@ bool CZipFile::ReadFileFromZip( HANDLE hZipFile, const char *pRelativeName, bool
             unsigned int nOutputBytesWritten = 0;
             bool bSuccess = decompressStream.Read( ( unsigned char * )pData, pEntry->m_nCompressedSize, ( unsigned char * )decompressTransform.Base(), decompressTransform.Size(), nCompressedBytesRead, nOutputBytesWritten );
             if ( !bSuccess ||
-                ( int )nCompressedBytesRead != pEntry->m_nCompressedSize ||
-                ( int )nOutputBytesWritten != pEntry->m_nUncompressedSize )
+                 ( int )nCompressedBytesRead != pEntry->m_nCompressedSize ||
+                 ( int )nOutputBytesWritten != pEntry->m_nUncompressedSize )
             {
                 Error( "Zip: Failed decompressing LZMA data\n" );
                 return false;
@@ -1245,7 +1245,6 @@ bool CZipFile::FileExistsInZip( const char *pRelativeName )
 //-----------------------------------------------------------------------------
 void CZipFile::AddFileToZip( const char *relativename, const char *fullpath, IZip::eCompressionType compressionType )
 {
-    //FILE *temp = fopen( fullpath, "rb" );
     FILE *temp;
     fopen_s( &temp, fullpath, "rb" );
 
@@ -1688,7 +1687,7 @@ void CZipFile::SaveDirectory( IWriteStream &stream )
 
 class CZip : public IZip
 {
-    public:
+   public:
     CZip( const char *pDiskCacheWritePath, bool bSortByName );
     virtual ~CZip();
 
@@ -1743,7 +1742,7 @@ class CZip : public IZip
 
     virtual unsigned int GetAlignment() OVERRIDE;
 
-    private:
+   private:
     CZipFile m_ZipFile;
 };
 
