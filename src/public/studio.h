@@ -1,4 +1,4 @@
-//===== Copyright © 1996-2008, Valve Corporation, All rights reserved. ======//
+//========= Copyright Valve Corporation, All rights reserved. ============//
 //
 // Purpose:
 //
@@ -107,8 +107,6 @@ struct mstudiodata_t
 #define STUDIO_PROC_AIMATBONE 3
 #define STUDIO_PROC_AIMATATTACH 4
 #define STUDIO_PROC_JIGGLE 5
-#define STUDIO_PROC_TWIST_MASTER 6
-#define STUDIO_PROC_TWIST_SLAVE 7  // Multiple twist bones are computed at once for the same parent/child combo so TWIST_NULL do nothing
 
 // If you want to embed a pointer into one of the structures that is serialized, use this class! It will ensure that the pointers consume the
 // right amount of space and work correctly across 32 and 64 bit. It also makes sure that there is no surprise about how large the structure
@@ -167,7 +165,7 @@ struct mstudioaxisinterpbone_t
 
     mstudioaxisinterpbone_t() = default;
 
-    private:
+   private:
     // No copy constructors allowed
     mstudioaxisinterpbone_t( const mstudioaxisinterpbone_t &vOther );
 };
@@ -182,7 +180,7 @@ struct mstudioquatinterpinfo_t
 
     mstudioquatinterpinfo_t() = default;
 
-    private:
+   private:
     // No copy constructors allowed
     mstudioquatinterpinfo_t( const mstudioquatinterpinfo_t &vOther );
 };
@@ -200,7 +198,7 @@ struct mstudioquatinterpbone_t
 
     mstudioquatinterpbone_t() = default;
 
-    private:
+   private:
     // No copy constructors allowed
     mstudioquatinterpbone_t( const mstudioquatinterpbone_t &vOther );
 };
@@ -212,6 +210,7 @@ struct mstudioquatinterpbone_t
 #define JIGGLE_HAS_ANGLE_CONSTRAINT 0x10
 #define JIGGLE_HAS_LENGTH_CONSTRAINT 0x20
 #define JIGGLE_HAS_BASE_SPRING 0x40
+#define JIGGLE_IS_BOING 0x80  // simple squash and stretch sinusoid "boing"
 
 struct mstudiojigglebone_t
 {
@@ -260,7 +259,7 @@ struct mstudiojigglebone_t
     float baseMaxForward;
     float baseForwardFriction;
 
-    private:
+   private:
     // No copy constructors allowed
     // mstudiojigglebone_t(const mstudiojigglebone_t& vOther);
 };
@@ -277,7 +276,7 @@ struct mstudioaimatbone_t
 
     mstudioaimatbone_t() = default;
 
-    private:
+   private:
     // No copy constructors allowed
     mstudioaimatbone_t( const mstudioaimatbone_t &vOther );
 };
@@ -296,7 +295,7 @@ struct mstudiotwistbonetarget_t
 
     mstudiotwistbonetarget_t() {}
 
-    private:
+   private:
     // No copy constructors allowed
     mstudiotwistbonetarget_t( const mstudiotwistbonetarget_t &vOther );
 };
@@ -323,7 +322,7 @@ struct mstudiotwistbone_t
 
     mstudiotwistbone_t() {}
 
-    private:
+   private:
     // No copy constructors allowed
     mstudiotwistbone_t( const mstudiotwistbone_t &vOther );
 };
@@ -377,7 +376,7 @@ struct mstudiobone_t
 
     mstudiobone_t() = default;
 
-    private:
+   private:
     // No copy constructors allowed
     mstudiobone_t( const mstudiobone_t &vOther );
 };
@@ -460,7 +459,7 @@ struct mstudiolinearbone_t
 
     mstudiolinearbone_t() = default;
 
-    private:
+   private:
     // No copy constructors allowed
     mstudiolinearbone_t( const mstudiolinearbone_t &vOther );
 };
@@ -490,7 +489,7 @@ struct mstudioboneflexdrivercontrol_t
 
     mstudioboneflexdrivercontrol_t() = default;
 
-    private:
+   private:
     // No copy constructors allowed
     mstudioboneflexdrivercontrol_t( const mstudioboneflexdrivercontrol_t &vOther );
 };
@@ -516,7 +515,7 @@ struct mstudioboneflexdriver_t
 
     mstudioboneflexdriver_t() = default;
 
-    private:
+   private:
     // No copy constructors allowed
     mstudioboneflexdriver_t( const mstudioboneflexdriver_t &vOther );
 };
@@ -589,7 +588,7 @@ struct mstudiobbox_t
 
     mstudiobbox_t() = default;
 
-    private:
+   private:
     // No copy constructors allowed
     mstudiobbox_t( const mstudiobbox_t &vOther );
 };
@@ -617,7 +616,6 @@ struct mstudiomodelgrouplookup_t
 };
 
 // events
-// NOTE: If you modify this struct you MUST also modify mstudioevent_for_client_server_t in npcevent.h!!!
 struct mstudioevent_t
 {
     DECLARE_BYTESWAP_DATADESC();
@@ -669,7 +667,7 @@ struct mstudioikerror_t
 
     mstudioikerror_t() = default;
 
-    private:
+   private:
     // No copy constructors allowed
     mstudioikerror_t( const mstudioikerror_t &vOther );
 };
@@ -690,7 +688,7 @@ struct mstudiocompressedikerror_t
     };
     mstudiocompressedikerror_t() = default;
 
-    private:
+   private:
     // No copy constructors allowed
     mstudiocompressedikerror_t( const mstudiocompressedikerror_t &vOther );
 };
@@ -750,7 +748,7 @@ struct mstudioikrule_t
 
     mstudioikrule_t() = default;
 
-    private:
+   private:
     // No copy constructors allowed
     mstudioikrule_t( const mstudioikrule_t &vOther );
 };
@@ -829,8 +827,8 @@ struct mstudioanim_valueptr_t
 #define STUDIO_ANIM_DELTA 0x10
 #define STUDIO_ANIM_RAWROT2 0x20  // Quaternion64
 
-// per bone per animation DOF and weight pointers, RLE encoded
-struct mstudio_rle_anim_t
+// per bone per animation DOF and weight pointers
+struct mstudioanim_t
 {
     DECLARE_BYTESWAP_DATADESC();
     byte bone;
@@ -839,7 +837,7 @@ struct mstudio_rle_anim_t
     // valid for animating data only
     inline byte *pData( void ) const
     {
-        return ( ( ( byte * )this ) + sizeof( struct mstudio_rle_anim_t ) );
+        return ( ( ( byte * )this ) + sizeof( struct mstudioanim_t ) );
     };
     inline mstudioanim_valueptr_t *pRotV( void ) const
     {
@@ -865,15 +863,14 @@ struct mstudio_rle_anim_t
     };
 
     short nextoffset;
-    inline mstudio_rle_anim_t *pNext( void ) const
+    inline mstudioanim_t *pNext( void ) const
     {
         if ( nextoffset != 0 )
-            return ( mstudio_rle_anim_t * )( ( ( byte * )this ) + nextoffset );
+            return ( mstudioanim_t * )( ( ( byte * )this ) + nextoffset );
         else
             return NULL;
     };
 };
-#define mstudioanim_t mstudio_rle_anim_t
 
 #define STUDIO_FRAME_RAWPOS 0x01       // Vector48 in constants
 #define STUDIO_FRAME_RAWROT 0x02       // Quaternion48 in constants
@@ -919,7 +916,7 @@ struct mstudiomovement_t
 
     mstudiomovement_t() = default;
 
-    private:
+   private:
     // No copy constructors allowed
     mstudiomovement_t( const mstudiomovement_t &vOther );
 };
@@ -981,13 +978,13 @@ struct mstudioanimdesc_t
     int unused1[5];  // remove as appropriate (and zero if loading older versions)
 
     int animblock;
-    int animindex;                                                    // non-zero when anim data isn't in sections
-    mstudio_rle_anim_t *pAnimBlock( int block, int index ) const;     // returns pointer to a specific anim block (local or external)
-    mstudio_rle_anim_t *pAnim( int *piFrame, float &flStall ) const;  // returns pointer to data and new frame index
-    mstudio_rle_anim_t *pAnim( int *piFrame ) const;                  // returns pointer to data and new frame index
+    int animindex;                                               // non-zero when anim data isn't in sections
+    mstudioanim_t *pAnimBlock( int block, int index ) const;     // returns pointer to a specific anim block (local or external)
+    mstudioanim_t *pAnim( int *piFrame, float &flStall ) const;  // returns pointer to data and new frame index
+    mstudioanim_t *pAnim( int *piFrame ) const;                  // returns pointer to data and new frame index
 
     int numikrules;
-    int ikruleindex;           // non-zero when IK rule is stored in the mdl
+    int ikruleindex;           // non-zero when IK data is stored in the mdl
     int animblockikruleindex;  // non-zero when IK data is stored in animblock file
     mstudioikrule_t *pIKRule( int i ) const;
 
@@ -1016,7 +1013,7 @@ struct mstudioanimdesc_t
 
     mstudioanimdesc_t() = default;
 
-    private:
+   private:
     // No copy constructors allowed
     mstudioanimdesc_t( const mstudioanimdesc_t &vOther );
 };
@@ -1192,7 +1189,7 @@ struct mstudioseqdesc_t
 
     mstudioseqdesc_t() = default;
 
-    private:
+   private:
     // No copy constructors allowed
     mstudioseqdesc_t( const mstudioseqdesc_t &vOther );
 };
@@ -1329,7 +1326,7 @@ struct mstudiovertanim_t
     byte speed;  // 255/max_length_in_flex
     byte side;   // 255/left_right
 
-    protected:
+   protected:
     // JasonM changing this type a lot, to prefer fixed point 16 bit...
     union
     {
@@ -1343,7 +1340,7 @@ struct mstudiovertanim_t
         float16 flNDelta[3];
     };
 
-    public:
+   public:
     inline void ConvertToFixed( float flVertAnimFixedPointScale )
     {
         delta[0] = flDelta[0].GetFloat() / flVertAnimFixedPointScale;
@@ -1407,7 +1404,7 @@ struct mstudiovertanim_t
 
     class CSortByIndex
     {
-        public:
+       public:
         bool operator()( const mstudiovertanim_t &left, const mstudiovertanim_t &right ) const
         {
             return left.index < right.index;
@@ -1542,7 +1539,7 @@ struct mstudiovertex_t
 
     mstudiovertex_t() = default;
 
-    private:
+   private:
     // No copy constructors allowed
     mstudiovertex_t( const mstudiovertex_t &vOther );
 };
@@ -1605,7 +1602,7 @@ struct mstudioeyeball_t
 
     mstudioeyeball_t() = default;
 
-    private:
+   private:
     // No copy constructors allowed
     mstudioeyeball_t( const mstudioeyeball_t &vOther );
 };
@@ -1620,7 +1617,7 @@ struct mstudioiklink_t
 
     mstudioiklink_t() = default;
 
-    private:
+   private:
     // No copy constructors allowed
     mstudioiklink_t( const mstudioiklink_t &vOther );
 };
@@ -1747,7 +1744,7 @@ struct mstudiomesh_t
 
     mstudiomesh_t() = default;
 
-    private:
+   private:
     // No copy constructors allowed
     mstudiomesh_t( const mstudiomesh_t &vOther );
 };
@@ -1952,6 +1949,7 @@ struct studiomeshgroup_t
     int m_NumVertices;
     int *m_pUniqueFaces;  // for performance measurements
     unsigned short *m_pIndices;
+    // Experiment; TODO: This line isn't in the TF2 SDK (but is in Alien Swarm). Is it part of this struct?)
     unsigned short *m_pTopologyIndices;
     bool m_MeshNeedsRestore;
     short m_ColorMeshID;
@@ -2049,7 +2047,7 @@ struct mstudiomouth_t
 
     mstudiomouth_t() = default;
 
-    private:
+   private:
     // No copy constructors allowed
     mstudiomouth_t( const mstudiomouth_t &vOther );
 };
@@ -2093,7 +2091,7 @@ struct mstudiosrcbonetransform_t
 
 class virtualgroup_t
 {
-    public:
+   public:
     virtualgroup_t( void )
     {
         cache = NULL;
@@ -2154,7 +2152,7 @@ struct virtualmodel_t
     virtualgroup_t *pAnimGroup( int animation )
     {
         return &m_group[m_anim[animation].group];
-    };  // Note: user must manage mutex for this
+    }  // Note: user must manage mutex for this
     virtualgroup_t *pSeqGroup( int sequence )
     {
         // Check for out of range access that is causing crashes on some servers.
@@ -2167,7 +2165,7 @@ struct virtualmodel_t
             return 0;
         }
         return &m_group[m_seq[sequence].group];
-    };  // Note: user must manage mutex for this
+    }  // Note: user must manage mutex for this
 
     CThreadFastMutex m_Lock;
 
@@ -2265,7 +2263,7 @@ struct thinModelVertices_t
         GetBoneWeights( pModel->vertexdata.GetGlobalVertexIndex( modelIndex ), pBoneWeights );
     }
 
-    private:
+   private:
     void GetPosition( int vertIndex, Vector *pPosition ) const
     {
         Assert( pPosition );
@@ -2352,7 +2350,7 @@ struct vertexStreamFileHeader_t
     int uv2ElementSize;  // size of each uv2 element
     int pad;             // pad
 
-    public:
+   public:
     // Accessor to uv2 stream
     const void *GetStreamUv2() const
     {
@@ -2389,7 +2387,7 @@ struct vertexFileHeader_t
     int vertexDataStart;               // offset from base to vertex block
     int tangentDataStart;              // offset from base to tangent block
 
-    public:
+   public:
     // Accessor to fat vertex data
     const mstudiovertex_t *GetVertexData() const
     {
@@ -3075,7 +3073,7 @@ struct studiohdr_t
 
     studiohdr_t() = default;
 
-    private:
+   private:
     // No copy constructors allowed
     studiohdr_t( const studiohdr_t &vOther );
 
@@ -3091,7 +3089,7 @@ class IMDLCache;
 
 class CStudioHdr
 {
-    public:
+   public:
     CStudioHdr( void );
     CStudioHdr( const studiohdr_t *pStudioHdr, IMDLCache *mdlcache = NULL );
     ~CStudioHdr()
@@ -3102,7 +3100,7 @@ class CStudioHdr
     void Init( const studiohdr_t *pStudioHdr, IMDLCache *mdlcache = NULL );
     void Term();
 
-    public:
+   public:
     inline bool IsVirtual( void )
     {
         return ( m_pVModel != NULL );
@@ -3127,7 +3125,7 @@ class CStudioHdr
     const studiohdr_t *pAnimStudioHdr( int animation );
     const virtualmodel_t *ResetVModel( const virtualmodel_t *pVModel ) const;
 
-    private:
+   private:
     mutable const studiohdr_t *m_pStudioHdr;
     mutable virtualmodel_t *m_pVModel;
 
@@ -3138,7 +3136,7 @@ class CStudioHdr
     int *m_pFrameUnlockCounter;
     CThreadFastMutex m_FrameUnlockCounterMutex;
 
-    public:
+   public:
     inline int numbones( void ) const
     {
         return m_pStudioHdr->numbones;
@@ -3387,7 +3385,7 @@ class CStudioHdr
         return m_pStudioHdr->VertAnimFixedPointScale();
     }
 
-    public:
+   public:
     int IsSequenceLooping( int iSequence );
     float GetSequenceCycleRate( int iSequence );
 
@@ -3395,7 +3393,7 @@ class CStudioHdr
     void RunFlexRulesOld( const float *src, float *dest );
     void RunFlexRulesNew( const float *src, float *dest );
 
-    public:
+   public:
     inline int boneFlags( int iBone ) const
     {
         return m_boneFlags[iBone];
@@ -3413,11 +3411,11 @@ class CStudioHdr
         return m_boneParent[iBone];
     }
 
-    private:
+   private:
     CUtlVector< int > m_boneFlags;
     CUtlVector< int > m_boneParent;
 
-    public:
+   public:
     // This class maps an activity to sequences allowed for that activity, accelerating the resolution
     // of SelectWeightedSequence(), especially on PowerPC. Iterating through every sequence
     // attached to a model turned out to be a very destructive cache access pattern on 360.
@@ -3429,7 +3427,7 @@ class CStudioHdr
     // Studio.
     class CActivityToSequenceMapping /* final */
     {
-        public:
+       public:
         // A tuple of a sequence and its corresponding weight. Lists of these correspond to activities.
         struct SequenceTuple
         {
@@ -3471,7 +3469,7 @@ class CStudioHdr
 
             class HashFuncs
             {
-                public:
+               public:
                 // dummy constructor (gndn)
                 HashFuncs( int ) {}
 
@@ -3502,10 +3500,10 @@ class CStudioHdr
         CActivityToSequenceMapping( void )
             : m_pSequenceTuples( NULL ), m_iSequenceTuplesCount( 0 ), m_ActToSeqHash( 8, 0, 0 ), m_expectedPStudioHdr( NULL ), m_expectedVModel( NULL )
 #if STUDIO_SEQUENCE_ACTIVITY_LAZY_INITIALIZE
-            ,
-            m_bIsInitialized( false )
+              ,
+              m_bIsInitialized( false )
 #endif
-                {};
+                  {};
 
         // dtor -- not virtual because this class has no inheritors
         ~CActivityToSequenceMapping()
@@ -3537,7 +3535,7 @@ class CStudioHdr
         }
 #endif
 
-        private:
+       private:
         /// Allocate my internal array. (It is freed in the destructor.) Also,
         /// build the hash of activities to sequences and populate m_pSequenceTuples.
         void Initialize( CStudioHdr *pstudiohdr );
@@ -3627,7 +3625,7 @@ class CStudioHdr
     }
 
 #ifdef STUDIO_ENABLE_PERF_COUNTERS
-    public:
+   public:
     inline void ClearPerfCounters( void )
     {
         m_nPerfAnimatedBones = 0;
@@ -3647,7 +3645,7 @@ class CModelAccess
 {
 public:
   CModelAccess(CStudioHdr *pSemaphore)
-    : m_pStudioHdr(pSemaphore)
+   : m_pStudioHdr(pSemaphore)
   {
     m_pStudioHdr->IncrementAccess();
   }
@@ -3905,7 +3903,7 @@ inline const mstudioflexcontroller_t *mstudioflexcontrollerui_t::pController( in
 #define STUDIO_HIDDEN 0x0400         // don't show in default selection views
 #define STUDIO_OVERRIDE 0x0800       // a forward declared sequence (empty)
 #define STUDIO_ACTIVITY 0x1000       // Has been updated at runtime to activity index
-#define STUDIO_EVENT 0x2000          // Has been updated at runtime to event index on server
+#define STUDIO_EVENT 0x2000          // Has been updated at runtime to event index
 #define STUDIO_WORLD 0x4000          // sequence blends in worldspace
 #define STUDIO_NOFORCELOOP 0x8000    // do not force the animation loop
 #define STUDIO_EVENT_CLIENT 0x10000  // Has been updated at runtime to event index on client
@@ -3927,7 +3925,8 @@ inline const mstudioflexcontroller_t *mstudioflexcontrollerui_t::pController( in
 //							0x2000
 #define STUDIO_AL_POSE 0x4000  // layer blends using a pose parameter instead of parent cycle
 
-// Insert this code anywhere that you need to allow for conversion from an old STUDIO_VERSION to a new one.
+// Insert this code anywhere that you need to allow for conversion from an old STUDIO_VERSION
+// to a new one.
 // If we only support the current version, this function should be empty.
 inline bool Studio_ConvertStudioHdrToNewVersion( studiohdr_t *pStudioHdr )
 {
@@ -3964,7 +3963,7 @@ inline bool Studio_ConvertStudioHdrToNewVersion( studiohdr_t *pStudioHdr )
 
     if ( version < 47 )
     {
-        // now used to contain zeroframe cache data, make sure it's empty
+        // used to contain zeroframe cache data
         if ( pStudioHdr->unused4 != 0 )
         {
             pStudioHdr->unused4 = 0;
@@ -3979,7 +3978,6 @@ inline bool Studio_ConvertStudioHdrToNewVersion( studiohdr_t *pStudioHdr )
     }
     else if ( version == 47 )
     {
-        // clear out stale version of zeroframe cache data
         for ( int i = 0; i < pStudioHdr->numlocalanim; i++ )
         {
             mstudioanimdesc_t *pAnim = ( mstudioanimdesc_t * )pStudioHdr->pLocalAnimdesc( i );
@@ -4005,6 +4003,7 @@ inline bool Studio_ConvertStudioHdrToNewVersion( studiohdr_t *pStudioHdr )
             }
         }
     }
+
     // for now, just slam the version number since they're compatible
     pStudioHdr->version = STUDIO_VERSION;
 
@@ -4016,7 +4015,7 @@ inline void Studio_SetRootLOD( studiohdr_t *pStudioHdr, int rootLOD )
 {
     // honor studiohdr restriction of root lod in case requested root lod exceeds restriction.
     if ( pStudioHdr->numAllowedRootLODs > 0 &&
-        rootLOD >= pStudioHdr->numAllowedRootLODs )
+         rootLOD >= pStudioHdr->numAllowedRootLODs )
     {
         rootLOD = pStudioHdr->numAllowedRootLODs - 1;
     }

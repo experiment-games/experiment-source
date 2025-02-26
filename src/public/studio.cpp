@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2008, Valve Corporation, All rights reserved. ============//
+//========= Copyright Valve Corporation, All rights reserved. ============//
 //
 // Purpose:
 //
@@ -44,24 +44,24 @@ mstudioanimdesc_t &studiohdr_t::pAnimdesc( int i ) const
 // Purpose:
 //-----------------------------------------------------------------------------
 
-mstudio_rle_anim_t *mstudioanimdesc_t::pAnimBlock( int block, int index ) const
+mstudioanim_t *mstudioanimdesc_t::pAnimBlock( int block, int index ) const
 {
     if ( block == -1 )
     {
-        return ( mstudio_rle_anim_t * )NULL;
+        return ( mstudioanim_t * )NULL;
     }
     if ( block == 0 )
     {
-        return ( ( ( mstudio_rle_anim_t * )this ) + index );
+        return ( mstudioanim_t * )( ( ( byte * )this ) + index );
     }
 
-    mstudio_rle_anim_t *pAnimBlock = ( mstudio_rle_anim_t * )pStudiohdr()->GetAnimBlock( block );
+    byte *pAnimBlock = pStudiohdr()->GetAnimBlock( block );
     if ( pAnimBlock )
     {
-        return pAnimBlock + index;
+        return ( mstudioanim_t * )( pAnimBlock + index );
     }
 
-    return ( mstudio_rle_anim_t * )NULL;
+    return ( mstudioanim_t * )NULL;
 }
 
 //-----------------------------------------------------------------------------
@@ -69,15 +69,15 @@ mstudio_rle_anim_t *mstudioanimdesc_t::pAnimBlock( int block, int index ) const
 //-----------------------------------------------------------------------------
 
 static ConVar mod_load_showstall( "mod_load_showstall", "0", 0, "1 - show hitches , 2 - show stalls" );
-mstudio_rle_anim_t *mstudioanimdesc_t::pAnim( int *piFrame ) const
+mstudioanim_t *mstudioanimdesc_t::pAnim( int *piFrame ) const
 {
     float flStall;
     return pAnim( piFrame, flStall );
 }
 
-mstudio_rle_anim_t *mstudioanimdesc_t::pAnim( int *piFrame, float &flStall ) const
+mstudioanim_t *mstudioanimdesc_t::pAnim( int *piFrame, float &flStall ) const
 {
-    mstudio_rle_anim_t *panim = NULL;
+    mstudioanim_t *panim = NULL;
 
     int block = animblock;
     int index = animindex;
@@ -175,7 +175,7 @@ mstudio_rle_anim_t *mstudioanimdesc_t::pAnim( int *piFrame, float &flStall ) con
         Msg( "[%8.3f] stall on %s:%s:%d:%d\n", Plat_FloatTime(), pStudiohdr()->pszName(), pszName(), section, block );
     }
 
-    return ( mstudioanim_t * )panim;
+    return panim;
 }
 
 mstudioikrule_t *mstudioanimdesc_t::pIKRule( int i ) const
@@ -830,7 +830,7 @@ const studiohdr_t *CStudioHdr::GroupStudioHdr( int i )
     if ( !m_pStudioHdrCache.IsValidIndex( i ) )
     {
         const char *pszName = ( m_pStudioHdr ) ? m_pStudioHdr->pszName() : "<<null>>";
-        ExecuteNTimes( 5, Warning( "Invalid index passed to CStudioHdr(%s)::GroupStudioHdr(): %d [%d]\n", pszName, i, m_pStudioHdrCache.Count() ) );
+        ExecuteNTimes( 5, Warning( "Invalid index passed to CStudioHdr(%s)::GroupStudioHdr(): %d, but max is %d\n", pszName, i, m_pStudioHdrCache.Count() ) );
         DebuggerBreakIfDebugging();
         return m_pStudioHdr;  // return something known to probably exist, certainly things will be messed up, but hopefully not crash before the warning is noticed
     }
@@ -839,9 +839,7 @@ const studiohdr_t *CStudioHdr::GroupStudioHdr( int i )
 
     if ( pStudioHdr == NULL )
     {
-#if !defined( POSIX )
         Assert( !m_pVModel->m_Lock.GetOwnerId() );
-#endif
         virtualgroup_t *pGroup = &m_pVModel->m_group[i];
         pStudioHdr = pGroup->GetStudioHdr();
         m_pStudioHdrCache[i] = pStudioHdr;
@@ -1302,31 +1300,31 @@ const mstudioiklock_t &CStudioHdr::pIKAutoplayLock( int i )
 #if 0
 int	CStudioHdr::CountAutoplaySequences() const
 {
-    int count = 0;
-    for (int i = 0; i < GetNumSeq(); i++)
-    {
-        mstudioseqdesc_t &seqdesc = pSeqdesc( i );
-        if (seqdesc.flags & STUDIO_AUTOPLAY)
-        {
-            count++;
-        }
-    }
-    return count;
+	int count = 0;
+	for (int i = 0; i < GetNumSeq(); i++)
+	{
+		mstudioseqdesc_t &seqdesc = pSeqdesc( i );
+		if (seqdesc.flags & STUDIO_AUTOPLAY)
+		{
+			count++;
+		}
+	}
+	return count;
 }
 
 int	CStudioHdr::CopyAutoplaySequences( unsigned short *pOut, int outCount ) const
 {
-    int outIndex = 0;
-    for (int i = 0; i < GetNumSeq() && outIndex < outCount; i++)
-    {
-        mstudioseqdesc_t &seqdesc = pSeqdesc( i );
-        if (seqdesc.flags & STUDIO_AUTOPLAY)
-        {
-            pOut[outIndex] = i;
-            outIndex++;
-        }
-    }
-    return outIndex;
+	int outIndex = 0;
+	for (int i = 0; i < GetNumSeq() && outIndex < outCount; i++)
+	{
+		mstudioseqdesc_t &seqdesc = pSeqdesc( i );
+		if (seqdesc.flags & STUDIO_AUTOPLAY)
+		{
+			pOut[outIndex] = i;
+			outIndex++;
+		}
+	}
+	return outIndex;
 }
 
 #endif
@@ -1391,7 +1389,7 @@ void CStudioHdr::RunFlexRulesOld( const float *src, float *dest )
             const char *pszExpression = flex_maxrule.GetString();
             if ( pszExpression )
             {
-            nFlexRulesToRun = atoi(pszExpression);				// 0 will be returned if not a numeric string
+              nFlexRulesToRun = atoi(pszExpression);				// 0 will be returned if not a numeric string
             }
             // end JasonM hack
         //*/
@@ -1668,13 +1666,13 @@ void CStudioHdr::RunFlexRulesOld( const float *src, float *dest )
             // JasonM hack
             if ( nFlexRulesToRun == 0)					// 0 means run all rules correctly
             {
-            dest[prule->flex] = stack[0];
+              dest[prule->flex] = stack[0];
             }
             else // run only up to nFlexRulesToRun correctly...zero out the rest
             {
-            if ( j < nFlexRulesToRun )
+              if ( j < nFlexRulesToRun )
                 dest[prule->flex] = stack[0];
-            else
+              else
                 dest[prule->flex] = 0.0f;
             }
 
@@ -2027,8 +2025,8 @@ void CStudioHdr::CActivityToSequenceMapping::Initialize( CStudioHdr *__restrict 
     int sequenceCount = 0;
     int topActivity = 0;  // this will store the highest seen activity number (used later to make an ad hoc map on the stack)
     for ( UtlHashHandle_t handle = m_ActToSeqHash.GetFirstHandle();
-        m_ActToSeqHash.IsValidHandle( handle );
-        handle = m_ActToSeqHash.GetNextHandle( handle ) )
+          m_ActToSeqHash.IsValidHandle( handle );
+          handle = m_ActToSeqHash.GetNextHandle( handle ) )
     {
         HashValueType &element = m_ActToSeqHash[handle];
         element.startingIdx = sequenceCount;
@@ -2179,7 +2177,7 @@ bool CStudioHdr::CActivityToSequenceMapping::ValidateAgainst( const CStudioHdr *
     if ( m_bIsInitialized )
     {
         return m_expectedPStudioHdr == pstudiohdr->GetRenderHdr() &&
-                m_expectedVModel == pstudiohdr->GetVirtualModel();
+               m_expectedVModel == pstudiohdr->GetVirtualModel();
     }
     else
     {
