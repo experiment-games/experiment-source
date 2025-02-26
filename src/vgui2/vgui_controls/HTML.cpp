@@ -1444,7 +1444,8 @@ bool HTML::OnStartRequest( const char *url, const char *target, const char *pchP
             Panel *targetPanel = m_CustomURLHandlers[i].hPanel;
             if ( targetPanel )
             {
-                PostMessage( targetPanel, new KeyValues( "CustomURL", "url", m_CustomURLHandlers[i].url ) );
+                // Experiment; Fixed this sending the protocol, not the URL:
+                PostMessage( targetPanel, new KeyValues( "CustomURL", "url", url ) );
             }
 
             bURLHandled = true;
