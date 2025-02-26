@@ -8,11 +8,6 @@
 
 An open-source platform for creating Source Engine mods with Lua, with compatibility for Garry's Mod scripts and addons.
 
-> [!CAUTION]
-> This project is currently being merged with the [recent `source-sdk-2013` TF2 SDK update](https://github.com/ValveSoftware/source-sdk-2013/commits/master/).
-> This means that the project is currently in a state of flux and may not work as expected.
-> If you are looking for a functional version of the project, please refer to [this temporary backup](https://github.com/experiment-games/experiment-source-history)
-
 > [!WARNING]
 > This project is still in early development and is **not yet ready for use**.
 > Additionally it is currently being worked on on-and-off, by a single developer.
