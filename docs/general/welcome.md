@@ -5,6 +5,12 @@ With this wiki we aim to provide reference material for the Lua API, as well as 
 
 With Experiment we aim to help you quickly prototype Source Engine mods without having to write any C++ code.
 
+!!! warning
+
+    Experiment is still in development and the Lua API is subject to change. Right now is not
+    the best time to use it for a large project. Instead, we recommend using it for playing around
+    with the API and providing feedback to us.
+
 ## First Steps
 
 Depending on your experience we recommend the following steps to get familiar with the Experiment Lua API:

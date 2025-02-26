@@ -71,6 +71,21 @@ In order to provide complete transparency, we have outlined the goals of Experim
     This way we can document the API as we go, reducing the slog of documenting everything at once.
     Additionally this recurring task adds some more variation to our development process.
 
+- [x] **TF2 SDK Merged:**
+
+    The TF2 SDK has been merged into Experiment to provide support for:
+    - NextBot AI
+    - VScript
+    - 64-bit binaries
+    - WebM video playback
+    - Vulkan renderer
+    - Radial Fog
+    - Swaying Trees
+
+    *See [the ValveSoftware Developer Wiki](https://developer.valvesoftware.com/wiki/Team_Fortress_2_engine_branch) for more features and information*
+
+- [ ] Ability to spawn what Garry's Mod calls "effects" (prop_static models) in the world.
+
 - [ ] *TODO: More tasks*
 
 ### **`v0.2`**: ???

@@ -1,7 +1,6 @@
 # Garry's Mod Compatibility
 
-!!! Note We are not affiliated with Garry's Mod or [Facepunch
-    Studios](https://facepunch.com/).
+!!! Note We are not affiliated with Garry's Mod or [Facepunch Studios](https://facepunch.com/).
 
     No code from Garry's Mod is provided with Experiment. You can however choose
     to mount Garry's Mod content in Experiment.
