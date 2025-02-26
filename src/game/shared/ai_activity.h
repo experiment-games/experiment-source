@@ -138,10 +138,12 @@ typedef enum
     ACT_WALK_SCARED,
     ACT_RUN_SCARED,
     ACT_VICTORY_DANCE,  // killed a player, do a victory dance.
+
     ACT_DIE_HEADSHOT,   // die, hit in head.
     ACT_DIE_CHESTSHOT,  // die, hit in chest
     ACT_DIE_GUTSHOT,    // die, hit in gut
     ACT_DIE_BACKSHOT,   // die, hit in back
+
     ACT_FLINCH_HEAD,
     ACT_FLINCH_CHEST,
     ACT_FLINCH_STOMACH,
@@ -159,7 +161,6 @@ typedef enum
 
     ACT_180_LEFT,  // 180 degree left turn
     ACT_180_RIGHT,
-
     ACT_90_LEFT,  // 90 degree turns
     ACT_90_RIGHT,
 
@@ -281,7 +282,8 @@ typedef enum
     //===========================
     // HL2 Specific Activities
     //===========================
-    // SLAM	Specialty Activities
+    
+    // SLAM Specialty Activities
     ACT_SLAM_STICKWALL_IDLE,
     ACT_SLAM_STICKWALL_ND_IDLE,
     ACT_SLAM_STICKWALL_ATTACH,
@@ -338,7 +340,7 @@ typedef enum
     // Physcannon special activities
     ACT_PHYSCANNON_UPGRADE,
 
-    // weapon override activities
+    // Weapon override activities
     ACT_RANGE_ATTACK_AR1,
     ACT_RANGE_ATTACK_AR2,
     ACT_RANGE_ATTACK_AR2_LOW,
@@ -367,7 +369,6 @@ typedef enum
     ACT_COVER_PISTOL_LOW,
     ACT_COVER_SMG1_LOW,
 
-    // weapon override activities
     ACT_GESTURE_RANGE_ATTACK_AR1,
     ACT_GESTURE_RANGE_ATTACK_AR2,
     ACT_GESTURE_RANGE_ATTACK_AR2_GRENADE,
@@ -421,7 +422,7 @@ typedef enum
     // Manned guns
     ACT_IDLE_MANNEDGUN,
 
-    // Melee weapon
+    // Melee weapon activities
     ACT_IDLE_MELEE,
     ACT_IDLE_ANGRY_MELEE,
 
@@ -536,7 +537,6 @@ typedef enum
     ACT_STARTDYING,
     ACT_DYINGLOOP,
     ACT_DYINGTODEAD,
-
     ACT_RIDE_MANNED_GUN,
 
     // All viewmodels
@@ -574,7 +574,6 @@ typedef enum
     // turning in place
     ACT_TURNRIGHT45,
     ACT_TURNLEFT45,
-
     ACT_TURN,
 
     ACT_OBJ_ASSEMBLING,
@@ -1235,7 +1234,10 @@ typedef enum
     ACT_DOD_PLANT_TNT,
     ACT_DOD_DEFUSE_TNT,
 
-    // HL2MP
+    //===========================
+    // HL2MP Specific Activities
+    //===========================
+
     ACT_HL2MP_IDLE,
     ACT_HL2MP_RUN,
     ACT_HL2MP_IDLE_CROUCH,
@@ -1433,7 +1435,6 @@ typedef enum
     ACT_MP_RELOAD_AIRWALK_PRIMARY_LOOP_2,
     ACT_MP_RELOAD_AIRWALK_PRIMARY_END_2,
 
-    // PRIMARY ALT
     ACT_MP_ATTACK_STAND_PRIMARY_ALT,
     ACT_MP_ATTACK_CROUCH_PRIMARY_ALT,
     ACT_MP_ATTACK_SWIM_PRIMARY_ALT,
@@ -1914,9 +1915,11 @@ typedef enum
     ACT_PRIMARY_VM_IDLE_TO_LOWERED,
     ACT_PRIMARY_VM_IDLE_LOWERED,
     ACT_PRIMARY_VM_LOWERED_TO_IDLE,
+
     ACT_PRIMARY_VM_RELOAD_2,
     ACT_PRIMARY_RELOAD_START_2,
     ACT_PRIMARY_RELOAD_FINISH_2,
+
     ACT_PRIMARY_VM_RELOAD_3,
     ACT_PRIMARY_RELOAD_START_3,
     ACT_PRIMARY_RELOAD_FINISH_3,
