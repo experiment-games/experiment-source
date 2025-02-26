@@ -366,8 +366,8 @@ void CPopulationManager::PlayerDoneViewingLoot( const CTFPlayer *pPlayer )
         {
             // Figure out if this is restart or kick to lobby time
             float flReduceTimeBy = ( tf_mm_trusted.GetBool() == true || tf_mvm_disconnect_on_victory.GetBool() == true )
-                                        ? tf_mvm_victory_disconnect_time.GetFloat()
-                                        : tf_mvm_victory_reset_time.GetFloat();
+                                       ? tf_mvm_victory_disconnect_time.GetFloat()
+                                       : tf_mvm_victory_reset_time.GetFloat();
 
             // Each player can reduce the clock by a certain amount, based on how
             // many players there are
@@ -2000,8 +2000,8 @@ bool CPopulationManager::IsValidPopfile( CUtlString fullPath )
 
     // known templates that are not valid by themselves
     if ( Q_stristr( pszFullPath, "robot_standard" ) ||
-        Q_stristr( pszFullPath, "robot_giant" ) ||
-        Q_stristr( pszFullPath, "robot_gatebot" ) )
+         Q_stristr( pszFullPath, "robot_giant" ) ||
+         Q_stristr( pszFullPath, "robot_gatebot" ) )
     {
         return false;
     }
@@ -2617,7 +2617,7 @@ void CPopulationManager::AllocateBots()
         Warning( "%d bots were already allocated some how before CPopulationManager::AllocateBots was called\n", botVector.Count() );
     }
 
-    for ( int i = nNumEnemyBots; i < MVM_INVADERS_TEAM_SIZE; ++i )
+    for ( int i = nNumEnemyBots; i < tf_mvm_max_invaders.GetInt(); ++i )
     {
         CTFBot *newBot = NextBotCreatePlayerBot< CTFBot >( "TFBot", false );
         if ( newBot )

@@ -738,7 +738,7 @@ bool CMissionPopulator::UpdateMission( CTFBot::MissionType mission )
     // are there enough free slots?
     int currentEnemyCount = GetGlobalTeam( TF_TEAM_PVE_INVADERS )->GetNumPlayers();
 
-    if ( currentEnemyCount + m_desiredCount > CPopulationManager::MVM_INVADERS_TEAM_SIZE )
+    if ( currentEnemyCount + m_desiredCount > tf_mvm_max_invaders.GetInt() )
     {
         // not enough slots yet
         if ( tf_populator_debug.GetBool() )
@@ -843,9 +843,9 @@ void CMissionPopulator::Update( void )
     VPROF_BUDGET( "CMissionPopulator::Update", "NextBot" );
 
     if ( TFGameRules()->InSetup() ||
-        GetManager()->GetWaveNumber() < m_beginAtWaveIndex ||
-        GetManager()->GetWaveNumber() >= m_stopAtWaveIndex ||
-        TFObjectiveResource()->GetMannVsMachineIsBetweenWaves() )
+         GetManager()->GetWaveNumber() < m_beginAtWaveIndex ||
+         GetManager()->GetWaveNumber() >= m_stopAtWaveIndex ||
+         TFObjectiveResource()->GetMannVsMachineIsBetweenWaves() )
     {
         m_state = NOT_STARTED;
         return;
@@ -2097,7 +2097,7 @@ void CWave::ActiveWaveUpdate( void )
             // Now let's kill everyone left on the attacking team
             CTFPlayer *pPlayer = ToTFPlayer( UTIL_PlayerByIndex( i ) );
             if ( pPlayer && pPlayer->IsAlive() &&
-                ( ( pPlayer->GetTeamNumber() == TF_TEAM_PVE_INVADERS ) || pPlayer->m_Shared.InCond( TF_COND_REPROGRAMMED ) ) )
+                 ( ( pPlayer->GetTeamNumber() == TF_TEAM_PVE_INVADERS ) || pPlayer->m_Shared.InCond( TF_COND_REPROGRAMMED ) ) )
             {
                 pPlayer->CommitSuicide( true, false );
             }
