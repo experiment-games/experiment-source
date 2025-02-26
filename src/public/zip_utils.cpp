@@ -30,12 +30,19 @@
 #include "lzma/lzma.h"
 #endif
 
+#ifdef LUA_SDK
+#include "filesystem.h"
+extern IFileSystem *filesystem;
+#endif
+
 #include "tier0/memdbgon.h"
 
+// clang-format off
+// 
 // Data descriptions for byte swapping - only needed
 // for structures that are written to file for use by the game.
 BEGIN_BYTESWAP_DATADESC( ZIP_EndOfCentralDirRecord )
-DEFINE_FIELD( signature, FIELD_INTEGER ),
+    DEFINE_FIELD( signature, FIELD_INTEGER ),
     DEFINE_FIELD( numberOfThisDisk, FIELD_SHORT ),
     DEFINE_FIELD( numberOfTheDiskWithStartOfCentralDirectory, FIELD_SHORT ),
     DEFINE_FIELD( nCentralDirectoryEntries_ThisDisk, FIELD_SHORT ),
@@ -43,10 +50,10 @@ DEFINE_FIELD( signature, FIELD_INTEGER ),
     DEFINE_FIELD( centralDirectorySize, FIELD_INTEGER ),
     DEFINE_FIELD( startOfCentralDirOffset, FIELD_INTEGER ),
     DEFINE_FIELD( commentLength, FIELD_SHORT ),
-    END_BYTESWAP_DATADESC()
+END_BYTESWAP_DATADESC()
 
-        BEGIN_BYTESWAP_DATADESC( ZIP_FileHeader )
-            DEFINE_FIELD( signature, FIELD_INTEGER ),
+BEGIN_BYTESWAP_DATADESC( ZIP_FileHeader )
+    DEFINE_FIELD( signature, FIELD_INTEGER ),
     DEFINE_FIELD( versionMadeBy, FIELD_SHORT ),
     DEFINE_FIELD( versionNeededToExtract, FIELD_SHORT ),
     DEFINE_FIELD( flags, FIELD_SHORT ),
@@ -63,10 +70,10 @@ DEFINE_FIELD( signature, FIELD_INTEGER ),
     DEFINE_FIELD( internalFileAttribs, FIELD_SHORT ),
     DEFINE_FIELD( externalFileAttribs, FIELD_INTEGER ),
     DEFINE_FIELD( relativeOffsetOfLocalHeader, FIELD_INTEGER ),
-    END_BYTESWAP_DATADESC()
+END_BYTESWAP_DATADESC()
 
-        BEGIN_BYTESWAP_DATADESC( ZIP_LocalFileHeader )
-            DEFINE_FIELD( signature, FIELD_INTEGER ),
+BEGIN_BYTESWAP_DATADESC( ZIP_LocalFileHeader )
+    DEFINE_FIELD( signature, FIELD_INTEGER ),
     DEFINE_FIELD( versionNeededToExtract, FIELD_SHORT ),
     DEFINE_FIELD( flags, FIELD_SHORT ),
     DEFINE_FIELD( compressionMethod, FIELD_SHORT ),
@@ -77,25 +84,27 @@ DEFINE_FIELD( signature, FIELD_INTEGER ),
     DEFINE_FIELD( uncompressedSize, FIELD_INTEGER ),
     DEFINE_FIELD( fileNameLength, FIELD_SHORT ),
     DEFINE_FIELD( extraFieldLength, FIELD_SHORT ),
-    END_BYTESWAP_DATADESC()
+END_BYTESWAP_DATADESC()
 
-        BEGIN_BYTESWAP_DATADESC( ZIP_PreloadHeader )
-            DEFINE_FIELD( Version, FIELD_INTEGER ),
+BEGIN_BYTESWAP_DATADESC( ZIP_PreloadHeader )
+    DEFINE_FIELD( Version, FIELD_INTEGER ),
     DEFINE_FIELD( DirectoryEntries, FIELD_INTEGER ),
     DEFINE_FIELD( PreloadDirectoryEntries, FIELD_INTEGER ),
     DEFINE_FIELD( Alignment, FIELD_INTEGER ),
-    END_BYTESWAP_DATADESC()
+END_BYTESWAP_DATADESC()
 
-        BEGIN_BYTESWAP_DATADESC( ZIP_PreloadDirectoryEntry )
-            DEFINE_FIELD( Length, FIELD_INTEGER ),
+BEGIN_BYTESWAP_DATADESC( ZIP_PreloadDirectoryEntry )
+    DEFINE_FIELD( Length, FIELD_INTEGER ),
     DEFINE_FIELD( DataOffset, FIELD_INTEGER ),
-    END_BYTESWAP_DATADESC()
+END_BYTESWAP_DATADESC()
+
+static bool WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
 
 #ifdef WIN32
-    //-----------------------------------------------------------------------------
-    // For >2 GB File Support
-    //-----------------------------------------------------------------------------
-    class CWin32File
+//-----------------------------------------------------------------------------
+// For >2 GB File Support
+//-----------------------------------------------------------------------------
+class CWin32File
 {
    public:
     static HANDLE CreateTempFile( CUtlString &WritePath, CUtlString &FileName )
@@ -169,7 +178,7 @@ DEFINE_FIELD( signature, FIELD_INTEGER ),
     }
 };
 #else
-        class CWin32File
+class CWin32File
 {
    public:
     static HANDLE CreateTempFile( CUtlString &WritePath, CUtlString &FileName )
@@ -281,10 +290,17 @@ class CBufferStream : public IWriteStream
 class CFileStream : public IWriteStream
 {
    public:
+#ifndef LUA_SDK
     CFileStream( FILE *fout )
         : IWriteStream(), m_file( fout ), m_hFile( INVALID_HANDLE_VALUE ) {}
     CFileStream( HANDLE hOutFile )
         : IWriteStream(), m_file( NULL ), m_hFile( hOutFile ) {}
+#else
+    CFileStream( FILE *fout )
+        : IWriteStream(), m_file( fout ), m_hFile( FILESYSTEM_INVALID_HANDLE ) {}
+    CFileStream( FileHandle_t hOutFile )
+        : IWriteStream(), m_file( NULL ), m_hFile( hOutFile ) {}
+#endif
 
     // Implementing IWriteStream method
     virtual void Put( const void *pMem, int size )
@@ -293,13 +309,23 @@ class CFileStream : public IWriteStream
         {
             fwrite( pMem, size, 1, m_file );
         }
-#ifdef WIN32
         else
         {
+#ifndef LUA_SDK
+#ifdef WIN32
             DWORD numBytesWritten;
-            WriteFile( m_hFile, pMem, size, &numBytesWritten, NULL );
-        }
+            if ( !WriteFile( m_hFile, pMem, size, &numBytesWritten, NULL ) )
+            {
+                DWORD errorCode = GetLastError();  // Retrieve the error code
+                DevWarning( "Writing file failed. Error code %lu\n", errorCode );
+            }
+#else
+            Assert( false );  // Implement a way to write files
 #endif
+#else
+            filesystem->Write( pMem, size, m_hFile );
+#endif
+        }
     }
 
     // Implementing IWriteStream method
@@ -311,10 +337,14 @@ class CFileStream : public IWriteStream
         }
         else
         {
+#ifndef LUA_SDK
 #ifdef WIN32
             return CWin32File::FileTell( m_hFile );
 #else
             return 0;
+#endif
+#else
+            return filesystem->Tell( m_hFile );
 #endif
         }
     }
@@ -322,6 +352,10 @@ class CFileStream : public IWriteStream
    private:
     FILE *m_file;
     HANDLE m_hFile;
+
+#ifdef LUA_SDK
+    FileHandle_t m_fhFile;
+#endif
 };
 
 //-----------------------------------------------------------------------------
@@ -374,7 +408,11 @@ class CZipFile
     void SaveToBuffer( CUtlBuffer &buffer );
     // Write the zip to a filestream
     void SaveToDisk( FILE *fout );
+#ifndef LUA_SDK
     void SaveToDisk( HANDLE hOutFile );
+#else
+    void SaveToDisk( FileHandle_t fhOutFile );
+#endif
 
     unsigned int CalculateSize( void );
 
@@ -1245,21 +1283,36 @@ bool CZipFile::FileExistsInZip( const char *pRelativeName )
 //-----------------------------------------------------------------------------
 void CZipFile::AddFileToZip( const char *relativename, const char *fullpath, IZip::eCompressionType compressionType )
 {
+#ifndef LUA_SDK
     FILE *temp;
     fopen_s( &temp, fullpath, "rb" );
+#else
+    FileHandle_t temp = filesystem->Open( fullpath, "rb" );
+#endif
 
     if ( !temp )
         return;
 
     // Determine length
+#ifndef LUA_SDK
     fseek( temp, 0, SEEK_END );
     int size = ftell( temp );
     fseek( temp, 0, SEEK_SET );
+#else
+    filesystem->Seek( temp, 0, FILESYSTEM_SEEK_TAIL );
+    int size = filesystem->Tell( temp );
+    filesystem->Seek( temp, 0, FILESYSTEM_SEEK_HEAD );
+#endif
     byte *buf = ( byte * )malloc( size + 1 );
 
     // Read data
+#ifndef LUA_SDK
     fread( buf, size, 1, temp );
     fclose( temp );
+#else
+    filesystem->Read( buf, size, temp );
+    filesystem->Close( temp );
+#endif
 
     // Now add as a buffer
     AddBufferToZip( relativename, buf, size, false, compressionType );
@@ -1439,11 +1492,19 @@ void CZipFile::SaveToDisk( FILE *fout )
     SaveDirectory( stream );
 }
 
+#ifndef LUA_SDK
 void CZipFile::SaveToDisk( HANDLE hOutFile )
 {
     CFileStream stream( hOutFile );
     SaveDirectory( stream );
 }
+#else
+void CZipFile::SaveToDisk( FileHandle_t fhOutFile )
+{
+    CFileStream stream( fhOutFile );
+    SaveDirectory( stream );
+}
+#endif
 
 //-----------------------------------------------------------------------------
 // Purpose: Store data out to a CUtlBuffer
@@ -1844,10 +1905,17 @@ void CZip::SaveToDisk( FILE *fout )
     m_ZipFile.SaveToDisk( fout );
 }
 
+#ifndef LUA_SDK
 void CZip::SaveToDisk( HANDLE hOutFile )
 {
     m_ZipFile.SaveToDisk( hOutFile );
 }
+#else
+void CZip::SaveToDisk( FileHandle_t fhOutFile )
+{
+    m_ZipFile.SaveToDisk( fhOutFile );
+}
+#endif
 
 void CZip::ParseFromBuffer( void *buffer, int bufferlength )
 {
