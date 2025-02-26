@@ -16,7 +16,7 @@ $Configuration
     $Compiler
     {
         $AdditionalIncludeDirectories	"$BASE;$SRCDIR\thirdparty;$SRCDIR\thirdparty\cef;$SRCDIR\game\client;$SRCDIR\game\shared;$SRCDIR\lua;$GENERATED_PROTO_DIR"
-        $PreprocessorDefinitions		"$BASE;LUA_SDK"
+        $PreprocessorDefinitions		"$BASE;LUA_SDK;EXPERIMENT_SOURCE"
     }
 }
 
