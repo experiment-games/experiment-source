@@ -1827,9 +1827,11 @@ int C_BaseEntity::GetSoundSourceIndex() const
 //-----------------------------------------------------------------------------
 const Vector &C_BaseEntity::GetRenderOrigin( void )
 {
-#ifdef LUA_SDK
+// Experiment; TODO: This is disabled because it causes read access violations when spamming new props.
+#if defined(LUA_SDK) && 0
     if ( lua_isrefvalid( L, m_nTableReference ) )
     {
+        luasrc_dumpstack( L );
         lua_getref( L, m_nTableReference );
         lua_getfield( L, -1, "m_vecRenderOrigin" );
         lua_remove( L, -2 );
@@ -1851,7 +1853,8 @@ const Vector &C_BaseEntity::GetRenderOrigin( void )
 
 const QAngle &C_BaseEntity::GetRenderAngles( void )
 {
-#ifdef LUA_SDK
+// Experiment; TODO: This is disabled because it causes read access violations when spamming new props.
+#if defined( LUA_SDK ) && 0
     if ( lua_isrefvalid( L, m_nTableReference ) )
     {
         lua_getref( L, m_nTableReference );
