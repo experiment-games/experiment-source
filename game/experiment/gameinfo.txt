@@ -1,52 +1,78 @@
 gameinfo
 {
-	game	"Experiment"
-	icon	"icon_experiment"
-	title	"Experiment"
-	title2	""
-	type	"multiplayer_only"
-	nomodels	"1"
-	nohimodel	"1"
-	nocrosshair	"1"
-	nodifficulty	"1"
-	hasportals	"0"
-	advcrosshair	"0"
-	supportsvr	"0"
+	game			"Experiment"
+	icon			"icon_experiment"
+	title			"Experiment"
+	title2			""
+
+	type			"multiplayer_only"
+	nomodels		1
+	nohimodel		1
+	nocrosshair		1
+	nodifficulty	1
+	hasportals		0
+	advcrosshair	0
+	supportsvr		0
+
 	hidden_maps
 	{
-		test_speakers	"1"
-		test_hardware	"1"
+		test_speakers	1
+		test_hardware	1
 	}
+
 	filesystem
 	{
-		steamappid	"243750"
+		steamappid			243750
 		searchpaths
 		{
-			game+mod		"experiment/addons/*"
+			// First, mount all user customizations.  This will search for VPKs and subfolders
+			// and mount them in alphabetical order.  The easiest way to distribute a mod is to
+			// pack up the custom content into a VPK.  To "install" a mod, just drop it in this
+			// folder.
+			//
+			// Note that this folder is scanned only when the game is booted.
+			game+mod		experiment/addons/*
 
-			game			"experiment"
+			// Now search loose files.  We'll set the directory containing the gameinfo.txt file
+			// as the first "mod" search path (after any user customizations).  This is also the one
+			// that's used when writing to the "mod" path.
+			mod+mod_write		|gameinfo_path|.
+			game+game_write		|gameinfo_path|.
+			default_write_path	|gameinfo_path|.
+			gamebin				|gameinfo_path|bin
 
-			game+mod+mod_write+default_write_path	"|gameinfo_path|."
-			gamebin	"|gameinfo_path|bin"
+			// We search VPK files before ordinary folders, because most files will be found in
+			// VPK and we can avoid making thousands of file system calls to attempt to open files
+			// in folders where they don't exist.  (Searching a VPK is much faster than making an operating
+			// system call.)
+			game+mod			|appid_243750|hl2mp/hl2mp_english.vpk
+			game+mod			|appid_243750|hl2mp/hl2mp_pak.vpk
 
-			game+mod	"|all_source_engine_paths|engine/hl2mp_pak.vpk"
-			game	"|all_source_engine_paths|engine/hl2_textures.vpk"
-			game	"|all_source_engine_paths|engine/hl2_sound_vo_english.vpk"
-			game	"|all_source_engine_paths|engine/hl2_sound_misc.vpk"
-			game	"|all_source_engine_paths|engine/hl2_misc.vpk"
+			game				|appid_243750|hl2_complete/hl2_complete_textures.vpk
+			game				|appid_243750|hl2_complete/hl2_complete_sound_vo_english.vpk
+			game				|appid_243750|hl2_complete/hl2_complete_sound_misc.vpk
+			game				|appid_243750|hl2_complete/hl2_complete_misc.vpk
 
-			game_write	"|gameinfo_path|"
-			gamebin	"|gameinfo_path|bin"
-			game	"|all_source_engine_paths|engine"
+			game				|appid_243750|hl2/hl2_textures.vpk
+			game				|appid_243750|hl2/hl2_sound_vo_english.vpk
+			game				|appid_243750|hl2/hl2_sound_misc.vpk
+			game				|appid_243750|hl2/hl2_misc.vpk
 
+			platform			|appid_243750|platform/platform_misc.vpk
+
+			game				experiment
+
+			// Last, mount in shared HL2 loose files
+			game				|appid_243750|hl2_complete
+			game				|appid_243750|hl2
+			platform			|appid_243750|platform
+
+			// Custom search paths
 			data	"|gameinfo_path|data"
-			lua	"|gameinfo_path|scripts/lua"
-			lua	"|gameinfo_path|gamemodes"
+			lua		"|gameinfo_path|scripts/lua"
+			lua		"|gameinfo_path|gamemodes"
 
 			game+mod+download	"|gameinfo_path|download"
-
-			platform	"|all_source_engine_paths|platform/platform_misc.vpk"
-			platform	"|all_source_engine_paths|platform"
 		}
 	}
 }
