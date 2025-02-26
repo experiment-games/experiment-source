@@ -42,24 +42,48 @@ fi
 files=(
     "bin"
     "platform"
-    "thirdpartylegalnotices.txt"
     "hl2.exe"
+)
+
+files_to_ignore=(
+    "bin/linux64/libsteam_api.so"
+    "bin/x64/steam_api64.dll"
+    "thirdpartylegalnotices.txt"
 )
 
 # Delete all files and directories in the target directory (looping files) so we start clean
 # This is useful when we might have compiled different library dll's into the bin especially.
-echo "Removing all files and directories in $target_dir"
+remove_recursive() {
+    local dir="$1"
+
+    [ -d "$dir" ] || return  # Skip if directory doesn't exist
+
+    find "$dir" -type f | while read -r file; do
+        for ignore in "${files_to_ignore[@]}"; do
+            if [[ "$file" == *"$ignore"* ]]; then
+                echo "Skipping ignored file: $file"
+                continue 2
+            fi
+        done
+
+        rm -f "$file"
+    done
+
+    find "$dir" -type d -empty -delete
+}
+
+echo "Cleaning $target_dir"
 for file in "${files[@]}"; do
     if [ -e "$target_dir/$file" ]; then
-        echo "Removing $target_dir/$file"
-        rm -r "$target_dir/$file"
+        remove_recursive "$target_dir/$file"
     fi
 done
 
 for file in "${files[@]}"; do
     if [ -e "$STEAM_SDK_DIR/$file" ]; then
         echo "Copying $file to $target_dir"
-        cp -r "$STEAM_SDK_DIR/$file" "$target_dir"
+        mkdir -p "$target_dir/$(dirname "$file")"
+        cp -r "$STEAM_SDK_DIR/$file" "$target_dir/$file"
     else
         echo "The file $file does not exist in $STEAM_SDK_DIR"
     fi

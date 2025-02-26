@@ -8,6 +8,11 @@
 
 An open-source platform for creating Source Engine mods with Lua, with compatibility for Garry's Mod scripts and addons.
 
+> [!CAUTION]
+> This project is currently being merged with the [recent `source-sdk-2013` TF2 SDK update](https://github.com/ValveSoftware/source-sdk-2013/commits/master/).
+> This means that the project is currently in a state of flux and may not work as expected.
+> If you are looking for a functional version of the project, please refer to [this temporary backup](https://github.com/experiment-games/experiment-source-history)
+
 > [!WARNING]
 > This project is still in early development and is **not yet ready for use**.
 > Additionally it is currently being worked on on-and-off, by a single developer.
@@ -61,7 +66,7 @@ After (forking and) cloning the repository, follow these steps to setup the proj
 
     ```bash
     cd src
-    creategameprojects.bat
+    createallprojects.bat
     ```
 
 2. Copy the `.env.example` file to `.env`.
@@ -84,7 +89,7 @@ After (forking and) cloning the repository, follow these steps to setup the proj
         ./buildshaders.sh
         ```
 
-5. Next run the `setupprojects.sh` script to modify the Visual Studio project files and solution.
+5. Next run the `setupprojects.sh` script to modify the Visual Studio project files, solution and copy content files:
 
     ```bash
     cd src
@@ -96,7 +101,7 @@ After (forking and) cloning the repository, follow these steps to setup the proj
     * _Enforces the correct project dependencies of all projects._
     * _The `--init` flag will cause all Source SDK 2013 executables and neccessary files to be copied to `game/`, so that the game can be run as a standalone mod._
 
-6. Open the created `experiment.sln` solution in Visual Studio 2022 (or newer).
+6. Open the created `everything.sln` solution in Visual Studio 2022 (or newer).
 
 > [!WARNING]
 > Despite being able to build within Visual Studio 2022, the Source SDK 2013 solution requires
