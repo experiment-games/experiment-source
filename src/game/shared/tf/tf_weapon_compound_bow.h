@@ -25,7 +25,7 @@ class CTFProjectile_Arrow;
 //
 class CTFCompoundBow : public CTFPipebombLauncher
 {
-    public:
+   public:
     DECLARE_CLASS( CTFCompoundBow, CTFPipebombLauncher );
     DECLARE_NETWORKCLASS();
     DECLARE_PREDICTABLE();
@@ -103,10 +103,9 @@ class CTFCompoundBow : public CTFPipebombLauncher
 
     void SetArrowAlight( bool bAlight );
 
-    protected:
-    virtual void SetInternalChargeBeginTime( float flChargeBeginTime ) OVERRIDE;
+    bool OwnerCanJump( void );
 
-    private:
+   private:
 #ifdef CLIENT_DLL
     virtual void StartBurningEffect( void );
     virtual void StopBurningEffect( void );

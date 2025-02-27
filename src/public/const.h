@@ -166,7 +166,7 @@
 #define FL_INWATER ( 1 << 10 )     // In water
 
 // NOTE if you move things up, make sure to change this value
-#define PLAYER_FLAG_BITS 11
+#define PLAYER_FLAG_BITS 32
 
 #define FL_FLY ( 1 << 11 )   // Changes the SV_Movestep() behavior to not need to be on ground
 #define FL_SWIM ( 1 << 12 )  // Changes the SV_Movestep() behavior to not need to be on ground (but stay in water)
@@ -254,7 +254,7 @@ enum SolidFlags_t
     FSOLID_CUSTOMBOXTEST = 0x0002,         // Ignore solid type + always call into the entity for swept box tests
     FSOLID_NOT_SOLID = 0x0004,             // Are we currently not solid?
     FSOLID_TRIGGER = 0x0008,               // This is something may be collideable but fires touch functions
-                                            // even when it's not collideable (when the FSOLID_NOT_SOLID flag is set)
+                                           // even when it's not collideable (when the FSOLID_NOT_SOLID flag is set)
     FSOLID_NOT_STANDABLE = 0x0010,         // You can't stand on this
     FSOLID_VOLUME_CONTENTS = 0x0020,       // Contains volumetric contents (like water)
     FSOLID_FORCE_WORLD_ALIGNED = 0x0040,   // Forces the collision rep to be world-aligned even if it's SOLID_BSP or SOLID_VPHYSICS
@@ -408,7 +408,7 @@ enum Collision_Group_t
     COLLISION_GROUP_BREAKABLE_GLASS,
     COLLISION_GROUP_VEHICLE,
     COLLISION_GROUP_PLAYER_MOVEMENT,  // For HL2, same as Collision_Group_Player, for
-                                    // TF2, this filters out other players and CBaseObjects
+                                      // TF2, this filters out other players and CBaseObjects
     COLLISION_GROUP_NPC,              // Generic NPC group
     COLLISION_GROUP_IN_VEHICLE,       // for any entity inside a vehicle
     COLLISION_GROUP_WEAPON,           // for any weapons that need collision detection

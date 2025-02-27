@@ -755,7 +755,7 @@ int CBasePlayer::ShouldTransmit( const CCheckTransmitInfo *pInfo )
 
         CBasePlayer *pRecipientPlayer = static_cast< CBasePlayer * >( pRecipientEntity );
         if ( pRecipientPlayer->IsHLTV() ||
-            pRecipientPlayer->IsReplay() )
+             pRecipientPlayer->IsReplay() )
         {
             // HACK force calling RecomputePVSInformation to update PVS data
             NetworkProp()->AreaNum();
@@ -767,7 +767,7 @@ int CBasePlayer::ShouldTransmit( const CCheckTransmitInfo *pInfo )
     // Note that if m_flDeathAnimTime is never set, as long as m_lifeState is set to LIFE_DEAD after dying, this
     // test will act as if the death anim is finished.
     if ( IsEffectActive( EF_NODRAW ) || ( IsObserver() && ( gpGlobals->curtime - m_flDeathTime > 0.5 ) &&
-                                        ( m_lifeState == LIFE_DEAD ) && ( gpGlobals->curtime - m_flDeathAnimTime > 0.5 ) ) )
+                                          ( m_lifeState == LIFE_DEAD ) && ( gpGlobals->curtime - m_flDeathAnimTime > 0.5 ) ) )
     {
         return FL_EDICT_DONTSEND;
     }
@@ -1662,7 +1662,7 @@ int CBasePlayer::OnTakeDamage_Alive( const CTakeDamageInfo &info )
     }
 
     if ( info.GetInflictor() && ( GetMoveType() == MOVETYPE_WALK ) &&
-        ( !attacker->IsSolidFlagSet( FSOLID_TRIGGER ) ) )
+         ( !attacker->IsSolidFlagSet( FSOLID_TRIGGER ) ) )
     {
         Vector force = vecDir * -DamageForce( WorldAlignSize(), info.GetBaseDamage() );
         if ( force.z > 250.0f )
@@ -1845,10 +1845,10 @@ void CBasePlayer::SetAnimation( PLAYER_ANIM playerAnim )
     else if ( playerAnim == PLAYER_ATTACK1 )
     {
         if ( m_Activity == ACT_HOVER ||
-            m_Activity == ACT_SWIM ||
-            m_Activity == ACT_HOP ||
-            m_Activity == ACT_LEAP ||
-            m_Activity == ACT_DIESIMPLE )
+             m_Activity == ACT_SWIM ||
+             m_Activity == ACT_HOP ||
+             m_Activity == ACT_LEAP ||
+             m_Activity == ACT_DIESIMPLE )
         {
             idealActivity = m_Activity;
         }
@@ -3212,7 +3212,7 @@ void CBasePlayer::AdjustPlayerTimeBase( int simulation_ticks )
 
         // See if we are too fast
         if ( nEstimatedFinalTick > too_fast_limit ||
-            nEstimatedFinalTick < too_slow_limit )
+             nEstimatedFinalTick < too_slow_limit )
         {
             int nCorrectedTick = nIdealFinalTick - simulation_ticks + gpGlobals->simTicksThisFrame;
 
@@ -3654,8 +3654,8 @@ void CBasePlayer::ProcessUsercmds( CUserCmd *cmds, int numcmds, int totalcmds, i
 
         // If no clipping and cheats enabled and sv_noclipduringpause enabled, then don't zero out movement part of CUserCmd
         if ( GetMoveType() == MOVETYPE_NOCLIP &&
-            sv_cheats->GetBool() &&
-            sv_noclipduringpause.GetBool() )
+             sv_cheats->GetBool() &&
+             sv_noclipduringpause.GetBool() )
         {
             clear_angles = false;
         }
@@ -3715,12 +3715,12 @@ bool CBasePlayer::IsUserCmdDataValid( CUserCmd *pCmd )
     const int nMaxDelta = gpGlobals->tickcount + nCmdMaxTickDelta;
 
     bool bValid = ( pCmd->tick_count >= nMinDelta && pCmd->tick_count < nMaxDelta ) &&
-                // Prevent clients from sending invalid view angles to try to get leaf server code to crash
-                ( pCmd->viewangles.IsValid() && IsEntityQAngleReasonable( pCmd->viewangles ) ) &&
-                // Movement ranges
-                ( IsFinite( pCmd->forwardmove ) && IsEntityCoordinateReasonable( pCmd->forwardmove ) ) &&
-                ( IsFinite( pCmd->sidemove ) && IsEntityCoordinateReasonable( pCmd->sidemove ) ) &&
-                ( IsFinite( pCmd->upmove ) && IsEntityCoordinateReasonable( pCmd->upmove ) );
+                  // Prevent clients from sending invalid view angles to try to get leaf server code to crash
+                  ( pCmd->viewangles.IsValid() && IsEntityQAngleReasonable( pCmd->viewangles ) ) &&
+                  // Movement ranges
+                  ( IsFinite( pCmd->forwardmove ) && IsEntityCoordinateReasonable( pCmd->forwardmove ) ) &&
+                  ( IsFinite( pCmd->sidemove ) && IsEntityCoordinateReasonable( pCmd->sidemove ) ) &&
+                  ( IsFinite( pCmd->upmove ) && IsEntityCoordinateReasonable( pCmd->upmove ) );
 
     int nWarningLevel = sv_player_display_usercommand_errors.GetInt();
     if ( !bValid && nWarningLevel > 0 )
@@ -3846,7 +3846,7 @@ void CBasePlayer::PlayerRunCommand( CUserCmd *ucmd, IMoveHelper *moveHelper )
     // Handle FL_FROZEN.
     // Prevent player moving for some seconds after New Game, so that they pick up everything
     if ( GetFlags() & FL_FROZEN ||
-        ( developer.GetInt() == 0 && gpGlobals->eLoadType == MapLoad_NewGame && gpGlobals->curtime < 3.0 ) )
+         ( developer.GetInt() == 0 && gpGlobals->eLoadType == MapLoad_NewGame && gpGlobals->curtime < 3.0 ) )
     {
         ucmd->forwardmove = 0;
         ucmd->sidemove = 0;
@@ -4713,12 +4713,12 @@ void CBasePlayer::PostThink()
             {
                 // if they've moved too far from the gun, or deployed another weapon, unuse the gun
                 if ( m_hUseEntity->OnControls( this ) &&
-                    ( !GetActiveWeapon() || GetActiveWeapon()->IsEffectActive( EF_NODRAW ) ||
-                        ( GetActiveWeapon()->GetActivity() == ACT_VM_HOLSTER )
+                     ( !GetActiveWeapon() || GetActiveWeapon()->IsEffectActive( EF_NODRAW ) ||
+                       ( GetActiveWeapon()->GetActivity() == ACT_VM_HOLSTER )
 #ifdef PORTAL  // Portalgun view model stays up when holding an object -Jeep
-                        || FClassnameIs( GetActiveWeapon(), "weapon_portalgun" )
+                       || FClassnameIs( GetActiveWeapon(), "weapon_portalgun" )
 #endif  // #ifdef PORTAL
-                            ) )
+                           ) )
                 {
                     m_hUseEntity->Use( this, this, USE_SET, 2 );  // try fire the gun
                 }
@@ -5132,7 +5132,7 @@ void CBasePlayer::Spawn( void )
     m_flNextDecalTime = 0;  // let this player decal as soon as he spawns.
 
     m_flgeigerDelay = gpGlobals->curtime + 2.0;  // wait a few seconds until user-defined message registrations
-                                                // are recieved by all clients
+                                                 // are recieved by all clients
 
     m_flFieldOfView = 0.766;  // some NPCs use this to determine whether or not the player is looking at them.
 
@@ -5345,7 +5345,7 @@ int CBasePlayer::Save( ISave &save )
 // Friend class of CBaseEntity to access private member data.
 class CPlayerRestoreHelper
 {
-    public:
+   public:
     const Vector &GetAbsOrigin( CBaseEntity *pent )
     {
         return pent->m_vecAbsOrigin;
@@ -5913,7 +5913,7 @@ bool CBasePlayer::ScriptIsPlayerNoclipping( void )
 //==============================================
 class CSprayCan : public CPointEntity
 {
-    public:
+   public:
     DECLARE_CLASS( CSprayCan, CPointEntity );
 
     void Spawn( CBasePlayer *pOwner );
@@ -5968,7 +5968,7 @@ void CSprayCan::Think( void )
 
 class CBloodSplat : public CPointEntity
 {
-    public:
+   public:
     DECLARE_CLASS( CBloodSplat, CPointEntity );
 
     void Spawn( CBaseEntity *pOwner );
@@ -6865,8 +6865,8 @@ bool CBasePlayer::ClientCommand( const CCommand &args )
         else if ( stricmp( cmd, "spec_goto" ) == 0 )  // chase next player
         {
             if ( ( GetObserverMode() == OBS_MODE_FIXED ||
-                    GetObserverMode() == OBS_MODE_ROAMING ) &&
-                args.ArgC() == 6 )
+                   GetObserverMode() == OBS_MODE_ROAMING ) &&
+                 args.ArgC() == 6 )
             {
                 Vector origin;
                 origin.x = clamp( atof( args[1] ), MIN_COORD_FLOAT, MAX_COORD_FLOAT );
@@ -7694,7 +7694,7 @@ void CBasePlayer::Weapon_Equip( CBaseCombatWeapon *pWeapon, bool bGiveAmmo /*= t
 
 #ifdef HL2_DLL
     if ( bShouldSwitch == false && PhysCannonGetHeldEntity( GetActiveWeapon() ) == pWeapon &&
-        Weapon_OwnsThisType( pWeapon->GetClassname(), pWeapon->GetSubType() ) )
+         Weapon_OwnsThisType( pWeapon->GetClassname(), pWeapon->GetSubType() ) )
     {
         bShouldSwitch = true;
     }
@@ -7901,7 +7901,7 @@ class CStripWeapons : public CPointEntity
 {
     DECLARE_CLASS( CStripWeapons, CPointEntity );
 
-    public:
+   public:
     void InputStripWeapons( inputdata_t &data );
     void InputStripWeaponsAndSuit( inputdata_t &data );
 
@@ -7966,7 +7966,7 @@ class CRevertSaved : public CPointEntity
 {
     DECLARE_CLASS( CRevertSaved, CPointEntity );
 
-    public:
+   public:
     void Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
     void LoadThink( void );
 
@@ -8013,7 +8013,7 @@ class CRevertSaved : public CPointEntity
     }
 #endif
 
-    private:
+   private:
     float m_loadTime;
     float m_Duration;
     float m_HoldTime;
@@ -8145,10 +8145,10 @@ class CMovementSpeedMod : public CPointEntity
 {
     DECLARE_CLASS( CMovementSpeedMod, CPointEntity );
 
-    public:
+   public:
     void InputSpeedMod( inputdata_t &data );
 
-    private:
+   private:
     int GetDisabledButtonMask( void );
 
     DECLARE_DATADESC();
@@ -8277,6 +8277,7 @@ void SendProxy_CropFlagsToPlayerFlagBitsLength( const SendProp *pProp, const voi
 
     pOut->m_Int = ( data & mask );
 }
+
 // -------------------------------------------------------------------------------- //
 // SendTable for CPlayerState.
 // -------------------------------------------------------------------------------- //
@@ -9316,7 +9317,7 @@ void CBasePlayer::SetPlayerName( const char *name )
 //-----------------------------------------------------------------------------
 class DisableAutokick
 {
-    public:
+   public:
     DisableAutokick( int userID )
     {
         m_userID = userID;
@@ -9334,7 +9335,7 @@ class DisableAutokick
         return true;  // keep looking at other players
     }
 
-    private:
+   private:
     int m_userID;
 };
 

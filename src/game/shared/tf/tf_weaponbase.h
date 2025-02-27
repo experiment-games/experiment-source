@@ -107,7 +107,7 @@ void AddViewModelBobHelper( Vector &origin, QAngle &angles, BobState_t *pBobStat
 // Interface for weapons that have a charge time
 class ITFChargeUpWeapon
 {
-    public:
+   public:
     virtual bool CanCharge( void ) = 0;
 
     virtual float GetChargeBeginTime( void ) = 0;
@@ -122,7 +122,7 @@ class ITFChargeUpWeapon
 
 class CTraceFilterIgnoreTeammates : public CTraceFilterSimple
 {
-    public:
+   public:
     // It does have a base, but we'll never network anything below here..
     DECLARE_CLASS( CTraceFilterIgnoreTeammates, CTraceFilterSimple );
 
@@ -148,7 +148,7 @@ class CTraceFilterIgnoreTeammates : public CTraceFilterSimple
 
 class CTraceFilterIgnorePlayers : public CTraceFilterSimple
 {
-    public:
+   public:
     // It does have a base, but we'll never network anything below here..
     DECLARE_CLASS( CTraceFilterIgnorePlayers, CTraceFilterSimple );
 
@@ -169,7 +169,7 @@ class CTraceFilterIgnorePlayers : public CTraceFilterSimple
 
 class CTraceFilterIgnoreFriendlyCombatItems : public CTraceFilterSimple
 {
-    public:
+   public:
     DECLARE_CLASS( CTraceFilterIgnoreFriendlyCombatItems, CTraceFilterSimple );
 
     CTraceFilterIgnoreFriendlyCombatItems( const IHandleEntity *passentity, int collisionGroup, int iIgnoreTeam, bool bIsProjectile = false )
@@ -210,7 +210,7 @@ class CTraceFilterIgnoreFriendlyCombatItems : public CTraceFilterSimple
 //-----------------------------------------------------------------------------
 class CTraceFilterCollisionArrows : public CTraceFilterEntitiesOnly
 {
-    public:
+   public:
     DECLARE_CLASS_NOBASE( CTraceFilterCollisionArrows );
 
     CTraceFilterCollisionArrows( const IHandleEntity *passentity, const IHandleEntity *passentity2 )
@@ -246,7 +246,7 @@ class CTraceFilterCollisionArrows : public CTraceFilterEntitiesOnly
         return true;
     }
 
-    protected:
+   protected:
     const IHandleEntity *m_pPassEnt;
     const IHandleEntity *m_pPassEnt2;
 };
@@ -358,6 +358,10 @@ class CTFWeaponBase : public CBaseCombatWeapon, public IHasOwner, public IHasGen
     void EnableDuck();
     void DisableDuck();
 
+    virtual bool OwnerCanJump( void )
+    {
+        return true;
+    }
     virtual bool OwnerCanTaunt( void )
     {
         return true;
@@ -838,7 +842,7 @@ class CTFWeaponBase : public CBaseCombatWeapon, public IHasOwner, public IHasGen
         return true;
     }
 
-    protected:
+   protected:
     virtual int GetEffectBarAmmo( void )
     {
         return m_iPrimaryAmmoType;
@@ -852,10 +856,10 @@ class CTFWeaponBase : public CBaseCombatWeapon, public IHasOwner, public IHasGen
     void EffectBarRegenFinished( void );
     void CheckEffectBarRegen( void );
 
-    private:
+   private:
     CNetworkVar( float, m_flEffectBarRegenTime );  // The time Regen is scheduled to complete
 
-    protected:
+   protected:
 #ifdef CLIENT_DLL
     virtual void CreateMuzzleFlashEffects( C_BaseEntity *pAttachEnt, int nIndex );
 
@@ -872,7 +876,7 @@ class CTFWeaponBase : public CBaseCombatWeapon, public IHasOwner, public IHasGen
     bool NeedsReloadForAmmo1( int iClipSize1 ) const;
     bool NeedsReloadForAmmo2( int iClipSize2 ) const;
 
-    protected:
+   protected:
     void PlayUpgradedShootSound( const char *pszSound );
 
     int m_iWeaponMode;
@@ -920,7 +924,7 @@ class CTFWeaponBase : public CBaseCombatWeapon, public IHasOwner, public IHasGen
 
     CNetworkVar( float, m_flEnergy );
 
-    public:
+   public:
 #ifdef GAME_DLL
     // Stores the number of kills we've made since we last shot & didn't hit a player.
     // Only hooked up to bullet firing right now, so you'll need to do plumbing if you want it for other weaponry.
@@ -985,7 +989,7 @@ class CTFWeaponBase : public CBaseCombatWeapon, public IHasOwner, public IHasGen
 
     virtual bool UsesCenterFireProjectile( void ) const OVERRIDE;
 
-    private:
+   private:
     CTFWeaponBase( const CTFWeaponBase & );
 
     CNetworkVar( bool, m_bBeingRepurposedForTaunt );
@@ -1020,7 +1024,7 @@ class CTFWeaponAttachmentModel : public CBaseAnimating, public IHasOwner
 {
     DECLARE_CLASS( CTFWeaponAttachmentModel, CBaseAnimating );
 
-    public:
+   public:
     CTFWeaponAttachmentModel()
     {
         m_bIsViewModelAttachment = false;
@@ -1049,7 +1053,7 @@ class CTFWeaponAttachmentModel : public CBaseAnimating, public IHasOwner
         return m_hWeaponAssociatedWith.Get() ? m_hWeaponAssociatedWith.Get()->GetOwner() : NULL;
     }
 
-    private:
+   private:
     bool m_bIsViewModelAttachment;
     CHandle< CTFWeaponBase > m_hWeaponAssociatedWith;
 };
