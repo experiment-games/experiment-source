@@ -37,25 +37,26 @@
 
 #define CYCLELATCH_TOLERANCE 0.15f
 
+// clang-format off
+
 LINK_ENTITY_TO_CLASS( player, C_Experiment_Player );
 
 BEGIN_RECV_TABLE_NOBASE( C_Experiment_Player, DT_ExperimentLocalPlayerExclusive )
-RecvPropVector( RECVINFO_NAME( m_vecNetworkOrigin, m_vecOrigin ) ),
+    RecvPropVector( RECVINFO_NAME( m_vecNetworkOrigin, m_vecOrigin ) ),
     RecvPropFloat( RECVINFO( m_angEyeAngles[0] ) ),
     //	RecvPropFloat( RECVINFO( m_angEyeAngles[1] ) ),
-    END_RECV_TABLE()
+END_RECV_TABLE()
 
-        BEGIN_RECV_TABLE_NOBASE( C_Experiment_Player, DT_ExperimentNonLocalPlayerExclusive )
-            RecvPropVector( RECVINFO_NAME( m_vecNetworkOrigin, m_vecOrigin ) ),
+BEGIN_RECV_TABLE_NOBASE( C_Experiment_Player, DT_ExperimentNonLocalPlayerExclusive )
+    RecvPropVector( RECVINFO_NAME( m_vecNetworkOrigin, m_vecOrigin ) ),
     RecvPropFloat( RECVINFO( m_angEyeAngles[0] ) ),
     RecvPropFloat( RECVINFO( m_angEyeAngles[1] ) ),
 
     RecvPropInt( RECVINFO( m_cycleLatch ), 0, &C_Experiment_Player::RecvProxy_CycleLatch ),
-    END_RECV_TABLE()
+END_RECV_TABLE()
 
-        IMPLEMENT_CLIENTCLASS_DT( C_Experiment_Player, DT_Experiment_Player, CExperiment_Player )
-
-            RecvPropDataTable( "experimentlocaldata", 0, 0, &REFERENCE_RECV_TABLE( DT_ExperimentLocalPlayerExclusive ) ),
+IMPLEMENT_CLIENTCLASS_DT( C_Experiment_Player, DT_Experiment_Player, CExperiment_Player )
+    RecvPropDataTable( "experimentlocaldata", 0, 0, &REFERENCE_RECV_TABLE( DT_ExperimentLocalPlayerExclusive ) ),
     RecvPropDataTable( "experimentnonlocaldata", 0, 0, &REFERENCE_RECV_TABLE( DT_ExperimentNonLocalPlayerExclusive ) ),
 
     RecvPropEHandle( RECVINFO( m_hRagdoll ) ),
@@ -64,20 +65,23 @@ RecvPropVector( RECVINFO_NAME( m_vecNetworkOrigin, m_vecOrigin ) ),
     RecvPropInt( RECVINFO( m_ArmorValue ) ),
 
     RecvPropBool( RECVINFO( m_fIsWalking ) ),
-    END_RECV_TABLE()
+END_RECV_TABLE()
 
-        BEGIN_PREDICTION_DATA( C_Experiment_Player )
-            DEFINE_PRED_FIELD( m_flCycle, FIELD_FLOAT, FTYPEDESC_OVERRIDE | FTYPEDESC_PRIVATE | FTYPEDESC_NOERRORCHECK ),
+BEGIN_PREDICTION_DATA( C_Experiment_Player )
+    DEFINE_PRED_FIELD( m_flCycle, FIELD_FLOAT, FTYPEDESC_OVERRIDE | FTYPEDESC_PRIVATE | FTYPEDESC_NOERRORCHECK ),
     DEFINE_PRED_FIELD( m_fIsWalking, FIELD_BOOLEAN, FTYPEDESC_INSENDTABLE ),
     DEFINE_PRED_FIELD( m_nSequence, FIELD_INTEGER, FTYPEDESC_OVERRIDE | FTYPEDESC_PRIVATE | FTYPEDESC_NOERRORCHECK ),
     DEFINE_PRED_FIELD( m_flPlaybackRate, FIELD_FLOAT, FTYPEDESC_OVERRIDE | FTYPEDESC_PRIVATE | FTYPEDESC_NOERRORCHECK ),
     DEFINE_PRED_ARRAY_TOL( m_flEncodedController, FIELD_FLOAT, MAXSTUDIOBONECTRLS, FTYPEDESC_OVERRIDE | FTYPEDESC_PRIVATE, 0.02f ),
     DEFINE_PRED_FIELD( m_nNewSequenceParity, FIELD_INTEGER, FTYPEDESC_OVERRIDE | FTYPEDESC_PRIVATE | FTYPEDESC_NOERRORCHECK ),
-    END_PREDICTION_DATA()
+END_PREDICTION_DATA()
 
-        static ConVar
-    cl_playermodel( "cl_playermodel", "none", FCVAR_USERINFO | FCVAR_ARCHIVE | FCVAR_SERVER_CAN_EXECUTE, "Default Player Model" );
+static bool WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
+
+static ConVar cl_playermodel( "cl_playermodel", "none", FCVAR_USERINFO | FCVAR_ARCHIVE | FCVAR_SERVER_CAN_EXECUTE, "Default Player Model" );
 static ConVar cl_defaultweapon( "cl_defaultweapon", "weapon_physcannon", FCVAR_USERINFO | FCVAR_ARCHIVE, "Default Spawn Weapon" );
+
+ConVar cl_clientsideeye_lookats( "cl_clientsideeye_lookats", "1", FCVAR_NONE, "When on, players will turn their pupils to look at nearby players." );
 
 void SpawnBlood( Vector vecSpot, const Vector &vecDir, int bloodColor, float flDamage );
 
@@ -126,7 +130,7 @@ void C_Experiment_Player::UpdateIDTarget()
 
     // don't show IDs in chase spec mode
     if ( GetObserverMode() == OBS_MODE_CHASE ||
-        GetObserverMode() == OBS_MODE_DEATHCAM )
+         GetObserverMode() == OBS_MODE_DEATHCAM )
         return;
 
     trace_t tr;
@@ -147,9 +151,9 @@ void C_Experiment_Player::UpdateIDTarget()
 }
 
 void C_Experiment_Player::TraceAttack( const CTakeDamageInfo &info,
-                                        const Vector &vecDir,
-                                        trace_t *ptr,
-                                        CDmgAccumulator *pAccumulator )
+                                       const Vector &vecDir,
+                                       trace_t *ptr,
+                                       CDmgAccumulator *pAccumulator )
 {
 #ifdef LUA_SDK
     // Andrew; push a copy of the damageinfo/vector, bring the changes back out
@@ -206,7 +210,7 @@ void C_Experiment_Player::TraceAttack( const CTakeDamageInfo &info,
         if ( pAttacker )
         {
             if ( ExperimentRules()->IsTeamplay() &&
-                pAttacker->InSameTeam( this ) == true )
+                 pAttacker->InSameTeam( this ) == true )
                 return;
         }
 
@@ -265,52 +269,53 @@ CStudioHdr *C_Experiment_Player::OnNewModel( void )
  */
 void C_Experiment_Player::UpdateLookAt( void )
 {
-    // head yaw
-    if ( m_headYawPoseParam < 0 || m_headPitchPoseParam < 0 )
-        return;
+    bool bFoundViewTarget = false;
 
-    // orient eyes
-    m_viewtarget = m_vLookAtTarget;
+    Vector vForward;
+    AngleVectors( GetLocalAngles(), &vForward );
 
-    // blinking
-    if ( m_blinkTimer.IsElapsed() )
+    Vector vMyOrigin = GetAbsOrigin();
+
+    Vector vecLookAtTarget = vec3_origin;
+
+    if ( cl_clientsideeye_lookats.GetBool() )
     {
-        m_blinktoggle = !m_blinktoggle;
-        m_blinkTimer.Start( RandomFloat( 1.5f, 4.0f ) );
+        for ( int iClient = 1; iClient <= gpGlobals->maxClients; ++iClient )
+        {
+            CBaseEntity *pEnt = UTIL_PlayerByIndex( iClient );
+            if ( !pEnt || !pEnt->IsPlayer() )
+                continue;
+
+            if ( !pEnt->IsAlive() )
+                continue;
+
+            if ( pEnt == this )
+                continue;
+
+            Vector vDir = pEnt->GetAbsOrigin() - vMyOrigin;
+
+            if ( vDir.Length() > 300 )
+                continue;
+
+            VectorNormalize( vDir );
+
+            if ( DotProduct( vForward, vDir ) < 0.0f )
+                continue;
+
+            vecLookAtTarget = pEnt->EyePosition();
+            bFoundViewTarget = true;
+            break;
+        }
     }
 
-    // Figure out where we want to look in world space.
-    QAngle desiredAngles;
-    Vector to = m_vLookAtTarget - EyePosition();
-    VectorAngles( to, desiredAngles );
+    if ( bFoundViewTarget == false )
+    {
+        // no target, look forward
+        vecLookAtTarget = GetAbsOrigin() + vForward * 512;
+    }
 
-    // Figure out where our body is facing in world space.
-    QAngle bodyAngles( 0, 0, 0 );
-    bodyAngles[YAW] = GetLocalAngles()[YAW];
-
-    float flBodyYawDiff = bodyAngles[YAW] - m_flLastBodyYaw;
-    m_flLastBodyYaw = bodyAngles[YAW];
-
-    // Set the head's yaw.
-    float desired = AngleNormalize( desiredAngles[YAW] - bodyAngles[YAW] );
-    desired = clamp( desired, m_headYawMin, m_headYawMax );
-    m_flCurrentHeadYaw =
-        ApproachAngle( desired, m_flCurrentHeadYaw, 130 * gpGlobals->frametime );
-
-    // Counterrotate the head from the body rotation so it doesn't rotate past
-    // its target.
-    m_flCurrentHeadYaw = AngleNormalize( m_flCurrentHeadYaw - flBodyYawDiff );
-    desired = clamp( desired, m_headYawMin, m_headYawMax );
-
-    SetPoseParameter( m_headYawPoseParam, m_flCurrentHeadYaw );
-
-    // Set the head's yaw.
-    desired = AngleNormalize( desiredAngles[PITCH] );
-    desired = clamp( desired, m_headPitchMin, m_headPitchMax );
-
-    m_flCurrentHeadPitch = ApproachAngle( desired, m_flCurrentHeadPitch, 130 * gpGlobals->frametime );
-    m_flCurrentHeadPitch = AngleNormalize( m_flCurrentHeadPitch );
-    SetPoseParameter( m_headPitchPoseParam, m_flCurrentHeadPitch );
+    // orient eyes
+    m_viewtarget = vecLookAtTarget;
 }
 
 void C_Experiment_Player::ClientThink( void )
@@ -397,17 +402,25 @@ void C_Experiment_Player::DoImpactEffect( trace_t &tr, int nDamageType )
 
 void C_Experiment_Player::PreThink( void )
 {
-    BaseClass::PreThink();
+    QAngle vTempAngles = GetLocalAngles();
 
-    HandleSpeedChanges();
-
-    if ( m_HL2Local.m_flSuitPower <= 0.0f )
+    if ( GetLocalPlayer() == this )
     {
-        if ( IsSprinting() )
-        {
-            StopSprinting();
-        }
+        vTempAngles[PITCH] = EyeAngles()[PITCH];
     }
+    else
+    {
+        vTempAngles[PITCH] = m_angEyeAngles[PITCH];
+    }
+
+    if ( vTempAngles[YAW] < 0.0f )
+    {
+        vTempAngles[YAW] += 360.0f;
+    }
+
+    SetLocalAngles( vTempAngles );
+
+    BaseClass::PreThink();
 }
 
 const QAngle &C_Experiment_Player::EyeAngles()
@@ -641,7 +654,7 @@ Vector C_Experiment_Player::GetAutoaimVector( float flDelta )
 bool C_Experiment_Player::CanSprint( void )
 {
     return ( ( !m_Local.m_bDucked && !m_Local.m_bDucking ) &&
-            ( GetWaterLevel() != 3 ) );
+             ( GetWaterLevel() != 3 ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -686,54 +699,85 @@ void C_Experiment_Player::StopSprinting( void )
     m_fIsSprinting = false;
 }
 
-void C_Experiment_Player::HandleSpeedChanges( void )
+extern ConVar sv_maxspeed;
+
+void C_Experiment_Player::HandleSpeedChanges( CMoveData *mv )
 {
-    int buttonsChanged = m_afButtonPressed | m_afButtonReleased;
+    int nChangedButtons = mv->m_nButtons ^ mv->m_nOldButtons;
 
-    if ( buttonsChanged & IN_SPEED )
+    bool bJustPressedSpeed = !!( nChangedButtons & IN_SPEED );
+
+    const bool bWantSprint = ( CanSprint() && IsSuitEquipped() && ( mv->m_nButtons & IN_SPEED ) );
+    const bool bWantsToChangeSprinting = ( m_HL2Local.m_bNewSprinting != bWantSprint ) && ( nChangedButtons & IN_SPEED ) != 0;
+
+    bool bSprinting = m_HL2Local.m_bNewSprinting;
+    if ( bWantsToChangeSprinting )
     {
-        // The state of the sprint/run button has changed.
-        if ( IsSuitEquipped() )
+        if ( bWantSprint )
         {
-            if ( !( m_afButtonPressed & IN_SPEED ) && IsSprinting() )
+            if ( m_HL2Local.m_flSuitPower < 10.0f )
             {
-                StopSprinting();
+                if ( bJustPressedSpeed )
+                {
+                    CPASAttenuationFilter filter( this );
+                    filter.UsePredictionRules();
+                    EmitSound( filter, entindex(), "HL2Player.SprintNoPower" );
+                }
             }
-            else if ( ( m_afButtonPressed & IN_SPEED ) && !IsSprinting() )
+            else
             {
-                if ( CanSprint() )
-                {
-                    StartSprinting();
-                }
-                else
-                {
-                    // Reset key, so it will be activated post whatever is
-                    // suppressing it.
-                    m_nButtons &= ~IN_SPEED;
-                }
+                bSprinting = true;
             }
         }
-    }
-    else if ( buttonsChanged & IN_WALK )
-    {
-        if ( IsSuitEquipped() )
+        else
         {
-            // The state of the WALK button has changed.
-            if ( IsWalking() && !( m_afButtonPressed & IN_WALK ) )
-            {
-                StopWalking();
-            }
-            else if ( !IsWalking() && !IsSprinting() &&
-                    ( m_afButtonPressed & IN_WALK ) &&
-                    !( m_nButtons & IN_DUCK ) )
-            {
-                StartWalking();
-            }
+            bSprinting = false;
         }
     }
 
-    if ( IsSuitEquipped() && m_fIsWalking && !( m_nButtons & IN_WALK ) )
-        StopWalking();
+    if ( m_HL2Local.m_flSuitPower < 0.01 )
+    {
+        bSprinting = false;
+    }
+
+    bool bWantWalking;
+
+    if ( IsSuitEquipped() )
+    {
+        bWantWalking = ( mv->m_nButtons & IN_WALK ) && !bSprinting && !( mv->m_nButtons & IN_DUCK );
+    }
+    else
+    {
+        bWantWalking = true;
+    }
+
+    if ( bWantWalking )
+    {
+        bSprinting = false;
+    }
+
+    m_HL2Local.m_bNewSprinting = bSprinting;
+
+    if ( bSprinting )
+    {
+        if ( bJustPressedSpeed )
+        {
+            CPASAttenuationFilter filter( this );
+            filter.UsePredictionRules();
+            EmitSound( filter, entindex(), "HL2Player.SprintStart" );
+        }
+        mv->m_flClientMaxSpeed = GetRunSpeed();
+    }
+    else if ( bWantWalking )
+    {
+        mv->m_flClientMaxSpeed = GetWalkSpeed();
+    }
+    else
+    {
+        mv->m_flClientMaxSpeed = GetNormalSpeed();
+    }
+
+    mv->m_flMaxSpeed = sv_maxspeed.GetFloat();
 }
 
 //-----------------------------------------------------------------------------
@@ -813,18 +857,20 @@ IRagdoll *C_Experiment_Player::GetRepresentativeRagdoll() const
     }
 }
 
-// ExperimentRAGDOLL
+// clang-format off
 
 IMPLEMENT_CLIENTCLASS_DT_NOBASE( C_ExperimentRagdoll, DT_ExperimentRagdoll, CExperimentRagdoll )
-RecvPropVector( RECVINFO( m_vecRagdollOrigin ) ),
+    RecvPropVector( RECVINFO( m_vecRagdollOrigin ) ),
     RecvPropEHandle( RECVINFO( m_hPlayer ) ),
     RecvPropInt( RECVINFO( m_nModelIndex ) ),
     RecvPropInt( RECVINFO( m_nForceBone ) ),
     RecvPropVector( RECVINFO( m_vecForce ) ),
     RecvPropVector( RECVINFO( m_vecRagdollVelocity ) )
-        END_RECV_TABLE()
+END_RECV_TABLE()
 
-            C_ExperimentRagdoll::C_ExperimentRagdoll()
+static bool WORKAROUND_NASTY_FORMATTING_BUG2;  // clang-format on
+
+C_ExperimentRagdoll::C_ExperimentRagdoll()
 {
 }
 
@@ -1054,7 +1100,7 @@ void C_Experiment_Player::UpdateClientSideAnimation()
 // --------------------------------------------------------------------------------
 class C_TEPlayerAnimEvent : public C_BaseTempEntity
 {
-    public:
+   public:
     DECLARE_CLASS( C_TEPlayerAnimEvent, C_BaseTempEntity );
     DECLARE_CLIENTCLASS();
 
@@ -1066,24 +1112,30 @@ class C_TEPlayerAnimEvent : public C_BaseTempEntity
         if ( pPlayer && !pPlayer->IsDormant() )
         {
             pPlayer->DoAnimationEvent( ( PlayerAnimEvent_t )m_iEvent.Get(),
-                                        m_nData );
+                                       m_nData );
         }
     }
 
-    public:
+   public:
     CNetworkHandle( CBasePlayer, m_hPlayer );
     CNetworkVar( int, m_iEvent );
     CNetworkVar( int, m_nData );
 };
 
+// clang-format off
+
 IMPLEMENT_CLIENTCLASS_EVENT( C_TEPlayerAnimEvent, DT_TEPlayerAnimEvent, CTEPlayerAnimEvent );
 
 BEGIN_RECV_TABLE_NOBASE( C_TEPlayerAnimEvent, DT_TEPlayerAnimEvent )
-RecvPropEHandle( RECVINFO( m_hPlayer ) ), RecvPropInt( RECVINFO( m_iEvent ) ),
-    RecvPropInt( RECVINFO( m_nData ) ) END_RECV_TABLE()
+    RecvPropEHandle( RECVINFO( m_hPlayer ) ),
+    RecvPropInt( RECVINFO( m_iEvent ) ),
+    RecvPropInt( RECVINFO( m_nData ) )
+END_RECV_TABLE()
 
-        void C_Experiment_Player::DoAnimationEvent( PlayerAnimEvent_t event,
-                                                    int nData )
+static bool WORKAROUND_NASTY_FORMATTING_BUG3;  // clang-format on
+
+void C_Experiment_Player::DoAnimationEvent( PlayerAnimEvent_t event,
+                                            int nData )
 {
     if ( IsLocalPlayer() )
     {
@@ -1141,8 +1193,8 @@ void C_Experiment_Player::CalculateIKLocks( float currentTime )
                 // FIXME: make entity finding sticky!
                 // FIXME: what should the radius check be?
                 for ( CEntitySphereQuery sphere( pTarget->est.pos, 64 );
-                    ( pEntity = sphere.GetCurrentEntity() ) != NULL;
-                    sphere.NextEntity() )
+                      ( pEntity = sphere.GetCurrentEntity() ) != NULL;
+                      sphere.NextEntity() )
                 {
                     C_BaseAnimating *pAnim = pEntity->GetBaseAnimating();
                     if ( !pAnim )

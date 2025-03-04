@@ -45,6 +45,8 @@ extern CBaseEntity *g_pLastSpawn;
 
 void DropPrimedFragGrenade( CExperiment_Player *pPlayer, CBaseCombatWeapon *pGrenade );
 
+// clang-format off
+
 LINK_ENTITY_TO_CLASS( player, CExperiment_Player );
 
 LINK_ENTITY_TO_CLASS( info_player_combine, CPointEntity );
@@ -53,13 +55,13 @@ LINK_ENTITY_TO_CLASS( info_player_rebel, CPointEntity );
 extern void SendProxy_Origin( const SendProp *pProp, const void *pStruct, const void *pData, DVariant *pOut, int iElement, int objectID );
 
 BEGIN_SEND_TABLE_NOBASE( CExperiment_Player, DT_ExperimentLocalPlayerExclusive )
-// send a hi-res origin to the local player for use in prediction
-SendPropVector( SENDINFO( m_vecOrigin ), -1, SPROP_NOSCALE | SPROP_CHANGES_OFTEN, 0.0f, HIGH_DEFAULT, SendProxy_Origin ),
+    // send a hi-res origin to the local player for use in prediction
+    SendPropVector( SENDINFO( m_vecOrigin ), -1, SPROP_NOSCALE | SPROP_CHANGES_OFTEN, 0.0f, HIGH_DEFAULT, SendProxy_Origin ),
     SendPropFloat( SENDINFO_VECTORELEM( m_angEyeAngles, 0 ), 8, SPROP_CHANGES_OFTEN, -90.0f, 90.0f ),
     //	SendPropAngle( SENDINFO_VECTORELEM(m_angEyeAngles, 1), 10, SPROP_CHANGES_OFTEN ),
-    END_SEND_TABLE()
+END_SEND_TABLE()
 
-        BEGIN_SEND_TABLE_NOBASE( CExperiment_Player, DT_ExperimentNonLocalPlayerExclusive )
+BEGIN_SEND_TABLE_NOBASE( CExperiment_Player, DT_ExperimentNonLocalPlayerExclusive )
     // send a lo-res origin to other players
     SendPropVector( SENDINFO( m_vecOrigin ), -1, SPROP_COORD_MP_LOWPRECISION | SPROP_CHANGES_OFTEN, 0.0f, HIGH_DEFAULT, SendProxy_Origin ),
     SendPropFloat( SENDINFO_VECTORELEM( m_angEyeAngles, 0 ), 8, SPROP_CHANGES_OFTEN, -90.0f, 90.0f ),
@@ -67,10 +69,10 @@ SendPropVector( SENDINFO( m_vecOrigin ), -1, SPROP_NOSCALE | SPROP_CHANGES_OFTEN
     // Only need to latch cycle for other players
     // If you increase the number of bits networked, make sure to also modify the code below and in the client class.
     SendPropInt( SENDINFO( m_cycleLatch ), 4, SPROP_UNSIGNED ),
-    END_SEND_TABLE()
+END_SEND_TABLE()
 
-        IMPLEMENT_SERVERCLASS_ST( CExperiment_Player, DT_Experiment_Player )
-            SendPropExclude( "DT_BaseAnimating", "m_flPoseParameter" ),
+IMPLEMENT_SERVERCLASS_ST( CExperiment_Player, DT_Experiment_Player )
+    SendPropExclude( "DT_BaseAnimating", "m_flPoseParameter" ),
     SendPropExclude( "DT_BaseAnimating", "m_flPlaybackRate" ),
     SendPropExclude( "DT_BaseAnimating", "m_nSequence" ),
     SendPropExclude( "DT_BaseEntity", "m_angRotation" ),
@@ -95,28 +97,29 @@ SendPropVector( SENDINFO( m_vecOrigin ), -1, SPROP_NOSCALE | SPROP_CHANGES_OFTEN
     SendPropInt( SENDINFO( m_iSpawnInterpCounter ), 4 ),
     SendPropInt( SENDINFO( m_iPlayerSoundType ), 3 ),
     SendPropInt( SENDINFO( m_ArmorValue ), 8 ),
+END_SEND_TABLE()
 
-    END_SEND_TABLE()
+BEGIN_DATADESC( CExperiment_Player )
+END_DATADESC()
 
-        BEGIN_DATADESC( CExperiment_Player )
-            END_DATADESC()
+static bool WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
 
-                const char *g_ppszRandomCitizenModels[] = {
-                    "models/humans/group03/male_01.mdl",
-                    "models/humans/group03/male_02.mdl",
-                    "models/humans/group03/female_01.mdl",
-                    "models/humans/group03/male_03.mdl",
-                    "models/humans/group03/female_02.mdl",
-                    "models/humans/group03/male_04.mdl",
-                    "models/humans/group03/female_03.mdl",
-                    "models/humans/group03/male_05.mdl",
-                    "models/humans/group03/female_04.mdl",
-                    "models/humans/group03/male_06.mdl",
-                    "models/humans/group03/female_06.mdl",
-                    "models/humans/group03/male_07.mdl",
-                    "models/humans/group03/female_07.mdl",
-                    "models/humans/group03/male_08.mdl",
-                    "models/humans/group03/male_09.mdl",
+const char *g_ppszRandomCitizenModels[] = {
+    "models/humans/group03/male_01.mdl",
+    "models/humans/group03/male_02.mdl",
+    "models/humans/group03/female_01.mdl",
+    "models/humans/group03/male_03.mdl",
+    "models/humans/group03/female_02.mdl",
+    "models/humans/group03/male_04.mdl",
+    "models/humans/group03/female_03.mdl",
+    "models/humans/group03/male_05.mdl",
+    "models/humans/group03/female_04.mdl",
+    "models/humans/group03/male_06.mdl",
+    "models/humans/group03/female_06.mdl",
+    "models/humans/group03/male_07.mdl",
+    "models/humans/group03/female_07.mdl",
+    "models/humans/group03/male_08.mdl",
+    "models/humans/group03/male_09.mdl",
 };
 
 const char *g_ppszRandomCombineModels[] = {
@@ -1039,7 +1042,7 @@ IMPLEMENT_SERVERCLASS_ST_NOBASE( CExperimentRagdoll, DT_ExperimentRagdoll )
     SendPropVector( SENDINFO( m_vecRagdollVelocity ) )
 END_SEND_TABLE()
 
-static bool WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
+static bool WORKAROUND_NASTY_FORMATTING_BUG2;  // clang-format on
 
 void CExperiment_Player::CreateRagdollEntity( void )
 {
