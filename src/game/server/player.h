@@ -280,7 +280,7 @@ class CBasePlayer : public CBaseCombatCharacter
     static CBasePlayer *CreatePlayer( const char *className, edict_t *ed );
 
     virtual void CreateViewModel( int viewmodelindex = 0 );
-    virtual void CreateDefaultHandModel( void );
+    virtual void CreateDefaultHandModel( int index = 1, int iOtherVm = 0 );
     CBaseViewModel *GetViewModel( int viewmodelindex = 0, bool bObserverOK = true );
     CBaseAnimating *GetHands();
     void SetHands( CBaseAnimating *pHandsModel );

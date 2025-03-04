@@ -536,14 +536,24 @@ void CBasePlayer::CreateViewModel( int index /*=0*/ )
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void CBasePlayer::CreateDefaultHandModel()
+void CBasePlayer::CreateDefaultHandModel( int index, int iOtherVm )
 {
+    Assert( index >= 0 && index < MAX_VIEWMODELS && iOtherVm >= 0 && iOtherVm < MAX_VIEWMODELS );
+
+    if ( GetViewModel( index ) )
+        return;
+
     CBaseViewModel *vm = ( CBaseViewModel * )CreateEntityByName( "hand_viewmodel" );
 
     if ( vm )
     {
+        vm->SetAbsOrigin( GetAbsOrigin() );
+        vm->SetOwner( this );
+        vm->SetIndex( index );
         DispatchSpawn( vm );
         SetHands( vm );
+        vm->FollowEntity( GetViewModel( iOtherVm ), true );
+        m_hViewModel.Set( index, vm );
     }
 }
 
@@ -5178,7 +5188,11 @@ void CBasePlayer::Spawn( void )
     enginesound->SetPlayerDSP( user, 0, false );
 
     CreateViewModel();
-    // CreateDefaultHandModel();
+
+#ifdef EXPERIMENT_SOURCE
+    CreateDefaultHandModel();
+    GetViewModel( 1 )->SetModel( "models/weapons/c_arms_refugee.mdl" );
+#endif
 
     SetCollisionGroup( COLLISION_GROUP_PLAYER );
 
@@ -5273,6 +5287,10 @@ void CBasePlayer::Precache( void )
     PrecacheParticleSystem( "slime_splash_01" );
     PrecacheParticleSystem( "slime_splash_02" );
     PrecacheParticleSystem( "slime_splash_03" );
+#endif
+
+#ifdef EXPERIMENT_SOURCE
+    PrecacheModel( "models/weapons/c_arms_refugee.mdl" );
 #endif
 
     // in the event that the player JUST spawned, and the level node graph

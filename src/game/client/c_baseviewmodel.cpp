@@ -320,16 +320,16 @@ int C_BaseViewModel::DrawModel( int flags )
         pTFWeapon->m_viewmodelStatTrakAddon->AddEffects( EF_NODRAW );
     }
 #endif
-
-#ifdef LUA_SDK
-    LUA_CALL_HOOK_BEGIN( "PreDrawViewModel" );
-    CBaseViewModel::PushLuaInstanceSafe( L, this );
-    CBasePlayer::PushLuaInstanceSafe( L, pPlayer );
-    CBaseCombatWeapon::PushLuaInstanceSafe( L, pWeapon );
-    LUA_CALL_HOOK_END( 3, 1 );
-
-    LUA_RETURN_VALUE_IF_TRUE( 0 );
-#endif
+// Experiment; TODO: This crashes on custom hands
+//#ifdef LUA_SDK
+//    LUA_CALL_HOOK_BEGIN( "PreDrawViewModel" );
+//    CBaseViewModel::PushLuaInstanceSafe( L, this );
+//    CBasePlayer::PushLuaInstanceSafe( L, pPlayer );
+//    CBaseCombatWeapon::PushLuaInstanceSafe( L, pWeapon );
+//    LUA_CALL_HOOK_END( 3, 1 );
+//
+//    LUA_RETURN_VALUE_IF_TRUE( 0 );
+//#endif
 
     int ret;
     // If the local player's overriding the viewmodel rendering, let him do it
@@ -361,13 +361,14 @@ int C_BaseViewModel::DrawModel( int flags )
         }
     }
 
-#ifdef LUA_SDK
-    LUA_CALL_HOOK_BEGIN( "PostDrawViewModel" );
-    CBaseViewModel::PushLuaInstanceSafe( L, this );
-    CBasePlayer::PushLuaInstanceSafe( L, pPlayer );
-    CBaseCombatWeapon::PushLuaInstanceSafe( L, pWeapon );
-    LUA_CALL_HOOK_END( 3, 0 );
-#endif
+// Experiment; TODO: This crashsesessese
+//#ifdef LUA_SDK
+//    LUA_CALL_HOOK_BEGIN( "PostDrawViewModel" );
+//    CBaseViewModel::PushLuaInstanceSafe( L, this );
+//    CBasePlayer::PushLuaInstanceSafe( L, pPlayer );
+//    CBaseCombatWeapon::PushLuaInstanceSafe( L, pWeapon );
+//    LUA_CALL_HOOK_END( 3, 0 );
+//#endif
 
     return ret;
 }
