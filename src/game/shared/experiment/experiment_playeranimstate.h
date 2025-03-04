@@ -20,7 +20,7 @@ class CExperiment_Player;
 // ------------------------------------------------------------------------------------------------ //
 class CExperimentPlayerAnimState : public CMultiPlayerAnimState
 {
-    public:
+   public:
     DECLARE_CLASS( CExperimentPlayerAnimState, CMultiPlayerAnimState );
 
     CExperimentPlayerAnimState();
@@ -40,29 +40,8 @@ class CExperimentPlayerAnimState : public CMultiPlayerAnimState
     void DoAnimationEvent( PlayerAnimEvent_t event, int nData = 0 );
     virtual Activity CalcMainActivity();
 
-    bool HandleMoving( Activity &idealActivity );
-    bool HandleJumping( Activity &idealActivity );
-    bool HandleDucking( Activity &idealActivity );
-    bool HandleSwimming( Activity &idealActivity );
-
-    virtual float GetCurrentMaxGroundSpeed();
-
-    protected:
-    virtual bool ShouldResetMainSequence( int iCurrentSequence,
-                                        int iNewSequence ) OVERRIDE;
-
-    bool IsAirborne();
-
-    private:
-    bool SetupPoseParameters( CStudioHdr *pStudioHdr );
-    virtual void EstimateYaw( void );
-    virtual void ComputePoseParam_MoveYaw( CStudioHdr *pStudioHdr );
-    virtual void ComputePoseParam_AimPitch( CStudioHdr *pStudioHdr );
-    virtual void ComputePoseParam_AimYaw( CStudioHdr *pStudioHdr );
-
+   private:
     CExperiment_Player *m_pExperimentPlayer;
-    bool m_bInAirWalk;
-    float m_flHoldDeployedPoseUntilTime;
 
     bool m_bFreshJump;
     bool m_bWasJumping;
