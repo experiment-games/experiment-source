@@ -1632,7 +1632,7 @@ LUA_BINDING_BEGIN( Players, GetAllBots, "library", "Get all bots." )
     {
         CBasePlayer *pPlayer = UTIL_PlayerByIndex( i );
 
-        if ( pPlayer->IsBot() )
+        if ( pPlayer && pPlayer->IsBot() )
         {
             CBasePlayer::PushLuaInstanceSafe( L, pPlayer );
             lua_rawseti( L, -2, index );

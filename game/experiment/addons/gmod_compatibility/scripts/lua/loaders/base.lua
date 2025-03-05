@@ -61,12 +61,13 @@ return {
 		if (isBaseGamemode) then
 			-- The base gamemode explicitly loads its entities and sweps before any other entity or swep is loaded, since
 			-- those likely depend on the base gamemode's entities (base_entity, base_ai, base_nextbot) and weapons (weapon_base).
-			return fileContent
+			return "require(\"gmod_compatibility\")\n\n"
+				.. fileContent
 				.. "\nScriptedEntities.LoadFromDirectory( \""..rootFolder.."entities/entities\" ) ScriptedWeapons.LoadFromDirectory( \""..rootFolder.."entities/weapons\" )\n"
 		end
 
 		-- Load the gmod_compatibility module to make Garry's Mod code compatible with Experiment
-		return "require(\"gmod_compatibility\")\n\n" -- Add the gmod_compatibility module
+		return "require(\"gmod_compatibility\")\n\n"
             .. fileContent
 			.. "\nFiles.AddSearchPath( \""..rootFolder.."entities\", \"LUA\" )\n" -- Ensure entities and weapons are loaded by Experiment
 	end,
