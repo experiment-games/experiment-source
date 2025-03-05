@@ -112,7 +112,7 @@ else
 
 		CallGlobalVariableCallbacks(key, oldValue, newValue)
 
-		Hooks.Call("GlobalNetworkedVarChanged", key, oldValue, newValue)
+		Hooks.Run("GlobalNetworkedVarChanged", key, oldValue, newValue)
 
 		SetGlobalVariable(key, newValue)
 	end)
@@ -135,7 +135,7 @@ else
 
 			CallGlobalVariableCallbacks(key, oldValue, value)
 
-			Hooks.Call("GlobalNetworkedVarChanged", key, oldValue, value)
+			Hooks.Run("GlobalNetworkedVarChanged", key, oldValue, value)
 		end
 
 		for key, value in pairs(networkedVariables) do

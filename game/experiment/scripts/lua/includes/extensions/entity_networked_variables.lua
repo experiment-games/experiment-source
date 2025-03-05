@@ -209,7 +209,7 @@ else
 
 		entity:CallNetworkedVariableCallbacks(key, oldValue, newValue)
 
-		Hooks.Call("EntityNetworkedVarChanged", entity, key, oldValue, newValue)
+		Hooks.Run("EntityNetworkedVarChanged", entity, key, oldValue, newValue)
 
 		entity:SetNetworkedVariable(key, newValue)
 	end)
@@ -233,7 +233,7 @@ else
 
 			entity:CallNetworkedVariableCallbacks(key, oldValue, value)
 
-			Hooks.Call("EntityNetworkedVarChanged", entity, key, oldValue, value)
+			Hooks.Run("EntityNetworkedVarChanged", entity, key, oldValue, value)
 		end
 
 		for key, value in pairs(networkedVariables) do

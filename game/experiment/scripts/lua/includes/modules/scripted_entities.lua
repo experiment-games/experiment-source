@@ -1,5 +1,6 @@
 _BASE_ENTITY_CLASS = "prop_scripted"
 
+local Hooks = require("hooks")
 local MODULE = {}
 MODULE.registeredEntities = MODULE.registeredEntities or {}
 
@@ -74,7 +75,9 @@ function MODULE.Register(entityTable, className, isReloading)
 		return
 	end
 
-	MODULE.registeredEntities[className] = entityTable
+    MODULE.registeredEntities[className] = entityTable
+
+	Hooks.Run("ScriptedEntityRegistered", className, entityTable)
 end
 
 return MODULE

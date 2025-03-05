@@ -7,7 +7,7 @@
 
 _BASE_GAMEMODE = "super"
 
-local hooks = require("hooks")
+local Hooks = require("hooks")
 local debugTraceback = debug.traceback
 
 local MODULE = {}

@@ -510,7 +510,7 @@ static void LoadEntitiesFromPath( const char *path = 0 )
     char fullPath[MAX_PATH] = { 0 };
     char className[255] = { 0 };
 
-    char const *fn = g_pFullFileSystem->FindFirstEx( searchPath, CONTENT_SEARCH_PATH, &fh );
+    char const *fn = g_pFullFileSystem->FindFirstEx( searchPath, CONTENT_SEARCH_PATH_LUA, &fh );
 
     while ( fn )
     {
@@ -529,13 +529,13 @@ static void LoadEntitiesFromPath( const char *path = 0 )
 #else
             Q_snprintf( fileName, sizeof( fileName ), "%s\\%s\\init.lua", path, className );
 #endif
-            if ( !filesystem->FileExists( fileName, CONTENT_SEARCH_PATH ) )
+            if ( !filesystem->FileExists( fileName, CONTENT_SEARCH_PATH_LUA ) )
             {
                 // TODO: Move this to the gmod compatibility module
                 // GMOD compatibility: Fallback to shared.lua if (cl_)init.lua doesn't exist
                 Q_snprintf( fileName, sizeof( fileName ), "%s\\%s\\shared.lua", path, className );
 
-                if ( !filesystem->FileExists( fileName, CONTENT_SEARCH_PATH ) )
+                if ( !filesystem->FileExists( fileName, CONTENT_SEARCH_PATH_LUA ) )
                 {
                     fn = g_pFullFileSystem->FindNext( fh );
                     continue;
@@ -543,7 +543,7 @@ static void LoadEntitiesFromPath( const char *path = 0 )
             }
 
             filesystem->RelativePathToFullPath(
-                fileName, CONTENT_SEARCH_PATH, fullPath, sizeof( fullPath ) );
+                fileName, CONTENT_SEARCH_PATH_LUA, fullPath, sizeof( fullPath ) );
 
             luasrc_LoadEntityFromFile( fullPath, className );
         }
@@ -554,7 +554,7 @@ static void LoadEntitiesFromPath( const char *path = 0 )
             Q_snprintf( fileName, sizeof( fileName ), "%s\\%s", path, fn );
 
             filesystem->RelativePathToFullPath(
-                fileName, CONTENT_SEARCH_PATH, fullPath, sizeof( fullPath ) );
+                fileName, CONTENT_SEARCH_PATH_LUA, fullPath, sizeof( fullPath ) );
 
             luasrc_LoadEntityFromFile( fullPath, className );
         }
@@ -770,7 +770,7 @@ static void LoadWeaponsFromPath( const char *path = 0 )
     char fullPath[MAX_PATH] = { 0 };
     char className[255] = { 0 };
 
-    char const *fn = g_pFullFileSystem->FindFirstEx( searchPath, CONTENT_SEARCH_PATH, &fh );
+    char const *fn = g_pFullFileSystem->FindFirstEx( searchPath, CONTENT_SEARCH_PATH_LUA, &fh );
 
     while ( fn )
     {
@@ -790,13 +790,13 @@ static void LoadWeaponsFromPath( const char *path = 0 )
             Q_snprintf( fileName, sizeof( fileName ), "%s\\%s\\init.lua", path, className );
 #endif
 
-            if ( !filesystem->FileExists( fileName, CONTENT_SEARCH_PATH ) )
+            if ( !filesystem->FileExists( fileName, CONTENT_SEARCH_PATH_LUA ) )
             {
                 // TODO: Move this to the gmod compatibility module
                 // GMOD compatibility: Fallback to shared.lua if (cl_)init.lua doesn't exist
                 Q_snprintf( fileName, sizeof( fileName ), "%s\\%s\\shared.lua", path, className );
 
-                if ( !filesystem->FileExists( fileName, CONTENT_SEARCH_PATH ) )
+                if ( !filesystem->FileExists( fileName, CONTENT_SEARCH_PATH_LUA ) )
                 {
                     fn = g_pFullFileSystem->FindNext( fh );
                     continue;
@@ -804,7 +804,7 @@ static void LoadWeaponsFromPath( const char *path = 0 )
             }
 
             filesystem->RelativePathToFullPath(
-                fileName, CONTENT_SEARCH_PATH, fullPath, sizeof( fullPath ) );
+                fileName, CONTENT_SEARCH_PATH_LUA, fullPath, sizeof( fullPath ) );
 
             luasrc_LoadWeaponFromFile( fullPath, className );
         }
@@ -815,7 +815,7 @@ static void LoadWeaponsFromPath( const char *path = 0 )
             Q_snprintf( fileName, sizeof( fileName ), "%s\\%s", path, fn );
 
             filesystem->RelativePathToFullPath(
-                fileName, CONTENT_SEARCH_PATH, fullPath, sizeof( fullPath ) );
+                fileName, CONTENT_SEARCH_PATH_LUA, fullPath, sizeof( fullPath ) );
 
             luasrc_LoadWeaponFromFile( fullPath, className );
         }
@@ -828,13 +828,17 @@ static void LoadWeaponsFromPath( const char *path = 0 )
 
 static int luasrc_LoadEntities( lua_State *L )
 {
-    LoadEntitiesFromPath( luaL_checkstring( L, -1 ) );
+    const char *path = luaL_checkstring( L, -1 );
+    DevMsg( "[Lua] Loading scripted entities from %s\n", path );
+    LoadEntitiesFromPath( path );
     return 0;
 }
 
 static int luasrc_LoadWeapons( lua_State *L )
 {
-    LoadWeaponsFromPath( luaL_checkstring( L, -1 ) );
+    const char *path = luaL_checkstring( L, -1 );
+    DevMsg( "[Lua] Loading scripted weapons from %s\n", path );
+    LoadWeaponsFromPath( path );
     return 0;
 }
 
@@ -1296,6 +1300,9 @@ void luasrc_init( void )
     luasrc_dofolder( L, LUA_PATH_AUTO_LOAD_SHARED );
     luasrc_dofolder( L, LUA_PATH_AUTO_LOAD_CLIENT );
 
+    luasrc_LoadGamemode( LUA_BASE_GAMEMODE );
+    luasrc_LoadGamemode( gamemode.GetString() );
+
     LoadWeaponsFromPath();
     LoadEntitiesFromPath();
     // LoadEffectsFromPath();
@@ -1303,8 +1310,6 @@ void luasrc_init( void )
     LUA_CALL_HOOK_BEGIN( "PostEntitiesLoaded" );
     LUA_CALL_HOOK_END( 0, 0 );
 
-    luasrc_LoadGamemode( LUA_BASE_GAMEMODE );
-    luasrc_LoadGamemode( gamemode.GetString() );
     luasrc_SetGamemode( gamemode.GetString() );
 
 #else   // CLIENT_DLL
@@ -1315,13 +1320,6 @@ void luasrc_init( void )
     luasrc_dofolder( L, LUA_PATH_AUTO_LOAD_SHARED );
     luasrc_dofolder( L, LUA_PATH_AUTO_LOAD_SERVER );
 
-    LoadWeaponsFromPath();
-    LoadEntitiesFromPath();
-    // LoadEffectsFromPath();
-
-    LUA_CALL_HOOK_BEGIN( "PostEntitiesLoaded" );
-    LUA_CALL_HOOK_END( 0, 0 );
-
     luasrc_LoadGamemode( LUA_BASE_GAMEMODE );
     g_bGamemodeLoaded = luasrc_LoadGamemode( gamemode.GetString() );
 
@@ -1330,6 +1328,13 @@ void luasrc_init( void )
         // Don't waste time setting up further, we will kick the host client in ClientConnect
         return;
     }
+
+    LoadWeaponsFromPath();
+    LoadEntitiesFromPath();
+    // LoadEffectsFromPath();
+
+    LUA_CALL_HOOK_BEGIN( "PostEntitiesLoaded" );
+    LUA_CALL_HOOK_END( 0, 0 );
 
     luasrc_SetGamemode( gamemode.GetString() );
 
@@ -2149,11 +2154,18 @@ bool luasrc_LoadGamemode( const char *gamemodeName )
     luasrc_add_to_package_path( L, gamemodeSearchPathC );
 
     // Add the gamemode content folder to the search path
-    char contentSearchPath[MAX_PATH];
+    char contentSearchPath[MAX_PATH] = { 0 };
     Q_strcpy( contentSearchPath, gamemodePath );
     Q_strncat( contentSearchPath, "content", sizeof( contentSearchPath ) );
 
     SetupRootSearchPaths( contentSearchPath, L );
+
+    // Add the entities folder to the lua search path so entities and weapons will be found when loading them from the lua folder
+    char entitiesPath[MAX_PATH] = { 0 };
+    Q_strcpy( entitiesPath, gamemodePath );
+    Q_strncat( entitiesPath, "entities", sizeof( contentSearchPath ) );
+
+    filesystem->AddSearchPath( entitiesPath, CONTENT_SEARCH_PATH_LUA );
 
     // Set the GM table as a global variable
     lua_newtable( L );
@@ -2262,14 +2274,6 @@ bool luasrc_SetGamemode( const char *gamemodeName )
     char contentSearchPath[MAX_PATH];
     Q_strcpy( contentSearchPath, gamemodeFolder );
     Q_strncat( contentSearchPath, "content", sizeof( contentSearchPath ) );
-
-    char loadPath[MAX_PATH];
-    Q_snprintf( loadPath, sizeof( loadPath ), "%s\\" LUA_PATH_WEAPONS, contentSearchPath );
-    LoadWeaponsFromPath( loadPath );
-    Q_snprintf( loadPath, sizeof( loadPath ), "%s\\" LUA_PATH_ENTITIES, contentSearchPath );
-    LoadEntitiesFromPath( loadPath );
-    // Q_snprintf( loadPath, sizeof( loadPath ), "%s\\" LUA_PATH_EFFECTS, contentSearchPath );
-    // LoadEffectsFromPath( loadPath );
 
     LUA_CALL_HOOK_BEGIN( "Initialize" );
     LUA_CALL_HOOK_END( 0, 0 );

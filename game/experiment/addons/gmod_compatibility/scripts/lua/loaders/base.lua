@@ -58,6 +58,6 @@ return {
 		-- Load the gmod_compatibility module to make Garry's Mod code compatible with Experiment
 		return "require(\"gmod_compatibility\")\n\n" -- Add the gmod_compatibility module
             .. fileContent
-			.. "\nScriptedEntities.LoadFromDirectory( \""..rootFolder.."entities/entities\" ) ScriptedWeapons.LoadFromDirectory( \""..rootFolder.."entities/weapons\" )\n" -- Load entities and weapons
+			.. "\nFiles.AddSearchPath( \""..rootFolder.."entities\", \"LUA\" )\n" -- Ensure entities and weapons are loaded by Experiment
 	end,
 }

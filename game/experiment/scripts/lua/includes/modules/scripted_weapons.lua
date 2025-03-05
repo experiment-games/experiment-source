@@ -1,5 +1,6 @@
 _BASE_WEAPON = "weapon_experiment_base_scripted"
 
+local Hooks = require("hooks")
 local MODULE = {}
 MODULE.registeredWeapons = MODULE.registeredWeapons or {}
 
@@ -15,7 +16,8 @@ function MODULE.Get(weaponClassName)
 
 	weaponTable = table.Copy(weaponTable)
 
-	if (weaponTable.Base ~= weaponClassName) then
+	--- @cast weaponTable table
+	if (weaponTable.Base and weaponTable.Base ~= weaponClassName) then
 		local baseWeaponTable = MODULE.Get(weaponTable.Base)
 
 		if (not baseWeaponTable) then
@@ -73,7 +75,9 @@ function MODULE.Register(weaponTable, className, isReloading)
 		return
 	end
 
-	MODULE.registeredWeapons[className] = weaponTable
+    MODULE.registeredWeapons[className] = weaponTable
+
+	Hooks.Run("ScriptedWeaponRegistered", className, weaponTable)
 end
 
 --- Initializes the given reference table for a weapon.

@@ -207,7 +207,7 @@ end
 
 function RegisterMetaTable(name, table)
 	-- TODO: What should MetaName and MetaID be set to to match GMod behavior?
-    table.MetaName = name
+	table.MetaName = name
 	table.MetaID = name
 	registry[name] = table
 end
@@ -720,11 +720,11 @@ function ENTITY_META:SetDTString(index, value)
 end
 
 function ENTITY_META:SetDTVector(index, value)
-    self:SetNetworkDataValue(_E.NETWORK_VARIABLE_TYPE.VECTOR, index, value)
+	self:SetNetworkDataValue(_E.NETWORK_VARIABLE_TYPE.VECTOR, index, value)
 end
 
 if (SERVER) then
-    function ENTITY_META:FrameAdvance()
+	function ENTITY_META:FrameAdvance()
 		-- TODO: Should this be implemented server-side? It isn't in engine.
 	end
 end
@@ -1096,7 +1096,7 @@ if (SERVER) then
 	local RECIPIENT_FILTER_META = FindMetaTable("RecipientFilter")
 	RECIPIENT_FILTER_META.AddPlayer = RECIPIENT_FILTER_META.AddRecipient
 	RECIPIENT_FILTER_META.AddPlayers = RECIPIENT_FILTER_META.CopyFrom
-    RECIPIENT_FILTER_META.GetCount = RECIPIENT_FILTER_META.GetRecipientCount
+	RECIPIENT_FILTER_META.GetCount = RECIPIENT_FILTER_META.GetRecipientCount
 	RECIPIENT_FILTER_META.GetPlayers = RECIPIENT_FILTER_META.GetRecipients
 	RECIPIENT_FILTER_META.RemovePlayer = RECIPIENT_FILTER_META.RemoveRecipient
 	RECIPIENT_FILTER_META.RemoveAllPlayers = RECIPIENT_FILTER_META.RemoveAllRecipients
@@ -1413,10 +1413,10 @@ else
 	TEXT_ENTRY_PANEL_META._OriginalGetFont = TEXT_ENTRY_PANEL_META._OriginalGetFont or TEXT_ENTRY_PANEL_META.GetFont
 	TEXT_ENTRY_PANEL_META.DrawTextEntryText = TEXT_ENTRY_PANEL_META.PaintText
 	TEXT_ENTRY_PANEL_META.GetCaretPos = TEXT_ENTRY_PANEL_META.GetCursorPosition
-    TEXT_ENTRY_PANEL_META.SetCaretPos = TEXT_ENTRY_PANEL_META.SetCursorPosition
+	TEXT_ENTRY_PANEL_META.SetCaretPos = TEXT_ENTRY_PANEL_META.SetCursorPosition
 
 	local FRAME_PANEL_META = FindMetaTable("Frame")
-    FRAME_PANEL_META.SetDraggable = FRAME_PANEL_META.SetMoveable
+	FRAME_PANEL_META.SetDraggable = FRAME_PANEL_META.SetMoveable
 	FRAME_PANEL_META.GetDraggable = FRAME_PANEL_META.GetMoveable
 
 	function TEXT_ENTRY_PANEL_META:SetFontInternal(font)
@@ -1915,21 +1915,6 @@ else
 	end)
 end
 
-hook.Add("PostEntitiesLoaded", "GModCompatibility.SyncWithGMod", function()
-	-- Copy ents from our system to the GMod system.
-	local scriptedEntities = ScriptedEntities.GetList()
-	for className, scriptedEntity in pairs(scriptedEntities) do
-		scripted_ents.Register(scriptedEntity, className)
-	end
-	scripted_ents.OnLoaded()
-
-	local scriptedWeapons = ScriptedWeapons.GetList()
-	for className, scriptedWeapon in pairs(scriptedWeapons) do
-		weapons.Register(scriptedWeapon, className)
-	end
-	weapons.OnLoaded()
-end)
-
 hook.Add("Initialize", "GModCompatibility.CallInitializeHooks", function()
 	hook.Run("CreateTeams")
 	hook.Run("PreGamemodeLoaded")
@@ -2088,35 +2073,23 @@ end
 	For all search paths, ensure the entities and weapons are loaded, after all autorun scripts have been loaded.
 --]]
 
-local pathsToLoad = {
-	entities = {
-		"lua/entities/",
-		-- "../entities/entities/", -- Gamemode entities are loaded by the loader
-	},
-	weapons = {
-		"lua/weapons/",
-		-- "../entities/weapons/", -- Gamemode weapons are loaded by the loader
-	},
-}
+-- Gamemode weapons and entities are added to the search path by the loader
+-- This adds the lua/ folder to the search path so Experiment will load the entities and weapons from it
+Files.AddSearchPath("lua/", "LUA")
 
-for _, searchPath in ipairs(searchPaths) do
-	local separator = (searchPath:sub(-1) == "/" or searchPath:sub(-1) == "\\") and "" or "/"
-
-	for __, path in pairs(pathsToLoad.entities) do
-		local entitiesPath = searchPath .. separator .. path
-
-		if (file.Exists(entitiesPath, "GAME")) then
-			print("[GMOD Compatibility] Loading entities from " .. entitiesPath)
-			ScriptedEntities.LoadFromDirectory(entitiesPath)
-		end
+-- Copy ents from our system to the GMod system.
+hook.Add(
+	"ScriptedEntityRegistered",
+	"GModCompatibility.ScriptedEntityRegistered.SyncWithGMod",
+	function(className, scriptedEntity)
+		scripted_ents.Register(scriptedEntity, className)
 	end
+)
 
-	for __, path in pairs(pathsToLoad.weapons) do
-		local weaponsPath = searchPath .. separator .. path
-
-		if (file.Exists(weaponsPath, "GAME")) then
-			print("[GMOD Compatibility] Loading weapons from " .. weaponsPath)
-			ScriptedWeapons.LoadFromDirectory(weaponsPath)
-		end
+hook.Add(
+	"ScriptedWeaponRegistered",
+	"GModCompatibility.ScriptedWeaponRegistered.SyncWithGMod",
+	function(className, scriptedWeapon)
+		weapons.Register(scriptedWeapon, className)
 	end
-end
+)

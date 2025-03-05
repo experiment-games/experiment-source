@@ -51,10 +51,11 @@
 #define LUA_PATH_AUTO_LOAD_CLIENT LUA_ROOT "\\auto_load\\client"
 #define LUA_PATH_AUTO_LOAD_SERVER LUA_ROOT "\\auto_load\\server"
 #define LUA_PATH_AUTO_LOAD_SHARED LUA_ROOT "\\auto_load\\shared"
-#define LUA_PATH_EFFECTS LUA_ROOT "\\effects"
-#define LUA_PATH_ENTITIES LUA_ROOT "\\entities"
 #define LUA_PATH_GAMEUI LUA_ROOT "\\gameui"
-#define LUA_PATH_WEAPONS LUA_ROOT "\\weapons"
+
+#define LUA_PATH_EFFECTS "effects"
+#define LUA_PATH_ENTITIES "entities"
+#define LUA_PATH_WEAPONS "weapons"
 
 #define LUA_PATH_DATA "data"
 
