@@ -15,6 +15,8 @@ $Macro OUTBINNAME	"sv_helloworld_win64" [$WIN64]
 
 $MacroRequired		"OUTDLLEXT" "$_DLL_EXT"
 
+$Conditional NOOUTPUTBINDIRSUFFIX    "1"
+
 $Include "$SRCDIR\vpc_scripts\source_dll_base.vpc"
 $Include "$SRCDIR\tier0\tier0_exclude.vpc"
 $Include "$SRCDIR\vstdlib\vstdlib_exclude.vpc"
