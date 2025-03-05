@@ -408,6 +408,39 @@ LUA_BINDING_BEGIN( Surfaces, DrawTexturedSubRectangle, "library", "Draws a textu
 }
 LUA_BINDING_END()
 
+LUA_BINDING_BEGIN( Surfaces, DrawTexturedPolygon, "library", "Draws a textured polygon" )
+{
+    luaL_checktype( L, 1, LUA_TTABLE );
+    int vertCount = luaL_len( L, 1 );
+
+    if ( vertCount < 3 )  // A polygon must have at least 3 vertices
+        return 0;
+
+    Vertex_t *vert = new Vertex_t[vertCount];
+
+    for ( int i = 0; i < vertCount; i++ )
+    {
+        lua_rawgeti( L, 1, i + 1 );
+
+        lua_getfield( L, -1, "x" );
+        float x = ( float )luaL_checknumber( L, -1 );
+        lua_pop( L, 1 );
+
+        lua_getfield( L, -1, "y" );
+        float y = ( float )luaL_checknumber( L, -1 );
+        lua_pop( L, 1 );
+
+        vert[i].Init( Vector2D( x, y ) );
+        lua_pop( L, 1 );
+    }
+
+    surface()->DrawTexturedPolygon( vertCount, vert );
+
+    delete[] vert;
+    return 0;
+}
+LUA_BINDING_END()
+
 LUA_BINDING_BEGIN( Surfaces, EnableMouseCapture, "library", "Enables mouse capture" )
 {
     Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );

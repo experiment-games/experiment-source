@@ -1300,6 +1300,9 @@ void luasrc_init( void )
     LoadEntitiesFromPath();
     // LoadEffectsFromPath();
 
+    LUA_CALL_HOOK_BEGIN( "PostEntitiesLoaded" );
+    LUA_CALL_HOOK_END( 0, 0 );
+
     luasrc_LoadGamemode( LUA_BASE_GAMEMODE );
     luasrc_LoadGamemode( gamemode.GetString() );
     luasrc_SetGamemode( gamemode.GetString() );
@@ -1315,6 +1318,9 @@ void luasrc_init( void )
     LoadWeaponsFromPath();
     LoadEntitiesFromPath();
     // LoadEffectsFromPath();
+
+    LUA_CALL_HOOK_BEGIN( "PostEntitiesLoaded" );
+    LUA_CALL_HOOK_END( 0, 0 );
 
     luasrc_LoadGamemode( LUA_BASE_GAMEMODE );
     g_bGamemodeLoaded = luasrc_LoadGamemode( gamemode.GetString() );

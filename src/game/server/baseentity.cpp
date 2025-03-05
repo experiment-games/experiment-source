@@ -5606,7 +5606,7 @@ int CBaseEntity::PrecacheModel( const char *name, bool bPreload )
 
         if ( version > 48 )
         {
-            Warning( "Model %s has unsupported version %d! Defaulting to error model to prevent crashes.", name, version );
+            Warning( "Model '%s' has unsupported version '%d'! Defaulting to error model to prevent crashes.\n", name, version );
             name = "models/error.mdl";
         }
     }

@@ -95,6 +95,10 @@ void SetupRootSearchPaths( const char *rootPath, lua_State *L )
     Q_snprintf( luaGamemodesPath, sizeof( luaGamemodesPath ), "%s%s\\?.lua", rootPath, LUA_PATH_GAMEMODES );
 
     luasrc_add_to_package_path( L, luaGamemodesPath );
+
+    LUA_CALL_HOOK_BEGIN( "SearchPathSetup" );
+    lua_pushstring( L, rootPath );
+    LUA_CALL_HOOK_END( 1, 0 );
 }
 
 void RemoveRootSearchPaths( const char *gamePath, lua_State *L )

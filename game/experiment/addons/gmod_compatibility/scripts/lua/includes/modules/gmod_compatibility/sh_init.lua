@@ -1522,6 +1522,7 @@ else
 
 	surface.SetDrawColor = Surfaces.DrawSetColor
 	surface.DrawRect = Surfaces.DrawFilledRectangle
+	surface.DrawPoly = Surfaces.DrawTexturedPolygon
 	surface.SetAlphaMultiplier = Surfaces.DrawSetAlphaMultiplier
 
 	local textureMap = {}
@@ -1914,7 +1915,7 @@ else
 	end)
 end
 
-hook.Add("Initialize", "GModCompatibility.CallInitializeHooks", function()
+hook.Add("PostEntitiesLoaded", "GModCompatibility.SyncWithGMod", function()
 	-- Copy ents from our system to the GMod system.
 	local scriptedEntities = ScriptedEntities.GetList()
 	for className, scriptedEntity in pairs(scriptedEntities) do
@@ -1927,7 +1928,9 @@ hook.Add("Initialize", "GModCompatibility.CallInitializeHooks", function()
 		weapons.Register(scriptedWeapon, className)
 	end
 	weapons.OnLoaded()
+end)
 
+hook.Add("Initialize", "GModCompatibility.CallInitializeHooks", function()
 	hook.Run("CreateTeams")
 	hook.Run("PreGamemodeLoaded")
 	hook.Run("OnGamemodeLoaded")
