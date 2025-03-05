@@ -658,10 +658,16 @@ class C_BasePlayer : public C_BaseCombatCharacter, public CGameEventListener
     float m_flConstraintWidth;
     float m_flConstraintSpeedFactor;
     int m_ArmorValue;
+    int m_MaxArmorValue;
 
     int ArmorValue() const
     {
         return m_ArmorValue;
+    }
+
+    int GetMaxArmor() const
+    {
+        return m_MaxArmorValue;
     }
 
     protected:

@@ -17,6 +17,8 @@
 #include "c_basetempentity.h"
 #include "prediction.h"
 #include "bone_setup.h"
+#include "c_team.h"
+#include <collisionutils.h>
 
 #ifdef LUA_SDK
 #include "luamanager.h"
@@ -53,6 +55,7 @@ BEGIN_RECV_TABLE_NOBASE( C_Experiment_Player, DT_ExperimentNonLocalPlayerExclusi
     RecvPropFloat( RECVINFO( m_angEyeAngles[1] ) ),
 
     RecvPropInt( RECVINFO( m_cycleLatch ), 0, &C_Experiment_Player::RecvProxy_CycleLatch ),
+    RecvPropBool( RECVINFO( m_bAvoidPlayers ) ),
 END_RECV_TABLE()
 
 IMPLEMENT_CLIENTCLASS_DT( C_Experiment_Player, DT_Experiment_Player, CExperiment_Player )
@@ -63,7 +66,8 @@ IMPLEMENT_CLIENTCLASS_DT( C_Experiment_Player, DT_Experiment_Player, CExperiment
     RecvPropInt( RECVINFO( m_iSpawnInterpCounter ) ),
     RecvPropInt( RECVINFO( m_iPlayerSoundType ) ),
     RecvPropInt( RECVINFO( m_ArmorValue ) ),
-
+    RecvPropInt( RECVINFO( m_MaxArmorValue ) ),
+    
     RecvPropBool( RECVINFO( m_fIsWalking ) ),
 END_RECV_TABLE()
 
@@ -81,7 +85,12 @@ static bool WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
 static ConVar cl_playermodel( "cl_playermodel", "none", FCVAR_USERINFO | FCVAR_ARCHIVE | FCVAR_SERVER_CAN_EXECUTE, "Default Player Model" );
 static ConVar cl_defaultweapon( "cl_defaultweapon", "weapon_physcannon", FCVAR_USERINFO | FCVAR_ARCHIVE, "Default Spawn Weapon" );
 
-ConVar cl_clientsideeye_lookats( "cl_clientsideeye_lookats", "1", FCVAR_NONE, "When on, players will turn their pupils to look at nearby players." );
+ConVar exp_max_separation_force( "exp_max_separation_force", "256", FCVAR_DEVELOPMENTONLY );
+ConVar exp_clientsideeye_lookats( "exp_clientsideeye_lookats", "1", FCVAR_NONE, "When on, players will turn their pupils to look at nearby players." );
+
+extern ConVar cl_forwardspeed;
+extern ConVar cl_backspeed;
+extern ConVar cl_sidespeed;
 
 void SpawnBlood( Vector vecSpot, const Vector &vecDir, int bloodColor, float flDamage );
 
@@ -278,7 +287,7 @@ void C_Experiment_Player::UpdateLookAt( void )
 
     Vector vecLookAtTarget = vec3_origin;
 
-    if ( cl_clientsideeye_lookats.GetBool() )
+    if ( exp_clientsideeye_lookats.GetBool() )
     {
         for ( int iClient = 1; iClient <= gpGlobals->maxClients; ++iClient )
         {
@@ -519,6 +528,221 @@ void C_Experiment_Player::AddEntity( void )
             ReleaseFlashlight();
         }
     }
+}
+
+/// <summary>
+/// This is a modified version of: src/game/client/tf/c_tf_player.cpp
+/// Note that the TF2 implementation also pushes objects away.
+/// </summary>
+/// <param name="pCmd"></param>
+void C_Experiment_Player::AvoidPlayers( CUserCmd *pCmd )
+{
+    // Turn off the avoid player code.
+    if ( !m_bAvoidPlayers )
+        return;
+
+    // Don't test if the player doesn't exist or is dead.
+    if ( IsAlive() == false )
+        return;
+
+    C_Team *pTeam = GetTeam();
+    if ( !pTeam )
+        return;
+
+    // Up vector.
+    static Vector vecUp( 0.0f, 0.0f, 1.0f );
+
+    Vector vecTFPlayerCenter = GetAbsOrigin();
+    Vector vecTFPlayerMin = GetPlayerMins();
+    Vector vecTFPlayerMax = GetPlayerMaxs();
+    float flZHeight = vecTFPlayerMax.z - vecTFPlayerMin.z;
+    vecTFPlayerCenter.z += 0.5f * flZHeight;
+    VectorAdd( vecTFPlayerMin, vecTFPlayerCenter, vecTFPlayerMin );
+    VectorAdd( vecTFPlayerMax, vecTFPlayerCenter, vecTFPlayerMax );
+
+    // Find an intersecting player.
+    int nAvoidPlayerCount = 0;
+    C_Experiment_Player *pAvoidPlayerList[MAX_PLAYERS_ARRAY_SAFE];
+
+    C_Experiment_Player *pIntersectPlayer = NULL;
+    float flAvoidRadius = 0.0f;
+
+    Vector vecAvoidCenter, vecAvoidMin, vecAvoidMax;
+    for ( int i = 0; i < pTeam->GetNumPlayers(); ++i )
+    {
+        C_Experiment_Player *pAvoidPlayer = static_cast< C_Experiment_Player * >( pTeam->GetPlayer( i ) );
+        if ( pAvoidPlayer == NULL )
+            continue;
+        // Is the avoid player me?
+        if ( pAvoidPlayer == this )
+            continue;
+
+        if ( !IsIndexIntoPlayerArrayValid( nAvoidPlayerCount ) )
+            break;
+
+        // Save as list to check against for objects.
+        pAvoidPlayerList[nAvoidPlayerCount] = pAvoidPlayer;
+        ++nAvoidPlayerCount;
+
+        // Check to see if the avoid player is dormant.
+        if ( pAvoidPlayer->IsDormant() )
+            continue;
+
+        // Is the avoid player solid?
+        if ( pAvoidPlayer->IsSolidFlagSet( FSOLID_NOT_SOLID ) )
+            continue;
+
+        Vector t1, t2;
+
+        vecAvoidCenter = pAvoidPlayer->GetAbsOrigin();
+        vecAvoidMin = pAvoidPlayer->GetPlayerMins();
+        vecAvoidMax = pAvoidPlayer->GetPlayerMaxs();
+        flZHeight = vecAvoidMax.z - vecAvoidMin.z;
+        vecAvoidCenter.z += 0.5f * flZHeight;
+        VectorAdd( vecAvoidMin, vecAvoidCenter, vecAvoidMin );
+        VectorAdd( vecAvoidMax, vecAvoidCenter, vecAvoidMax );
+
+        if ( IsBoxIntersectingBox( vecTFPlayerMin, vecTFPlayerMax, vecAvoidMin, vecAvoidMax ) )
+        {
+            // Need to avoid this player.
+            if ( !pIntersectPlayer )
+            {
+                pIntersectPlayer = pAvoidPlayer;
+                break;
+            }
+        }
+    }
+
+    // Anything to avoid?
+    if ( !pIntersectPlayer )
+    {
+        return;
+    }
+
+    // Calculate the push strength and direction.
+    Vector vecDelta;
+
+    VectorSubtract( pIntersectPlayer->WorldSpaceCenter(), vecTFPlayerCenter, vecDelta );
+
+    Vector vRad = pIntersectPlayer->WorldAlignMaxs() - pIntersectPlayer->WorldAlignMins();
+    vRad.z = 0;
+
+    flAvoidRadius = vRad.Length();
+    
+    float flPushStrength = RemapValClamped( vecDelta.Length(), flAvoidRadius, 0, 0, exp_max_separation_force.GetInt() );  // flPushScale;
+
+    // Msg( "PushScale = %f\n", flPushStrength );
+
+    // Check to see if we have enough push strength to make a difference.
+    if ( flPushStrength < 0.01f )
+        return;
+
+    Vector vecPush;
+    if ( GetAbsVelocity().Length2DSqr() > 0.1f )
+    {
+        Vector vecVelocity = GetAbsVelocity();
+        vecVelocity.z = 0.0f;
+        CrossProduct( vecUp, vecVelocity, vecPush );
+        VectorNormalize( vecPush );
+    }
+    else
+    {
+        // We are not moving, but we're still intersecting.
+        QAngle angView = pCmd->viewangles;
+        angView.x = 0.0f;
+        AngleVectors( angView, NULL, &vecPush, NULL );
+    }
+
+    // Move away from the other player/object.
+    Vector vecSeparationVelocity;
+    if ( vecDelta.Dot( vecPush ) < 0 )
+    {
+        vecSeparationVelocity = vecPush * flPushStrength;
+    }
+    else
+    {
+        vecSeparationVelocity = vecPush * -flPushStrength;
+    }
+
+    // Don't allow the max push speed to be greater than the max player speed.
+    float flMaxPlayerSpeed = GetMaxSpeed();
+    float flCropFraction = 1.33333333f;
+
+    if ( ( GetFlags() & FL_DUCKING ) && ( GetGroundEntity() != NULL ) )
+    {
+        flMaxPlayerSpeed *= flCropFraction;
+    }
+
+    float flMaxPlayerSpeedSqr = flMaxPlayerSpeed * flMaxPlayerSpeed;
+
+    if ( vecSeparationVelocity.LengthSqr() > flMaxPlayerSpeedSqr )
+    {
+        vecSeparationVelocity.NormalizeInPlace();
+        VectorScale( vecSeparationVelocity, flMaxPlayerSpeed, vecSeparationVelocity );
+    }
+
+    QAngle vAngles = pCmd->viewangles;
+    vAngles.x = 0;
+    Vector currentdir;
+    Vector rightdir;
+
+    AngleVectors( vAngles, &currentdir, &rightdir, NULL );
+
+    Vector vDirection = vecSeparationVelocity;
+
+    VectorNormalize( vDirection );
+
+    float fwd = currentdir.Dot( vDirection );
+    float rt = rightdir.Dot( vDirection );
+
+    float forward = fwd * flPushStrength;
+    float side = rt * flPushStrength;
+
+    // Msg( "fwd: %f - rt: %f - forward: %f - side: %f\n", fwd, rt, forward, side );
+
+    pCmd->forwardmove += forward;
+    pCmd->sidemove += side;
+
+    // Clamp the move to within legal limits, preserving direction. This is a little
+    // complicated because we have different limits for forward, back, and side
+
+    // Msg( "PRECLAMP: forwardmove=%f, sidemove=%f\n", pCmd->forwardmove, pCmd->sidemove );
+
+    float flForwardScale = 1.0f;
+    if ( pCmd->forwardmove > fabs( cl_forwardspeed.GetFloat() ) )
+    {
+        flForwardScale = fabs( cl_forwardspeed.GetFloat() ) / pCmd->forwardmove;
+    }
+    else if ( pCmd->forwardmove < -fabs( cl_backspeed.GetFloat() ) )
+    {
+        flForwardScale = fabs( cl_backspeed.GetFloat() ) / fabs( pCmd->forwardmove );
+    }
+
+    float flSideScale = 1.0f;
+    if ( fabs( pCmd->sidemove ) > fabs( cl_sidespeed.GetFloat() ) )
+    {
+        flSideScale = fabs( cl_sidespeed.GetFloat() ) / fabs( pCmd->sidemove );
+    }
+
+    float flScale = MIN( flForwardScale, flSideScale );
+    pCmd->forwardmove *= flScale;
+    pCmd->sidemove *= flScale;
+
+    // Msg( "Pforwardmove=%f, sidemove=%f\n", pCmd->forwardmove, pCmd->sidemove );
+}
+
+//-----------------------------------------------------------------------------
+// Purpose:
+// Input  : flInputSampleTime -
+//			*pCmd -
+//-----------------------------------------------------------------------------
+bool C_Experiment_Player::CreateMove( float flInputSampleTime, CUserCmd *pCmd )
+{
+    bool bResult = BaseClass::CreateMove( flInputSampleTime, pCmd );
+
+    AvoidPlayers( pCmd );
+
+    return bResult;
 }
 
 ShadowType_t C_Experiment_Player::ShadowCastType( void )

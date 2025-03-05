@@ -9,7 +9,6 @@
 #define Experiment_PLAYER_SHARED_H
 #pragma once
 
-#define Experiment_PUSHAWAY_THINK_INTERVAL ( 1.0f / 20.0f )
 #include "studio.h"
 
 enum

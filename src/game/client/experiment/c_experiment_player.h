@@ -40,6 +40,9 @@ class C_Experiment_Player : public C_BaseHLPlayer
     virtual int DrawModel( int flags );
     virtual void AddEntity( void );
 
+    void AvoidPlayers( CUserCmd *pCmd );
+    virtual bool CreateMove( float flInputSampleTime, CUserCmd *pCmd ) OVERRIDE;
+
     Vector GetAttackSpread( CBaseCombatWeapon *pWeapon,
                             CBaseEntity *pTarget = NULL );
 
@@ -92,6 +95,10 @@ class C_Experiment_Player : public C_BaseHLPlayer
     {
         return m_fIsWalking;
     }
+
+    // Avoiding players
+    void SetAvoidPlayers( bool shouldAvoid );
+    bool GetAvoidPlayers();
 
     virtual void UpdateClientSideAnimation();
     void DoAnimationEvent( PlayerAnimEvent_t event, int nData = 0 );
@@ -172,6 +179,7 @@ class C_Experiment_Player : public C_BaseHLPlayer
     bool m_fIsWalking;
     int m_cycleLatch;  // The animation cycle goes out of sync very easily. Mostly from the player entering/exiting PVS. Server will frequently update us with a new one.
     float m_flServerCycle;
+    bool m_bAvoidPlayers;
 };
 
 inline C_Experiment_Player *ToExperimentPlayer( CBaseEntity *pEntity )

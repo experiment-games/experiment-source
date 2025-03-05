@@ -36,6 +36,15 @@ LUA_BINDING_BEGIN( Player, GiveAmmo, "class", "Give ammo to the player." )
 }
 LUA_BINDING_END( "integer", "The amount of ammo actually given." )
 
+LUA_BINDING_BEGIN( Player, SetArmor, "class", "Sets the armor value for a player." )
+{
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    float armorValue = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "armorValue" );
+    player->SetArmorValue( armorValue );
+    return 0;
+}
+LUA_BINDING_END()
+
 LUA_BINDING_BEGIN( Player, SetBodyPitch, "class", "Set the body pitch of the player." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );

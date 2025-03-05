@@ -946,11 +946,21 @@ function PLAYER_META:FlashlightIsOn()
 	return self:IsFlashlightOn()
 end
 
+function PLAYER_META:SetPlayerColor(color)
+	-- TODO: Implement this
+end
+
+function PLAYER_META:GetPlayerColor()
+	-- TODO: Implement this
+	return Color(255, 255, 255)
+end
+
 function PLAYER_META:SetWeaponColor(color)
-	-- Not implemented
+	-- TODO: Implement this
 end
 
 function PLAYER_META:GetWeaponColor()
+	-- TODO: Implement this
 	return Color(255, 255, 255)
 end
 

@@ -169,3 +169,16 @@ void CExperiment_Player::PlayStepSound( Vector &vecOrigin, surfacedata_t *psurfa
 
     EmitSound( filter, entindex(), ep );
 }
+
+void CExperiment_Player::SetAvoidPlayers( bool shouldAvoid )
+{
+#ifdef CLIENT_DLL
+    m_bAvoidPlayers = shouldAvoid;
+#else
+    m_bAvoidPlayers.GetForModify() = shouldAvoid;
+#endif
+}
+bool CExperiment_Player::GetAvoidPlayers()
+{
+    return m_bAvoidPlayers;
+}

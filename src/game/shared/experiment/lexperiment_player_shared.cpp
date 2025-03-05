@@ -128,6 +128,30 @@ LUA_BINDING_BEGIN( CExperimentPlayer, KeyDown, "class", "Key down." )
 }
 LUA_BINDING_END()
 
+LUA_BINDING_BEGIN( CExperimentPlayer, SetAvoidPlayers, "class", "Set whether to push away players in the same team. The pushing away is handled client-side." )
+{
+    CExperiment_Player *player = LUA_BINDING_ARGUMENT( luaL_checkexperimentplayer, 1, "entity" );
+    player->SetAvoidPlayers( LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "shouldAvoidPlayers" ) );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( CExperimentPlayer, GetAvoidPlayers, "class", "Get whether to push away players in the same team." )
+{
+    CExperiment_Player *player = LUA_BINDING_ARGUMENT( luaL_checkexperimentplayer, 1, "entity" );
+    lua_pushboolean( L, player->GetAvoidPlayers() );
+    return 1;
+}
+LUA_BINDING_END( "boolean", "Whether to push away players in the same team" )
+
+LUA_BINDING_BEGIN( CExperimentPlayer, GetMaxArmor, "class", "Get the max armor for this player." )
+{
+    CExperiment_Player *player = LUA_BINDING_ARGUMENT( luaL_checkexperimentplayer, 1, "entity" );
+    lua_pushinteger( L, player->GetMaxArmor() );
+    return 1;
+}
+LUA_BINDING_END( "integer", "The maximum armor" )
+
 #ifndef CLIENT_DLL
 LUA_BINDING_BEGIN( CExperimentPlayer, GetPlayerModelType, "class", "Get the player model type.", "server" )
 {
@@ -136,6 +160,14 @@ LUA_BINDING_BEGIN( CExperimentPlayer, GetPlayerModelType, "class", "Get the play
     return 1;
 }
 LUA_BINDING_END( "integer", "The player model type" )
+
+LUA_BINDING_BEGIN( CExperimentPlayer, SetMaxArmor, "class", "Set the armor for this player." )
+{
+    CExperiment_Player *player = LUA_BINDING_ARGUMENT( luaL_checkexperimentplayer, 1, "entity" );
+    player->SetMaxArmor( LUA_BINDING_ARGUMENT( luaL_checkinteger, 2, "maxArmor" ) );
+    return 0;
+}
+LUA_BINDING_END()
 #endif
 
 // Experiment; We only let CBasePlayer determine equality, which should be fine since they're pointers to the same entity. Disabled:

@@ -698,7 +698,7 @@ FSReturnCode_t FileSystem_LoadSearchPaths( CFSSearchPathsInit &initInfo )
 
             if ( !SteamApps() )
             {
-                Error( "No SteamApps connection." );
+                Error( "No SteamApps connection. Is Steam running?" );
             }
 
             const Source1AppidInfo_t *pKnownAppid = GetKnownAppidInfo( nAppId );

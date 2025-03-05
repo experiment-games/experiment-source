@@ -57,6 +57,10 @@ class CExperiment_Player : public CHL2_Player
     void SetupBones( matrix3x4_t *pBoneToWorld, int boneMask );
     bool KeyDown( int buttonCode );
 
+    // Avoiding players
+    void SetAvoidPlayers( bool shouldAvoid );
+    bool GetAvoidPlayers();
+
     virtual void Precache( void );
     virtual void Spawn( void );
     virtual void PostThink( void );
@@ -170,6 +174,15 @@ class CExperiment_Player : public CHL2_Player
         return m_hRagdoll;
     }
 
+    int GetMaxArmor() const
+    {
+        return m_MaxArmorValue;
+    }
+    void SetMaxArmor( int maxArmor )
+    {
+        m_MaxArmorValue.GetForModify() = maxArmor;
+    }
+
     private:
     CExperimentPlayerAnimState *m_PlayerAnimState;
 
@@ -199,6 +212,10 @@ class CExperiment_Player : public CHL2_Player
 
     CNetworkVar( int, m_cycleLatch );  // Network the cycle to clients periodically
     CountdownTimer m_cycleLatchTimer;
+
+    CNetworkVar( bool, m_bAvoidPlayers );
+
+    CNetworkVar( int, m_MaxArmorValue );
 
 #ifndef NO_STEAM
     STEAM_GAMESERVER_CALLBACK( CExperiment_Player, OnValidateAuthTicketResponse, ValidateAuthTicketResponse_t, m_CallbackValidateAuthTicketResponse );

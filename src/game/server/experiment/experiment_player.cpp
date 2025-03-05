@@ -69,6 +69,7 @@ BEGIN_SEND_TABLE_NOBASE( CExperiment_Player, DT_ExperimentNonLocalPlayerExclusiv
     // Only need to latch cycle for other players
     // If you increase the number of bits networked, make sure to also modify the code below and in the client class.
     SendPropInt( SENDINFO( m_cycleLatch ), 4, SPROP_UNSIGNED ),
+    SendPropBool( SENDINFO( m_bAvoidPlayers ) ),
 END_SEND_TABLE()
 
 IMPLEMENT_SERVERCLASS_ST( CExperiment_Player, DT_Experiment_Player )
@@ -96,7 +97,8 @@ IMPLEMENT_SERVERCLASS_ST( CExperiment_Player, DT_Experiment_Player )
     SendPropEHandle( SENDINFO( m_hRagdoll ) ),
     SendPropInt( SENDINFO( m_iSpawnInterpCounter ), 4 ),
     SendPropInt( SENDINFO( m_iPlayerSoundType ), 3 ),
-    SendPropInt( SENDINFO( m_ArmorValue ), 8 ),
+    SendPropInt( SENDINFO( m_ArmorValue ) ),
+    SendPropInt( SENDINFO( m_MaxArmorValue ) ),
 END_SEND_TABLE()
 
 BEGIN_DATADESC( CExperiment_Player )
@@ -161,6 +163,8 @@ CExperiment_Player::CExperiment_Player()
 
     m_cycleLatch = 0;
     m_cycleLatchTimer.Invalidate();
+
+    m_bAvoidPlayers = false;
 
     BaseClass::ChangeTeam( TEAM_UNASSIGNED );
 }
