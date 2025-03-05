@@ -102,7 +102,12 @@ After (forking and) cloning the repository, follow these steps to setup the proj
 > Despite being able to build within Visual Studio 2022, the Source SDK 2013 solution requires
 > Visual Studio 2013 (and/or its build tools) to be installed.
 
-7. To setup the game mod directory, run this in the root directory of the repository:
+7. Build the entire solution.
+
+> [!NOTE]
+> Building produces our `networksystem.dll` in `game/bin/x64/` which is required for the game to run. If you run `setupprojects.sh --init` after compiling the solution, you will need to rebuild the solution to get the `networksystem.dll` back in the correct location.
+
+8. To setup the game mod directory, run this in the root directory of the repository:
 
     ```bash
     ./tools/setup-game.sh
@@ -110,7 +115,7 @@ After (forking and) cloning the repository, follow these steps to setup the proj
 
     _This setups up a `settings.scr` file based on an example that is in this repository._
 
-8. Make sure Steam is running and start the game through the `Client (Experiment)` project by clicking the 'Local Windows Debugger'-button.
+9. Make sure Steam is running and start the game through the `Client (Experiment)` project by clicking the 'Local Windows Debugger'-button.
 
     > [!NOTE]
     > If you're running with the 'Debug' configuration, give Visual Studio a minute to download the necessary symbols. This only needs to be done once (or when the symbols are updated).

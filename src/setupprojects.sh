@@ -44,7 +44,7 @@ cat <<EOL > $PROJECT_FILE
     <PropertyGroup Condition="'\$(Configuration)|\$(Platform)'=='Release|x64' or '\$(Configuration)|\$(Platform)'=='Debug|x64'">
         <LocalDebuggerCommand>\$(SolutionDir)..\\game\\experiment_win64.exe</LocalDebuggerCommand>
         <LocalDebuggerCommandArguments>-allowdebug -dev -sw -game "$STEAM_MOD_DIR"</LocalDebuggerCommandArguments>
-        <LocalDebuggerWorkingDirectory>$STEAM_SDK_DIR</LocalDebuggerWorkingDirectory>
+        <LocalDebuggerWorkingDirectory>..\..\..\game</LocalDebuggerWorkingDirectory>
         <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
     </PropertyGroup>
 </Project>

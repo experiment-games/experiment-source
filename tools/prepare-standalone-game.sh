@@ -82,8 +82,8 @@ done
 for file in "${files[@]}"; do
     if [ -e "$STEAM_SDK_DIR/$file" ]; then
         echo "Copying $file to $target_dir"
-        mkdir -p "$target_dir/$(dirname "$file")"
-        cp -r "$STEAM_SDK_DIR/$file" "$target_dir/$file"
+        mkdir -p "$target_dir"  # Ensure the target directory exists
+        cp -r "$STEAM_SDK_DIR/$file" "$target_dir/"
     else
         echo "The file $file does not exist in $STEAM_SDK_DIR"
     fi
