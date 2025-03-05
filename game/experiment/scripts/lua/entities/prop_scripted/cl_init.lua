@@ -7,7 +7,7 @@
 
 Include("shared.lua")
 
-function ENT:DrawModel(flags)
+function ENT:Draw(flags)
 end
 
 function ENT:ClientThink()

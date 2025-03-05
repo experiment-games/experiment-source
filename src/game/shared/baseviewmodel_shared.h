@@ -213,6 +213,11 @@ class CBaseViewModel : public CBaseAnimating, public IHasOwner
     int m_nOldAnimationParity;
 #endif
 
+#ifdef LUA_SDK
+    bool m_bIsPreDrawHookCalling;
+    bool m_bIsPostDrawHookCalling;
+#endif
+
     typedef CHandle< CBaseCombatWeapon > CBaseCombatWeaponHandle;
     CNetworkVar( CBaseCombatWeaponHandle, m_hWeapon );
 

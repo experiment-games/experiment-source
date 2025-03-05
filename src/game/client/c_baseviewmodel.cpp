@@ -320,14 +320,22 @@ int C_BaseViewModel::DrawModel( int flags )
         pTFWeapon->m_viewmodelStatTrakAddon->AddEffects( EF_NODRAW );
     }
 #endif
-#ifdef LUA_SDK
-    LUA_CALL_HOOK_BEGIN( "PreDrawViewModel" );
-    CBaseViewModel::PushLuaInstanceSafe( L, this );
-    CBasePlayer::PushLuaInstanceSafe( L, pPlayer );
-    CBaseCombatWeapon::PushLuaInstanceSafe( L, pWeapon );
-    LUA_CALL_HOOK_END( 3, 1 );
 
-    LUA_RETURN_VALUE_IF_TRUE( 0 );
+#ifdef LUA_SDK
+    if ( !m_bIsPreDrawHookCalling )
+    {
+        m_bIsPreDrawHookCalling = true;
+
+        LUA_CALL_HOOK_BEGIN( "PreDrawViewModel" );
+        CBaseViewModel::PushLuaInstanceSafe( L, this );
+        CBasePlayer::PushLuaInstanceSafe( L, pPlayer );
+        CBaseCombatWeapon::PushLuaInstanceSafe( L, pWeapon );
+        LUA_CALL_HOOK_END( 3, 1 );
+
+        m_bIsPreDrawHookCalling = false;
+
+        LUA_RETURN_VALUE_IF_TRUE( 0 );
+    }
 #endif
 
     int ret;
@@ -345,6 +353,21 @@ int C_BaseViewModel::DrawModel( int flags )
         ret = BaseClass::DrawModel( flags );
     }
 
+#ifdef LUA_SDK
+    if (!m_bIsPostDrawHookCalling)
+    {
+        m_bIsPostDrawHookCalling = true;
+
+        LUA_CALL_HOOK_BEGIN( "PostDrawViewModel" );
+        CBaseViewModel::PushLuaInstanceSafe( L, this );
+        CBasePlayer::PushLuaInstanceSafe( L, pPlayer );
+        CBaseCombatWeapon::PushLuaInstanceSafe( L, pWeapon );
+        LUA_CALL_HOOK_END( 3, 0 );
+
+        m_bIsPostDrawHookCalling = false;
+    }
+#endif
+
     // Now that we've rendered, reset the animation restart flag
     if ( flags & STUDIO_RENDER )
     {
@@ -359,14 +382,6 @@ int C_BaseViewModel::DrawModel( int flags )
             pWeapon->ViewModelDrawn( this );
         }
     }
-
-#ifdef LUA_SDK
-    LUA_CALL_HOOK_BEGIN( "PostDrawViewModel" );
-    CBaseViewModel::PushLuaInstanceSafe( L, this );
-    CBasePlayer::PushLuaInstanceSafe( L, pPlayer );
-    CBaseCombatWeapon::PushLuaInstanceSafe( L, pWeapon );
-    LUA_CALL_HOOK_END( 3, 0 );
-#endif
 
     return ret;
 }

@@ -2290,8 +2290,8 @@ LUA_BINDING_END()
 LUA_BINDING_BEGIN( Entity, SetParent, "class", "Set parent." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
-    CBaseEntity *pParent = LUA_BINDING_ARGUMENT( luaL_checkentity, 2, "parent" );
-    int iAttachment = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 3, 0, "attachment" );
+    CBaseEntity *pParent = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optentity, 2, NULL, "parent" );
+    int iAttachment = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 3, -1, "attachment" );
 
     pEntity->SetParent( pParent, iAttachment );
     return 0;

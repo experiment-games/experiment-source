@@ -12,20 +12,24 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
+// clang-format off
+
 IMPLEMENT_NETWORKCLASS_ALIASED( BaseScripted, DT_BaseScripted )
 
 BEGIN_NETWORK_TABLE( CBaseScripted, DT_BaseScripted )
 #ifdef CLIENT_DLL
-RecvPropString( RECVINFO( m_iScriptedClassname ) ),
+    RecvPropString( RECVINFO( m_iScriptedClassname ) ),
 #else
-SendPropString( SENDINFO( m_iScriptedClassname ) ),
+    SendPropString( SENDINFO( m_iScriptedClassname ) ),
 #endif
-    END_NETWORK_TABLE()
+END_NETWORK_TABLE()
 
-        BEGIN_PREDICTION_DATA( CBaseScripted ) END_PREDICTION_DATA()
+BEGIN_PREDICTION_DATA( CBaseScripted ) END_PREDICTION_DATA()
+
+static bool WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
 
 #ifdef CLIENT_DLL
-            static C_BaseEntity *CCBaseScriptedFactory( void )
+static C_BaseEntity *CCBaseScriptedFactory( void )
 {
     return static_cast< C_BaseEntity * >( new CBaseScripted );
 };
@@ -74,8 +78,8 @@ void ResetEntityFactoryDatabase( void )
 #endif
 #else
     for ( int i = m_EntityFactoryDatabase.First();
-        i != m_EntityFactoryDatabase.InvalidIndex();
-        i = m_EntityFactoryDatabase.Next( i ) )
+          i != m_EntityFactoryDatabase.InvalidIndex();
+          i = m_EntityFactoryDatabase.Next( i ) )
     {
         delete m_EntityFactoryDatabase[i];
     }
@@ -187,6 +191,29 @@ void CBaseScripted::InitScriptedEntity( void )
         }
     }
 
+    // Get (or init) the ref table
+    LUA_GET_REF_TABLE( L, this );
+
+#ifdef CLIENT_DLL
+    lua_getfield( L, -1, "RenderGroup" );
+    if ( lua_isnumber( L, -1 ) )
+    {
+        m_iRenderGroupOverride = ( int )lua_tointeger( L, -1 );
+    }
+    lua_pop( L, 1 );  // Pop the RenderGroup field
+#endif
+
+    // Experiment; TODO: Remaining members: https://wiki.facepunch.com/gmod/Structures/ENT
+    lua_getfield( L, -1, "ClassNameOverride" );
+    if ( lua_isstring( L, -1 ) )
+    {
+        DevWarning( "`ClassNameOverride` not yet implemented! For entity with class '%s'", className );
+    }
+    lua_pop( L, 1 );  // Pop the ClassNameOverride field
+
+    // Pop the LUA_GET_REF_TABLE
+    lua_pop( L, 1 );
+
     LUA_CALL_HOOK_BEGIN( "PreEntityInitialize" );
     CBaseEntity::PushLuaInstanceSafe( L, this );
     LUA_CALL_HOOK_END( 1, 0 );
@@ -197,10 +224,20 @@ void CBaseScripted::InitScriptedEntity( void )
 }
 
 #ifdef CLIENT_DLL
+RenderGroup_t CBaseScripted::GetRenderGroup()
+{
+    if ( m_iRenderGroupOverride > -1 )
+    {
+        return ( RenderGroup_t )m_iRenderGroupOverride;
+    }
+
+    return BaseClass::GetRenderGroup();
+}
+
 int CBaseScripted::DrawModel( int flags )
 {
 #ifdef LUA_SDK
-    LUA_CALL_ENTITY_METHOD_BEGIN( "DrawModel" );
+    LUA_CALL_ENTITY_METHOD_BEGIN( "Draw" );
     lua_pushinteger( L, flags );
     LUA_CALL_ENTITY_METHOD_END( 1, 1 );
 

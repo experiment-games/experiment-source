@@ -40,6 +40,8 @@ class CBaseScripted : /* public CBaseEntity */ public CBaseAnimating
     void EndTouch( CBaseEntity *pOther );
 
 #ifdef CLIENT_DLL
+    virtual RenderGroup_t GetRenderGroup() OVERRIDE;
+
     // model specific
     virtual int DrawModel( int flags );
 #endif
@@ -64,6 +66,10 @@ class CBaseScripted : /* public CBaseEntity */ public CBaseAnimating
     CBaseScripted( const CBaseScripted & );  // not defined, not accessible
 
     CNetworkString( m_iScriptedClassname, 255 );
+
+#ifdef CLIENT_DLL
+    int m_iRenderGroupOverride = -1;
+#endif
 };
 
 // void RegisterScriptedEntity( const char *szClassname );
