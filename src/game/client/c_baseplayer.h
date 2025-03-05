@@ -651,6 +651,14 @@ class C_BasePlayer : public C_BaseCombatCharacter, public CGameEventListener
 
     CUserCmd *m_pCurrentCommand;
 
+#ifdef ARGG
+    // adnan
+    // store the use angles
+    // set when the player presses use
+    QAngle m_vecUseAngles;
+    // end adnan
+#endif
+
     // Movement constraints
     EHANDLE m_hConstraintEntity;
     Vector m_vecConstraintCenter;

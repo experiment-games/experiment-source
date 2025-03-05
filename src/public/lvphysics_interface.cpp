@@ -1256,6 +1256,22 @@ LUA_BINDING_BEGIN( PhysicsObject, WorldToLocalVector, "class", "Converts world v
 }
 LUA_BINDING_END( "Vector", "The local vector." )
 
+LUA_BINDING_BEGIN( PhysicsObject, IsValid, "class", "Check if physics object is valid." )
+{
+    lua_IPhysicsObject *physicsObject = LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" );
+
+    if ( physicsObject == NULL )
+    {
+        lua_pushboolean( L, false );
+        return 1;
+    }
+
+    lua_pushboolean( L, true );
+
+    return 1;
+}
+LUA_BINDING_END()
+
 LUA_BINDING_BEGIN( PhysicsObject, __tostring, "class", "Provides a string representation of the object" )
 {
     lua_IPhysicsObject *physicsObject = LUA_BINDING_ARGUMENT( lua_tophysicsobject, 1, "physicsObject" );
@@ -1395,9 +1411,9 @@ LUA_BINDING_END( "PhysicsSurfacePropertiesHandle", "The global surface propertie
 LUA_BINDING_BEGIN( PhysicsSurfaceProperties, ParseSurfaceData, "class", "Parses surface data" )
 {
     lua_pushinteger( L,
-                    physprops->ParseSurfaceData(
-                        LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "stringData" ),
-                        LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "textFileName" ) ) );
+                     physprops->ParseSurfaceData(
+                         LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "stringData" ),
+                         LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "textFileName" ) ) );
     return 1;
 }
 LUA_BINDING_END( "integer", "The surface data." )

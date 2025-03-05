@@ -196,8 +196,8 @@ function FindMetaTable(name)
 		name = "UserMessageReader"
 	elseif (name == "VMatrix") then
 		name = "Matrix"
-		-- elseif (name == "PhysObj") then
-		-- 	name = "PhysicsObject"
+	elseif (name == "PhysObj") then
+		name = "PhysicsObject"
 		-- elseif (name == "PhysCollide") then
 		-- 	name = "PhysicsCollide"
 	end
@@ -744,7 +744,18 @@ function ENTITY_META:SetSpawnEffect(effect)
 end
 
 function ENTITY_META:GetSpawnEffect()
+	-- TODO: Implement
 	return self.__spawnEffect
+end
+
+function ENTITY_META:SetPersistent(persistent)
+	-- TODO: Implement
+	self.__persistent = persistent
+end
+
+function ENTITY_META:GetPersistent()
+	-- TODO: Implement
+	return self.__persistent
 end
 
 function ENTITY_META:SetNoDraw(bBool)
@@ -768,6 +779,17 @@ function ENTITY_META:IsOnGround()
 end
 
 ENTITY_META.OnGround = ENTITY_META.IsOnGround
+
+-- TODO: Are GetPhysicsObjectNum and GetPhysicsObjectCount correctly implemented?
+function ENTITY_META:GetPhysicsObjectCount()
+	return select(1, self:GetPhysicsObjects())
+end
+
+function ENTITY_META:GetPhysicsObjectNum(physicsObjectNumber)
+	local physicsObjects = select(2, self:GetPhysicsObjects())
+
+	return physicsObjects[physicsObjectNumber + 1]
+end
 
 --[[
 	We implement SetNotSolid and DrawShadow using engine flags/effects, but I'm not sure
@@ -825,6 +847,16 @@ end
 
 function ENTITY_META:HasBoneManipulations()
 	return false
+end
+
+local PHYSICS_OBJECT_META = FindMetaTable("PhysicsObject")
+
+function PHYSICS_OBJECT_META:GetPos()
+	return select(1, self:GetPosition())
+end
+
+function PHYSICS_OBJECT_META:GetAngles()
+	return select(2, self:GetPosition())
 end
 
 local WEAPON_META = FindMetaTable("Weapon")

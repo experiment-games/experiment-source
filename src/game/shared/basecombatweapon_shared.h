@@ -712,6 +712,15 @@ class CBaseCombatWeapon : public BASECOMBATWEAPON_DERIVED_FROM
     {
         return;
     };
+#ifdef ARGG
+    // adnan
+    // does this weapon need to override the setting of view angles?
+    virtual bool OverrideViewAngles( void )
+    {
+        return false;
+    };
+    // end adnan
+#endif
     virtual void OverrideMouseInput( float *x, float *y )
     {
         return;

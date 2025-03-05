@@ -443,6 +443,14 @@ DEFINE_FIELD( v_angle, FIELD_VECTOR ),
     DEFINE_FIELD( m_bPlayerUnderwater, FIELD_BOOLEAN ),
     DEFINE_FIELD( m_hViewEntity, FIELD_EHANDLE ),
 
+#if defined( ARGG )
+    // adnan
+    // set the use angles
+    // set when the player presses use
+    DEFINE_FIELD( m_vecUseAngles, FIELD_VECTOR ),
+// end adnan
+#endif
+
     DEFINE_FIELD( m_hConstraintEntity, FIELD_EHANDLE ),
     DEFINE_FIELD( m_vecConstraintCenter, FIELD_VECTOR ),
     DEFINE_FIELD( m_flConstraintRadius, FIELD_FLOAT ),
@@ -8263,21 +8271,23 @@ void SendProxy_CropFlagsToPlayerFlagBitsLength( const SendProp *pProp, const voi
     pOut->m_Int = ( data & mask );
 }
 
+// clang-format off
+
 // -------------------------------------------------------------------------------- //
 // SendTable for CPlayerState.
 // -------------------------------------------------------------------------------- //
 
 BEGIN_SEND_TABLE_NOBASE( CPlayerState, DT_PlayerState )
-SendPropInt( SENDINFO( deadflag ), 1, SPROP_UNSIGNED ),
-    END_SEND_TABLE()
+    SendPropInt( SENDINFO( deadflag ), 1, SPROP_UNSIGNED ),
+END_SEND_TABLE()
 
-    // -------------------------------------------------------------------------------- //
-    // This data only gets sent to clients that ARE this player entity.
-    // -------------------------------------------------------------------------------- //
+// -------------------------------------------------------------------------------- //
+// This data only gets sent to clients that ARE this player entity.
+// -------------------------------------------------------------------------------- //
 
-    BEGIN_SEND_TABLE_NOBASE( CBasePlayer, DT_LocalPlayerExclusive )
+BEGIN_SEND_TABLE_NOBASE( CBasePlayer, DT_LocalPlayerExclusive )
 
-        SendPropDataTable( SENDINFO_DT( m_Local ), &REFERENCE_SEND_TABLE( DT_Local ) ),
+    SendPropDataTable( SENDINFO_DT( m_Local ), &REFERENCE_SEND_TABLE( DT_Local ) ),
 
 // If HL2_DLL is defined, then baseflex.cpp already sends these.
 #ifndef HL2_DLL
@@ -8304,6 +8314,14 @@ SendPropInt( SENDINFO( deadflag ), 1, SPROP_UNSIGNED ),
 
     SendPropVector( SENDINFO( m_vecBaseVelocity ), 32, SPROP_NOSCALE ),
 
+#ifdef ARGG
+    // adnan
+    // send the use angles
+    // set when the player presses use
+    SendPropVector( SENDINFO( m_vecUseAngles ), 0, SPROP_NOSCALE ),
+    // end adnan
+#endif
+
     SendPropEHandle( SENDINFO( m_hConstraintEntity ) ),
     SendPropVector( SENDINFO( m_vecConstraintCenter ), 0, SPROP_NOSCALE ),
     SendPropFloat( SENDINFO( m_flConstraintRadius ), 0, SPROP_NOSCALE ),
@@ -8315,20 +8333,20 @@ SendPropInt( SENDINFO( deadflag ), 1, SPROP_UNSIGNED ),
     SendPropInt( SENDINFO( m_nWaterLevel ), 2, SPROP_UNSIGNED ),
     SendPropFloat( SENDINFO( m_flLaggedMovementValue ), 0, SPROP_NOSCALE ),
 
-    END_SEND_TABLE()
+END_SEND_TABLE()
 
 // -------------------------------------------------------------------------------- //
 // DT_BasePlayer sendtable.
 // -------------------------------------------------------------------------------- //
 
 #if defined USES_ECON_ITEMS
-        EXTERN_SEND_TABLE( DT_AttributeList );
+EXTERN_SEND_TABLE( DT_AttributeList );
 #endif
 
 IMPLEMENT_SERVERCLASS_ST( CBasePlayer, DT_BasePlayer )
 
 #if defined USES_ECON_ITEMS
-SendPropDataTable( SENDINFO_DT( m_AttributeList ), &REFERENCE_SEND_TABLE( DT_AttributeList ) ),
+    SendPropDataTable( SENDINFO_DT( m_AttributeList ), &REFERENCE_SEND_TABLE( DT_AttributeList ) ),
 #endif
 
     SendPropDataTable( SENDINFO_DT( pl ), &REFERENCE_SEND_TABLE( DT_PlayerState ), SendProxy_DataTableToDataTable ),
@@ -8370,14 +8388,16 @@ SendPropDataTable( SENDINFO_DT( m_AttributeList ), &REFERENCE_SEND_TABLE( DT_Att
     // Data that only gets sent to the local player.
     SendPropDataTable( "localdata", 0, &REFERENCE_SEND_TABLE( DT_LocalPlayerExclusive ), SendProxy_SendLocalDataTable ),
 
-    END_SEND_TABLE()
+END_SEND_TABLE()
 
-    //=============================================================================
-    //
-    // Player Physics Shadow Code
-    //
+// clang-format off
 
-    void CBasePlayer::SetupVPhysicsShadow( const Vector &vecAbsOrigin, const Vector &vecAbsVelocity, CPhysCollide *pStandModel, const char *pStandHullName, CPhysCollide *pCrouchModel, const char *pCrouchHullName )
+//=============================================================================
+//
+// Player Physics Shadow Code
+//
+
+void CBasePlayer::SetupVPhysicsShadow( const Vector &vecAbsOrigin, const Vector &vecAbsVelocity, CPhysCollide *pStandModel, const char *pStandHullName, CPhysCollide *pCrouchModel, const char *pCrouchHullName )
 {
     solid_t solid;
     Q_strncpy( solid.surfaceprop, "player", sizeof( solid.surfaceprop ) );

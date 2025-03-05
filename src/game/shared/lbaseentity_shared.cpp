@@ -2672,7 +2672,7 @@ LUA_BINDING_BEGIN( Entity, GetPhysicsObjects, "class", "Get physics object list.
     lua_newtable( L );
     for ( int i = 0; i < count; i++ )
     {
-        lua_pushinteger( L, i );
+        lua_pushinteger( L, i + 1 );
         lua_pushphysicsobject( L, pList[i] );
         lua_settable( L, -3 );
     }
@@ -2843,7 +2843,7 @@ LUA_BINDING_BEGIN( Entity, SetNetworkDataValue, "class", "Sets a data table vari
     int slot = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "slot" );
 
     if ( slot < 0 || ( networkVarType == TYPE_STRING && slot >= LUA_MAX_NETWORK_VARIABLES_STRING ) ||
-        ( networkVarType != TYPE_STRING && slot >= LUA_MAX_NETWORK_VARIABLES ) )
+         ( networkVarType != TYPE_STRING && slot >= LUA_MAX_NETWORK_VARIABLES ) )
     {
         luaL_argerror( L, 3, "Invalid slot index" );
         return 0;
@@ -2970,7 +2970,7 @@ LUA_BINDING_BEGIN( Entity, GetNetworkDataValue, "class", "Gets a data table vari
     int slot = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "slot" );
 
     if ( slot < 0 || ( networkVarType == TYPE_STRING && slot >= LUA_MAX_NETWORK_VARIABLES_STRING ) ||
-        ( networkVarType != TYPE_STRING && slot >= LUA_MAX_NETWORK_VARIABLES ) )
+         ( networkVarType != TYPE_STRING && slot >= LUA_MAX_NETWORK_VARIABLES ) )
     {
         luaL_argerror( L, 3, "Invalid slot index" );
         return 0;

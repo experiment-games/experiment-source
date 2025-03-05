@@ -405,6 +405,10 @@ CHud::CHud()
     SetDefLessFunc( m_RenderGroups );
 
     m_flScreenShotTime = -1;
+
+#ifdef ARGG
+    m_bSkipClear = false;
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -461,7 +465,7 @@ void CHud::Init( void )
 
                 // Note:  When a panel is parented to the module root, it's "parent" is returned as NULL.
                 if ( !element->IsParentedToClientDLLRootPanel() &&
-                    !pPanel->GetParent() )
+                     !pPanel->GetParent() )
                 {
                     Assert( false );
                     DevMsg( "Hud element '%s'/'%s' doesn't have a parent\n", m_HudList[i]->GetName(), pPanel->GetName() );
@@ -988,7 +992,7 @@ bool CHud::IsHidden( int iHudFlags )
     if ( ( iHudFlags & HIDEHUD_NEEDSUIT ) && ( !pPlayer->IsSuitEquipped() ) )
         return true;
 
-        // Hide all HUD elements during screenshot if the user's set hud_freezecamhide ( TF2 )
+    // Hide all HUD elements during screenshot if the user's set hud_freezecamhide ( TF2 )
 #if defined( TF_CLIENT_DLL )
     extern bool IsTakingAFreezecamScreenshot();
     extern ConVar hud_freezecamhide;
@@ -1188,8 +1192,16 @@ bool CHud::DoesRenderGroupExist( int iGroupIndex )
 //-----------------------------------------------------------------------------
 void CHud::UpdateHud( bool bActive )
 {
+#ifndef ARGG
     // clear the weapon bits.
     gHUD.m_iKeyBits &= ( ~( IN_WEAPON1 | IN_WEAPON2 ) );
+#else
+    if ( !gHUD.m_bSkipClear )
+    {
+        // clear the weapon bits.
+        gHUD.m_iKeyBits &= ( ~( IN_WEAPON1 | IN_WEAPON2 ) );
+    }
+#endif
 
     g_pClientMode->Update();
 

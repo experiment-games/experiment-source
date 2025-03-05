@@ -84,6 +84,8 @@ In order to provide complete transparency, we have outlined the goals of Experim
 
     *See [the ValveSoftware Developer Wiki](https://developer.valvesoftware.com/wiki/Team_Fortress_2_engine_branch) for more features and information*
 
+- [x] Physgun based on ARGG (Adnan's Rotational Gravity Gun)
+
 - [ ] Ability to spawn what Garry's Mod calls "effects" (prop_static models) in the world.
 
 - [ ] *TODO: More tasks*

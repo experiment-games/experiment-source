@@ -14,7 +14,7 @@ $Configuration
     $Compiler
     {
         $AdditionalIncludeDirectories		"$BASE;experiment\ui;.\experiment;$SRCDIR\game\shared\experiment;.\hl2;.\hl2\elements;$SRCDIR\game\shared\hl2;$SRCDIR\game\shared\Multiplayer"
-        $PreprocessorDefinitions			"$BASE;HL2_CLIENT_DLL;NEXT_BOT;EXPERIMENT_SOURCE"
+        $PreprocessorDefinitions			"$BASE;HL2_CLIENT_DLL;NEXT_BOT;ARGG;EXPERIMENT_SOURCE"
     }
 }
 
@@ -160,6 +160,7 @@ $Project "Client (Experiment)"
                 $File	"$SRCDIR\game\shared\experiment\weapon_slam.h"
                 $File	"$SRCDIR\game\shared\experiment\weapon_smg1.cpp"
                 $File	"$SRCDIR\game\shared\experiment\weapon_stunstick.cpp"
+                $File	"$SRCDIR\game\shared\experiment\weapon_physgun_argg.cpp"
             }
 
             $Folder	"UI"
