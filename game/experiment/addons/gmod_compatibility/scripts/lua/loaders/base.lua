@@ -51,9 +51,19 @@ return {
         local rootFolder = ""
 
 		-- -1 tp not get the last part (cl_init.lua or init.lua) nor the gamemode/ folder
-        for i = 1, #parts - 1 do
-            rootFolder = rootFolder .. parts[i] .. "/"
-        end
+		for i = 1, #parts - 1 do
+			rootFolder = rootFolder .. parts[i] .. "/"
+		end
+
+        local isBaseGamemode = filePath:match("[/\\]base[/\\]gamemode[/\\]cl_init%.lua$")
+			or filePath:match("[/\\]base[/\\]gamemode[/\\]init%.lua$")
+
+		if (isBaseGamemode) then
+			-- The base gamemode explicitly loads its entities and sweps before any other entity or swep is loaded, since
+			-- those likely depend on the base gamemode's entities (base_entity, base_ai, base_nextbot) and weapons (weapon_base).
+			return fileContent
+				.. "\nScriptedEntities.LoadFromDirectory( \""..rootFolder.."entities/entities\" ) ScriptedWeapons.LoadFromDirectory( \""..rootFolder.."entities/weapons\" )\n"
+		end
 
 		-- Load the gmod_compatibility module to make Garry's Mod code compatible with Experiment
 		return "require(\"gmod_compatibility\")\n\n" -- Add the gmod_compatibility module

@@ -19,7 +19,7 @@ function MODULE.Get(className)
 	foundEntity = table.Copy(foundEntity)
 
 	if (foundEntity.Base ~= className) then
-		local baseEntityTable = MODULE.Get(foundEntity.Base)
+		local baseEntityTable = MODULE.GetStored(foundEntity.Base)
 
 		if (not baseEntityTable) then
 			debug.PrintWarning("WARNING: Attempted to initialize entity \"" .. className .. "\" with non-existing base class \"" .. tostring(foundEntity.Base) .. "\"!\n")
@@ -31,10 +31,18 @@ function MODULE.Get(className)
 	return foundEntity
 end
 
+--- Returns the registered entity table for the given entity class name.
+--- Be careful, this returns a reference to the actual table.
+--- @param className string
+--- @return table?
+function MODULE.GetStored(className)
+	return MODULE.registeredEntities[className]
+end
+
 --- Returns all registered entities.
 --- Be careful, this returns a reference to the actual table.
 --- @return table
-function MODULE.GetStored()
+function MODULE.GetStoredList()
 	return MODULE.registeredEntities
 end
 
@@ -71,7 +79,7 @@ end
 --- @param className string Name of the entity
 --- @param isReloading boolean Whether or not we're reloading this entity data
 function MODULE.Register(entityTable, className, isReloading)
-	if (MODULE.Get(className) ~= nil and isReloading ~= true) then
+	if (MODULE.GetStored(className) ~= nil and isReloading ~= true) then
 		return
 	end
 

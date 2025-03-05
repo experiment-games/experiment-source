@@ -46,7 +46,7 @@ DEFINE_KEYFIELD( m_iFilterName, FIELD_STRING, "filtername" ),
     END_DATADESC()
 
         static CUtlDict< CEntityFactory< CBaseScriptedTrigger > *,
-                        unsigned short > m_TriggerFactoryDatabase;
+                         unsigned short > m_TriggerFactoryDatabase;
 
 // Experiment; Commented to instead go ask Lua when we encounter a non-C-registered entities.
 // void RegisterScriptedTrigger( const char *className )
@@ -72,8 +72,8 @@ DEFINE_KEYFIELD( m_iFilterName, FIELD_STRING, "filtername" ),
 void ResetTriggerFactoryDatabase( void )
 {
     for ( int i = m_TriggerFactoryDatabase.First();
-        i != m_TriggerFactoryDatabase.InvalidIndex();
-        i = m_TriggerFactoryDatabase.Next( i ) )
+          i != m_TriggerFactoryDatabase.InvalidIndex();
+          i = m_TriggerFactoryDatabase.Next( i ) )
     {
         delete m_TriggerFactoryDatabase[i];
     }
@@ -100,7 +100,7 @@ void CBaseScriptedTrigger::LoadScriptedTrigger( void )
     lua_getglobal( L, LUA_SCRIPTEDENTITIESLIBNAME );
     if ( lua_istable( L, -1 ) )
     {
-        lua_getfield( L, -1, "Get" );
+        lua_getfield( L, -1, "GetStored" );
         if ( lua_isfunction( L, -1 ) )
         {
             lua_remove( L, -2 );
@@ -142,7 +142,7 @@ void CBaseScriptedTrigger::InitScriptedTrigger( void )
     lua_getglobal( L, LUA_SCRIPTEDENTITIESLIBNAME );
     if ( lua_istable( L, -1 ) )
     {
-        lua_getfield( L, -1, "Get" );
+        lua_getfield( L, -1, "GetStored" );
         if ( lua_isfunction( L, -1 ) )
         {
             lua_remove( L, -2 );

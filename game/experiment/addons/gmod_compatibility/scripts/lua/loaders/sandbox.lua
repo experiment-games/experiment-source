@@ -12,7 +12,7 @@ return {
         end
 
 		-- "super" is our default, but Garry's Mod uses "base" by default. So gamemodes not inheriting explicitly from "super" will inherit from "base" instead.
-        -- For that reason derive from "base" instead of "super" unless this is the "base" gamemode (which may derive from "super" if it wants to).
+        -- For that reason derive from "base" instead of "super" unless this is the "base" gamemode (which derives from "super" by default).
         local isBaseGamemode = filePath:match("[/\\]base[/\\]gamemode[/\\]cl_init%.lua$")
 			or filePath:match("[/\\]base[/\\]gamemode[/\\]init%.lua$")
 

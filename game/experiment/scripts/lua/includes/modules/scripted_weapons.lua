@@ -6,23 +6,23 @@ MODULE.registeredWeapons = MODULE.registeredWeapons or {}
 
 --- Returns the registered weapon table for the given weapon class name.
 --- @param weaponClassName string
---- @return table|nil
+--- @return table?
 function MODULE.Get(weaponClassName)
 	local weaponTable = MODULE.registeredWeapons[weaponClassName]
 
 	if (not weaponTable) then
-		return nil
+		return
 	end
 
 	weaponTable = table.Copy(weaponTable)
 
 	--- @cast weaponTable table
 	if (weaponTable.Base and weaponTable.Base ~= weaponClassName) then
-		local baseWeaponTable = MODULE.Get(weaponTable.Base)
+		local baseWeaponTable = MODULE.GetStored(weaponTable.Base)
 
 		if (not baseWeaponTable) then
 			debug.PrintWarning("WARNING: Attempted to initialize weapon \"" ..
-			weaponClassName .. "\" with non-existing base class \"" .. tostring(weaponTable.Base) .. "\"!\n")
+				weaponClassName .. "\" with non-existing base class \"" .. tostring(weaponTable.Base) .. "\"!\n")
 		else
 			return table.Inherit(weaponTable, baseWeaponTable)
 		end
@@ -31,10 +31,17 @@ function MODULE.Get(weaponClassName)
 	return weaponTable
 end
 
---- Returns all registered weapons.
+--- Returns the registered weapon table for the given weapon class name.
 --- Be careful, this returns a reference to the actual table.
+--- @param weaponClassName string
+--- @return table?
+function MODULE.GetStored(weaponClassName)
+	return MODULE.registeredWeapons[weaponClassName]
+end
+
+--- Returns a list of all registered weapons.
 --- @return table
-function MODULE.GetStored()
+function MODULE.GetStoredList()
 	return MODULE.registeredWeapons
 end
 
@@ -49,7 +56,7 @@ end
 --- @param potentialBaseClassName string Name of the potential base entity
 --- @return boolean
 function MODULE.IsBasedOn(className, potentialBaseClassName)
-	local entityTable = MODULE.Get(className)
+	local entityTable = MODULE.GetStored(className)
 
 	if (not entityTable) then
 		return false
@@ -71,7 +78,7 @@ end
 --- @param className string
 --- @param isReloading boolean
 function MODULE.Register(weaponTable, className, isReloading)
-	if (MODULE.Get(className) ~= nil and isReloading ~= true) then
+	if (MODULE.GetStored(className) ~= nil and isReloading ~= true) then
 		return
 	end
 
@@ -84,11 +91,11 @@ end
 --- @param refTable table
 --- @param className string
 function MODULE.InitializeRefTable(refTable, className)
-	local weaponTable = MODULE.Get(className)
+	local weaponTable = MODULE.GetStored(className)
 
 	if (not weaponTable) then
-		debug.PrintWarning("WARNING: Attempted to initialize weapon \"" ..
-			className .. "\" with non-existing class!\n")
+		debug.PrintWarning("WARNING: Attempted to initialize weapon \""
+			.. className .. "\" with non-existing class!\n")
 		return
 	end
 

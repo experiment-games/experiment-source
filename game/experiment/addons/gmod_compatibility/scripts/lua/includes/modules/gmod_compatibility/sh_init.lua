@@ -540,6 +540,11 @@ game = {
 	end,
 
 	GetMap = Engines.GetLevelName,
+
+	AddDecal = function(decalName, materialName)
+		-- TODO: Implement
+		print("TODO: game.AddDecal is not yet implemented!", decalName, materialName)
+	end,
 }
 
 debugoverlay.Axis = function(origin, angle, size, lifetime, ignoreZ)
