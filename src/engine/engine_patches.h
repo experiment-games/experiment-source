@@ -93,5 +93,10 @@ void ApplyClientConnectDetour();
 #define GET_MEMORY_BOOL( basePtr, offset ) GET_MEMORY_FIELD( basePtr, offset, bool )
 #define GET_MEMORY_PTR( basePtr, offset, type ) GET_MEMORY_FIELD( basePtr, offset, type* )
 #define GET_MEMORY_STRING( basePtr, offset ) ( ( const char* )( ( uintptr_t )( basePtr ) + ( offset ) ) )
+// Get a pointer to a field's memory location for modification
+#define GET_MEMORY_FIELD_PTR( basePtr, offset, type ) ( ( type* )( ( uintptr_t )( basePtr ) + ( offset ) ) )
+
+// Specialized macro for bool field modification
+#define GET_MEMORY_BOOL_FOR_CHANGE( basePtr, offset ) ( *GET_MEMORY_FIELD_PTR( basePtr, offset, bool ) )
 
 #endif  // ENGINE_PATCHES_H

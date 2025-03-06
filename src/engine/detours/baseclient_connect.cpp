@@ -116,6 +116,7 @@ static Function_BaseClient_Connect_t OriginalClientConnect = nullptr;
 static CUtlMap< int, void * > connectedClients;
 
 static int s_OffsetConVars;
+static int s_OffsetConVarsChanged;
 
 #pragma warning( disable : 4189 )  // Disable warning about unused variable
 
@@ -157,7 +158,7 @@ void __fastcall DetourClientConnect(
     DEFINE_STRING( Client, friendsName, MAX_PLAYER_NAME_LENGTH );
 
     s_OffsetConVars = DEFINE_PTR( Client, KeyValues *, conVars );  // offset: 144
-    DEFINE_BOOL( Client, conVarsChanged );
+    s_OffsetConVarsChanged = DEFINE_BOOL( Client, conVarsChanged );
     DEFINE_BOOL( Client, conVarsInitiallySet );
     DEFINE_BOOL( Client, sentServerInfo );
 
@@ -266,7 +267,7 @@ CON_COMMAND_F( exp_hack_allow_new_userinfo, "Allow the given CVAR name to become
     KeyValues *conVars = GET_MEMORY_PTR( connectedClient, s_OffsetConVars, KeyValues );
     conVars->SetString( userInfoName, "" );
 
-    DevWarning( "New UserInfo ConVar %s added!\n", userInfoName );
+    DevMsg( "New UserInfo ConVar %s added!\n", userInfoName );
 }
 
 DWORD_PTR FindPattern( HMODULE module, const char *pattern, const char *mask )
