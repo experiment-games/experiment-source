@@ -1623,7 +1623,7 @@ void CServerGameDLL::LevelShutdown( void )
 #endif
 
 #ifdef WITH_ENGINE_PATCHES
-    NotifyDetoursOnLevelShutdown();
+    //NotifyDetoursOnLevelShutdown();
 #endif
 
 #ifdef LUA_SDK

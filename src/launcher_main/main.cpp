@@ -281,6 +281,10 @@ static char *GetBaseDir( const char *pszBuffer )
 
 #include <process.h>
 
+#ifdef WITH_ENGINE_PATCHES
+#include "engine/engine_patches.h"
+#endif
+
 std::wstring GetExePath()
 {
     std::vector< WCHAR > exePath;
@@ -433,6 +437,10 @@ static void HandleRelaunching()
 int APIENTRY WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow )
 {
     HandleRelaunching();
+
+#ifdef WITH_ENGINE_PATCHES
+    //ApplyDetoursOnDllStartup();
+#endif
 
     // Must add 'bin' to the path....
     char *pPath = getenv( "PATH" );

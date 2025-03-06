@@ -110,9 +110,6 @@ C_Experiment_Player::C_Experiment_Player()
     m_pFlashlightBeam = NULL;
 
     m_flServerCycle = -1.0f;
-
-    // Experiment; TODO: ONly for testing, let's set a submaterial if the class inherits from C_AI_BaseNPC
-    Q_strncpy( m_SubMaterialOverrides[2], "models/wireframe", sizeof( m_SubMaterialOverrides[0] ) );
 }
 
 C_Experiment_Player::~C_Experiment_Player( void )

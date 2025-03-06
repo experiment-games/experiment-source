@@ -9,13 +9,14 @@ $Macro GAMENAME 	"experiment"
 
 $Include "$SRCDIR\game\server\server_base.vpc"
 $Include "$SRCDIR\game\server\nav_mesh.vpc" [$SOURCESDK]
+$Include "$SRCDIR\engine\engine_patches_server.vpc"
 
 $Configuration
 {
     $Compiler
     {
         $AdditionalIncludeDirectories	"$BASE;$SRCDIR\game\shared\hl2;.\hl2;.\experiment;$SRCDIR\game\shared\experiment;$SRCDIR\game\shared\Multiplayer"
-        $PreprocessorDefinitions		"$BASE;ARGG;EXPERIMENT_SOURCE;HL2_DLL"
+        $PreprocessorDefinitions		"$BASE;ARGG;WITH_ENGINE_PATCHES;EXPERIMENT_SOURCE;HL2_DLL"
     }
 }
 

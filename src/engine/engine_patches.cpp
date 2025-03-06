@@ -1,4 +1,3 @@
-#include "cbase.h"
 #include "engine_patches.h"
 
 // Experiment;
@@ -7,22 +6,22 @@
 // hacky, but it's the only way to get access to things like CheckPassword and
 // ClientConnect.
 
-DWORD_PTR GetModuleBaseAddress( const char *moduleName )
+DWORD_PTR GetModuleBaseAddress( HMODULE module )
 {
-    return reinterpret_cast< DWORD_PTR >( GetModuleHandle( moduleName ) );
+    return reinterpret_cast< DWORD_PTR >( module );
 }
 
 void ApplyDetoursOnDllStartup()
 {
     if ( MH_Initialize() != MH_OK )
     {
-        DevWarning( "Failed to initialize MinHook.\n" );
+        //DevWarning( "Failed to initialize MinHook.\n" );
         return;
     }
 
-#ifdef CLIENT_DLL
+#if defined( CLIENT_DLL)
 
-#else
+#elif defined( GAME_DLL )
     // HandleCheckPasswordDetour();
     ApplyClientConnectDetour();
 #endif
@@ -30,9 +29,9 @@ void ApplyDetoursOnDllStartup()
 
 void NotifyDetoursOnLevelShutdown()
 {
-#ifdef CLIENT_DLL
+#if defined( CLIENT_DLL )
 
-#else
-    UpdateCheckPasswordDetourOnLevelShutdown();
+#elif defined( GAME_DLL )
+    // UpdateCheckPasswordDetourOnLevelShutdown();
 #endif
 }

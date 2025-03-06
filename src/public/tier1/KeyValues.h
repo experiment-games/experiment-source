@@ -340,7 +340,9 @@ class KeyValues
     void FreeAllocatedValue();
     void AllocateValueBlock( int size );
 
+    public://EXPERIMENT; TODO: REMOVE
     int m_iKeyName;  // keyname is a symbol defined in KeyValuesSystem
+    private://EXPERIMENT; TODO: REMOVE
 
     // These are needed out of the union because the API returns string pointers
     char *m_sValue;

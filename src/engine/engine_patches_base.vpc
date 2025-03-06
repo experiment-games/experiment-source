@@ -16,12 +16,22 @@ $Project
 {
     $Folder "Engine Patches"
     {
-        $File "$SRCDIR\engine\engine_patches.cpp"
-        $File "$SRCDIR\engine\engine_patches.h"
+        $File   "$SRCDIR\engine\engine_patches.h"
+        $File   "$SRCDIR\engine\engine_patches.cpp"
+        {
+            $Configuration
+            {
+                $Compiler
+                {
+                    $Create/UsePrecompiledHeader	"Not Using Precompiled Headers"
+                }
+            }
+        }
     }
 
     $Folder	"Link Libraries"
     {
-        $Lib    "minhook"
+        $Lib    "MinHook.x64" [$WIN64]
+        $Lib    "MinHook.x86" [$WIN32]
     }
 }
