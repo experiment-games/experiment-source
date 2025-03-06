@@ -2584,7 +2584,7 @@ LUA_BINDING_END()
 // }
 // LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Entity, Think, "class", "Think." )
+LUA_BINDING_BEGIN( Entity, ExecuteThink, "class", "Think." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
 

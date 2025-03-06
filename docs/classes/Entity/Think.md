@@ -1,6 +1,6 @@
 ---
 template: lua-class-function.html
-title: Think
+title: ExecuteThink
 icon: lua-shared
 tags:
   - lua
@@ -9,18 +9,18 @@ tags:
   - needs-example
 lua:
   library: Entity
-  function: Think
+  function: ExecuteThink
   realm: shared
   description: "Think."
-  
+
   arguments:
   - position: 1
     name: "entity"
     type: Entity
   returns:
-    
+
 ---
 
 <div class="lua__search__keywords">
-Entity:Think &#x2013; Think.
+Entity:ExecuteThink &#x2013; Think.
 </div>

@@ -1,9 +1,8 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved.
-//============//
+//====== Copyright © 1996-2005, Valve Corporation, All rights reserved. ======//
 //
 // Purpose:
 //
-//=============================================================================//
+//============================================================================//
 
 #include "cbase.h"
 
@@ -40,9 +39,11 @@ END_PREDICTION_DATA()
 //=========================================================
 //	>> CHLSelectFireScriptedWeapon
 //=========================================================
-BEGIN_DATADESC( CExperimentScriptedWeapon ) END_DATADESC()
+BEGIN_DATADESC( CExperimentScriptedWeapon )
+END_DATADESC()
 
-// LINK_ENTITY_TO_CLASS( weapon_experimentbase_scriptedweapon, CExperimentScriptedWeapon ); PRECACHE_WEAPON_REGISTER( weapon_experimentbase_scriptedweapon );
+// LINK_ENTITY_TO_CLASS( weapon_experimentbase_scriptedweapon, CExperimentScriptedWeapon );
+// PRECACHE_WEAPON_REGISTER( weapon_experimentbase_scriptedweapon );
 
 static bool WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
 
@@ -402,62 +403,6 @@ void CExperimentScriptedWeapon::InitScriptedWeapon( void )
         lua_pop( L, 1 );  // Pop the InventorySlotPositionX360 field
     }
 
-    // MaxClip
-    lua_getfield( L, -1, "MaxClip" );
-    if ( lua_isnumber( L, -1 ) )
-    {
-        m_pLuaWeaponInfo->iMaxClip1 =
-            lua_tonumber( L, -1 );  // Max primary clips gun can hold (assume they
-                                    // don't use clips by default)
-    }
-    else
-    {
-        m_pLuaWeaponInfo->iMaxClip1 = WEAPON_NOCLIP;
-    }
-    lua_pop( L, 1 );  // Pop the MaxClip field
-
-    // MaxClip2
-    lua_getfield( L, -1, "MaxClip2" );
-    if ( lua_isnumber( L, -1 ) )
-    {
-        m_pLuaWeaponInfo->iMaxClip2 =
-            lua_tonumber( L, -1 );  // Max secondary clips gun can hold (assume
-                                    // they don't use clips by default)
-    }
-    else
-    {
-        m_pLuaWeaponInfo->iMaxClip2 = WEAPON_NOCLIP;
-    }
-    lua_pop( L, 1 );  // Pop the MaxClip2 field
-
-    // DefaultClip
-    lua_getfield( L, -1, "DefaultClip" );
-    if ( lua_isnumber( L, -1 ) )
-    {
-        m_pLuaWeaponInfo->iDefaultClip1 =
-            lua_tonumber( L, -1 );  // amount of primary ammo placed in the
-                                    // primary clip when it's picked up
-    }
-    else
-    {
-        m_pLuaWeaponInfo->iDefaultClip1 = m_pLuaWeaponInfo->iMaxClip1;
-    }
-    lua_pop( L, 1 );  // Pop the DefaultClip field
-
-    // DefaultClip2
-    lua_getfield( L, -1, "DefaultClip2" );
-    if ( lua_isnumber( L, -1 ) )
-    {
-        m_pLuaWeaponInfo->iDefaultClip2 =
-            lua_tonumber( L, -1 );  // amount of secondary ammo placed in the
-                                    // secondary clip when it's picked up
-    }
-    else
-    {
-        m_pLuaWeaponInfo->iDefaultClip2 = m_pLuaWeaponInfo->iMaxClip2;
-    }
-    lua_pop( L, 1 );  // Pop the DefaultClip2 field
-
     // Weight
     lua_getfield( L, -1, "Weight" );
     if ( lua_isnumber( L, -1 ) )
@@ -562,33 +507,99 @@ void CExperimentScriptedWeapon::InitScriptedWeapon( void )
     }
     lua_pop( L, 1 );  // Pop the MeleeWeapon field
 
-    // Primary ammo used
-    lua_getfield( L, -1, "PrimaryAmmo" );
-    if ( lua_isstring( L, -1 ) )
+    // Primary ammo information
+    lua_getfield( L, -1, "Primary" );
+    if ( lua_istable( L, -1 ) )
     {
-        const char *pAmmo = lua_tostring( L, -1 );
-        if ( strcmp( "None", pAmmo ) == 0 )
-            Q_strncpy( m_pLuaWeaponInfo->szAmmo1, "", sizeof( m_pLuaWeaponInfo->szAmmo1 ) );
-        else
-            Q_strncpy( m_pLuaWeaponInfo->szAmmo1, pAmmo, sizeof( m_pLuaWeaponInfo->szAmmo1 ) );
-        m_pLuaWeaponInfo->iAmmoType =
-            GetAmmoDef()->Index( m_pLuaWeaponInfo->szAmmo1 );
-    }
-    lua_pop( L, 1 );  // Pop the PrimaryAmmo field
+        // Ammo
+        lua_getfield( L, -1, "Ammo" );
+        if ( lua_isstring( L, -1 ) )
+        {
+            const char *ammo = lua_tostring( L, -1 );
 
-    // Secondary ammo used
-    lua_getfield( L, -1, "SecondaryAmmo" );
-    if ( lua_isstring( L, -1 ) )
-    {
-        const char *pAmmo = lua_tostring( L, -1 );
-        if ( strcmp( "None", pAmmo ) == 0 )
-            Q_strncpy( m_pLuaWeaponInfo->szAmmo2, "", sizeof( m_pLuaWeaponInfo->szAmmo2 ) );
+            if ( strcmpi( "None", ammo ) == 0 )
+                Q_strncpy( m_pLuaWeaponInfo->szAmmo1, "", sizeof( m_pLuaWeaponInfo->szAmmo1 ) );
+            else
+                Q_strncpy( m_pLuaWeaponInfo->szAmmo1, ammo, sizeof( m_pLuaWeaponInfo->szAmmo1 ) );
+
+            m_pLuaWeaponInfo->iAmmoType = GetAmmoDef()->Index( m_pLuaWeaponInfo->szAmmo1 );
+        }
+        lua_pop( L, 1 );  // Pop the Ammo field
+
+        // ClipSize
+        lua_getfield( L, -1, "ClipSize" );
+        if ( lua_isnumber( L, -1 ) )
+        {
+            m_pLuaWeaponInfo->iMaxClip1 = lua_tonumber( L, -1 );
+        }
         else
-            Q_strncpy( m_pLuaWeaponInfo->szAmmo2, pAmmo, sizeof( m_pLuaWeaponInfo->szAmmo2 ) );
-        m_pLuaWeaponInfo->iAmmo2Type =
-            GetAmmoDef()->Index( m_pLuaWeaponInfo->szAmmo2 );
+        {
+            m_pLuaWeaponInfo->iMaxClip1 = -1;
+        }
+        lua_pop( L, 1 );  // Pop the ClipSize field
+
+        // DefaultClip
+        lua_getfield( L, -1, "DefaultClip" );
+        if ( lua_isnumber( L, -1 ) )
+        {
+            m_pLuaWeaponInfo->iDefaultClip1 = lua_tonumber( L, -1 );
+        }
+        else
+        {
+            m_pLuaWeaponInfo->iDefaultClip1 = m_pLuaWeaponInfo->iMaxClip1;
+        }
+        lua_pop( L, 1 );  // Pop the DefaultClip field
+
+        // Experiment; TODO: Automatic not yet implemented
     }
-    lua_pop( L, 1 );  // Pop the SecondaryAmmo field
+    lua_pop( L, 1 );  // Pop the Primary field
+
+    // Secondary ammo information
+    lua_getfield( L, -1, "Secondary" );
+    if ( lua_istable( L, -1 ) )
+    {
+        // Ammo
+        lua_getfield( L, -1, "Ammo" );
+        if ( lua_isstring( L, -1 ) )
+        {
+            const char *ammo = lua_tostring( L, -1 );
+
+            if ( strcmpi( "None", ammo ) == 0 )
+                Q_strncpy( m_pLuaWeaponInfo->szAmmo1, "", sizeof( m_pLuaWeaponInfo->szAmmo1 ) );
+            else
+                Q_strncpy( m_pLuaWeaponInfo->szAmmo1, ammo, sizeof( m_pLuaWeaponInfo->szAmmo1 ) );
+
+            m_pLuaWeaponInfo->iAmmoType = GetAmmoDef()->Index( m_pLuaWeaponInfo->szAmmo1 );
+        }
+        lua_pop( L, 1 );  // Pop the Ammo field
+
+        // ClipSize
+        lua_getfield( L, -1, "ClipSize" );
+        if ( lua_isnumber( L, -1 ) )
+        {
+            m_pLuaWeaponInfo->iMaxClip1 = lua_tonumber( L, -1 );
+        }
+        else
+        {
+            m_pLuaWeaponInfo->iMaxClip1 = -1;
+        }
+        lua_pop( L, 1 );  // Pop the ClipSize field
+
+        // DefaultClip
+        lua_getfield( L, -1, "DefaultClip" );
+        if ( lua_isnumber( L, -1 ) )
+        {
+            m_pLuaWeaponInfo->iDefaultClip1 = lua_tonumber( L, -1 );
+        }
+        else
+        {
+            m_pLuaWeaponInfo->iDefaultClip1 = m_pLuaWeaponInfo->iMaxClip1;
+        }
+        lua_pop( L, 1 );  // Pop the DefaultClip field
+
+        // Experiment; TODO: Automatic not yet implemented
+    }
+    lua_pop( L, 1 );  // Pop the Secondary field
 
     // Now read the weapon sounds
     memset( m_pLuaWeaponInfo->aShootSounds, 0, sizeof( m_pLuaWeaponInfo->aShootSounds ) );
@@ -801,17 +812,32 @@ const char *CExperimentScriptedWeapon::GetPrintName( void ) const
     return BaseClass::GetPrintName();
 }
 
+#define UPDATE_LUA_WEAPON_AMMO_FIELD_NUMBER( ammoType, ammoField, targetVar ) \
+    if ( lua_isrefvalid( L, m_nTableReference ) )                             \
+    {                                                                         \
+        lua_getref( L, m_nTableReference );                                   \
+        lua_getfield( L, -1, ammoType );                                      \
+        lua_remove( L, -2 );                                                  \
+        if ( lua_istable( L, -1 ) )                                           \
+        {                                                                     \
+            lua_getfield( L, -1, ammoField );                                 \
+            if ( lua_isnumber( L, -1 ) )                                      \
+            {                                                                 \
+                targetVar = lua_tonumber( L, -1 );                            \
+            }                                                                 \
+            else                                                              \
+            {                                                                 \
+                targetVar = -1;                                               \
+            }                                                                 \
+            lua_pop( L, 1 ); /* Pop the ammoField field */                    \
+        }                                                                     \
+        lua_pop( L, 1 ); /* Pop the ammoType field */                         \
+    }
+
 int CExperimentScriptedWeapon::GetMaxClip1( void ) const
 {
 #ifdef LUA_SDK
-    if ( lua_isrefvalid( L, m_nTableReference ) )
-    {
-        lua_getref( L, m_nTableReference );
-        lua_getfield( L, -1, "MaxClip" );
-        lua_remove( L, -2 );  // Remove the reference table
-
-        LUA_RETURN_INTEGER();
-    }
+    UPDATE_LUA_WEAPON_AMMO_FIELD_NUMBER( "Primary", "ClipSize", m_pLuaWeaponInfo->iMaxClip1 );
 #endif
 
     return BaseClass::GetMaxClip1();
@@ -820,14 +846,7 @@ int CExperimentScriptedWeapon::GetMaxClip1( void ) const
 int CExperimentScriptedWeapon::GetMaxClip2( void ) const
 {
 #ifdef LUA_SDK
-    if ( lua_isrefvalid( L, m_nTableReference ) )
-    {
-        lua_getref( L, m_nTableReference );
-        lua_getfield( L, -1, "MaxClip2" );
-        lua_remove( L, -2 );  // Remove the reference table
-
-        LUA_RETURN_INTEGER();
-    }
+    UPDATE_LUA_WEAPON_AMMO_FIELD_NUMBER( "Secondary", "ClipSize", m_pLuaWeaponInfo->iMaxClip1 );
 #endif
 
     return BaseClass::GetMaxClip2();
@@ -836,14 +855,7 @@ int CExperimentScriptedWeapon::GetMaxClip2( void ) const
 int CExperimentScriptedWeapon::GetDefaultClip1( void ) const
 {
 #ifdef LUA_SDK
-    if ( lua_isrefvalid( L, m_nTableReference ) )
-    {
-        lua_getref( L, m_nTableReference );
-        lua_getfield( L, -1, "DefaultClip" );
-        lua_remove( L, -2 );  // Remove the reference table
-
-        LUA_RETURN_INTEGER();
-    }
+    UPDATE_LUA_WEAPON_AMMO_FIELD_NUMBER( "Primary", "DefaultClip", m_pLuaWeaponInfo->iMaxClip1 );
 #endif
 
     return BaseClass::GetDefaultClip1();
@@ -852,14 +864,7 @@ int CExperimentScriptedWeapon::GetDefaultClip1( void ) const
 int CExperimentScriptedWeapon::GetDefaultClip2( void ) const
 {
 #ifdef LUA_SDK
-    if ( lua_isrefvalid( L, m_nTableReference ) )
-    {
-        lua_getref( L, m_nTableReference );
-        lua_getfield( L, -1, "DefaultClip2" );
-        lua_remove( L, -2 );  // Remove the reference table
-
-        LUA_RETURN_INTEGER();
-    }
+    UPDATE_LUA_WEAPON_AMMO_FIELD_NUMBER( "Secondary", "DefaultClip", m_pLuaWeaponInfo->iMaxClip1 );
 #endif
 
     return BaseClass::GetDefaultClip2();
@@ -1073,19 +1078,90 @@ bool CExperimentScriptedWeapon::Holster( CBaseCombatWeapon *pSwitchingTo )
     return BaseClass::Holster( pSwitchingTo );
 }
 
-//-----------------------------------------------------------------------------
-// Purpose:
-//-----------------------------------------------------------------------------
+//====================================================================================
+// Purpose: Copied from CBaseCombatWeapon::ItemPostFrame and modified to let Lua
+//          determine more behaviour.
+//====================================================================================
 void CExperimentScriptedWeapon::ItemPostFrame( void )
 {
 #ifdef LUA_SDK
+    // Experiment; TODO: Is this really the best place to call Think? At the end of the frame?
+    LUA_CALL_WEAPON_METHOD_BEGIN( "Think" );
+    LUA_CALL_WEAPON_METHOD_END( 0, 0 );
+
     LUA_CALL_WEAPON_METHOD_BEGIN( "ItemPostFrame" );
     LUA_CALL_WEAPON_METHOD_END( 0, 1 );
 
     LUA_RETURN_NONE_IF_FALSE();
 #endif
 
-    BaseClass::ItemPostFrame();
+    CBasePlayer *pOwner = ToBasePlayer( GetOwner() );
+    if ( !pOwner )
+        return;
+
+    UpdateAutoFire();
+
+    // Track the duration of the fire
+    // FIXME: Check for IN_ATTACK2 as well?
+    // FIXME: What if we're calling ItemBusyFrame?
+    m_fFireDuration = ( pOwner->m_nButtons & IN_ATTACK )
+        ? ( m_fFireDuration + gpGlobals->frametime )
+        : 0.0f;
+
+    if ( UsesClipsForAmmo1() )
+    {
+        CheckReload();
+    }
+
+    bool bFired = false;
+
+    // Secondary attack has priority
+    if ( ( pOwner->m_nButtons & IN_ATTACK2 ) )
+    {
+        // FIXME: This isn't necessarily true if the weapon doesn't have a secondary fire!
+        // For instance, the crossbow doesn't have a 'real' secondary fire, but it still
+        // stops the crossbow from firing on the 360 if the player chooses to hold down their
+        // zoom button. (sjb) Orange Box 7/25/2007
+#if !defined( CLIENT_DLL )
+        if ( !IsX360() || !ClassMatches( "weapon_crossbow" ) )
+#endif
+        {
+            bFired = ShouldBlockPrimaryFire();
+        }
+
+        SecondaryAttack();
+    }
+
+    if ( !bFired && ( pOwner->m_nButtons & IN_ATTACK ) )
+    {
+        PrimaryAttack();
+
+#ifdef CLIENT_DLL
+        pOwner->SetFiredWeapon( true );
+#endif
+    }
+
+    // -----------------------
+    //  Reload pressed / Clip Empty
+    //  Can only start the Reload Cycle after the firing cycle
+    if ( ( pOwner->m_nButtons & IN_RELOAD ) && !m_bInReload )
+    {
+        // reload when reload is pressed, or if no buttons are down and weapon is empty.
+        Reload();
+        m_fFireDuration = 0.0f;
+    }
+
+    // -----------------------
+    //  No buttons down
+    // -----------------------
+    if ( !( ( pOwner->m_nButtons & IN_ATTACK ) || ( pOwner->m_nButtons & IN_ATTACK2 ) || ( CanReload() && pOwner->m_nButtons & IN_RELOAD ) ) )
+    {
+        // no fire buttons down or reloading
+        if ( !ReloadOrSwitchWeapons() && ( m_bInReload == false ) )
+        {
+            WeaponIdle();
+        }
+    }
 }
 
 //-----------------------------------------------------------------------------

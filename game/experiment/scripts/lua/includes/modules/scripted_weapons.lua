@@ -17,7 +17,9 @@ function MODULE.Get(weaponClassName)
 	weaponTable = table.Copy(weaponTable)
 
 	--- @cast weaponTable table
-	if (weaponTable.Base and weaponTable.Base ~= weaponClassName) then
+	weaponTable.Base = weaponTable.Base or _BASE_WEAPON
+
+	if (weaponTable.Base ~= weaponClassName) then
 		local baseWeaponTable = MODULE.GetStored(weaponTable.Base)
 
 		if (not baseWeaponTable) then

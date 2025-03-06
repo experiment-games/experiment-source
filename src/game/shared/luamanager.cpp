@@ -435,7 +435,7 @@ static void luasrc_LoadEntityFromFile( char *fullPath, char *className )
     char entDir[MAX_PATH];
     Q_snprintf( entDir, sizeof( entDir ), "entities\\%s", className );
     lua_pushstring( L, entDir );
-    lua_setfield( L, -2, "/*Folder*/" );
+    lua_setfield( L, -2, "Folder" );
     lua_pushstring( L, LUA_BASE_ENTITY_CLASS );
     lua_setfield( L, -2, "Base" );
     lua_pushstring( L, LUA_BASE_ENTITY_FACTORY );

@@ -5,12 +5,15 @@ SWEP.AnimationPrefix       = "python"
 SWEP.InventorySlot         = 1
 SWEP.InventorySlotPosition = 1
 
-SWEP.MaxClip               = 6
-SWEP.MaxClip2              = -1
-SWEP.DefaultClip           = 6
-SWEP.DefaultClip2          = -1
-SWEP.PrimaryAmmo           = "Pistol"
-SWEP.SecondaryAmmo         = "None"
+SWEP.Primary.Ammo          = "Pistol"
+SWEP.Primary.ClipSize      = 6
+SWEP.Primary.DefaultClip   = 6
+SWEP.Primary.Automatic     = false
+
+SWEP.Secondary.Ammo        = "None"
+SWEP.Secondary.ClipSize    = -1
+SWEP.Secondary.DefaultClip = -1
+SWEP.Secondary.Automatic   = false
 
 SWEP.Weight                = 7
 SWEP.WeaponFlags           = 0

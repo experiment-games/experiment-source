@@ -18,6 +18,9 @@ function MODULE.Get(className)
 
 	foundEntity = table.Copy(foundEntity)
 
+	--- @cast foundEntity table
+	foundEntity.Base = foundEntity.Base or _BASE_ENTITY_CLASS
+
 	if (foundEntity.Base ~= className) then
 		local baseEntityTable = MODULE.GetStored(foundEntity.Base)
 
