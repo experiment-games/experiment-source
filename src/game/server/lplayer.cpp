@@ -522,6 +522,17 @@ LUA_BINDING_BEGIN( Player, CheatImpulseCommands, "class", "Handle cheat impulse 
 }
 LUA_BINDING_END()
 
+LUA_BINDING_BEGIN( Player, RunConsoleCommand, "class", "Mimics that client typing the command at the console." )
+{
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    const char *command = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "command" );
+
+    engine->ClientCommand( player->edict(), command );
+
+    return 0;
+}
+LUA_BINDING_END()
+
 LUA_BINDING_BEGIN( Player, NotifySinglePlayerGameEnding, "class", "Notify the player that the single player game is ending." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );

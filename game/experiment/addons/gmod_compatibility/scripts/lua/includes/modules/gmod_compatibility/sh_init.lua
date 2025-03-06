@@ -900,6 +900,7 @@ PLAYER_META.GetUnDuckSpeed = PLAYER_META.GetUnDuckFraction
 PLAYER_META.SetDSP = PLAYER_META.SetDsp
 PLAYER_META.ShouldDropWeapon = PLAYER_META.SetDropActiveWeaponOnDeath
 PLAYER_META.Armor = PLAYER_META.GetArmor
+PLAYER_META.ConCommand = PLAYER_META.RunConsoleCommand
 
 function PLAYER_META:LagCompensation(shouldStart)
 	if (shouldStart) then
