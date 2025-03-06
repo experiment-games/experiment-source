@@ -1471,20 +1471,6 @@ else
 	local CHECK_BUTTON_PANEL_META = FindMetaTable("CheckButton")
 	CHECK_BUTTON_PANEL_META.GetValue = CHECK_BUTTON_PANEL_META.IsSelected
 
-	function PANEL_META:GetValue()
-		local className = self:GetClassName()
-
-		if (className == "LCheckButton") then
-			return CHECK_BUTTON_PANEL_META.GetValue(self)
-		elseif (className == "LTextEntry") then
-			return TEXT_ENTRY_PANEL_META.GetValue(self)
-		elseif (className == "LLabel") then
-			return LABEL_PANEL_META.GetValue(self)
-		end
-
-		error("attempt to get value of unsupported panel class \"" .. tostring(className) .. "\"", 2)
-	end
-
 	function PANEL_META:GetContentSize()
 		local className = self:GetClassName()
 

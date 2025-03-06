@@ -147,8 +147,8 @@ if (CLIENT) then
 
 	Metatables.CollapseSkipMetamethods(_R.Panel, _R.EditablePanel, _R.Label, _R.Button, _R.Frame, _R.Html, _R.CheckButton, _R.ModelImagePanel, _R.TextEntry)
 
-    -- TODO: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH
-    -- TODO: THINK ABOUT HOW WE WANT TO DO INHERITANCE IN A WAY THAT IS FUCKING MAINTAINABLE >.<"
+    -- TODO: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH
+    -- TODO: THINK ABOUT HOW WE WANT TO DO INHERITANCE IN A WAY THAT IS MAINTAINABLE >.<"
 	-- TODO: This doesnt work!
 	-- -- Setup our inheritance structures so the __index metamethods exist.
 	-- -- Then we merge the vgui element metatables into a single panel metatable.
