@@ -1053,14 +1053,6 @@ LUA_BINDING_BEGIN( Panel, IsWorldClicker, "class", "Checks if the panel is a wor
 }
 LUA_BINDING_END( "boolean", "True if the panel is a world clicker, false otherwise" )
 
-LUA_BINDING_BEGIN( Panel, KeyCodeToString, "class|static", "Converts a key code to a string" )
-{
-    KeyCode keyCode = LUA_BINDING_ARGUMENT_ENUM( KeyCode, 1, "keyCode" );
-    lua_pushstring( L, Panel::KeyCodeToString( keyCode ) );
-    return 1;
-}
-LUA_BINDING_END( "string", "The string representation of the key code" )
-
 LUA_BINDING_BEGIN( Panel, LocalToScreen, "class", "Converts a local position to a screen position" )
 {
     lua_Panel *panel = LUA_BINDING_ARGUMENT( luaL_checkpanel, 1, "panel" );

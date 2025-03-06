@@ -165,6 +165,29 @@ LUA_BINDING_BEGIN( Inputs, LookupKeyBinding, "library", "Get the binding for a s
 }
 LUA_BINDING_END( "string", "The key binding." )
 
+LUA_BINDING_BEGIN( Inputs, KeyCodeToString, "library", "Converts a key code to its string representation, e.g: KEY_W -> 'KEY_W'" )
+{
+    KeyCode keyCode = LUA_BINDING_ARGUMENT_ENUM( KeyCode, 1, "keyCode" );
+    lua_pushstring( L, Panel::KeyCodeToString( keyCode ) );
+    return 1;
+}
+LUA_BINDING_END( "string", "The string representation of the key code" )
+
+LUA_BINDING_BEGIN( Inputs, KeyCodeToDisplayString, "library", "Converts a key code to a user-friendly string, e.g: KEY_W -> 'W'" )
+{
+    KeyCode keyCode = LUA_BINDING_ARGUMENT_ENUM( KeyCode, 1, "keyCode" );
+    wchar_t const *displayString = Panel::KeyCodeToDisplayString( keyCode );
+
+    int len = Q_wcslen( displayString ) + 1;  // Include null terminator
+    char buffer[256];
+    V_wcstostr( displayString, len, buffer, len );
+
+    lua_pushstring( L, buffer );
+
+    return 1;
+}
+LUA_BINDING_END( "string", "The user-friendly string representation of the key code" )
+
 LUA_BINDING_BEGIN( Inputs, OnChangeIme, "library", "Trigger a change in the IME state." )
 {
     bool activate = LUA_BINDING_ARGUMENT( luaL_checkboolean, 1, "activate" );

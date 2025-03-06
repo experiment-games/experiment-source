@@ -1270,6 +1270,7 @@ else
 	input.StartKeyTrapping = engine.StartKeyTrapMode
 	input.IsKeyTrapping = engine.IsKeyTrapping
 	input.CheckKeyTrapping = engine.CheckKeyTrapping
+	input.GetKeyName = input.KeyCodeToDisplayString
 
 	function input.IsShiftDown()
 		return input.IsKeyDown(KEY_LSHIFT) or input.IsKeyDown(KEY_RSHIFT)
