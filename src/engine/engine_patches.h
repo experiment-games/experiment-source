@@ -9,6 +9,7 @@
 #undef CreateEvent  // WinBase.h defines this, but it messes with out gameeventmanager->CreateEvent
 
 DWORD_PTR GetModuleBaseAddress( HMODULE module );
+DWORD_PTR FindPattern( HMODULE module, const char* pattern, const char* mask );
 
 void ApplyDetoursOnDllStartup();
 void NotifyDetoursOnLevelShutdown();
@@ -28,9 +29,22 @@ void ApplyClientConnectDetour();
 
 #ifdef CLIENT_DLL  // Client detours
 
-// ...
+void ApplyClientStateDetours();
 
 #endif
+
+/*
+** Definitions
+*/
+
+#define SIGN_ON_STATE_NONE 0         // Not connected yet
+#define SIGN_ON_STATE_CHALLENGING 1  // Challenging server (retryChallenge?)
+#define SIGN_ON_STATE_CONNECTED 2    // NetChannels can be used now
+#define SIGN_ON_STATE_SPAWNING 3     // Got server info and string tables
+#define SIGN_ON_STATE_PRESPAWN 4     // On getting this, the server spawns the player
+#define SIGN_ON_STATE_SPAWN 5        // Server spawned player. Start sending entity packets
+#define SIGN_ON_STATE_FULL 6         // Fully connected, initial handshake completed
+#define SIGN_ON_STATE_CHANGELEVEL 7
 
 /*
 ** Macro's for accessing structured memory
@@ -55,6 +69,12 @@ void ApplyClientConnectDetour();
     ALIGN_OFFSET( structName, 4 );                                              \
     int fieldName = *( int* )( _##structName##_base + _##structName##_offset ); \
     _##structName##_offset += sizeof( int );
+
+// Macro for defining a double field
+#define DEFINE_DOUBLE( structName, fieldName )                                        \
+    ALIGN_OFFSET( structName, 8 );                                                    \
+    double fieldName = *( double* )( _##structName##_base + _##structName##_offset ); \
+    _##structName##_offset += sizeof( double );
 
 // Macro for defining a string field with a fixed length
 #define DEFINE_STRING( structName, fieldName, length )                                        \

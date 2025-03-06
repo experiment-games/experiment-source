@@ -57,11 +57,11 @@ typedef void( __fastcall *Function_BaseClient_Connect_t )(
     Extract the opcode bytes and create a signature with a corresponding mask.
     First create a variant to perform a byte search in IDA, replacing memory
     references with a `?`
-    
+
     A memory reference is any operand that points to a specific memory address,
     such as the four-byte offset in the `LEA` instruction above.
 
-    
+
     In IDA go to `Search > Sequence of bytes` and enter the constructed
     signature:
 
@@ -76,13 +76,13 @@ typedef void( __fastcall *Function_BaseClient_Connect_t )(
     48 8D 0D ? ? ? ?
     41 8B
     ```
-    
+
     If you get only a single result you know the signature is unique enough
     to be used.
 
     Then start building CLIENT_CONNECT_SIG and CLIENT_CONNECT_MASK. Prefix
     all bytes with \x. Replace memory references with `\x00` and mark their
-    positions with `?` in the mask. 
+    positions with `?` in the mask.
 */
 
 // First 35 bytes of the function, wildcarding the four-byte offset in the LEA instruction.
@@ -112,8 +112,14 @@ const char *CLIENT_CONNECT_MASK =
 
 static Function_BaseClient_Connect_t OriginalClientConnect = nullptr;
 
+struct ClientWithNetChannel
+{
+    void *client;
+    INetChannel *netChannel;
+};
+
 // Static map of connected clients to their user id so we can fetch em later
-static CUtlMap< int, void * > connectedClients;
+static CUtlMap< int, ClientWithNetChannel > connectedClients;
 
 static int s_OffsetConVars;
 static int s_OffsetConVarsChanged;
@@ -126,7 +132,7 @@ void __fastcall DetourClientConnect(
     int userID,
     INetChannel *pNetChannel,
     bool bFakePlayer,
-    int challenge )
+    int retryChallenge )
 {
     if ( !bFakePlayer )
     {
@@ -140,7 +146,7 @@ void __fastcall DetourClientConnect(
         DevWarning( "Detour: Fake player connecting with name %s (#%i)\n", playerName, userID );
     }
 
-    OriginalClientConnect( thisClient, playerName, userID, pNetChannel, bFakePlayer, challenge );
+    OriginalClientConnect( thisClient, playerName, userID, pNetChannel, bFakePlayer, retryChallenge );
 
 #ifdef _WIN64
     BEGIN_MEMORY_LAYOUT( Client, thisClient );
@@ -210,7 +216,10 @@ void __fastcall DetourClientConnect(
     const char *steamIdAsString = steamId->Render();
     // HandleCheckPasswordDetour( serverObject, steamIdAsString );
 
-    connectedClients.Insert( userID, thisClient );
+    ClientWithNetChannel info;
+    info.client = thisClient;
+    info.netChannel = pNetChannel;
+    connectedClients.Insert( userID, info );
 }
 
 #pragma warning( default : 4189 )  // Enable warning about unused variable
@@ -262,40 +271,12 @@ CON_COMMAND_F( exp_hack_allow_new_userinfo, "Allow the given CVAR name to become
         return;
     }
 
-    void *connectedClient = connectedClients.Element( index );
+    ClientWithNetChannel info = connectedClients.Element( index );
 
-    KeyValues *conVars = GET_MEMORY_PTR( connectedClient, s_OffsetConVars, KeyValues );
+    KeyValues *conVars = GET_MEMORY_PTR( info.client, s_OffsetConVars, KeyValues );
     conVars->SetString( userInfoName, "" );
 
     DevMsg( "New UserInfo ConVar %s added!\n", userInfoName );
-}
-
-DWORD_PTR FindPattern( HMODULE module, const char *pattern, const char *mask )
-{
-    if ( !module || !pattern || !mask )
-        return 0;
-
-    PIMAGE_DOS_HEADER dos = ( PIMAGE_DOS_HEADER )module;
-    PIMAGE_NT_HEADERS nt = ( PIMAGE_NT_HEADERS )( ( BYTE * )module + dos->e_lfanew );
-    DWORD size = nt->OptionalHeader.SizeOfImage;
-    BYTE *data = ( BYTE * )module;
-    DWORD length = ( DWORD )strlen( mask );
-
-    for ( DWORD i = 0; i <= size - length; i++ )
-    {
-        bool found = true;
-        for ( DWORD j = 0; j < length; j++ )
-        {
-            if ( mask[j] != '?' && pattern[j] != ( char )data[i + j] )
-            {
-                found = false;
-                break;
-            }
-        }
-        if ( found )
-            return ( DWORD_PTR )&data[i];
-    }
-    return 0;
 }
 
 void ApplyClientConnectDetour()

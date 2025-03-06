@@ -10,5 +10,6 @@ $Project
 {
     $Folder "Engine Patches"
     {
+        $File "$SRCDIR\engine\detours\clientstate_setsignonstate.cpp"
     }
 }

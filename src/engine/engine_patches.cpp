@@ -11,15 +11,43 @@ DWORD_PTR GetModuleBaseAddress( HMODULE module )
     return reinterpret_cast< DWORD_PTR >( module );
 }
 
+DWORD_PTR FindPattern( HMODULE module, const char *pattern, const char *mask )
+{
+    if ( !module || !pattern || !mask )
+        return 0;
+
+    PIMAGE_DOS_HEADER dos = ( PIMAGE_DOS_HEADER )module;
+    PIMAGE_NT_HEADERS nt = ( PIMAGE_NT_HEADERS )( ( BYTE * )module + dos->e_lfanew );
+    DWORD size = nt->OptionalHeader.SizeOfImage;
+    BYTE *data = ( BYTE * )module;
+    DWORD length = ( DWORD )strlen( mask );
+
+    for ( DWORD i = 0; i <= size - length; i++ )
+    {
+        bool found = true;
+        for ( DWORD j = 0; j < length; j++ )
+        {
+            if ( mask[j] != '?' && pattern[j] != ( char )data[i + j] )
+            {
+                found = false;
+                break;
+            }
+        }
+        if ( found )
+            return ( DWORD_PTR )&data[i];
+    }
+    return 0;
+}
+
 void ApplyDetoursOnDllStartup()
 {
     if ( MH_Initialize() != MH_OK )
     {
-        //DevWarning( "Failed to initialize MinHook.\n" );
+        // DevWarning( "Failed to initialize MinHook.\n" );
         return;
     }
 
-#if defined( CLIENT_DLL)
+#if defined( CLIENT_DLL )
 
 #elif defined( GAME_DLL )
     // HandleCheckPasswordDetour();
