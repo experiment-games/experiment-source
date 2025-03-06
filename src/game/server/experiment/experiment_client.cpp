@@ -207,6 +207,15 @@ void respawn( CBaseEntity *pEdict, bool fCopyCorpse )
 void GameStartFrame( void )
 {
     VPROF( "GameStartFrame()" );
+    
+#ifdef LUA_SDK
+    if ( L )
+    {
+        LUA_CALL_HOOK_BEGIN( "Think" );
+        LUA_CALL_HOOK_END( 0, 0 );
+    }
+#endif
+
     if ( g_fGameOver )
         return;
 

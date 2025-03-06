@@ -1277,7 +1277,11 @@ void UTIL_SetModel( CBaseEntity *pEntity, const char *pModelName )
     int i = modelinfo->GetModelIndex( pModelName );
     if ( i == -1 )
     {
+#ifdef EXPERIMENT_SOURCE
+        i = CBaseEntity::PrecacheModel( pModelName, true );
+#else
         Error( "%i/%s - %s:  UTIL_SetModel:  not precached: %s\n", pEntity->entindex(), STRING( pEntity->GetEntityName() ), pEntity->GetClassname(), pModelName );
+#endif
     }
 
     CBaseAnimating *pAnimating = pEntity->GetBaseAnimating();

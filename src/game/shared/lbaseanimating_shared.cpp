@@ -657,13 +657,13 @@ LUA_BINDING_BEGIN( CBaseAnimating, ResetSequence, "class", "Reset the sequence."
 
     if ( !model )
     {
-        Warning( "CBaseAnimating::ResetSequence failed: no model\n" );
+        DevWarning( "CBaseAnimating::ResetSequence failed: no model\n" );
         return 0;
     }
 
     if ( iSequence >= model->GetNumSeq() )
     {
-        Warning( "CBaseAnimating::ResetSequence failed: invalid sequence %d\n", iSequence );
+        DevWarning( "CBaseAnimating::ResetSequence failed: invalid sequence %d\n", iSequence );
         return 0;
     }
 

@@ -5867,7 +5867,7 @@ float C_BaseAnimating::SetPoseParameter( CStudioHdr *pStudioHdr, int iParameter,
 {
     if ( !pStudioHdr )
     {
-        Assert( !"C_BaseAnimating::SetPoseParameter: model missing" );
+        // Assert( !"C_BaseAnimating::SetPoseParameter: model missing" );
         return flValue;
     }
 
