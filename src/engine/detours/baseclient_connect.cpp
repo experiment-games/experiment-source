@@ -55,11 +55,34 @@ typedef void( __fastcall *Function_BaseClient_Connect_t )(
     found addresses.
 
     Extract the opcode bytes and create a signature with a corresponding mask.
-    Replace memory references with `\x00` and mark their positions with `?` in
-    the mask.
-
+    First create a variant to perform a byte search in IDA, replacing memory
+    references with a `?`
+    
     A memory reference is any operand that points to a specific memory address,
     such as the four-byte offset in the `LEA` instruction above.
+
+    
+    In IDA go to `Search > Sequence of bytes` and enter the constructed
+    signature:
+
+    ```
+    48 89 5C 24 08
+    48 89 6C 24 10
+    48 89 74 24 18
+    57
+    48 83 EC 20
+    48 8B D9
+    49 8B E9
+    48 8D 0D ? ? ? ?
+    41 8B
+    ```
+    
+    If you get only a single result you know the signature is unique enough
+    to be used.
+
+    Then start building CLIENT_CONNECT_SIG and CLIENT_CONNECT_MASK. Prefix
+    all bytes with \x. Replace memory references with `\x00` and mark their
+    positions with `?` in the mask. 
 */
 
 // First 35 bytes of the function, wildcarding the four-byte offset in the LEA instruction.
@@ -73,7 +96,7 @@ const char *CLIENT_CONNECT_MASK =
 
 #else
 
-// TOOD: Not yet tested x86
+// TODO: Not yet tested for x86
 const char *CLIENT_CONNECT_SIG =
     "\x55\x8B\xEC\x53\x56\x57\x68\x00\x00\x00\x00\x8B\xF1\xFF\x15"
     "\x00\x00\x00\x00\x83\xC4\x04\xE8\x00\x00\x00\x00\x6A\x0E\x8B"
@@ -96,9 +119,6 @@ static int s_OffsetConVars;
 
 #pragma warning( disable : 4189 )  // Disable warning about unused variable
 
-// __fastcall workaround because you cant declare a __thiscall function without a class
-// This behaves similar to __thiscall, but safely getting the ECX and EDX registry as its first parameters.
-// ECX holds the address of 'this' for the detoured method.
 void __fastcall DetourClientConnect(
     void *thisClient,
     const char *playerName,
@@ -121,52 +141,7 @@ void __fastcall DetourClientConnect(
 
     OriginalClientConnect( thisClient, playerName, userID, pNetChannel, bFakePlayer, challenge );
 
-    // Offset of m_nUserID from CBaseClient
 #ifdef _WIN64
-
-    // int offset = 16;
-    // int clientSlot = *( int * )( ( uintptr_t )thisClient + offset );
-    // offset += sizeof( int );
-    // int entityIndex = *( int * )( ( uintptr_t )thisClient + offset );
-    // offset += sizeof( int );
-    // int validateUserID = *( int * )( ( uintptr_t )thisClient + offset );
-    // offset += sizeof( int );
-    // const char *validateName = ( const char * )( ( uintptr_t )thisClient + offset );
-    // offset += MAX_PLAYER_NAME_LENGTH * sizeof( char );
-    // const char *_guid = ( const char * )( ( uintptr_t )thisClient + offset );
-    // offset += ( SIGNED_GUID_LEN * sizeof( char ) ) + 1;
-    // CSteamID *validateSteamId = ( CSteamID * )( ( uintptr_t )thisClient + offset );  // wont be set yet
-    // offset += sizeof( CSteamID );
-
-    //// Align int to 4 bytes
-    // offset = ( offset + 3 ) & ~3;
-    // int _friendsID = *( int * )( ( uintptr_t )thisClient + offset );
-    // offset += sizeof( int );
-    // const char *_friendsName = ( const char * )( ( uintptr_t )thisClient + offset );
-    // offset += MAX_PLAYER_NAME_LENGTH * sizeof( char );
-
-    //// Align KeyValues* to 8 bytes
-    // offset = ( offset + 7 ) & ~7;
-    // KeyValues *conVars = ( KeyValues * )( ( uintptr_t )thisClient + offset ); // offset: 144
-    // offset += sizeof( KeyValues * );
-
-    //// Align bools to 4 bytes
-    // offset = ( offset + 3 ) & ~3;
-    // bool conVarsChanged = *( bool * )( ( uintptr_t )thisClient + offset ); // offset: 152
-    // offset += sizeof( bool );
-    // bool conVarsInitialSet = *( bool * )( ( uintptr_t )thisClient + offset );
-    // offset += sizeof( bool );
-    // bool sentServerInfo = *( bool * )( ( uintptr_t )thisClient + offset );
-    // offset += sizeof( bool );
-
-    //// Align void* to 8 bytes
-    // offset = ( offset + 7 ) & ~7;
-    // void *serverObject = *( void ** )( ( uintptr_t )thisClient + offset );  // offset: 160
-    // offset += sizeof( void * );
-    // bool isHLTV = *( bool * )( ( uintptr_t )thisClient + offset );
-    // offset += sizeof( bool );
-
-    // Cleaned up variant of the above:
     BEGIN_MEMORY_LAYOUT( Client, thisClient );
     SKIP_UNKNOWN_TO( Client, 16 );
 
@@ -222,7 +197,7 @@ void __fastcall DetourClientConnect(
     END_MEMORY_LAYOUT( Client );
 #endif
     const CSteamID *steamId = engine->GetClientSteamID(
-        engine->PEntityOfEntIndex( entityIndex ) );  // will be valid
+        engine->PEntityOfEntIndex( entityIndex ) );
 
     // Check that our alignment is correct
     Assert( steamId );
@@ -247,8 +222,21 @@ void __fastcall DetourClientConnect(
 /// add userinfo to the player's ConVars.
 /// I imagine we could call this in GetInfo, to add the name if it's not already added. That
 /// way we never get an error like "Client ... userinfo ignored: gmod_toolmode"
+///
+/// For an example of the problem:
+/// 1. Go in-game (sandbox gamemode) and switch toolmode in the toolgun
+/// 2. Run this in console:
+///     `lua_run print(player.GetByID(1):GetInfo("gmod_toolmode"))`
+/// 3. You'll see:
+///     `GetUserSetting: cvar 'gmod_toolmode' unknown.`
+/// 4. Run this in console:
+///     `exp_hack_allow_new_userinfo gmod_toolmode`
+/// 5. Switch toolmode in the toolgun
+/// 6. Run this in console again:
+///     `lua_run print(player.GetByID(1):GetInfo("gmod_toolmode"))`
+/// 7. You'll now see the expected toolmode
 /// </summary>
-CON_COMMAND_F( hack_allow_new_userinfo, "Allow the given CVAR name to become new userinfo", FCVAR_GAMEDLL )
+CON_COMMAND_F( exp_hack_allow_new_userinfo, "Allow the given CVAR name to become new userinfo", FCVAR_GAMEDLL )
 {
     CBasePlayer *pPlayer = UTIL_GetCommandClient();
 
@@ -278,7 +266,7 @@ CON_COMMAND_F( hack_allow_new_userinfo, "Allow the given CVAR name to become new
     KeyValues *conVars = GET_MEMORY_PTR( connectedClient, s_OffsetConVars, KeyValues );
     conVars->SetString( userInfoName, "" );
 
-    DevWarning( "Initial ConVars reset.\n" );
+    DevWarning( "New UserInfo ConVar %s added!\n", userInfoName );
 }
 
 DWORD_PTR FindPattern( HMODULE module, const char *pattern, const char *mask )
