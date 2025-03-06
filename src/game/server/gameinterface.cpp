@@ -1558,6 +1558,14 @@ void CServerGameDLL::Think( bool finalTick )
         m_fAutoSaveDangerousTime = 0.0f;
         m_fAutoSaveDangerousMinHealthToCommit = 0.0f;
     }
+
+#ifdef LUA_SDK
+    if ( L )
+    {
+        LUA_CALL_HOOK_BEGIN( "Think" );
+        LUA_CALL_HOOK_END( 0, 0 );
+    }
+#endif
 }
 
 void CServerGameDLL::OnQueryCvarValueFinished( QueryCvarCookie_t iCookie,

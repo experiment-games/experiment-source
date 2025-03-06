@@ -1819,17 +1819,17 @@ end
 unpack = unpack or table.unpack
 
 MsgC = function(...)
-	local currentColor = debug.GetRealmColor()
+    local currentColor = debug.GetRealmColor()
 
 	for k, stringOrColor in ipairs({ ... }) do
 		if (IsColor(stringOrColor)) then
 			currentColor = stringOrColor
 		else
-			debug.PrintDebugColorMessage(currentColor, tostring(stringOrColor))
+			debug.PrintColorMessage(currentColor, tostring(stringOrColor))
 		end
 	end
 
-	debug.PrintDebugColorMessage(currentColor, "\n")
+	debug.PrintColorMessage(currentColor, "\n")
 end
 
 PrintTable = table.Print

@@ -4,12 +4,12 @@ local printError = debug.PrintError
 MODULE.registeredTimers = MODULE.registeredTimers or {}
 
 function MODULE.Create(id, delay, repetitions, callback)
-    MODULE.registeredTimers[id] = {
-        delay = delay,
-        repetitions = repetitions,
-        callback = callback,
-        nextTick = Engines.GetCurrentTime() + delay
-    }
+	MODULE.registeredTimers[id] = {
+		delay = delay,
+		repetitions = repetitions,
+		callback = callback,
+		nextTick = Engines.GetCurrentTime() + delay
+	}
 end
 
 function MODULE.Exists(id)
@@ -17,13 +17,14 @@ function MODULE.Exists(id)
 end
 
 function MODULE.Remove(id)
-    MODULE.registeredTimers[id] = nil
+	MODULE.registeredTimers[id] = nil
 end
 
 function MODULE.Simple(delay, callback)
-    local id = "simple_" .. tostring({})
-    MODULE.Create(id, delay, 1, callback)
-    return id
+	-- Trim the "table: " prefix, getting a nice unique ID
+	local id = "simple_" .. tostring({}):sub(8)
+	MODULE.Create(id, delay, 1, callback)
+	return id
 end
 
 function MODULE.Adjust(id, delay, repetitions, callback)
@@ -46,41 +47,41 @@ function MODULE.Check()
 end
 
 function MODULE.Destroy(id)
-    MODULE.Remove(id)
+	MODULE.Remove(id)
 end
 
 function MODULE.Pause(id)
-    local timer = MODULE.registeredTimers[id]
+	local timer = MODULE.registeredTimers[id]
 
-    if (timer == nil) then
-        return false
-    end
+	if (timer == nil) then
+		return false
+	end
 
-    timer.paused = true
+	timer.paused = true
 
-    return true
+	return true
 end
 
 function MODULE.RepetitionsLeft(id)
-    local timer = MODULE.registeredTimers[id]
+	local timer = MODULE.registeredTimers[id]
 
-    if (timer == nil) then
-        return 0
-    end
+	if (timer == nil) then
+		return 0
+	end
 
-    return timer.repetitions
+	return timer.repetitions
 end
 
 function MODULE.Start(id)
-    local timer = MODULE.registeredTimers[id]
+	local timer = MODULE.registeredTimers[id]
 
-    if (timer == nil) then
-        return false
-    end
+	if (timer == nil) then
+		return false
+	end
 
-    timer.nextTick = Engines.GetCurrentTime() + timer.delay
+	timer.nextTick = Engines.GetCurrentTime() + timer.delay
 
-    return true
+	return true
 end
 
 function MODULE.Stop(id)
@@ -96,13 +97,13 @@ function MODULE.Stop(id)
 end
 
 function MODULE.TimeLeft(id)
-    local timer = MODULE.registeredTimers[id]
+	local timer = MODULE.registeredTimers[id]
 
-    if (timer == nil) then
-        return 0
-    end
+	if (timer == nil) then
+		return 0
+	end
 
-    return timer.nextTick - Engines.GetCurrentTime()
+	return timer.nextTick - Engines.GetCurrentTime()
 end
 
 function MODULE.Toggle(id)
@@ -122,22 +123,22 @@ function MODULE.Toggle(id)
 end
 
 function MODULE.UnPause(id)
-    local timer = MODULE.registeredTimers[id]
+	local timer = MODULE.registeredTimers[id]
 
-    if (timer == nil) then
-        return false
-    end
+	if (timer == nil) then
+		return false
+	end
 
-    timer.paused = false
+	timer.paused = false
 
-    return true
+	return true
 end
 
 function MODULE.Tick()
-	local curTime = Engines.GetCurrentTime()
+	local currentTime = Engines.GetCurrentTime()
 
 	for id, timer in pairs(MODULE.registeredTimers) do
-		if (curTime >= timer.nextTick and not timer.paused) then
+		if (currentTime >= timer.nextTick and not timer.paused) then
 			xpcall(timer.callback, printError)
 
 			-- If repetitions was already 0 (or -1) this will result in the
@@ -147,7 +148,7 @@ function MODULE.Tick()
 			if (timer.repetitions == 0) then
 				MODULE.Remove(id)
 			else
-				timer.nextTick = curTime + timer.delay
+				timer.nextTick = currentTime + timer.delay
 			end
 		end
 	end
