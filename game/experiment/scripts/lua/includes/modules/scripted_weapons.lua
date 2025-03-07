@@ -84,6 +84,12 @@ function MODULE.Register(weaponTable, className, isReloading)
 		return
 	end
 
+    if (type(weaponTable.ClassNameOverride) == "string") then
+        className = weaponTable.ClassNameOverride
+    end
+
+	weaponTable.ClassName = className
+
     MODULE.registeredWeapons[className] = weaponTable
 
 	Hooks.Run("ScriptedWeaponRegistered", className, weaponTable)
@@ -101,7 +107,7 @@ function MODULE.InitializeRefTable(refTable, className)
 		return
 	end
 
-	table.CopyMerge(refTable, weaponTable)
+    table.CopyMerge(refTable, weaponTable)
 end
 
 return MODULE

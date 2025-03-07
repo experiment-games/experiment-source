@@ -1949,10 +1949,17 @@ end)
 
 -- Also register gmod weapons and entities in our system
 hook.Add("PreRegisterSWEP", "GModCompatibility.RegisterSWEP", function(weaponTable, className)
+	weaponTable.Base = weaponTable.Base or "weapon_base"
 	ScriptedWeapons.Register(weaponTable, className)
 end)
 hook.Add("PreRegisterSENT", "GModCompatibility.RegisterSENT", function(entityTable, className)
+	entityTable.Base = entityTable.Base or "base_entity"
 	ScriptedEntities.Register(entityTable, className)
+end)
+
+hook.Add("PostEntitiesLoaded", "GModCompatibility.CallOnLoaded", function()
+    scripted_ents.OnLoaded()
+	weapons.OnLoaded()
 end)
 
 hook.Add("PreEntityInitialize", "GModCompatibility.CallSetupDataTables", function(entity)
@@ -2102,11 +2109,57 @@ end
 -- This adds the lua/ folder to the search path so Experiment will load the entities and weapons from it
 Files.AddSearchPath("lua/", "LUA")
 
--- Copy ents from our system to the GMod system.
+-- Copy ents from our system to the GMod system, making sure their bases use the GMod base
+-- We need to do this because these don't explicitly set '.Base' since they expect Garry's Mod
+-- to set the default for them.
+local differentBase = {
+	-- Weapons
+	["gmod_tool"] = "weapon_base",
+	["gmod_camera"] = "weapon_base",
+	["manhack_welder"] = "weapon_base",
+	["weapon_fists"] = "weapon_base",
+	["weapon_flechettegun"] = "weapon_base",
+    ["weapon_medkit"] = "weapon_base",
+
+    -- Entities
+    ["base_edit"] = "base_entity",
+    ["edit_fog"] = false, -- "base_edit",
+    ["edit_sky"] = false, -- "base_edit",
+    ["base_gmodentity"] = false, -- "base_anim",
+    ["gmod_anchor"] = false, -- "base_anim",
+    ["gmod_balloon"] = "base_entity",
+    ["gmod_button"] = "base_entity",
+	["gmod_cameraprop"] = false, -- "base_anim",
+	["gmod_dynamite"] = "base_entity",
+	["gmod_emitter"] = "base_entity",
+	["gmod_ghost"] = false, -- "base_anim",
+	["gmod_hoverball"] = "base_entity",
+	["gmod_lamp"] = "base_entity",
+	["gmod_light"] = "base_entity",
+	["gmod_thruster"] = "base_entity",
+    ["gmod_wheel"] = "base_entity",
+    ["gmod_winch_controller"] = false, -- "base_point",
+    ["sent_ball"] = "base_entity",
+	["widget_base"] = "base_entity",
+	["env_skypaint"] = false, -- "base_point",
+	["gmod_hands"] = false, -- "base_anim",
+	["gmod_player_start"] = false, -- "base_point",
+	["lua_run"] = false, -- "base_point",
+	["prop_effect"] = false, -- "base_anim",
+	["ragdoll_motion"] = false, -- "base_anim",
+}
+
 hook.Add(
 	"ScriptedEntityRegistered",
 	"GModCompatibility.ScriptedEntityRegistered.SyncWithGMod",
-	function(className, scriptedEntity)
+    function(className, scriptedEntity)
+        if (differentBase[className]) then
+            scriptedEntity.Base = differentBase[className]
+        elseif (differentBase[className] == false) then
+			-- Let the gmod module set the Base
+			scriptedEntity.Base = nil
+        end
+
 		scripted_ents.Register(scriptedEntity, className)
 	end
 )
@@ -2115,6 +2168,12 @@ hook.Add(
 	"ScriptedWeaponRegistered",
 	"GModCompatibility.ScriptedWeaponRegistered.SyncWithGMod",
 	function(className, scriptedWeapon)
+        if (differentBase[className]) then
+            scriptedWeapon.Base = differentBase[className]
+        elseif (differentBase[className] == false) then
+			scriptedEntity.Base = nil
+        end
+
 		weapons.Register(scriptedWeapon, className)
 	end
 )

@@ -82,9 +82,15 @@ end
 --- @param className string Name of the entity
 --- @param isReloading boolean Whether or not we're reloading this entity data
 function MODULE.Register(entityTable, className, isReloading)
-	if (MODULE.GetStored(className) ~= nil and isReloading ~= true) then
-		return
-	end
+    if (MODULE.GetStored(className) ~= nil and isReloading ~= true) then
+        return
+    end
+
+    if (type(entityTable.ClassNameOverride) == "string") then
+        className = entityTable.ClassNameOverride
+    end
+
+	entityTable.ClassName = className
 
     MODULE.registeredEntities[className] = entityTable
 

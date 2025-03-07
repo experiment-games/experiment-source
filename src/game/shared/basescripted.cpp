@@ -204,12 +204,7 @@ void CBaseScripted::InitScriptedEntity( void )
 #endif
 
     // Experiment; TODO: Remaining members: https://wiki.facepunch.com/gmod/Structures/ENT
-    lua_getfield( L, -1, "ClassNameOverride" );
-    if ( lua_isstring( L, -1 ) )
-    {
-        DevWarning( "`ClassNameOverride` not yet implemented! For entity with class '%s'", className );
-    }
-    lua_pop( L, 1 );  // Pop the ClassNameOverride field
+    // Note that we don't have to implement ClassNameOverride as it's handled in (GMod) Lua
 
     // Pop the LUA_GET_REF_TABLE
     lua_pop( L, 1 );

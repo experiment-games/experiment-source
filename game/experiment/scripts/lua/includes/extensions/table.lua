@@ -96,7 +96,7 @@ function table.Inherit(target, tableToInherit)
 	return target
 end
 
-function table.Merge(target, sourceToMergeFrom)
+function table.Merge(target, sourceToMergeFrom, overrideSubTables)
 	if (type(target) ~= "table") then
 		error(debug.traceback("bad argument #1 to 'Merge' (table expected, got " .. type(target) .. ")", 2))
 	end
@@ -106,7 +106,7 @@ function table.Merge(target, sourceToMergeFrom)
 	end
 
     for key, value in pairs(sourceToMergeFrom) do
-        if (type(target[key]) == "table" and type(value) == "table") then
+        if (not overrideSubTables and type(target[key]) == "table" and type(value) == "table") then
             table.Merge(target[key], value)
         else
             target[key] = value
