@@ -3,7 +3,6 @@ $Macro OUTBINNAME "experiment"
 $Conditional "MOD_LAUNCHER" "1"
 
 $Include "launcher_main.vpc"
-$Include "$SRCDIR\engine\engine_patches_base.vpc"
 
 $Configuration
 {

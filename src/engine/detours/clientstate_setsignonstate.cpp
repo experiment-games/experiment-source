@@ -1,6 +1,6 @@
 #include "cbase.h"
-#include <inetchannel.h>
 #include "../engine_patches.h"
+#include "inetchannel.h"
 #include <netadr.h>
 
 #include <psapi.h>
@@ -110,6 +110,8 @@ bool __fastcall DetourClientStateSetSignOnState(
         if ( signOnState == SIGN_ON_STATE_CONNECTED )
         {
             // TODO: Testing if we have successfully hooked into networking
+            CNetMessage_LuaString* netMessage = new CNetMessage_LuaString();
+            netChannel->RegisterMessage( netMessage );
         }
     }
 

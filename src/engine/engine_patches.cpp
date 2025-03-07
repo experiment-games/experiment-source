@@ -1,4 +1,5 @@
 #include "engine_patches.h"
+#include <strtools.h>
 
 // Experiment;
 // These detours are experimental and give us access to engine features we
@@ -62,4 +63,90 @@ void NotifyDetoursOnLevelShutdown()
 #elif defined( GAME_DLL )
     // UpdateCheckPasswordDetourOnLevelShutdown();
 #endif
+}
+
+/*
+** Testing Net Channel detours
+*/
+// TODO: Move this to its own file(s)
+
+CBaseNetMessage::CBaseNetMessage()
+{
+    m_pNetChannel = NULL;
+    m_bReliable = true;
+
+    // Subclasses must change this to the size of the message, or it
+    // will get rejected
+    m_ExpectedSize = 0;
+}
+
+void CBaseNetMessage::SetNetChannel( INetChannel *netchan )
+{
+    m_pNetChannel = netchan;
+}
+
+INetChannel *CBaseNetMessage::GetNetChannel( void ) const
+{
+    return m_pNetChannel;
+}
+
+void CBaseNetMessage::SetReliable( bool state )
+{
+    m_bReliable = state;
+}
+
+bool CBaseNetMessage::IsReliable( void ) const
+{
+    return m_bReliable;
+}
+
+const char *CBaseNetMessage::ToString( void ) const
+{
+    char buffer[512];
+    Q_snprintf( buffer, sizeof( buffer ), "Type: %d, Group: %d, Name: %s", GetType(), GetGroup(), GetName() );
+    return buffer;
+}
+
+size_t CBaseNetMessage::GetSize() const
+{
+    return m_ExpectedSize;
+}
+
+//
+// Example of a NetMessage implementation
+//
+const char *CNetMessage_LuaString::GetLuaString() const
+{
+    return m_szLuaString;
+}
+
+void CNetMessage_LuaString::SetLuaString( const char *szLuaString )
+{
+    Q_strncpy( m_szLuaString, szLuaString, sizeof( m_szLuaString ) );
+}
+
+bool CNetMessage_LuaString::Process( void )
+{
+    //DevWarning( "Processing LuaString message: %s\n", m_szLuaString );
+    return true;
+}
+
+bool CNetMessage_LuaString::ReadFromBuffer( bf_read &buffer )
+{
+    // We could call a Lua function here (e.g: net.Incoming) to handle
+    // reading the buffer
+
+    buffer.ReadString( m_szLuaString, sizeof( m_szLuaString ) );
+
+    m_ExpectedSize = buffer.GetNumBytesRead();
+
+    return !buffer.IsOverflowed();
+}
+
+bool CNetMessage_LuaString::WriteToBuffer( bf_write &buffer )
+{
+    buffer.WriteUBitLong( GetType(), NET_MESSAGE_TYPE_BITS );
+    buffer.WriteString( m_szLuaString );
+
+    return !buffer.IsOverflowed();
 }

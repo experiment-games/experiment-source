@@ -1,6 +1,6 @@
 #include "cbase.h"
-#include <inetchannel.h>
 #include "../engine_patches.h"
+#include "inetchannel.h"
 #include <util.h>
 #include <netadr.h>
 
@@ -242,6 +242,38 @@ void Engine_PlayerAllowNewUserInfo( CBasePlayer *pPlayer, const char *userInfoNa
     {
         conVars->SetString( userInfoName, "" );
     }
+}
+
+CON_COMMAND_F( exp_test_net_message, "Test to send a net message", FCVAR_GAMEDLL )
+{
+    CBasePlayer *pPlayer = UTIL_GetCommandClient();
+
+    if ( !pPlayer )
+    {
+        DevWarning( "This command can only be used by players.\n" );
+        return;
+    }
+
+    if ( args.ArgC() < 1 || Q_strlen( args[1] ) == 0 )
+    {
+        DevWarning( "Usage: exp_test_net_message <message>\n" );
+        return;
+    }
+
+    unsigned short index = connectedClients.Find( pPlayer->GetUserID() );
+
+    if ( index == connectedClients.InvalidIndex() )
+    {
+        DevWarning( "No client connect object found for player.\n" );
+        return;
+    }
+
+    ClientWithNetChannel info = connectedClients.Element( index );
+    const char *message = args[1];
+
+    CNetMessage_LuaString netMessage;
+    netMessage.SetLuaString( message );
+    info.netChannel->SendNetMsg( netMessage, true);
 }
 
 void ApplyClientConnectDetour()

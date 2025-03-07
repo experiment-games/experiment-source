@@ -19,16 +19,13 @@ class INetChannel;
 
 class INetMessage
 {
-    public:
+   public:
     virtual ~INetMessage(){};
-
-    // Use these to setup who can hear whose voice.
-    // Pass in client indices (which are their ent indices - 1).
 
     virtual void SetNetChannel( INetChannel *netchan ) = 0;  // netchannel this message is from/for
     virtual void SetReliable( bool state ) = 0;              // set to true if it's a reliable message
 
-    virtual bool Process( void ) = 0;  // calles the recently set handler to process this message
+    virtual bool Process( void ) = 0;  // should process this message, return true if it succeeded
 
     virtual bool ReadFromBuffer( bf_read &buffer ) = 0;  // returns true if parsing was OK
     virtual bool WriteToBuffer( bf_write &buffer ) = 0;  // returns true if writing was OK
@@ -41,7 +38,8 @@ class INetMessage
     virtual INetChannel *GetNetChannel( void ) const = 0;
     virtual const char *ToString( void ) const = 0;  // returns a human readable string about message content
 
-    virtual bool BIncomingMessageForProcessing( double dblNetTime, int numBytes ) = 0;
+    // Experiment; TODO: Figure out if we must implement this in our CBaseNetMessage
+    // virtual bool BIncomingMessageForProcessing( double dblNetTime, int numBytes ) = 0;
 
     virtual size_t GetSize() const = 0;
 };
