@@ -281,28 +281,22 @@ extern ConVar hud_fastswitch;
 void CExperimentScriptedWeapon::InitScriptedWeapon( void )
 {
 #ifdef LUA_SDK
-    // #ifndef CLIENT_DLL
-    //     // Let the instance reinitialize itself for the client. <- Experiment; TODO: Is this correct?
-    //     if ( lua_isrefvalid( L, m_nTableReference ) )
-    //         return;
-    // #endif
+#ifndef CLIENT_DLL
+    // Let the instance reinitialize itself for the client.
+    if ( m_nTableReference != LUA_NOREF )
+        return;
+#endif
 
     char className[MAX_WEAPON_STRING];
 #if defined( CLIENT_DLL )
-    if ( strlen( GetScriptedClassname() ) == 0 )
+    if ( strlen( GetScriptedClassname() ) > 0 )
+        Q_strncpy( className, GetScriptedClassname(), sizeof( className ) );
+    else
     {
-        // Experiment;
-        // Wait for the client to receive the actual classname from the server.
-        // The entity will arrive before the networked data.
-        // TODO: Can we wait before spawning locally? Because those checks like
-        // `if ( lua_isrefvalid( L, m_nTableReference ) )` below may cause
-        // unexpected behavior (e.g: baseclass methods deciding differently
-        // from the scripted methods).
-        // To fix the above I tried to override ::Spawn (see below)
+        // We must wait for the scripted classname to arrive, only then can we properly
+        // initialize
         return;
     }
-
-    Q_strncpy( className, GetScriptedClassname(), sizeof( className ) );
 #else
     Q_strncpy( m_iScriptedClassname.GetForModify(), GetClassname(), sizeof( className ) );
     Q_strncpy( className, GetClassname(), sizeof( className ) );
@@ -314,7 +308,9 @@ void CExperimentScriptedWeapon::InitScriptedWeapon( void )
     Q_strncpy( m_pLuaWeaponInfo->szClassName, className, MAX_WEAPON_STRING );
     SetClassname( m_pLuaWeaponInfo->szClassName );
 
+#ifndef CLIENT_DLL
     m_pLuaWeaponInfo->bParsedScript = true;
+#endif
 
     // Get (or init) the ref table (popped near the end of this function)
     LUA_GET_REF_TABLE( L, this );
@@ -645,12 +641,6 @@ void CExperimentScriptedWeapon::InitScriptedWeapon( void )
 }
 
 #ifdef CLIENT_DLL
-void CExperimentScriptedWeapon::Spawn( void )
-{
-    // Experiment; Prevent spawning, until the client has
-    // received the classname from the server.
-}
-
 void CExperimentScriptedWeapon::OnDataChanged( DataUpdateType_t updateType )
 {
     BaseClass::OnDataChanged( updateType );
@@ -659,6 +649,7 @@ void CExperimentScriptedWeapon::OnDataChanged( DataUpdateType_t updateType )
     {
         if ( m_iScriptedClassname.Get() && !m_pLuaWeaponInfo->bParsedScript )
         {
+            m_pLuaWeaponInfo->bParsedScript = true;
             SetClassname( m_iScriptedClassname.Get() );
             InitScriptedWeapon();
 
@@ -666,10 +657,6 @@ void CExperimentScriptedWeapon::OnDataChanged( DataUpdateType_t updateType )
             LUA_CALL_WEAPON_METHOD_BEGIN( "Precache" );
             LUA_CALL_WEAPON_METHOD_END( 0, 0 );
 #endif
-
-            // Only now do we call the base class's spawn method, after we're
-            // sure to have the scripted classname.
-            BaseClass::Spawn();
         }
     }
 }
@@ -678,6 +665,7 @@ const char *CExperimentScriptedWeapon::GetScriptedClassname( void )
 {
     if ( m_iScriptedClassname.Get() )
         return m_iScriptedClassname.Get();
+
     return BaseClass::GetClassname();
 }
 #endif
@@ -1029,6 +1017,7 @@ bool CExperimentScriptedWeapon::Reload( void )
 
     LUA_RETURN_BOOLEAN();
 #endif
+
     return BaseClass::Reload();
 }
 
@@ -1105,8 +1094,8 @@ void CExperimentScriptedWeapon::ItemPostFrame( void )
     // FIXME: Check for IN_ATTACK2 as well?
     // FIXME: What if we're calling ItemBusyFrame?
     m_fFireDuration = ( pOwner->m_nButtons & IN_ATTACK )
-        ? ( m_fFireDuration + gpGlobals->frametime )
-        : 0.0f;
+                          ? ( m_fFireDuration + gpGlobals->frametime )
+                          : 0.0f;
 
     if ( UsesClipsForAmmo1() )
     {
