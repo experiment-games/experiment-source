@@ -354,7 +354,7 @@ LUA_API void lua_pushtrace_t( lua_State *L, trace_t *trace, bool bNoNewTable /* 
 #ifdef CLIENT_DLL
         CBaseEntity::PushLuaInstanceSafe( L, GetClientWorldEntity() );
 #else
-        CBaseEntity::PushLuaInstanceSafe( L, UTIL_EntityByIndex( 0 ) );
+        CBaseEntity::PushLuaInstanceSafe( L, GetWorldEntity() );
 #endif
     }
     else
