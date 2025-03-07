@@ -237,52 +237,11 @@ void Engine_PlayerAllowNewUserInfo( CBasePlayer *pPlayer, const char *userInfoNa
     ClientWithNetChannel info = connectedClients.Element( index );
 
     KeyValues *conVars = GET_MEMORY_PTR( info.client, s_OffsetConVars, KeyValues );
-    conVars->SetString( userInfoName, "" );
-}
 
-/// <summary>
-/// This is a proof-of-concept that shows how we can force new userinfo to be allowed.
-/// Normally the Source Engine omits any new userinfo that is registered as a cvar after the
-/// first client update. This is no good for us, since we let Lua register client userinfo
-/// at any time, even in the middle of gameplay. So with this hack into the engine we can
-/// add userinfo to the player's ConVars.
-/// I imagine we could call this in GetInfo, to add the name if it's not already added. That
-/// way we never get an error like "Client ... userinfo ignored: gmod_toolmode"
-///
-/// For an example of the problem:
-/// 1. Go in-game (sandbox gamemode) and switch toolmode in the toolgun
-/// 2. Run this in console:
-///     `lua_run print(player.GetByID(1):GetInfo("gmod_toolmode"))`
-/// 3. You'll see:
-///     `GetUserSetting: cvar 'gmod_toolmode' unknown.`
-/// 4. Run this in console:
-///     `exp_hack_allow_new_userinfo gmod_toolmode`
-/// 5. Switch toolmode in the toolgun
-/// 6. Run this in console again:
-///     `lua_run print(player.GetByID(1):GetInfo("gmod_toolmode"))`
-/// 7. You'll now see the expected toolmode
-/// </summary>
-CON_COMMAND_F( exp_hack_allow_new_userinfo, "Allow the given CVAR name to become new userinfo", FCVAR_GAMEDLL )
-{
-    CBasePlayer *pPlayer = UTIL_GetCommandClient();
-
-    if ( !pPlayer )
+    if ( conVars->GetString( userInfoName, nullptr ) == nullptr )
     {
-        DevWarning( "No player found.\n" );
-        return;
+        conVars->SetString( userInfoName, "" );
     }
-
-    if ( args.ArgC() < 1 )
-    {
-        DevWarning( "No userinfo name provided!\n" );
-        return;
-    }
-
-    const char *userInfoName = args[1];
-
-    Engine_PlayerAllowNewUserInfo( pPlayer, userInfoName );
-
-    DevMsg( "New UserInfo ConVar %s added!\n", userInfoName );
 }
 
 void ApplyClientConnectDetour()
