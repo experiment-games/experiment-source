@@ -20,10 +20,13 @@ void NotifyDetoursOnLevelShutdown();
 
 #ifdef GAME_DLL  // Server detours
 
+#include <player.h>
+
 // void HandleCheckPasswordDetour( void *serverObject, const char *steamIdAsString );
 // void UpdateCheckPasswordDetourOnLevelShutdown();
 
 void ApplyClientConnectDetour();
+void Engine_PlayerAllowNewUserInfo( CBasePlayer* pPlayer, const char* userInfoName );
 
 #endif
 

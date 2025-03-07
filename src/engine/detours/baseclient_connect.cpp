@@ -224,6 +224,22 @@ void __fastcall DetourClientConnect(
 
 #pragma warning( default : 4189 )  // Enable warning about unused variable
 
+void Engine_PlayerAllowNewUserInfo( CBasePlayer *pPlayer, const char *userInfoName )
+{
+    unsigned short index = connectedClients.Find( pPlayer->GetUserID() );
+
+    if ( index == connectedClients.InvalidIndex() )
+    {
+        DevWarning( "No client connect object found for player.\n" );
+        return;
+    }
+
+    ClientWithNetChannel info = connectedClients.Element( index );
+
+    KeyValues *conVars = GET_MEMORY_PTR( info.client, s_OffsetConVars, KeyValues );
+    conVars->SetString( userInfoName, "" );
+}
+
 /// <summary>
 /// This is a proof-of-concept that shows how we can force new userinfo to be allowed.
 /// Normally the Source Engine omits any new userinfo that is registered as a cvar after the
@@ -263,18 +279,8 @@ CON_COMMAND_F( exp_hack_allow_new_userinfo, "Allow the given CVAR name to become
     }
 
     const char *userInfoName = args[1];
-    unsigned short index = connectedClients.Find( pPlayer->GetUserID() );
 
-    if ( index == connectedClients.InvalidIndex() )
-    {
-        DevWarning( "No client connect object found for player.\n" );
-        return;
-    }
-
-    ClientWithNetChannel info = connectedClients.Element( index );
-
-    KeyValues *conVars = GET_MEMORY_PTR( info.client, s_OffsetConVars, KeyValues );
-    conVars->SetString( userInfoName, "" );
+    Engine_PlayerAllowNewUserInfo( pPlayer, userInfoName );
 
     DevMsg( "New UserInfo ConVar %s added!\n", userInfoName );
 }

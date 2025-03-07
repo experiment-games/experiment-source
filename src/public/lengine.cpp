@@ -9,6 +9,10 @@
 #include <lconvar.h>
 #include <lconcommand.h>
 
+#ifdef WITH_ENGINE_PATCHES
+#include <engine/engine_patches.h>
+#endif
+
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
@@ -45,6 +49,8 @@ LUA_BINDING_BEGIN( Engines, CheckAreasConnected, "library", "Check if two areas 
     return 1;
 }
 LUA_BINDING_END( "boolean", "True if the areas are connected, false otherwise." )
+
+#undef CopyFile
 
 LUA_BINDING_BEGIN( Engines, CopyFile, "library", "Copy a file." )
 {
@@ -107,6 +113,12 @@ LUA_BINDING_BEGIN( Engines, GetClientConsoleVariableValue, "library", "Get a cli
 
     const char *conVarName = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "conVarName" );
 
+#ifdef WITH_ENGINE_PATCHES
+    // Experiment; Without this, userinfo registered too late wouldn't be allowed to be fetched
+    CBasePlayer *pPlayer = UTIL_PlayerByIndex( playerIndex );
+    Engine_PlayerAllowNewUserInfo( pPlayer, conVarName );
+#endif
+
     lua_pushstring( L, engine->GetClientConVarValue( playerIndex, conVarName ) );
 
     return 1;
@@ -123,6 +135,12 @@ LUA_BINDING_BEGIN( Engines, GetClientConsoleVariableValueAsNumber, "library", "G
         playerIndex = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "playerOrIndex" );
 
     const char *conVarName = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "conVarName" );
+
+#ifdef WITH_ENGINE_PATCHES
+    // Experiment; Without this, userinfo registered too late wouldn't be allowed to be fetched
+    CBasePlayer *pPlayer = UTIL_PlayerByIndex( playerIndex );
+    Engine_PlayerAllowNewUserInfo( pPlayer, conVarName );
+#endif
 
     lua_pushinteger( L, Q_atoi( engine->GetClientConVarValue( playerIndex, conVarName ) ) );
 
@@ -155,6 +173,8 @@ LUA_BINDING_BEGIN( Engines, GetPlayerNetInfo, "library", "Get the player's net i
     return 1;
 }
 LUA_BINDING_END( "netchannel", "The player's net info." )
+
+#undef GetSaveFileName
 
 LUA_BINDING_BEGIN( Engines, GetSaveFileName, "library", "Get the save file name." )
 {

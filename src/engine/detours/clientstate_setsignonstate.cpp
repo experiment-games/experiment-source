@@ -116,6 +116,8 @@ bool __fastcall DetourClientStateSetSignOnState(
     return result;
 }
 
+#pragma warning( default : 4189 )  // Enable warning about unused variable
+
 void ApplyClientStateDetours()
 {
     HMODULE hModule = GetModuleHandle( "engine.dll" );
