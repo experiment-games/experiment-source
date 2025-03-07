@@ -1944,6 +1944,10 @@ else
 	end)
 end
 
+hook.Add("CanPhysgunPickup", "GModCompatibility.CallCanPhysgunPickupHooks", function(client, entity)
+	return hook.Run("PhysgunPickup", client, entity)
+end)
+
 hook.Add("Initialize", "GModCompatibility.CallInitializeHooks", function()
 	hook.Run("CreateTeams")
 	hook.Run("PreGamemodeLoaded")

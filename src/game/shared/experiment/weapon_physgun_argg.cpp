@@ -749,7 +749,7 @@ void CWeaponGravityGun::EffectUpdate( void )
         CBaseEntity *pEntity = tr.m_pEnt;
 
 #if defined( LUA_SDK )
-        LUA_CALL_HOOK_BEGIN( "PhysgunPickup" );
+        LUA_CALL_HOOK_BEGIN( "CanPhysgunPickup" );
         CBasePlayer::PushLuaInstanceSafe( L, GetPlayerOwner() );  // doc: player (The player holding the physgun)
         CBaseEntity::PushLuaInstanceSafe( L, pEntity );           // doc: weapon (The entity attempted to be picked up)
         LUA_CALL_HOOK_END( 2, 1 );                                // doc: boolean (return false to not let the entity be picked up)
