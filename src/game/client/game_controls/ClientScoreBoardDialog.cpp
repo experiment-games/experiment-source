@@ -100,7 +100,7 @@ CClientScoreBoardDialog::~CClientScoreBoardDialog()
 void CClientScoreBoardDialog::Paint()
 {
 #ifdef LUA_SDK
-    LUA_CALL_HOOK_BEGIN( "HUDDrawScoreBoard" );
+    LUA_CALL_HOOK_BEGIN( "ScoreboardDraw" );
     LUA_CALL_HOOK_END( 0, 0 );
 #endif
 }

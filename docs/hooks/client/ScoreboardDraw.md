@@ -1,6 +1,6 @@
 ---
 template: lua-hook.html
-title: HUDDrawScoreBoard
+title: ScoreboardDraw
 icon: lua-client
 tags:
   - lua
@@ -8,15 +8,15 @@ tags:
   - needs-verification
   - needs-example
 lua:
-  function: HUDDrawScoreBoard
+  function: ScoreboardDraw
   realm: client
   description: ""
   arguments:
-  
+
   returns:
-    
+
 ---
 
 <div class="lua__search__keywords">
-hook HUDDrawScoreBoard &#x2013; ""
+hook ScoreboardDraw &#x2013; ""
 </div>

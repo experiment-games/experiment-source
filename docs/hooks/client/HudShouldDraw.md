@@ -1,6 +1,6 @@
 ---
 template: lua-hook.html
-title: HUDPaint
+title: HudShouldDraw
 icon: lua-client
 tags:
   - lua
@@ -8,15 +8,16 @@ tags:
   - needs-verification
   - needs-example
 lua:
-  function: HUDPaint
+  function: HudShouldDraw
   realm: client
   description: ""
   arguments:
-  
+
   returns:
-    
+    - type: unknown
+      description: ""
 ---
 
 <div class="lua__search__keywords">
-hook HUDPaint &#x2013; ""
+hook HudShouldDraw &#x2013; ""
 </div>

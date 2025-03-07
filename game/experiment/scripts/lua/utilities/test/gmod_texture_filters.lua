@@ -17,7 +17,7 @@ filters[TEXFILTER.POINT] = "POINT"
 filters[TEXFILTER.LINEAR] = "LINEAR"
 filters[TEXFILTER.ANISOTROPIC] = "ANISOTROPIC"
 
-hook.Add("HUDPaint", "PutAUniqueHookNameHere", function()
+hook.Add("HudDraw", "PutAUniqueHookNameHere", function()
   surface.SetDrawColor(255, 255, 255, 255)  -- Set the drawing color
   surface.SetMaterial(ourMat)               -- Use our cached material
 

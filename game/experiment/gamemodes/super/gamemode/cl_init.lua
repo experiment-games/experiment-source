@@ -21,10 +21,10 @@ end
 function GM:HideClientUI()
 end
 
-function GM:HUDShouldDraw(elementName)
+function GM:HudShouldDraw(elementName)
 end
 
-function GM:HUDPaint()
+function GM:HudDraw()
 end
 
 function GM:KeyInput(down, keyNumber, currentBinding)
@@ -61,8 +61,4 @@ function GM:ShouldDrawParticles()
 end
 
 function GM:ShouldDrawViewModel()
-end
-
-function GM:HUDPaint()
-	-- Here for GMod compatibility.
 end

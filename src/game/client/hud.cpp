@@ -297,7 +297,7 @@ bool CHudElement::ShouldDraw( void )
     C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
     if ( pPlayer )
     {
-        LUA_CALL_HOOK_BEGIN( "HUDShouldDraw" );
+        LUA_CALL_HOOK_BEGIN( "HudShouldDraw" );
         lua_pushstring( L, GetName() );
         LUA_CALL_HOOK_END( 1, 1 );
 
@@ -992,7 +992,7 @@ bool CHud::IsHidden( int iHudFlags )
     if ( ( iHudFlags & HIDEHUD_NEEDSUIT ) && ( !pPlayer->IsSuitEquipped() ) )
         return true;
 
-    // Hide all HUD elements during screenshot if the user's set hud_freezecamhide ( TF2 )
+        // Hide all HUD elements during screenshot if the user's set hud_freezecamhide ( TF2 )
 #if defined( TF_CLIENT_DLL )
     extern bool IsTakingAFreezecamScreenshot();
     extern ConVar hud_freezecamhide;

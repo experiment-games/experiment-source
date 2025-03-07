@@ -1931,11 +1931,23 @@ if (CLIENT) then
 		hook.Run("OnContextMenuClose")
 	end)
 
-	hook.Add("LevelInitPostEntity", "GModCompatibility.CallInitPostEntityHooks", function()
+	hook.Add("LevelInitPostEntity", "GModCompatibility.CallInitPostEntityHook", function()
 		hook.Run("InitPostEntity")
+    end)
+
+	hook.Add("HudDraw", "GModCompatibility.CallHUDPaintHook", function()
+		hook.Run("HUDPaint")
+    end)
+
+	hook.Add("HudShouldDraw", "GModCompatibility.CallHUDShouldDrawHook", function()
+		hook.Run("HUDShouldDraw")
+    end)
+
+	hook.Add("ScoreboardDraw", "GModCompatibility.CallHUDDrawScoreBoardHook", function()
+		hook.Run("HUDDrawScoreBoard")
 	end)
 else
-	hook.Add("ServerActivate", "GModCompatibility.CallInitPostEntityHooks", function()
+	hook.Add("ServerActivate", "GModCompatibility.CallInitPostEntityHook", function()
 		hook.Run("InitPostEntity")
 	end)
 
@@ -1944,7 +1956,7 @@ else
 	end)
 end
 
-hook.Add("CanPhysgunPickup", "GModCompatibility.CallCanPhysgunPickupHooks", function(client, entity)
+hook.Add("CanPhysgunPickup", "GModCompatibility.CallCanPhysgunPickupHook", function(client, entity)
 	return hook.Run("PhysgunPickup", client, entity)
 end)
 
