@@ -107,7 +107,7 @@ function MODULE.InitializeRefTable(refTable, className)
 		return
 	end
 
-    table.CopyMerge(refTable, weaponTable)
+    table.Merge(refTable, weaponTable)
 end
 
 return MODULE

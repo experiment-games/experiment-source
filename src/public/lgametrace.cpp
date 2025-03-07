@@ -350,7 +350,12 @@ LUA_API void lua_pushtrace_t( lua_State *L, trace_t *trace, bool bNoNewTable /* 
     lua_pushstring( L, "Entity" );
     if ( trace->m_pEnt && trace->m_pEnt->IsWorld() )
     {
-        CBaseEntity::PushLuaInstanceSafe( L, NULL );
+        // Instead of NULL, we return the world entity (like gmod does)
+#ifdef CLIENT_DLL
+        CBaseEntity::PushLuaInstanceSafe( L, GetClientWorldEntity() );
+#else
+        CBaseEntity::PushLuaInstanceSafe( L, UTIL_EntityByIndex( 0 ) );
+#endif
     }
     else
     {

@@ -36,23 +36,6 @@ function table.Copy(target, lookupTable)
 	return __copy
 end
 
---- Recursively copies a source table into a target table.
---- @param target table
---- @param source table
-function table.CopyMerge(target, source)
-	for key, value in pairs(source) do
-		if (type(value) == "table") then
-			if (type(target[key]) ~= "table") then
-				target[key] = {}
-			end
-
-			table.CopyMerge(target[key], value)
-		else
-			target[key] = value
-		end
-	end
-end
-
 --- Counts the items in a table by iterating over the keys.
 --- @param target any
 --- @return unknown

@@ -127,7 +127,9 @@ end
 util.SharedRandom = Randoms.SharedRandomFloat
 
 ents = {
-	Create = Entities.CreateByName,
+    Create = Entities.CreateByName,
+	-- TODO: Probably not correct, since CreateClientProp creates an ent with physics
+	CreateClientProp = Entities.CreateClientEntity,
 
 	GetAll = Entities.GetAll,
 	GetCount = Entities.GetCount,
@@ -656,6 +658,7 @@ ENTITY_META.SetColor = ENTITY_META.SetRenderColor
 ENTITY_META.GetColor = ENTITY_META.GetRenderColor
 ENTITY_META.GetSequenceList = ENTITY_META.GetSequences
 ENTITY_META.NextThink = ENTITY_META.SetNextThink
+ENTITY_META.PhysicsDestroy = ENTITY_META.DestroyPhysicsObject
 
 function ENTITY_META:GetForward()
 	local forward, _, _ = self:GetVectors()
@@ -864,6 +867,7 @@ WEAPON_META.GetHoldType = WEAPON_META.GetAnimationPrefix
 WEAPON_META.SetHoldType = WEAPON_META.SetAnimationPrefix
 WEAPON_META.Ammo1 = WEAPON_META.GetPrimaryAmmoCount
 WEAPON_META.Ammo2 = WEAPON_META.GetSecondaryAmmoCount
+WEAPON_META.SendWeaponAnim = WEAPON_META.SendWeaponAnimation
 
 local PLAYER_META = FindMetaTable("Player")
 PLAYER_META.GetShootPos = PLAYER_META.GetWeaponShootPosition
