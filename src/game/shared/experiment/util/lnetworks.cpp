@@ -4,6 +4,7 @@
 #include "lnetwork.h"
 #include "networkmanager.h"
 #include "lbaseplayer_shared.h"
+#include "networkmessage.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -17,14 +18,13 @@ LUA_BINDING_BEGIN( Networks, InternalSendToClients, "library", "Send a message t
     bf_write &messageWriter = LUA_BINDING_ARGUMENT( lua_tobf_write, 2, "messageWriter" );
 
     // Build the message
-    CDynamicWriteNetworkMessage *message = new CDynamicWriteNetworkMessage( NETWORK_MESSAGE_GROUP::SCRIPT, messageTypeId );
-
+    CDynamicWriteNetworkMessage *message = new CDynamicWriteNetworkMessage( messageTypeId );
     message->SetBuffer( ( const char * )messageWriter.GetBasePointer(), messageWriter.GetNumBytesWritten() );
 
     // If no clients are probided, broadcast the message
     if ( lua_isnoneornil( L, 3 ) )
     {
-        g_pNetworkManager->BroadcastServerToClientMessage( message );
+        g_pNetworkManager->BroadcastServerToClientsMessage( message );
     }
     else if ( LUA_BINDING_ARGUMENT_NILLABLE( lua_istable, 3, "clientOrClients" ) )
     {
@@ -36,7 +36,7 @@ LUA_BINDING_BEGIN( Networks, InternalSendToClients, "library", "Send a message t
 
             if ( client )
             {
-                g_pNetworkManager->SendServerToClientMessage( message, client );
+                g_pNetworkManager->SendServerToClientMessage( message, client->entindex() );
             }
             else
             {
@@ -52,7 +52,7 @@ LUA_BINDING_BEGIN( Networks, InternalSendToClients, "library", "Send a message t
 
         if ( client )
         {
-            g_pNetworkManager->SendServerToClientMessage( message, client );
+            g_pNetworkManager->SendServerToClientMessage( message, client->entindex() );
         }
         else
         {
@@ -79,8 +79,7 @@ LUA_BINDING_BEGIN( Networks, InternalSendToServer, "library", "Send a message to
     bf_write &messageWriter = LUA_BINDING_ARGUMENT( lua_tobf_write, 2, "messageWriter" );
 
     // Build the message
-    CDynamicWriteNetworkMessage *message = new CDynamicWriteNetworkMessage( NETWORK_MESSAGE_GROUP::SCRIPT, messageTypeId );
-
+    CDynamicWriteNetworkMessage *message = new CDynamicWriteNetworkMessage( messageTypeId );
     message->SetBuffer( ( const char * )messageWriter.GetBasePointer(), messageWriter.GetNumBytesWritten() );
 
     g_pNetworkManager->SendClientToServerMessage( message );

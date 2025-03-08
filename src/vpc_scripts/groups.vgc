@@ -32,8 +32,6 @@ $Group "game"
     "luasocket"
     "libpng"
     "helloworldmodule"
-
-    "networksystem"
 }
 
 $Group "shaders"
@@ -74,8 +72,6 @@ $Group "everything"
     "luasocket"
     "libpng"
     "helloworldmodule"
-
-    "networksystem"
 
     "game_shader_generic_example"
 

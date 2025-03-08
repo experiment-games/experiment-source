@@ -8,9 +8,6 @@
 #include "MinHook.h"
 #undef CreateEvent  // WinBase.h defines this, but it messes with out gameeventmanager->CreateEvent
 
-#include <inetchannelinfo.h>
-#include <inetmessage.h>
-
 DWORD_PTR GetModuleBaseAddress( HMODULE module );
 DWORD_PTR FindPattern( HMODULE module, const char* pattern, const char* mask );
 
@@ -51,9 +48,6 @@ void ApplyClientStateDetours();
 #define SIGN_ON_STATE_SPAWN 5        // Server spawned player. Start sending entity packets
 #define SIGN_ON_STATE_FULL 6         // Fully connected, initial handshake completed
 #define SIGN_ON_STATE_CHANGELEVEL 7
-
-// Should match engine since that reads it, so we can't increase it sadly :/
-#define NET_MESSAGE_TYPE_BITS 6
 
 /*
 ** Macro's for accessing structured memory
@@ -109,7 +103,7 @@ void ApplyClientStateDetours();
 
 // Macro to align the current offset to a specific boundary
 #define ALIGN_OFFSET( structName, alignment ) \
-    _##structName##_offset = ( _##structName##_offset + ( ( alignment ) - 1 ) ) & ~( ( alignment ) - 1 );
+    _##structName##_offset = ( _##structName##_offset + ( ( alignment )-1 ) ) & ~( ( alignment )-1 );
 
 // Macro to get the current offset
 #define CURRENT_OFFSET( structName ) _##structName##_offset
@@ -127,81 +121,5 @@ void ApplyClientStateDetours();
 
 // Specialized macro for bool field modification
 #define GET_MEMORY_BOOL_FOR_CHANGE( basePtr, offset ) ( *GET_MEMORY_FIELD_PTR( basePtr, offset, bool ) )
-
-/*
-** Testing Net Channel detours
-*/
-// TODO: Move this to its own file(s)
-
-class CBaseNetMessage : public INetMessage
-{
-   public:
-    CBaseNetMessage();
-
-    virtual ~CBaseNetMessage() {};
-
-    virtual void SetNetChannel( INetChannel* netchan );
-    virtual INetChannel* GetNetChannel( void ) const;
-    virtual void SetReliable( bool state );
-    virtual bool IsReliable( void ) const;
-
-    // TODO: Implement these in the derived classes
-    // virtual bool Process( void ) = 0;   // should process this message, return true if it succeeded
-    // virtual bool ReadFromBuffer( bf_read &buffer ) = 0;  // returns true if parsing was OK
-    // virtual bool WriteToBuffer( bf_write &buffer ) = 0;  // returns true if writing was OK
-
-    // These identify the net message, so the correct 'Process' function can be called on arrival
-    // Use the IMPLEMENT_NET_MESSAGE macro to implement these
-    // virtual int GetType( void ) const = 0;          // returns module specific header tag eg svc_serverinfo
-    // virtual int GetGroup( void ) const = 0;         // returns net message group of this message
-    // virtual const char *GetName( void ) const = 0;  // returns network message name, eg "svc_serverinfo"
-
-    virtual const char* ToString( void ) const;  // returns a human readable string about message content
-
-    virtual size_t GetSize() const;
-
-   protected:
-    INetChannel* m_pNetChannel;
-    bool m_bReliable;
-    size_t m_ExpectedSize;
-};
-
-// Macro to ensure a NetMessage class has the correct type, group, and name
-#define IMPLEMENT_NET_MESSAGE( group, type, name ) \
-    virtual int GetGroup( void ) const             \
-    {                                              \
-        return group;                              \
-    }                                              \
-    virtual int GetType( void ) const              \
-    {                                              \
-        return type;                               \
-    }                                              \
-    virtual const char* GetName( void ) const      \
-    {                                              \
-        return name;                               \
-    }
-
-// Example of a NetMessage implementation
-class CNetMessage_LuaString : public CBaseNetMessage
-{
-    // I believe 33 to be the highest type used in the ingenge
-    IMPLEMENT_NET_MESSAGE( INetChannelInfo::GENERIC, 33 + 1, "LuaString" );
-
-   public:
-    CNetMessage_LuaString()
-    {
-        m_szLuaString[0] = '\0';
-    }
-
-    const char* GetLuaString() const;
-    void SetLuaString( const char* szLuaString );
-
-    virtual bool Process( void ) OVERRIDE;
-    virtual bool ReadFromBuffer( bf_read& buffer ) OVERRIDE;
-    virtual bool WriteToBuffer( bf_write& buffer ) OVERRIDE;
-
-   protected:
-    char m_szLuaString[256];
-};
 
 #endif  // ENGINE_PATCHES_H

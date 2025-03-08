@@ -13,67 +13,34 @@
 #pragma once
 #endif
 
-#include "networksystem/inetworksystem.h"
 #include "GameEventListener.h"
+#include <inetchannel.h>
 
 struct ConnectedPlayer_t
 {
-    IConnectedClient *client;
-    CBasePlayer *player;
+    int playerIndex;
+    INetChannel *netChannel;
 };
 
-class CNetworkManager : public CBaseGameSystemPerFrame, public CGameEventListener
+/// <summary>
+/// Main interface for using NetChannel to send and receive messages.
+/// </summary>
+class CNetworkManager
 {
-    public:
-    virtual char const *Name()
-    {
-        return "CNetworkManager";
-    }
-
-    // IGameEventListener interface:
-    virtual void FireGameEvent( IGameEvent *event );
-
-    virtual bool Init();
-    virtual void Shutdown();
-
-    bool AcceptClient( CBasePlayer *player );
-
-    // Update functions
-    virtual void Tick();
-#ifdef CLIENT_DLL
-    virtual void Update( float frametime );
+   public:
+#ifdef GAME_DLL
+    virtual bool BindClientServer( int playerIndex, INetChannel *netChannel );
+    virtual void UnbindClientServer( int playerIndex );
 #else
-    virtual void FrameUpdatePreEntityThink();
+    virtual bool BindClient( INetChannel *netChannel );
+    virtual void UnbindClient();
 #endif
 
-    // The manager can be a client or a server or both
-    bool IsServer();
-    bool IsClient();
+    virtual void SendClientToServerMessage( INetMessage *pMessage );
+    virtual void BroadcastServerToClientsMessage( INetMessage *pMessage );
+    virtual void SendServerToClientMessage( INetMessage *pMessage, int playerIndex );
 
-    bool IsClientConnected();
-
-    bool StartServer( unsigned short serverPort );
-    void ShutdownServer();
-
-    bool StartClient();
-    void ShutdownClient();
-
-    bool ConnectClientToServer();
-    void DisconnectClientFromServer();
-
-    void SendClientToServerMessage( INetworkMessage *pMessage );
-    void BroadcastServerToClientMessage( INetworkMessage *pMessage );
-    void SendServerToClientMessage( INetworkMessage *pMessage, CBasePlayer *client );
-    IConnectedClient *FindConnectedClient( CBasePlayer *client );
-    CBasePlayer *FindConnectedPlayer( IConnectedClient *client );
-
-    private:
-    bool m_bIsClient;
-    bool m_bIsServer;
-
-    INetworkPeerBase *m_pClientPeer;
-    INetworkPeerBase *m_pServerPeer;
-
+   private:
     CUtlVector< ConnectedPlayer_t > m_ConnectedPlayers;
 };
 

@@ -111,23 +111,6 @@ void ClientActive( edict_t *pEdict, bool bLoadGame )
 
     CExperiment_Player *pPlayer = ToExperimentPlayer( CBaseEntity::Instance( pEdict ) );
 
-    // Experiment; Ensure that the socket connection is established
-    if ( !g_pNetworkManager->AcceptClient( pPlayer ) )
-    {
-        // We didn't manage to connect the player to a socket
-        // TODO:    I feel like a race condition could happen here if the player
-        //          is activated before the socket is ready. We should probably
-        //          queue the player and activate them when the socket is ready.
-        // #ifdef WITH_ENGINE_PATCHES
-        // pPlayer->Disconnect()// This isn't exposed (but we could use detours to expose it)
-        // #endif
-
-        // This also happens for bots, but since the bot flag is added after activation, we can't check for it here
-        // So we must let the player spawn, even if a race condition happens
-        // return;
-        DevWarning( "ClientActive: Failed to accept client - If this is a bot, this is expected\n" );
-    }
-
     FinishClientPutInServer( pPlayer );
 }
 

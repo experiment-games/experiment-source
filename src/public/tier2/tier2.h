@@ -23,7 +23,6 @@ class IMaterialSystemHardwareConfig;
 class IDebugTextureInfo;
 class IVBAllocTracker;
 class IInputSystem;
-class INetworkSystem;
 class IP4;
 class IMdlLib;
 class IQueuedLoader;
@@ -38,7 +37,6 @@ extern IFileSystem *g_pFullFileSystem;
 extern IMaterialSystem *materials;
 extern IMaterialSystem *g_pMaterialSystem;
 extern IInputSystem *g_pInputSystem;
-extern INetworkSystem *g_pNetworkSystem;
 extern IMaterialSystemHardwareConfig *g_pMaterialSystemHardwareConfig;
 extern IDebugTextureInfo *g_pMaterialSystemDebugTextureInfo;
 extern IVBAllocTracker *g_VBAllocTracker;
@@ -74,7 +72,7 @@ class CTier2AppSystem : public CTier1AppSystem< IInterface, ConVarFlag >
 {
     typedef CTier1AppSystem< IInterface, ConVarFlag > BaseClass;
 
-    public:
+   public:
     CTier2AppSystem( bool bIsPrimaryAppSystem = true )
         : BaseClass( bIsPrimaryAppSystem )
     {

@@ -80,11 +80,6 @@ $Project "motionmapper"
     "utils\motionmapper\motionmapper.vpc" [$WINDOWS]
 }
 
-$Project "networksystem"
-{
-    "networksystem\networksystem.vpc" [$WINDOWS]
-}
-
 $Project "phonemeextractor"
 {
     "utils\phonemeextractor\phonemeextractor.vpc" [$WIN32]

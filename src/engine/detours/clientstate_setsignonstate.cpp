@@ -2,8 +2,8 @@
 #include "../engine_patches.h"
 #include "inetchannel.h"
 #include <netadr.h>
-
 #include <psapi.h>
+#include <util/networkmanager.h>
 
 using Function_ClientState_SetSignonState_t = bool( __fastcall* )( void* pThis, int state, int count );
 
@@ -109,9 +109,7 @@ bool __fastcall DetourClientStateSetSignOnState(
 
         if ( signOnState == SIGN_ON_STATE_CONNECTED )
         {
-            // TODO: Testing if we have successfully hooked into networking
-            CNetMessage_LuaString* netMessage = new CNetMessage_LuaString();
-            netChannel->RegisterMessage( netMessage );
+            g_pNetworkManager->BindClient( netChannel );
         }
     }
 

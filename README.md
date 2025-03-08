@@ -104,9 +104,6 @@ After (forking and) cloning the repository, follow these steps to setup the proj
 
 7. Build the entire solution.
 
-> [!NOTE]
-> Building produces our `networksystem.dll` in `game/bin/x64/` which is required for the game to run. If you run `setupprojects.sh --init` after compiling the solution, you will need to rebuild the solution to get the `networksystem.dll` back in the correct location.
-
 8. To setup the game mod directory, run this in the root directory of the repository:
 
     ```bash

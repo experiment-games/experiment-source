@@ -37,8 +37,6 @@
 #include <lresources.h>
 
 #include <util/networkmanager.h>
-#include <networksystem/inetworkgrouphandler.h>
-#include <networksystem/networkserver.h>
 #include "tier2/tier2.h"
 #include <util/lwebconnections.h>
 
@@ -128,59 +126,6 @@ LUALIB_API int luaL_optboolean( lua_State *L, int narg, int def )
 {
     return luaL_opt( L, luaL_checkboolean, narg, def );
 }
-
-/// <summary>
-/// Lua Network Message Handler
-///
-/// This will pass the message to Lua for it to read the buffer.
-/// </summary>
-class CLuaNetworkGroupHandler : public INetworkGroupHandler
-{
-   public:
-    CLuaNetworkGroupHandler( lua_State *L )
-    {
-        Assert( L );
-        m_L = L;
-    }
-
-    void HandleReadingMessage( unsigned int messageTypeId, bf_read &buffer, IConnectedClient *client );
-
-   private:
-    lua_State *m_L;
-};
-
-void CLuaNetworkGroupHandler::HandleReadingMessage( unsigned int messageTypeId, bf_read &buffer, IConnectedClient *client )
-{
-    CBasePlayer *player = nullptr;
-
-    if ( client )
-    {
-        player = g_pNetworkManager->FindConnectedPlayer( client );
-        Assert( player != nullptr );  // TODO: What if there's no player for this client? How do we handle it?
-    }
-
-    lua_getglobal( m_L, LUA_NETWORKSLIBNAME );
-    lua_getfield( m_L, -1, "HandleIncomingMessage" );
-
-    lua_remove( m_L, -2 );  // Remove the Networks table
-    Assert( lua_isfunction( L, -1 ) );
-
-    lua_pushnumber( m_L, messageTypeId );
-    lua_pushbf_read( m_L, &buffer );
-
-    if ( player != nullptr )
-    {
-        CBasePlayer::PushLuaInstanceSafe( m_L, player );
-    }
-    else
-    {
-        lua_pushnil( m_L );
-    }
-
-    luasrc_pcall( m_L, 3, 0 );  // Call HandleIncomingMessage and pop it with 3 arguments
-}
-
-static CLuaNetworkGroupHandler *s_pLuaNetworkGroupHandler = nullptr;
 
 #ifdef CLIENT_DLL
 lua_State *LGameUI;
@@ -1256,8 +1201,6 @@ void luasrc_init( void )
     g_bLuaInitialized = true;
 
     L = lua_open();
-    s_pLuaNetworkGroupHandler = new CLuaNetworkGroupHandler( L );
-    g_pNetworkSystem->RegisterGroupHandler( NETWORK_MESSAGE_GROUP::SCRIPT, s_pLuaNetworkGroupHandler );
 
 #ifdef CLIENT_DLL
     g_pClientLuaPanel = new CScriptedClientLuaPanel( L );
@@ -1439,9 +1382,6 @@ void luasrc_shutdown( void )
     ShutdownLuaGameEventHandler( L );
 
     luasrc_UnloadLoadedModules( L );
-
-    g_pNetworkSystem->UnregisterNetworkHandler( NETWORK_MESSAGE_GROUP::SCRIPT, s_pLuaNetworkGroupHandler );
-    delete s_pLuaNetworkGroupHandler;
 
     g_bLuaInitialized = false;
 

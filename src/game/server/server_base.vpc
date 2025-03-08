@@ -57,7 +57,7 @@ $Configuration
     {
         $OutputDirectory			    ".\$GAMENAME" [$OSXALL]
         $IntermediateDirectory		    ".\$GAMENAME" [$OSXALL]
-        $AdditionalProjectDependencies	"networksystem;luasocket;lua54;libpng;lzma"
+        $AdditionalProjectDependencies	"luasocket;lua54;libpng;lzma"
     }
 
     $Compiler

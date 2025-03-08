@@ -194,7 +194,6 @@ extern vgui::IInputInternal *g_InputInternal;
 #endif
 
 #include <util/networkmanager.h>
-#include <networksystem/networksystem.h>
 
 #ifdef WITH_ENGINE_PATCHES
 #include <engine/engine_patches.h>
@@ -1114,9 +1113,6 @@ int CHLClient::Init( CreateInterfaceFn appSystemFactory,
     factories.physicsFactory = physicsFactory;
     FactoryList_Store( factories );
 
-    if ( ( g_pNetworkSystem = LoadNetworkSystem( appSystemFactory ) ) == NULL )
-        return false;
-
     // Yes, both the client and game .dlls will try to Connect, the
     // soundemittersystem.dll will handle this gracefully
     if ( !soundemitterbase->Connect( appSystemFactory ) )
@@ -1208,7 +1204,6 @@ int CHLClient::Init( CreateInterfaceFn appSystemFactory,
     IGameSystem::Add( PerfVisualBenchmark() );
     IGameSystem::Add( MumbleSystem() );
 
-    IGameSystem::Add( g_pNetworkManager );
     IGameSystem::Add( g_pBassManager );
 
 #if defined( TF_CLIENT_DLL )
@@ -1459,8 +1454,6 @@ void CHLClient::Shutdown( void )
     DisconnectDataModel();
     ShutdownFbx();
 #endif
-
-    UnloadNetworkSystem( g_pNetworkSystem );
 
     // This call disconnects the VGui libraries which we rely on later in the
     // shutdown path, so don't do it
@@ -1829,16 +1822,6 @@ void CHLClient::LevelInitPreEntity( char const *pMapName )
         return;
     g_bLevelInitialized = true;
 
-    // If we're not running singleplayer, connect to the network
-    if ( g_pGameRules->IsMultiplayer() )
-    {
-        if ( !g_pNetworkManager->StartClient() )
-            Assert( 0 );  // Let's hope this never happens
-
-        if ( !g_pNetworkManager->ConnectClientToServer() )
-            Assert( 0 );  // Let's hope this never happens
-    }
-
 #ifdef LUA_SDK
     lcf_recursivedeletefile( LUA_PATH_CACHE );
 
@@ -1978,8 +1961,6 @@ void CHLClient::LevelShutdown( void )
         LUA_CALL_HOOK_END( 0, 0 );
     }
 #endif
-
-    g_pNetworkManager->ShutdownClient();
 
     // Disable abs recomputations when everything is shutting down
     CBaseEntity::EnableAbsRecomputations( false );
