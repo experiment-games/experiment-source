@@ -103,6 +103,8 @@ function ENTITY_META:CallNetworkedVariableCallbacks(key, oldValue, newValue)
 end
 
 if (SERVER) then
+	Networks.AddNetworkString("EntityNetworkedVariablesSet")
+
 	--- Sends a set of networked variables to a player
 	--- @param player Player
 	--- @param networkedVariables table

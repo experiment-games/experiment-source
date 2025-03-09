@@ -30,11 +30,12 @@ class CNetworkManager
    public:
 #ifdef GAME_DLL
     virtual bool BindClientServer( int playerIndex, INetChannel *netChannel );
-    virtual void UnbindClientServer( int playerIndex );
 #else
     virtual bool BindClient( INetChannel *netChannel );
     virtual void UnbindClient();
 #endif
+
+    virtual void UnbindClients();
 
     virtual void SendClientToServerMessage( INetMessage *pMessage );
     virtual void BroadcastServerToClientsMessage( INetMessage *pMessage );

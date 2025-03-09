@@ -138,7 +138,7 @@ local networkStrings = NetworkStringTables.FindTable("LuaNetworkStrings")
 
 function Networks.AddNetworkString(name)
 	if (SERVER) then
-        local networkId = networkStrings:AddString(true, name)
+		local networkId = networkStrings:AddString(true, name)
 
 		printDebug("Added network string: " .. name .. " with id " .. networkId)
 	end
@@ -162,18 +162,18 @@ local MESSAGE_WRITER_META = _R.MessageWriter
 --- @param color Color
 --- @param sendAlpha? boolean # Defaults to true
 function MESSAGE_WRITER_META:WriteColor(color, sendAlpha)
-    if (sendAlpha == nil) then
-        sendAlpha = true
-    end
+	if (sendAlpha == nil) then
+		sendAlpha = true
+	end
 
-    self:WriteBitLong(color.r, 8, false)
-    self:WriteBitLong(color.g, 8, false)
-    self:WriteBitLong(color.b, 8, false)
+	self:WriteBitLong(color.r, 8, false)
+	self:WriteBitLong(color.g, 8, false)
+	self:WriteBitLong(color.b, 8, false)
 
-    -- Save space by not sending alpha if it's not needed
-    if (sendAlpha) then
-        self:WriteBitLong(color.a, 8, false)
-    end
+	-- Save space by not sending alpha if it's not needed
+	if (sendAlpha) then
+		self:WriteBitLong(color.a, 8, false)
+	end
 end
 
 --- Writes a table, simply encoding it as a JSON string
@@ -186,29 +186,46 @@ end
 local writeFunctions = {
 	[NET_TYPE_NUMBER] = MESSAGE_WRITER_META.WriteFloat,
 	[NET_TYPE_STRING] = MESSAGE_WRITER_META.WriteString,
-    [NET_TYPE_BOOL] = MESSAGE_WRITER_META.WriteBool,
+	[NET_TYPE_BOOL] = MESSAGE_WRITER_META.WriteBool,
 	[NET_TYPE_NIL] = function(writer, value)
 	end,
-    [NET_TYPE_TABLE] = MESSAGE_WRITER_META.WriteTable,
+	[NET_TYPE_TABLE] = MESSAGE_WRITER_META.WriteTable,
 
-    [NET_TYPE_COLOR] = MESSAGE_WRITER_META.WriteColor,
-    [NET_TYPE_VECTOR] = MESSAGE_WRITER_META.WriteVector,
-    [NET_TYPE_ANGLE] = MESSAGE_WRITER_META.WriteAngle,
+	[NET_TYPE_COLOR] = MESSAGE_WRITER_META.WriteColor,
+	[NET_TYPE_VECTOR] = MESSAGE_WRITER_META.WriteVector,
+	[NET_TYPE_ANGLE] = MESSAGE_WRITER_META.WriteAngle,
 }
 
 --- Writes any type of data, with a type identifier
 --- @param data any
 function MESSAGE_WRITER_META:WriteType(data)
-    local typeId = toTypeId(data)
-    self:WriteBitLong(typeId, 8, false)
+	local typeId = toTypeId(data)
+	self:WriteBitLong(typeId, 8, false)
 
-    local writeFunction = writeFunctions[typeId]
+	local writeFunction = writeFunctions[typeId]
 
-    if (not writeFunction) then
-        error("Unsupported data type: " .. typeId)
-    end
+	if (not writeFunction) then
+		error("Unsupported data type: " .. typeId)
+	end
 
-    writeFunction(self, data)
+	writeFunction(self, data)
+end
+
+--- Writes a double-precision number using bytes
+--- @param number number
+function MESSAGE_WRITER_META:WriteDouble(number)
+	self:WriteData(
+		string.char(
+			(number >> 0) & 0xFF,
+			(number >> 8) & 0xFF,
+			(number >> 16) & 0xFF,
+			(number >> 24) & 0xFF,
+			(number >> 32) & 0xFF,
+			(number >> 40) & 0xFF,
+			(number >> 48) & 0xFF,
+			(number >> 56) & 0xFF
+		)
+	)
 end
 
 --[[
@@ -229,11 +246,11 @@ function MESSAGE_READER_META:ReadColor(withSentAlpha)
 	local b = self:ReadBitLong(8, false)
 	local a = 255
 
-    if (withSentAlpha) then
-        a = self:ReadBitLong(8, false)
-    end
+	if (withSentAlpha) then
+		a = self:ReadBitLong(8, false)
+	end
 
-    local color = Colors.Create()
+	local color = Colors.Create()
 	color:Initialize(r, g, b, a)
 
 	return color
@@ -275,6 +292,20 @@ function MESSAGE_READER_META:ReadType(typeId)
 	return readFunction(self)
 end
 
+--- Reads a double-precision number using bytes
+--- @return number
+function MESSAGE_READER_META:ReadDouble()
+	local data = self:ReadData(8)
+
+	local number = 0
+
+	for i = 1, 8 do
+		number = number | (data:byte(i) << ((i - 1) * 8))
+	end
+
+	return number
+end
+
 --[[
 	Networks Library functions for sending and receiving messages
 --]]
@@ -289,7 +320,7 @@ end
 --- to the same writer.
 --- @param messageName string
 --- @param unreliable boolean # Ignored, always reliable
---- @return MessageWriter
+--- @return MessageWriter?
 function Networks.Start(messageName, unreliable)
 	if (currentOutgoingMessageWriter) then
 		error("Networks.Start was called multiple times without sending the earlier message(s).")
@@ -297,6 +328,18 @@ function Networks.Start(messageName, unreliable)
 
 	currentOutgoingMessageWriter = MessageWriters.Create()
 	currentOutgoingMessageTypeId = Networks.NetworkStringToId(messageName)
+
+	if (currentOutgoingMessageTypeId == _E.INVALID_STRING_INDEX) then
+		debug.PrintError(
+			debug.traceback(
+				"Failed to send message with name " .. messageName .. " because it was not registered. "
+				.. "Make sure to call Networks.AddNetworkString with the message name well before sending it."
+			)
+		)
+		Networks.Cancel()
+
+		return nil
+	end
 
 	if (not currentOutgoingMessageTypeId) then
 		Networks.Cancel()
@@ -393,7 +436,11 @@ function Networks.HandleIncomingMessage(messageTypeId, bufferReader, sender)
 	local callback = registeredCallbacks[messageName]
 
 	if (not callback) then
-		printDebug("Warning: Unhandled message '" .. tostring(messageName) .. "' with network id " .. tostring(messageTypeId))
+		printDebug(
+			"Warning: Unhandled message '" .. tostring(messageName)
+			.. "' with network id " .. tostring(messageTypeId)
+		)
+
 		return
 	end
 

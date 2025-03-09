@@ -81,6 +81,8 @@ function CallGlobalVariableCallbacks(key, oldValue, newValue)
 end
 
 if (SERVER) then
+	Networks.AddNetworkString("GlobalNetworkedVariablesSet")
+
 	--- Sends a set of global networked variables to a player
 	--- @param player Player
 	--- @param networkedVariables table

@@ -302,8 +302,8 @@ bool IsExplosionTraceBlocked( trace_t *ptr )
         // All doors are push, but not all things that push are doors. This
         // narrows the search before we start to do classname compares.
         if ( FClassnameIs( ptr->m_pEnt, "prop_door_rotating" ) ||
-            FClassnameIs( ptr->m_pEnt, "func_door" ) ||
-            FClassnameIs( ptr->m_pEnt, "func_door_rotating" ) )
+             FClassnameIs( ptr->m_pEnt, "func_door" ) ||
+             FClassnameIs( ptr->m_pEnt, "func_door_rotating" ) )
             return true;
     }
 
@@ -592,10 +592,10 @@ void CGameRules::EndGameFrame( void )
     if ( !g_MultiDamage.IsClear() )
     {
         Warning( "Unapplied multidamage left in the system:\nTarget: %s\nInflictor: %s\nAttacker: %s\nDamage: %.2f\n",
-                g_MultiDamage.GetTarget()->GetDebugName(),
-                g_MultiDamage.GetInflictor()->GetDebugName(),
-                g_MultiDamage.GetAttacker()->GetDebugName(),
-                g_MultiDamage.GetDamage() );
+                 g_MultiDamage.GetTarget()->GetDebugName(),
+                 g_MultiDamage.GetInflictor()->GetDebugName(),
+                 g_MultiDamage.GetAttacker()->GetDebugName(),
+                 g_MultiDamage.GetDamage() );
         ApplyMultiDamage();
     }
 }
@@ -671,7 +671,7 @@ bool CGameRules::ShouldCollide( int collisionGroup0, int collisionGroup1 )
 
 #ifndef HL2MP
     if ( ( collisionGroup0 == COLLISION_GROUP_PLAYER || collisionGroup0 == COLLISION_GROUP_PLAYER_MOVEMENT ) &&
-        collisionGroup1 == COLLISION_GROUP_PUSHAWAY )
+         collisionGroup1 == COLLISION_GROUP_PUSHAWAY )
     {
         return false;
     }
@@ -734,8 +734,8 @@ bool CGameRules::ShouldCollide( int collisionGroup0, int collisionGroup1 )
     if ( collisionGroup1 == COLLISION_GROUP_PROJECTILE )
     {
         if ( collisionGroup0 == COLLISION_GROUP_DEBRIS ||
-            collisionGroup0 == COLLISION_GROUP_WEAPON ||
-            collisionGroup0 == COLLISION_GROUP_PROJECTILE )
+             collisionGroup0 == COLLISION_GROUP_WEAPON ||
+             collisionGroup0 == COLLISION_GROUP_PROJECTILE )
         {
             return false;
         }
@@ -748,8 +748,8 @@ bool CGameRules::ShouldCollide( int collisionGroup0, int collisionGroup1 )
     if ( collisionGroup1 == COLLISION_GROUP_WEAPON )
     {
         if ( collisionGroup0 == COLLISION_GROUP_VEHICLE ||
-            collisionGroup0 == COLLISION_GROUP_PLAYER ||
-            collisionGroup0 == COLLISION_GROUP_NPC )
+             collisionGroup0 == COLLISION_GROUP_PLAYER ||
+             collisionGroup0 == COLLISION_GROUP_NPC )
         {
             return false;
         }

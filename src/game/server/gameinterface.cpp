@@ -1618,6 +1618,8 @@ void CServerGameDLL::LevelShutdown( void )
 #ifdef LUA_SDK
     luasrc_shutdown();
 #endif
+
+    g_pNetworkManager->UnbindClients();
 }
 
 //-----------------------------------------------------------------------------
@@ -3066,6 +3068,7 @@ void CServerGameClients::ClientDisconnect( edict_t *pEdict )
     extern bool g_fGameOver;
 
     CBasePlayer *player = ( CBasePlayer * )CBaseEntity::Instance( pEdict );
+
     if ( player )
     {
         if ( !g_fGameOver )

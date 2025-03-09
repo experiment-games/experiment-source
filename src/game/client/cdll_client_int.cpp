@@ -2031,6 +2031,8 @@ void CHLClient::LevelShutdown( void )
 #ifdef LUA_SDK
     luasrc_shutdown();
 #endif
+
+    g_pNetworkManager->UnbindClients();
 }
 
 //-----------------------------------------------------------------------------

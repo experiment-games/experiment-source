@@ -275,5 +275,10 @@ LUA_BINDING_END()
 LUALIB_API int luaopen_NetworkStringTables( lua_State *L )
 {
     LUA_REGISTRATION_COMMIT_LIBRARY( NetworkStringTables );
+
+    lua_getglobal( L, LUA_ENAME );
+    lua_pushenum( L, INVALID_STRING_INDEX, "INVALID_STRING_INDEX" );
+    lua_pop( L, 1 );  // pop the _E table
+
     return 1;
 }

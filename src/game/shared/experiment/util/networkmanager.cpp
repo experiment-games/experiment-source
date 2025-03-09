@@ -40,33 +40,12 @@ bool CNetworkManager::BindClientServer( int playerIndex, INetChannel *netChannel
 
     return true;
 }
-
-void CNetworkManager::UnbindClientServer( int playerIndex )
-{
-    for ( int i = 0; i < m_ConnectedPlayers.Count(); i++ )
-    {
-        if ( m_ConnectedPlayers[i].playerIndex == playerIndex )
-        {
-            m_ConnectedPlayers.Remove( i );
-            return;
-        }
-    }
-}
 #else
 bool CNetworkManager::BindClient( INetChannel *netChannel )
 {
     if ( !netChannel )
     {
         return false;
-    }
-
-    for ( int i = 0; i < m_ConnectedPlayers.Count(); i++ )
-    {
-        if ( m_ConnectedPlayers[i].playerIndex == -1 )
-        {
-            m_ConnectedPlayers[i].netChannel = netChannel;
-            return true;
-        }
     }
 
     ConnectedPlayer_t player;
@@ -93,6 +72,11 @@ void CNetworkManager::UnbindClient()
     }
 }
 #endif
+
+void CNetworkManager::UnbindClients()
+{
+    m_ConnectedPlayers.Purge();
+}
 
 void CNetworkManager::SendClientToServerMessage( INetMessage *pMessage )
 {
