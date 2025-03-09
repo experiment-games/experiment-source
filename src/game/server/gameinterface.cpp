@@ -918,6 +918,16 @@ void CServerGameDLL::DLLShutdown( void )
     DisconnectTier1Libraries();
 }
 
+void CServerGameDLL::FireGameEvent( IGameEvent *event )
+{
+    const char *type = event->GetName();
+
+    if ( Q_strcmp( type, "player_disconnect" ) == 0 )
+    {
+        g_pNetworkManager->UnbindClient( event->GetInt( "userid" ) );
+    }
+}
+
 bool CServerGameDLL::ReplayInit( CreateInterfaceFn fnReplayFactory )
 {
 #if defined( REPLAY_ENABLED )
@@ -967,6 +977,8 @@ float CServerGameDLL::GetTickInterval( void ) const
 // This is called when a new game is started. (restart, map)
 bool CServerGameDLL::GameInit( void )
 {
+    ListenForGameEvent( "player_disconnect" );
+
     ResetGlobalState();
     engine->ServerCommand( "exec game.cfg\n" );
     engine->ServerExecute();

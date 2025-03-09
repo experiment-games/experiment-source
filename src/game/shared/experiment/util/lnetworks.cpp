@@ -36,7 +36,7 @@ LUA_BINDING_BEGIN( Networks, InternalSendToClients, "library", "Send a message t
 
             if ( client )
             {
-                g_pNetworkManager->SendServerToClientMessage( message, client->entindex() );
+                g_pNetworkManager->SendServerToClientMessage( message, client->GetUserID() );
             }
             else
             {
@@ -52,7 +52,7 @@ LUA_BINDING_BEGIN( Networks, InternalSendToClients, "library", "Send a message t
 
         if ( client )
         {
-            g_pNetworkManager->SendServerToClientMessage( message, client->entindex() );
+            g_pNetworkManager->SendServerToClientMessage( message, client->GetUserID() );
         }
         else
         {

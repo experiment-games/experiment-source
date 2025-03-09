@@ -12,33 +12,36 @@ static CNetworkManager s_NetworkManager;
 CNetworkManager *g_pNetworkManager = &s_NetworkManager;
 
 #ifdef GAME_DLL
-bool CNetworkManager::BindClientServer( int playerIndex, INetChannel *netChannel )
+bool CNetworkManager::BindClient( int userId, INetChannel *netChannel )
 {
     if ( !netChannel )
     {
         return false;
     }
 
-    for ( int i = 0; i < m_ConnectedPlayers.Count(); i++ )
-    {
-        if ( m_ConnectedPlayers[i].playerIndex == playerIndex )
-        {
-            m_ConnectedPlayers[i].netChannel = netChannel;
-            return true;
-        }
-    }
-
     ConnectedPlayer_t player;
-    player.playerIndex = playerIndex;
+    player.userId = userId;
     player.netChannel = netChannel;
     m_ConnectedPlayers.AddToTail( player );
 
     // Bind the handler that will get called on incoming messages
     CDynamicWriteNetworkMessage *netMessage = new CDynamicWriteNetworkMessage();
-    netMessage->SetSender( playerIndex );
+    netMessage->SetSender( userId );
     netChannel->RegisterMessage( netMessage );
 
     return true;
+}
+
+void CNetworkManager::UnbindClient( int userId )
+{
+    for ( int i = 0; i < m_ConnectedPlayers.Count(); i++ )
+    {
+        if ( m_ConnectedPlayers[i].userId == userId )
+        {
+            m_ConnectedPlayers.Remove( i );
+            break;
+        }
+    }
 }
 #else
 bool CNetworkManager::BindClient( INetChannel *netChannel )
@@ -49,7 +52,7 @@ bool CNetworkManager::BindClient( INetChannel *netChannel )
     }
 
     ConnectedPlayer_t player;
-    player.playerIndex = -1;
+    player.userId = -1;
     player.netChannel = netChannel;
     m_ConnectedPlayers.AddToTail( player );
 
@@ -64,7 +67,7 @@ void CNetworkManager::UnbindClient()
 {
     for ( int i = 0; i < m_ConnectedPlayers.Count(); i++ )
     {
-        if ( m_ConnectedPlayers[i].playerIndex == -1 )
+        if ( m_ConnectedPlayers[i].userId == -1 )
         {
             m_ConnectedPlayers.Remove( i );
             return;
@@ -87,7 +90,7 @@ void CNetworkManager::SendClientToServerMessage( INetMessage *pMessage )
 
     for ( int i = 0; i < m_ConnectedPlayers.Count(); i++ )
     {
-        if ( m_ConnectedPlayers[i].playerIndex == -1 )
+        if ( m_ConnectedPlayers[i].userId == -1 )
         {
             m_ConnectedPlayers[i].netChannel->SendNetMsg( *pMessage, true );
             return;
@@ -104,14 +107,11 @@ void CNetworkManager::BroadcastServerToClientsMessage( INetMessage *pMessage )
 
     for ( int i = 0; i < m_ConnectedPlayers.Count(); i++ )
     {
-        if ( m_ConnectedPlayers[i].playerIndex != -1 )
-        {
-            m_ConnectedPlayers[i].netChannel->SendNetMsg( *pMessage, true );
-        }
+        m_ConnectedPlayers[i].netChannel->SendNetMsg( *pMessage, true );
     }
 }
 
-void CNetworkManager::SendServerToClientMessage( INetMessage *pMessage, int playerIndex )
+void CNetworkManager::SendServerToClientMessage( INetMessage *pMessage, int userId )
 {
     if ( !pMessage )
     {
@@ -120,7 +120,7 @@ void CNetworkManager::SendServerToClientMessage( INetMessage *pMessage, int play
 
     for ( int i = 0; i < m_ConnectedPlayers.Count(); i++ )
     {
-        if ( m_ConnectedPlayers[i].playerIndex == playerIndex )
+        if ( m_ConnectedPlayers[i].userId == userId )
         {
             m_ConnectedPlayers[i].netChannel->SendNetMsg( *pMessage, true );
             return;

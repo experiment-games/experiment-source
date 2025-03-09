@@ -74,9 +74,9 @@ void CDynamicWriteNetworkMessage::SetBuffer( const char* buffer, int bufferLengt
     Q_memcpy( ( void* )m_pBuffer, buffer, bufferLength );
 }
 
-void CDynamicWriteNetworkMessage::SetSender( int playerIndex )
+void CDynamicWriteNetworkMessage::SetSender( int userId )
 {
-    m_iSender = playerIndex;
+    m_iSender = userId;
 }
 
 bool CDynamicWriteNetworkMessage::Process( void )
@@ -86,7 +86,7 @@ bool CDynamicWriteNetworkMessage::Process( void )
 #ifdef GAME_DLL
     if ( m_iSender > -1 )
     {
-        player = UTIL_PlayerByIndex( m_iSender );
+        player = UTIL_PlayerByUserId( m_iSender );
 
         if ( !player )
         {

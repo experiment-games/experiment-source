@@ -221,7 +221,7 @@ void __fastcall DetourClientConnect(
     info.netChannel = pNetChannel;
     connectedClients.Insert( userID, info );
 
-    g_pNetworkManager->BindClientServer( entityIndex, pNetChannel );
+    g_pNetworkManager->BindClient( userID, pNetChannel );
 }
 
 #pragma warning( default : 4189 )  // Enable warning about unused variable

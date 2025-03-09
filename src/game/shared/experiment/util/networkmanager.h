@@ -18,7 +18,7 @@
 
 struct ConnectedPlayer_t
 {
-    int playerIndex;
+    int userId;
     INetChannel *netChannel;
 };
 
@@ -29,7 +29,8 @@ class CNetworkManager
 {
    public:
 #ifdef GAME_DLL
-    virtual bool BindClientServer( int playerIndex, INetChannel *netChannel );
+    virtual bool BindClient( int userId, INetChannel *netChannel );
+    virtual void UnbindClient( int userId );
 #else
     virtual bool BindClient( INetChannel *netChannel );
     virtual void UnbindClient();
@@ -39,7 +40,7 @@ class CNetworkManager
 
     virtual void SendClientToServerMessage( INetMessage *pMessage );
     virtual void BroadcastServerToClientsMessage( INetMessage *pMessage );
-    virtual void SendServerToClientMessage( INetMessage *pMessage, int playerIndex );
+    virtual void SendServerToClientMessage( INetMessage *pMessage, int userId );
 
    private:
     CUtlVector< ConnectedPlayer_t > m_ConnectedPlayers;
