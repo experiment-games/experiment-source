@@ -74,7 +74,7 @@ void CDynamicWriteNetworkMessage::SetBuffer( const char* buffer, int bufferLengt
     Q_memcpy( ( void* )m_pBuffer, buffer, bufferLength );
 }
 
-void CDynamicWriteNetworkMessage::SetSender(int playerIndex)
+void CDynamicWriteNetworkMessage::SetSender( int playerIndex )
 {
     m_iSender = playerIndex;
 }
@@ -83,12 +83,20 @@ bool CDynamicWriteNetworkMessage::Process( void )
 {
     CBasePlayer* player = nullptr;
 
+#ifdef GAME_DLL
     if ( m_iSender > -1 )
     {
         player = UTIL_PlayerByIndex( m_iSender );
-        // TODO: This happens if the player hasn't spawned yet :/
-        // Assert( player != nullptr );  // TODO: What if there's no player for this client? How do we handle it?
+
+        if ( !player )
+        {
+            // Experiment; TODO: This happens when messages are sent before the player has fully
+            //                   spawned and gotten their entity. :/ Unsure how to handle, other
+            //                   than just not processing the message for now.
+            return true;
+        }
     }
+#endif
 
     if ( L )
     {
