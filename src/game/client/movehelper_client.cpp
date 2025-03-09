@@ -19,7 +19,7 @@ extern CMoveData* g_pMoveData;
 
 class CMoveHelperClient : public IMoveHelper
 {
-    public:
+   public:
     CMoveHelperClient( void );
     virtual ~CMoveHelperClient( void );
 
@@ -46,7 +46,7 @@ class CMoveHelperClient : public IMoveHelper
 
     virtual void SetHost( CBasePlayer* host ) OVERRIDE;
 
-    private:
+   private:
     // results, tallied on client and server, but only used by server to run SV_Impact.
     // we store off our velocity in the trace_t structure so that we can determine results
     // of shoving boxes etc. around.
@@ -57,7 +57,7 @@ class CMoveHelperClient : public IMoveHelper
 
         touchlist_t() {}
 
-        private:
+       private:
         touchlist_t( const touchlist_t& src );
     };
 
@@ -190,12 +190,12 @@ void CMoveHelperClient::ProcessImpacts( void )
     }
 
     // misyl: Debug
-    if ( vOldLocalVel != vOldAbsVel )
-    {
-        Msg( "%d\n", gpGlobals->tickcount );
-        Msg( "vOldLocalVel: %f %f %f\n", vOldLocalVel.x, vOldLocalVel.y, vOldLocalVel.z );
-        Msg( "vOldAbsVel: %f %f %f\n", vOldAbsVel.x, vOldAbsVel.y, vOldAbsVel.z );
-    }
+    //	if ( vOldLocalVel != vOldAbsVel )
+    // 	{
+    // 		Msg( "%d\n", gpGlobals->tickcount );
+    // 		Msg( "vOldLocalVel: %f %f %f\n", vOldLocalVel.x, vOldLocalVel.y, vOldLocalVel.z );
+    // 		Msg( "vOldAbsVel: %f %f %f\n", vOldAbsVel.x, vOldAbsVel.y, vOldAbsVel.z );
+    // 	}
     // Restore the velocity
     m_pHost->SetAbsVelocity( vOldAbsVel );
     // m_pHost->SetLocalVelocity( vOldLocalVel );

@@ -31,6 +31,7 @@
 #include "tf_mapinfo.h"
 #include "tf_dropped_weapon.h"
 #include "tf_weapon_passtime_gun.h"
+#include "tf_weapon_rocketpack.h"
 #include <functional>
 
 // Client specific.
@@ -299,8 +300,10 @@ void RecvProxy_BuildablesListChanged( const CRecvProxyData *pData, void *pStruct
 
 #ifdef CLIENT_DLL
 
+// clang-format off
+
 BEGIN_RECV_TABLE_NOBASE( localplayerscoring_t, DT_TFPlayerScoringDataExclusive )
-RecvPropInt( RECVINFO( m_iCaptures ) ),
+    RecvPropInt( RECVINFO( m_iCaptures ) ),
     RecvPropInt( RECVINFO( m_iDefenses ) ),
     RecvPropInt( RECVINFO( m_iKills ) ),
     RecvPropInt( RECVINFO( m_iDeaths ) ),
@@ -320,12 +323,12 @@ RecvPropInt( RECVINFO( m_iCaptures ) ),
     RecvPropInt( RECVINFO( m_iBonusPoints ) ),
     RecvPropInt( RECVINFO( m_iDamageDone ) ),
     RecvPropInt( RECVINFO( m_iCrits ) ),
-    END_RECV_TABLE()
+END_RECV_TABLE()
 
-        EXTERN_RECV_TABLE( DT_TFPlayerConditionListExclusive );
+EXTERN_RECV_TABLE( DT_TFPlayerConditionListExclusive );
 
 BEGIN_RECV_TABLE_NOBASE( CTFPlayerShared, DT_TFPlayerSharedLocal )
-RecvPropInt( RECVINFO( m_nDesiredDisguiseTeam ) ),
+    RecvPropInt( RECVINFO( m_nDesiredDisguiseTeam ) ),
     RecvPropInt( RECVINFO( m_nDesiredDisguiseClass ) ),
     RecvPropTime( RECVINFO( m_flStealthNoAttackExpire ) ),
     RecvPropTime( RECVINFO( m_flStealthNextChangeTime ) ),
@@ -339,17 +342,17 @@ RecvPropInt( RECVINFO( m_nDesiredDisguiseTeam ) ),
     RecvPropArray3( RECVINFO_ARRAY( m_bPlayerDominatingMe ), RecvPropBool( RECVINFO( m_bPlayerDominatingMe[0] ) ) ),
     RecvPropDataTable( RECVINFO_DT( m_ScoreData ), 0, &REFERENCE_RECV_TABLE( DT_TFPlayerScoringDataExclusive ) ),
     RecvPropDataTable( RECVINFO_DT( m_RoundScoreData ), 0, &REFERENCE_RECV_TABLE( DT_TFPlayerScoringDataExclusive ) ),
-    END_RECV_TABLE()
+END_RECV_TABLE()
 
-        BEGIN_RECV_TABLE_NOBASE( condition_source_t, DT_TFPlayerConditionSource )
+BEGIN_RECV_TABLE_NOBASE( condition_source_t, DT_TFPlayerConditionSource )
     // RecvPropInt( RECVINFO( m_nPreventedDamageFromCondition ) ),
     // RecvPropFloat( RECVINFO( m_flExpireTime ) ),
     RecvPropEHandle( RECVINFO( m_pProvider ) ),
     // RecvPropBool( RECVINFO( m_bPrevActive ) ),
-    END_RECV_TABLE()
+END_RECV_TABLE()
 
-        BEGIN_RECV_TABLE_NOBASE( CTFPlayerShared, DT_TFPlayerShared )
-            RecvPropInt( RECVINFO( m_nPlayerCond ) ),
+BEGIN_RECV_TABLE_NOBASE( CTFPlayerShared, DT_TFPlayerShared )
+    RecvPropInt( RECVINFO( m_nPlayerCond ) ),
     RecvPropInt( RECVINFO( m_bJumping ) ),
     RecvPropInt( RECVINFO( m_nNumHealers ) ),
     RecvPropInt( RECVINFO( m_iCritMult ) ),
@@ -432,10 +435,10 @@ RecvPropInt( RECVINFO( m_nDesiredDisguiseTeam ) ),
 
     RecvPropFloat( RECVINFO( m_flHolsterAnimTime ) ),
     RecvPropEHandle( RECVINFO( m_hSwitchTo ) ),
-    END_RECV_TABLE()
+END_RECV_TABLE()
 
-        BEGIN_PREDICTION_DATA_NO_BASE( CTFPlayerShared )
-            DEFINE_PRED_FIELD( m_nPlayerState, FIELD_INTEGER, FTYPEDESC_INSENDTABLE ),
+BEGIN_PREDICTION_DATA_NO_BASE( CTFPlayerShared )
+    DEFINE_PRED_FIELD( m_nPlayerState, FIELD_INTEGER, FTYPEDESC_INSENDTABLE ),
     DEFINE_PRED_FIELD( m_nPlayerCond, FIELD_INTEGER, FTYPEDESC_INSENDTABLE ),
     DEFINE_PRED_FIELD( m_flCloakMeter, FIELD_FLOAT, FTYPEDESC_INSENDTABLE ),
     DEFINE_PRED_FIELD( m_flRageMeter, FIELD_FLOAT, FTYPEDESC_INSENDTABLE ),
@@ -466,14 +469,17 @@ RecvPropInt( RECVINFO( m_nDesiredDisguiseTeam ) ),
     DEFINE_PRED_FIELD( m_bHasPasstimeBall, FIELD_BOOLEAN, FTYPEDESC_INSENDTABLE ),
     DEFINE_PRED_FIELD( m_bIsTargetedForPasstimePass, FIELD_BOOLEAN, FTYPEDESC_INSENDTABLE ),  // does this belong here?
     DEFINE_PRED_FIELD( m_askForBallTime, FIELD_FLOAT, FTYPEDESC_INSENDTABLE ),
+    DEFINE_PRED_FIELD( m_flHolsterAnimTime, FIELD_FLOAT, FTYPEDESC_INSENDTABLE ),
     DEFINE_PRED_ARRAY( m_flItemChargeMeter, FIELD_FLOAT, LAST_LOADOUT_SLOT_WITH_CHARGE_METER, FTYPEDESC_INSENDTABLE ),
-    END_PREDICTION_DATA()
+    DEFINE_PRED_FIELD( m_iStunIndex, FIELD_INTEGER, FTYPEDESC_INSENDTABLE ),
+    DEFINE_PRED_FIELD( m_bScattergunJump, FIELD_BOOLEAN, 0 ),
+END_PREDICTION_DATA()
 
 // Server specific.
 #else
 
 BEGIN_SEND_TABLE_NOBASE( localplayerscoring_t, DT_TFPlayerScoringDataExclusive )
-SendPropInt( SENDINFO( m_iCaptures ), 10, SPROP_UNSIGNED ),
+    SendPropInt( SENDINFO( m_iCaptures ), 10, SPROP_UNSIGNED ),
     SendPropInt( SENDINFO( m_iDefenses ), 10, SPROP_UNSIGNED ),
     SendPropInt( SENDINFO( m_iKills ), 10, SPROP_UNSIGNED ),
     SendPropInt( SENDINFO( m_iDeaths ), 10, SPROP_UNSIGNED ),
@@ -493,11 +499,12 @@ SendPropInt( SENDINFO( m_iCaptures ), 10, SPROP_UNSIGNED ),
     SendPropInt( SENDINFO( m_iKillAssists ), 12, SPROP_UNSIGNED ),
     SendPropInt( SENDINFO( m_iBonusPoints ), 10, SPROP_UNSIGNED ),
     SendPropInt( SENDINFO( m_iPoints ), 10, SPROP_UNSIGNED ),
-    END_SEND_TABLE()
+END_SEND_TABLE()
 
-        EXTERN_SEND_TABLE( DT_TFPlayerConditionListExclusive );
+EXTERN_SEND_TABLE( DT_TFPlayerConditionListExclusive );
+
 BEGIN_SEND_TABLE_NOBASE( CTFPlayerShared, DT_TFPlayerSharedLocal )
-SendPropInt( SENDINFO( m_nDesiredDisguiseTeam ), 3, SPROP_UNSIGNED ),
+    SendPropInt( SENDINFO( m_nDesiredDisguiseTeam ), 3, SPROP_UNSIGNED ),
     SendPropInt( SENDINFO( m_nDesiredDisguiseClass ), 4, SPROP_UNSIGNED ),
     SendPropBool( SENDINFO( m_bLastDisguisedAsOwnTeam ) ),
     SendPropTime( SENDINFO( m_flStealthNoAttackExpire ) ),
@@ -511,17 +518,17 @@ SendPropInt( SENDINFO( m_nDesiredDisguiseTeam ), 3, SPROP_UNSIGNED ),
     SendPropArray3( SENDINFO_ARRAY3( m_bPlayerDominatingMe ), SendPropBool( SENDINFO_ARRAY( m_bPlayerDominatingMe ) ) ),
     SendPropDataTable( SENDINFO_DT( m_ScoreData ), &REFERENCE_SEND_TABLE( DT_TFPlayerScoringDataExclusive ) ),
     SendPropDataTable( SENDINFO_DT( m_RoundScoreData ), &REFERENCE_SEND_TABLE( DT_TFPlayerScoringDataExclusive ) ),
-    END_SEND_TABLE()
+END_SEND_TABLE()
 
-        BEGIN_SEND_TABLE_NOBASE( condition_source_t, DT_TFPlayerConditionSource )
+BEGIN_SEND_TABLE_NOBASE( condition_source_t, DT_TFPlayerConditionSource )
     // SendPropInt( SENDINFO( m_nPreventedDamageFromCondition ) ),
     // SendPropFloat( SENDINFO( m_flExpireTime ) ),
     SendPropEHandle( SENDINFO( m_pProvider ) ),
     // SendPropBool( SENDINFO( m_bPrevActive ) ),
-    END_SEND_TABLE()
+END_SEND_TABLE()
 
-        BEGIN_SEND_TABLE_NOBASE( CTFPlayerShared, DT_TFPlayerShared )
-            SendPropInt( SENDINFO( m_nPlayerCond ), -1, SPROP_VARINT | SPROP_UNSIGNED ),
+BEGIN_SEND_TABLE_NOBASE( CTFPlayerShared, DT_TFPlayerShared )
+    SendPropInt( SENDINFO( m_nPlayerCond ), -1, SPROP_VARINT | SPROP_UNSIGNED ),
     SendPropInt( SENDINFO( m_bJumping ), 1, SPROP_UNSIGNED ),
     SendPropInt( SENDINFO( m_nNumHealers ), 5, SPROP_UNSIGNED ),
     SendPropInt( SENDINFO( m_iCritMult ), 8, SPROP_UNSIGNED ),
@@ -605,11 +612,13 @@ SendPropInt( SENDINFO( m_nDesiredDisguiseTeam ), 3, SPROP_UNSIGNED ),
 
     SendPropFloat( SENDINFO( m_flHolsterAnimTime ) ),
     SendPropEHandle( SENDINFO( m_hSwitchTo ) ),
-    END_SEND_TABLE()
+END_SEND_TABLE()
 
 #endif
 
-        extern void HandleRageGain( CTFPlayer *pPlayer, unsigned int iRequiredBuffFlags, float flDamage, float fInverseRageGainScale );
+    // clang-format on
+
+    extern void HandleRageGain( CTFPlayer *pPlayer, unsigned int iRequiredBuffFlags, float flDamage, float fInverseRageGainScale );
 
 CTFWearableDemoShield *GetEquippedDemoShield( CTFPlayer *pPlayer )
 {
@@ -776,6 +785,8 @@ CTFPlayerShared::CTFPlayerShared()
     m_flInvisibility = 0.0f;
     m_flPrevInvisibility = 0.f;
     m_flTmpDamageBonusAmount = 1.0f;
+
+    m_bScattergunJump = false;
 
     m_bFeignDeathReady = false;
 
@@ -998,7 +1009,6 @@ void CTFPlayerShared::Spawn( void )
     SetRevengeCrits( 0 );
 
     m_PlayerStuns.RemoveAll();
-    m_iStunIndex = -1;
 
     m_iPasstimeThrowAnimState = PASSTIME_THROW_ANIM_NONE;
     m_bHasPasstimeBall = false;
@@ -1007,6 +1017,7 @@ void CTFPlayerShared::Spawn( void )
 #else
     m_bSyncingConditions = false;
 #endif
+    m_iStunIndex = -1;
     m_bKingRuneBuffActive = false;
 
     // Reset our assist here incase something happens before we get killed
@@ -3079,9 +3090,48 @@ void CTFPlayerShared::ConditionThink( void )
 
     VehicleThink();
 
-    if ( m_pOuter->GetFlags() & FL_ONGROUND && InCond( TF_COND_PARACHUTE_ACTIVE ) )
+    if ( m_pOuter->GetFlags() & FL_ONGROUND )
     {
-        RemoveCond( TF_COND_PARACHUTE_ACTIVE );
+        // Airborne conditions end on ground contact
+        RemoveCond( TF_COND_KNOCKED_INTO_AIR );
+        RemoveCond( TF_COND_AIR_CURRENT );
+
+        if ( InCond( TF_COND_PARACHUTE_ACTIVE ) )
+        {
+            RemoveCond( TF_COND_PARACHUTE_ACTIVE );
+        }
+
+        if ( InCond( TF_COND_ROCKETPACK ) )
+        {
+            // Make sure we're still not dealing with launch, where it's possible
+            // to hit your head and fall to the ground before the second stage.
+            CTFWeaponBase *pRocketPack = m_pOuter->Weapon_OwnsThisID( TF_WEAPON_ROCKETPACK );
+            if ( pRocketPack )
+            {
+                if ( gpGlobals->curtime > ( static_cast< CTFRocketPack * >( pRocketPack )->GetRefireTime() ) )
+                {
+#ifdef CLIENT_DLL
+                    if ( prediction->IsFirstTimePredicted() )
+#endif
+                    {
+                        CPASAttenuationFilter filter( m_pOuter );
+                        filter.UsePredictionRules();
+                        m_pOuter->EmitSound( filter, m_pOuter->entindex(), "Weapon_RocketPack.BoostersShutdown" );
+                        m_pOuter->EmitSound( filter, m_pOuter->entindex(), "Weapon_RocketPack.Land" );
+                    }
+                    RemoveCond( TF_COND_ROCKETPACK );
+
+#ifdef GAME_DLL
+                    IGameEvent *pEvent = gameeventmanager->CreateEvent( "rocketpack_landed" );
+                    if ( pEvent )
+                    {
+                        pEvent->SetInt( "userid", m_pOuter->GetUserID() );
+                        gameeventmanager->FireEvent( pEvent );
+                    }
+#endif
+                }
+            }
+        }
     }
 
     // See if we should be pulsing our radius heal
@@ -7271,6 +7321,8 @@ void CTFPlayerShared::OnRemoveStunned( void )
     m_iStunFlags = 0;
     m_hStunner = NULL;
 
+    m_iStunIndex = -1;
+
 #ifdef CLIENT_DLL
     if ( m_pOuter->m_pStunnedEffect )
     {
@@ -7280,7 +7332,6 @@ void CTFPlayerShared::OnRemoveStunned( void )
         m_pOuter->m_pStunnedEffect = NULL;
     }
 #else
-    m_iStunIndex = -1;
     m_PlayerStuns.RemoveAll();
 #endif
 
@@ -9572,15 +9623,16 @@ bool CTFPlayerShared::AddToSpyCloakMeter( float val, bool bForce )
 
 #endif
 
-#ifdef GAME_DLL
 //-----------------------------------------------------------------------------
 // Purpose: Stun & Snare Application
 //-----------------------------------------------------------------------------
 void CTFPlayerShared::StunPlayer( float flTime, float flReductionAmount, int iStunFlags, CTFPlayer *pAttacker )
 {
+#ifdef GAME_DLL
     // Insanity prevention
     if ( ( m_PlayerStuns.Count() + 1 ) >= 250 )
         return;
+#endif
 
     if ( InCond( TF_COND_PHASE ) || InCond( TF_COND_PASSTIME_INTERCEPTION ) )
         return;
@@ -9591,11 +9643,13 @@ void CTFPlayerShared::StunPlayer( float flTime, float flReductionAmount, int iSt
     if ( InCond( TF_COND_INVULNERABLE_HIDE_UNLESS_DAMAGED ) && !InCond( TF_COND_MVM_BOT_STUN_RADIOWAVE ) )
         return;
 
+#ifdef GAME_DLL
     if ( pAttacker && TFGameRules() && TFGameRules()->IsTruceActive() && pAttacker->IsTruceValidForEnt() )
     {
         if ( ( pAttacker->GetTeamNumber() == TF_TEAM_RED ) || ( pAttacker->GetTeamNumber() == TF_TEAM_BLUE ) )
             return;
     }
+#endif
 
     float flRemapAmount = RemapValClamped( flReductionAmount, 0.0, 1.0, 0, 255 );
 
@@ -9622,10 +9676,13 @@ void CTFPlayerShared::StunPlayer( float flTime, float flReductionAmount, int iSt
     }
     else if ( GetActiveStunInfo() )
     {
+#ifdef GAME_DLL
         // Something yanked our TF_COND_STUNNED in an unexpected way
         if ( !HushAsserts() )
             Assert( !"Something yanked out TF_COND_STUNNED." );
         m_PlayerStuns.RemoveAll();
+#endif
+        m_iStunIndex = -1;
         return;
     }
 
@@ -9647,7 +9704,16 @@ void CTFPlayerShared::StunPlayer( float flTime, float flReductionAmount, int iSt
         // This can happen when stuns use TF_STUN_CONTROLS or TF_STUN_LOSER_STATE.
         float flOldStun = GetActiveStunInfo() ? GetActiveStunInfo()->flStunAmount : 0.f;
 
+#ifdef GAME_DLL
         m_iStunIndex = m_PlayerStuns.AddToTail( stunEvent );
+#else
+        m_iStunIndex = 0;
+
+        if ( prediction->IsFirstTimePredicted() )
+        {
+            m_ActiveStunInfo = stunEvent;
+        }
+#endif
 
         if ( flOldStun > flRemapAmount )
         {
@@ -9657,10 +9723,18 @@ void CTFPlayerShared::StunPlayer( float flTime, float flReductionAmount, int iSt
     else
     {
         // Done for now
+#ifdef GAME_DLL
         m_PlayerStuns.AddToTail( stunEvent );
+#else
+        if ( prediction->IsFirstTimePredicted() )
+        {
+            m_ActiveStunInfo = stunEvent;
+        }
+#endif
         return;
     }
 
+#ifdef GAME_DLL
     // Add in extra time when TF_STUN_CONTROLS
     if ( GetActiveStunInfo()->iStunFlags & TF_STUN_CONTROLS )
     {
@@ -9714,10 +9788,10 @@ void CTFPlayerShared::StunPlayer( float flTime, float flReductionAmount, int iSt
         m_pOuter->ClearExpression();
         m_pOuter->ClearWeaponFireScene();
     }
+#endif
 
     AddCond( TF_COND_STUNNED, -1.f, pAttacker );
 }
-#endif  // GAME_DLL
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns the intensity of the current stun effect, if we have the type of stun indicated.

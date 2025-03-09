@@ -289,7 +289,7 @@ IClientMode *g_pClientMode = NULL;
 
 class CTFModeManager : public IVModeManager
 {
-    public:
+   public:
     virtual void Init();
     virtual void SwitchMode( bool commander, bool force ) {}
     virtual void LevelInit( const char *newmap );
@@ -522,6 +522,7 @@ void ClientModeTFNormal::Shutdown()
     {
         RemoveFilesInPath( "materials/temp" );
         RemoveFilesInPath( "download/user_custom" );
+        RemoveFilesInPath( "sound/temp" );
     }
 
     DestroyStatsSummaryPanel();
@@ -593,9 +594,9 @@ bool ClientModeTFNormal::ShouldDrawCrosshair()
         return false;
 
     if ( pPlayer->GetPlayerClass() &&
-        pPlayer->GetPlayerClass()->GetClassIndex() == TF_CLASS_SNIPER &&
-        pPlayer->m_Shared.InCond( TF_COND_ZOOMED ) &&
-        tf_hud_no_crosshair_on_scope_zoom.GetBool() )
+         pPlayer->GetPlayerClass()->GetClassIndex() == TF_CLASS_SNIPER &&
+         pPlayer->m_Shared.InCond( TF_COND_ZOOMED ) &&
+         tf_hud_no_crosshair_on_scope_zoom.GetBool() )
     {
         return false;
     }
@@ -1339,8 +1340,8 @@ void ClientModeTFNormal::FireGameEvent( IGameEvent *event )
 
         // Don't show a hint if we're dead, we've already done it the maximum amount of times, or if it's too soon.
         if ( pLocalPlayer && pLocalPlayer->IsAlive() &&
-            ( tf_taunt_always_show_hint.GetBool() ||
-                ( tf_highfive_hintcount.GetInt() < TF_HIGHFIVE_HINT_MAXHINTS && gpGlobals->curtime > m_flNextAllowedHighFiveHintTime ) ) )
+             ( tf_taunt_always_show_hint.GetBool() ||
+               ( tf_highfive_hintcount.GetInt() < TF_HIGHFIVE_HINT_MAXHINTS && gpGlobals->curtime > m_flNextAllowedHighFiveHintTime ) ) )
         {
             int entindex = event->GetInt( "entindex" );
             C_BasePlayer *pHighFiveInitiator = UTIL_PlayerByIndex( entindex );
@@ -1652,11 +1653,11 @@ void OnAskFavoriteDialogButtonPressed( bool bConfirm, void *pContext )
     {
         // add last server to our favorites
         steamapicontext->SteamMatchmaking()->AddFavoriteGame( steamapicontext->SteamUtils()->GetAppID(),
-                                                            GetClientModeTFNormal()->GetLastConnectedServerIP(),
-                                                            GetClientModeTFNormal()->GetLastConnectedServerPort(),
-                                                            GetClientModeTFNormal()->GetLastConnectedServerPort(),
-                                                            k_unFavoriteFlagFavorite,
-                                                            CRTime::RTime32TimeCur() );
+                                                              GetClientModeTFNormal()->GetLastConnectedServerIP(),
+                                                              GetClientModeTFNormal()->GetLastConnectedServerPort(),
+                                                              GetClientModeTFNormal()->GetLastConnectedServerPort(),
+                                                              k_unFavoriteFlagFavorite,
+                                                              CRTime::RTime32TimeCur() );
 
         // Send it to the GC
         GCSDK::CGCMsg< MsgGCServerBrowser_Server_t > msg( k_EMsgGCServerBrowser_FavoriteServer );
@@ -1677,8 +1678,8 @@ void OnAskBlacklistDialogButtonPressed( bool bConfirm, void *pContext )
         blackList.LoadServersFromFile( BLACKLIST_DEFAULT_SAVE_FILE, false );
 
         blackList.AddServer( GetClientModeTFNormal()->GetLastConnectedServerName(),
-                            GetClientModeTFNormal()->GetLastConnectedServerIP(),
-                            GetClientModeTFNormal()->GetLastConnectedServerPort() );
+                             GetClientModeTFNormal()->GetLastConnectedServerIP(),
+                             GetClientModeTFNormal()->GetLastConnectedServerPort() );
 
         blackList.SaveToFile( BLACKLIST_DEFAULT_SAVE_FILE );
 
@@ -1738,8 +1739,8 @@ void ClientModeTFNormal::AskFavoriteOrBlacklist() const
                     }
 
                     if ( ( appID == 0 || appID == steamapicontext->SteamUtils()->GetAppID() ) &&
-                        IP == GetLastConnectedServerIP() &&
-                        connPort == GetLastConnectedServerPort() )
+                         IP == GetLastConnectedServerIP() &&
+                         connPort == GetLastConnectedServerPort() )
                     {
                         // already have this server in our favorites - don't ask again
                         return;
@@ -1833,7 +1834,7 @@ void ClientModeTFNormal::Update()
         bool bNeedHUD = false;
         bool bNeedSpectator = false;
         m_pViewport->ForEachPanel( [&]( IViewPortPanel *pPanel )
-                                    {
+                                   {
             if ( pPanel && pPanel->IsVisible() )
             {
                 auto actionset = pPanel->GetPreferredActionSet();
@@ -2219,7 +2220,7 @@ void ClientModeTFNormal::UpdateSteamRichPresence() const
     // don't want to override -- except if we're in a match which cannot be ad-hoc joined.
     wchar_t wzStatus[256] = { 0 };
     if ( ( bInMatch || ( !bConnecting && !bConnected ) ) &&
-        BuildRichPresenceStatus( wzStatus, pszState, pszMatchGroupLoc, pszPrettyMap ) )
+         BuildRichPresenceStatus( wzStatus, pszState, pszMatchGroupLoc, pszPrettyMap ) )
     {
         char szStatus[256] = { 0 };
         V_UnicodeToUTF8( wzStatus, szStatus, sizeof( szStatus ) );

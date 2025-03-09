@@ -14,8 +14,10 @@
 #include "tf_gamerules.h"
 #endif
 
+// clang-format off
+
 BEGIN_DATADESC( CTeamControlPointMaster )
-DEFINE_KEYFIELD( m_bDisabled, FIELD_BOOLEAN, "StartDisabled" ),
+    DEFINE_KEYFIELD( m_bDisabled, FIELD_BOOLEAN, "StartDisabled" ),
     DEFINE_KEYFIELD( m_iszCapLayoutInHUD, FIELD_STRING, "caplayout" ),
     DEFINE_KEYFIELD( m_iInvalidCapWinner, FIELD_INTEGER, "cpm_restrict_team_cap_win" ),
     DEFINE_KEYFIELD( m_bSwitchTeamsOnWin, FIELD_BOOLEAN, "switch_teams" ),
@@ -51,9 +53,11 @@ DEFINE_KEYFIELD( m_bDisabled, FIELD_BOOLEAN, "StartDisabled" ),
     DEFINE_OUTPUT( m_OnWonByTeam1, "OnWonByTeam1" ),
     DEFINE_OUTPUT( m_OnWonByTeam2, "OnWonByTeam2" ),
 
-    END_DATADESC()
+END_DATADESC()
 
-        LINK_ENTITY_TO_CLASS( team_control_point_master, CTeamControlPointMaster );
+LINK_ENTITY_TO_CLASS( team_control_point_master, CTeamControlPointMaster );
+
+// clang-format on
 
 ConVar mp_time_between_capscoring( "mp_time_between_capscoring", "30", FCVAR_GAMEDLL, "Delay between scoring of owned capture points.", true, 1, false, 0 );
 
@@ -396,7 +400,7 @@ bool CTeamControlPointMaster::SelectSpecificRound( void )
             if ( pRound )
             {
                 if ( ( m_ControlPointRounds.Find( pRound ) == m_ControlPointRounds.InvalidIndex() ) ||
-                    ( !pRound->IsPlayable() && !pRound->MakePlayable() ) )
+                     ( !pRound->IsPlayable() && !pRound->MakePlayable() ) )
                 {
                     pRound = NULL;
                 }
@@ -668,8 +672,8 @@ void CTeamControlPointMaster::CheckWinConditions( void )
         // this will reset the round and will reset all the points
         int iWinners = TeamOwnsAllPoints();
         if ( ( m_iInvalidCapWinner != 1 ) &&
-            ( iWinners >= FIRST_GAME_TEAM ) &&
-            ( iWinners != m_iInvalidCapWinner ) )
+             ( iWinners >= FIRST_GAME_TEAM ) &&
+             ( iWinners != m_iInvalidCapWinner ) )
         {
             bool bWinner = true;
 
@@ -1097,7 +1101,7 @@ int CTeamControlPointMaster::GetBaseControlPoint( int iTeam )
     {
         // which point is owned by this team?
         if ( ( pLowestPoint->GetDefaultOwner() == iTeam && pHighestPoint->GetDefaultOwner() == iTeam ) ||  // if the same team owns both, take the highest value to be the last point
-            ( pHighestPoint->GetDefaultOwner() == iTeam ) )
+             ( pHighestPoint->GetDefaultOwner() == iTeam ) )
         {
             iRetVal = nHighestValue;
         }
@@ -1152,6 +1156,9 @@ int CTeamControlPointMaster::GetNumPointsOwnedByTeam( int iTeam )
 //-----------------------------------------------------------------------------
 int CTeamControlPointMaster::CalcNumRoundsRemaining( int iTeam )
 {
+    if ( m_ControlPointRounds.IsEmpty() )
+        return 0;
+
     // To determine how many rounds remain for a given team if it consistently wins mini-rounds, we have to
     // simulate forward each mini-round and track the control point ownership that would result
 

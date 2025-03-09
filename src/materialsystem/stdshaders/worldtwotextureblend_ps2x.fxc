@@ -151,12 +151,12 @@ float4 main( PS_INPUT i ) : COLOR
     albedo *= i.vertexColor;
     alpha *= i.vertexColor.a; // not sure about this one
 
-    HALF3 diffuseLighting;
-    if( bFlashlight )
-    {
-        float3 worldSpaceNormal;
-        // Make the unbumped version not so fucking stupid and not need tangentSpaceTranspose you knob.
-        worldSpaceNormal = mul( normal, i.tangentSpaceTranspose );
+	HALF3 diffuseLighting;
+	if( bFlashlight )
+	{
+		float3 worldSpaceNormal;
+		// Make the unbumped version not need tangentSpaceTranspose
+		worldSpaceNormal = mul( normal, i.tangentSpaceTranspose );
 
         int nShadowSampleLevel = 0;
         bool bDoShadows = false;

@@ -11,6 +11,7 @@
 
 #ifdef CLIENT_DLL
 #include "c_hl2mp_player.h"
+#include <prediction.h>
 #else
 #include "hl2mp_player.h"
 #endif
@@ -29,7 +30,7 @@ class CWeapon357 : public CBaseHL2MPCombatWeapon
 {
     DECLARE_CLASS( CWeapon357, CBaseHL2MPCombatWeapon );
 
-    public:
+   public:
     CWeapon357( void );
 
     void PrimaryAttack( void );
@@ -40,9 +41,11 @@ class CWeapon357 : public CBaseHL2MPCombatWeapon
     DECLARE_ACTTABLE();
 #endif
 
-    private:
+   private:
     CWeapon357( const CWeapon357 & );
 };
+
+// clang-format off
 
 IMPLEMENT_NETWORKCLASS_ALIASED( Weapon357, DT_Weapon357 )
 
@@ -54,6 +57,8 @@ END_PREDICTION_DATA()
 
 LINK_ENTITY_TO_CLASS( weapon_357, CWeapon357 );
 PRECACHE_WEAPON_REGISTER( weapon_357 );
+
+// clang-format on
 
 #ifndef CLIENT_DLL
 acttable_t CWeapon357::m_acttable[] =
@@ -129,16 +134,18 @@ void CWeapon357::PrimaryAttack( void )
     // Fire the bullets, and force the first shot to be perfectly accuracy
     pPlayer->FireBullets( info );
 
+#ifdef CLIENT_DLL
     // Disorient the player
-    QAngle angles = pPlayer->GetLocalAngles();
-
-    angles.x += random->RandomInt( -1, 1 );
-    angles.y += random->RandomInt( -1, 1 );
-    angles.z = 0;
-
-#ifndef CLIENT_DLL
-    pPlayer->SnapEyeAngles( angles );
-#endif
+    if ( prediction->IsFirstTimePredicted() )
+    {
+        QAngle angles;
+        engine->GetViewAngles( angles );
+        angles.x += random->RandomInt( -1, 1 );
+        angles.y += random->RandomInt( -1, 1 );
+        angles.z += 0.0f;
+        engine->SetViewAngles( angles );
+    }
+#endif  // CLIENT_DLL
 
     pPlayer->ViewPunch( QAngle( -8, random->RandomFloat( -2, 2 ), 0 ) );
 

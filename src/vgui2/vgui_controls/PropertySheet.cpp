@@ -39,10 +39,10 @@ class ContextLabel : public Label
 {
     DECLARE_CLASS_SIMPLE( ContextLabel, Label );
 
-    public:
+   public:
     ContextLabel( Button *parent, char const *panelName, char const *text )
         : BaseClass( ( Panel * )parent, panelName, text ),
-        m_pTabButton( parent )
+          m_pTabButton( parent )
     {
         SetBlockDragChaining( true );
     }
@@ -81,7 +81,7 @@ class ContextLabel : public Label
         }
     }
 
-    private:
+   private:
     Button *m_pTabButton;
 };
 
@@ -110,7 +110,7 @@ class PageTab : public Button
 {
     DECLARE_CLASS_SIMPLE( PageTab, Button );
 
-    private:
+   private:
     bool _active;
     Color _textColor;
     Color _dimTextColor;
@@ -127,17 +127,17 @@ class PageTab : public Button
     long m_hoverActivatePageTime;
     long m_dropHoverTime;
 
-    public:
+   public:
     PageTab( PropertySheet *parent, const char *panelName, const char *text, char const *imageName, int maxTabWidth, Panel *page, bool showContextButton, long hoverActivatePageTime = -1 )
         : Button( ( Panel * )parent, panelName, text ),
-        m_pParent( parent ),
-        m_pPage( page ),
-        m_pImage( 0 ),
-        m_pszImageName( 0 ),
-        m_bShowContextLabel( showContextButton ),
-        m_bAttemptingDrop( false ),
-        m_hoverActivatePageTime( hoverActivatePageTime ),
-        m_dropHoverTime( -1 )
+          m_pParent( parent ),
+          m_pPage( page ),
+          m_pImage( 0 ),
+          m_pszImageName( 0 ),
+          m_bShowContextLabel( showContextButton ),
+          m_bAttemptingDrop( false ),
+          m_hoverActivatePageTime( hoverActivatePageTime ),
+          m_dropHoverTime( -1 )
     {
         SetCommand( new KeyValues( "TabPressed" ) );
         _active = false;
@@ -1019,11 +1019,11 @@ void PropertySheet::PerformLayout()
 
         if ( _showTabs )
         {
-            _activePage->SetBounds( 0, tabHeight, wide, tall - tabHeight );
+            _activePage->SetBounds( 0, tabHeight + m_iPageYOffset, wide, tall - tabHeight );
         }
         else
         {
-            _activePage->SetBounds( 0, 0, wide, tall );
+            _activePage->SetBounds( 0, m_iPageYOffset, wide, tall );
         }
         _activePage->InvalidateLayout();
     }
@@ -1056,11 +1056,11 @@ void PropertySheet::PerformLayout()
             if ( m_PageTabs[i] == _activeTab )
             {
                 // active tab is taller
-                _activeTab->SetBounds( xtab, 2, width, tabHeight );
+                _activeTab->SetBounds( xtab, 2 + m_iPageYOffset, width, tabHeight );
             }
             else
             {
-                m_PageTabs[i]->SetBounds( xtab, 4, width, tabHeight - 2 );
+                m_PageTabs[i]->SetBounds( xtab, 4 + m_iPageYOffset, width, tabHeight - 2 );
             }
             m_PageTabs[i]->SetVisible( true );
             xtab += ( width + 1 ) + m_iTabXDelta;
