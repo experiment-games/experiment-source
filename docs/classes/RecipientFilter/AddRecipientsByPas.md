@@ -1,6 +1,6 @@
 ---
 template: lua-class-function.html
-title: AddRecipientsByPAS
+title: AddRecipientsByPas
 icon: lua-shared
 tags:
   - lua
@@ -9,10 +9,10 @@ tags:
   - needs-example
 lua:
   library: RecipientFilter
-  function: AddRecipientsByPAS
+  function: AddRecipientsByPas
   realm: shared
   description: "Adds recipients by potentially audible set"
-  
+
   arguments:
   - position: 1
     name: "filter"
@@ -21,9 +21,9 @@ lua:
     name: "position"
     type: Vector
   returns:
-    
+
 ---
 
 <div class="lua__search__keywords">
-RecipientFilter:AddRecipientsByPAS &#x2013; Adds recipients by potentially audible set
+RecipientFilter:AddRecipientsByPas &#x2013; Adds recipients by potentially audible set
 </div>

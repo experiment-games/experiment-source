@@ -1,6 +1,6 @@
 ---
 template: lua-class-function.html
-title: AddRecipientsByPVS
+title: AddRecipientsByPvs
 icon: lua-shared
 tags:
   - lua
@@ -9,10 +9,10 @@ tags:
   - needs-example
 lua:
   library: RecipientFilter
-  function: AddRecipientsByPVS
+  function: AddRecipientsByPvs
   realm: shared
   description: "Adds recipients by potentially visible set"
-  
+
   arguments:
   - position: 1
     name: "filter"
@@ -21,9 +21,9 @@ lua:
     name: "position"
     type: Vector
   returns:
-    
+
 ---
 
 <div class="lua__search__keywords">
-RecipientFilter:AddRecipientsByPVS &#x2013; Adds recipients by potentially visible set
+RecipientFilter:AddRecipientsByPvs &#x2013; Adds recipients by potentially visible set
 </div>

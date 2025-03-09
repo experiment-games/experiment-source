@@ -3,6 +3,7 @@
 #include "luasrclib.h"
 #include <lsounds.h>
 #include <engine/IEngineSound.h>
+#include <lrecipientfilter.h>
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -551,10 +552,23 @@ LUA_BINDING_BEGIN( Sounds, Play, "library", "Plays a sound emitting from a place
 {
     const char *pszSoundName = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "soundName" );  // doc: sound script name or sound file name relative to sound/ folder
     const Vector vecOrigin = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "origin" );       // doc: position of the sound
-    soundlevel_t soundLevel = LUA_BINDING_ARGUMENT_ENUM_WITH_DEFAULT( soundlevel_t, 3, SNDLVL_NORM, "soundLevel" );
-    float flPitchPercent = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 4, 100, "pitchPercent" );
+    int entityIndex = ( int )LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 3, SOUND_FROM_WORLD, "entity" );
+    SOUND_CHANNEL channel = ( SOUND_CHANNEL )LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 4, SOUND_CHANNEL::CHAN_AUTO, "channel" );
     float flVolume = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 5, 1, "volume" );
-    int nDSP = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 6, 0, "dsp" );
+    soundlevel_t soundLevel = LUA_BINDING_ARGUMENT_ENUM_WITH_DEFAULT( soundlevel_t, 6, SNDLVL_NORM, "soundLevel" );
+    int soundFlags = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 7, 0, "soundFlags" );
+    float flPitchPercent = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 8, 100, "pitchPercent" );
+    int nDSP = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 9, 0, "dsp" );
+    lua_CRecipientFilter filter;
+
+    if ( lua_isrecipientfilter( L, 10 ) )
+    {
+        filter = LUA_BINDING_ARGUMENT_NILLABLE( luaL_checkrecipientfilter, 10, "filter" );
+    }
+    else
+    {
+        filter = CPASAttenuationFilter( vecOrigin, soundLevel );
+    }
 
     float duration = 0;
 
@@ -568,10 +582,10 @@ LUA_BINDING_BEGIN( Sounds, Play, "library", "Plays a sound emitting from a place
     params.m_flSoundTime = 0;
     params.m_pflSoundDuration = &duration;
     params.m_bWarnOnDirectWaveReference = false;
+    params.m_nChannel = channel;
+    params.m_nFlags = soundFlags;
 
-    CPVSFilter filter( vecOrigin );
-
-    CBaseEntity::EmitSound( filter, SOUND_FROM_WORLD, params );
+    CBaseEntity::EmitSound( filter, entityIndex, params );
 
     lua_pushnumber( L, duration );
 

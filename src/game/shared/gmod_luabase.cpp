@@ -94,7 +94,9 @@ int CLuaBase::CreateMetaTable( const char *strName )
     }
     else
     {
-        Assert( 0 );  // TODO: Does this happen?
+        // TODO: This else is reached when running `lua_run require("mysqloo")` twice,
+        //       causing it to run this CreateMetaTable method twice.
+        return m_mapMetaTableNameToID.Find( strName );
     }
 
     return m_mapMetaTableNameToID.Count() - 1;

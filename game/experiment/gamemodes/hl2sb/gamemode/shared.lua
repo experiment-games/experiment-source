@@ -28,7 +28,7 @@ function GM:FlWeaponTryRespawn(targetWeapon)
 	return 0
 end
 
-function GM:PlayerPlayStepSound(client, vecOrigin, psurface, fvol, force)
+function GM:PlayerPlayStepSound(client, vecOrigin, psurface, volume, force)
 	if (Engines.GetMaxClients() > 1 and ConsoleVariables.FindVariable("sv_footsteps"):GetFloat() == 0) then
 		return false
 	end
@@ -69,32 +69,25 @@ function GM:PlayerPlayStepSound(client, vecOrigin, psurface, fvol, force)
 		end
 
 		-- Only cache if there's one option.  Otherwise we'd never here any other sounds
-		if (params.count == 1) then
-			client:SetStepSoundCache(nSide, "m_usSoundNameIndex", stepSoundName)
-			client:SetStepSoundCache(nSide, "m_SoundParameters", params)
-		end
+        if (params.count == 1) then
+            client:SetStepSoundCache(nSide, "m_usSoundNameIndex", stepSoundName)
+            client:SetStepSoundCache(nSide, "m_SoundParameters", params)
+        end
+
+		stepSoundName = pSoundName
 	end
 
 	local filter = RecipientFilters.Create()
-	filter:AddRecipientsByPAS(vecOrigin)
+	filter:AddRecipientsByPas(vecOrigin)
 
 	if not CLIENT then
 		-- in MP, server removes all players in the vecOrigin's PVS, these players generate the footsteps client side
 		if (Engines.GetMaxClients() > 1) then
-			filter:RemoveRecipientsByPVS(vecOrigin)
+			filter:RemoveRecipientsByPvs(vecOrigin)
 		end
 	end
 
-	local ep = {}
-	ep.m_nChannel = 4; -- CHAN_BODY
-	ep.m_pSoundName = params.soundname
-	ep.m_flVolume = fvol
-	ep.m_SoundLevel = params.soundlevel
-	ep.m_nFlags = 0
-	ep.m_nPitch = params.pitch
-	ep.m_pOrigin = vecOrigin
-
-	_R.Entity.EmitSound(filter, client:GetEntityIndex(), ep)
+	Sounds.Play(stepSoundName, vecOrigin, 0, _E.SOUND_CHANNEL.BODY, volume, params.soundlevel, 0, params.pitch, 0, filter)
 	return false
 end
 

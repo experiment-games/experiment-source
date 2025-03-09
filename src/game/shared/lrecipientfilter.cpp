@@ -78,7 +78,7 @@ LUA_BINDING_BEGIN( RecipientFilter, AddRecipient, "class", "Adds a single recipi
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( RecipientFilter, AddRecipientsByPAS, "class", "Adds recipients by potentially audible set" )
+LUA_BINDING_BEGIN( RecipientFilter, AddRecipientsByPas, "class", "Adds recipients by potentially audible set" )
 {
     LUA_BINDING_ARGUMENT( luaL_checkrecipientfilter, 1, "filter" ).AddRecipientsByPAS( LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "position" ) );
     return 0;

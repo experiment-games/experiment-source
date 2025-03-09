@@ -267,6 +267,7 @@ engine.TickInterval = Engines.GetIntervalPerTick
 SoundDuration = Engines.GetSoundDuration
 GetHostName = Engines.GetServerName
 Player = Players.FindByUserId
+EmitSound = Sounds.Play
 
 PrecacheParticleSystem = ParticleSystems.Precache
 GetPredictionPlayer = Predictions.GetPredictionPlayer
