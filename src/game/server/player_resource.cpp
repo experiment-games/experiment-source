@@ -12,7 +12,7 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-// clang-format off
+;  // clang-format off
 
 // Datatable
 IMPLEMENT_SERVERCLASS_ST_NOBASE( CPlayerResource, DT_PlayerResource )
@@ -48,7 +48,7 @@ END_DATADESC()
 
 LINK_ENTITY_TO_CLASS( player_manager, CPlayerResource );
 
-// clang-format on
+;  // clang-format on
 
 CPlayerResource *g_pPlayerResource;
 

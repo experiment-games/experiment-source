@@ -126,7 +126,6 @@
 #include "tf_revive.h"
 #include "tf_logic_halloween_2014.h"
 #include "tf_logic_player_destruction.h"
-#include "tf_weapon_rocketpack.h"
 #include "tf_weapon_slap.h"
 #include "func_croc.h"
 #include "tf_weapon_bonesaw.h"
@@ -319,7 +318,7 @@ static const char *s_pszTauntRPSParticleNames[] =
 
 class CTEPlayerAnimEvent : public CBaseTempEntity
 {
-    public:
+   public:
     DECLARE_CLASS( CTEPlayerAnimEvent, CBaseTempEntity );
     DECLARE_SERVERCLASS();
 
@@ -370,7 +369,7 @@ void TE_PlayerAnimEvent( CBasePlayer *pPlayer, PlayerAnimEvent_t event, int nDat
 //
 class CTFRagdoll : public CBaseAnimatingOverlay
 {
-    public:
+   public:
     DECLARE_CLASS( CTFRagdoll, CBaseAnimatingOverlay );
     DECLARE_SERVERCLASS();
 
@@ -433,10 +432,12 @@ class CTFRagdoll : public CBaseAnimatingOverlay
     CUtlVector< CHandle< CEconWearable > > m_hRagWearables;
 };
 
+// clang-format off
+
 LINK_ENTITY_TO_CLASS( tf_ragdoll, CTFRagdoll );
 
 IMPLEMENT_SERVERCLASS_ST_NOBASE( CTFRagdoll, DT_TFRagdoll )
-SendPropVector( SENDINFO( m_vecRagdollOrigin ), -1, SPROP_COORD ),
+    SendPropVector( SENDINFO( m_vecRagdollOrigin ), -1, SPROP_COORD ),
     SendPropEHandle( SENDINFO( m_hPlayer ) ),
     SendPropVector( SENDINFO( m_vecForce ), -1, SPROP_NOSCALE ),
     SendPropVector( SENDINFO( m_vecRagdollVelocity ), 13, SPROP_ROUNDDOWN, -2048.0f, 2048.0f ),
@@ -459,7 +460,9 @@ SendPropVector( SENDINFO( m_vecRagdollOrigin ), -1, SPROP_COORD ),
     SendPropFloat( SENDINFO( m_flHeadScale ) ),
     SendPropFloat( SENDINFO( m_flTorsoScale ) ),
     SendPropFloat( SENDINFO( m_flHandScale ) ),
-    END_SEND_TABLE()
+END_SEND_TABLE()
+
+    // clang-format on
 
     // -------------------------------------------------------------------------------- //
     // Tables.
@@ -518,8 +521,10 @@ void *SendProxy_SendHealersDataTable( const SendProp *pProp, const void *pStruct
 }
 REGISTER_SEND_PROXY_NON_MODIFIED_POINTER( SendProxy_SendHealersDataTable );
 
+// clang-format off
+
 BEGIN_DATADESC( CTFPlayer )
-DEFINE_INPUTFUNC( FIELD_VOID, "IgnitePlayer", InputIgnitePlayer ),
+    DEFINE_INPUTFUNC( FIELD_VOID, "IgnitePlayer", InputIgnitePlayer ),
     DEFINE_INPUTFUNC( FIELD_STRING, "SetCustomModel", InputSetCustomModel ),
     DEFINE_INPUTFUNC( FIELD_STRING, "SetCustomModelWithClassAnimations", InputSetCustomModelWithClassAnimations ),
     DEFINE_INPUTFUNC( FIELD_VECTOR, "SetCustomModelOffset", InputSetCustomModelOffset ),
@@ -535,184 +540,184 @@ DEFINE_INPUTFUNC( FIELD_VOID, "IgnitePlayer", InputIgnitePlayer ),
     DEFINE_INPUTFUNC( FIELD_STRING, "SpeakResponseConcept", InputSpeakResponseConcept ),
     DEFINE_INPUTFUNC( FIELD_VOID, "RollRareSpell", InputRollRareSpell ),
     DEFINE_INPUTFUNC( FIELD_VOID, "RoundSpawn", InputRoundSpawn ),
-    END_DATADESC()
+END_DATADESC()
 
-        BEGIN_ENT_SCRIPTDESC( CTFPlayer, CBaseMultiplayerPlayer, "Team Fortress 2 Player" )
-            DEFINE_SCRIPTFUNC_NAMED( ScriptGetActiveWeapon, "GetActiveWeapon", "Get the player's current weapon" )
+BEGIN_ENT_SCRIPTDESC( CTFPlayer, CBaseMultiplayerPlayer, "Team Fortress 2 Player" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptGetActiveWeapon, "GetActiveWeapon", "Get the player's current weapon" )
 
-                DEFINE_SCRIPTFUNC( ForceRespawn, "Force respawns the player" )
-                    DEFINE_SCRIPTFUNC( ForceRegenerateAndRespawn, "Force regenerates and respawns the player" )
-                        DEFINE_SCRIPTFUNC( Regenerate, "Resupplies a player. If regen health/ammo is set, clears negative conds, gives back player health/ammo" )
+    DEFINE_SCRIPTFUNC( ForceRespawn, "Force respawns the player" )
+    DEFINE_SCRIPTFUNC( ForceRegenerateAndRespawn, "Force regenerates and respawns the player" )
+    DEFINE_SCRIPTFUNC( Regenerate, "Resupplies a player. If regen health/ammo is set, clears negative conds, gives back player health/ammo" )
 
-                            DEFINE_SCRIPTFUNC( HasItem, "Currently holding an item? Eg. capture flag" )
-                                DEFINE_SCRIPTFUNC( GetNextRegenTime, "Get next health regen time." )
-                                    DEFINE_SCRIPTFUNC( SetNextRegenTime, "Set next health regen time." )
-                                        DEFINE_SCRIPTFUNC( GetNextChangeClassTime, "Get next change class time." )
-                                            DEFINE_SCRIPTFUNC( SetNextChangeClassTime, "Set next change class time." )
-                                                DEFINE_SCRIPTFUNC( GetNextChangeTeamTime, "Get next change team time." )
-                                                    DEFINE_SCRIPTFUNC( SetNextChangeTeamTime, "Set next change team time." )
-                                                        DEFINE_SCRIPTFUNC( DropFlag, "Force player to drop the flag." )
-                                                            DEFINE_SCRIPTFUNC( DropRune, "Force player to drop the rune." )
-                                                                DEFINE_SCRIPTFUNC( ForceChangeTeam, "Force player to change their team." )
-                                                                    DEFINE_SCRIPTFUNC( IsMiniBoss, "Is this player an MvM mini-boss?" )
-                                                                        DEFINE_SCRIPTFUNC( SetIsMiniBoss, "Make this player an MvM mini-boss." )
-                                                                            DEFINE_SCRIPTFUNC( CanJump, "Can the player jump?" )
-                                                                                DEFINE_SCRIPTFUNC( CanDuck, "Can the player duck?" )
-                                                                                    DEFINE_SCRIPTFUNC( CanPlayerMove, "Can the player move?" )
-                                                                                        DEFINE_SCRIPTFUNC( RemoveAllObjects, "Remove all player objects. Eg. dispensers/sentries." )
-                                                                                            DEFINE_SCRIPTFUNC( IsPlacingSapper, "Returns true if we placed a sapper in the last few moments" )
-                                                                                                DEFINE_SCRIPTFUNC( IsSapping, "Returns true if we are currently sapping" )
-                                                                                                    DEFINE_SCRIPTFUNC( RemoveInvisibility, "Un-invisible a spy." )
-                                                                                                        DEFINE_SCRIPTFUNC( RemoveDisguise, "Undisguise a spy." )
-                                                                                                            DEFINE_SCRIPTFUNC( TryToPickupBuilding, "Make the player attempt to pick up a building in front of them" )
-                                                                                                                DEFINE_SCRIPTFUNC( IsCallingForMedic, "Is this player calling for medic?" )
-                                                                                                                    DEFINE_SCRIPTFUNC( GetTimeSinceCalledForMedic, "When did the player last call medic" )
-                                                                                                                        DEFINE_SCRIPTFUNC_NAMED( ScriptGetHealTarget, "GetHealTarget", "Who is the medic healing?" )
-                                                                                                                            DEFINE_SCRIPTFUNC( GetClassEyeHeight, "Gets the eye height of the player" )
-                                                                                                                                DEFINE_SCRIPTFUNC( FiringTalk, "Makes eg. a heavy go AAAAAAAAAAaAaa like they are firing their minigun." )
-                                                                                                                                    DEFINE_SCRIPTFUNC( CanAirDash, "" )
-                                                                                                                                        DEFINE_SCRIPTFUNC( CanBreatheUnderwater, "" )
-                                                                                                                                            DEFINE_SCRIPTFUNC( CanGetWet, "" )
-                                                                                                                                                DEFINE_SCRIPTFUNC( InAirDueToExplosion, "" )
-                                                                                                                                                    DEFINE_SCRIPTFUNC( InAirDueToKnockback, "" )
-                                                                                                                                                        DEFINE_SCRIPTFUNC( ApplyAbsVelocityImpulse, "" )
-                                                                                                                                                            DEFINE_SCRIPTFUNC( ApplyPunchImpulseX, "" )
-                                                                                                                                                                DEFINE_SCRIPTFUNC( SetUseBossHealthBar, "" )
-                                                                                                                                                                    DEFINE_SCRIPTFUNC( IsFireproof, "" )
-                                                                                                                                                                        DEFINE_SCRIPTFUNC( IsAllowedToTaunt, "" )
-                                                                                                                                                                            DEFINE_SCRIPTFUNC( IsViewingCYOAPDA, "" )
-                                                                                                                                                                                DEFINE_SCRIPTFUNC( IsRegenerating, "" )
-                                                                                                                                                                                    DEFINE_SCRIPTFUNC( GetCurrentTauntMoveSpeed, "" )
-                                                                                                                                                                                        DEFINE_SCRIPTFUNC( SetCurrentTauntMoveSpeed, "" )
-                                                                                                                                                                                            DEFINE_SCRIPTFUNC( IsUsingActionSlot, "" )
-                                                                                                                                                                                                DEFINE_SCRIPTFUNC( IsInspecting, "" )
-                                                                                                                                                                                                    DEFINE_SCRIPTFUNC_NAMED( ScriptGetGrapplingHookTarget, "GetGrapplingHookTarget", "What entity is the player grappling?" )
-                                                                                                                                                                                                        DEFINE_SCRIPTFUNC_NAMED( ScriptSetGrapplingHookTarget, "SetGrapplingHookTarget", "Set the player's target grapple entity" )
-                                                                                                                                                                                                            DEFINE_SCRIPTFUNC( AddCustomAttribute, "Add a custom attribute to the player" )
-                                                                                                                                                                                                                DEFINE_SCRIPTFUNC( RemoveCustomAttribute, "Remove a custom attribute to the player" )
-                                                                                                                                                                                                                    DEFINE_SCRIPTFUNC_NAMED( ScriptAddCond, "AddCond", "" )
-                                                                                                                                                                                                                        DEFINE_SCRIPTFUNC_NAMED( ScriptAddCondEx, "AddCondEx", "" )
-                                                                                                                                                                                                                            DEFINE_SCRIPTFUNC_NAMED( ScriptRemoveCond, "RemoveCond", "" )
-                                                                                                                                                                                                                                DEFINE_SCRIPTFUNC_NAMED( ScriptRemoveCondEx, "RemoveCondEx", "" )
-                                                                                                                                                                                                                                    DEFINE_SCRIPTFUNC_NAMED( ScriptInCond, "InCond", "" )
-                                                                                                                                                                                                                                        DEFINE_SCRIPTFUNC_NAMED( ScriptWasInCond, "WasInCond", "" )
-                                                                                                                                                                                                                                            DEFINE_SCRIPTFUNC_NAMED( ScriptRemoveAllCond, "RemoveAllCond", "" )
-                                                                                                                                                                                                                                                DEFINE_SCRIPTFUNC_NAMED( ScriptGetCondDuration, "GetCondDuration", "" )
-                                                                                                                                                                                                                                                    DEFINE_SCRIPTFUNC_NAMED( ScriptSetCondDuration, "SetCondDuration", "" )
-                                                                                                                                                                                                                                                        DEFINE_SCRIPTFUNC_NAMED( ScriptGetDisguiseTarget, "GetDisguiseTarget", "" )
+    DEFINE_SCRIPTFUNC( HasItem, "Currently holding an item? Eg. capture flag" )
+    DEFINE_SCRIPTFUNC( GetNextRegenTime, "Get next health regen time." )
+    DEFINE_SCRIPTFUNC( SetNextRegenTime, "Set next health regen time." )
+    DEFINE_SCRIPTFUNC( GetNextChangeClassTime, "Get next change class time." )
+    DEFINE_SCRIPTFUNC( SetNextChangeClassTime, "Set next change class time." )
+    DEFINE_SCRIPTFUNC( GetNextChangeTeamTime, "Get next change team time." )
+    DEFINE_SCRIPTFUNC( SetNextChangeTeamTime, "Set next change team time." )
+    DEFINE_SCRIPTFUNC( DropFlag, "Force player to drop the flag." )
+    DEFINE_SCRIPTFUNC( DropRune, "Force player to drop the rune." )
+    DEFINE_SCRIPTFUNC( ForceChangeTeam, "Force player to change their team." )
+    DEFINE_SCRIPTFUNC( IsMiniBoss, "Is this player an MvM mini-boss?" )
+    DEFINE_SCRIPTFUNC( SetIsMiniBoss, "Make this player an MvM mini-boss." )
+    DEFINE_SCRIPTFUNC( CanJump, "Can the player jump?" )
+    DEFINE_SCRIPTFUNC( CanDuck, "Can the player duck?" )
+    DEFINE_SCRIPTFUNC( CanPlayerMove, "Can the player move?" )
+    DEFINE_SCRIPTFUNC( RemoveAllObjects, "Remove all player objects. Eg. dispensers/sentries." )
+    DEFINE_SCRIPTFUNC( IsPlacingSapper, "Returns true if we placed a sapper in the last few moments" )
+    DEFINE_SCRIPTFUNC( IsSapping, "Returns true if we are currently sapping" )
+    DEFINE_SCRIPTFUNC( RemoveInvisibility, "Un-invisible a spy." )
+    DEFINE_SCRIPTFUNC( RemoveDisguise, "Undisguise a spy." )
+    DEFINE_SCRIPTFUNC( TryToPickupBuilding, "Make the player attempt to pick up a building in front of them" )
+    DEFINE_SCRIPTFUNC( IsCallingForMedic, "Is this player calling for medic?" )
+    DEFINE_SCRIPTFUNC( GetTimeSinceCalledForMedic, "When did the player last call medic" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptGetHealTarget, "GetHealTarget", "Who is the medic healing?" )
+    DEFINE_SCRIPTFUNC( GetClassEyeHeight, "Gets the eye height of the player" )
+    DEFINE_SCRIPTFUNC( FiringTalk, "Makes eg. a heavy go AAAAAAAAAAaAaa like they are firing their minigun." )
+    DEFINE_SCRIPTFUNC( CanAirDash, "" )
+    DEFINE_SCRIPTFUNC( CanBreatheUnderwater, "" )
+    DEFINE_SCRIPTFUNC( CanGetWet, "" )
+    DEFINE_SCRIPTFUNC( InAirDueToExplosion, "" )
+    DEFINE_SCRIPTFUNC( InAirDueToKnockback, "" )
+    DEFINE_SCRIPTFUNC( ApplyAbsVelocityImpulse, "" )
+    DEFINE_SCRIPTFUNC( ApplyPunchImpulseX, "" )
+    DEFINE_SCRIPTFUNC( SetUseBossHealthBar, "" )
+    DEFINE_SCRIPTFUNC( IsFireproof, "" )
+    DEFINE_SCRIPTFUNC( IsAllowedToTaunt, "" )
+    DEFINE_SCRIPTFUNC( IsViewingCYOAPDA, "" )
+    DEFINE_SCRIPTFUNC( IsRegenerating, "" )
+    DEFINE_SCRIPTFUNC( GetCurrentTauntMoveSpeed, "" )
+    DEFINE_SCRIPTFUNC( SetCurrentTauntMoveSpeed, "" )
+    DEFINE_SCRIPTFUNC( IsUsingActionSlot, "" )
+    DEFINE_SCRIPTFUNC( IsInspecting, "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptGetGrapplingHookTarget, "GetGrapplingHookTarget", "What entity is the player grappling?" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptSetGrapplingHookTarget, "SetGrapplingHookTarget", "Set the player's target grapple entity" )
+    DEFINE_SCRIPTFUNC( AddCustomAttribute, "Add a custom attribute to the player" )
+    DEFINE_SCRIPTFUNC( RemoveCustomAttribute, "Remove a custom attribute to the player" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptAddCond, "AddCond", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptAddCondEx, "AddCondEx", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptRemoveCond, "RemoveCond", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptRemoveCondEx, "RemoveCondEx", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptInCond, "InCond", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptWasInCond, "WasInCond", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptRemoveAllCond, "RemoveAllCond", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptGetCondDuration, "GetCondDuration", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptSetCondDuration, "SetCondDuration", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptGetDisguiseTarget, "GetDisguiseTarget", "" )
 
-                                                                                                                                                                                                                                                            DEFINE_SCRIPTFUNC_NAMED( ScriptIsCarryingRune, "IsCarryingRune", "" )
-                                                                                                                                                                                                                                                                DEFINE_SCRIPTFUNC_NAMED( ScriptIsCritBoosted, "IsCritBoosted", "" )
-                                                                                                                                                                                                                                                                    DEFINE_SCRIPTFUNC_NAMED( ScriptIsInvulnerable, "IsInvulnerable", "" )
-                                                                                                                                                                                                                                                                        DEFINE_SCRIPTFUNC_NAMED( ScriptIsStealthed, "IsStealthed", "" )
-                                                                                                                                                                                                                                                                            DEFINE_SCRIPTFUNC_NAMED( ScriptCanBeDebuffed, "CanBeDebuffed", "" )
-                                                                                                                                                                                                                                                                                DEFINE_SCRIPTFUNC_NAMED( ScriptIsImmuneToPushback, "IsImmuneToPushback", "" )
-                                                                                                                                                                                                                                                                                    DEFINE_SCRIPTFUNC_NAMED( ScriptGetDisguiseAmmoCount, "GetDisguiseAmmoCount", "" )
-                                                                                                                                                                                                                                                                                        DEFINE_SCRIPTFUNC_NAMED( ScriptSetDisguiseAmmoCount, "SetDisguiseAmmoCount", "" )
-                                                                                                                                                                                                                                                                                            DEFINE_SCRIPTFUNC_NAMED( ScriptGetDisguiseTeam, "GetDisguiseTeam", "" )
-                                                                                                                                                                                                                                                                                                DEFINE_SCRIPTFUNC_NAMED( ScriptIsFullyInvisible, "IsFullyInvisible", "" )
-                                                                                                                                                                                                                                                                                                    DEFINE_SCRIPTFUNC_NAMED( ScriptGetSpyCloakMeter, "GetSpyCloakMeter", "" )
-                                                                                                                                                                                                                                                                                                        DEFINE_SCRIPTFUNC_NAMED( ScriptSetSpyCloakMeter, "SetSpyCloakMeter", "" )
-                                                                                                                                                                                                                                                                                                            DEFINE_SCRIPTFUNC_NAMED( ScriptIsRageDraining, "IsRageDraining", "" )
-                                                                                                                                                                                                                                                                                                                DEFINE_SCRIPTFUNC_NAMED( ScriptGetRageMeter, "GetRageMeter", "" )
-                                                                                                                                                                                                                                                                                                                    DEFINE_SCRIPTFUNC_NAMED( ScriptSetRageMeter, "SetRageMeter", "" )
-                                                                                                                                                                                                                                                                                                                        DEFINE_SCRIPTFUNC_NAMED( ScriptGetScoutHypeMeter, "GetScoutHypeMeter", "" )
-                                                                                                                                                                                                                                                                                                                            DEFINE_SCRIPTFUNC_NAMED( ScriptSetScoutHypeMeter, "SetScoutHypeMeter", "" )
-                                                                                                                                                                                                                                                                                                                                DEFINE_SCRIPTFUNC_NAMED( ScriptIsHypeBuffed, "IsHypeBuffed", "" )
-                                                                                                                                                                                                                                                                                                                                    DEFINE_SCRIPTFUNC_NAMED( ScriptIsJumping, "IsJumping", "" )
-                                                                                                                                                                                                                                                                                                                                        DEFINE_SCRIPTFUNC_NAMED( ScriptIsAirDashing, "IsAirDashing", "" )
-                                                                                                                                                                                                                                                                                                                                            DEFINE_SCRIPTFUNC_NAMED( ScriptIsControlStunned, "IsControlStunned", "" )
-                                                                                                                                                                                                                                                                                                                                                DEFINE_SCRIPTFUNC_NAMED( ScriptIsSnared, "IsSnared", "" )
-                                                                                                                                                                                                                                                                                                                                                    DEFINE_SCRIPTFUNC_NAMED( ScriptGetCaptures, "GetCaptures", "" )
-                                                                                                                                                                                                                                                                                                                                                        DEFINE_SCRIPTFUNC_NAMED( ScriptGetDefenses, "GetDefenses", "" )
-                                                                                                                                                                                                                                                                                                                                                            DEFINE_SCRIPTFUNC_NAMED( ScriptGetDominations, "GetDominations", "" )
-                                                                                                                                                                                                                                                                                                                                                                DEFINE_SCRIPTFUNC_NAMED( ScriptGetRevenge, "GetRevenge", "" )
-                                                                                                                                                                                                                                                                                                                                                                    DEFINE_SCRIPTFUNC_NAMED( ScriptGetBuildingsDestroyed, "GetBuildingsDestroyed", "" )
-                                                                                                                                                                                                                                                                                                                                                                        DEFINE_SCRIPTFUNC_NAMED( ScriptGetHeadshots, "GetHeadshots", "" )
-                                                                                                                                                                                                                                                                                                                                                                            DEFINE_SCRIPTFUNC_NAMED( ScriptGetBackstabs, "GetBackstabs", "" )
-                                                                                                                                                                                                                                                                                                                                                                                DEFINE_SCRIPTFUNC_NAMED( ScriptGetHealPoints, "GetHealPoints", "" )
-                                                                                                                                                                                                                                                                                                                                                                                    DEFINE_SCRIPTFUNC_NAMED( ScriptGetInvulns, "GetInvulns", "" )
-                                                                                                                                                                                                                                                                                                                                                                                        DEFINE_SCRIPTFUNC_NAMED( ScriptGetTeleports, "GetTeleports", "" )
-                                                                                                                                                                                                                                                                                                                                                                                            DEFINE_SCRIPTFUNC_NAMED( ScriptGetResupplyPoints, "GetResupplyPoints", "" )
-                                                                                                                                                                                                                                                                                                                                                                                                DEFINE_SCRIPTFUNC_NAMED( ScriptGetKillAssists, "GetKillAssists", "" )
-                                                                                                                                                                                                                                                                                                                                                                                                    DEFINE_SCRIPTFUNC_NAMED( ScriptGetBonusPoints, "GetBonusPoints", "" )
-                                                                                                                                                                                                                                                                                                                                                                                                        DEFINE_SCRIPTFUNC_NAMED( ScriptResetScores, "ResetScores", "" )
-                                                                                                                                                                                                                                                                                                                                                                                                            DEFINE_SCRIPTFUNC_NAMED( ScriptIsParachuteEquipped, "IsParachuteEquipped", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptIsCarryingRune, "IsCarryingRune", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptIsCritBoosted, "IsCritBoosted", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptIsInvulnerable, "IsInvulnerable", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptIsStealthed, "IsStealthed", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptCanBeDebuffed, "CanBeDebuffed", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptIsImmuneToPushback, "IsImmuneToPushback", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptGetDisguiseAmmoCount, "GetDisguiseAmmoCount", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptSetDisguiseAmmoCount, "SetDisguiseAmmoCount", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptGetDisguiseTeam, "GetDisguiseTeam", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptIsFullyInvisible, "IsFullyInvisible", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptGetSpyCloakMeter, "GetSpyCloakMeter", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptSetSpyCloakMeter, "SetSpyCloakMeter", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptIsRageDraining, "IsRageDraining", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptGetRageMeter, "GetRageMeter", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptSetRageMeter, "SetRageMeter", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptGetScoutHypeMeter, "GetScoutHypeMeter", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptSetScoutHypeMeter, "SetScoutHypeMeter", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptIsHypeBuffed, "IsHypeBuffed", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptIsJumping, "IsJumping", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptIsAirDashing, "IsAirDashing", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptIsControlStunned, "IsControlStunned", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptIsSnared, "IsSnared", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptGetCaptures, "GetCaptures", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptGetDefenses, "GetDefenses", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptGetDominations, "GetDominations", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptGetRevenge, "GetRevenge", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptGetBuildingsDestroyed, "GetBuildingsDestroyed", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptGetHeadshots, "GetHeadshots", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptGetBackstabs, "GetBackstabs", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptGetHealPoints, "GetHealPoints", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptGetInvulns, "GetInvulns", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptGetTeleports, "GetTeleports", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptGetResupplyPoints, "GetResupplyPoints", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptGetKillAssists, "GetKillAssists", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptGetBonusPoints, "GetBonusPoints", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptResetScores, "ResetScores", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptIsParachuteEquipped, "IsParachuteEquipped", "" )
 
-                                                                                                                                                                                                                                                                                                                                                                                                                DEFINE_SCRIPTFUNC( GetCurrency, "Get player's cash for game modes with upgrades, ie. MvM" )
-                                                                                                                                                                                                                                                                                                                                                                                                                    DEFINE_SCRIPTFUNC( SetCurrency, "Set player's cash for game modes with upgrades, ie. MvM" )
-                                                                                                                                                                                                                                                                                                                                                                                                                        DEFINE_SCRIPTFUNC( AddCurrency, "Kaching! Give the player some cash for game modes with upgrades, ie. MvM" )
-                                                                                                                                                                                                                                                                                                                                                                                                                            DEFINE_SCRIPTFUNC( RemoveCurrency, "Take away money from a player for reasons such as ie. spending." )
+    DEFINE_SCRIPTFUNC( GetCurrency, "Get player's cash for game modes with upgrades, ie. MvM" )
+    DEFINE_SCRIPTFUNC( SetCurrency, "Set player's cash for game modes with upgrades, ie. MvM" )
+    DEFINE_SCRIPTFUNC( AddCurrency, "Kaching! Give the player some cash for game modes with upgrades, ie. MvM" )
+    DEFINE_SCRIPTFUNC( RemoveCurrency, "Take away money from a player for reasons such as ie. spending." )
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                DEFINE_SCRIPTFUNC( IgnitePlayer, "" )
-                                                                                                                                                                                                                                                                                                                                                                                                                                    DEFINE_SCRIPTFUNC( SetCustomModel, "" )
-                                                                                                                                                                                                                                                                                                                                                                                                                                        DEFINE_SCRIPTFUNC( SetCustomModelWithClassAnimations, "" )
-                                                                                                                                                                                                                                                                                                                                                                                                                                            DEFINE_SCRIPTFUNC( SetCustomModelOffset, "" )
-                                                                                                                                                                                                                                                                                                                                                                                                                                                DEFINE_SCRIPTFUNC( SetCustomModelRotation, "" )
-                                                                                                                                                                                                                                                                                                                                                                                                                                                    DEFINE_SCRIPTFUNC( ClearCustomModelRotation, "" )
-                                                                                                                                                                                                                                                                                                                                                                                                                                                        DEFINE_SCRIPTFUNC( SetCustomModelRotates, "" )
-                                                                                                                                                                                                                                                                                                                                                                                                                                                            DEFINE_SCRIPTFUNC( SetCustomModelVisibleToSelf, "" )
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                DEFINE_SCRIPTFUNC( SetForcedTauntCam, "" )
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                    DEFINE_SCRIPTFUNC( ExtinguishPlayerBurning, "" )
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                        DEFINE_SCRIPTFUNC( BleedPlayer, "" )
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            DEFINE_SCRIPTFUNC( BleedPlayerEx, "" )
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                DEFINE_SCRIPTFUNC( RollRareSpell, "" )
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    DEFINE_SCRIPTFUNC( ClearSpells, "" )
+    DEFINE_SCRIPTFUNC( IgnitePlayer, "" )
+    DEFINE_SCRIPTFUNC( SetCustomModel, "" )
+    DEFINE_SCRIPTFUNC( SetCustomModelWithClassAnimations, "" )
+    DEFINE_SCRIPTFUNC( SetCustomModelOffset, "" )
+    DEFINE_SCRIPTFUNC( SetCustomModelRotation, "" )
+    DEFINE_SCRIPTFUNC( ClearCustomModelRotation, "" )
+    DEFINE_SCRIPTFUNC( SetCustomModelRotates, "" )
+    DEFINE_SCRIPTFUNC( SetCustomModelVisibleToSelf, "" )
+    DEFINE_SCRIPTFUNC( SetForcedTauntCam, "" )
+    DEFINE_SCRIPTFUNC( ExtinguishPlayerBurning, "" )
+    DEFINE_SCRIPTFUNC( BleedPlayer, "" )
+    DEFINE_SCRIPTFUNC( BleedPlayerEx, "" )
+    DEFINE_SCRIPTFUNC( RollRareSpell, "" )
+    DEFINE_SCRIPTFUNC( ClearSpells, "" )
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        DEFINE_SCRIPTFUNC_NAMED( ScriptGetPlayerClass, "GetPlayerClass", "" )
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            DEFINE_SCRIPTFUNC_NAMED( ScriptSetPlayerClass, "SetPlayerClass", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptGetPlayerClass, "GetPlayerClass", "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptSetPlayerClass, "SetPlayerClass", "" )
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                DEFINE_SCRIPTFUNC( RemoveTeleportEffect, "" )
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    DEFINE_SCRIPTFUNC_NAMED( ScriptRemoveAllItems, "RemoveAllItems", "" )
+    DEFINE_SCRIPTFUNC( RemoveTeleportEffect, "" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptRemoveAllItems, "RemoveAllItems", "" )
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        DEFINE_SCRIPTFUNC( UpdateSkin, "" )
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            DEFINE_SCRIPTFUNC_WRAPPED( Weapon_ShootPosition, "" )  // Needs this slim wrapper or the world falls apart on MSVC.
+    DEFINE_SCRIPTFUNC( UpdateSkin, "" )
+    DEFINE_SCRIPTFUNC_WRAPPED( Weapon_ShootPosition, "" )  // Needs this slim wrapper or the world falls apart on MSVC.
     DEFINE_SCRIPTFUNC_WRAPPED( Weapon_CanUse, "" )
-        DEFINE_SCRIPTFUNC_WRAPPED( Weapon_Equip, "" )
-            DEFINE_SCRIPTFUNC_WRAPPED( Weapon_Drop, "" )
-                DEFINE_SCRIPTFUNC_WRAPPED( Weapon_DropEx, "" )
-                    DEFINE_SCRIPTFUNC_WRAPPED( Weapon_Switch, "" )
-                        DEFINE_SCRIPTFUNC_WRAPPED( Weapon_SetLast, "" )
-                            DEFINE_SCRIPTFUNC_WRAPPED( GetLastWeapon, "" )
-                                DEFINE_SCRIPTFUNC_WRAPPED( EquipWearableViewModel, "" )
+    DEFINE_SCRIPTFUNC_WRAPPED( Weapon_Equip, "" )
+    DEFINE_SCRIPTFUNC_WRAPPED( Weapon_Drop, "" )
+    DEFINE_SCRIPTFUNC_WRAPPED( Weapon_DropEx, "" )
+    DEFINE_SCRIPTFUNC_WRAPPED( Weapon_Switch, "" )
+    DEFINE_SCRIPTFUNC_WRAPPED( Weapon_SetLast, "" )
+    DEFINE_SCRIPTFUNC_WRAPPED( GetLastWeapon, "" )
+    DEFINE_SCRIPTFUNC_WRAPPED( EquipWearableViewModel, "" )
 
-                                    DEFINE_SCRIPTFUNC_WRAPPED( IsFakeClient, "" )
-                                        DEFINE_SCRIPTFUNC_WRAPPED( GetBotType, "" )
-                                            DEFINE_SCRIPTFUNC_WRAPPED( IsBotOfType, "" )
+    DEFINE_SCRIPTFUNC_WRAPPED( IsFakeClient, "" )
+    DEFINE_SCRIPTFUNC_WRAPPED( GetBotType, "" )
+    DEFINE_SCRIPTFUNC_WRAPPED( IsBotOfType, "" )
 
-                                                DEFINE_SCRIPTFUNC( AddHudHideFlags, "Hides a hud element based on Constants.FHideHUD." )
-                                                    DEFINE_SCRIPTFUNC( RemoveHudHideFlags, "Unhides a hud element based on Constants.FHideHUD." )
-                                                        DEFINE_SCRIPTFUNC( SetHudHideFlags, "Force hud hide flags to a value" )
-                                                            DEFINE_SCRIPTFUNC( GetHudHideFlags, "Gets current hidden hud elements" )
+    DEFINE_SCRIPTFUNC( AddHudHideFlags, "Hides a hud element based on Constants.FHideHUD." )
+    DEFINE_SCRIPTFUNC( RemoveHudHideFlags, "Unhides a hud element based on Constants.FHideHUD." )
+    DEFINE_SCRIPTFUNC( SetHudHideFlags, "Force hud hide flags to a value" )
+    DEFINE_SCRIPTFUNC( GetHudHideFlags, "Gets current hidden hud elements" )
 
-                                                                DEFINE_SCRIPTFUNC( IsTaunting, "" )
-                                                                    DEFINE_SCRIPTFUNC( DoTauntAttack, "" )
-                                                                        DEFINE_SCRIPTFUNC( CancelTaunt, "" )
-                                                                            DEFINE_SCRIPTFUNC( StopTaunt, "" )
-                                                                                DEFINE_SCRIPTFUNC( EndLongTaunt, "" )
-                                                                                    DEFINE_SCRIPTFUNC( GetTauntRemoveTime, "" )
-                                                                                        DEFINE_SCRIPTFUNC( IsAllowedToRemoveTaunt, "" )
-                                                                                            DEFINE_SCRIPTFUNC( HandleTauntCommand, "" )
-                                                                                                DEFINE_SCRIPTFUNC( ClearTauntAttack, "" )
-                                                                                                    DEFINE_SCRIPTFUNC( GetTauntAttackTime, "" )
-                                                                                                        DEFINE_SCRIPTFUNC( SetRPSResult, "" )
-                                                                                                            DEFINE_SCRIPTFUNC( GetVehicleReverseTime, "" )
-                                                                                                                DEFINE_SCRIPTFUNC( SetVehicleReverseTime, "" )
-                                                                                                                    DEFINE_SCRIPTFUNC_WRAPPED( Taunt, "" )
+    DEFINE_SCRIPTFUNC( IsTaunting, "" )
+    DEFINE_SCRIPTFUNC( DoTauntAttack, "" )
+    DEFINE_SCRIPTFUNC( CancelTaunt, "" )
+    DEFINE_SCRIPTFUNC( StopTaunt, "" )
+    DEFINE_SCRIPTFUNC( EndLongTaunt, "" )
+    DEFINE_SCRIPTFUNC( GetTauntRemoveTime, "" )
+    DEFINE_SCRIPTFUNC( IsAllowedToRemoveTaunt, "" )
+    DEFINE_SCRIPTFUNC( HandleTauntCommand, "" )
+    DEFINE_SCRIPTFUNC( ClearTauntAttack, "" )
+    DEFINE_SCRIPTFUNC( GetTauntAttackTime, "" )
+    DEFINE_SCRIPTFUNC( SetRPSResult, "" )
+    DEFINE_SCRIPTFUNC( GetVehicleReverseTime, "" )
+    DEFINE_SCRIPTFUNC( SetVehicleReverseTime, "" )
+    DEFINE_SCRIPTFUNC_WRAPPED( Taunt, "" )
 
-                                                                                                                        DEFINE_SCRIPTFUNC( GrantOrRemoveAllUpgrades, "Grants or removes all upgrades the player has purchased." )
+    DEFINE_SCRIPTFUNC( GrantOrRemoveAllUpgrades, "Grants or removes all upgrades the player has purchased." )
 
-                                                                                                                            DEFINE_SCRIPTFUNC_NAMED( ScriptGetCustomAttribute, "GetCustomAttribute", "Get a custom attribute float from the player" )
+    DEFINE_SCRIPTFUNC_NAMED( ScriptGetCustomAttribute, "GetCustomAttribute", "Get a custom attribute float from the player" )
 
-                                                                                                                                DEFINE_SCRIPTFUNC_WRAPPED( StunPlayer, "" )
-                                                                                                                                    END_SCRIPTDESC();
+    DEFINE_SCRIPTFUNC_WRAPPED( StunPlayer, "" )
+END_SCRIPTDESC();
 
 EXTERN_SEND_TABLE( DT_ScriptCreatedItem );
 
 // specific to the local player
 BEGIN_SEND_TABLE_NOBASE( CTFPlayer, DT_TFLocalPlayerExclusive )
-// send a hi-res origin to the local player for use in prediction
-SendPropVectorXY( SENDINFO( m_vecOrigin ), -1, SPROP_NOSCALE | SPROP_CHANGES_OFTEN, 0.0f, HIGH_DEFAULT, SendProxy_OriginXY ),
+    // send a hi-res origin to the local player for use in prediction
+    SendPropVectorXY( SENDINFO( m_vecOrigin ), -1, SPROP_NOSCALE | SPROP_CHANGES_OFTEN, 0.0f, HIGH_DEFAULT, SendProxy_OriginXY ),
     SendPropFloat( SENDINFO_VECTORELEM( m_vecOrigin, 2 ), -1, SPROP_NOSCALE | SPROP_CHANGES_OFTEN, 0.0f, HIGH_DEFAULT, SendProxy_OriginZ ),
     SendPropArray2(
         SendProxyArrayLength_PlayerObjects,
@@ -733,10 +738,10 @@ SendPropVectorXY( SENDINFO( m_vecOrigin ), -1, SPROP_NOSCALE | SPROP_CHANGES_OFT
     SendPropInt( SENDINFO( m_nExperienceLevelProgress ), 7, SPROP_UNSIGNED ),
     SendPropBool( SENDINFO( m_bMatchSafeToLeave ) ),
 
-    END_SEND_TABLE()
+END_SEND_TABLE()
 
-    // all players except the local player
-    BEGIN_SEND_TABLE_NOBASE( CTFPlayer, DT_TFNonLocalPlayerExclusive )
+// all players except the local player
+BEGIN_SEND_TABLE_NOBASE( CTFPlayer, DT_TFNonLocalPlayerExclusive )
     // send a lo-res origin to other players
     SendPropVectorXY( SENDINFO( m_vecOrigin ), -1, SPROP_COORD_MP_LOWPRECISION | SPROP_CHANGES_OFTEN, 0.0f, HIGH_DEFAULT, SendProxy_OriginXY ),
     SendPropFloat( SENDINFO_VECTORELEM( m_vecOrigin, 2 ), -1, SPROP_COORD_MP_LOWPRECISION | SPROP_CHANGES_OFTEN, 0.0f, HIGH_DEFAULT, SendProxy_OriginZ ),
@@ -744,18 +749,18 @@ SendPropVectorXY( SENDINFO( m_vecOrigin ), -1, SPROP_NOSCALE | SPROP_CHANGES_OFT
     SendPropFloat( SENDINFO_VECTORELEM( m_angEyeAngles, 0 ), 8, SPROP_CHANGES_OFTEN, -90.0f, 90.0f ),
     SendPropAngle( SENDINFO_VECTORELEM( m_angEyeAngles, 1 ), 10, SPROP_CHANGES_OFTEN ),
 
-    END_SEND_TABLE()
+END_SEND_TABLE()
 
-    //-----------------------------------------------------------------------------
-    // Purpose: Sent to attached medics
-    //-----------------------------------------------------------------------------
-    BEGIN_SEND_TABLE_NOBASE( CTFPlayer, DT_TFSendHealersDataTable )
-        SendPropInt( SENDINFO( m_nActiveWpnClip ), -1, SPROP_VARINT | SPROP_UNSIGNED ),
-    END_SEND_TABLE()
+//-----------------------------------------------------------------------------
+// Purpose: Sent to attached medics
+//-----------------------------------------------------------------------------
+BEGIN_SEND_TABLE_NOBASE( CTFPlayer, DT_TFSendHealersDataTable )
+    SendPropInt( SENDINFO( m_nActiveWpnClip ), -1, SPROP_VARINT | SPROP_UNSIGNED ),
+END_SEND_TABLE()
 
-    //============
+//============
 
-    LINK_ENTITY_TO_CLASS( player, CTFPlayer );
+LINK_ENTITY_TO_CLASS( player, CTFPlayer );
 PRECACHE_REGISTER( player );
 
 IMPLEMENT_SERVERCLASS_ST( CTFPlayer, DT_TFPlayer )
@@ -836,7 +841,9 @@ SendPropExclude( "DT_BaseAnimating", "m_flPoseParameter" ),
     SendPropInt( SENDINFO( m_iPlayerSkinOverride ) ),
     SendPropBool( SENDINFO( m_bViewingCYOAPDA ) ),
     SendPropBool( SENDINFO( m_bRegenerating ) ),
-    END_SEND_TABLE()
+END_SEND_TABLE()
+
+    // clang-format on
 
     // -------------------------------------------------------------------------------- //
 
@@ -989,7 +996,6 @@ CTFPlayer::CTFPlayer()
     m_flNextChangeClassTime = 0.0f;
     m_flNextChangeTeamTime = 0.0f;
 
-    m_bScattergunJump = false;
     m_iOldStunFlags = 0;
     m_iLastWeaponSlot = 1;
     m_iNumberofDominations = 0;
@@ -1445,35 +1451,6 @@ void CTFPlayer::TFPlayerThink()
     else
     {
         m_iLeftGroundHealth = -1;
-        if ( GetFlags() & FL_ONGROUND )
-        {
-            // Airborne conditions end on ground contact
-            m_Shared.RemoveCond( TF_COND_KNOCKED_INTO_AIR );
-            m_Shared.RemoveCond( TF_COND_AIR_CURRENT );
-
-            if ( m_Shared.InCond( TF_COND_ROCKETPACK ) )
-            {
-                // Make sure we're still not dealing with launch, where it's possible
-                // to hit your head and fall to the ground before the second stage.
-                CTFWeaponBase *pRocketPack = Weapon_OwnsThisID( TF_WEAPON_ROCKETPACK );
-                if ( pRocketPack )
-                {
-                    if ( gpGlobals->curtime > ( static_cast< CTFRocketPack * >( pRocketPack )->GetRefireTime() ) )
-                    {
-                        EmitSound( "Weapon_RocketPack.BoostersShutdown" );
-                        EmitSound( "Weapon_RocketPack.Land" );
-                        m_Shared.RemoveCond( TF_COND_ROCKETPACK );
-
-                        IGameEvent *pEvent = gameeventmanager->CreateEvent( "rocketpack_landed" );
-                        if ( pEvent )
-                        {
-                            pEvent->SetInt( "userid", GetUserID() );
-                            gameeventmanager->FireEvent( pEvent );
-                        }
-                    }
-                }
-            }
-        }
 
         if ( m_iBlastJumpState )
         {
@@ -1642,8 +1619,8 @@ void CTFPlayer::TFPlayerThink()
 
     // Send active weapon's clip state to attached medics
     bool bSendClipInfo = gpGlobals->curtime > m_flNextClipSendTime &&
-                        m_Shared.GetNumHealers() &&
-                        IsAlive();
+                         m_Shared.GetNumHealers() &&
+                         IsAlive();
     if ( bSendClipInfo )
     {
         CTFWeaponBase *pTFWeapon = GetActiveTFWeapon();
@@ -1723,9 +1700,9 @@ void CTFPlayer::TFPlayerThink()
 
         float flDistSqrToTarget = GetAbsOrigin().DistToSqr( pHookedPlayer->GetAbsOrigin() );
         if ( flDistSqrToTarget < 8100 && !pHookedPlayer->m_Shared.InCond( TF_COND_PLAGUE ) &&
-            !m_Shared.IsAlly( pHookedPlayer ) &&
-            !pHookedPlayer->m_Shared.IsInvulnerable() &&
-            pHookedPlayer->m_Shared.GetCarryingRuneType() != RUNE_RESIST )
+             !m_Shared.IsAlly( pHookedPlayer ) &&
+             !pHookedPlayer->m_Shared.IsInvulnerable() &&
+             pHookedPlayer->m_Shared.GetCarryingRuneType() != RUNE_RESIST )
         {
             pHookedPlayer->m_Shared.AddCond( TF_COND_PLAGUE, PERMANENT_CONDITION, this );
         }
@@ -2615,7 +2592,7 @@ void CTFPlayer::AddHalloweenKartPushEvent( CTFPlayer *pOther, CBaseEntity *pInfl
 
     // Dropped collection game tokens if hit hard enough and we're in the collection minigame
     if ( pOther && iDamage > 10 && CTFMinigameLogic::GetMinigameLogic() && CTFMinigameLogic::GetMinigameLogic()->GetActiveMinigame() &&
-        CTFMinigameLogic::GetMinigameLogic()->GetActiveMinigame()->GetMinigameType() == CTFMiniGame::EMinigameType::MINIGAME_HALLOWEEN2014_COLLECTION )
+         CTFMinigameLogic::GetMinigameLogic()->GetActiveMinigame()->GetMinigameType() == CTFMiniGame::EMinigameType::MINIGAME_HALLOWEEN2014_COLLECTION )
     {
         CUtlVector< CTFPlayer * > vecEveryone;
         CollectPlayers( &vecEveryone );
@@ -3762,7 +3739,6 @@ void CTFPlayer::Spawn()
 
     m_Shared.SetFeignDeathReady( false );
 
-    m_bScattergunJump = false;
     m_iOldStunFlags = 0;
 
     m_flAccumulatedHealthRegen = 0;
@@ -4390,7 +4366,7 @@ bool CTFPlayer::ItemsMatch( TFPlayerClassData_t *pData, CEconItemView *pCurWeapo
         if ( pWpnEntity )
         {
             const char *pszCurWeaponClass = pWpnEntity->GetClassname(),
-                        *pszNewWeaponTransClass = TranslateWeaponEntForClass( pNewWeaponItem->GetStaticData()->GetItemClass(), GetPlayerClass()->GetClassIndex() );
+                       *pszNewWeaponTransClass = TranslateWeaponEntForClass( pNewWeaponItem->GetStaticData()->GetItemClass(), GetPlayerClass()->GetClassIndex() );
 
             if ( !pszCurWeaponClass || !pszNewWeaponTransClass || Q_stricmp( pszCurWeaponClass, pszNewWeaponTransClass ) )
                 return false;
@@ -5511,7 +5487,7 @@ void CTFPlayer::ManageRegularWeaponsLegacy( TFPlayerClassData_t *pData )
             continue;
 
         if ( pWeapon->GetTFWpnData().m_iWeaponType == TF_WPN_TYPE_PRIMARY ||
-            pWeapon->GetTFWpnData().m_iWeaponType == TF_WPN_TYPE_SECONDARY )
+             pWeapon->GetTFWpnData().m_iWeaponType == TF_WPN_TYPE_SECONDARY )
         {
             ++iMainWeaponCount;
         }
@@ -6014,7 +5990,7 @@ int CTFPlayer::GetAutoTeam( int nPreferedTeam /*= TF_TEAM_AUTOASSIGN*/ )
             if ( TFGameRules()->IsInHighlanderMode() )
             {
                 if ( ( pBlue->GetNumPlayers() >= TF_LAST_NORMAL_CLASS - 1 ) &&
-                    ( pRed->GetNumPlayers() >= TF_LAST_NORMAL_CLASS - 1 ) )
+                     ( pRed->GetNumPlayers() >= TF_LAST_NORMAL_CLASS - 1 ) )
                 {
                     // teams are full....join team Spectator for now
                     return TEAM_SPECTATOR;
@@ -6700,7 +6676,7 @@ void CTFPlayer::ChangeTeam( int iTeamNum, bool bAutoTeam, bool bSilent, bool bAu
             if ( pTemp && pTemp != this )
             {
                 if ( ( pTemp->m_Shared.GetDisguiseTarget() == this ) ||                                           // they were disguising as me and I've changed teams
-                    ( !pTemp->m_Shared.GetDisguiseTarget() && pTemp->m_Shared.GetDisguiseTeam() == iTeamNum ) )  // they don't have a disguise and I'm joining the team they're disguising as
+                     ( !pTemp->m_Shared.GetDisguiseTarget() && pTemp->m_Shared.GetDisguiseTeam() == iTeamNum ) )  // they don't have a disguise and I'm joining the team they're disguising as
                 {
                     // choose someone else...
                     pTemp->m_Shared.FindDisguiseTarget();
@@ -6746,15 +6722,15 @@ void CTFPlayer::HandleCommand_JoinClass( const char *pClassName, bool bAllowSpaw
     if ( TFGameRules()->IsCompetitiveMode() )
     {
         if ( !tf_tournament_classchange_allowed.GetBool() &&
-            TFGameRules()->State_Get() == GR_STATE_RND_RUNNING )
+             TFGameRules()->State_Get() == GR_STATE_RND_RUNNING )
         {
             ClientPrint( this, HUD_PRINTCENTER, "#TF_Ladder_NoClassChangeRound" );
             return;
         }
 
         if ( !tf_tournament_classchange_ready_allowed.GetBool() &&
-            TFGameRules()->State_Get() == GR_STATE_BETWEEN_RNDS &&
-            TFGameRules()->IsPlayerReady( entindex() ) )
+             TFGameRules()->State_Get() == GR_STATE_BETWEEN_RNDS &&
+             TFGameRules()->IsPlayerReady( entindex() ) )
         {
             ClientPrint( this, HUD_PRINTCENTER, "#TF_Ladder_NoClassChangeReady" );
             return;
@@ -7123,7 +7099,7 @@ void CTFPlayer::CheckInstantLoadoutRespawn( void )
 
 class CGC_RespawnPostLoadoutChange : public GCSDK::CGCClientJob
 {
-    public:
+   public:
     CGC_RespawnPostLoadoutChange( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
 
@@ -8877,11 +8853,11 @@ int CTFPlayer::OnTakeDamage( const CTakeDamageInfo &inputInfo )
                 {
                     CTFBot *pTFAttackerBot = ToTFBot( pTFAttacker );
                     if ( pTFAttackerBot &&
-                        ( pTFAttackerBot != this ) &&
-                        pTFAttackerBot->GetPrevMission() == CTFBot::MISSION_DESTROY_SENTRIES &&
-                        info.IsForceFriendlyFire() &&
-                        InSameTeam( pTFAttackerBot ) &&
-                        IsMiniBoss() )
+                         ( pTFAttackerBot != this ) &&
+                         pTFAttackerBot->GetPrevMission() == CTFBot::MISSION_DESTROY_SENTRIES &&
+                         info.IsForceFriendlyFire() &&
+                         InSameTeam( pTFAttackerBot ) &&
+                         IsMiniBoss() )
                     {
                         info.SetDamage( 600.f );
                     }
@@ -10138,7 +10114,7 @@ void CTFPlayer::DamageEffect( float flDamage, int fDamageType )
 bool CTFPlayer::ShouldCollide( int collisionGroup, int contentsMask ) const
 {
     if ( ( ( collisionGroup == COLLISION_GROUP_PLAYER_MOVEMENT ) && tf_avoidteammates.GetBool() ) ||
-        collisionGroup == TFCOLLISION_GROUP_ROCKETS || collisionGroup == TFCOLLISION_GROUP_ROCKET_BUT_NOT_WITH_OTHER_ROCKETS )
+         collisionGroup == TFCOLLISION_GROUP_ROCKETS || collisionGroup == TFCOLLISION_GROUP_ROCKET_BUT_NOT_WITH_OTHER_ROCKETS )
     {
         switch ( GetTeamNumber() )
         {
@@ -10180,7 +10156,7 @@ void CTFPlayer::CommitSuicide( bool bExplode /* = false */, bool bForce /*= fals
 
     // Don't suicide during the "bonus time" if we're not on the winning team
     if ( !bForce && TFGameRules()->State_Get() == GR_STATE_TEAM_WIN &&
-        GetTeamNumber() != TFGameRules()->GetWinningTeam() )
+         GetTeamNumber() != TFGameRules()->GetWinningTeam() )
     {
         return;
     }
@@ -10471,7 +10447,7 @@ void CTFPlayer::PlayDamageResistSound( float flStartDamage, float flModifiedDama
     if ( flDamagePercent > 0.f && flDamagePercent < 1.f )
     {
         const char *pszSoundName = ( flDamagePercent >= 0.75f ) ? "Player.ResistanceLight" : ( flDamagePercent <= 0.25f ) ? "Player.ResistanceHeavy"
-                                                                                                                        : "Player.ResistanceMedium";
+                                                                                                                          : "Player.ResistanceMedium";
 
         CSoundParameters params;
         if ( CBaseEntity::GetParametersForSound( pszSoundName, params, NULL ) )
@@ -10624,8 +10600,8 @@ int CTFPlayer::OnTakeDamage_Alive( const CTakeDamageInfo &info )
     if ( ( info.GetDamageType() & DMG_PREVENT_PHYSICS_FORCE ) == 0 )
     {
         if ( info.GetInflictor() && ( GetMoveType() == MOVETYPE_WALK ) &&
-            ( !pAttacker->IsSolidFlagSet( FSOLID_TRIGGER ) ) &&
-            ( !m_Shared.InCond( TF_COND_DISGUISED ) ) )
+             ( !pAttacker->IsSolidFlagSet( FSOLID_TRIGGER ) ) &&
+             ( !m_Shared.InCond( TF_COND_DISGUISED ) ) )
         {
             if ( !m_Shared.IsImmuneToPushback() || outParams.bSelfBlastDmg )
             {
@@ -10927,7 +10903,7 @@ bool CTFPlayer::ShouldGib( const CTakeDamageInfo &info )
     {
         // Only blast & half falloff damage can gib.
         if ( ( ( info.GetDamageType() & DMG_BLAST ) == 0 ) &&
-            ( ( info.GetDamageType() & DMG_HALF_FALLOFF ) == 0 ) )
+             ( ( info.GetDamageType() & DMG_HALF_FALLOFF ) == 0 ) )
             return false;
     }
 
@@ -11327,7 +11303,7 @@ void CTFPlayer::Event_KilledOther( CBaseEntity *pVictim, const CTakeDamageInfo &
                         {
                             // If we're able to cap the point...
                             if ( TeamplayGameRules()->TeamMayCapturePoint( GetTeamNumber(), pCP->GetPointIndex() ) &&
-                                TeamplayGameRules()->PlayerMayCapturePoint( this, pCP->GetPointIndex() ) )
+                                 TeamplayGameRules()->PlayerMayCapturePoint( this, pCP->GetPointIndex() ) )
                             {
                                 AwardAchievement( ACHIEVEMENT_TF_DEMOMAN_KILL_X_DEFENDING );
                             }
@@ -11405,7 +11381,7 @@ void CTFPlayer::Event_KilledOther( CBaseEntity *pVictim, const CTakeDamageInfo &
                 if ( pCP && ( pCP->GetOwner() != pTFVictim->GetTeamNumber() ) )
                 {
                     if ( TeamplayGameRules()->TeamMayCapturePoint( pTFVictim->GetTeamNumber(), pCP->GetPointIndex() ) &&
-                        TeamplayGameRules()->PlayerMayCapturePoint( pTFVictim, pCP->GetPointIndex() ) )
+                         TeamplayGameRules()->PlayerMayCapturePoint( pTFVictim, pCP->GetPointIndex() ) )
                     {
                         CTFPlayer *pTFAssister = NULL;
                         if ( TFGameRules() )
@@ -11625,9 +11601,9 @@ void CTFPlayer::Event_Killed( const CTakeDamageInfo &info )
 
         // If we were killed by "the world", then give credit to the next damager in the list
         if ( ( info.GetAttacker() == info.GetInflictor() && info.GetAttacker() && info.GetAttacker()->IsBSPModel() ) ||
-            ( info.GetDamageCustom() == TF_DMG_CUSTOM_TRIGGER_HURT ) ||
-            ( info.GetDamageType() & DMG_VEHICLE ) ||
-            ( info.GetDamageCustom() == TF_DMG_CUSTOM_CROC ) )
+             ( info.GetDamageCustom() == TF_DMG_CUSTOM_TRIGGER_HURT ) ||
+             ( info.GetDamageType() & DMG_VEHICLE ) ||
+             ( info.GetDamageCustom() == TF_DMG_CUSTOM_CROC ) )
         {
             pRecentDamager = TFGameRules()->GetRecentDamager( this, 1, 10.0 );
 
@@ -11955,7 +11931,7 @@ void CTFPlayer::Event_Killed( const CTakeDamageInfo &info )
                         {
                             // was i able to capture the control point?
                             if ( TeamplayGameRules()->TeamMayCapturePoint( GetTeamNumber(), pCP->GetPointIndex() ) &&
-                                TeamplayGameRules()->PlayerMayCapturePoint( this, pCP->GetPointIndex() ) )
+                                 TeamplayGameRules()->PlayerMayCapturePoint( this, pCP->GetPointIndex() ) )
                             {
                                 pPlayerAttacker->AwardAchievement( ACHIEVEMENT_TF_SPY_BACKSTAB_CAPPING_ENEMIES );
                             }
@@ -12011,9 +11987,9 @@ void CTFPlayer::Event_Killed( const CTakeDamageInfo &info )
             // give achievement for killing someone who was recently damaged by our sentry
             // note that we don't check to see if the sentry is still alive
             if ( pKillerWeapon &&
-                ( pKillerWeapon->GetWeaponID() == TF_WEAPON_SENTRY_REVENGE ||
-                    pKillerWeapon->GetWeaponID() == TF_WEAPON_SHOTGUN_PRIMARY ||
-                    pKillerWeapon->GetWeaponID() == TF_WEAPON_SHOTGUN_BUILDING_RESCUE ) )
+                 ( pKillerWeapon->GetWeaponID() == TF_WEAPON_SENTRY_REVENGE ||
+                   pKillerWeapon->GetWeaponID() == TF_WEAPON_SHOTGUN_PRIMARY ||
+                   pKillerWeapon->GetWeaponID() == TF_WEAPON_SHOTGUN_BUILDING_RESCUE ) )
             {
                 if ( m_AchievementData.IsSentryDamagerInHistory( pPlayerAttacker, 5.0 ) )
                 {
@@ -12415,7 +12391,7 @@ void CTFPlayer::Event_Killed( const CTakeDamageInfo &info )
         // will still be the owner of that object, but we want the deathcam to point to the
         // object itself.
         else if ( info.GetInflictor() && info.GetInflictor()->GetOwnerEntity() &&
-                info.GetInflictor()->GetOwnerEntity()->IsBaseObject() )
+                  info.GetInflictor()->GetOwnerEntity()->IsBaseObject() )
         {
             m_hObserverTarget.Set( info.GetInflictor()->GetOwnerEntity() );
         }
@@ -12874,9 +12850,9 @@ void CTFPlayer::Event_Killed( const CTakeDamageInfo &info )
 
     // Is this an environmental death?
     if ( ( info.GetAttacker() == info.GetInflictor() && info.GetAttacker() && info.GetAttacker()->IsBSPModel() ) ||
-        ( info.GetDamageCustom() == TF_DMG_CUSTOM_TRIGGER_HURT ) ||
-        ( info.GetDamageType() & DMG_VEHICLE ) ||
-        ( info.GetDamageCustom() == TF_DMG_CUSTOM_CROC ) )
+         ( info.GetDamageCustom() == TF_DMG_CUSTOM_TRIGGER_HURT ) ||
+         ( info.GetDamageType() & DMG_VEHICLE ) ||
+         ( info.GetDamageCustom() == TF_DMG_CUSTOM_CROC ) )
     {
         CTFPlayer *pRecentDamager = TFGameRules()->GetRecentDamager( this, 1, 5.0 );
         if ( pRecentDamager )
@@ -13042,8 +13018,8 @@ void CTFPlayer::DropAmmoPack( const CTakeDamageInfo &info, bool bEmpty, bool bDi
     // Figure out which model/skin to use for the drop. We may pull from our real weapon or
     // from the weapon we're disguised as.
     CTFWeaponBase *pDropWeaponProps = ( bDisguisedWeapon && m_Shared.InCond( TF_COND_DISGUISED ) && m_Shared.GetDisguiseWeapon() )
-                                        ? m_Shared.GetDisguiseWeapon()
-                                        : pWeapon;
+                                          ? m_Shared.GetDisguiseWeapon()
+                                          : pWeapon;
 
     const char *pszWorldModel = pDropWeaponProps->GetWorldModel();
     int nSkin = pDropWeaponProps->GetDropSkinOverride();
@@ -13891,8 +13867,8 @@ void CTFPlayer::StateThinkDYING( void )
 {
     // If we have a ragdoll, it's time to go to deathcam
     if ( !m_bAbortFreezeCam && m_hRagdoll &&
-        ( m_lifeState == LIFE_DYING || m_lifeState == LIFE_DEAD ) &&
-        GetObserverMode() != OBS_MODE_FREEZECAM )
+         ( m_lifeState == LIFE_DYING || m_lifeState == LIFE_DEAD ) &&
+         GetObserverMode() != OBS_MODE_FREEZECAM )
     {
         if ( GetObserverMode() != OBS_MODE_DEATHCAM )
         {
@@ -13994,7 +13970,7 @@ class CIntroViewpoint : public CPointEntity
 {
     DECLARE_CLASS( CIntroViewpoint, CPointEntity );
 
-    public:
+   public:
     DECLARE_DATADESC();
 
     virtual int UpdateTransmitState()
@@ -15226,7 +15202,7 @@ void CTFPlayer::DeathSound( const CTakeDamageInfo &info )
     }
 
     if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() &&
-        GetTeamNumber() != TF_TEAM_PVE_INVADERS && !m_bGoingFeignDeath )
+         GetTeamNumber() != TF_TEAM_PVE_INVADERS && !m_bGoingFeignDeath )
     {
         EmitSound( "MVM.PlayerDied" );
         return;
@@ -15405,7 +15381,7 @@ void CTFPlayer::OnBurnOther( CTFPlayer *pTFPlayerVictim, CTFWeaponBase *pWeapon 
         if ( pCP && pCP->GetOwner() == GetTeamNumber() )
         {
             if ( TeamplayGameRules()->TeamMayCapturePoint( pTFPlayerVictim->GetTeamNumber(), pCP->GetPointIndex() ) &&
-                TeamplayGameRules()->PlayerMayCapturePoint( pTFPlayerVictim, pCP->GetPointIndex() ) )
+                 TeamplayGameRules()->PlayerMayCapturePoint( pTFPlayerVictim, pCP->GetPointIndex() ) )
             {
                 AwardAchievement( ACHIEVEMENT_TF_PYRO_DEFEND_POINTS );
             }
@@ -15468,7 +15444,7 @@ bool CTFPlayer::IsCapturingPoint()
         if ( pCP )
         {
             if ( TeamplayGameRules()->TeamMayCapturePoint( GetTeamNumber(), pCP->GetPointIndex() ) &&
-                TeamplayGameRules()->PlayerMayCapturePoint( this, pCP->GetPointIndex() ) )
+                 TeamplayGameRules()->PlayerMayCapturePoint( this, pCP->GetPointIndex() ) )
             {
                 // if we own this point, we're no longer "capturing" it
                 return pCP->GetOwner() != GetTeamNumber();
@@ -15745,9 +15721,9 @@ void CTFPlayer::FeignDeath( const CTakeDamageInfo &info, bool bDeathnotice )
 
     // Note that we succeeded for stats tracking.
     EconEntity_OnOwnerKillEaterEvent( dynamic_cast< CEconEntity * >( GetEntityForLoadoutSlot( LOADOUT_POSITION_PDA2 ) ),
-                                    this,
-                                    pTFPlayer,  // in this case the "victim" is the person doing the damage
-                                    kKillEaterEvent_DeathsFeigned );
+                                      this,
+                                      pTFPlayer,  // in this case the "victim" is the person doing the damage
+                                      kKillEaterEvent_DeathsFeigned );
 }
 
 //-----------------------------------------------------------------------------
@@ -16844,11 +16820,11 @@ void CTFPlayer::Touch( CBaseEntity *pOther )
                 }
             }
             if ( ( m_Shared.GetPercentInvisible() < 0.10f ) &&
-                m_Shared.GetCarryingRuneType() == RUNE_PLAGUE &&
-                !m_Shared.IsAlly( pVictim ) &&
-                !pVictim->m_Shared.IsInvulnerable() &&
-                !pVictim->m_Shared.InCond( TF_COND_PLAGUE ) &&
-                pVictim->m_Shared.GetCarryingRuneType() != RUNE_RESIST )
+                 m_Shared.GetCarryingRuneType() == RUNE_PLAGUE &&
+                 !m_Shared.IsAlly( pVictim ) &&
+                 !pVictim->m_Shared.IsInvulnerable() &&
+                 !pVictim->m_Shared.InCond( TF_COND_PLAGUE ) &&
+                 pVictim->m_Shared.GetCarryingRuneType() != RUNE_RESIST )
             {
                 pVictim->m_Shared.AddCond( TF_COND_PLAGUE, PERMANENT_CONDITION, this );
 
@@ -17281,8 +17257,8 @@ bool CTFPlayer::HasWearablesEquipped( const CSchemaItemDefHandle *ppItemDefs, in
         {
             CEconWearable *pWearable = m_hMyWearables[wbl];
             if ( pWearable &&
-                pWearable->GetAttributeContainer()->GetItem() &&
-                pWearable->GetAttributeContainer()->GetItem()->GetItemDefinition() == pItemDef )
+                 pWearable->GetAttributeContainer()->GetItem() &&
+                 pWearable->GetAttributeContainer()->GetItem()->GetItemDefinition() == pItemDef )
             {
                 bHasWearable = true;
                 break;
@@ -17307,7 +17283,7 @@ int CTFPlayer::GetTauntConcept( CEconItemDefinition *pItemDef )
     {
         animation_on_wearable_t *pAnim = pItemDef->GetAnimationData( GetTeamNumber(), i );
         if ( pAnim && pAnim->pszActivity &&
-            !Q_stricmp( pAnim->pszActivity, "taunt_concept" ) )
+             !Q_stricmp( pAnim->pszActivity, "taunt_concept" ) )
         {
             const char *pszConcept = pAnim->pszReplacement;
             if ( !pszConcept )
@@ -17855,7 +17831,7 @@ void CTFPlayer::Taunt( taunts_t iTauntIndex, int iTauntConcept )
     {
         // phlogistinator
         if ( IsPlayerClass( TF_CLASS_PYRO ) && m_Shared.GetRageMeter() >= 100.0f &&
-            StringHasPrefix( szResponse, "scenes/player/pyro/low/taunt01" ) )
+             StringHasPrefix( szResponse, "scenes/player/pyro/low/taunt01" ) )
         {
             // Pyro Rage!
             CBaseCombatWeapon *pWeapon = GetActiveWeapon();
@@ -18342,7 +18318,7 @@ void CTFPlayer::DoTauntAttack( void )
     m_iTauntAttack = TAUNTATK_NONE;
 
     if ( iTauntAttack == TAUNTATK_PYRO_HADOUKEN || iTauntAttack == TAUNTATK_SPY_FENCING_SLASH_A ||
-        iTauntAttack == TAUNTATK_SPY_FENCING_SLASH_B || iTauntAttack == TAUNTATK_SPY_FENCING_STAB || iTauntAttack == TAUNTATK_PYRO_GASBLAST )
+         iTauntAttack == TAUNTATK_SPY_FENCING_SLASH_B || iTauntAttack == TAUNTATK_SPY_FENCING_STAB || iTauntAttack == TAUNTATK_PYRO_GASBLAST )
     {
         // Pyro Hadouken fireball attack
         // Kill all enemies within a small volume in front of the player.
@@ -18433,7 +18409,7 @@ void CTFPlayer::DoTauntAttack( void )
         }
     }
     else if ( iTauntAttack == TAUNTATK_SNIPER_ARROW_STAB_IMPALE || iTauntAttack == TAUNTATK_SNIPER_ARROW_STAB_KILL ||
-            iTauntAttack == TAUNTATK_ENGINEER_ARM_IMPALE || iTauntAttack == TAUNTATK_ENGINEER_ARM_KILL || iTauntAttack == TAUNTATK_ENGINEER_ARM_BLEND )
+              iTauntAttack == TAUNTATK_ENGINEER_ARM_IMPALE || iTauntAttack == TAUNTATK_ENGINEER_ARM_KILL || iTauntAttack == TAUNTATK_ENGINEER_ARM_BLEND )
     {
         Vector vecForward;
         AngleVectors( EyeAngles(), &vecForward );
@@ -19191,7 +19167,7 @@ void CTFPlayer::ModifyOrAppendCriteria( AI_CriteriaSet &criteriaSet )
     if ( pStats )
     {
         iTotalKills = pStats->statsCurrentLife.m_iStat[TFSTAT_KILLS] + pStats->statsCurrentLife.m_iStat[TFSTAT_KILLASSISTS] +
-                    pStats->statsCurrentLife.m_iStat[TFSTAT_BUILDINGSDESTROYED];
+                      pStats->statsCurrentLife.m_iStat[TFSTAT_BUILDINGSDESTROYED];
     }
     criteriaSet.AppendCriteria( "killsthislife", UTIL_VarArgs( "%d", iTotalKills ) );
     criteriaSet.AppendCriteria( "disguised", m_Shared.InCond( TF_COND_DISGUISED ) ? "1" : "0" );
@@ -19384,7 +19360,7 @@ void CTFPlayer::ModifyOrAppendCriteria( AI_CriteriaSet &criteriaSet )
             else
             {
                 if ( TeamplayGameRules()->TeamMayCapturePoint( GetTeamNumber(), pCP->GetPointIndex() ) &&
-                    TeamplayGameRules()->PlayerMayCapturePoint( this, pCP->GetPointIndex() ) )
+                     TeamplayGameRules()->PlayerMayCapturePoint( this, pCP->GetPointIndex() ) )
                 {
                     criteriaSet.AppendCriteria( "OnCappableControlPoint", "1" );
                 }
@@ -19577,7 +19553,7 @@ CTriggerAreaCapture *CTFPlayer::GetControlPointStandingOn( void )
 // Usable by CTFPlayers, not just CTFBots
 class CTFPlayertPathCost : public IPathCost
 {
-    public:
+   public:
     CTFPlayertPathCost( const CTFPlayer *me )
     {
         m_me = me;
@@ -19606,7 +19582,7 @@ class CTFPlayertPathCost : public IPathCost
 
             // don't path through enemy spawn rooms
             if ( ( m_me->GetTeamNumber() == TF_TEAM_RED && area->HasAttributeTF( TF_NAV_SPAWN_ROOM_BLUE ) ) ||
-                ( m_me->GetTeamNumber() == TF_TEAM_BLUE && area->HasAttributeTF( TF_NAV_SPAWN_ROOM_RED ) ) )
+                 ( m_me->GetTeamNumber() == TF_TEAM_BLUE && area->HasAttributeTF( TF_NAV_SPAWN_ROOM_RED ) ) )
             {
                 if ( !TFGameRules()->RoundHasBeenWon() )
                 {
@@ -20318,8 +20294,8 @@ bool CTFPlayer::ShouldAnnounceAchievement( void )
     if ( IsPlayerClass( TF_CLASS_SPY ) )
     {
         if ( m_Shared.IsStealthed() ||
-            m_Shared.InCond( TF_COND_DISGUISED ) ||
-            m_Shared.InCond( TF_COND_DISGUISING ) )
+             m_Shared.InCond( TF_COND_DISGUISED ) ||
+             m_Shared.InCond( TF_COND_DISGUISING ) )
         {
             return false;
         }
@@ -21466,9 +21442,9 @@ CTFPlayer *CTFPlayer::FindPartnerTauntInitiator( void )
         {
             if ( tf_highfive_debug.GetBool() )
                 Msg( " - entity [%i %s %s] in between. tracing again with tolerance.\n",
-                    result.GetEntityIndex(),
-                    result.m_pEnt ? result.m_pEnt->GetClassname() : "NULL",
-                    result.surface.name );
+                     result.GetEntityIndex(),
+                     result.m_pEnt ? result.m_pEnt->GetClassname() : "NULL",
+                     result.surface.name );
 
             Vector offset( 0, 0, tf_highfive_height_tolerance.GetFloat() );
             trace_t result2;
@@ -21477,9 +21453,9 @@ CTFPlayer *CTFPlayer::FindPartnerTauntInitiator( void )
             {
                 if ( tf_highfive_debug.GetBool() )
                     Msg( " - entity [%i %s %s] in between.\n",
-                        result2.GetEntityIndex(),
-                        result2.m_pEnt ? result2.m_pEnt->GetClassname() : "NULL",
-                        result2.surface.name );
+                         result2.GetEntityIndex(),
+                         result2.m_pEnt ? result2.m_pEnt->GetClassname() : "NULL",
+                         result2.surface.name );
 
                 // something is in between us
                 continue;
@@ -21533,7 +21509,7 @@ static bool SelectPartnerTaunt( const GameItemDefinition_t *pItemDef, CTFPlayer 
     const int iInitiatorSceneCount = pTauntData->GetPartnerTauntInitiatorSceneCount( iInitiatorClass );
     const int iReceiverSceneCount = pTauntData->GetPartnerTauntReceiverSceneCount( iReceiverClass );
     if ( iInitiatorSceneCount == 0 ||
-        iReceiverSceneCount == 0 )
+         iReceiverSceneCount == 0 )
     {
         return false;
     }
@@ -21635,10 +21611,10 @@ void CTFPlayer::AcceptTauntWithPartner( CTFPlayer *initiator )
     {
         if ( tf_highfive_debug.GetBool() )
             Msg( " - but we'd get stuck on entity [%i %s %s] going in front of %s.\n",
-                stucktrace.GetEntityIndex(),
-                stucktrace.m_pEnt ? stucktrace.m_pEnt->GetClassname() : "NULL",
-                stucktrace.surface.name,
-                initiator->GetPlayerName() );
+                 stucktrace.GetEntityIndex(),
+                 stucktrace.m_pEnt ? stucktrace.m_pEnt->GetClassname() : "NULL",
+                 stucktrace.surface.name,
+                 initiator->GetPlayerName() );
 
         return;
     }
@@ -21820,8 +21796,8 @@ void CTFPlayer::IncrementKillCountSinceLastDeploy( const CTakeDamageInfo &info )
 bool CTFPlayer::IsAnyEnemySentryAbleToAttackMe( void ) const
 {
     if ( m_Shared.InCond( TF_COND_DISGUISED ) ||
-        m_Shared.InCond( TF_COND_DISGUISING ) ||
-        m_Shared.IsStealthed() )
+         m_Shared.InCond( TF_COND_DISGUISING ) ||
+         m_Shared.IsStealthed() )
     {
         // I'm a disguised or cloaked Spy
         return false;
@@ -22136,7 +22112,7 @@ void CTFPlayer::ForgetFirstUpgradeForItem( CEconItemView *pItem )
     for ( int i = 0; i < upgrades->Count(); ++i )
     {
         if ( ( pItem == NULL && upgrades->Element( i ).m_itemDefIndex == INVALID_ITEM_DEF_INDEX ) ||  // self upgrade
-            upgrades->Element( i ).m_itemDefIndex == pItem->GetItemDefIndex() )                      // item upgrade
+             upgrades->Element( i ).m_itemDefIndex == pItem->GetItemDefIndex() )                      // item upgrade
         {
             upgrades->Remove( i );
             if ( g_pPopulationManager )
@@ -22795,7 +22771,7 @@ void CTFPlayer::RemoveAllCustomAttributes()
 bool CTFPlayer::ShouldForceTransmitsForTeam( int iTeam )
 {
     return ( ( GetTeamNumber() == TEAM_SPECTATOR ) ||
-            ( ( GetTeamNumber() == iTeam ) && ( m_Shared.InCond( TF_COND_TEAM_GLOWS ) || !IsAlive() ) ) );
+             ( ( GetTeamNumber() == iTeam ) && ( m_Shared.InCond( TF_COND_TEAM_GLOWS ) || !IsAlive() ) ) );
 }
 
 //-----------------------------------------------------------------------------

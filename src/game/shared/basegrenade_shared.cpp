@@ -28,11 +28,13 @@ extern ConVar sk_plr_dmg_grenade;
 
 #if !defined( CLIENT_DLL )
 
+;  // clang-format off
+
 // Global Savedata for friction modifier
 BEGIN_DATADESC( CBaseGrenade )
-//					nextGrenade
-DEFINE_FIELD( m_hThrower, FIELD_EHANDLE ),
-    //					m_fRegisteredSound ???
+    // nextGrenade
+    DEFINE_FIELD( m_hThrower, FIELD_EHANDLE ),
+    // m_fRegisteredSound ???
     DEFINE_FIELD( m_bIsLive, FIELD_BOOLEAN ),
     DEFINE_FIELD( m_DmgRadius, FIELD_FLOAT ),
     DEFINE_FIELD( m_flDetonateTime, FIELD_TIME ),
@@ -52,9 +54,7 @@ DEFINE_FIELD( m_hThrower, FIELD_EHANDLE ),
     DEFINE_THINKFUNC( Detonate ),
     DEFINE_THINKFUNC( TumbleThink ),
 
-    END_DATADESC()
-
-        void SendProxy_CropFlagsToPlayerFlagBitsLength( const SendProp *pProp, const void *pStruct, const void *pVarData, DVariant *pOut, int iElement, int objectID );
+END_DATADESC()
 
 #endif
 
@@ -62,7 +62,7 @@ IMPLEMENT_NETWORKCLASS_ALIASED( BaseGrenade, DT_BaseGrenade )
 
 BEGIN_NETWORK_TABLE( CBaseGrenade, DT_BaseGrenade )
 #if !defined( CLIENT_DLL )
-SendPropFloat( SENDINFO( m_flDamage ), 10, SPROP_ROUNDDOWN, 0.0, 256.0f ),
+    SendPropFloat( SENDINFO( m_flDamage ), 10, SPROP_ROUNDDOWN, 0.0, 256.0f ),
     SendPropFloat( SENDINFO( m_DmgRadius ), 10, SPROP_ROUNDDOWN, 0.0, 1024.0f ),
     SendPropInt( SENDINFO( m_bIsLive ), 1, SPROP_UNSIGNED ),
     //	SendPropTime( SENDINFO( m_flDetonateTime ) ),
@@ -70,9 +70,9 @@ SendPropFloat( SENDINFO( m_flDamage ), 10, SPROP_ROUNDDOWN, 0.0, 256.0f ),
 
     SendPropVector( SENDINFO( m_vecVelocity ), 0, SPROP_NOSCALE ),
     // HACK: Use same flag bits as player for now
-    SendPropInt( SENDINFO( m_fFlags ), PLAYER_FLAG_BITS, SPROP_UNSIGNED, SendProxy_CropFlagsToPlayerFlagBitsLength ),
+    SendPropInt( SENDINFO( m_fFlags ), 0, SPROP_UNSIGNED ),
 #else
-RecvPropFloat( RECVINFO( m_flDamage ) ),
+    RecvPropFloat( RECVINFO( m_flDamage ) ),
     RecvPropFloat( RECVINFO( m_DmgRadius ) ),
     RecvPropInt( RECVINFO( m_bIsLive ) ),
     //	RecvPropTime( RECVINFO( m_flDetonateTime ) ),
@@ -83,15 +83,15 @@ RecvPropFloat( RECVINFO( m_flDamage ) ),
 
     RecvPropInt( RECVINFO( m_fFlags ) ),
 #endif
-    END_NETWORK_TABLE()
+END_NETWORK_TABLE()
 
-        LINK_ENTITY_TO_CLASS( grenade, CBaseGrenade );
+LINK_ENTITY_TO_CLASS( grenade, CBaseGrenade );
 
 #if defined( CLIENT_DLL )
 
 BEGIN_PREDICTION_DATA( CBaseGrenade )
 
-DEFINE_PRED_FIELD( m_hThrower, FIELD_EHANDLE, FTYPEDESC_INSENDTABLE ),
+    DEFINE_PRED_FIELD( m_hThrower, FIELD_EHANDLE, FTYPEDESC_INSENDTABLE ),
     DEFINE_PRED_FIELD( m_bIsLive, FIELD_BOOLEAN, FTYPEDESC_INSENDTABLE ),
     DEFINE_PRED_FIELD( m_DmgRadius, FIELD_BOOLEAN, FTYPEDESC_INSENDTABLE ),
     //	DEFINE_PRED_FIELD_TOL( m_flDetonateTime, FIELD_FLOAT, FTYPEDESC_INSENDTABLE, TD_MSECTOLERANCE ),
@@ -103,15 +103,17 @@ DEFINE_PRED_FIELD( m_hThrower, FIELD_EHANDLE, FTYPEDESC_INSENDTABLE ),
     //	DEFINE_FIELD( m_fRegisteredSound, FIELD_BOOLEAN ),
     //	DEFINE_FIELD( m_iszBounceSound, FIELD_STRING ),
 
-    END_PREDICTION_DATA()
+END_PREDICTION_DATA()
 
 #endif
+
+;  // clang-format on
 
 // Grenades flagged with this will be triggered when the owner calls detonateSatchelCharges
 #define SF_DETONATE 0x0001
 
-    // UNDONE: temporary scorching for PreAlpha - find a less sleazy permenant solution.
-    void CBaseGrenade::Explode( trace_t *pTrace, int bitsDamageType )
+// UNDONE: temporary scorching for PreAlpha - find a less sleazy permenant solution.
+void CBaseGrenade::Explode( trace_t *pTrace, int bitsDamageType )
 {
 #if !defined( CLIENT_DLL )
 
@@ -142,27 +144,27 @@ DEFINE_PRED_FIELD( m_hThrower, FIELD_EHANDLE, FTYPEDESC_INSENDTABLE ),
         CPASFilter filter( vecAbsOrigin );
 
         te->Explosion( filter, -1.0,  // don't apply cl_interp delay
-                        &vecAbsOrigin,
-                        !( contents & MASK_WATER ) ? g_sModelIndexFireball : g_sModelIndexWExplosion,
-                        m_DmgRadius * .03,
-                        25,
-                        TE_EXPLFLAG_NONE,
-                        m_DmgRadius,
-                        m_flDamage,
-                        &vecNormal,
-                        ( char )pdata->game.material );
+                       &vecAbsOrigin,
+                       !( contents & MASK_WATER ) ? g_sModelIndexFireball : g_sModelIndexWExplosion,
+                       m_DmgRadius * .03,
+                       25,
+                       TE_EXPLFLAG_NONE,
+                       m_DmgRadius,
+                       m_flDamage,
+                       &vecNormal,
+                       ( char )pdata->game.material );
     }
     else
     {
         CPASFilter filter( vecAbsOrigin );
         te->Explosion( filter, -1.0,  // don't apply cl_interp delay
-                        &vecAbsOrigin,
-                        !( contents & MASK_WATER ) ? g_sModelIndexFireball : g_sModelIndexWExplosion,
-                        m_DmgRadius * .03,
-                        25,
-                        TE_EXPLFLAG_NONE,
-                        m_DmgRadius,
-                        m_flDamage );
+                       &vecAbsOrigin,
+                       !( contents & MASK_WATER ) ? g_sModelIndexFireball : g_sModelIndexWExplosion,
+                       m_DmgRadius * .03,
+                       25,
+                       TE_EXPLFLAG_NONE,
+                       m_DmgRadius,
+                       m_flDamage );
     }
 
 #if !defined( CLIENT_DLL )
@@ -511,7 +513,7 @@ void CBaseGrenade::SetThrower( CBaseCombatCharacter *pThrower )
 // Input  :
 // Output :
 //-----------------------------------------------------------------------------
-CBaseGrenade::~CBaseGrenade( void ){};
+CBaseGrenade::~CBaseGrenade( void ) {};
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor

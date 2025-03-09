@@ -69,7 +69,7 @@ class CEnvEntityMaker : public CPointEntity
     COutputEvent m_pOutputOnFailedSpawn;
 };
 
-// clang-format off
+;  // clang-format off
 
 BEGIN_DATADESC( CEnvEntityMaker )
     // DEFINE_FIELD( m_vecEntityMins, FIELD_VECTOR ),
@@ -104,7 +104,7 @@ END_SCRIPTDESC()
 
 LINK_ENTITY_TO_CLASS( env_entity_maker, CEnvEntityMaker );
 
-// clang-format on
+;  // clang-format on
 
 //-----------------------------------------------------------------------------
 // Purpose:

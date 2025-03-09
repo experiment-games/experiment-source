@@ -33,6 +33,8 @@ class CTFPlayer;
 // Tables.
 //
 
+// clang-format off
+
 // Client specific.
 #ifdef CLIENT_DLL
 
@@ -44,6 +46,8 @@ EXTERN_RECV_TABLE( DT_TFPlayerShared );
 EXTERN_SEND_TABLE( DT_TFPlayerShared );
 
 #endif
+
+// clang-format on
 
 enum
 {
@@ -75,13 +79,13 @@ class CTFDamageEvent
     // This redundantly declares friendship which leads to gcc warnings.
     // DECLARE_CLIENTCLASS_NOBASE();
 #else
-    public:
+   public:
     // This redundantly declares friendship which leads to gcc warnings.
     // DECLARE_SERVERCLASS_NOBASE();
 #endif
     DECLARE_EMBEDDED_NETWORKVAR();
 
-    public:
+   public:
     float flDamage;
     float flDamageCritScaleMultiplier;  // scale the damage by this amount when taking it into consideration for "should I crit?" calculations
     float flTime;
@@ -190,7 +194,7 @@ struct condition_source_t
 // For checkpointing upgrades Players have purchased in Mann Vs Machine
 class CUpgradeInfo
 {
-    public:
+   public:
     int m_iPlayerClass;                      // the character class this upgrade is being applied too
     item_definition_index_t m_itemDefIndex;  // item that was upgraded (or INVALID_ITEM_DEF_INDEX for the player itself)
     int m_upgrade;                           // the upgrade that was applied
@@ -226,7 +230,7 @@ enum TFCYOAPDAAnimState_t
 //
 class CTFPlayerShared : public CGameEventListener
 {
-    public:
+   public:
 // Client specific.
 #ifdef CLIENT_DLL
 
@@ -245,7 +249,7 @@ class CTFPlayerShared : public CGameEventListener
     DECLARE_EMBEDDED_NETWORKVAR()
     DECLARE_CLASS_NOBASE( CTFPlayerShared );
 
-    private:
+   private:
     struct RageBuff
     {
         int m_iBuffTypeActive;
@@ -256,7 +260,7 @@ class CTFPlayerShared : public CGameEventListener
     // Condition Provider tracking
     CUtlVector< condition_source_t > m_ConditionData;
 
-    public:
+   public:
     enum ERageBuffSlot
     {
         kBuffSlot_Rage,
@@ -740,9 +744,7 @@ class CTFPlayerShared : public CGameEventListener
 
     // Stuns
     stun_struct_t *GetActiveStunInfo( void ) const;
-#ifdef GAME_DLL
     void StunPlayer( float flTime, float flReductionAmount, int iStunFlags = TF_STUN_MOVEMENT, CTFPlayer *pAttacker = NULL );
-#endif  // GAME_DLL
     float GetAmountStunned( int iStunFlags );
     bool IsLoserStateStunned( void ) const;
     bool IsControlStunned( void );
@@ -849,7 +851,7 @@ class CTFPlayerShared : public CGameEventListener
 
     void PulseKingRuneBuff();
 
-    public:
+   public:
     // Scoring
     int GetCaptures( int iIndex ) const
     {
@@ -1126,11 +1128,11 @@ class CTFPlayerShared : public CGameEventListener
     void SetDefaultItemChargeMeters( void );
 #endif  // GAME_DLL
 
-    private:
+   private:
     CNetworkVarEmbedded( localplayerscoring_t, m_ScoreData );
     CNetworkVarEmbedded( localplayerscoring_t, m_RoundScoreData );
 
-    private:
+   private:
 #ifdef CLIENT_DLL
     typedef std::pair< const char *, float > taunt_particle_state_t;
     taunt_particle_state_t GetClientTauntParticleDesiredState() const;
@@ -1325,7 +1327,7 @@ class CTFPlayerShared : public CGameEventListener
     void ApplyAttributeToPlayer( const char *pszAttribName, float flValue );
     void RemoveAttributeFromPlayer( const char *pszAttribName );
 
-    public:
+   public:
     void SetAfterburnDuration( float flDuration )
     {
         m_flAfterburnDuration = flDuration;
@@ -1336,7 +1338,7 @@ class CTFPlayerShared : public CGameEventListener
     }
 #endif  // GAME_DLL
 
-    private:
+   private:
     // Vars that are networked.
     CNetworkVar( int, m_nPlayerState );    // Player state.
     CNetworkVar( int, m_nPlayerCond );     // Player condition flags.
@@ -1584,13 +1586,13 @@ class CTFPlayerShared : public CGameEventListener
     CHandle< CBaseAnimating > m_hKartParachuteEntity;
 
 #endif
-    public:
+   public:
     CNetworkVar( int, m_iKillCountSinceLastDeploy );
     CNetworkVar( float, m_flFirstPrimaryAttack );
 
     CNetworkVar( float, m_flSpyTranqBuffDuration );
 
-    private:
+   private:
 #ifdef GAME_DLL
     float m_flNextCritUpdate;
     CUtlVector< CTFDamageEvent > m_DamageEvents;
@@ -1613,7 +1615,9 @@ class CTFPlayerShared : public CGameEventListener
     CSoundPatch *m_pCritBoostSoundLoop;
 #endif
 
-    public:
+   public:
+    bool m_bScattergunJump;
+
     float m_flStunFade;
     float m_flStunEnd;
     float m_flStunMid;
@@ -1651,7 +1655,7 @@ class CTFPlayerShared : public CGameEventListener
     CNetworkVar( bool, m_bArenaFirstBloodBoost );
 
     // passtime
-    public:
+   public:
     void SetHasPasstimeBall( bool has )
     {
         m_bHasPasstimeBall = has;
@@ -1683,7 +1687,7 @@ class CTFPlayerShared : public CGameEventListener
     float m_flCYOAPDAAnimStateTime;
     TFCYOAPDAAnimState_t m_iCYOAPDAAnimState;
 
-    private:
+   private:
     CNetworkVar( bool, m_bHasPasstimeBall );
     CNetworkVar( bool, m_bIsTargetedForPasstimePass );
     CNetworkHandle( CTFPlayer, m_hPasstimePassTarget );
@@ -1697,7 +1701,7 @@ extern const char *g_pszBDayGibs[22];
 
 class CTraceFilterIgnoreTeammatesAndTeamObjects : public CTraceFilterSimple
 {
-    public:
+   public:
     DECLARE_CLASS( CTraceFilterIgnoreTeammatesAndTeamObjects, CTraceFilterSimple );
 
     CTraceFilterIgnoreTeammatesAndTeamObjects( const IHandleEntity *passentity, int collisionGroup, int iIgnoreTeam )
@@ -1705,7 +1709,7 @@ class CTraceFilterIgnoreTeammatesAndTeamObjects : public CTraceFilterSimple
 
     virtual bool ShouldHitEntity( IHandleEntity *pServerEntity, int contentsMask );
 
-    private:
+   private:
     int m_iIgnoreTeam;
 };
 
@@ -1717,7 +1721,7 @@ extern ETFCond g_SoldierBuffAttributeIDToConditionMap[kSoldierBuffCount + 1];
 
 class CTFPlayerSharedUtils
 {
-    public:
+   public:
     static CEconItemView *GetEconItemViewByLoadoutSlot( CTFPlayer *pTFPlayer, int iSlot, CEconEntity **pEntity = NULL );
     static bool ConceptIsPartnerTaunt( int iConcept );
     static CTFWeaponBuilder *GetBuilderForObjectType( CTFPlayer *pTFPlayer, int iObjectType );
@@ -1725,7 +1729,7 @@ class CTFPlayerSharedUtils
 
 class CTargetOnlyFilter : public CTraceFilterSimple
 {
-    public:
+   public:
     CTargetOnlyFilter( CBaseEntity *pShooter, CBaseEntity *pTarget );
     virtual bool ShouldHitEntity( IHandleEntity *pHandleEntity, int contentsMask );
     CBaseEntity *m_pShooter;

@@ -53,7 +53,7 @@ static IClientNetworkable *ClientWorldFactory( int entnum, int serialNum )
 
 IMPLEMENT_CLIENTCLASS_FACTORY( C_World, DT_World, CWorld, ClientWorldFactory );
 
-// clang-format off
+;  // clang-format off
 
 BEGIN_RECV_TABLE( C_World, DT_World )
     RecvPropFloat( RECVINFO( m_flWaveHeight ) ),
@@ -68,7 +68,7 @@ BEGIN_RECV_TABLE( C_World, DT_World )
     RecvPropInt( RECVINFO( m_bColdWorld ) ),
 END_RECV_TABLE()
 
-static bool WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
+;  // clang-format on
 
 C_World::C_World( void )
 {

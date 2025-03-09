@@ -104,9 +104,9 @@ ConVar spec_freeze_traveltime( "spec_freeze_traveltime", "0.4", FCVAR_CHEAT | FC
 
 ConVar sv_bonus_challenge( "sv_bonus_challenge", "0", FCVAR_REPLICATED, "Set to values other than 0 to select a bonus map challenge type." );
 
-ConVar sv_chat_bucket_size_tier1( "sv_chat_bucket_size_tier1", "4", FCVAR_NONE, "The maxmimum size of the short term chat msg bucket." );
+ConVar sv_chat_bucket_size_tier1( "sv_chat_bucket_size_tier1", "4", FCVAR_NONE, "The maximum size of the short term chat msg bucket." );
 ConVar sv_chat_seconds_per_msg_tier1( "sv_chat_seconds_per_msg_tier1", "3", FCVAR_NONE, "The number of seconds to accrue an additional short term chat msg." );
-ConVar sv_chat_bucket_size_tier2( "sv_chat_bucket_size_tier2", "30", FCVAR_NONE, "The maxmimum size of the long term chat msg bucket." );
+ConVar sv_chat_bucket_size_tier2( "sv_chat_bucket_size_tier2", "30", FCVAR_NONE, "The maximum size of the long term chat msg bucket." );
 ConVar sv_chat_seconds_per_msg_tier2( "sv_chat_seconds_per_msg_tier2", "10", FCVAR_NONE, "The number of seconds to accrue an additional long term chat msg." );
 
 static ConVar sv_maxusrcmdprocessticks( "sv_maxusrcmdprocessticks", "24", FCVAR_NOTIFY, "Maximum number of client-issued usrcmd ticks that can be replayed in packet loss conditions, 0 to allow no restrictions" );
@@ -7902,7 +7902,7 @@ class CStripWeapons : public CPointEntity
     DECLARE_DATADESC();
 };
 
-// clang-format off
+;  // clang-format off
 
 LINK_ENTITY_TO_CLASS( player_weaponstrip, CStripWeapons );
 
@@ -7924,7 +7924,7 @@ BEGIN_ENT_SCRIPTDESC( CBasePlayer, CBaseCombatCharacter, "The player entity." )
     DEFINE_SCRIPTFUNC( SetScriptOverlayMaterial, "Sets a view overlay material" )
 END_SCRIPTDESC();
 
-// clang-format on
+;  // clang-format on
 
 void CStripWeapons::InputStripWeapons( inputdata_t &data )
 {
@@ -8263,27 +8263,19 @@ void CMovementSpeedMod::InputSpeedMod( inputdata_t &data )
     }
 }
 
-void SendProxy_CropFlagsToPlayerFlagBitsLength( const SendProp *pProp, const void *pStruct, const void *pVarData, DVariant *pOut, int iElement, int objectID )
-{
-    int mask = ( 1 << PLAYER_FLAG_BITS ) - 1;
-    int data = *( int * )pVarData;
-
-    pOut->m_Int = ( data & mask );
-}
-
-// clang-format off
-
 // -------------------------------------------------------------------------------- //
 // SendTable for CPlayerState.
 // -------------------------------------------------------------------------------- //
+
+;  // clang-format off
 
 BEGIN_SEND_TABLE_NOBASE( CPlayerState, DT_PlayerState )
     SendPropInt( SENDINFO( deadflag ), 1, SPROP_UNSIGNED ),
 END_SEND_TABLE()
 
-// -------------------------------------------------------------------------------- //
-// This data only gets sent to clients that ARE this player entity.
-// -------------------------------------------------------------------------------- //
+    // -------------------------------------------------------------------------------- //
+    // This data only gets sent to clients that ARE this player entity.
+    // -------------------------------------------------------------------------------- //
 
 BEGIN_SEND_TABLE_NOBASE( CBasePlayer, DT_LocalPlayerExclusive )
 
@@ -8319,7 +8311,7 @@ BEGIN_SEND_TABLE_NOBASE( CBasePlayer, DT_LocalPlayerExclusive )
     // send the use angles
     // set when the player presses use
     SendPropVector( SENDINFO( m_vecUseAngles ), 0, SPROP_NOSCALE ),
-    // end adnan
+// end adnan
 #endif
 
     SendPropEHandle( SENDINFO( m_hConstraintEntity ) ),
@@ -8368,7 +8360,7 @@ IMPLEMENT_SERVERCLASS_ST( CBasePlayer, DT_BasePlayer )
     SendPropFloat( SENDINFO( m_flDuckSpeed ), 12, SPROP_ROUNDDOWN, 0.0f, 2048.0f ),           // CL
     SendPropFloat( SENDINFO( m_flUnDuckFraction ), 12, SPROP_ROUNDDOWN, 0.0f, 10.0f ),        // CL
 
-    SendPropInt( SENDINFO( m_fFlags ), PLAYER_FLAG_BITS, SPROP_UNSIGNED | SPROP_CHANGES_OFTEN, SendProxy_CropFlagsToPlayerFlagBitsLength ),
+    SendPropInt( SENDINFO( m_fFlags ), 0, SPROP_UNSIGNED | SPROP_CHANGES_OFTEN ),
     SendPropInt( SENDINFO( m_iObserverMode ), 3, SPROP_UNSIGNED ),
     SendPropEHandle( SENDINFO( m_hObserverTarget ) ),
     SendPropInt( SENDINFO( m_iFOV ), 8, SPROP_UNSIGNED ),
@@ -8390,7 +8382,7 @@ IMPLEMENT_SERVERCLASS_ST( CBasePlayer, DT_BasePlayer )
 
 END_SEND_TABLE()
 
-// clang-format off
+;  // clang-format on
 
 //=============================================================================
 //

@@ -53,7 +53,7 @@ void *SendProxy_FlexWeights( const SendProp *pProp, const void *pStruct, const v
         return NULL;
 }
 
-// clang-format off
+;  // clang-format off
 
 REGISTER_SEND_PROXY_NON_MODIFIED_POINTER( SendProxy_FlexWeights );
 
@@ -101,7 +101,7 @@ BEGIN_ENT_SCRIPTDESC( CBaseFlex, CBaseAnimating, "Animated characters who have v
     DEFINE_SCRIPTFUNC_NAMED( ScriptPlayScene, "PlayScene", "Play the specified .vcd file." )
 END_SCRIPTDESC();
 
-// clang-format on
+;  // clang-format on
 
 #if 0
 //--------------------------------------------------------------------------------------------------
@@ -975,7 +975,7 @@ void CBaseFlex::ProcessSceneEvents( void )
 
 class CFlexSceneFileManager : CAutoGameSystem
 {
-    public:
+   public:
     CFlexSceneFileManager( char const *name )
         : CAutoGameSystem( name )
     {
@@ -1095,7 +1095,7 @@ class CFlexSceneFileManager : CAutoGameSystem
         return pfile->buffer;
     }
 
-    private:
+   private:
     void DeleteSceneFiles()
     {
         while ( m_FileList.Size() > 0 )
@@ -2223,10 +2223,10 @@ float CSceneEventInfo::UpdateWeight( CBaseFlex *pActor )
 
 class CFlexCycler : public CBaseFlex
 {
-    private:
+   private:
     DECLARE_CLASS( CFlexCycler, CBaseFlex );
 
-    public:
+   public:
     DECLARE_DATADESC();
 
     CFlexCycler()
@@ -2289,7 +2289,7 @@ DEFINE_FIELD( m_flextime, FIELD_TIME ),
     //
     class CGenericFlexCycler : public CFlexCycler
 {
-    public:
+   public:
     DECLARE_CLASS( CGenericFlexCycler, CFlexCycler );
 
     void Spawn( void )

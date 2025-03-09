@@ -96,20 +96,20 @@ void sv_allow_point_servercommand_changed( IConVar *pConVar, const char *pOldStr
 
 ConVar sv_allow_point_servercommand( "sv_allow_point_servercommand",
 #ifdef TF_DLL
-                                    // The default value here should match the default of the convar
-                                    "official",
+                                     // The default value here should match the default of the convar
+                                     "official",
 #else
-                                    // Other games may use this in their official maps, and only TF exposes IsValveMap() currently
-                                    "always",
+                                     // Other games may use this in their official maps, and only TF exposes IsValveMap() currently
+                                     "always",
 #endif  // TF_DLL
-                                    FCVAR_NONE,
-                                    "Allow use of point_servercommand entities in map. Potentially dangerous for untrusted maps.\n"
-                                    "  disallow : Always disallow\n"
+                                     FCVAR_NONE,
+                                     "Allow use of point_servercommand entities in map. Potentially dangerous for untrusted maps.\n"
+                                     "  disallow : Always disallow\n"
 #ifdef TF_DLL
-                                    "  official : Allowed for valve maps only\n"
+                                     "  official : Allowed for valve maps only\n"
 #endif  // TF_DLL
-                                    "  always   : Allow for all maps",
-                                    sv_allow_point_servercommand_changed );
+                                     "  always   : Allow for all maps",
+                                     sv_allow_point_servercommand_changed );
 
 void ClientKill( edict_t *pEdict, const Vector &vecForce, bool bExplode = false )
 {
@@ -242,7 +242,7 @@ void Host_Say( edict_t *pEdict, const CCommand &args, bool teamonly )
 
         // See if the player wants to modify of check the text
         pPlayer->CheckChatText( p, 127 );  // though the buffer szTemp that p points to is 256,
-                                            // chat text is capped to 127 in CheckChatText above
+                                           // chat text is capped to 127 in CheckChatText above
 
         // make sure the text has valid content
         p = CheckChatText( pPlayer, p );
@@ -533,7 +533,7 @@ CBaseEntity *GetNextCommandEntity( CBasePlayer *pPlayer, const char *name, CBase
     while ( ( ent = gEntList.NextEnt( ent ) ) != NULL )
     {
         if ( ( ent->GetEntityName() != NULL_STRING && ent->NameMatches( name ) ) ||
-            ( ent->m_iClassname != NULL_STRING && ent->ClassMatches( name ) ) )
+             ( ent->m_iClassname != NULL_STRING && ent->ClassMatches( name ) ) )
         {
             return ent;
         }
@@ -616,7 +616,7 @@ void ConsoleKillTarget( CBasePlayer *pPlayer, const char *name )
 //-----------------------------------------------------------------------------
 class CPointClientCommand : public CPointEntity
 {
-    public:
+   public:
     DECLARE_CLASS( CPointClientCommand, CPointEntity );
     DECLARE_DATADESC();
 
@@ -666,7 +666,7 @@ DEFINE_INPUTFUNC( FIELD_STRING, "Command", InputCommand ),
 //-----------------------------------------------------------------------------
 class CPointServerCommand : public CPointEntity
 {
-    public:
+   public:
     DECLARE_CLASS( CPointServerCommand, CPointEntity );
     DECLARE_DATADESC();
     void InputCommand( inputdata_t &inputdata );
@@ -699,7 +699,7 @@ void CPointServerCommand::InputCommand( inputdata_t &inputdata )
     }
 }
 
-// clang-format off
+;  // clang-format off
 
 BEGIN_DATADESC( CPointServerCommand )
     DEFINE_INPUTFUNC( FIELD_STRING, "Command", InputCommand ),
@@ -707,7 +707,7 @@ END_DATADESC()
 
 LINK_ENTITY_TO_CLASS( point_servercommand, CPointServerCommand );
 
-// clang-format on
+;  // clang-format on
 
 //------------------------------------------------------------------------------
 // Purpose : Draw a line betwen two points.  White if no world collisions, red if collisions

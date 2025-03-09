@@ -135,7 +135,7 @@ const char *pFGDPropData[] =
         "Glass.Window",
 };
 
-// clang-format off
+;  // clang-format off
 
 LINK_ENTITY_TO_CLASS( func_breakable, CBreakable );
 
@@ -193,7 +193,7 @@ END_DATADESC()
 
 IMPLEMENT_AUTO_LIST( IBreakablePropAutoList );
 
-// clang-format on
+;  // clang-format on
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -1198,7 +1198,7 @@ CBasePlayer *CBreakable::HasPhysicsAttacker( float dt )
 //-----------------------------------------------------------------------------
 class CPushable : public CBreakable
 {
-    public:
+   public:
     DECLARE_CLASS( CPushable, CBreakable );
 
     void Spawn( void );

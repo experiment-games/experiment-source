@@ -11,7 +11,7 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-// clang-format off
+;  // clang-format off
 
 BEGIN_RECV_TABLE_NOBASE( C_HL2PlayerLocalData, DT_HL2Local )
     RecvPropFloat( RECVINFO( m_flSuitPower ) ),
@@ -50,7 +50,7 @@ BEGIN_PREDICTION_DATA_NO_BASE( C_HL2PlayerLocalData )
     DEFINE_PRED_TYPEDESCRIPTION( m_LadderMove, LadderMove_t ),
 END_PREDICTION_DATA()
 
-    static bool WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
+;  // clang-format on
 
 C_HL2PlayerLocalData::C_HL2PlayerLocalData()
 {

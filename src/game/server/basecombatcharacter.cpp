@@ -79,7 +79,7 @@ ConVar ai_use_visibility_cache( "ai_use_visibility_cache", "1" );
 #define ShouldUseVisibilityCache() true
 #endif
 
-// clang-format off
+;  // clang-format off
 
 BEGIN_DATADESC( CBaseCombatCharacter )
 
@@ -122,7 +122,7 @@ BEGIN_SIMPLE_DATADESC( Relationship_t )
     DEFINE_FIELD( priority, FIELD_INTEGER ),
 END_DATADESC()
 
-static bool WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
+;  // clang-format on
 
 //-----------------------------------------------------------------------------
 // Init static variables
@@ -135,7 +135,7 @@ Relationship_t **CBaseCombatCharacter::m_DefaultRelationship = NULL;
 //-----------------------------------------------------------------------------
 class CCleanupDefaultRelationShips : public CAutoGameSystem
 {
-    public:
+   public:
     CCleanupDefaultRelationShips( char const *name )
         : CAutoGameSystem( name )
     {
@@ -188,7 +188,7 @@ void *SendProxy_SendBaseCombatCharacterLocalDataTable( const SendProp *pProp, co
 }
 REGISTER_SEND_PROXY_NON_MODIFIED_POINTER( SendProxy_SendBaseCombatCharacterLocalDataTable );
 
-// clang-format off
+;  // clang-format off
 
 // Only send active weapon index to local player
 BEGIN_SEND_TABLE_NOBASE( CBaseCombatCharacter, DT_BCCLocalPlayerExclusive )
@@ -214,7 +214,7 @@ IMPLEMENT_SERVERCLASS_ST( CBaseCombatCharacter, DT_BaseCombatCharacter )
 
 END_SEND_TABLE()
 
-static bool WORKAROUND_NASTY_FORMATTING_BUG2;  // clang-format on
+;  // clang-format on
 
 //-----------------------------------------------------------------------------
 // Interactions
@@ -240,19 +240,19 @@ bool CBaseCombatCharacter::HasHumanGibs( void )
 #if defined( HL2_DLL )
     Class_T myClass = Classify();
     if ( myClass == CLASS_CITIZEN_PASSIVE ||
-        myClass == CLASS_CITIZEN_REBEL ||
-        myClass == CLASS_COMBINE ||
-        myClass == CLASS_CONSCRIPT ||
-        myClass == CLASS_METROPOLICE ||
-        myClass == CLASS_PLAYER )
+         myClass == CLASS_CITIZEN_REBEL ||
+         myClass == CLASS_COMBINE ||
+         myClass == CLASS_CONSCRIPT ||
+         myClass == CLASS_METROPOLICE ||
+         myClass == CLASS_PLAYER )
         return true;
 
 #elif defined( HL1_DLL )
     Class_T myClass = Classify();
     if ( myClass == CLASS_HUMAN_MILITARY ||
-        myClass == CLASS_PLAYER_ALLY ||
-        myClass == CLASS_HUMAN_PASSIVE ||
-        myClass == CLASS_PLAYER )
+         myClass == CLASS_PLAYER_ALLY ||
+         myClass == CLASS_HUMAN_PASSIVE ||
+         myClass == CLASS_PLAYER )
     {
         return true;
     }
@@ -274,10 +274,10 @@ bool CBaseCombatCharacter::HasAlienGibs( void )
 #if defined( HL2_DLL )
     Class_T myClass = Classify();
     if ( myClass == CLASS_BARNACLE ||
-        myClass == CLASS_STALKER ||
-        myClass == CLASS_ZOMBIE ||
-        myClass == CLASS_VORTIGAUNT ||
-        myClass == CLASS_HEADCRAB )
+         myClass == CLASS_STALKER ||
+         myClass == CLASS_ZOMBIE ||
+         myClass == CLASS_VORTIGAUNT ||
+         myClass == CLASS_HEADCRAB )
     {
         return true;
     }
@@ -285,10 +285,10 @@ bool CBaseCombatCharacter::HasAlienGibs( void )
 #elif defined( HL1_DLL )
     Class_T myClass = Classify();
     if ( myClass == CLASS_ALIEN_MILITARY ||
-        myClass == CLASS_ALIEN_MONSTER ||
-        myClass == CLASS_INSECT ||
-        myClass == CLASS_ALIEN_PREDATOR ||
-        myClass == CLASS_ALIEN_PREY )
+         myClass == CLASS_ALIEN_MONSTER ||
+         myClass == CLASS_INSECT ||
+         myClass == CLASS_ALIEN_PREDATOR ||
+         myClass == CLASS_ALIEN_PREY )
     {
         return true;
     }
@@ -322,7 +322,7 @@ struct VisibilityCacheEntry_t
 
 class CVisibilityCacheEntryLess
 {
-    public:
+   public:
     CVisibilityCacheEntryLess( int ) {}
     bool operator!() const
     {
@@ -343,7 +343,7 @@ bool CBaseCombatCharacter::FVisible( CBaseEntity *pEntity, int traceMask, CBaseE
 
     if ( traceMask != MASK_BLOCKLOS || !ShouldUseVisibilityCache() || pEntity == this
 #if defined( HL2_DLL )
-        || Classify() == CLASS_BULLSEYE || pEntity->Classify() == CLASS_BULLSEYE
+         || Classify() == CLASS_BULLSEYE || pEntity->Classify() == CLASS_BULLSEYE
 #endif
     )
     {
@@ -1767,9 +1767,9 @@ void CBaseCombatCharacter::ThrowDirForWeaponStrip( CBaseCombatWeapon *pWeapon, c
 // For weapon strip
 //-----------------------------------------------------------------------------
 void CBaseCombatCharacter::DropWeaponForWeaponStrip( CBaseCombatWeapon *pWeapon,
-                                                    const Vector &vecForward,
-                                                    const QAngle &vecAngles,
-                                                    float flDiameter )
+                                                     const Vector &vecForward,
+                                                     const QAngle &vecAngles,
+                                                     float flDiameter )
 {
     Vector vecOrigin;
     CollisionProp()->RandomPointInBounds( Vector( 0.5f, 0.5f, 0.5f ), Vector( 0.5f, 0.5f, 1.0f ), &vecOrigin );
@@ -1825,7 +1825,7 @@ void CBaseCombatCharacter::Weapon_DropAll( bool bDisallowWeaponPickup )
     AngleVectors( gunAngles, &vecForward, NULL, NULL );
 
     float flDiameter = sqrt( CollisionProp()->OBBSize().x * CollisionProp()->OBBSize().x +
-                            CollisionProp()->OBBSize().y * CollisionProp()->OBBSize().y );
+                             CollisionProp()->OBBSize().y * CollisionProp()->OBBSize().y );
 
     CBaseCombatWeapon *pActiveWeapon = GetActiveWeapon();
     for ( int i = 0; i < MAX_WEAPONS; ++i )
@@ -3292,8 +3292,8 @@ CBaseEntity *CBaseCombatCharacter::FindMissTarget( void )
 
         // See if it's a good target candidate
         if ( FClassnameIs( pEnts[i], "prop_dynamic" ) ||
-            FClassnameIs( pEnts[i], "prop_physics" ) ||
-            FClassnameIs( pEnts[i], "physics_prop" ) )
+             FClassnameIs( pEnts[i], "prop_physics" ) ||
+             FClassnameIs( pEnts[i], "physics_prop" ) )
         {
             pMissCandidates[numMissCandidates++] = pEnts[i];
             continue;

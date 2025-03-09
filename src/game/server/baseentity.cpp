@@ -161,7 +161,7 @@ void *SendProxy_ClientSideAnimation( const SendProp *pProp, const void *pStruct,
         return NULL;  // Don't send animtime unless the client needs it.
 }
 
-// clang-format off
+;  // clang-format off
 
 REGISTER_SEND_PROXY_NON_MODIFIED_POINTER( SendProxy_ClientSideAnimation );
 
@@ -179,6 +179,8 @@ BEGIN_SEND_TABLE_NOBASE( CBaseEntity, DT_PredictableId )
     SendPropInt( SENDINFO( m_bIsPlayerSimulated ), 1, SPROP_UNSIGNED ),
 END_SEND_TABLE()
 
+;  // clang-format on
+
 static void *SendProxy_SendPredictableId( const SendProp *pProp, const void *pStruct, const void *pVarData, CSendProxyRecipients *pRecipients, int objectID )
 {
     CBaseEntity *pEntity = ( CBaseEntity * )pStruct;
@@ -192,8 +194,6 @@ static void *SendProxy_SendPredictableId( const SendProp *pProp, const void *pSt
 }
 REGISTER_SEND_PROXY_NON_MODIFIED_POINTER( SendProxy_SendPredictableId );
 #endif
-
-static bool WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
 
 void SendProxy_Origin( const SendProp *pProp, const void *pStruct, const void *pData, DVariant *pOut, int iElement, int objectID )
 {
@@ -266,9 +266,7 @@ void SendProxy_Angles( const SendProp *pProp, const void *pStruct, const void *p
     pOut->m_Vector[2] = anglemod( a->z );
 }
 
-// clang-format off
-
-#ifdef LUA_SDK // NetworkVariables
+#ifdef LUA_SDK  // NetworkVariables
 
 void SendProxy_LuaVariableElement_String( const SendProp *pProp, const void *pStruct, const void *pVarData, DVariant *pOut, int iElement, int objectID )
 {
@@ -277,9 +275,11 @@ void SendProxy_LuaVariableElement_String( const SendProp *pProp, const void *pSt
     Assert( entity );
 #endif
 
-    string_t *pString = (string_t*)pVarData;
-    pOut->m_pString = (char*)STRING( *pString );
+    string_t *pString = ( string_t * )pVarData;
+    pOut->m_pString = ( char * )STRING( *pString );
 }
+
+;  // clang-format off
 
 BEGIN_SEND_TABLE_NOBASE( CBaseEntity, DT_BaseEntityLuaVariables )
     SendPropArray( SendPropInt( SENDINFO_ARRAY( m_LuaVariables_bool ) ), m_LuaVariables_bool ),
@@ -350,7 +350,7 @@ IMPLEMENT_SERVERCLASS_ST_NOBASE( CBaseEntity, DT_BaseEntity )
 
 END_SEND_TABLE()
 
-static bool WORKAROUND_NASTY_FORMATTING_BUG2;  // clang-format on
+;  // clang-format on
 
 // dynamic models
 class CBaseEntityModelLoadProxy
@@ -2118,7 +2118,7 @@ class CThinkContextsSaveDataOps : public CDefSaveRestoreOps
 CThinkContextsSaveDataOps g_ThinkContextsSaveDataOps;
 ISaveRestoreOps *thinkcontextFuncs = &g_ThinkContextsSaveDataOps;
 
-// clang-format off
+;  // clang-format off
 
 BEGIN_SIMPLE_DATADESC( thinkfunc_t )
     DEFINE_FIELD( m_iszContext, FIELD_STRING ),
@@ -2523,7 +2523,7 @@ DEFINE_SCRIPT_INSTANCE_HELPER( CBaseEntity, &g_BaseEntityScriptInstanceHelper )
     DEFINE_SCRIPTFUNC( IsAlive, "" )
 END_SCRIPTDESC();
 
-static void *WORKAROUND_NASTY_FORMATTING_BUG3;  // clang-format on
+;  // clang-format on
 
 // For code error checking
 extern bool g_bReceivedChainedUpdateOnRemove;

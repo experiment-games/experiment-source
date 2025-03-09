@@ -1042,7 +1042,7 @@ void CBaseCombatWeapon::SetActivity( Activity act, float duration )
     if ( sequence == ACTIVITY_NOT_AVAILABLE )
         sequence = SelectWeightedSequence( ACT_VM_IDLE );
 
-        // Adrian: Oh man again...
+    // Adrian: Oh man again...
 #if !defined( CLIENT_DLL ) && ( defined( HL2MP ) || defined( PORTAL ) || defined( EXPERIMENT_SOURCE ) )
     SetModel( GetViewModel() );
 #endif
@@ -1401,10 +1401,10 @@ bool CBaseCombatWeapon::ReloadOrSwitchWeapons( void )
     {
         // Weapon is useable. Reload if empty and weapon has waited as long as it has to after firing
         if ( UsesClipsForAmmo1() && !AutoFiresFullClip() &&
-            ( m_iClip1 == 0 ) &&
-            ( GetWeaponFlags() & ITEM_FLAG_NOAUTORELOAD ) == false &&
-            m_flNextPrimaryAttack < gpGlobals->curtime &&
-            m_flNextSecondaryAttack < gpGlobals->curtime )
+             ( m_iClip1 == 0 ) &&
+             ( GetWeaponFlags() & ITEM_FLAG_NOAUTORELOAD ) == false &&
+             m_flNextPrimaryAttack < gpGlobals->curtime &&
+             m_flNextSecondaryAttack < gpGlobals->curtime )
         {
             // if we're successfully reloading, we're done
             if ( Reload() )
@@ -1767,7 +1767,7 @@ void CBaseCombatWeapon::ItemPostFrame( void )
     {
         // Clip empty? Or out of ammo on a no-clip weapon?
         if ( !IsMeleeWeapon() &&
-            ( ( UsesClipsForAmmo1() && m_iClip1 <= 0 ) || ( !UsesClipsForAmmo1() && pOwner->GetAmmoCount( m_iPrimaryAmmoType ) <= 0 ) ) )
+             ( ( UsesClipsForAmmo1() && m_iClip1 <= 0 ) || ( !UsesClipsForAmmo1() && pOwner->GetAmmoCount( m_iPrimaryAmmoType ) <= 0 ) ) )
         {
             HandleFireOnEmpty();
         }
@@ -2570,7 +2570,7 @@ void CDmgAccumulator::Process( void )
 
 #if defined( CLIENT_DLL )
 
-// clang-format off
+;  // clang-format off
 
 BEGIN_PREDICTION_DATA( CBaseCombatWeapon )
     DEFINE_PRED_FIELD( m_nNextThinkTick, FIELD_INTEGER, FTYPEDESC_INSENDTABLE ),
@@ -2711,7 +2711,7 @@ BEGIN_DATADESC( CBaseCombatWeapon )
     DEFINE_OUTPUT( m_OnCacheInteraction, "OnCacheInteraction" ),
 END_DATADESC()
 
-static bool WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
+;  // clang-format on
 
 //-----------------------------------------------------------------------------
 // Purpose: Only send to local player if this weapon is the active weapon
@@ -2818,7 +2818,7 @@ static void RecvProxy_WeaponOwner( const CRecvProxyData *pData, void *pStruct, v
 // Purpose: Propagation data for weapons. Only sent when a player's holding it.
 //-----------------------------------------------------------------------------
 
-// clang-format off
+;  // clang-format off
 
 BEGIN_NETWORK_TABLE_NOBASE( CBaseCombatWeapon, DT_LocalActiveWeaponData )
 #if !defined( CLIENT_DLL )
@@ -2890,4 +2890,4 @@ BEGIN_NETWORK_TABLE( CBaseCombatWeapon, DT_BaseCombatWeapon )
 #endif
 END_NETWORK_TABLE()
 
-static bool WORKAROUND_NASTY_FORMATTING_BUG2;  // clang-format on
+;  // clang-format on

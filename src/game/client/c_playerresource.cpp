@@ -22,7 +22,7 @@
 
 const float PLAYER_RESOURCE_THINK_INTERVAL = 0.2f;
 
-// clang-format off
+;  // clang-format off
 
 IMPLEMENT_CLIENTCLASS_DT_NOBASE( C_PlayerResource, DT_PlayerResource, CPlayerResource )
     RecvPropArray3( RECVINFO_ARRAY( m_iPing ), RecvPropInt( RECVINFO( m_iPing[0] ) ) ),
@@ -53,7 +53,7 @@ BEGIN_PREDICTION_DATA( C_PlayerResource )
 
 END_PREDICTION_DATA()
 
-static bool WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
+;  // clang-format on
 
 C_PlayerResource *g_PR;
 

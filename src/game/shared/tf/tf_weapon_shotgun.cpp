@@ -27,6 +27,8 @@
 // Weapon Shotgun tables.
 //
 
+// clang-format off
+
 CREATE_SIMPLE_WEAPON_TABLE( TFShotgun, tf_weapon_shotgun_primary )
 CREATE_SIMPLE_WEAPON_TABLE( TFShotgun_Soldier, tf_weapon_shotgun_soldier )
 CREATE_SIMPLE_WEAPON_TABLE( TFShotgun_HWG, tf_weapon_shotgun_hwg )
@@ -36,6 +38,8 @@ CREATE_SIMPLE_WEAPON_TABLE( TFShotgun_Revenge, tf_weapon_sentry_revenge )
 CREATE_SIMPLE_WEAPON_TABLE( TFSodaPopper, tf_weapon_soda_popper )
 CREATE_SIMPLE_WEAPON_TABLE( TFPEPBrawlerBlaster, tf_weapon_pep_brawler_blaster )
 CREATE_SIMPLE_WEAPON_TABLE( TFShotgunBuildingRescue, tf_weapon_shotgun_building_rescue )
+
+// clang-format on
 
 #define SCATTERGUN_KNOCKBACK_MIN_DMG 30.0f
 #define SCATTERGUN_KNOCKBACK_MIN_RANGE_SQ 160000.0f  // 400x400
@@ -265,7 +269,7 @@ int CTFShotgun_Revenge::GetWorldModelIndex( void )
     // Engineer guitar support.
     CTFPlayer *pPlayer = ToTFPlayer( GetOwner() );
     if ( pPlayer && pPlayer->GetPlayerClass() && ( pPlayer->GetPlayerClass()->GetClassIndex() == TF_CLASS_ENGINEER ) &&
-        ( pPlayer->m_Shared.InCond( TF_COND_TAUNTING ) ) && ( pPlayer->m_Shared.GetTauntIndex() == TAUNT_BASE_WEAPON ) )
+         ( pPlayer->m_Shared.InCond( TF_COND_TAUNTING ) ) && ( pPlayer->m_Shared.GetTauntIndex() == TAUNT_BASE_WEAPON ) )
     {
         // While we are taunting, replace our normal world model with the guitar.
         m_iWorldModelIndex = modelinfo->GetModelIndex( TF_WEAPON_TAUNT_FRONTIER_JUSTICE_GUITAR_MODEL );
@@ -316,7 +320,6 @@ extern float AirBurstDamageForce( const Vector &size, float damage, float scale 
 //-----------------------------------------------------------------------------
 void CTFScatterGun::FireBullet( CTFPlayer *pPlayer )
 {
-#ifndef CLIENT_DLL
     if ( HasKnockback() )
     {
         // Perform some knock back.
@@ -329,9 +332,9 @@ void CTFScatterGun::FireBullet( CTFPlayer *pPlayer )
             return;
 
         // Knock the firer back!
-        if ( !( pOwner->GetFlags() & FL_ONGROUND ) && !pPlayer->m_bScattergunJump )
+        if ( !( pOwner->GetFlags() & FL_ONGROUND ) && !pPlayer->m_Shared.m_bScattergunJump )
         {
-            pPlayer->m_bScattergunJump = true;
+            pPlayer->m_Shared.m_bScattergunJump = true;
 
             pOwner->m_Shared.StunPlayer( 0.3f, 1.f, TF_STUN_MOVEMENT | TF_STUN_MOVEMENT_FORWARD_ONLY );
 
@@ -341,15 +344,15 @@ void CTFScatterGun::FireBullet( CTFPlayer *pPlayer )
             AngleVectors( pOwner->EyeAngles(), &vecForward );
             Vector vecForce = vecForward * -flForce;
 
-            EntityMatrix mtxPlayer;
-            mtxPlayer.InitFromEntity( pOwner );
+            VMatrix mtxPlayer;
+            mtxPlayer.SetupMatrixOrgAngles( pOwner->GetAbsOrigin(), pOwner->EyeAngles() );
             Vector vecAbsVelocity = pOwner->GetAbsVelocity();
             Vector vecAbsVelocityAsPoint = vecAbsVelocity + pOwner->GetAbsOrigin();
-            Vector vecLocalVelocity = mtxPlayer.WorldToLocal( vecAbsVelocityAsPoint );
+            Vector vecLocalVelocity = mtxPlayer.VMul4x3Transpose( vecAbsVelocityAsPoint );
 
             vecLocalVelocity.x = -300;
 
-            vecAbsVelocityAsPoint = mtxPlayer.LocalToWorld( vecLocalVelocity );
+            vecAbsVelocityAsPoint = mtxPlayer.VMul4x3( vecLocalVelocity );
             vecAbsVelocity = vecAbsVelocityAsPoint - pOwner->GetAbsOrigin();
             pOwner->SetAbsVelocity( vecAbsVelocity );
 
@@ -360,7 +363,6 @@ void CTFScatterGun::FireBullet( CTFPlayer *pPlayer )
             pOwner->RemoveFlag( FL_ONGROUND );
         }
     }
-#endif
 
     BaseClass::FireBullet( pPlayer );
 }

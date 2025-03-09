@@ -171,8 +171,8 @@ bool Flashlight_UseLegacyVersion( void )
             return false;
 
         g_bUseLegacyFlashlight = ( !Q_strcmp( modDir, "hl2" ) ||
-                                    !Q_strcmp( modDir, "episodic" ) ||
-                                    !Q_strcmp( modDir, "lostcoast" ) || !Q_strcmp( modDir, "hl1" ) );
+                                   !Q_strcmp( modDir, "episodic" ) ||
+                                   !Q_strcmp( modDir, "lostcoast" ) || !Q_strcmp( modDir, "hl1" ) );
 
         g_bCacheLegacyFlashlightStatus = false;
     }
@@ -188,10 +188,10 @@ class CLogicPlayerProxy : public CLogicalEntity
 {
     DECLARE_CLASS( CLogicPlayerProxy, CLogicalEntity );
 
-    private:
+   private:
     DECLARE_DATADESC();
 
-    public:
+   public:
     COutputEvent m_OnFlashlightOn;
     COutputEvent m_OnFlashlightOff;
     COutputEvent m_PlayerHasAmmo;
@@ -300,7 +300,7 @@ PRECACHE_REGISTER( player );
 
 CBaseEntity *FindEntityForward( CBasePlayer *pMe, bool fHull );
 
-// clang-format off
+;  // clang-format off
 
 BEGIN_SIMPLE_DATADESC( LadderMove_t )
     DEFINE_FIELD( m_bForceLadderMove, FIELD_BOOLEAN ),
@@ -386,7 +386,7 @@ BEGIN_DATADESC( CHL2_Player )
     // DEFINE_FIELD( m_hPlayerProxy, FIELD_EHANDLE ), //Shut up class check!
 END_DATADESC()
 
-static bool WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
+;  // clang-format on
 
 CHL2_Player::CHL2_Player()
 {
@@ -416,7 +416,7 @@ CSuitPowerDevice SuitDeviceFlashlight( bits_SUIT_DEVICE_FLASHLIGHT, 2.222 );  //
 #endif
 CSuitPowerDevice SuitDeviceBreather( bits_SUIT_DEVICE_BREATHER, 6.7f );  // 100 units in 15 seconds (plus three padded seconds)
 
-// clang-format off
+;  // clang-format off
 
 IMPLEMENT_SERVERCLASS_ST( CHL2_Player, DT_HL2_Player )
     SendPropDataTable( SENDINFO_DT( m_HL2Local ), &REFERENCE_SEND_TABLE( DT_HL2Local ), SendProxy_SendLocalDataTable ),
@@ -435,7 +435,7 @@ END_SEND_TABLE()
 BEGIN_ENT_SCRIPTDESC( CHL2_Player, CBasePlayer, "Half-Life 2 Player" )
 END_SCRIPTDESC();
 
-static bool WORKAROUND_NASTY_FORMATTING_BUG2;  // clang-format on
+;  // clang-format on
 
 void CHL2_Player::Precache( void )
 {
@@ -1228,9 +1228,9 @@ void CHL2_Player::InitSprinting( void )
 bool CHL2_Player::CanSprint()
 {
     return ( m_bSprintEnabled &&                                            // Only if sprint is enabled
-            !( m_Local.m_bDucked && !m_Local.m_bDucking ) &&               // Nor if we're ducking
-            ( GetWaterLevel() != 3 ) &&                                    // Certainly not underwater
-            ( GlobalEntity_GetState( "suit_no_sprint" ) != GLOBAL_ON ) );  // Out of the question without the sprint module
+             !( m_Local.m_bDucked && !m_Local.m_bDucking ) &&               // Nor if we're ducking
+             ( GetWaterLevel() != 3 ) &&                                    // Certainly not underwater
+             ( GlobalEntity_GetState( "suit_no_sprint" ) != GLOBAL_ON ) );  // Out of the question without the sprint module
 }
 
 //-----------------------------------------------------------------------------
@@ -1358,7 +1358,7 @@ bool CHL2_Player::IsZooming( void )
 
 class CPhysicsPlayerCallback : public IPhysicsPlayerControllerEvent
 {
-    public:
+   public:
     int ShouldMoveTo( IPhysicsObject *pObject, const Vector &position )
     {
         CHL2_Player *pPlayer = ( CHL2_Player * )pObject->GetGameData();
@@ -2901,7 +2901,7 @@ void CHL2_Player::PlayerUse( void )
         }
 
         if ( ( ( m_nButtons & IN_USE ) && ( caps & FCAP_CONTINUOUS_USE ) ) ||
-            ( ( m_afButtonPressed & IN_USE ) && ( caps & ( FCAP_IMPULSE_USE | FCAP_ONOFF_USE ) ) ) )
+             ( ( m_afButtonPressed & IN_USE ) && ( caps & ( FCAP_IMPULSE_USE | FCAP_ONOFF_USE ) ) ) )
         {
             if ( caps & FCAP_CONTINUOUS_USE )
                 m_afPhysicsFlags |= PFLAG_USING;
@@ -3149,7 +3149,7 @@ bool CHL2_Player::Weapon_CanSwitchTo( CBaseCombatWeapon *pWeapon )
     if ( GetActiveWeapon() )
     {
         if ( PhysCannonGetHeldEntity( GetActiveWeapon() ) == pWeapon &&
-            Weapon_OwnsThisType( pWeapon->GetClassname(), pWeapon->GetSubType() ) )
+             Weapon_OwnsThisType( pWeapon->GetClassname(), pWeapon->GetSubType() ) )
         {
             return true;
         }
@@ -3452,10 +3452,10 @@ static void Collision_ClearTrace( const Vector &vecRayStart, const Vector &vecRa
 }
 
 bool IntersectRayWithAACylinder( const Ray_t &ray,
-                                const Vector &center,
-                                float radius,
-                                float height,
-                                CBaseTrace *pTrace )
+                                 const Vector &center,
+                                 float radius,
+                                 float height,
+                                 CBaseTrace *pTrace )
 {
     Assert( ray.m_IsRay );
     Collision_ClearTrace( ray.m_Start, ray.m_Delta, pTrace );

@@ -93,7 +93,7 @@ extern ConVar mp_tournament_readymode_countdown;
 //-----------------------------------------------------------------------------
 class CTFGameMovement : public CGameMovement
 {
-    public:
+   public:
     DECLARE_CLASS( CTFGameMovement, CGameMovement );
 
     CTFGameMovement();
@@ -131,11 +131,11 @@ class CTFGameMovement : public CGameMovement
 
     virtual void HandleDuckingSpeedCrop( void );
 
-    protected:
+   protected:
     virtual void CheckWaterJump( void );
     void FullWalkMoveUnderwater();
 
-    private:
+   private:
     bool CheckWaterJumpButton( void );
     void AirDash( void );
     void PreventBunnyJumping();
@@ -153,7 +153,7 @@ class CTFGameMovement : public CGameMovement
     void OnDuck( int nButtonsPressed );
     void OnUnDuck( int nButtonsReleased );
 
-    private:
+   private:
     Vector m_vecWaterPoint;
     CTFPlayer *m_pTFPlayer;
     bool m_isPassingThroughEnemies;
@@ -852,7 +852,7 @@ void CTFGameMovement::VehicleMove( void )
 
     m_pTFPlayer->SetCurrentTauntMoveSpeed( flTargetMoveSpeed );
     float flLeanAccel = flTargetSpeed > flSmoothMoveSpeed ? flAcceleration : flTargetSpeed < flSmoothMoveSpeed ? -flAcceleration
-                                                                                                                : 0.f;
+                                                                                                               : 0.f;
     flLeanAccel = Sign( m_pTFPlayer->GetCurrentTauntMoveSpeed() ) != Sign( flTargetSpeed ) ? -flLeanAccel : flLeanAccel;
     m_pTFPlayer->m_PlayerAnimState->Vehicle_LeanAccel( flLeanAccel );
 
@@ -1026,8 +1026,8 @@ void CTFGameMovement::AirDash( void )
 
     // Find the direction,velocity in the x,y plane.
     Vector vecWishDirection( ( ( vecForward.x * flForwardMove ) + ( vecRight.x * flSideMove ) ),
-                            ( ( vecForward.y * flForwardMove ) + ( vecRight.y * flSideMove ) ),
-                            0.0f );
+                             ( ( vecForward.y * flForwardMove ) + ( vecRight.y * flSideMove ) ),
+                             0.0f );
 
     // Update the velocity on the scout.
     mv->m_vecVelocity = vecWishDirection;
@@ -1451,8 +1451,8 @@ bool CTFGameMovement::CheckWater( void )
     Vector vecPlayerMax = GetPlayerMaxs();
 
     Vector vecPoint( ( mv->GetAbsOrigin().x + ( vecPlayerMin.x + vecPlayerMax.x ) * 0.5f ),
-                    ( mv->GetAbsOrigin().y + ( vecPlayerMin.y + vecPlayerMax.y ) * 0.5f ),
-                    ( mv->GetAbsOrigin().z + vecPlayerMin.z + 1 ) );
+                     ( mv->GetAbsOrigin().y + ( vecPlayerMin.y + vecPlayerMax.y ) * 0.5f ),
+                     ( mv->GetAbsOrigin().z + vecPlayerMin.z + 1 ) );
 
     // Assume that we are not in water at all.
     int wl = WL_NotInWater;
@@ -1757,8 +1757,8 @@ void CTFGameMovement::WalkMove( void )
 
     // Find the direction,velocity in the x,y plane.
     Vector vecWishDirection( ( ( vecForward.x * flForwardMove ) + ( vecRight.x * flSideMove ) ),
-                            ( ( vecForward.y * flForwardMove ) + ( vecRight.y * flSideMove ) ),
-                            0.0f );
+                             ( ( vecForward.y * flForwardMove ) + ( vecRight.y * flSideMove ) ),
+                             0.0f );
 
     // Calculate the speed and direction of movement, then clamp the speed.
     float flWishSpeed = VectorNormalize( vecWishDirection );
@@ -1903,7 +1903,7 @@ void CTFGameMovement::WalkMove( void )
         // Track how far we moved (if we're a Scout or an Engineer carrying a building).
         CTFPlayer *pTFPlayer = ToTFPlayer( player );
         if ( pTFPlayer->IsPlayerClass( TF_CLASS_SCOUT ) ||
-            ( pTFPlayer->IsPlayerClass( TF_CLASS_ENGINEER ) && pTFPlayer->m_Shared.IsCarryingObject() ) )
+             ( pTFPlayer->IsPlayerClass( TF_CLASS_ENGINEER ) && pTFPlayer->m_Shared.IsCarryingObject() ) )
         {
             float fInchesToMeters = 0.0254f;
             float fWorldScale = 0.25;
@@ -2197,7 +2197,7 @@ extern void TracePlayerBBoxForGround( const Vector &start, const Vector &end, co
 //-----------------------------------------------------------------------------
 class CTraceFilterObject : public CTraceFilterSimple
 {
-    public:
+   public:
     DECLARE_CLASS( CTraceFilterObject, CTraceFilterSimple );
 
     CTraceFilterObject( const IHandleEntity *passentity, int collisionGroup );
@@ -2364,7 +2364,7 @@ void CTFGameMovement::CategorizePosition( void )
     bool bUnderwater = ( player->GetWaterLevel() >= WL_Eyes );
     bool bMoveToEndPos = false;
     if ( player->GetMoveType() == MOVETYPE_WALK &&
-        player->GetGroundEntity() != NULL && !bUnderwater )
+         player->GetGroundEntity() != NULL && !bUnderwater )
     {
         // if walking and still think we're on ground, we'll extend trace down by stepsize so we don't bounce down slopes
         vecEndPos.z -= player->GetStepSize();
@@ -2416,7 +2416,7 @@ void CTFGameMovement::CategorizePosition( void )
             // Too steep.
             bInAir = true;
             if ( ( mv->m_vecVelocity.z > 0.0f ) &&
-                ( player->GetMoveType() != MOVETYPE_NOCLIP ) )
+                 ( player->GetMoveType() != MOVETYPE_NOCLIP ) )
             {
                 player->m_surfaceFriction = 0.25f;
             }
@@ -2426,9 +2426,9 @@ void CTFGameMovement::CategorizePosition( void )
     {
         // YWB:  This logic block essentially lifted from StayOnGround implementation
         if ( bMoveToEndPos &&
-            !trace.startsolid &&      // not sure we need this check as fraction would == 0.0f?
-            trace.fraction > 0.0f &&  // must go somewhere
-            trace.fraction < 1.0f )   // must hit something
+             !trace.startsolid &&      // not sure we need this check as fraction would == 0.0f?
+             trace.fraction > 0.0f &&  // must go somewhere
+             trace.fraction < 1.0f )   // must hit something
         {
             float flDelta = fabs( mv->GetAbsOrigin().z - trace.endpos.z );
             // HACK HACK:  The real problem is that trace returning that strange value
@@ -2765,7 +2765,7 @@ void CTFGameMovement::FullTossMove( void )
     if ( player->GetGroundEntity() != NULL )
     {
         if ( VectorCompare( player->GetBaseVelocity(), vec3_origin ) &&
-            VectorCompare( mv->m_vecVelocity, vec3_origin ) )
+             VectorCompare( mv->m_vecVelocity, vec3_origin ) )
             return;
     }
 
@@ -2855,8 +2855,8 @@ void CTFGameMovement::StepMove( Vector &vecDestination, trace_t &trace )
 
         // If we are not on the standable ground any more or going the "high road" didn't move us at all, then we'll also want to check the "low road"
         if ( ( trace.fraction != 1.0f &&
-                trace.plane.normal[2] < 0.7 ) ||
-            VectorCompare( mv->GetAbsOrigin(), vecPos ) )
+               trace.plane.normal[2] < 0.7 ) ||
+             VectorCompare( mv->GetAbsOrigin(), vecPos ) )
         {
             bLowRoad = true;
             bUpRoad = false;
@@ -2940,9 +2940,9 @@ void CTFGameMovement::SetGroundEntity( trace_t *pm )
         {
             m_pTFPlayer->SpeakConceptIfAllowed( MP_CONCEPT_DOUBLE_JUMP, "started_jumping:0" );
         }
-        m_pTFPlayer->m_Shared.SetWeaponKnockbackID( -1 );
-        m_pTFPlayer->m_bScattergunJump = false;
 #endif  // GAME_DLL
+        m_pTFPlayer->m_Shared.SetWeaponKnockbackID( -1 );
+        m_pTFPlayer->m_Shared.m_bScattergunJump = false;
         m_pTFPlayer->m_Shared.SetAirDash( 0 );
         m_pTFPlayer->m_Shared.SetAirDucked( 0 );
 
@@ -3169,7 +3169,7 @@ void CTFGameMovement::DuckOverrides()
 
     // Don't allowing ducking in water.
     if ( ( ( player->GetWaterLevel() >= WL_Feet ) && !bOnGround ) ||
-        player->GetWaterLevel() >= WL_Eyes )
+         player->GetWaterLevel() >= WL_Eyes )
     {
         mv->m_nButtons &= ~IN_DUCK;
     }
