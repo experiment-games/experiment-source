@@ -15,7 +15,8 @@
 //-----------------------------------------------------------------------------
 // Save/load
 //-----------------------------------------------------------------------------
-// clang-format off
+
+;  // clang-format off
 
 BEGIN_DATADESC( CPathTrack )
     DEFINE_FIELD( m_pnext, FIELD_EHANDLE ),
@@ -46,7 +47,7 @@ END_DATADESC()
 
 LINK_ENTITY_TO_CLASS( path_track, CPathTrack );
 
-// clang-format on
+;  // clang-format on
 
 //-----------------------------------------------------------------------------
 // Finds circular paths

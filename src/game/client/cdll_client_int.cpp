@@ -263,7 +263,7 @@ AchievementsAndStatsInterface *g_pAchievementsAndStatsInterface = NULL;
 IGameSystem *SoundEmitterSystem();
 IGameSystem *ToolFrameworkClientSystem();
 
-// clang-format off
+;  // clang-format off
 
 // Engine player info, no game related infos here
 BEGIN_BYTESWAP_DATADESC( player_info_s )
@@ -281,7 +281,7 @@ BEGIN_BYTESWAP_DATADESC( player_info_s )
     DEFINE_FIELD( filesDownloaded, FIELD_INTEGER ),
 END_BYTESWAP_DATADESC()
 
-static bool WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
+;  // clang-format on
 
 static bool g_bRequestCacheUsedMaterials = false;
 void RequestCacheUsedMaterials()

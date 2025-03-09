@@ -21,7 +21,7 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-// clang-format off
+;  // clang-format off
 
 IMPLEMENT_NETWORKCLASS_ALIASED( ExperimentScriptedWeapon, DT_ExperimentScriptedWeapon )
 
@@ -45,7 +45,7 @@ END_DATADESC()
 // LINK_ENTITY_TO_CLASS( weapon_experimentbase_scriptedweapon, CExperimentScriptedWeapon );
 // PRECACHE_WEAPON_REGISTER( weapon_experimentbase_scriptedweapon );
 
-static bool WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
+;  // clang-format on
 
 // These functions replace the macros above for runtime registration of
 // scripted weapons.

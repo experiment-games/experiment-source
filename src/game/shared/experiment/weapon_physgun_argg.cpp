@@ -123,7 +123,7 @@ class CGravControllerPoint : public IMotionEvent
     hlshadowcontrol_params_t m_shadow;
 };
 
-// clang-format off
+;  // clang-format off
 
 BEGIN_SIMPLE_DATADESC( CGravControllerPoint )
 
@@ -150,8 +150,8 @@ DEFINE_FIELD( m_localPosition, FIELD_VECTOR ),
     // DEFINE_PHYSPTR( m_controller ),
 
 END_DATADESC()
-    
-static bool WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
+
+;  // clang-format on
 
 CGravControllerPoint::CGravControllerPoint( void )
 {
@@ -475,7 +475,7 @@ class CWeaponGravityGun : public CBaseExperimentCombatWeapon
     DECLARE_ACTTABLE();
 };
 
-// clang-format off
+;  // clang-format off
 
 IMPLEMENT_NETWORKCLASS_ALIASED( WeaponGravityGun, DT_WeaponGravityGun )
 
@@ -556,8 +556,8 @@ BEGIN_DATADESC( CWeaponGravityGun )
     // Physptrs can't be saved in embedded classes..
     DEFINE_PHYSPTR( m_gravCallback.m_controller ),
 END_DATADESC()
-    
-static bool WORKAROUND_NASTY_FORMATTING_BUG2;  // clang-format on
+
+;  // clang-format on
 
 enum physgun_soundstate
 {

@@ -14,7 +14,7 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-// clang-format off
+;  // clang-format off
 
 BEGIN_SEND_TABLE_NOBASE( CHL2PlayerLocalData, DT_HL2Local )
     // misyl: SPROP_NOSCALE looks a bit overkill here, but I get pred errors without it.
@@ -65,7 +65,7 @@ BEGIN_SIMPLE_DATADESC( CHL2PlayerLocalData )
     DEFINE_EMBEDDED( m_LadderMove ),
 END_DATADESC()
 
-static bool WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
+;  // clang-format on
 
 CHL2PlayerLocalData::CHL2PlayerLocalData()
 {

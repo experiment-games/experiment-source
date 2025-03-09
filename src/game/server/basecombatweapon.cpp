@@ -53,7 +53,8 @@ short g_sModelIndexBubbles;     // holds the index for the bubbles model
 short g_sModelIndexBloodDrop;   // holds the sprite index for the initial blood
 short g_sModelIndexBloodSpray;  // holds the sprite index for splattered blood
 
-// clang-format off
+;  // clang-format off
+
 BEGIN_ENT_SCRIPTDESC( CBaseCombatWeapon, BASECOMBATWEAPON_DERIVED_FROM, "Base Combat Weapon" )
     DEFINE_SCRIPTFUNC( SetCustomViewModel, "Sets a custom view model for this weapon by model name" )
     DEFINE_SCRIPTFUNC( SetCustomViewModelModelIndex, "Sets a custom view model for this weapon by modelindex" )
@@ -92,7 +93,7 @@ BEGIN_ENT_SCRIPTDESC( CBaseCombatWeapon, BASECOMBATWEAPON_DERIVED_FROM, "Base Co
     DEFINE_SCRIPTFUNC( GetSecondaryAmmoCount, "Current secondary ammo count if no clip is used or to give a player if they pick up this weapon legacy style (not TF)" )
 END_SCRIPTDESC();
 
-static bool WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
+;  // clang-format on
 
 ConVar weapon_showproficiency( "weapon_showproficiency", "0" );
 extern ConVar ai_debug_shoot_positions;
@@ -269,7 +270,7 @@ class CWeaponLOSFilter : public CTraceFilterSkipTwoEntities
 {
     DECLARE_CLASS( CWeaponLOSFilter, CTraceFilterSkipTwoEntities );
 
-    public:
+   public:
     CWeaponLOSFilter( IHandleEntity *pHandleEntity, IHandleEntity *pHandleEntity2, int collisionGroup )
         : CTraceFilterSkipTwoEntities( pHandleEntity, pHandleEntity2, collisionGroup ), m_pVehicle( NULL )
     {
@@ -306,7 +307,7 @@ class CWeaponLOSFilter : public CTraceFilterSkipTwoEntities
         return BaseClass::ShouldHitEntity( pServerEntity, contentsMask );
     }
 
-    private:
+   private:
     CBaseEntity *m_pVehicle;
 };
 
@@ -670,7 +671,7 @@ void CBaseCombatWeapon::CheckRespawn( void )
 
 class CWeaponList : public CAutoGameSystem
 {
-    public:
+   public:
     CWeaponList( char const *name )
         : CAutoGameSystem( name )
     {

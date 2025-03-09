@@ -26,7 +26,7 @@ CFogSystem *FogSystem( void )
     return &s_FogSystem;
 }
 
-// clang-format off
+;  // clang-format off
 
 LINK_ENTITY_TO_CLASS( env_fog_controller, CFogController );
 
@@ -96,7 +96,7 @@ IMPLEMENT_SERVERCLASS_ST_NOBASE( CFogController, DT_FogController )
     SendPropFloat( SENDINFO_STRUCTELEM( m_fog.duration ), 0, SPROP_NOSCALE ),
 END_SEND_TABLE()
 
-static bool WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
+;  // clang-format on
 
 CFogController::CFogController()
 {

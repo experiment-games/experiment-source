@@ -15,7 +15,7 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-// clang-format off
+;  // clang-format off
 
 IMPLEMENT_CLIENTCLASS_DT( C_VoteController, DT_VoteController, CVoteController )
     RecvPropInt( RECVINFO( m_iActiveIssueIndex ), 0, C_VoteController::RecvProxy_VoteType ),
@@ -27,7 +27,7 @@ IMPLEMENT_CLIENTCLASS_DT( C_VoteController, DT_VoteController, CVoteController )
     RecvPropBool( RECVINFO( m_bIsYesNoVote ) )
 END_RECV_TABLE()
 
-static bool WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
+;  // clang-format on
 
 //-----------------------------------------------------------------------------
 // Purpose:

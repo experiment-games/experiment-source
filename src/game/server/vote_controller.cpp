@@ -22,7 +22,7 @@
 
 #define MAX_VOTER_HISTORY 64
 
-// clang-format off
+;  // clang-format off
 
 // Datatable
 IMPLEMENT_SERVERCLASS_ST( CVoteController, DT_VoteController )
@@ -40,7 +40,7 @@ END_DATADESC()
 
 LINK_ENTITY_TO_CLASS( vote_controller, CVoteController );
 
-// clang-format on
+;  // clang-format on
 
 CVoteController *g_voteControllerGlobal = NULL;
 CVoteController *g_voteControllerRed = NULL;
@@ -72,7 +72,7 @@ static int s_nVoteIdx = 0;
 //-----------------------------------------------------------------------------
 class CVoteControllerSystem : public CAutoGameSystemPerFrame
 {
-    public:
+   public:
     CVoteControllerSystem( char const *name )
         : CAutoGameSystemPerFrame( name )
     {
@@ -190,7 +190,7 @@ class CVoteControllerSystem : public CAutoGameSystemPerFrame
         }
     }
 
-    private:
+   private:
     CUtlMap< CSteamID, float > m_mapKickWatchList;
     CUtlMap< CSteamID, float > m_mapNameLockedList;
     float m_flNextKickCheckTime;
@@ -744,7 +744,7 @@ CVoteController::TryCastVoteResult CVoteController::TryCastVote( int iEntIndex, 
     if ( nCurrentVote < VOTE_OPTION1 || nCurrentVote > VOTE_OPTION5 )
         return CAST_FAIL_SYSTEM_ERROR;
 
-        // They're changing their vote
+    // They're changing their vote
 #ifdef DEBUG
     if ( nOldVote != VOTE_UNCAST )
     {
@@ -825,11 +825,11 @@ void CVoteController::VoteControllerThink( void )
     {
         CBaseIssue *pCurrentIssue = m_potentialIssues[m_iActiveIssueIndex];
         CBaseIssue::EVoteAction eVoteAction = pCurrentIssue->ProcessResults( m_VoteOptions,
-                                                                            m_nVoteOptionCount.Base(),
-                                                                            m_mapVotesBySteamID,
-                                                                            GetVoteIssueIndexWithHighestCount(),
-                                                                            GetNumVotesCast(),
-                                                                            m_nPotentialVotes );
+                                                                             m_nVoteOptionCount.Base(),
+                                                                             m_mapVotesBySteamID,
+                                                                             GetVoteIssueIndexWithHighestCount(),
+                                                                             GetNumVotesCast(),
+                                                                             m_nPotentialVotes );
 
         bool bVotePassed = false;
         switch ( eVoteAction )

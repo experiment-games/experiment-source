@@ -14,7 +14,7 @@
 #include "tf_gamerules.h"
 #endif
 
-// clang-format off
+;  // clang-format off
 
 BEGIN_DATADESC( CTeamControlPointMaster )
     DEFINE_KEYFIELD( m_bDisabled, FIELD_BOOLEAN, "StartDisabled" ),
@@ -57,7 +57,7 @@ END_DATADESC()
 
 LINK_ENTITY_TO_CLASS( team_control_point_master, CTeamControlPointMaster );
 
-// clang-format on
+;  // clang-format on
 
 ConVar mp_time_between_capscoring( "mp_time_between_capscoring", "30", FCVAR_GAMEDLL, "Delay between scoring of owned capture points.", true, 1, false, 0 );
 

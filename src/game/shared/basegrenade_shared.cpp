@@ -28,7 +28,7 @@ extern ConVar sk_plr_dmg_grenade;
 
 #if !defined( CLIENT_DLL )
 
-// clang-format off
+;  // clang-format off
 
 // Global Savedata for friction modifier
 BEGIN_DATADESC( CBaseGrenade )
@@ -107,13 +107,13 @@ END_PREDICTION_DATA()
 
 #endif
 
-// clang-format on
+;  // clang-format on
 
 // Grenades flagged with this will be triggered when the owner calls detonateSatchelCharges
 #define SF_DETONATE 0x0001
 
-    // UNDONE: temporary scorching for PreAlpha - find a less sleazy permenant solution.
-    void CBaseGrenade::Explode( trace_t *pTrace, int bitsDamageType )
+// UNDONE: temporary scorching for PreAlpha - find a less sleazy permenant solution.
+void CBaseGrenade::Explode( trace_t *pTrace, int bitsDamageType )
 {
 #if !defined( CLIENT_DLL )
 
@@ -513,7 +513,7 @@ void CBaseGrenade::SetThrower( CBaseCombatCharacter *pThrower )
 // Input  :
 // Output :
 //-----------------------------------------------------------------------------
-CBaseGrenade::~CBaseGrenade( void ){};
+CBaseGrenade::~CBaseGrenade( void ) {};
 
 //-----------------------------------------------------------------------------
 // Purpose: Constructor

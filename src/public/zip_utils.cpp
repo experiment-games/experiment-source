@@ -37,7 +37,8 @@ extern IFileSystem *filesystem;
 
 #include "tier0/memdbgon.h"
 
-// clang-format off
+;  // clang-format off
+
 // 
 // Data descriptions for byte swapping - only needed
 // for structures that are written to file for use by the game.
@@ -98,7 +99,7 @@ BEGIN_BYTESWAP_DATADESC( ZIP_PreloadDirectoryEntry )
     DEFINE_FIELD( DataOffset, FIELD_INTEGER ),
 END_BYTESWAP_DATADESC()
 
-static bool WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
+;  // clang-format on
 
 #ifdef WIN32
 //-----------------------------------------------------------------------------

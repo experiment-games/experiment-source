@@ -501,7 +501,7 @@ void CBreakableProp::HandleFirstCollisionInteractions( int index, gamevcollision
             // Don't paintsplat friendlies
             int iClassify = tr.m_pEnt->Classify();
             if ( iClassify != CLASS_PLAYER_ALLY_VITAL && iClassify != CLASS_PLAYER_ALLY &&
-                iClassify != CLASS_CITIZEN_PASSIVE && iClassify != CLASS_CITIZEN_REBEL )
+                 iClassify != CLASS_CITIZEN_PASSIVE && iClassify != CLASS_CITIZEN_REBEL )
 #endif
             {
                 switch ( entindex() % 3 )
@@ -726,7 +726,7 @@ static ConCommand prop_debug( "prop_debug", CC_Prop_Debug, "Toggle prop debug mo
 // BREAKABLE PROPS
 //=============================================================================================================
 
-// clang-format off
+;  // clang-format off
 
 IMPLEMENT_SERVERCLASS_ST( CBreakableProp, DT_BreakableProp )
 END_SEND_TABLE()
@@ -801,7 +801,7 @@ BEGIN_DATADESC( CBreakableProp )
     DEFINE_FIELD( m_hFlareEnt, FIELD_EHANDLE ),
 END_DATADESC()
 
-static bool WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
+;  // clang-format on
 
 //-----------------------------------------------------------------------------
 // Constructor:
@@ -864,12 +864,12 @@ void CBreakableProp::Spawn()
 
     // Setup takedamage based upon the health we parsed earlier, and our interactions
     if ( ( m_iHealth == 0 ) ||
-        ( !m_iNumBreakableChunks &&
-            !HasInteraction( PROPINTER_PHYSGUN_BREAK_EXPLODE ) &&
-            !HasInteraction( PROPINTER_PHYSGUN_FIRST_BREAK ) &&
-            !HasInteraction( PROPINTER_FIRE_FLAMMABLE ) &&
-            !HasInteraction( PROPINTER_FIRE_IGNITE_HALFHEALTH ) &&
-            !HasInteraction( PROPINTER_FIRE_EXPLOSIVE_RESIST ) ) )
+         ( !m_iNumBreakableChunks &&
+           !HasInteraction( PROPINTER_PHYSGUN_BREAK_EXPLODE ) &&
+           !HasInteraction( PROPINTER_PHYSGUN_FIRST_BREAK ) &&
+           !HasInteraction( PROPINTER_FIRE_FLAMMABLE ) &&
+           !HasInteraction( PROPINTER_FIRE_IGNITE_HALFHEALTH ) &&
+           !HasInteraction( PROPINTER_FIRE_EXPLOSIVE_RESIST ) ) )
     {
         m_iHealth = 0;
         m_takedamage = DAMAGE_EVENTS_ONLY;
@@ -881,7 +881,7 @@ void CBreakableProp::Spawn()
         if ( g_pGameRules->GetAutoAimMode() == AUTOAIM_ON_CONSOLE )
         {
             if ( HasInteraction( PROPINTER_PHYSGUN_BREAK_EXPLODE ) ||
-                HasInteraction( PROPINTER_FIRE_IGNITE_HALFHEALTH ) )
+                 HasInteraction( PROPINTER_FIRE_IGNITE_HALFHEALTH ) )
             {
                 // Exploding barrels, exploding gas cans
                 AddFlag( FL_AIMTARGET );
@@ -1296,7 +1296,7 @@ bool CBreakableProp::OnAttemptPhysGunPickup( CBasePlayer *pPhysGunUser, PhysGunP
 
     // If we're running PRE or POST ANIMATE sequences, wait for them to be done
     if ( m_nPhysgunState == PHYSGUN_ANIMATE_IS_PRE_ANIMATING ||
-        m_nPhysgunState == PHYSGUN_ANIMATE_IS_POST_ANIMATING )
+         m_nPhysgunState == PHYSGUN_ANIMATE_IS_POST_ANIMATING )
         return false;
 
     if ( m_nPhysgunState == PHYSGUN_ANIMATE_IS_ANIMATING )
@@ -2306,7 +2306,7 @@ class COrnamentProp : public CDynamicProp
 {
     DECLARE_CLASS( COrnamentProp, CDynamicProp );
 
-    public:
+   public:
     DECLARE_DATADESC();
 
     void Spawn();
@@ -2318,7 +2318,7 @@ class COrnamentProp : public CDynamicProp
     void InputSetAttached( inputdata_t &inputdata );
     void InputDetach( inputdata_t &inputdata );
 
-    private:
+   private:
     string_t m_initialOwner;
 };
 
@@ -3337,7 +3337,7 @@ CBaseEntity *BreakModelCreateSingle( CBaseEntity *pOwner, breakmodel_t *pModel, 
 
 class CBreakModelsPrecached : public CAutoGameSystem
 {
-    public:
+   public:
     CBreakModelsPrecached()
         : CAutoGameSystem( "CBreakModelsPrecached" )
     {
@@ -3382,7 +3382,7 @@ class CBreakModelsPrecached : public CAutoGameSystem
         m_modelList.RemoveAll();
     }
 
-    private:
+   private:
     CUtlRBTree< breakable_precache_t > m_modelList;
 };
 
@@ -3747,7 +3747,7 @@ void CBasePropDoor::CalcDoorSounds()
 
             // If any sounds were missing, try the "defaults" block.
             if ( ( strSoundOpen == NULL_STRING ) || ( strSoundClose == NULL_STRING ) || ( strSoundMoving == NULL_STRING ) ||
-                ( strSoundLocked == NULL_STRING ) || ( strSoundUnlocked == NULL_STRING ) )
+                 ( strSoundLocked == NULL_STRING ) || ( strSoundUnlocked == NULL_STRING ) )
             {
                 KeyValues *pkvDefaults = pkvDoorSounds->FindKey( "defaults" );
                 if ( pkvDefaults )
@@ -4341,7 +4341,7 @@ void CBasePropDoor::Blocked( CBaseEntity *pOther )
     //}
 
     if ( m_bForceClosed && ( pOther->GetMoveType() == MOVETYPE_VPHYSICS ) &&
-        ( pOther->m_takedamage == DAMAGE_NO || pOther->m_takedamage == DAMAGE_EVENTS_ONLY ) )
+         ( pOther->m_takedamage == DAMAGE_NO || pOther->m_takedamage == DAMAGE_EVENTS_ONLY ) )
     {
         EntityPhysics_CreateSolver( this, pOther, true, 4.0f );
     }
@@ -4531,7 +4531,7 @@ bool CBasePropDoor::TestCollision( const Ray_t &ray, unsigned int mask, trace_t 
 
 class CTraceFilterDoor : public CTraceFilterEntitiesOnly
 {
-    public:
+   public:
     // It does have a base, but we'll never network anything below here..
     DECLARE_CLASS_NOBASE( CTraceFilterDoor );
 
@@ -4577,7 +4577,7 @@ class CTraceFilterDoor : public CTraceFilterEntitiesOnly
         return true;
     }
 
-    private:
+   private:
     const IHandleEntity *m_pDoor;
     const IHandleEntity *m_pPassEnt;
     int m_collisionGroup;
@@ -4622,7 +4622,7 @@ class CPropDoorRotating : public CBasePropDoor
 {
     DECLARE_CLASS( CPropDoorRotating, CBasePropDoor );
 
-    public:
+   public:
     ~CPropDoorRotating();
 
     int DrawDebugTextOverlays( void );
@@ -4660,7 +4660,7 @@ class CPropDoorRotating : public CBasePropDoor
 
     DECLARE_DATADESC();
 
-    private:
+   private:
     bool IsHingeOnLeft();
 
     void AngularMove( const QAngle &vecDestAngle, float flSpeed );
@@ -4695,7 +4695,7 @@ class CPropDoorRotating : public CBasePropDoor
     CHandle< CEntityBlocker > m_hDoorBlocker;
 };
 
-// clang-format off
+;  // clang-format off
 
 BEGIN_DATADESC( CPropDoorRotating )
     DEFINE_KEYFIELD( m_eSpawnPosition, FIELD_INTEGER, "spawnpos" ),
@@ -4718,7 +4718,7 @@ END_DATADESC()
 
 LINK_ENTITY_TO_CLASS( prop_door_rotating, CPropDoorRotating );
 
-// clang-format on
+;  // clang-format on
 
 //-----------------------------------------------------------------------------
 // Destructor
@@ -5405,7 +5405,7 @@ class CPhysSphere : public CPhysicsProp
 {
     DECLARE_CLASS( CPhysSphere, CPhysicsProp );
 
-    public:
+   public:
     virtual bool OverridePropdata()
     {
         return true;
@@ -5442,7 +5442,7 @@ LINK_ENTITY_TO_CLASS( prop_sphere, CPhysSphere );
 // ------------------------------------------------------------------------------------------ //
 class CPhysBoxMultiplayer : public CPhysBox, public IMultiplayerPhysics
 {
-    public:
+   public:
     DECLARE_CLASS( CPhysBoxMultiplayer, CPhysBox );
 
     virtual int GetMultiplayerPhysicsMode()
@@ -5637,7 +5637,7 @@ SendPropInt( SENDINFO( m_iPhysicsMode ), 1, SPROP_UNSIGNED ),
         TransformAABB( EntityToWorldTransform(), m_collisionMins, m_collisionMaxs, *mins, *maxs );
     }
 
-    private:
+   private:
     bool m_usingCustomCollisionBounds;
     CNetworkVector( m_collisionMins );
     CNetworkVector( m_collisionMaxs );
@@ -5667,7 +5667,7 @@ DEFINE_KEYFIELD( m_iPhysicsMode, FIELD_INTEGER, "physicsmode" ),
     DECLARE_CLASS( CPhysicsPropRespawnable, CPhysicsProp );
     DECLARE_DATADESC();
 
-    public:
+   public:
     CPhysicsPropRespawnable();
 
     virtual void Spawn( void );
@@ -5675,7 +5675,7 @@ DEFINE_KEYFIELD( m_iPhysicsMode, FIELD_INTEGER, "physicsmode" ),
 
     void Materialize( void );
 
-    private:
+   private:
     Vector m_vOriginalSpawnOrigin;
     QAngle m_vOriginalSpawnAngles;
 

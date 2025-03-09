@@ -28,7 +28,7 @@ extern ConVar sensitivity;
 ConVar cl_npc_speedmod_intime( "cl_npc_speedmod_intime", "0.25", FCVAR_CLIENTDLL | FCVAR_ARCHIVE );
 ConVar cl_npc_speedmod_outtime( "cl_npc_speedmod_outtime", "1.5", FCVAR_CLIENTDLL | FCVAR_ARCHIVE );
 
-// clang-format off
+;  // clang-format off
 
 IMPLEMENT_CLIENTCLASS_DT(C_BaseHLPlayer, DT_HL2_Player, CHL2_Player)
     RecvPropDataTable( RECVINFO_DT(m_HL2Local),0, &REFERENCE_RECV_TABLE(DT_HL2Local) ),
@@ -58,7 +58,7 @@ BEGIN_PREDICTION_DATA_NO_BASE( LadderMove_t )
     DEFINE_PRED_FIELD( m_vecStartPosition, FIELD_VECTOR, FTYPEDESC_INSENDTABLE | FTYPEDESC_NOERRORCHECK ),
 END_PREDICTION_DATA()
 
-static bool WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
+;  // clang-format on
 
 //-----------------------------------------------------------------------------
 // Purpose: Drops player's primary weapon
@@ -226,8 +226,8 @@ bool C_BaseHLPlayer::TestMove( const Vector &pos, float fVertDist, float radius,
     {
         // check if the endpos intersects with the direction the object is travelling.  if it doesn't, this is a good direction to move.
         if ( objDir.IsZero() ||
-            ( IntersectInfiniteRayWithSphere( objPos, objDir, trOver.endpos, radius, &flHit1, &flHit2 ) &&
-                ( ( flHit1 >= 0.0f ) || ( flHit2 >= 0.0f ) ) ) )
+             ( IntersectInfiniteRayWithSphere( objPos, objDir, trOver.endpos, radius, &flHit1, &flHit2 ) &&
+               ( ( flHit1 >= 0.0f ) || ( flHit2 >= 0.0f ) ) ) )
         {
             // our first trace failed, so see if we can go farther if we step up.
 
@@ -241,7 +241,7 @@ bool C_BaseHLPlayer::TestMove( const Vector &pos, float fVertDist, float radius,
             {
                 // check if the endpos intersects with the direction the object is travelling.  if it doesn't, this is a good direction to move.
                 if ( objDir.IsZero() ||
-                    ( IntersectInfiniteRayWithSphere( objPos, objDir, trOver.endpos, radius, &flHit1, &flHit2 ) && ( ( flHit1 >= 0.0f ) || ( flHit2 >= 0.0f ) ) ) )
+                     ( IntersectInfiniteRayWithSphere( objPos, objDir, trOver.endpos, radius, &flHit1, &flHit2 ) && ( ( flHit1 >= 0.0f ) || ( flHit2 >= 0.0f ) ) ) )
                 {
                     return false;
                 }
@@ -308,7 +308,7 @@ void C_BaseHLPlayer::PerformClientSideObstacleAvoidance( float flFrameTime, CUse
     bool istryingtomove = false;
     bool ismovingforward = false;
     if ( fabs( pCmd->forwardmove ) > 0.0f ||
-        fabs( pCmd->sidemove ) > 0.0f )
+         fabs( pCmd->sidemove ) > 0.0f )
     {
         istryingtomove = true;
         if ( pCmd->forwardmove > 1.0f )
@@ -375,12 +375,12 @@ void C_BaseHLPlayer::PerformClientSideObstacleAvoidance( float flFrameTime, CUse
         float flDirProduct = DotProduct( vRayDir, vPlayerVel );
 
         if ( !IntersectInfiniteRayWithSphere(
-                GetAbsOrigin(),
-                vRayDir,
-                obj->GetAbsOrigin(),
-                radius,
-                &flHit1,
-                &flHit2 ) )
+                 GetAbsOrigin(),
+                 vRayDir,
+                 obj->GetAbsOrigin(),
+                 radius,
+                 &flHit1,
+                 &flHit2 ) )
             continue;
 
         Vector dirToObject = -vecToObject;

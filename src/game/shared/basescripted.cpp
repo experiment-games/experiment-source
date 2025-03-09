@@ -12,7 +12,7 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-// clang-format off
+;  // clang-format off
 
 IMPLEMENT_NETWORKCLASS_ALIASED( BaseScripted, DT_BaseScripted )
 
@@ -27,7 +27,7 @@ END_NETWORK_TABLE()
 BEGIN_PREDICTION_DATA( CBaseScripted )
 END_PREDICTION_DATA()
 
-static bool WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
+;  // clang-format on
 
 #ifdef CLIENT_DLL
 static C_BaseEntity *CCBaseScriptedFactory( void )

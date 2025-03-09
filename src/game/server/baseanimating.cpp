@@ -63,7 +63,7 @@ class CIKSaveRestoreOps : public CClassPtrSaveRestoreOps
 //-----------------------------------------------------------------------------
 class CInfoLightingRelative : public CBaseEntity
 {
-    public:
+   public:
     DECLARE_CLASS( CInfoLightingRelative, CBaseEntity );
     DECLARE_DATADESC();
     DECLARE_SERVERCLASS();
@@ -72,7 +72,7 @@ class CInfoLightingRelative : public CBaseEntity
     virtual void SetTransmit( CCheckTransmitInfo *pInfo, bool bAlways );
     virtual int UpdateTransmitState( void );
 
-    private:
+   private:
     CNetworkHandle( CBaseEntity, m_hLightingLandmark );
     string_t m_strLightingLandmark;
 };
@@ -151,7 +151,7 @@ int CInfoLightingRelative::UpdateTransmitState( void )
 
 static CIKSaveRestoreOps s_IKSaveRestoreOp;
 
-// clang-format off
+;  // clang-format off
 
 BEGIN_DATADESC( CBaseAnimating )
 
@@ -311,7 +311,7 @@ BEGIN_ENT_SCRIPTDESC( CBaseAnimating, CBaseEntity, "Animating models" )
     DEFINE_SCRIPTFUNC_WRAPPED( LookupPoseParameter, "Looks up a pose parameter index by name" );
 END_SCRIPTDESC();
 
-static bool WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
+;  // clang-format on
 
 CBaseAnimating::CBaseAnimating()
 {
@@ -1457,7 +1457,7 @@ bool CBaseAnimating::HasPoseParameter( int iSequence, int iParameter )
 
     mstudioseqdesc_t &seqdesc = pstudiohdr->pSeqdesc( iSequence );
     if ( pstudiohdr->GetSharedPoseParameter( iSequence, seqdesc.paramindex[0] ) == iParameter ||
-        pstudiohdr->GetSharedPoseParameter( iSequence, seqdesc.paramindex[1] ) == iParameter )
+         pstudiohdr->GetSharedPoseParameter( iSequence, seqdesc.paramindex[1] ) == iParameter )
     {
         return true;
     }
@@ -1577,7 +1577,7 @@ void CBaseAnimating::GetBoneTransform( int iBone, matrix3x4_t &pBoneToWorld )
 
 class CTraceFilterSkipNPCs : public CTraceFilterSimple
 {
-    public:
+   public:
     CTraceFilterSkipNPCs( const IHandleEntity *passentity, int collisionGroup )
         : CTraceFilterSimple( passentity, collisionGroup )
     {
@@ -3034,9 +3034,9 @@ void CBaseAnimating::GetInputDispatchEffectPosition( const char *sInputString, V
         if ( !GetAttachment( iAttachment, pOrigin, pAngles ) )
         {
             Msg( "ERROR: Mapmaker tried to spawn DispatchEffect %s, but %s has no attachment %d\n",
-                sInputString,
-                STRING( GetModelName() ),
-                iAttachment );
+                 sInputString,
+                 STRING( GetModelName() ),
+                 iAttachment );
         }
         return;
     }

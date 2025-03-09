@@ -39,7 +39,7 @@
 
 #define CYCLELATCH_TOLERANCE 0.15f
 
-// clang-format off
+;  // clang-format off
 
 LINK_ENTITY_TO_CLASS( player, C_Experiment_Player );
 
@@ -80,7 +80,7 @@ BEGIN_PREDICTION_DATA( C_Experiment_Player )
     DEFINE_PRED_FIELD( m_nNewSequenceParity, FIELD_INTEGER, FTYPEDESC_OVERRIDE | FTYPEDESC_PRIVATE | FTYPEDESC_NOERRORCHECK ),
 END_PREDICTION_DATA()
 
-static bool WORKAROUND_NASTY_FORMATTING_BUG;  // clang-format on
+;  // clang-format on
 
 static ConVar cl_playermodel( "cl_playermodel", "none", FCVAR_USERINFO | FCVAR_ARCHIVE | FCVAR_SERVER_CAN_EXECUTE, "Default Player Model" );
 static ConVar cl_defaultweapon( "cl_defaultweapon", "weapon_physcannon", FCVAR_USERINFO | FCVAR_ARCHIVE, "Default Spawn Weapon" );
@@ -625,7 +625,7 @@ void C_Experiment_Player::AvoidPlayers( CUserCmd *pCmd )
     vRad.z = 0;
 
     flAvoidRadius = vRad.Length();
-    
+
     float flPushStrength = RemapValClamped( vecDelta.Length(), flAvoidRadius, 0, 0, exp_max_separation_force.GetInt() );  // flPushScale;
 
     // Msg( "PushScale = %f\n", flPushStrength );
@@ -1078,7 +1078,7 @@ IRagdoll *C_Experiment_Player::GetRepresentativeRagdoll() const
     }
 }
 
-// clang-format off
+;  // clang-format off
 
 IMPLEMENT_CLIENTCLASS_DT_NOBASE( C_ExperimentRagdoll, DT_ExperimentRagdoll, CExperimentRagdoll )
     RecvPropVector( RECVINFO( m_vecRagdollOrigin ) ),
@@ -1089,7 +1089,7 @@ IMPLEMENT_CLIENTCLASS_DT_NOBASE( C_ExperimentRagdoll, DT_ExperimentRagdoll, CExp
     RecvPropVector( RECVINFO( m_vecRagdollVelocity ) )
 END_RECV_TABLE()
 
-static bool WORKAROUND_NASTY_FORMATTING_BUG2;  // clang-format on
+;  // clang-format on
 
 C_ExperimentRagdoll::C_ExperimentRagdoll()
 {
@@ -1343,7 +1343,7 @@ class C_TEPlayerAnimEvent : public C_BaseTempEntity
     CNetworkVar( int, m_nData );
 };
 
-// clang-format off
+;  // clang-format off
 
 IMPLEMENT_CLIENTCLASS_EVENT( C_TEPlayerAnimEvent, DT_TEPlayerAnimEvent, CTEPlayerAnimEvent );
 
@@ -1353,7 +1353,7 @@ BEGIN_RECV_TABLE_NOBASE( C_TEPlayerAnimEvent, DT_TEPlayerAnimEvent )
     RecvPropInt( RECVINFO( m_nData ) )
 END_RECV_TABLE()
 
-static bool WORKAROUND_NASTY_FORMATTING_BUG3;  // clang-format on
+;  // clang-format on
 
 void C_Experiment_Player::DoAnimationEvent( PlayerAnimEvent_t event,
                                             int nData )

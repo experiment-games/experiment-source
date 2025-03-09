@@ -7902,7 +7902,7 @@ class CStripWeapons : public CPointEntity
     DECLARE_DATADESC();
 };
 
-// clang-format off
+;  // clang-format off
 
 LINK_ENTITY_TO_CLASS( player_weaponstrip, CStripWeapons );
 
@@ -7924,7 +7924,7 @@ BEGIN_ENT_SCRIPTDESC( CBasePlayer, CBaseCombatCharacter, "The player entity." )
     DEFINE_SCRIPTFUNC( SetScriptOverlayMaterial, "Sets a view overlay material" )
 END_SCRIPTDESC();
 
-// clang-format on
+;  // clang-format on
 
 void CStripWeapons::InputStripWeapons( inputdata_t &data )
 {
@@ -8267,7 +8267,7 @@ void CMovementSpeedMod::InputSpeedMod( inputdata_t &data )
 // SendTable for CPlayerState.
 // -------------------------------------------------------------------------------- //
 
-// clang-format off
+;  // clang-format off
 
 BEGIN_SEND_TABLE_NOBASE( CPlayerState, DT_PlayerState )
     SendPropInt( SENDINFO( deadflag ), 1, SPROP_UNSIGNED ),
@@ -8382,14 +8382,14 @@ IMPLEMENT_SERVERCLASS_ST( CBasePlayer, DT_BasePlayer )
 
 END_SEND_TABLE()
 
-    // clang-format on
+;  // clang-format on
 
-    //=============================================================================
-    //
-    // Player Physics Shadow Code
-    //
+//=============================================================================
+//
+// Player Physics Shadow Code
+//
 
-    void CBasePlayer::SetupVPhysicsShadow( const Vector &vecAbsOrigin, const Vector &vecAbsVelocity, CPhysCollide *pStandModel, const char *pStandHullName, CPhysCollide *pCrouchModel, const char *pCrouchHullName )
+void CBasePlayer::SetupVPhysicsShadow( const Vector &vecAbsOrigin, const Vector &vecAbsVelocity, CPhysCollide *pStandModel, const char *pStandHullName, CPhysCollide *pCrouchModel, const char *pCrouchHullName )
 {
     solid_t solid;
     Q_strncpy( solid.surfaceprop, "player", sizeof( solid.surfaceprop ) );
