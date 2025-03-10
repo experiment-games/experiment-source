@@ -86,7 +86,14 @@ LUA_BINDING_END( "string", "The country code of the user." )
 
 LUA_BINDING_BEGIN( Systems, HasFocus, "library", "Check if the application has focus." )
 {
-    lua_pushboolean( L, GetForegroundWindow() == GetActiveWindow() );
+#ifdef _WIN32
+    HWND hWnd = ( HWND )GetAppWindow();
+    lua_pushboolean( L, hWnd == GetActiveWindow() );
+#else
+    // TODO: Implement for other platforms
+    Assert( 0 );
+#endif
+
     return 1;
 }
 LUA_BINDING_END( "boolean", "Whether the application has focus." )
@@ -128,7 +135,7 @@ LUA_BINDING_END( "boolean", "Whether the application is running on Windows." )
 LUA_BINDING_BEGIN( Systems, IsWindowed, "library", "Check if the application is running in windowed mode." )
 {
 #ifdef _WIN32
-    HWND hWnd = GetForegroundWindow();
+    HWND hWnd = ( HWND )GetAppWindow();
 
     if ( hWnd )
     {

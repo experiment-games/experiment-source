@@ -44,6 +44,8 @@ extern ConVar developer;  // developer mode
 #define LANGUAGE_FRENCH 2
 #define LANGUAGE_BRITISH 3
 
+void *GetAppWindow();
+
 //-----------------------------------------------------------------------------
 // Pitch + yaw
 //-----------------------------------------------------------------------------
@@ -114,7 +116,7 @@ typedef bool ( *ShouldHitFunc_t )( IHandleEntity *pHandleEntity, int contentsMas
 //-----------------------------------------------------------------------------
 class CTraceFilterSimple : public CTraceFilter
 {
-    public:
+   public:
     // It does have a base, but we'll never network anything below here..
     DECLARE_CLASS_NOBASE( CTraceFilterSimple );
 
@@ -134,7 +136,7 @@ class CTraceFilterSimple : public CTraceFilter
         return m_pPassEnt;
     }
 
-    private:
+   private:
     const IHandleEntity *m_pPassEnt;
     int m_collisionGroup;
     ShouldHitFunc_t m_pExtraShouldHitCheckFunction;
@@ -142,7 +144,7 @@ class CTraceFilterSimple : public CTraceFilter
 
 class CTraceFilterSkipTwoEntities : public CTraceFilterSimple
 {
-    public:
+   public:
     // It does have a base, but we'll never network anything below here..
     DECLARE_CLASS( CTraceFilterSkipTwoEntities, CTraceFilterSimple );
 
@@ -153,25 +155,25 @@ class CTraceFilterSkipTwoEntities : public CTraceFilterSimple
         m_pPassEnt2 = pPassEntity2;
     }
 
-    private:
+   private:
     const IHandleEntity *m_pPassEnt2;
 };
 
 class CTraceFilterSimpleList : public CTraceFilterSimple
 {
-    public:
+   public:
     CTraceFilterSimpleList( int collisionGroup );
     virtual bool ShouldHitEntity( IHandleEntity *pHandleEntity, int contentsMask );
 
     void AddEntityToIgnore( IHandleEntity *pEntity );
 
-    protected:
+   protected:
     CUtlVector< IHandleEntity * > m_PassEntities;
 };
 
 class CTraceFilterOnlyNPCsAndPlayer : public CTraceFilterSimple
 {
-    public:
+   public:
     CTraceFilterOnlyNPCsAndPlayer( const IHandleEntity *passentity, int collisionGroup )
         : CTraceFilterSimple( passentity, collisionGroup )
     {
@@ -187,7 +189,7 @@ class CTraceFilterOnlyNPCsAndPlayer : public CTraceFilterSimple
 
 class CTraceFilterNoNPCsOrPlayer : public CTraceFilterSimple
 {
-    public:
+   public:
     CTraceFilterNoNPCsOrPlayer( const IHandleEntity *passentity, int collisionGroup )
         : CTraceFilterSimple( passentity, collisionGroup )
     {
@@ -201,53 +203,53 @@ class CTraceFilterNoNPCsOrPlayer : public CTraceFilterSimple
 //-----------------------------------------------------------------------------
 class CTraceFilterLOS : public CTraceFilterSkipTwoEntities
 {
-    public:
+   public:
     CTraceFilterLOS( IHandleEntity *pHandleEntity, int collisionGroup, IHandleEntity *pHandleEntity2 = NULL );
     bool ShouldHitEntity( IHandleEntity *pHandleEntity, int contentsMask );
 };
 
 class CTraceFilterSkipClassname : public CTraceFilterSimple
 {
-    public:
+   public:
     CTraceFilterSkipClassname( const IHandleEntity *passentity, const char *pchClassname, int collisionGroup );
     virtual bool ShouldHitEntity( IHandleEntity *pHandleEntity, int contentsMask );
 
-    private:
+   private:
     const char *m_pchClassname;
 };
 
 class CTraceFilterSkipTwoClassnames : public CTraceFilterSkipClassname
 {
-    public:
+   public:
     // It does have a base, but we'll never network anything below here..
     DECLARE_CLASS( CTraceFilterSkipTwoClassnames, CTraceFilterSkipClassname );
 
     CTraceFilterSkipTwoClassnames( const IHandleEntity *passentity, const char *pchClassname, const char *pchClassname2, int collisionGroup );
     virtual bool ShouldHitEntity( IHandleEntity *pHandleEntity, int contentsMask );
 
-    private:
+   private:
     const char *m_pchClassname2;
 };
 
 class CTraceFilterSimpleClassnameList : public CTraceFilterSimple
 {
-    public:
+   public:
     CTraceFilterSimpleClassnameList( const IHandleEntity *passentity, int collisionGroup );
     virtual bool ShouldHitEntity( IHandleEntity *pHandleEntity, int contentsMask );
 
     void AddClassnameToIgnore( const char *pchClassname );
 
-    private:
+   private:
     CUtlVector< const char * > m_PassClassnames;
 };
 
 class CTraceFilterChain : public CTraceFilter
 {
-    public:
+   public:
     CTraceFilterChain( ITraceFilter *pTraceFilter1, ITraceFilter *pTraceFilter2 );
     virtual bool ShouldHitEntity( IHandleEntity *pHandleEntity, int contentsMask );
 
-    private:
+   private:
     ITraceFilter *m_pTraceFilter1;
     ITraceFilter *m_pTraceFilter2;
 };
@@ -458,7 +460,7 @@ inline float DistanceToRay( const Vector &pos, const Vector &rayStart, const Vec
     class interfaceName;                                                  \
     abstract_class interfaceName                                          \
     {                                                                     \
-        public:                                                            \
+       public:                                                            \
         interfaceName( bool bAutoAdd = true );                            \
         virtual ~interfaceName();                                         \
         static void AddToAutoList( interfaceName *pElement )              \
@@ -473,8 +475,8 @@ inline float DistanceToRay( const Vector &pos, const Vector &rayStart, const Vec
         {                                                                 \
             return m_##interfaceName##AutoList;                           \
         }                                                                 \
-                                                                        \
-        private:                                                           \
+                                                                          \
+       private:                                                           \
         static CUtlVector< interfaceName * > m_##interfaceName##AutoList; \
     };
 
@@ -500,7 +502,7 @@ inline float DistanceToRay( const Vector &pos, const Vector &rayStart, const Vec
 template < class T >
 class TAutoList
 {
-    public:
+   public:
     typedef CUtlVector< T * > AutoListType;
 
     static AutoListType &GetAutoList()
@@ -508,7 +510,7 @@ class TAutoList
         return m_autolist;
     }
 
-    protected:
+   protected:
     TAutoList()
     {
         m_autolist.AddToTail( static_cast< T * >( this ) );
@@ -519,7 +521,7 @@ class TAutoList
         m_autolist.FindAndFastRemove( static_cast< T * >( this ) );
     }
 
-    private:
+   private:
     static AutoListType m_autolist;
 };
 
@@ -533,7 +535,7 @@ CUtlVector< T * > TAutoList< T >::m_autolist;
  */
 class IntervalTimer
 {
-    public:
+   public:
     IntervalTimer( void )
     {
         m_timestamp = -1.0f;
@@ -575,7 +577,7 @@ class IntervalTimer
         return ( Now() - m_timestamp > duration ) ? true : false;
     }
 
-    private:
+   private:
     float m_timestamp;
     float Now( void ) const;  // work-around since client header doesn't like inlined gpGlobals->curtime
 };
@@ -587,7 +589,7 @@ class IntervalTimer
  */
 class CountdownTimer
 {
-    public:
+   public:
     CountdownTimer( void )
     {
         m_timestamp = -1.0f;
@@ -636,7 +638,7 @@ class CountdownTimer
         return ( m_timestamp > 0.0f ) ? m_duration : 0.0f;
     }
 
-    private:
+   private:
     float m_duration;
     float m_timestamp;
     virtual float Now( void ) const;  // work-around since client header doesn't like inlined gpGlobals->curtime

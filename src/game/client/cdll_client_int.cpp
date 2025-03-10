@@ -972,6 +972,10 @@ int CHLClient::Init( CreateInterfaceFn appSystemFactory,
     ApplyClientStateDetours();
 #endif
 
+#ifdef _WIN32
+    SetWindowTextA( ( HWND )GetAppWindow(), "Experiment" );
+#endif
+
     InitCRTMemDebug();
     MathLib_Init( 2.2f, 2.2f, 0.0f, 2.0f );
 
