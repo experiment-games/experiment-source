@@ -14,6 +14,7 @@
 #include "vgui/IInput.h"
 #include <mountsteamcontent.h>
 #include <createmultiplayergamedialog.h>
+#include <util/jsontokv.h>
 
 using namespace vgui;
 
@@ -77,8 +78,6 @@ CBaseMenuPanel::CBaseMenuPanel()
     // Add a HTML panel that takes up the whole screen
     // This is where the main menu will be displayed
     m_pMainMenu = new CMainMenu( this );
-
-    // OnGameUIActivated();
 }
 
 CBaseMenuPanel::~CBaseMenuPanel()
@@ -238,7 +237,7 @@ static void GetGamemodes( CUtlVector< CUtlString > &outGamemodes )
     g_pFullFileSystem->FindClose( findHandle );
 }
 
-class MainMenuHTML : public HTML
+class MainMenuHTML : public HTML, public ISteamMatchmakingServerListResponse
 {
     DECLARE_CLASS_SIMPLE( MainMenuHTML, HTML );
 
@@ -247,6 +246,19 @@ class MainMenuHTML : public HTML
         : HTML( parent, name, allowJavaScript )
     {
     }
+
+    void RequestServerList( GameServerType iType = GameServerType::GS_INTERNET );
+
+    // ISteamMatchmakingServerListResponse
+    virtual void ServerResponded( HServerListRequest hRequest, int iServer );
+    virtual void ServerFailedToRespond( HServerListRequest hRequest, int iServer );
+    virtual void RefreshComplete( HServerListRequest hRequest, EMatchMakingServerResponse response );
+
+   private:
+    void AddServerToList( const gameserveritem_t &serverInfo );
+
+    HServerListRequest m_hSteamRequest;
+    bool m_bIsSearching;
 
    protected:
     virtual void OnInstallJavaScriptInterop() OVERRIDE
@@ -257,6 +269,7 @@ class MainMenuHTML : public HTML
         AddJavascriptObjectCallback( "GameUI", "MountGameContent" );
         AddJavascriptObjectCallback( "GameUI", "UnmountGameContent" );
         AddJavascriptObjectCallback( "GameUI", "HostServer" );
+        AddJavascriptObjectCallback( "GameUI", "RequestServerList" );
     }
 
     virtual void OnJavaScriptCallback( KeyValues *pData ) OVERRIDE
@@ -354,7 +367,7 @@ class MainMenuHTML : public HTML
             pResponse->SetBool( "wasSuccessful", UnmountGameContentByAppId( nGameAppId ) );
             CallJavascriptObjectCallback( callbackId, pResponse );
         }
-        else if (Q_strcmp(pszProperty, "HostServer") == 0)
+        else if ( Q_strcmp( pszProperty, "HostServer" ) == 0 )
         {
             KeyValues *pArguments = pData->FindKey( "arguments" );
             KeyValues *config = pArguments->FindKey( "1" );
@@ -366,7 +379,7 @@ class MainMenuHTML : public HTML
             const char *password = config->GetString( "password" );
 
             // TODO: Save preferences for map and gamemode (copy logic from game\client\experiment\ui\createmultiplayergamedialog.cpp)
-            //if ( m_pSavedData )
+            // if ( m_pSavedData )
             //{
             //    if ( m_pServerPage->IsRandomMapSelected() )
             //    {
@@ -401,6 +414,7 @@ class MainMenuHTML : public HTML
                 "wait\n"
                 "sv_lan 1\n"
                 "setmaster enable\n"
+
                 "maxplayers %i\n"
                 "sv_password \"%s\"\n"
                 "gamemode \"%s\"\n"
@@ -411,8 +425,7 @@ class MainMenuHTML : public HTML
                 password,
                 gamemode,
                 hostName,
-                map
-            );
+                map );
 
             engine->ClientCmd_Unrestricted( startCommand );
 
@@ -420,8 +433,112 @@ class MainMenuHTML : public HTML
             pResponse->SetBool( "wasSuccessful", true );
             CallJavascriptObjectCallback( callbackId, pResponse );
         }
+        else if ( Q_strcmp( pszProperty, "RequestServerList" ) == 0 )
+        {
+            RequestServerList();
+
+            KeyValues *pResponse = new KeyValues( "parameters" );
+            pResponse->SetBool( "wasSuccessful", true );
+            CallJavascriptObjectCallback( callbackId, pResponse );
+        }
     }
 };
+
+// Source: https://github.com/NeotokyoRebuild/neo/blob/1d2dc708d1d950ba5a4eb20f95280f0bf8e0d4b7/src/game/client/neo/ui/neo_root_serverbrowser.cpp#L92
+void MainMenuHTML::RequestServerList( GameServerType iType )
+{
+    static MatchMakingKeyValuePair_t mmFilters[] = {
+        { "hasplayers", "" }, // For testing with many servers
+        // { "gamedir", "mod_tf" }, // 504?
+        //{ "gamedir", "experiment" },  // Commented because for testing we need a game with servers
+    };
+    MatchMakingKeyValuePair_t *pMMFilters = mmFilters;
+
+    static constexpr HServerListRequest ( ISteamMatchmakingServers::*P_FN_REQ[GS__TOTAL] )(
+        AppId_t, MatchMakingKeyValuePair_t **, uint32, ISteamMatchmakingServerListResponse * ) = {
+        &ISteamMatchmakingServers::RequestInternetServerList,
+        nullptr,
+        &ISteamMatchmakingServers::RequestFriendsServerList,
+        &ISteamMatchmakingServers::RequestFavoritesServerList,
+        &ISteamMatchmakingServers::RequestHistoryServerList,
+        &ISteamMatchmakingServers::RequestSpectatorServerList,
+    };
+
+    ISteamMatchmakingServers *steamMM = steamapicontext->SteamMatchmakingServers();
+    m_hSteamRequest = ( iType == GS_LAN )
+                          ? steamMM->RequestLANServerList( engine->GetAppID(), this )
+                          : ( steamMM->*P_FN_REQ[iType] )( engine->GetAppID(), &pMMFilters, ARRAYSIZE( mmFilters ), this );
+    m_bIsSearching = true;
+}
+
+// Server has responded ok with updated data
+void MainMenuHTML::ServerResponded( HServerListRequest hRequest, int iServer )
+{
+    if ( hRequest != m_hSteamRequest ) return;
+
+    ISteamMatchmakingServers *steamMM = steamapicontext->SteamMatchmakingServers();
+    gameserveritem_t *pServerDetails = steamMM->GetServerDetails( hRequest, iServer );
+    if ( pServerDetails )
+    {
+        AddServerToList( *pServerDetails );
+    }
+}
+
+// Server has failed to respond
+void MainMenuHTML::ServerFailedToRespond( HServerListRequest hRequest, [[maybe_unused]] int iServer )
+{
+    if ( hRequest != m_hSteamRequest ) return;
+
+    RunJavascript( "ServerListFailed('ServerFailedToRespond...')" );
+}
+
+// A list refresh you had initiated is now 100% completed
+void MainMenuHTML::RefreshComplete( HServerListRequest hRequest, EMatchMakingServerResponse response )
+{
+    if ( hRequest != m_hSteamRequest ) return;
+
+    m_bIsSearching = false;
+    if ( response == eNoServersListedOnMasterServer )
+    {
+        RunJavascript( "ServerListComplete(false, 'No servers listed...')" );
+    }
+}
+
+void MainMenuHTML::AddServerToList( const gameserveritem_t &serverInfo )
+{
+    KeyValues *pParameters = new KeyValues( "parameters" );
+    KeyValues *pServers = new KeyValues( "serverInfo" );
+    pParameters->AddSubKey( pServers );
+
+    KeyValues *pServerInfo = new KeyValues( "" );
+    pServerInfo->SetString( "address", serverInfo.m_NetAdr.GetConnectionAddressString() );
+    pServerInfo->SetInt( "port", serverInfo.m_NetAdr.GetConnectionPort() );
+    pServerInfo->SetString( "address_query", serverInfo.m_NetAdr.GetQueryAddressString() );
+    pServerInfo->SetInt( "port_query", serverInfo.m_NetAdr.GetQueryPort() );
+    pServerInfo->SetString( "name", serverInfo.GetName() );
+    pServerInfo->SetString( "gameDir", serverInfo.m_szGameDir );
+    pServerInfo->SetString( "map", serverInfo.m_szMap );
+    pServerInfo->SetString( "gameDescription", serverInfo.m_szGameDescription );
+    pServerInfo->SetInt( "appId", serverInfo.m_nAppID );
+    pServerInfo->SetInt( "players", serverInfo.m_nPlayers );
+    pServerInfo->SetInt( "maxPlayers", serverInfo.m_nMaxPlayers );
+    pServerInfo->SetInt( "botPlayers", serverInfo.m_nBotPlayers );
+    pServerInfo->SetBool( "password", serverInfo.m_bPassword );
+    pServerInfo->SetBool( "secure", serverInfo.m_bSecure );
+    pServerInfo->SetInt( "timeLastPlayed", serverInfo.m_ulTimeLastPlayed );
+    pServerInfo->SetInt( "serverVersion", serverInfo.m_nServerVersion );
+    pServerInfo->SetString( "gameTags", serverInfo.m_szGameTags );
+    pServerInfo->SetString( "steamID", serverInfo.m_steamID.Render() );
+    pServers->AddSubKey( pServerInfo );
+
+    char szJson[8096];
+    CJsonToKeyValues::ConvertKeyValuesToJson( pParameters, szJson, sizeof( szJson ) );
+
+    char szScript[8096];
+    Q_snprintf( szScript, sizeof( szScript ), "ServerListAdd(Object.values(%s));", szJson );
+
+    RunJavascript( szScript );
+}
 
 void CBaseMenuPanel::OnThink()
 {
@@ -437,9 +554,11 @@ void CBaseMenuPanel::OnThink()
     }
 }
 
-CMainMenu::CMainMenu( Panel *pParent )
+CMainMenu::CMainMenu( CBaseMenuPanel *pParent )
     : BaseClass( pParent, "MainMenuPanel" )
 {
+    m_pBaseMenuPanel = pParent;
+
     MakePopup( false );
     SetProportional( false );
     SetMouseInputEnabled( true );
@@ -542,24 +661,13 @@ void CMainMenu::OnCustomURLHandler( const char *pszUrl )
 
 bool CMainMenu::OnKnownCommand( const char *command )
 {
-    if ( !Q_stricmp( command, "OpenCreateMultiplayerGameDialog" ) )
-    {
-        OnOpenCreateMultiplayerGameDialog();
-        return true;
-    }
+    // if ( !Q_stricmp( command, "OpenCreateMultiplayerGameDialog" ) )
+    //{
+    //     OnOpenCreateMultiplayerGameDialog();
+    //     return true;
+    // }
 
     return false;
-}
-
-void CMainMenu::OnOpenCreateMultiplayerGameDialog()
-{
-    if ( !m_hCreateMultiplayerGameDialog.Get() )
-    {
-        m_hCreateMultiplayerGameDialog = new CCreateMultiplayerGameDialog( this );
-        GameUIUtil::PositionDialog( m_hCreateMultiplayerGameDialog );
-    }
-
-    m_hCreateMultiplayerGameDialog->Activate();
 }
 
 void CMainMenu::OnKeyCodeUnhandled( int code )
