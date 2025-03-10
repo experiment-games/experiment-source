@@ -7,6 +7,19 @@
 
 using namespace vgui;
 
+// From NeotokyoRebuild
+enum GameServerType
+{
+    GS_INTERNET = 0,
+    GS_LAN,
+    GS_FRIENDS,
+    GS_FAVORITES,
+    GS_HISTORY,
+    GS_SPEC,
+
+    GS__TOTAL,
+};
+
 enum EBackgroundState
 {
     BACKGROUND_INITIAL,
@@ -30,7 +43,7 @@ class CBaseMenuPanel : public EditablePanel
 {
     DECLARE_CLASS_SIMPLE( CBaseMenuPanel, EditablePanel );
 
-    public:
+   public:
     CBaseMenuPanel();
     virtual ~CBaseMenuPanel();
 
@@ -46,10 +59,10 @@ class CBaseMenuPanel : public EditablePanel
     // MESSAGE_FUNC( OnGameUIActivated, "OnGameUIActivated" );
     // MESSAGE_FUNC( OnGameUIHidden, "GameUIHidden" );
 
-    protected:
+   protected:
     void OnThink() OVERRIDE;
 
-    private:
+   private:
     void SetBackgroundRenderState( EBackgroundState state );
     bool LoadGameUI();
     void UpdateBackgroundState();
@@ -64,8 +77,8 @@ class CMainMenu : public Panel
 {
     DECLARE_CLASS_SIMPLE( CMainMenu, Panel );
 
-    public:
-    CMainMenu( Panel* pParent );
+   public:
+    CMainMenu( CBaseMenuPanel* pParent );
     virtual ~CMainMenu();
 
     void SetBackgroundRenderState( EBackgroundState state );
@@ -74,15 +87,13 @@ class CMainMenu : public Panel
     MESSAGE_FUNC_CHARPTR( OnCustomURLHandler, "CustomURL", url );
     MESSAGE_FUNC_INT( OnKeyCodeUnhandled, "KeyCodeUnhandled", code );
 
-    protected:
+   protected:
     void OnThink() OVERRIDE;
 
     virtual void PerformLayout() OVERRIDE;
 
-    void OnOpenCreateMultiplayerGameDialog();
-    vgui::DHANDLE< vgui::Frame > m_hCreateMultiplayerGameDialog;
-
-    private:
+   private:
+    CBaseMenuPanel* m_pBaseMenuPanel;
     HTML* m_pHTML;
 };
 

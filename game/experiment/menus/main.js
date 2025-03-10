@@ -41,6 +41,18 @@ function SetBackgroundRenderState(state) {
   }
 }
 
+function ServerListComplete(wasSuccessful, errorMessage) {
+  console.log('Server list complete:', wasSuccessful, errorMessage);
+}
+
+function ServerListFailed(errorMessage) {
+  console.log('Server list failed:', errorMessage);
+}
+
+function ServerListAdd(serverInfo) {
+  console.log('Server list add:', serverInfo);
+}
+
 const pageElement = document.querySelector('#page');
 const pageTitleElement = document.querySelector('#pageTitle');
 const pageContentElement = document.querySelector('#pageContent');
@@ -365,6 +377,10 @@ function initialize() {
       });
     });
   });
+
+  window.GameUI.RequestServerList(function (wasSuccessful) {
+    console.log('Server list requested:', wasSuccessful);
+  });
 }
 
 window.addEventListener('interop:ready', () => {
@@ -490,6 +506,10 @@ window.addEventListener('interop:installmock', () => {
       setTimeout(() => {
         callback(true);
       }, 2000);
+    },
+
+    RequestServerList: function (callback) {
+      callback(true);
     },
   };
 });
