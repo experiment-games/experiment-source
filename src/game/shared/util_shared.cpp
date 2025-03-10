@@ -52,6 +52,7 @@ ConVar r_visualizetraces( "r_visualizetraces", "0", FCVAR_CHEAT );
 ConVar developer( "developer", "0", 0, "Set developer message level" );  // developer mode
 
 #ifdef _WIN32
+// Source: https://stackoverflow.com/a/21767578/3086369
 struct handle_data
 {
     unsigned long process_id;
@@ -89,10 +90,11 @@ void *GetAppWindow()
     return hWnd;
 }
 #else
-void* GetAppWindow()
+void *GetAppWindow()
 {
     // TODO: Implement this for other platforms
     Assert( false );
+    return nullptr;
 }
 #endif
 
@@ -382,7 +384,7 @@ bool CTraceFilterSimple::ShouldHitEntity( IHandleEntity *pHandleEntity, int cont
     // Experiment;  added this where if there's a filtered player and the entity is also a player,
     //              we don't collide if we're in the same team
     if ( m_pPassEnt && ( m_collisionGroup == COLLISION_GROUP_PLAYER || m_collisionGroup == COLLISION_GROUP_PLAYER_MOVEMENT ) &&
-        pEntity->IsPlayer() )
+         pEntity->IsPlayer() )
     {
         CBaseEntity *pPlayer = const_cast< CBaseEntity * >( EntityFromEntityHandle( m_pPassEnt ) );
 
@@ -394,7 +396,7 @@ bool CTraceFilterSimple::ShouldHitEntity( IHandleEntity *pHandleEntity, int cont
         return false;
 
     if ( m_pExtraShouldHitCheckFunction &&
-        ( !( m_pExtraShouldHitCheckFunction( pHandleEntity, contentsMask ) ) ) )
+         ( !( m_pExtraShouldHitCheckFunction( pHandleEntity, contentsMask ) ) ) )
         return false;
 
     return true;
@@ -636,7 +638,7 @@ class CTraceFilterEntity : public CTraceFilterSimple
 {
     DECLARE_CLASS( CTraceFilterEntity, CTraceFilterSimple );
 
-    public:
+   public:
     CTraceFilterEntity( CBaseEntity *pEntity, int nCollisionGroup )
         : CTraceFilterSimple( pEntity, nCollisionGroup )
     {
@@ -673,7 +675,7 @@ class CTraceFilterEntity : public CTraceFilterSimple
         return BaseClass::ShouldHitEntity( pHandleEntity, contentsMask );
     }
 
-    private:
+   private:
     CBaseEntity *m_pRootParent;
     CBaseEntity *m_pEntity;
     bool m_checkHash;
@@ -683,7 +685,7 @@ class CTraceFilterEntityIgnoreOther : public CTraceFilterEntity
 {
     DECLARE_CLASS( CTraceFilterEntityIgnoreOther, CTraceFilterEntity );
 
-    public:
+   public:
     CTraceFilterEntityIgnoreOther( CBaseEntity *pEntity, const IHandleEntity *pIgnore, int nCollisionGroup )
         : CTraceFilterEntity( pEntity, nCollisionGroup ), m_pIgnoreOther( pIgnore )
     {
@@ -697,7 +699,7 @@ class CTraceFilterEntityIgnoreOther : public CTraceFilterEntity
         return BaseClass::ShouldHitEntity( pHandleEntity, contentsMask );
     }
 
-    private:
+   private:
     const IHandleEntity *m_pIgnoreOther;
 };
 
@@ -1661,7 +1663,7 @@ CSteamID UTIL_SteamIDFromProperString( const char *pszInput, bool bAllowSteam2 /
     // Legacy SteamID?
     const char szPrefix[] = "STEAM_";
     if ( bAllowSteam2 && V_strlen( pszInput ) >= ( int )V_ARRAYSIZE( szPrefix ) &&
-        V_strncmp( szPrefix, pszInput, V_ARRAYSIZE( szPrefix ) - 1 ) == 0 )
+         V_strncmp( szPrefix, pszInput, V_ARRAYSIZE( szPrefix ) - 1 ) == 0 )
     {
         CSteamID steamID;
         bool bMatch = SteamIDFromSteam2String( pszInput, GetUniverse(), &steamID );
@@ -1739,7 +1741,7 @@ CSteamID UTIL_GuessSteamIDFromFuzzyInput( const char *pszInputRaw, bool bCurrent
     const char pszProfilePrepend[] = "steamcommunity.com/profiles/";
     const size_t lenProfilePrepend = V_ARRAYSIZE( pszProfilePrepend ) - 1;
     if ( strInput.Length() > ( int )lenProfilePrepend &&
-        V_strncmp( pszProfilePrepend, strInput, lenProfilePrepend ) == 0 )
+         V_strncmp( pszProfilePrepend, strInput, lenProfilePrepend ) == 0 )
     {
         // Read up to ? or # or /
         const char *pEnd = strchr( strInput + lenProfilePrepend, '?' );

@@ -92,6 +92,7 @@ LUA_BINDING_BEGIN( Systems, HasFocus, "library", "Check if the application has f
 #else
     // TODO: Implement for other platforms
     Assert( 0 );
+    lua_pushboolean( L, false );
 #endif
 
     return 1;
