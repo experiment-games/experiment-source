@@ -40,7 +40,7 @@ let loadingOverlay;
 
 document.addEventListener('DOMContentLoaded', function () {
   loadingOverlay = document.createElement('div');
-  loadingOverlay.classList.add('hidden', 'inset-0', 'fixed', 'bg-black', 'bg-opacity-50', 'flex', 'items-center', 'justify-center');
+  loadingOverlay.classList.add('hidden', 'inset-0', 'fixed', 'bg-black', 'bg-opacity-50', 'flex', 'items-center', 'justify-center', 'z-50');
   loadingOverlay.innerHTML = `
     <div class="flex flex-col gap-2 items-center">
       <div class="text-2xl text-white" id="loadingText">Loading...</div>

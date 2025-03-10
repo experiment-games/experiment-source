@@ -28,8 +28,8 @@ module.exports = {
                 'source-default': ['Tahoma', 'sans-serif'],
             },
             fontSize: {
-                'source-uibold': '11px',
-                'source-default': '13px',
+                'source-uibold': '2rem',
+                'source-default': '1rem',
             },
         },
     },

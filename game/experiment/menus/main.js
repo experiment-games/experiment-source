@@ -43,20 +43,12 @@ function SetBackgroundRenderState(state) {
 
 const pageElement = document.querySelector('#page');
 const pageTitleElement = document.querySelector('#pageTitle');
-const pageCloseElement = document.querySelector('#pageClose');
 const pageContentElement = document.querySelector('#pageContent');
 const contentListElement = document.querySelector('#contentList');
 const contentItemTemplateElement = document.querySelector('#contentItemTemplate');
 
 const registeredPages = new Map();
 let currentPage = null;
-
-pageCloseElement.addEventListener('click', () => {
-  if (currentPage) {
-    currentPage.hide();
-    currentPage = null;
-  }
-});
 
 // Custom element for links
 customElements.define('game-menu-link', class extends HTMLElement {
@@ -179,43 +171,6 @@ customElements.define('game-page', class extends HTMLElement {
   }
 });
 
-// Source: https://codepen.io/marcusparsons/pen/NMyzgR
-function makeDraggable(element) {
-  let currentPosX = 0, currentPosY = 0, previousPosX = 0, previousPosY = 0;
-  element.querySelector('[x-draggable-handle]').onmousedown = dragMouseDown;
-
-  function dragMouseDown(e) {
-    e.preventDefault();
-    // Get the mouse cursor position and set the initial previous positions to begin
-    previousPosX = e.clientX;
-    previousPosY = e.clientY;
-    // When the mouse is let go, call the closing event
-    document.onmouseup = closeDragElement;
-    // call a function whenever the cursor moves
-    document.onmousemove = elementDrag;
-  }
-
-  function elementDrag(e) {
-    e.preventDefault();
-    // Calculate the new cursor position by using the previous x and y positions of the mouse
-    currentPosX = previousPosX - e.clientX;
-    currentPosY = previousPosY - e.clientY;
-    // Replace the previous positions with the new x and y positions of the mouse
-    previousPosX = e.clientX;
-    previousPosY = e.clientY;
-    // Set the element's new position
-    element.style.top = (element.offsetTop - currentPosY) + 'px';
-    element.style.left = (element.offsetLeft - currentPosX) + 'px';
-  }
-
-  function closeDragElement() {
-    document.onmouseup = null;
-    document.onmousemove = null;
-  }
-}
-
-document.querySelectorAll('[x-draggable]').forEach(makeDraggable);
-
 /**
  * Loads the mountable content info from the game, populating the list
  * and setting up the event listeners for mounting and unmounting content.
@@ -229,6 +184,10 @@ function initialize() {
 
       contentItemElement.classList.add(index % 2 === 0 ? 'bg-white/10' : 'bg-white/5');
 
+      if (index === 0) {
+        contentItemElement.classList.add('origin-top-left');
+      }
+
       const iconElement = contentItemElement.querySelector('img');
       iconElement.src = content.icon;
       iconElement.alt = content.name;
@@ -241,8 +200,8 @@ function initialize() {
       inputElement.checked = content.mounted;
 
       inputElement.addEventListener('change', () => {
-        showLoadingOverlay('Mounting content...', function (finish) {
-          if (inputElement.checked) {
+        if (inputElement.checked) {
+          showLoadingOverlay('Mounting content...', function (finish) {
             GameUI.MountGameContent(inputElement.value, function (wasSuccessful) {
               if (!wasSuccessful) {
                 inputElement.checked = false;
@@ -250,7 +209,9 @@ function initialize() {
 
               finish();
             });
-          } else {
+          });
+        } else {
+          showLoadingOverlay('Unmounting content...', function (finish) {
             GameUI.UnmountGameContent(inputElement.value, function (wasSuccessful) {
               if (!wasSuccessful) {
                 inputElement.checked = true;
@@ -258,8 +219,8 @@ function initialize() {
 
               finish();
             });
-          }
-        });
+          });
+        }
       });
 
       contentItemElement.addEventListener('click', (ev) => {
@@ -288,6 +249,18 @@ window.addEventListener('interop:ready', () => {
 // When working in the browser we want to mock the GameUI API
 window.addEventListener('interop:installmock', () => {
   window.GameUI = {
+    MountGameContent: function (value, callback) {
+      console.log(`Mocking mounting content ${value}`);
+      setTimeout(() => {
+        callback(true);
+      }, 1000);
+    },
+    UnmountGameContent: function (value, callback) {
+      console.log(`Mocking unmounting content ${value}`);
+      setTimeout(() => {
+        callback(true);
+      }, 1000);
+    },
     LoadMountableContentInfo: function (callback) {
       callback([
         {
@@ -304,9 +277,57 @@ window.addEventListener('interop:installmock', () => {
         },
         {
           id: 220,
-          name: 'Dev Note: this mountable game data is mocked',
+          name: 'Half-Life 2',
           mounted: false,
           icon: './images/game-icons/hl2.png',
+        },
+        {
+          id: 280,
+          name: 'Half-Life',
+          mounted: true,
+          icon: './images/game-icons/hl1.png',
+        },
+        {
+          id: 300,
+          name: 'Day of Defeat: Source',
+          mounted: false,
+          icon: './images/game-icons/dod.png',
+        },
+        {
+          id: 340,
+          name: 'Half-Life 2: Lost Coast',
+          mounted: false,
+          icon: './images/game-icons/lostcoast.png',
+        },
+        {
+          id: 320,
+          name: 'Half-Life Deathmatch: Source',
+          mounted: false,
+          icon: './images/game-icons/hl1mp.png',
+        },
+        {
+          id: 380,
+          name: 'Half-Life 2: Episode One',
+          mounted: false,
+          icon: './images/game-icons/episodic.png',
+        },
+        {
+          id: 400,
+          name: 'Portal',
+          mounted: false,
+          icon: './images/game-icons/portal.png',
+        },
+        {
+          id: 420,
+          name: 'Half-Life 2: Episode Two',
+          mounted: false,
+          icon: './images/game-icons/ep2.png',
+        },
+        {
+          id: 440,
+          name: 'Team Fortress 2',
+          mounted: false,
+          icon: './images/game-icons/tf.png',
         },
       ]);
     },

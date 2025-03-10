@@ -47,19 +47,13 @@
 
         <div id="page"
              x-draggable
-             class="fixed flex flex-col flex-1 opacity-0 transition max-h-screen overflow-hidden w-[600px] top-1/4 left-1/4 bg-back px-4 py-3">
-            <div class="flex flex-row justify-between"
-                 x-draggable-handle>
+             class="flex flex-col flex-1 opacity-0 transition max-h-screen overflow-hidden bg-black/90 px-14 py-12">
+            <div class="flex flex-row justify-between">
                 <h2 class="font-source-uibold text-source-uibold font-semibold mb-4 text-white uppercase"
                     id="pageTitle"></h2>
-                <button id="pageClose"
-                        class="p-[6px] focus:outline-none border border-back-highlight border-b-back-shadow border-r-back-shadow w-6 h-6 flex place-content-center">
-                    <img src="images/icon-cross-source.png"
-                         alt="Close">
-                </button>
             </div>
             <div id="pageContent"
-                 class="font-source-default text-source-default overflow-y-auto"></div>
+                 class="flex-1 font-source-default text-source-default overflow-y-auto"></div>
         </div>
 
         <footer class="flex flex-row justify-evenly p-12 gap-12 bg-gradient-to-t from-black/80 via-black/75 to-transparent">
@@ -93,20 +87,21 @@
             from a selection of games you have installed through Steam.
         </p>
         <div id="contentList"
-             class="flex flex-col gap-1 mt-4">
+             class="flex flex-row flex-wrap gap-4 mt-4">
         </div>
     </game-page>
 
     <template id="contentItemTemplate">
-        <div class="flex flex-row items-center justify-between p-3">
+        <div class="group relative w-[100px] h-[150px] hover:scale-125 hover:z-10 transition-transform duration-300">
             <img src=""
                  alt=""
-                 class="w-6 h-6">
-            <span></span>
+                 class="w-full h-full object-cover">
+            <span class="flex items-center justify-center text-center text-xs absolute top-0 w-full h-full bg-black/80 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+            </span>
             <input type="checkbox"
                    name="content"
                    value=""
-                   class="w-6 h-6">
+                   class="w-6 h-6 bottom-2 right-2 absolute">
         </div>
     </template>
 
