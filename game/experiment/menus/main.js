@@ -1,8 +1,37 @@
+const BACKGROUND_CYCLE_INTERVAL_MS = 10000;
+
 const BACKGROUND_INITIAL = 0;
 const BACKGROUND_LOADING = 1;
 const BACKGROUND_MAINMENU = 2;
 const BACKGROUND_LEVEL = 3;
 const BACKGROUND_DISCONNECTED = 4;
+
+const backgrounds = ['outland.jpg', 'breens-office.jpg'];
+let backgroundIndex = Math.floor(Math.random() * backgrounds.length);
+
+const containerEl = document.getElementById('background-container');
+
+const backgroundEl = document.createElement('div');
+backgroundEl.classList.add('background');
+backgroundEl.style.backgroundImage = `url('images/backgrounds/${backgrounds[backgroundIndex]}')`;
+
+const backgroundBufferEl = document.createElement('div');
+backgroundBufferEl.classList.add('background-next');
+
+containerEl.append(backgroundEl, backgroundBufferEl);
+
+function changeBackground() {
+  backgroundIndex = (backgroundIndex + 1) % backgrounds.length;
+  backgroundBufferEl.style.backgroundImage = `url('images/backgrounds/${backgrounds[backgroundIndex]}')`;
+  backgroundBufferEl.style.opacity = '1';
+
+  setTimeout(() => {
+    backgroundEl.style.backgroundImage = backgroundBufferEl.style.backgroundImage;
+    backgroundBufferEl.style.opacity = '0';
+  }, 1000);
+}
+
+setInterval(changeBackground, BACKGROUND_CYCLE_INTERVAL_MS);
 
 function SetBackgroundRenderState(state) {
   if (state === BACKGROUND_LEVEL) {
