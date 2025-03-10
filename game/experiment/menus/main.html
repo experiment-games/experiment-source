@@ -56,12 +56,13 @@
         </div>
 
         <footer class="flex flex-row justify-evenly p-12 pt-6 gap-12 bg-gradient-to-t from-black/80 via-black/75 to-transparent">
-            <game-menu-link href="gamemenucommand://OpenServerBrowser"
+            <game-menu-link pageref="server-browser"
                             translation="GameUI_GameMenu_PlayOnline"
                             icon="images/icon-magnifier.png"
                             label-above>
                 PLAY ONLINE
             </game-menu-link>
+
             <game-menu-link pageref="host-server"
                             translation="GameUI_GameMenu_HostOwnServer"
                             icon="images/icon-globe.png"
@@ -69,6 +70,7 @@
                             label-above>
                 HOST SERVER
             </game-menu-link>
+
             <game-menu-link href="gamemenucommand://Disconnect"
                             translation="GameUI_GameMenu_Disconnect"
                             icon="images/icon-disconnect.png"
@@ -111,7 +113,7 @@
                         <label class="font-bold text-lg">Gamemode</label>
                         <div class="relative">
                             <select id="gameMode"
-                                class="w-full">
+                                    class="w-full">
                                 <!-- Options will be populated by JavaScript -->
                             </select>
                             <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
@@ -176,6 +178,132 @@
         </div>
     </game-page>
 
+    <game-page id="server-browser"
+               title="Server Browser">
+        <div class="flex flex-col gap-4 overflow-y-auto h-full">
+            <div class="flex flex-row gap-2 bg-black/30 p-2">
+                <button id="tab-internet"
+                        class="server-tab-button bg-primary-600 hover:bg-primary-500 px-4 py-2 transition">Internet</button>
+                <button id="tab-favorites"
+                        class="server-tab-button bg-white/10 hover:bg-primary-500 px-4 py-2 transition">Favorites</button>
+                <button id="tab-history"
+                        class="server-tab-button bg-white/10 hover:bg-primary-500 px-4 py-2 transition">History</button>
+                <button id="tab-lan"
+                        class="server-tab-button bg-white/10 hover:bg-primary-500 px-4 py-2 transition">LAN</button>
+                <button id="tab-legacy"
+                        class="server-tab-button bg-white/10 hover:bg-primary-500 px-4 py-2 transition"
+                        onclick="window.location.href='gamemenucommand://OpenServerBrowser'">Legacy Browser</button>
+            </div>
+
+            <div class="flex flex-row justify-between items-center">
+                <div class="flex gap-2 items-center">
+                    <input type="text"
+                           placeholder="Search servers..."
+                           class="server-search bg-white/10 p-2 border border-white/20 focus:border-white/50 outline-none w-64">
+                    <button class="bg-primary-600 hover:bg-primary-500 px-4 py-2 transition">Search</button>
+                </div>
+                <div class="flex gap-2 items-center">
+                    <label class="text-sm">Filter:</label>
+                    <select class="server-filter bg-white/10 p-2 border border-white/20 focus:border-white/50 outline-none">
+                        <option value="all">All Modes</option>
+                        <option>Team Deathmatch</option>
+                        <option>Capture the Flag</option>
+                        <option>Control Point</option>
+                        <option>Custom</option>
+                    </select>
+                    <button class="bg-white/10 hover:bg-white/20 px-4 py-2 transition">Refresh</button>
+                </div>
+            </div>
+
+            <div id="server-list-container"
+                 class="flex-1 min-h-0 overflow-y-auto">
+                <!-- Tab content for All Servers -->
+                <div id="content-internet"
+                     class="server-tab-content">
+                    <table class="w-full border-separate border-spacing-0">
+                        <thead>
+                            <tr class="bg-white/10">
+                                <th class="p-2 text-left border-b border-white/20">Server Name</th>
+                                <th class="p-2 text-center border-b border-white/20">Players</th>
+                                <th class="p-2 text-left border-b border-white/20">Map</th>
+                                <th class="p-2 text-left border-b border-white/20">Gamemode</th>
+                                <th class="p-2 text-center border-b border-white/20">Ping</th>
+                                <th class="p-2 text-center border-b border-white/20"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Tab content for Favorites -->
+                <div id="content-favorites"
+                     class="server-tab-content hidden">
+                    <table class="w-full border-separate border-spacing-0">
+                        <thead>
+                            <tr class="bg-white/10">
+                                <th class="p-2 text-left border-b border-white/20">Server Name</th>
+                                <th class="p-2 text-center border-b border-white/20">Players</th>
+                                <th class="p-2 text-left border-b border-white/20">Map</th>
+                                <th class="p-2 text-left border-b border-white/20">Gamemode</th>
+                                <th class="p-2 text-center border-b border-white/20">Ping</th>
+                                <th class="p-2 text-center border-b border-white/20"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Tab content for History -->
+                <div id="content-history"
+                     class="server-tab-content hidden">
+                    <table class="w-full border-separate border-spacing-0">
+                        <thead>
+                            <tr class="bg-white/10">
+                                <th class="p-2 text-left border-b border-white/20">Server Name</th>
+                                <th class="p-2 text-center border-b border-white/20">Players</th>
+                                <th class="p-2 text-left border-b border-white/20">Map</th>
+                                <th class="p-2 text-left border-b border-white/20">Gamemode</th>
+                                <th class="p-2 text-center border-b border-white/20">Ping</th>
+                                <th class="p-2 text-center border-b border-white/20"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Tab content for LAN -->
+                <div id="content-lan"
+                     class="server-tab-content hidden">
+                    <table class="w-full border-separate border-spacing-0">
+                        <thead>
+                            <tr class="bg-white/10">
+                                <th class="p-2 text-left border-b border-white/20">Server Name</th>
+                                <th class="p-2 text-center border-b border-white/20">Players</th>
+                                <th class="p-2 text-left border-b border-white/20">Map</th>
+                                <th class="p-2 text-left border-b border-white/20">Gamemode</th>
+                                <th class="p-2 text-center border-b border-white/20">Ping</th>
+                                <th class="p-2 text-center border-b border-white/20"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="flex justify-between items-center mt-4">
+                <div class="text-sm text-white/60">Showing 7 of 124 servers (filtered from 243 total)</div>
+                <!-- <div class="flex gap-4">
+                    <button class="bg-primary-600 hover:bg-primary-500 px-6 py-2 transition">Join Selected</button>
+                    <button class="bg-white/10 hover:bg-white/20 px-6 py-2 transition">Add to Favorites</button>
+                </div> -->
+            </div>
+        </div>
+    </game-page>
+
     <template id="contentItemTemplate">
         <div class="group relative w-[200px] h-[300px] hover:scale-105 hover:z-10 transition-transform duration-300 cursor-pointer">
             <img src=""
@@ -188,6 +316,36 @@
                    value=""
                    class="w-6 h-6 bottom-2 right-2 absolute">
         </div>
+    </template>
+
+    <template id="serverBrowserItemTemplate">
+        <tr class="hover:bg-white/10 cursor-pointer transition-colors">
+            <td class="server-name p-2 border-b border-white/10"></td>
+            <td class="server-players p-2 text-center border-b border-white/10"></td>
+            <td class="server-map p-2 border-b border-white/10"></td>
+            <td class="server-gamemode p-2 border-b border-white/10"></td>
+            <td class="server-ping p-2 text-center border-b border-white/10"></td>
+            <td class="server-actions p-2 text-center border-b border-white/10">
+                <button class="server-action-favorite group bg-primary transition font-bold rounded-md w-8 h-8"
+                    title="Favorite">
+                    <img src="images/icon-star.png"
+                         alt="Favorite"
+                         class="w-full h-full group-hover:hidden">
+                    <img src="images/icon-star-filled.png"
+                         alt="Favorite"
+                         class="w-full h-full hidden group-hover:block">
+                </button>
+                <button class="server-action-unfavorite group bg-primary transition font-bold rounded-md w-8 h-8"
+                    title="Favorite">
+                    <img src="images/icon-star.png"
+                         alt="Favorite"
+                         class="w-full h-full hidden group-hover:block">
+                    <img src="images/icon-star-filled.png"
+                         alt="Favorite"
+                         class="w-full h-full group-hover:hidden">
+                </button>
+            </td>
+        </tr>
     </template>
 
     <script src="init.js"></script>

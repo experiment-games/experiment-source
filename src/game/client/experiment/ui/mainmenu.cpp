@@ -15,6 +15,10 @@
 #include <mountsteamcontent.h>
 #include <createmultiplayergamedialog.h>
 #include <util/jsontokv.h>
+#include <time.h>
+
+// memdbgon must be the last include file in a .cpp file!!!
+#include <tier0/memdbgon.h>
 
 using namespace vgui;
 
@@ -255,9 +259,10 @@ class MainMenuHTML : public HTML, public ISteamMatchmakingServerListResponse
     virtual void RefreshComplete( HServerListRequest hRequest, EMatchMakingServerResponse response );
 
    private:
-    void AddServerToList( const gameserveritem_t &serverInfo );
+    void AddServerToList( GameServerType iType, const gameserveritem_t &serverInfo );
 
     HServerListRequest m_hSteamRequest;
+    GameServerType m_iRequestType;
     bool m_bIsSearching;
 
    protected:
@@ -270,6 +275,8 @@ class MainMenuHTML : public HTML, public ISteamMatchmakingServerListResponse
         AddJavascriptObjectCallback( "GameUI", "UnmountGameContent" );
         AddJavascriptObjectCallback( "GameUI", "HostServer" );
         AddJavascriptObjectCallback( "GameUI", "RequestServerList" );
+        AddJavascriptObjectCallback( "GameUI", "ModifyFavoriteGame" );
+        AddJavascriptObjectCallback( "GameUI", "ConnectToServer" );
     }
 
     virtual void OnJavaScriptCallback( KeyValues *pData ) OVERRIDE
@@ -441,6 +448,61 @@ class MainMenuHTML : public HTML, public ISteamMatchmakingServerListResponse
             pResponse->SetBool( "wasSuccessful", true );
             CallJavascriptObjectCallback( callbackId, pResponse );
         }
+        else if ( Q_strcmp( pszProperty, "ModifyFavoriteGame" ) == 0 )
+        {
+            KeyValues *pArguments = pData->FindKey( "arguments" );
+            KeyValues *serverToAdd = pArguments->FindKey( "1" );
+
+            int appId = serverToAdd->GetInt( "appId" );
+            int ip = serverToAdd->GetInt( "ip" );
+            int port = serverToAdd->GetInt( "port" );
+            int portQuery = serverToAdd->GetInt( "portQuery" );
+            bool isHistory = serverToAdd->GetBool( "isHistory", false );
+            bool isRemoving = serverToAdd->GetBool( "isRemoving", false );
+
+            ISteamMatchmaking *steamMM = SteamMatchmaking();
+            bool wasSuccessful;
+
+            if ( !isRemoving )
+            {
+                steamMM->AddFavoriteGame(
+                    appId,
+                    ip,
+                    port,
+                    portQuery,
+                    isHistory ? k_unFavoriteFlagHistory : k_unFavoriteFlagFavorite,
+                    time( NULL ) );
+                wasSuccessful = true;
+            }
+            else
+            {
+                wasSuccessful = steamMM->RemoveFavoriteGame(
+                    appId,
+                    ip,
+                    port,
+                    portQuery,
+                    isHistory ? k_unFavoriteFlagHistory : k_unFavoriteFlagFavorite );
+            }
+
+            KeyValues *pResponse = new KeyValues( "parameters" );
+            pResponse->SetBool( "wasSuccessful", wasSuccessful );
+            CallJavascriptObjectCallback( callbackId, pResponse );
+        }
+        else if ( Q_strcmp( pszProperty, "ConnectToServer" ) == 0 )
+        {
+            KeyValues *pArguments = pData->FindKey( "arguments" );
+            KeyValues *serverToConnect = pArguments->FindKey( "1" );
+
+            const char *address = serverToConnect->GetString( "address" );
+
+            char command[256];
+            Q_snprintf( command, sizeof( command ), "connect %s %s_%d\n", address );
+            engine->ClientCmd_Unrestricted( command );
+
+            KeyValues *pResponse = new KeyValues( "parameters" );
+            pResponse->SetBool( "wasSuccessful", true );
+            CallJavascriptObjectCallback( callbackId, pResponse );
+        }
     }
 };
 
@@ -448,7 +510,7 @@ class MainMenuHTML : public HTML, public ISteamMatchmakingServerListResponse
 void MainMenuHTML::RequestServerList( GameServerType iType )
 {
     static MatchMakingKeyValuePair_t mmFilters[] = {
-        { "hasplayers", "" }, // For testing with many servers
+        { "hasplayers", "" },  // For testing with many servers
         // { "gamedir", "mod_tf" }, // 504?
         //{ "gamedir", "experiment" },  // Commented because for testing we need a game with servers
     };
@@ -468,6 +530,7 @@ void MainMenuHTML::RequestServerList( GameServerType iType )
     m_hSteamRequest = ( iType == GS_LAN )
                           ? steamMM->RequestLANServerList( engine->GetAppID(), this )
                           : ( steamMM->*P_FN_REQ[iType] )( engine->GetAppID(), &pMMFilters, ARRAYSIZE( mmFilters ), this );
+    m_iRequestType = iType;
     m_bIsSearching = true;
 }
 
@@ -480,7 +543,7 @@ void MainMenuHTML::ServerResponded( HServerListRequest hRequest, int iServer )
     gameserveritem_t *pServerDetails = steamMM->GetServerDetails( hRequest, iServer );
     if ( pServerDetails )
     {
-        AddServerToList( *pServerDetails );
+        AddServerToList( m_iRequestType, *pServerDetails );
     }
 }
 
@@ -504,38 +567,63 @@ void MainMenuHTML::RefreshComplete( HServerListRequest hRequest, EMatchMakingSer
     }
 }
 
-void MainMenuHTML::AddServerToList( const gameserveritem_t &serverInfo )
+void MainMenuHTML::AddServerToList( GameServerType iType, const gameserveritem_t &serverInfo )
 {
-    KeyValues *pParameters = new KeyValues( "parameters" );
-    KeyValues *pServers = new KeyValues( "serverInfo" );
-    pParameters->AddSubKey( pServers );
-
     KeyValues *pServerInfo = new KeyValues( "" );
-    pServerInfo->SetString( "address", serverInfo.m_NetAdr.GetConnectionAddressString() );
-    pServerInfo->SetInt( "port", serverInfo.m_NetAdr.GetConnectionPort() );
-    pServerInfo->SetString( "address_query", serverInfo.m_NetAdr.GetQueryAddressString() );
-    pServerInfo->SetInt( "port_query", serverInfo.m_NetAdr.GetQueryPort() );
-    pServerInfo->SetString( "name", serverInfo.GetName() );
-    pServerInfo->SetString( "gameDir", serverInfo.m_szGameDir );
-    pServerInfo->SetString( "map", serverInfo.m_szMap );
-    pServerInfo->SetString( "gameDescription", serverInfo.m_szGameDescription );
-    pServerInfo->SetInt( "appId", serverInfo.m_nAppID );
-    pServerInfo->SetInt( "players", serverInfo.m_nPlayers );
-    pServerInfo->SetInt( "maxPlayers", serverInfo.m_nMaxPlayers );
-    pServerInfo->SetInt( "botPlayers", serverInfo.m_nBotPlayers );
-    pServerInfo->SetBool( "password", serverInfo.m_bPassword );
-    pServerInfo->SetBool( "secure", serverInfo.m_bSecure );
-    pServerInfo->SetInt( "timeLastPlayed", serverInfo.m_ulTimeLastPlayed );
+
+    // Experiment; Since KeyValues cache keys we have to be unique or the JSON will have unexpected key capitalization
+    pServerInfo->SetString( "serverAddress", serverInfo.m_NetAdr.GetConnectionAddressString() );
+    pServerInfo->SetInt( "serverIp", serverInfo.m_NetAdr.GetIP() );
+    pServerInfo->SetInt( "serverPort", serverInfo.m_NetAdr.GetConnectionPort() );
+    pServerInfo->SetString( "serverAddressQuery", serverInfo.m_NetAdr.GetQueryAddressString() );
+    pServerInfo->SetInt( "serverIpQuery", serverInfo.m_NetAdr.GetIP() );
+    pServerInfo->SetInt( "serverPortQuery", serverInfo.m_NetAdr.GetQueryPort() );
+    pServerInfo->SetInt( "serverPing", serverInfo.m_nPing );
+    pServerInfo->SetString( "serverHostName", serverInfo.GetName() );
+    pServerInfo->SetString( "serverGameDirectory", serverInfo.m_szGameDir );
+    pServerInfo->SetString( "serverMap", serverInfo.m_szMap );
+    pServerInfo->SetString( "serverGameDescription", serverInfo.m_szGameDescription );
+    pServerInfo->SetInt( "serverAppId", serverInfo.m_nAppID );
+    pServerInfo->SetInt( "serverPlayers", serverInfo.m_nPlayers );
+    pServerInfo->SetInt( "serverMaxPlayers", serverInfo.m_nMaxPlayers );
+    pServerInfo->SetInt( "serverBotPlayers", serverInfo.m_nBotPlayers );
+    pServerInfo->SetBool( "serverHasPassword", serverInfo.m_bPassword );
+    pServerInfo->SetBool( "serverIsSecure", serverInfo.m_bSecure );
+    pServerInfo->SetInt( "serverTimeLastPlayed", serverInfo.m_ulTimeLastPlayed );
     pServerInfo->SetInt( "serverVersion", serverInfo.m_nServerVersion );
-    pServerInfo->SetString( "gameTags", serverInfo.m_szGameTags );
-    pServerInfo->SetString( "steamID", serverInfo.m_steamID.Render() );
-    pServers->AddSubKey( pServerInfo );
+    pServerInfo->SetString( "serverGameTags", serverInfo.m_szGameTags );
+    pServerInfo->SetString( "serverSteamId", serverInfo.m_steamID.Render() );
+
+    if ( iType == GameServerType::GS_FAVORITES )
+    {
+        pServerInfo->SetString( "serverTab", "favorites" );
+    }
+    else if ( iType == GameServerType::GS_FRIENDS )
+    {
+        pServerInfo->SetString( "serverTab", "friends" );
+    }
+    else if ( iType == GameServerType::GS_HISTORY )
+    {
+        pServerInfo->SetString( "serverTab", "history" );
+    }
+    else if ( iType == GameServerType::GS_INTERNET )
+    {
+        pServerInfo->SetString( "serverTab", "internet" );
+    }
+    else if ( iType == GameServerType::GS_LAN )
+    {
+        pServerInfo->SetString( "serverTab", "lan" );
+    }
+    else if ( iType == GameServerType::GS_SPEC )
+    {
+        pServerInfo->SetString( "serverTab", "spectator" );
+    }
 
     char szJson[8096];
-    CJsonToKeyValues::ConvertKeyValuesToJson( pParameters, szJson, sizeof( szJson ) );
+    CJsonToKeyValues::ConvertKeyValuesToJson( pServerInfo, szJson, sizeof( szJson ) );
 
     char szScript[8096];
-    Q_snprintf( szScript, sizeof( szScript ), "ServerListAdd(Object.values(%s));", szJson );
+    Q_snprintf( szScript, sizeof( szScript ), "ServerListAdd(%s);", szJson );
 
     RunJavascript( szScript );
 }

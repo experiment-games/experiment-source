@@ -49,8 +49,86 @@ function ServerListFailed(errorMessage) {
   console.log('Server list failed:', errorMessage);
 }
 
-function ServerListAdd(serverInfo) {
-  console.log('Server list add:', serverInfo);
+const serverBrowserItemTemplate = document.querySelector('#serverBrowserItemTemplate');
+
+function ServerListAdd(info) {
+  const serverListContainer = document.getElementById('server-list-container');
+  const serverList = serverListContainer.querySelector('#content-' + info.serverTab.toLowerCase());
+
+  if (!serverList) {
+    console.error('Server list not found for tab:', info.serverTab);
+    return;
+  }
+
+  const serverListTable = serverList.querySelector('table tbody');
+  const serverItem = serverBrowserItemTemplate.content.firstElementChild.cloneNode(true);
+
+  serverItem.querySelector('.server-name').textContent = info.serverHostName;
+  serverItem.querySelector('.server-players').textContent = `${info.serverPlayers}/${info.serverMaxPlayers}`;
+  serverItem.querySelector('.server-map').textContent = info.serverMap;
+  serverItem.querySelector('.server-gamemode').textContent = info.serverGameDescription;
+
+  const pingEl = serverItem.querySelector('.server-ping');
+  pingEl.textContent = info.serverPing + 'ms';
+
+  if (info.serverPing < 50) {
+    pingEl.classList.add('text-green-500');
+  } else if (info.serverPing < 100) {
+    pingEl.classList.add('text-yellow-500');
+  } else {
+    pingEl.classList.add('text-red-500');
+  }
+
+  if (info.serverTab === 'favorites') {
+    serverItem.querySelector('.server-action-favorite').classList.add('hidden');
+    serverItem.querySelector('.server-action-unfavorite').classList.remove('hidden');
+  } else {
+    serverItem.querySelector('.server-action-favorite').classList.remove('hidden');
+    serverItem.querySelector('.server-action-unfavorite').classList.add('hidden');
+  }
+
+  serverItem.querySelector('.server-action-favorite')
+    .addEventListener('click', () => {
+      console.log('Favorite server:', info.serverHostName);
+      window.GameUI.ModifyFavoriteGame({
+        appId: info.serverAppId,
+        ip: info.serverIp,
+        port: info.serverPort,
+        portQuery: info.serverPortQuery,
+      }, function (wasSuccessful) {
+        console.log('Favorite server result:', wasSuccessful);
+      })
+    });
+
+  serverItem.querySelector('.server-action-unfavorite')
+    .addEventListener('click', () => {
+      console.log('Unfavorite server:', info.serverHostName);
+      window.GameUI.ModifyFavoriteGame({
+        appId: info.serverAppId,
+        ip: info.serverIp,
+        port: info.serverPort,
+        portQuery: info.serverPortQuery,
+        isRemoving: true,
+      }, function (wasSuccessful) {
+        console.log('Unfavorite server result:', wasSuccessful);
+      })
+    });
+
+  // Add double-click event to server row for join
+  serverItem.addEventListener('dblclick', function () {
+    const serverName = info.serverHostName;
+    const address = info.serverAddress;
+
+    showLoadingOverlay('Connecting to server "' + serverName + '"...', function (finish) {
+      window.GameUI.ConnectToServer({
+        address: address,
+      }, function (wasSuccessful) {
+        finish();
+      });
+    });
+  });
+
+  serverListTable.appendChild(serverItem);
 }
 
 const pageElement = document.querySelector('#page');
@@ -215,8 +293,8 @@ customElements.define('game-page', class extends HTMLElement {
  * and setting up the event listeners for mounting and unmounting content.
  */
 function initialize() {
+  // Setup mountable content page
   GameUI.LoadMountableContentInfo(function (registeredMountableContent) {
-    // Get the content page
     const contentPage = registeredPages.get('content');
 
     contentPage.setInitFunction(() => {
@@ -378,8 +456,86 @@ function initialize() {
     });
   });
 
-  window.GameUI.RequestServerList(function (wasSuccessful) {
-    console.log('Server list requested:', wasSuccessful);
+  // Setup the server list page
+  const serverBrowserPage = registeredPages.get('server-browser');
+
+  serverBrowserPage.setInitFunction(() => {
+    window.GameUI.RequestServerList(function (wasSuccessful) {
+      console.log('Server list requested:', wasSuccessful);
+    });
+
+    const tabButtons = document.querySelectorAll('.server-tab-button');
+    const tabContents = document.querySelectorAll('.server-tab-content');
+    let activeTab = 'internet';
+
+    tabButtons.forEach(button => {
+      button.addEventListener('click', function () {
+        // Skip for legacy browser tab which uses the direct command
+        if (this.id === 'tab-legacy') return;
+
+        // Remove active class from all buttons
+        tabButtons.forEach(btn => {
+          btn.classList.remove('bg-primary-600');
+          btn.classList.add('bg-white/10');
+        });
+
+        this.classList.remove('bg-white/10');
+        this.classList.add('bg-primary-600');
+
+        // Hide all tab contents
+        tabContents.forEach(content => {
+          content.classList.add('hidden');
+        });
+
+        // Show the corresponding tab content
+        const tabId = this.id.replace('tab-', '');
+        activeTab = tabId;
+        document.getElementById('content-' + tabId).classList.remove('hidden');
+      });
+    });
+
+    // Search input filter
+    const searchInput = document.querySelector('input.server-search');
+    const searchButton = searchInput.nextElementSibling;
+
+    searchButton.addEventListener('click', function () {
+      const searchTerm = searchInput.value.toLowerCase();
+      const allServerRows = document.querySelectorAll('#content-' + activeTab + ' tbody tr');
+
+      allServerRows.forEach(row => {
+        const serverName = row.querySelector('.server-name')
+          .textContent
+          .toLowerCase();
+        const gamemode = row.querySelector('.server-gamemode')
+          .textContent
+          .toLowerCase();
+
+        if (serverName.includes(searchTerm) || gamemode.includes(searchTerm)) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
+      });
+    });
+
+    // Filter by gamemode
+    const searchFilter = document.querySelector('select.server-filter');
+    searchFilter.addEventListener('change', function () {
+      const selectedFilter = searchFilter.value.toLowerCase();
+      const allServerRows = document.querySelectorAll('#content-' + activeTab + ' tbody tr');
+
+      allServerRows.forEach(row => {
+        const serverType = row.querySelector('.server-gamemode')
+          .textContent
+          .toLowerCase();
+
+        if (selectedFilter === 'all' || serverType === selectedFilter) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
+      });
+    });
   });
 }
 
@@ -508,8 +664,161 @@ window.addEventListener('interop:installmock', () => {
       }, 2000);
     },
 
+    ModifyFavoriteGame: function (serverFavoriteInfo, callback) {
+      console.log(`Mocking modify favorite game:`, serverFavoriteInfo);
+      setTimeout(() => {
+        callback(true);
+      }, 1000);
+    },
+
+    ConnectToServer: function (serverInfo, callback) {
+      console.log(`Mocking connect to server:`, serverInfo);
+      setTimeout(() => {
+        callback(true);
+      }, 1000);
+    },
+
     RequestServerList: function (callback) {
       callback(true);
+
+      // Start calling the server list functions with mock data
+      const mockServerInfo = [
+        {
+          serverAddress: '192.168.123.1:27015',
+          serverIp: 3232267009,
+          serverPort: 27015,
+          serverAddressQuery: '192.168.123.1:27001',
+          serverIpQuery: 3232267009,
+          serverPortQuery: 27001,
+          serverPing: 25,
+          serverHostName: '[US-East] Official Experiment Server',
+          serverGameDirectory: 'experiment',
+          serverMap: 'exp_cascade_falls',
+          serverGameDescription: 'Team Deathmatch',
+          serverAppId: 243750,
+          serverPlayers: 24,
+          serverMaxPlayers: 32,
+          serverBotPlayers: 0,
+          serverHasPassword: false,
+          serverIsSecure: true,
+          serverTimeLastPlayed: 1631870400,
+          serverVersion: 1,
+          serverGameTags: 'teamdeathmatch,official',
+          serverSteamId: '76561198000000000',
+          serverTab: 'internet',
+        },
+        {
+          serverAddress: '192.168.123.1:27015',
+          serverIp: 3232267009,
+          serverPort: 27015,
+          serverAddressQuery: '192.168.123.1:27001',
+          serverIpQuery: 3232267009,
+          serverPortQuery: 27001,
+          serverPing: 50,
+          serverHostName: 'Experiment Pro League #1',
+          serverGameDirectory: 'experiment',
+          serverMap: 'exp_orbital_station',
+          serverGameDescription: 'Capture the Flag',
+          serverAppId: 243750,
+          serverPlayers: 12,
+          serverMaxPlayers: 16,
+          serverBotPlayers: 0,
+          serverHasPassword: false,
+          serverIsSecure: true,
+          serverTimeLastPlayed: 1631870400,
+          serverVersion: 1,
+          serverGameTags: 'ctf,proleague',
+          serverSteamId: '76561198000000001',
+          serverTab: 'internet',
+        },
+        {
+          serverAddress: '192.168.123.1:27015',
+          serverIp: 3232267009,
+          serverPort: 27015,
+          serverAddressQuery: '192.168.123.1:27001',
+          serverIpQuery: 3232267009,
+          serverPortQuery: 27001,
+          serverPing: 75,
+          serverHostName: '[EU] DevTest Server',
+          serverGameDirectory: 'experiment',
+          serverMap: 'exp_metropolis',
+          serverGameDescription: 'Control Point',
+          serverAppId: 243750,
+          serverPlayers: 8,
+          serverMaxPlayers: 16,
+          serverBotPlayers: 0,
+          serverHasPassword: false,
+          serverIsSecure: true,
+          serverTimeLastPlayed: 1631870400,
+          serverVersion: 1,
+          serverGameTags: 'controlpoint,devtest',
+          serverSteamId: '76561198000000002',
+          serverTab: 'internet',
+        },
+        {
+          serverAddress: '192.168.123.1:27015',
+          serverIp: 3232267009,
+          serverPort: 27015,
+          serverAddressQuery: '192.168.123.1:27001',
+          serverIpQuery: 3232267009,
+          serverPortQuery: 27001,
+          serverPing: 100,
+          serverHostName: 'TheNoob\'s Custom Server',
+          serverGameDirectory: 'experiment',
+          serverMap: 'exp_desert_ruins',
+          serverGameDescription: 'Custom',
+          serverAppId: 243750,
+          serverPlayers: 4,
+          serverMaxPlayers: 10,
+          serverBotPlayers: 0,
+          serverHasPassword: false,
+          serverIsSecure: true,
+          serverTimeLastPlayed: 1631870400,
+          serverVersion: 1,
+          serverGameTags: 'custom,thenoob',
+          serverSteamId: '76561198000000003',
+          serverTab: 'favorites',
+        },
+        {
+          serverAddress: '192.168.123.1:27015',
+          serverIp: 3232267009,
+          serverPort: 27015,
+          serverAddressQuery: '192.168.123.1:27001',
+          serverIpQuery: 3232267009,
+          serverPortQuery: 27001,
+          serverPing: 150,
+          serverHostName: '[ASIA] Experiment Community',
+          serverGameDirectory: 'experiment',
+          serverMap: 'exp_volcano',
+          serverGameDescription: 'Team Deathmatch',
+          serverAppId: 243750,
+          serverPlayers: 30,
+          serverMaxPlayers: 32,
+          serverBotPlayers: 0,
+          serverHasPassword: false,
+          serverIsSecure: true,
+          serverTimeLastPlayed: 1631870400,
+          serverVersion: 1,
+          serverGameTags: 'teamdeathmatch,community',
+          serverSteamId: '76561198000000004',
+          serverTab: 'history',
+        },
+      ];
+
+      let index = 0;
+      let interval;
+
+      interval = setInterval(() => {
+        if (index >= mockServerInfo.length) {
+          clearInterval(interval);
+          return;
+        }
+
+        const serverInfo = mockServerInfo[index];
+
+        window.ServerListAdd(serverInfo);
+        index++;
+      }, 300);
     },
   };
 });
