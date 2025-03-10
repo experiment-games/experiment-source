@@ -663,20 +663,21 @@ video {
   inset: 0px;
 }
 
-.end-1 {
-  inset-inline-end: 0.25rem;
-}
-
-.right-4 {
-  right: 1rem;
-}
-
-.top-4 {
-  top: 1rem;
+.inset-y-0 {
+  top: 0px;
+  bottom: 0px;
 }
 
 .bottom-2 {
   bottom: 0.5rem;
+}
+
+.end-1 {
+  inset-inline-end: 0.25rem;
+}
+
+.right-0 {
+  right: 0px;
 }
 
 .right-2 {
@@ -870,6 +871,10 @@ video {
   height: 6rem;
 }
 
+.h-4 {
+  height: 1rem;
+}
+
 .h-5 {
   height: 1.25rem;
 }
@@ -878,40 +883,28 @@ video {
   height: 1.5rem;
 }
 
-.h-\[387\] {
-  height: 387;
+.h-\[300px\] {
+  height: 300px;
 }
 
 .h-full {
   height: 100%;
 }
 
-.h-\[387px\] {
-  height: 387px;
-}
-
-.h-\[330px\] {
-  height: 330px;
-}
-
-.h-\[450px\] {
-  height: 450px;
-}
-
-.h-\[225px\] {
-  height: 225px;
-}
-
-.h-\[75px\] {
-  height: 75px;
-}
-
-.h-\[150px\] {
-  height: 150px;
+.max-h-16 {
+  max-height: 4rem;
 }
 
 .max-h-screen {
   max-height: 100vh;
+}
+
+.min-h-0 {
+  min-height: 0px;
+}
+
+.min-h-\[200px\] {
+  min-height: 200px;
 }
 
 .w-12 {
@@ -922,8 +915,8 @@ video {
   width: 6rem;
 }
 
-.w-48 {
-  width: 12rem;
+.w-4 {
+  width: 1rem;
 }
 
 .w-5 {
@@ -934,8 +927,8 @@ video {
   width: 1.5rem;
 }
 
-.w-\[258\] {
-  width: 258;
+.w-\[200px\] {
+  width: 200px;
 }
 
 .w-\[this-is\\\\\] {
@@ -950,32 +943,12 @@ video {
   width: weird-and-invalid;
 }
 
-.w-\[258px\] {
-  width: 258px;
-}
-
-.w-\[220px\] {
-  width: 220px;
-}
-
-.w-\[300px\] {
-  width: 300px;
-}
-
-.w-\[150px\] {
-  width: 150px;
-}
-
-.w-\[50px\] {
-  width: 50px;
+.w-auto {
+  width: auto;
 }
 
 .w-full {
   width: 100%;
-}
-
-.w-\[100px\] {
-  width: 100px;
 }
 
 .max-w-md {
@@ -1024,10 +997,6 @@ video {
 
 .border-separate {
   border-collapse: separate;
-}
-
-.origin-top-left {
-  transform-origin: top left;
 }
 
 .scale-0 {
@@ -1344,6 +1313,10 @@ video {
   grid-auto-flow: column dense;
 }
 
+.grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 .flex-row {
   flex-direction: row;
 }
@@ -1538,6 +1511,14 @@ video {
 
 .gap-4 {
   gap: 1rem;
+}
+
+.gap-6 {
+  gap: 1.5rem;
+}
+
+.gap-8 {
+  gap: 2rem;
 }
 
 .space-x-2 > :not([hidden]) ~ :not([hidden]) {
@@ -1980,6 +1961,10 @@ video {
   border-style: none;
 }
 
+.border-white\/20 {
+  border-color: rgb(255 255 255 / 0.2);
+}
+
 .bg-\[rgb\(255\2c 0\2c 0\)\] {
   --tw-bg-opacity: 1;
   background-color: rgb(255 0 0 / var(--tw-bg-opacity));
@@ -1990,8 +1975,17 @@ video {
   background-color: rgb(0 0 0 / var(--tw-bg-opacity));
 }
 
+.bg-black\/80 {
+  background-color: rgb(0 0 0 / 0.8);
+}
+
 .bg-black\/90 {
   background-color: rgb(0 0 0 / 0.9);
+}
+
+.bg-primary-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(206 69 52 / var(--tw-bg-opacity));
 }
 
 .bg-white\/10 {
@@ -2000,14 +1994,6 @@ video {
 
 .bg-white\/5 {
   background-color: rgb(255 255 255 / 0.05);
-}
-
-.bg-black\/50 {
-  background-color: rgb(0 0 0 / 0.5);
-}
-
-.bg-black\/80 {
-  background-color: rgb(0 0 0 / 0.8);
 }
 
 .bg-opacity-50 {
@@ -2151,8 +2137,8 @@ video {
   padding: 3rem;
 }
 
-.p-3 {
-  padding: 0.75rem;
+.p-2 {
+  padding: 0.5rem;
 }
 
 .px-1 {
@@ -2165,9 +2151,19 @@ video {
   padding-right: 0.375rem;
 }
 
+.px-12 {
+  padding-left: 3rem;
+  padding-right: 3rem;
+}
+
 .px-14 {
   padding-left: 3.5rem;
   padding-right: 3.5rem;
+}
+
+.px-2 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 .px-5 {
@@ -2175,9 +2171,27 @@ video {
   padding-right: 1.25rem;
 }
 
-.py-12 {
-  padding-top: 3rem;
-  padding-bottom: 3rem;
+.px-6 {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.py-3 {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.py-6 {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+.pb-6 {
+  padding-bottom: 1.5rem;
+}
+
+.pt-6 {
+  padding-top: 1.5rem;
 }
 
 .text-left {
@@ -2247,6 +2261,11 @@ video {
 .text-2xl {
   font-size: 1.5rem;
   line-height: 2rem;
+}
+
+.text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
 }
 
 .text-sm {
@@ -2691,20 +2710,12 @@ video {
   transition-duration: 150ms;
 }
 
-.duration-150 {
-  transition-duration: 150ms;
-}
-
-.duration-1000 {
-  transition-duration: 1000ms;
+.duration-300 {
+  transition-duration: 300ms;
 }
 
 .duration-700 {
   transition-duration: 700ms;
-}
-
-.duration-300 {
-  transition-duration: 300ms;
 }
 
 .ease-in {
@@ -2799,6 +2810,22 @@ video {
   }
 }
 
+/* Firefox */
+
+* {
+  scrollbar-color: #ce4534 #1e1e1e;
+}
+
+/* Chrome, Edge, and Safari */
+
+*::-webkit-scrollbar-track {
+  background: #1e1e1e;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #ce4534;
+}
+
 html,
 body {
   height: 100%;
@@ -2811,6 +2838,26 @@ body {
   font-size: 1.4em;
   color: white;
   position: relative;
+}
+
+select {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  outline: none;
+  padding: 0.5rem;
+  background: rgb(28, 28, 28);
+  border: 1px solid rgb(255, 255, 255, 0.2);
+}
+
+select option {
+  margin: 40px;
+  background: rgb(28, 28, 28);
+  color: rgba(255, 255, 255, 0.5);
+}
+
+select option:hover {
+  color: rgba(255, 255, 255, 1);
 }
 
 #background-container {
@@ -2893,18 +2940,25 @@ body.in-level::before {
   }
 }
 
-.hover\:z-50:hover {
-  z-index: 50;
-}
-
 .hover\:z-10:hover {
   z-index: 10;
+}
+
+.hover\:scale-105:hover {
+  --tw-scale-x: 1.05;
+  --tw-scale-y: 1.05;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
 .hover\:scale-125:hover {
   --tw-scale-x: 1.25;
   --tw-scale-y: 1.25;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.hover\:bg-primary-500:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(226 97 81 / var(--tw-bg-opacity));
 }
 
 .hover\:font-bold:hover {
@@ -2919,6 +2973,10 @@ body.in-level::before {
 .hover\:before\:text-center:hover::before {
   content: var(--tw-content);
   text-align: center;
+}
+
+.focus\:border-white\/50:focus {
+  border-color: rgb(255 255 255 / 0.5);
 }
 
 .focus\:hover\:text-center:hover:focus {

@@ -16,10 +16,10 @@
     <div class="overlay"></div>
 
     <div class="flex flex-col h-full justify-between">
-        <header class="flex flex-row justify-between p-12 bg-gradient-to-b from-black/80 via-black/75 to-transparent">
+        <header class="flex flex-row justify-between p-12 pb-6 bg-gradient-to-b from-black/80 via-black/75 to-transparent">
             <img src="images/logo.png"
                  alt="Experiment"
-                 class="max-w-md">
+                 class="max-w-md max-h-16 w-auto">
 
             <div class="flex flex-row justify-evenly gap-12">
                 <game-menu-link pageref="content"
@@ -46,29 +46,28 @@
         </header>
 
         <div id="page"
-             x-draggable
-             class="flex flex-col flex-1 opacity-0 transition max-h-screen overflow-hidden bg-black/90 px-14 py-12">
+             class="relative flex flex-col flex-1 opacity-0 transition max-h-screen bg-black/90 px-14 py-6 min-h-0">
             <div class="flex flex-row justify-between">
                 <h2 class="font-source-uibold text-source-uibold font-semibold mb-4 text-white uppercase"
                     id="pageTitle"></h2>
             </div>
             <div id="pageContent"
-                 class="flex-1 font-source-default text-source-default overflow-y-auto"></div>
+                 class="flex-1 font-source-default text-source-default min-h-0"></div>
         </div>
 
-        <footer class="flex flex-row justify-evenly p-12 gap-12 bg-gradient-to-t from-black/80 via-black/75 to-transparent">
+        <footer class="flex flex-row justify-evenly p-12 pt-6 gap-12 bg-gradient-to-t from-black/80 via-black/75 to-transparent">
             <game-menu-link href="gamemenucommand://OpenServerBrowser"
                             translation="GameUI_GameMenu_PlayOnline"
                             icon="images/icon-magnifier.png"
                             label-above>
                 PLAY ONLINE
             </game-menu-link>
-            <game-menu-link href="gamemenucommand://OpenCreateMultiplayerGameDialog"
+            <game-menu-link pageref="host-server"
                             translation="GameUI_GameMenu_HostOwnServer"
                             icon="images/icon-globe.png"
                             class="flex group-[.in-level]/body:hidden"
                             label-above>
-                HOST OWN SERVER
+                HOST SERVER
             </game-menu-link>
             <game-menu-link href="gamemenucommand://Disconnect"
                             translation="GameUI_GameMenu_Disconnect"
@@ -87,12 +86,98 @@
             from a selection of games you have installed through Steam.
         </p>
         <div id="contentList"
-             class="flex flex-row flex-wrap gap-4 mt-4">
+             class="flex flex-row flex-wrap gap-4 mt-4 overflow-y-scroll flex-1 min-h-0">
+        </div>
+    </game-page>
+
+    <game-page id="host-server"
+               title="Host Server">
+        <div class="flex flex-col gap-6 overflow-y-scroll">
+            <p>
+                Configure your server settings below to define how you want your server to be set up.
+            </p>
+
+            <div class="grid grid-cols-2 gap-8">
+                <div class="flex flex-col gap-4">
+                    <div class="flex flex-col gap-2">
+                        <label class="font-bold text-lg">Server Name</label>
+                        <input type="text"
+                               id="serverName"
+                               class="bg-white/10 p-2 border border-white/20 focus:border-white/50 outline-none"
+                               placeholder="My Awesome Server">
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <label class="font-bold text-lg">Gamemode</label>
+                        <div class="relative">
+                            <select id="gameMode"
+                                class="w-full">
+                                <!-- Options will be populated by JavaScript -->
+                            </select>
+                            <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                                <img src="images/icon-cog.png"
+                                     alt="dropdown"
+                                     class="w-4 h-4">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <label class="font-bold text-lg">Max Players</label>
+                        <input type="number"
+                               id="maxPlayers"
+                               min="1"
+                               max="32"
+                               value="16"
+                               class="bg-white/10 p-2 border border-white/20 focus:border-white/50 outline-none">
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <label class="font-bold text-lg">Password (optional)</label>
+                        <input type="password"
+                               id="serverPassword"
+                               class="bg-white/10 p-2 border border-white/20 focus:border-white/50 outline-none"
+                               placeholder="Leave empty for public server">
+                    </div>
+                </div>
+
+                <div class="flex flex-col gap-4">
+                    <div class="flex flex-col gap-2">
+                        <label class="font-bold text-lg">Map</label>
+                        <div class="relative">
+                            <select id="mapSelect"
+                                    class="w-full">
+                                <!-- Options will be populated by JavaScript -->
+                            </select>
+                            <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                                <img src="images/icon-globe.png"
+                                     alt="dropdown"
+                                     class="w-4 h-4">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="mapPreviewContainer"
+                         class="flex-1 relative group bg-white/10 border border-white/20 min-h-[200px] overflow-hidden">
+                        <img id="mapPreview"
+                             src="images/maps/_placeholder.jpg"
+                             alt="Map Preview"
+                             class="absolute inset-0 h-full w-full object-cover">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="flex justify-center gap-4 px-12 pt-6">
+            <button id="startServerBtn"
+                    class="bg-primary-600 hover:bg-primary-500 px-6 py-3 transition flex items-center gap-2 group cursor-pointer">
+                START SERVER
+            </button>
         </div>
     </game-page>
 
     <template id="contentItemTemplate">
-        <div class="group relative w-[100px] h-[150px] hover:scale-125 hover:z-10 transition-transform duration-300">
+        <div class="group relative w-[200px] h-[300px] hover:scale-105 hover:z-10 transition-transform duration-300 cursor-pointer">
             <img src=""
                  alt=""
                  class="w-full h-full object-cover">

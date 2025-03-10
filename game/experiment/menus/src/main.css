@@ -28,6 +28,20 @@
     }
 }
 
+/* Firefox */
+* {
+    scrollbar-color: #ce4534 #1e1e1e;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar-track {
+    background: #1e1e1e;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: #ce4534;
+}
+
 html,
 body {
     height: 100%;
@@ -41,6 +55,24 @@ body {
     color: white;
 
     position: relative;
+}
+
+select {
+    appearance: none;
+    outline: none;
+    padding: 0.5rem;
+    background: rgb(28, 28, 28);
+    border: 1px solid rgb(255, 255, 255, 0.2);
+}
+
+select option {
+    margin: 40px;
+    background: rgb(28, 28, 28);
+    color: rgba(255, 255, 255, 0.5);
+}
+
+select option:hover {
+    color: rgba(255, 255, 255, 1);
 }
 
 #background-container {

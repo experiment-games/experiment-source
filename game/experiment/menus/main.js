@@ -48,9 +48,9 @@ const contentListElement = document.querySelector('#contentList');
 const contentItemTemplateElement = document.querySelector('#contentItemTemplate');
 
 const registeredPages = new Map();
+let currentHideTimeout = null;
 let currentPage = null;
 
-// Custom element for links
 customElements.define('game-menu-link', class extends HTMLElement {
   constructor() {
     super();
@@ -66,8 +66,7 @@ customElements.define('game-menu-link', class extends HTMLElement {
     }
 
     const key = this.getAttribute('translation');
-    console.log(key); // TODO: request the menu for translations
-    // this.textContent = menus.localize.getTranslation(key); // TODO: Set this on the span (not the element itself) or sub-links will break
+    console.log(key);
   }
 
   connectedCallback() {
@@ -109,8 +108,11 @@ customElements.define('game-menu-link', class extends HTMLElement {
         currentPage.hide();
       }
 
-      registeredPage.show();
-      currentPage = registeredPage;
+      // Small delay to ensure the hide animation has started
+      setTimeout(() => {
+        registeredPage.show();
+      }, 50);
+
       return;
     }
   }
@@ -118,30 +120,61 @@ customElements.define('game-menu-link', class extends HTMLElement {
 
 // Custom element for pages (invisible until selected)
 customElements.define('game-page', class extends HTMLElement {
-  _lastShowHandler = 0;
   _isShowing = false;
+  _contentHolder = null;
+  _initialized = false;
+  _initializeFunction = null;
 
   constructor() {
     super();
-
     this.classList.add('hidden');
+
+    // Create a content holder div for this page
+    this._contentHolder = document.createElement('div');
+    this._contentHolder.classList.add('page-content-holder', 'h-full', 'flex', 'flex-col');
   }
 
   connectedCallback() {
     registeredPages.set(this.id, this);
+
+    // Move all initial children to the content holder
+    while (this.firstChild) {
+      this._contentHolder.appendChild(this.firstChild);
+    }
+  }
+
+  // Set an initialization function for this page
+  setInitFunction(initFn) {
+    this._initializeFunction = initFn;
   }
 
   show() {
-    this._isShowing = true;
-    this._lastShowHandler++;
-
-    pageTitleElement.textContent = this.getAttribute('title');
-    // pageContentElement.innerHTML = this.innerHTML; // This messes up any values set (e.g: checked on checkboxes)
-    // Lets teleport the children instead
-    while (this.firstChild) {
-      pageContentElement.appendChild(this.firstChild);
+    // Clear any pending hide operations
+    if (currentHideTimeout) {
+      clearTimeout(currentHideTimeout);
+      currentHideTimeout = null;
     }
 
+    this._isShowing = true;
+    currentPage = this;
+
+    pageTitleElement.textContent = this.getAttribute('title');
+
+    // Clear current content
+    while (pageContentElement.firstChild) {
+      pageContentElement.removeChild(pageContentElement.firstChild);
+    }
+
+    // Append the content holder to the page content
+    pageContentElement.appendChild(this._contentHolder);
+
+    // Initialize the page if needed
+    if (!this._initialized && this._initializeFunction) {
+      this._initializeFunction();
+      this._initialized = true;
+    }
+
+    // Make the page visible
     pageElement.classList.remove('opacity-0');
   }
 
@@ -152,21 +185,15 @@ customElements.define('game-page', class extends HTMLElement {
   hide() {
     this._isShowing = false;
 
-    const showHandler = this._lastShowHandler;
-
+    // Hide the page visually
     pageElement.classList.add('opacity-0');
 
-    // Move the children back after the animation
-    setTimeout(() => {
-      // Don't move them if the show handler changed, meaning the page was shown again
-      // (happens when spam clicking)
-      if (showHandler !== this._lastShowHandler) {
-        return;
+    // Set timeout to move content back after transition
+    currentHideTimeout = setTimeout(() => {
+      if (pageContentElement.contains(this._contentHolder)) {
+        pageContentElement.removeChild(this._contentHolder);
       }
-
-      while (pageContentElement.firstChild) {
-        this.appendChild(pageContentElement.firstChild);
-      }
+      currentHideTimeout = null;
     }, 500);
   }
 });
@@ -177,64 +204,165 @@ customElements.define('game-page', class extends HTMLElement {
  */
 function initialize() {
   GameUI.LoadMountableContentInfo(function (registeredMountableContent) {
-    // sort it by name first
-    registeredMountableContent.sort((a, b) => a.name.localeCompare(b.name));
-    registeredMountableContent.forEach((content, index) => {
-      const contentItemElement = contentItemTemplateElement.content.firstElementChild.cloneNode(true);
+    // Get the content page
+    const contentPage = registeredPages.get('content');
 
-      contentItemElement.classList.add(index % 2 === 0 ? 'bg-white/10' : 'bg-white/5');
+    contentPage.setInitFunction(() => {
+      const contentList = contentPage._contentHolder.querySelector('#contentList');
+      const contentItemTemplateElement = document.querySelector('#contentItemTemplate');
 
-      if (index === 0) {
-        contentItemElement.classList.add('origin-top-left');
+      if (!contentList) return;
+
+      // Clear existing content
+      contentList.innerHTML = '';
+
+      // sort it by name first
+      registeredMountableContent.sort((a, b) => a.name.localeCompare(b.name));
+      registeredMountableContent.forEach((content, index) => {
+        const contentItemElement = contentItemTemplateElement.content.firstElementChild.cloneNode(true);
+
+        contentItemElement.classList.add(index % 2 === 0 ? 'bg-white/10' : 'bg-white/5');
+
+        const iconElement = contentItemElement.querySelector('img');
+        iconElement.src = content.icon;
+        iconElement.alt = content.name;
+
+        const nameElement = contentItemElement.querySelector('span');
+        nameElement.textContent = content.name;
+
+        const inputElement = contentItemElement.querySelector('input');
+        inputElement.value = content.id;
+        inputElement.checked = content.mounted;
+
+        inputElement.addEventListener('change', () => {
+          if (inputElement.checked) {
+            showLoadingOverlay('Mounting content...', function (finish) {
+              GameUI.MountGameContent(inputElement.value, function (wasSuccessful) {
+                if (!wasSuccessful) {
+                  inputElement.checked = false;
+                }
+
+                finish();
+              });
+            });
+          } else {
+            showLoadingOverlay('Unmounting content...', function (finish) {
+              GameUI.UnmountGameContent(inputElement.value, function (wasSuccessful) {
+                if (!wasSuccessful) {
+                  inputElement.checked = true;
+                }
+
+                finish();
+              });
+            });
+          }
+        });
+
+        contentItemElement.addEventListener('click', (ev) => {
+          // Don't toggle the checkbox if the click was on the checkbox itself
+          // otherwise we immediately toggle it back
+          if (ev.target.tagName === 'INPUT') {
+            return;
+          }
+
+          inputElement.checked = !inputElement.checked;
+          inputElement.dispatchEvent(new Event('change'));
+        });
+
+        contentList.appendChild(contentItemElement);
+      });
+    });
+  });
+
+  // Setup the host server page
+  const hostServerPage = registeredPages.get('host-server');
+
+  hostServerPage.setInitFunction(() => {
+    // This function only runs when the host-server page is shown for the first time
+    const pageContent = hostServerPage._contentHolder;
+    const gameModeSelect = pageContent.querySelector('#gameMode');
+    const mapSelect = pageContent.querySelector('#mapSelect');
+    const mapPreview = pageContent.querySelector('#mapPreview');
+    const startServerBtn = pageContent.querySelector('#startServerBtn');
+
+    if (!gameModeSelect || !mapSelect) return;
+
+    function populateGameModes(gamemodes) {
+      gameModeSelect.innerHTML = '';
+
+      gamemodes.forEach(gamemode => {
+        const option = document.createElement('option');
+        option.value = gamemode.id;
+        option.textContent = gamemode.id;
+        gameModeSelect.appendChild(option);
+      });
+    }
+
+    function populateMaps(maps) {
+      mapSelect.innerHTML = '';
+
+      maps.forEach(map => {
+        const option = document.createElement('option');
+        option.value = map.id;
+        option.textContent = map.id;
+        map.preview = option.dataset.preview = 'images/maps/' + map.id + '.jpg';
+        mapSelect.appendChild(option);
+      });
+
+      // Initialize with first map
+      if (maps.length > 0) {
+        updateMapPreview(maps[0]);
       }
+    }
 
-      const iconElement = contentItemElement.querySelector('img');
-      iconElement.src = content.icon;
-      iconElement.alt = content.name;
+    GameUI.LoadServerVariables(function (availableMaps, availableGamemodes) {
+      console.log('Loaded server variables:', availableMaps, availableGamemodes);
+      populateGameModes(availableGamemodes);
+      populateMaps(availableMaps);
+    });
 
-      const nameElement = contentItemElement.querySelector('span');
-      nameElement.textContent = content.name;
+    // Event listener for map selection
+    mapSelect.addEventListener('change', function () {
+      const selectedOption = this.options[this.selectedIndex];
+      const map = {
+        id: selectedOption.value,
+        name: selectedOption.textContent,
+        preview: selectedOption.dataset.preview
+      };
 
-      const inputElement = contentItemElement.querySelector('input');
-      inputElement.value = content.id;
-      inputElement.checked = content.mounted;
+      updateMapPreview(map);
+    });
 
-      inputElement.addEventListener('change', () => {
-        if (inputElement.checked) {
-          showLoadingOverlay('Mounting content...', function (finish) {
-            GameUI.MountGameContent(inputElement.value, function (wasSuccessful) {
-              if (!wasSuccessful) {
-                inputElement.checked = false;
-              }
+    function updateMapPreview(map) {
+      if (map.preview) {
+        mapPreview.src = map.preview;
+      } else {
+        mapPreview.src = 'images/maps/_placeholder.jpg';
+      }
+    }
 
-              finish();
-            });
-          });
-        } else {
-          showLoadingOverlay('Unmounting content...', function (finish) {
-            GameUI.UnmountGameContent(inputElement.value, function (wasSuccessful) {
-              if (!wasSuccessful) {
-                inputElement.checked = true;
-              }
+    // Start server button
+    startServerBtn.addEventListener('click', function () {
+      const serverName = pageContent.querySelector('#serverName').value || "My Awesome Server";
+      const gameMode = gameModeSelect.value;
+      const map = mapSelect.value;
+      const maxPlayers = pageContent.querySelector('#maxPlayers').value;
+      const password = pageContent.querySelector('#serverPassword').value;
 
-              finish();
-            });
-          });
-        }
+      showLoadingOverlay('Starting Server...', function (finish) {
+        // Create server configuration object
+        const serverConfig = {
+          name: serverName,
+          gamemode: gameMode,
+          map: map,
+          maxPlayers: parseInt(maxPlayers, 10),
+          password: password
+        };
+
+        window.GameUI.HostServer(serverConfig, function (wasSuccessful) {
+          finish();
+        });
       });
-
-      contentItemElement.addEventListener('click', (ev) => {
-        // Don't toggle the checkbox if the click was on the checkbox itself
-        // otherwise we immediately toggle it back
-        if (ev.target.tagName === 'INPUT') {
-          return;
-        }
-
-        inputElement.checked = !inputElement.checked;
-        inputElement.dispatchEvent(new Event('change'));
-      });
-
-      contentList.appendChild(contentItemElement);
     });
   });
 }
@@ -255,12 +383,14 @@ window.addEventListener('interop:installmock', () => {
         callback(true);
       }, 1000);
     },
+
     UnmountGameContent: function (value, callback) {
       console.log(`Mocking unmounting content ${value}`);
       setTimeout(() => {
         callback(true);
       }, 1000);
     },
+
     LoadMountableContentInfo: function (callback) {
       callback([
         {
@@ -330,6 +460,36 @@ window.addEventListener('interop:installmock', () => {
           icon: './images/game-icons/tf.png',
         },
       ]);
+    },
+
+    LoadServerVariables: function (callback) {
+      const mockMaps = [
+        { id: 'gm_flatgrass' },
+        { id: 'gm_construct' },
+        { id: 'cs_office' },
+        { id: 'de_dust2' },
+        { id: 'c17_hospital' }
+      ];
+
+      const mockGamemodes = [
+        { id: 'sandbox' },
+        { id: 'deathmatch' },
+        { id: 'teamdm' },
+        { id: 'rp' },
+        { id: 'zombies' }
+      ];
+
+      console.log(`Loading server variables (mock)`);
+      setTimeout(() => {
+        callback(mockMaps, mockGamemodes);
+      }, 500);
+    },
+
+    HostServer: function (config, callback) {
+      console.log(`Mocking host server with config:`, config);
+      setTimeout(() => {
+        callback(true);
+      }, 2000);
     },
   };
 });

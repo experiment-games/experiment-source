@@ -169,23 +169,94 @@ void CBaseMenuPanel::UpdateBackgroundState()
     }*/
 }
 
+static void GetMaps( CUtlVector< CUtlString > &outMaps )
+{
+    FileFindHandle_t findHandle = NULL;
+
+    const char *pszFilename = g_pFullFileSystem->FindFirst( "maps/*.bsp", &findHandle );
+    while ( pszFilename )
+    {
+        char mapname[256];
+
+        // FindFirst ignores the pszPathID, so check it here
+        // TODO: this doesn't find maps in fallback dirs
+        Q_snprintf( mapname, sizeof( mapname ), "maps/%s", pszFilename );
+        if ( !g_pFullFileSystem->FileExists( mapname, CONTENT_SEARCH_PATH ) )
+        {
+            goto nextFile;
+        }
+
+        // remove the text 'maps/' and '.bsp' from the file name to get the map name
+
+        const char *str = Q_strstr( pszFilename, "maps" );
+        if ( str )
+        {
+            Q_strncpy( mapname, str + 5, sizeof( mapname ) - 1 );  // maps + \\ = 5
+        }
+        else
+        {
+            Q_strncpy( mapname, pszFilename, sizeof( mapname ) - 1 );
+        }
+        char *ext = Q_strstr( mapname, ".bsp" );
+        if ( ext )
+        {
+            *ext = 0;
+        }
+
+        // add to the map list
+        outMaps.AddToTail( mapname );
+
+        // get the next file
+    nextFile:
+        pszFilename = g_pFullFileSystem->FindNext( findHandle );
+    }
+    g_pFullFileSystem->FindClose( findHandle );
+}
+
+static void GetGamemodes( CUtlVector< CUtlString > &outGamemodes )
+{
+    FileFindHandle_t findHandle = NULL;
+
+    const char *pszFilename = g_pFullFileSystem->FindFirst( "gamemodes/*", &findHandle );
+    while ( pszFilename )
+    {
+        if ( Q_stricmp( pszFilename, ".." ) == 0 || Q_stricmp( pszFilename, "." ) == 0 )
+        {
+            goto nextFile;
+        }
+
+        if ( !g_pFullFileSystem->FindIsDirectory( findHandle ) )
+        {
+            goto nextFile;
+        }
+
+        outGamemodes.AddToTail( pszFilename );
+
+    nextFile:
+        pszFilename = g_pFullFileSystem->FindNext( findHandle );
+    }
+    g_pFullFileSystem->FindClose( findHandle );
+}
+
 class MainMenuHTML : public HTML
 {
     DECLARE_CLASS_SIMPLE( MainMenuHTML, HTML );
 
-    public:
+   public:
     MainMenuHTML( Panel *parent, const char *name, bool allowJavaScript = true )
         : HTML( parent, name, allowJavaScript )
     {
     }
 
-    protected:
+   protected:
     virtual void OnInstallJavaScriptInterop() OVERRIDE
     {
         AddJavascriptObject( "GameUI" );
         AddJavascriptObjectCallback( "GameUI", "LoadMountableContentInfo" );
+        AddJavascriptObjectCallback( "GameUI", "LoadServerVariables" );
         AddJavascriptObjectCallback( "GameUI", "MountGameContent" );
         AddJavascriptObjectCallback( "GameUI", "UnmountGameContent" );
+        AddJavascriptObjectCallback( "GameUI", "HostServer" );
     }
 
     virtual void OnJavaScriptCallback( KeyValues *pData ) OVERRIDE
@@ -229,6 +300,42 @@ class MainMenuHTML : public HTML
 
             CallJavascriptObjectCallback( callbackId, pParameters );
         }
+        else if ( Q_strcmp( pszProperty, "LoadServerVariables" ) == 0 )
+        {
+            KeyValues *pParameters = new KeyValues( "parameters" );
+
+            CUtlVector< CUtlString > maps;
+            GetMaps( maps );
+
+            KeyValues *pMaps = new KeyValues( "maps" );
+            pParameters->AddSubKey( pMaps );
+
+            for ( int i = 0; i < maps.Count(); i++ )
+            {
+                CUtlString map = maps[i];
+
+                KeyValues *pMap = new KeyValues( "" );
+                pMap->SetString( "id", map );
+                pMaps->AddSubKey( pMap );
+            }
+
+            KeyValues *pGamemodes = new KeyValues( "gamemodes" );
+            pParameters->AddSubKey( pGamemodes );
+
+            CUtlVector< CUtlString > gamemodes;
+            GetGamemodes( gamemodes );
+
+            for ( int i = 0; i < gamemodes.Count(); i++ )
+            {
+                CUtlString gamemode = gamemodes[i];
+
+                KeyValues *pGamemode = new KeyValues( "" );
+                pGamemode->SetString( "id", gamemode );
+                pGamemodes->AddSubKey( pGamemode );
+            }
+
+            CallJavascriptObjectCallback( callbackId, pParameters );
+        }
         else if ( Q_strcmp( pszProperty, "MountGameContent" ) == 0 )
         {
             KeyValues *pArguments = pData->FindKey( "arguments" );
@@ -245,6 +352,72 @@ class MainMenuHTML : public HTML
 
             KeyValues *pResponse = new KeyValues( "parameters" );
             pResponse->SetBool( "wasSuccessful", UnmountGameContentByAppId( nGameAppId ) );
+            CallJavascriptObjectCallback( callbackId, pResponse );
+        }
+        else if (Q_strcmp(pszProperty, "HostServer") == 0)
+        {
+            KeyValues *pArguments = pData->FindKey( "arguments" );
+            KeyValues *config = pArguments->FindKey( "1" );
+
+            const char *hostName = config->GetString( "name" );
+            const char *gamemode = config->GetString( "gamemode" );
+            const char *map = config->GetString( "map" );
+            const char *maxPlayers = config->GetString( "maxPlayers" );
+            const char *password = config->GetString( "password" );
+
+            // TODO: Save preferences for map and gamemode (copy logic from game\client\experiment\ui\createmultiplayergamedialog.cpp)
+            //if ( m_pSavedData )
+            //{
+            //    if ( m_pServerPage->IsRandomMapSelected() )
+            //    {
+            //        // it's set to random map, just save an
+            //        m_pSavedData->SetString( "map", "" );
+            //    }
+            //    else
+            //    {
+            //        m_pSavedData->SetString( "map", map );
+            //    }
+
+            //    // save config to a file
+            //    m_pSavedData->SaveToFile( g_pFullFileSystem, "ServerConfig.vdf", "GAME" );
+            //}
+
+            // reset server enforced cvars
+            g_pCVar->RevertFlaggedConVars( FCVAR_REPLICATED );
+
+            // Cheats were disabled; revert all cheat cvars to their default values.
+            // This must be done heading into multiplayer games because people can play
+            // demos etc and set cheat cvars with sv_cheats 0.
+            g_pCVar->RevertFlaggedConVars( FCVAR_CHEAT );
+
+            char startCommand[1024];
+
+            // create the command to execute
+            Q_snprintf(
+                startCommand,
+                sizeof( startCommand ),
+                "disconnect\n"
+                "wait\n"
+                "wait\n"
+                "sv_lan 1\n"
+                "setmaster enable\n"
+                "maxplayers %i\n"
+                "sv_password \"%s\"\n"
+                "gamemode \"%s\"\n"
+                "hostname \"%s\"\n"
+                "progress_enable\n"
+                "map %s\n",
+                maxPlayers,
+                password,
+                gamemode,
+                hostName,
+                map
+            );
+
+            engine->ClientCmd_Unrestricted( startCommand );
+
+            KeyValues *pResponse = new KeyValues( "parameters" );
+            pResponse->SetBool( "wasSuccessful", true );
             CallJavascriptObjectCallback( callbackId, pResponse );
         }
     }

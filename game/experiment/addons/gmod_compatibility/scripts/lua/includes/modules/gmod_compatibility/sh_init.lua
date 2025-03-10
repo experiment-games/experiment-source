@@ -1027,6 +1027,7 @@ if (SERVER) then
 		self:RemoveAllItems(shouldRemoveSuit)
 	end
 
+	util.AddNetworkString("__PlayerLuaRun")
 	function PLAYER_META:SendLua(lua)
 		net.Start("__PlayerLuaRun")
 		net.WriteString(lua)
