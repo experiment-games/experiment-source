@@ -42,7 +42,7 @@ function SetBackgroundRenderState(state) {
 }
 
 function ServerListComplete(wasSuccessful, errorMessage) {
-  console.log('Server list complete:', wasSuccessful, errorMessage);
+  // console.log('Server list complete:', wasSuccessful, errorMessage);
 }
 
 function ServerListFailed(errorMessage) {
@@ -137,7 +137,6 @@ function ServerListAdd(info) {
 
   serverItem.querySelector('.server-action-favorite')
     .addEventListener('click', () => {
-      console.log('Favorite server:', info.serverHostName);
       window.GameUI.ModifyFavoriteGame({
         appId: info.serverAppId,
         ip: info.serverIp,
@@ -150,7 +149,6 @@ function ServerListAdd(info) {
 
   serverItem.querySelector('.server-action-unfavorite')
     .addEventListener('click', () => {
-      console.log('Unfavorite server:', info.serverHostName);
       window.GameUI.ModifyFavoriteGame({
         appId: info.serverAppId,
         ip: info.serverIp,
@@ -456,7 +454,6 @@ function initialize() {
     }
 
     GameUI.LoadServerVariables(function (availableMaps, availableGamemodes) {
-      console.log('Loaded server variables:', availableMaps, availableGamemodes);
       populateGameModes(availableGamemodes);
       populateMaps(availableMaps);
     });
@@ -524,7 +521,7 @@ function initialize() {
       window.GameUI.CancelServerListRequest();
 
       window.GameUI.RequestServerList(function (wasSuccessful) {
-        console.log('(Refresh) Server list requested', wasSuccessful);
+        // console.log('(Refresh) Server list requested', wasSuccessful);
       });
     }
 
