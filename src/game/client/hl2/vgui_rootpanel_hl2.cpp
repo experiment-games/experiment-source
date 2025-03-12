@@ -18,25 +18,27 @@
 #include "tier0/memdbgon.h"
 
 #ifdef LUA_SDK
-C_ScriptedBaseGameUIPanel *g_pScriptedBaseGameUIPanel = NULL;
+// Experiment;  This is commented since it got in the way of our MainMenuUI and
+//              we didn't seem to use it anywhere anyway.
+//C_ScriptedBaseGameUIPanel *g_pScriptedBaseGameUIPanel = NULL;
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void VGUI_CreateGameUIRootPanel( void )
-{
-    g_pScriptedBaseGameUIPanel =
-        new C_ScriptedBaseGameUIPanel( enginevgui->GetPanel( PANEL_GAMEUIDLL ) );
-}
+//void VGUI_CreateGameUIRootPanel( void )
+//{
+//    g_pScriptedBaseGameUIPanel =
+//        new C_ScriptedBaseGameUIPanel( enginevgui->GetPanel( PANEL_GAMEUIDLL ) );
+//}
 
 //-----------------------------------------------------------------------------
 // Purpose:
 //-----------------------------------------------------------------------------
-void VGUI_DestroyGameUIRootPanel( void )
-{
-    delete g_pScriptedBaseGameUIPanel;
-    g_pScriptedBaseGameUIPanel = NULL;
-}
+//void VGUI_DestroyGameUIRootPanel( void )
+//{
+//    delete g_pScriptedBaseGameUIPanel;
+//    g_pScriptedBaseGameUIPanel = NULL;
+//}
 #endif
 
 //-----------------------------------------------------------------------------
@@ -65,10 +67,10 @@ vgui::VPANEL VGui_GetClientDLLRootPanel( void )
 }
 
 #ifdef LUA_SDK
-vgui::Panel *VGui_GetGameUIPanel( void )
-{
-    return g_pScriptedBaseGameUIPanel;
-}
+//vgui::Panel *VGui_GetGameUIPanel( void )
+//{
+//    return g_pScriptedBaseGameUIPanel;
+//}
 
 //-----------------------------------------------------------------------------
 // Purpose: Game specific root panel

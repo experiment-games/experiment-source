@@ -26,11 +26,11 @@ void VGui_CreateGlobalPanels( void );
 vgui::VPANEL VGui_GetClientDLLRootPanel( void );
 
 #ifdef LUA_SDK
-vgui::Panel *VGui_GetGameUIPanel( void );
+//vgui::Panel *VGui_GetGameUIPanel( void );
 CScriptedClientLuaPanel *VGui_GetClientLuaRootPanel( void );
 CScriptedClientLuaPanel *VGui_GetClientLuaRootPanelHUD( void );
-void VGUI_CreateGameUIRootPanel( void );
-void VGUI_DestroyGameUIRootPanel( void );
+// void VGUI_CreateGameUIRootPanel( void );
+// void VGUI_DestroyGameUIRootPanel( void );
 #endif
 
 void VGUI_CreateClientDLLRootPanel( void );

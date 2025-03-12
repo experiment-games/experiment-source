@@ -14,6 +14,7 @@
 
 #include "iclientmode.h"
 #include "GameEventListener.h"
+#include "GameUI/IGameUI.h"
 #include <baseviewport.h>
 #include <mapload_background.h>
 
@@ -55,7 +56,7 @@ extern IClientMode *GetClientModeNormal();  // must be implemented
 class ClientModeShared : public IClientMode, public CGameEventListener
 {
     // IClientMode overrides.
-    public:
+   public:
     DECLARE_CLASS_NOBASE( ClientModeShared );
 
     ClientModeShared();
@@ -155,10 +156,10 @@ class ClientModeShared : public IClientMode, public CGameEventListener
     virtual bool DoPostScreenSpaceEffects( const CViewSetup *pSetup );
 
     virtual void DisplayReplayMessage( const char *pLocalizeName,
-                                        float flDuration,
-                                        bool bUrgent,
-                                        const char *pSound,
-                                        bool bDlg );
+                                       float flDuration,
+                                       bool bUrgent,
+                                       const char *pSound,
+                                       bool bDlg );
 
     virtual bool IsInfoPanelAllowed() OVERRIDE
     {
@@ -184,7 +185,12 @@ class ClientModeShared : public IClientMode, public CGameEventListener
     virtual void OnDemoRecordStart( char const *pDemoBaseName ) OVERRIDE {}
     virtual void OnDemoRecordStop() OVERRIDE {}
 
-    protected:
+    IGameUI *GameUI( void )
+    {
+        return m_pGameUI;
+    }
+
+   protected:
 #ifdef LUA_SDK
     CScriptedHudViewport *m_pScriptedViewport;
 #endif
@@ -192,7 +198,7 @@ class ClientModeShared : public IClientMode, public CGameEventListener
 
     void DisplayReplayReminder();
 
-    private:
+   private:
     virtual bool BCanSendPartyChatMessages() const
     {
         return false;
@@ -213,6 +219,7 @@ class ClientModeShared : public IClientMode, public CGameEventListener
     vgui::HCursor m_CursorNone;
     CBaseHudWeaponSelection *m_pWeaponSelection;
     int m_nRootSize[2];
+    IGameUI *m_pGameUI;
 };
 
 #endif  // CLIENTMODE_NORMAL_H

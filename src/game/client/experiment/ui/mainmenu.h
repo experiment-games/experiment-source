@@ -7,6 +7,19 @@
 
 using namespace vgui;
 
+// From NeotokyoRebuild
+enum GameServerType
+{
+    GS_INTERNET = 0,
+    GS_LAN,
+    GS_FRIENDS,
+    GS_FAVORITES,
+    GS_HISTORY,
+    GS_SPEC,
+
+    GS__TOTAL,
+};
+
 enum EBackgroundState
 {
     BACKGROUND_INITIAL,
@@ -26,11 +39,11 @@ void PositionDialog( vgui::PHandle dialog );
 
 class CMainMenu;  // Forward declaration
 
-class CBaseMenuPanel : public EditablePanel
+class CBaseMenuPanel : public EditablePanel, public IViewPortPanel
 {
     DECLARE_CLASS_SIMPLE( CBaseMenuPanel, EditablePanel );
 
-    public:
+   public:
     CBaseMenuPanel();
     virtual ~CBaseMenuPanel();
 
@@ -46,27 +59,47 @@ class CBaseMenuPanel : public EditablePanel
     // MESSAGE_FUNC( OnGameUIActivated, "OnGameUIActivated" );
     // MESSAGE_FUNC( OnGameUIHidden, "GameUIHidden" );
 
-    protected:
-    void OnThink() OVERRIDE;
+    // both vgui::Frame and IViewPortPanel define these, so explicitly define them here as passthroughs to vgui
+    vgui::VPANEL GetVPanel( void )
+    {
+        return BaseClass::GetVPanel();
+    }
+    virtual bool IsVisible();
+    virtual void SetParent( vgui::VPANEL parent )
+    {
+        BaseClass::SetParent( parent );
+    }
+    virtual const char* GetName( void )
+    {
+        return "MainMenuOverride";
+    }
+    virtual void SetData( KeyValues* data ) {}
+    virtual void Reset()
+    {
+        Update();
+        SetVisible( true );
+    }
+    virtual void Update()
+    {
+        return;
+    }
+    virtual bool NeedsUpdate( void )
+    {
+        return false;
+    }
+    virtual bool HasInputElements( void )
+    {
+        return true;
+    }
+    virtual void ShowPanel( bool bShow )
+    {
+        SetVisible( true );
+    }  // Refuses to hide
 
-    private:
-    void SetBackgroundRenderState( EBackgroundState state );
-    bool LoadGameUI();
-    void UpdateBackgroundState();
-    EBackgroundState m_eBackgroundState;
-
-    IGameUI* m_pGameUI;
-
-    CMainMenu* m_pMainMenu;
-};
-
-class CMainMenu : public Panel
-{
-    DECLARE_CLASS_SIMPLE( CMainMenu, Panel );
-
-    public:
-    CMainMenu( Panel* pParent );
-    virtual ~CMainMenu();
+    virtual GameActionSet_t GetPreferredActionSet()
+    {
+        return GAME_ACTION_SET_NONE;
+    }  // Seems like this should be GAME_ACTION_SET_MENU, but it's not because it's apparently visible *all* *the* *time*
 
     void SetBackgroundRenderState( EBackgroundState state );
     virtual bool OnKnownCommand( const char* command );
@@ -74,16 +107,45 @@ class CMainMenu : public Panel
     MESSAGE_FUNC_CHARPTR( OnCustomURLHandler, "CustomURL", url );
     MESSAGE_FUNC_INT( OnKeyCodeUnhandled, "KeyCodeUnhandled", code );
 
-    protected:
+   protected:
     void OnThink() OVERRIDE;
 
     virtual void PerformLayout() OVERRIDE;
 
-    void OnOpenCreateMultiplayerGameDialog();
-    vgui::DHANDLE< vgui::Frame > m_hCreateMultiplayerGameDialog;
+   private:
+    void UpdateBackgroundState();
+    EBackgroundState m_eBackgroundState;
 
-    private:
     HTML* m_pHTML;
+};
+
+class MainMenuHTML : public HTML, public ISteamMatchmakingServerListResponse
+{
+    DECLARE_CLASS_SIMPLE( MainMenuHTML, HTML );
+
+   public:
+    MainMenuHTML( Panel *parent, const char *name, bool allowJavaScript = true )
+        : HTML( parent, name, allowJavaScript )
+    {
+    }
+
+    void RequestServerList( GameServerType iType = GameServerType::GS_INTERNET );
+
+    // ISteamMatchmakingServerListResponse
+    virtual void ServerResponded( HServerListRequest hRequest, int iServer );
+    virtual void ServerFailedToRespond( HServerListRequest hRequest, int iServer );
+    virtual void RefreshComplete( HServerListRequest hRequest, EMatchMakingServerResponse response );
+
+   private:
+    void AddServerToList( GameServerType iType, const gameserveritem_t &serverInfo );
+
+    HServerListRequest m_hSteamRequest;
+    GameServerType m_iRequestType;
+    bool m_bIsSearching;
+
+   protected:
+    virtual void OnInstallJavaScriptInterop() OVERRIDE;
+    virtual void OnJavaScriptCallback( KeyValues* pData ) OVERRIDE;
 };
 
 extern CBaseMenuPanel* g_BaseMenuPanel;

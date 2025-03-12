@@ -41,7 +41,6 @@ void MP3Player_Destroy();
 vgui::IInputInternal *g_InputInternal = NULL;
 
 #include <vgui_controls/Controls.h>
-#include <mainmenu.h>
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -160,8 +159,6 @@ static void VGui_OneTimeInit()
     vgui::Panel::AddPropertyConverter( "CHudTextureHandle", &textureHandleConverter );
 
     g_pMaterialSystem->AddModeChangeCallBack( &VGui_VideoMode_AdjustForModeChange );
-
-    CBaseMenuPanel::Init();
 }
 
 bool VGui_Startup( CreateInterfaceFn appSystemFactory )
@@ -179,8 +176,9 @@ bool VGui_Startup( CreateInterfaceFn appSystemFactory )
     }
 
 #ifdef LUA_SDK
-    // Create the root panel for our scripted GameUI state
-    VGUI_CreateGameUIRootPanel();
+    // Experiment; Commented because it got in the way of our menu
+    // // Create the root panel for our scripted GameUI state
+    // VGUI_CreateGameUIRootPanel();
 #endif
 
     VGui_OneTimeInit();
@@ -255,7 +253,7 @@ void VGui_Shutdown()
     }
 
 #ifdef LUA_SDK
-    VGUI_DestroyGameUIRootPanel();
+    // VGUI_DestroyGameUIRootPanel();
 #endif
 
     // Make sure anything "marked for deletion"

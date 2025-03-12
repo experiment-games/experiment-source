@@ -41,6 +41,146 @@ function SetBackgroundRenderState(state) {
   }
 }
 
+function ServerListComplete(wasSuccessful, errorMessage) {
+  console.log('Server list complete:', wasSuccessful, errorMessage);
+}
+
+function ServerListFailed(errorMessage) {
+  console.log('Server list failed:', errorMessage);
+}
+
+const serverBrowserItemTemplate = document.querySelector('#serverBrowserItemTemplate');
+
+function ServerListAdd(info) {
+  const serverListContainer = document.getElementById('server-list-container');
+  const serverList = serverListContainer.querySelector('#content-' + info.serverTab.toLowerCase());
+
+  if (!serverList) {
+    console.error('Server list not found for tab:', info.serverTab);
+    return;
+  }
+
+  const serverListTable = serverList.querySelector('table tbody');
+
+  let serverAddress = info.serverAddress;
+
+  function setServerItemData(serverItem) {
+    const players = info.serverPlayers;
+    const maxPlayers = info.serverMaxPlayers;
+    const ping = info.serverPing;
+    const nameEl = serverItem.querySelector('.server-name');
+
+    if (info.serverHostName) {
+      nameEl.textContent = info.serverHostName;
+    } else {
+      nameEl.textContent = `Loading ${serverAddress}...`;
+    }
+
+    serverItem.querySelector('.server-players').textContent = players ? `${players}/${maxPlayers}` : '';
+    serverItem.querySelector('.server-map').textContent = info.serverMap ?? '';
+    serverItem.querySelector('.server-gamemode').textContent = info.serverGameDescription ?? '';
+
+    const pingEl = serverItem.querySelector('.server-ping');
+
+    if (ping) {
+      pingEl.textContent = ping + 'ms';
+
+      if (ping < 50) {
+        pingEl.classList.add('text-green-500');
+      } else if (ping < 100) {
+        pingEl.classList.add('text-yellow-500');
+      } else {
+        pingEl.classList.add('text-red-500');
+      }
+    } else {
+      pingEl.textContent = '';
+    }
+  }
+
+  const serverItem = serverBrowserItemTemplate.content.firstElementChild.cloneNode(true);
+
+  // convert the serverIp decimal to IP address
+  if (!serverAddress) {
+    const ip = info.serverIp;
+    const ipA = (ip >> 24) & 0xFF;
+    const ipB = (ip >> 16) & 0xFF;
+    const ipC = (ip >> 8) & 0xFF;
+    const ipD = ip & 0xFF;
+
+    serverAddress = `${ipA}.${ipB}.${ipC}.${ipD}:${info.serverPort}`;
+
+    // If this is sparse data, mark it as loading and update it when the full data is available
+    serverItem.classList.add('text-gray-500', 'italic', 'opacity-70');
+    serverItem.dataset.serverIp = info.serverIp;
+    serverItem.dataset.serverPort = info.serverPort;
+    serverItem.dataset.serverPortQuery = info.serverPortQuery;
+  } else {
+    // If this is full data, find the related sparse data and update it
+    const sparseItems = serverListContainer.querySelectorAll(`tr[data-server-ip="${info.serverIp}"][data-server-port="${info.serverPort}"]`);
+
+    sparseItems.forEach(sparseItem => {
+      sparseItem.classList.remove('text-gray-500', 'italic', 'opacity-70');
+
+      setServerItemData(sparseItem);
+    });
+  }
+
+  setServerItemData(serverItem);
+
+  if (info.serverTab === 'favorites') {
+    serverItem.querySelector('.server-action-favorite').classList.add('hidden');
+    serverItem.querySelector('.server-action-unfavorite').classList.remove('hidden');
+  } else {
+    serverItem.querySelector('.server-action-favorite').classList.remove('hidden');
+    serverItem.querySelector('.server-action-unfavorite').classList.add('hidden');
+  }
+
+  serverItem.querySelector('.server-action-favorite')
+    .addEventListener('click', () => {
+      console.log('Favorite server:', info.serverHostName);
+      window.GameUI.ModifyFavoriteGame({
+        appId: info.serverAppId,
+        ip: info.serverIp,
+        port: info.serverPort,
+        portQuery: info.serverPortQuery,
+      }, function (wasSuccessful) {
+        // TODO: Refresh only the favorites tab
+      })
+    });
+
+  serverItem.querySelector('.server-action-unfavorite')
+    .addEventListener('click', () => {
+      console.log('Unfavorite server:', info.serverHostName);
+      window.GameUI.ModifyFavoriteGame({
+        appId: info.serverAppId,
+        ip: info.serverIp,
+        port: info.serverPort,
+        portQuery: info.serverPortQuery,
+        isRemoving: true,
+      }, function (wasSuccessful) {
+        if (wasSuccessful) {
+          serverItem.remove();
+        }
+      })
+    });
+
+  // Add double-click event to server row for join
+  serverItem.addEventListener('dblclick', function () {
+    const serverName = info.serverHostName;
+    const address = info.serverAddress;
+
+    showLoadingOverlay('Connecting to server "' + serverName + '"...', function (finish) {
+      window.GameUI.ConnectToServer({
+        address: address,
+      }, function (wasSuccessful) {
+        finish();
+      });
+    });
+  });
+
+  serverListTable.appendChild(serverItem);
+}
+
 const pageElement = document.querySelector('#page');
 const pageTitleElement = document.querySelector('#pageTitle');
 const pageContentElement = document.querySelector('#pageContent');
@@ -203,8 +343,8 @@ customElements.define('game-page', class extends HTMLElement {
  * and setting up the event listeners for mounting and unmounting content.
  */
 function initialize() {
+  // Setup mountable content page
   GameUI.LoadMountableContentInfo(function (registeredMountableContent) {
-    // Get the content page
     const contentPage = registeredPages.get('content');
 
     contentPage.setInitFunction(() => {
@@ -365,6 +505,108 @@ function initialize() {
       });
     });
   });
+
+  // Setup the server list page
+  const serverBrowserPage = registeredPages.get('server-browser');
+
+  serverBrowserPage.setInitFunction(() => {
+    const refreshAction = pageContent.querySelector('#refreshAction');
+
+    function refresh() {
+      const serverListContainer = document.getElementById('server-list-container');
+      const tableBodies = serverListContainer.querySelectorAll('table tbody');
+
+      // Clear all table bodies
+      tableBodies.forEach(body => {
+        body.innerHTML = '';
+      });
+
+      window.GameUI.CancelServerListRequest();
+
+      window.GameUI.RequestServerList(function (wasSuccessful) {
+        console.log('(Refresh) Server list requested', wasSuccessful);
+      });
+    }
+
+    refresh();
+
+    refreshAction.addEventListener('click', function () {
+      refresh();
+    });
+
+    const tabButtons = document.querySelectorAll('.server-tab-button');
+    const tabContents = document.querySelectorAll('.server-tab-content');
+    let activeTab = 'internet';
+
+    tabButtons.forEach(button => {
+      button.addEventListener('click', function () {
+        // Skip for legacy browser tab which uses the direct command
+        if (this.id === 'tab-legacy') return;
+
+        // Remove active class from all buttons
+        tabButtons.forEach(btn => {
+          btn.classList.remove('bg-primary-600');
+          btn.classList.add('bg-white/10');
+        });
+
+        this.classList.remove('bg-white/10');
+        this.classList.add('bg-primary-600');
+
+        // Hide all tab contents
+        tabContents.forEach(content => {
+          content.classList.add('hidden');
+        });
+
+        // Show the corresponding tab content
+        const tabId = this.id.replace('tab-', '');
+        activeTab = tabId;
+        document.getElementById('content-' + tabId).classList.remove('hidden');
+      });
+    });
+
+    // Search input filter
+    const searchInput = document.querySelector('input.server-search');
+    const searchButton = searchInput.nextElementSibling;
+
+    searchButton.addEventListener('click', function () {
+      const searchTerm = searchInput.value.toLowerCase();
+      const allServerRows = document.querySelectorAll('#content-' + activeTab + ' tbody tr');
+
+      allServerRows.forEach(row => {
+        const serverName = row.querySelector('.server-name')
+          .textContent
+          .toLowerCase();
+        const gamemode = row.querySelector('.server-gamemode')
+          .textContent
+          .toLowerCase();
+
+        if (serverName.includes(searchTerm) || gamemode.includes(searchTerm)) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
+      });
+    });
+
+    // Filter by gamemode
+    const searchFilter = document.querySelector('select.server-filter');
+    searchFilter.addEventListener('change', function () {
+      const selectedFilter = searchFilter.value.toLowerCase();
+      const allServerRows = document.querySelectorAll('#content-' + activeTab + ' tbody tr');
+
+      allServerRows.forEach(row => {
+        const serverType = row.querySelector('.server-gamemode')
+          .textContent
+          .toLowerCase();
+
+        if (selectedFilter === 'all' || serverType === selectedFilter) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
+      });
+    });
+  });
 }
 
 window.addEventListener('interop:ready', () => {
@@ -376,6 +618,8 @@ window.addEventListener('interop:ready', () => {
 
 // When working in the browser we want to mock the GameUI API
 window.addEventListener('interop:installmock', () => {
+  let refreshInterval;
+
   window.GameUI = {
     MountGameContent: function (value, callback) {
       console.log(`Mocking mounting content ${value}`);
@@ -490,6 +734,177 @@ window.addEventListener('interop:installmock', () => {
       setTimeout(() => {
         callback(true);
       }, 2000);
+    },
+
+    ModifyFavoriteGame: function (serverFavoriteInfo, callback) {
+      console.log(`Mocking modify favorite game:`, serverFavoriteInfo);
+      setTimeout(() => {
+        callback(true);
+      }, 1000);
+    },
+
+    ConnectToServer: function (serverInfo, callback) {
+      console.log(`Mocking connect to server:`, serverInfo);
+      setTimeout(() => {
+        callback(true);
+      }, 1000);
+    },
+
+    RequestServerList: function (callback) {
+      callback(true);
+
+      // Start calling the server list functions with mock data
+      const mockServerInfo = [
+        {
+          serverAddress: '192.168.123.1:27015',
+          serverIp: 3232267009,
+          serverPort: 27015,
+          serverPortQuery: 27001,
+          serverPing: 25,
+          serverHostName: '[US-East] Official Experiment Server',
+          serverGameDirectory: 'experiment',
+          serverMap: 'exp_cascade_falls',
+          serverGameDescription: 'Team Deathmatch',
+          serverAppId: 243750,
+          serverPlayers: 24,
+          serverMaxPlayers: 32,
+          serverBotPlayers: 0,
+          serverHasPassword: false,
+          serverIsSecure: true,
+          serverTimeLastPlayed: 1631870400,
+          serverVersion: 1,
+          serverGameTags: 'teamdeathmatch,official',
+          serverSteamId: '76561198000000000',
+          serverTab: 'internet',
+        },
+        {
+          serverAddress: '192.168.123.1:27015',
+          serverIp: 3232267009,
+          serverPort: 27015,
+          serverPortQuery: 27001,
+          serverPing: 50,
+          serverHostName: 'Experiment Pro League #1',
+          serverGameDirectory: 'experiment',
+          serverMap: 'exp_orbital_station',
+          serverGameDescription: 'Capture the Flag',
+          serverAppId: 243750,
+          serverPlayers: 12,
+          serverMaxPlayers: 16,
+          serverBotPlayers: 0,
+          serverHasPassword: false,
+          serverIsSecure: true,
+          serverTimeLastPlayed: 1631870400,
+          serverVersion: 1,
+          serverGameTags: 'ctf,proleague',
+          serverSteamId: '76561198000000001',
+          serverTab: 'internet',
+        },
+        {
+          serverAddress: '192.168.123.1:27015',
+          serverIp: 3232267009,
+          serverPort: 27015,
+          serverPortQuery: 27001,
+          serverPing: 75,
+          serverHostName: '[EU] DevTest Server',
+          serverGameDirectory: 'experiment',
+          serverMap: 'exp_metropolis',
+          serverGameDescription: 'Control Point',
+          serverAppId: 243750,
+          serverPlayers: 8,
+          serverMaxPlayers: 16,
+          serverBotPlayers: 0,
+          serverHasPassword: false,
+          serverIsSecure: true,
+          serverTimeLastPlayed: 1631870400,
+          serverVersion: 1,
+          serverGameTags: 'controlpoint,devtest',
+          serverSteamId: '76561198000000002',
+          serverTab: 'internet',
+        },
+        /*
+          History and favorites information starts sparse, but will be filled
+          in once the server list request is complete.
+        */
+        {
+          serverAppId: 243750,
+          serverIp: 3229318011, // 192.123.123.123
+          serverPort: 27015,
+          serverPortQuery: 27001,
+          serverTab: 'favorites',
+        },
+        {
+          serverAppId: 243750,
+          serverIp: 3242345025, // 192.321.321.321
+          serverPort: 27015,
+          serverIpQuery: 3242345025,
+          serverPortQuery: 27001,
+          serverTab: 'history',
+        },
+        /*
+          Mock data to fill in the rest of the favorites and history, which
+          is matched by the serverIp and serverPort.
+         */
+        {
+          serverAddress: '192.123.123.123:27015',
+          serverIp: 3229318011,
+          serverPort: 27015,
+          serverPortQuery: 27001,
+          serverPing: 100,
+          serverHostName: 'My Favorite Server',
+          serverGameDirectory: 'experiment',
+          serverMap: 'exp_cascade_falls',
+          serverGameDescription: 'Team Deathmatch',
+          serverPlayers: 16,
+          serverMaxPlayers: 24,
+          serverBotPlayers: 0,
+          serverHasPassword: false,
+          serverIsSecure: true,
+          serverTimeLastPlayed: 1631870400,
+          serverVersion: 1,
+          serverGameTags: 'teamdeathmatch,favorite',
+          serverSteamId: '76561198000000003',
+          serverTab: 'internet',
+        },
+        {
+          serverAddress: '192.321.321.321:27015',
+          serverIp: 3242345025,
+          serverPort: 27015,
+          serverPortQuery: 27001,
+          serverPing: 150,
+          serverHostName: 'My History Server',
+          serverGameDirectory: 'experiment',
+          serverMap: 'exp_cascade_falls',
+          serverGameDescription: 'Team Deathmatch',
+          serverPlayers: 16,
+          serverMaxPlayers: 24,
+          serverBotPlayers: 0,
+          serverHasPassword: false,
+          serverIsSecure: true,
+          serverTimeLastPlayed: 1631870400,
+          serverVersion: 1,
+          serverGameTags: 'teamdeathmatch,history',
+          serverSteamId: '76561198000000004',
+          serverTab: 'internet',
+        },
+      ];
+
+      let index = 0;
+
+      refreshInterval = setInterval(() => {
+        if (index >= mockServerInfo.length) {
+          clearInterval(refreshInterval);
+          return;
+        }
+
+        const serverInfo = mockServerInfo[index];
+
+        window.ServerListAdd(serverInfo);
+        index++;
+      }, 300);
+    },
+
+    CancelServerListRequest: function () {
+      clearInterval(refreshInterval);
     },
   };
 });
