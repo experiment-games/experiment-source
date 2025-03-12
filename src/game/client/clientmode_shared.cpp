@@ -72,6 +72,8 @@ extern ConVar replay_rendersetting_renderglow;
 #include "luamanager.h"
 #endif
 
+#include <mainmenu.h>
+
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
@@ -436,14 +438,16 @@ void ClientModeShared::Init()
 
     if ( gameUIFactory )
     {
-        IGameUI *pGameUI = ( IGameUI * )gameUIFactory( GAMEUI_INTERFACE_VERSION, NULL );
-        if ( pGameUI )
+        m_pGameUI = ( IGameUI * )gameUIFactory( GAMEUI_INTERFACE_VERSION, NULL );
+        if ( m_pGameUI )
         {
             g_pMapLoadingPanel = new CMapLoadBG( "Background" );
             g_pMapLoadingPanel->InvalidateLayout( false, true );
             g_pMapLoadingPanel->SetVisible( false );
             g_pMapLoadingPanel->MakePopup( false );
-            pGameUI->SetLoadingBackgroundDialog( g_pMapLoadingPanel->GetVPanel() );
+            m_pGameUI->SetLoadingBackgroundDialog( g_pMapLoadingPanel->GetVPanel() );
+
+            CBaseMenuPanel::Init();
         }
     }
 }

@@ -61,23 +61,71 @@ function ServerListAdd(info) {
   }
 
   const serverListTable = serverList.querySelector('table tbody');
+
+  let serverAddress = info.serverAddress;
+
+  function setServerItemData(serverItem) {
+    const players = info.serverPlayers;
+    const maxPlayers = info.serverMaxPlayers;
+    const ping = info.serverPing;
+    const nameEl = serverItem.querySelector('.server-name');
+
+    if (info.serverHostName) {
+      nameEl.textContent = info.serverHostName;
+    } else {
+      nameEl.textContent = `Loading ${serverAddress}...`;
+    }
+
+    serverItem.querySelector('.server-players').textContent = players ? `${players}/${maxPlayers}` : '';
+    serverItem.querySelector('.server-map').textContent = info.serverMap ?? '';
+    serverItem.querySelector('.server-gamemode').textContent = info.serverGameDescription ?? '';
+
+    const pingEl = serverItem.querySelector('.server-ping');
+
+    if (ping) {
+      pingEl.textContent = ping + 'ms';
+
+      if (ping < 50) {
+        pingEl.classList.add('text-green-500');
+      } else if (ping < 100) {
+        pingEl.classList.add('text-yellow-500');
+      } else {
+        pingEl.classList.add('text-red-500');
+      }
+    } else {
+      pingEl.textContent = '';
+    }
+  }
+
   const serverItem = serverBrowserItemTemplate.content.firstElementChild.cloneNode(true);
 
-  serverItem.querySelector('.server-name').textContent = info.serverHostName;
-  serverItem.querySelector('.server-players').textContent = `${info.serverPlayers}/${info.serverMaxPlayers}`;
-  serverItem.querySelector('.server-map').textContent = info.serverMap;
-  serverItem.querySelector('.server-gamemode').textContent = info.serverGameDescription;
+  // convert the serverIp decimal to IP address
+  if (!serverAddress) {
+    const ip = info.serverIp;
+    const ipA = (ip >> 24) & 0xFF;
+    const ipB = (ip >> 16) & 0xFF;
+    const ipC = (ip >> 8) & 0xFF;
+    const ipD = ip & 0xFF;
 
-  const pingEl = serverItem.querySelector('.server-ping');
-  pingEl.textContent = info.serverPing + 'ms';
+    serverAddress = `${ipA}.${ipB}.${ipC}.${ipD}:${info.serverPort}`;
 
-  if (info.serverPing < 50) {
-    pingEl.classList.add('text-green-500');
-  } else if (info.serverPing < 100) {
-    pingEl.classList.add('text-yellow-500');
+    // If this is sparse data, mark it as loading and update it when the full data is available
+    serverItem.classList.add('text-gray-500', 'italic', 'opacity-70');
+    serverItem.dataset.serverIp = info.serverIp;
+    serverItem.dataset.serverPort = info.serverPort;
+    serverItem.dataset.serverPortQuery = info.serverPortQuery;
   } else {
-    pingEl.classList.add('text-red-500');
+    // If this is full data, find the related sparse data and update it
+    const sparseItems = serverListContainer.querySelectorAll(`tr[data-server-ip="${info.serverIp}"][data-server-port="${info.serverPort}"]`);
+
+    sparseItems.forEach(sparseItem => {
+      sparseItem.classList.remove('text-gray-500', 'italic', 'opacity-70');
+
+      setServerItemData(sparseItem);
+    });
   }
+
+  setServerItemData(serverItem);
 
   if (info.serverTab === 'favorites') {
     serverItem.querySelector('.server-action-favorite').classList.add('hidden');
@@ -96,7 +144,7 @@ function ServerListAdd(info) {
         port: info.serverPort,
         portQuery: info.serverPortQuery,
       }, function (wasSuccessful) {
-        console.log('Favorite server result:', wasSuccessful);
+        // TODO: Refresh only the favorites tab
       })
     });
 
@@ -110,7 +158,9 @@ function ServerListAdd(info) {
         portQuery: info.serverPortQuery,
         isRemoving: true,
       }, function (wasSuccessful) {
-        console.log('Unfavorite server result:', wasSuccessful);
+        if (wasSuccessful) {
+          serverItem.remove();
+        }
       })
     });
 
@@ -460,8 +510,28 @@ function initialize() {
   const serverBrowserPage = registeredPages.get('server-browser');
 
   serverBrowserPage.setInitFunction(() => {
-    window.GameUI.RequestServerList(function (wasSuccessful) {
-      console.log('Server list requested:', wasSuccessful);
+    const refreshAction = pageContent.querySelector('#refreshAction');
+
+    function refresh() {
+      const serverListContainer = document.getElementById('server-list-container');
+      const tableBodies = serverListContainer.querySelectorAll('table tbody');
+
+      // Clear all table bodies
+      tableBodies.forEach(body => {
+        body.innerHTML = '';
+      });
+
+      window.GameUI.CancelServerListRequest();
+
+      window.GameUI.RequestServerList(function (wasSuccessful) {
+        console.log('(Refresh) Server list requested', wasSuccessful);
+      });
+    }
+
+    refresh();
+
+    refreshAction.addEventListener('click', function () {
+      refresh();
     });
 
     const tabButtons = document.querySelectorAll('.server-tab-button');
@@ -548,6 +618,8 @@ window.addEventListener('interop:ready', () => {
 
 // When working in the browser we want to mock the GameUI API
 window.addEventListener('interop:installmock', () => {
+  let refreshInterval;
+
   window.GameUI = {
     MountGameContent: function (value, callback) {
       console.log(`Mocking mounting content ${value}`);
@@ -687,8 +759,6 @@ window.addEventListener('interop:installmock', () => {
           serverAddress: '192.168.123.1:27015',
           serverIp: 3232267009,
           serverPort: 27015,
-          serverAddressQuery: '192.168.123.1:27001',
-          serverIpQuery: 3232267009,
           serverPortQuery: 27001,
           serverPing: 25,
           serverHostName: '[US-East] Official Experiment Server',
@@ -711,8 +781,6 @@ window.addEventListener('interop:installmock', () => {
           serverAddress: '192.168.123.1:27015',
           serverIp: 3232267009,
           serverPort: 27015,
-          serverAddressQuery: '192.168.123.1:27001',
-          serverIpQuery: 3232267009,
           serverPortQuery: 27001,
           serverPing: 50,
           serverHostName: 'Experiment Pro League #1',
@@ -735,8 +803,6 @@ window.addEventListener('interop:installmock', () => {
           serverAddress: '192.168.123.1:27015',
           serverIp: 3232267009,
           serverPort: 27015,
-          serverAddressQuery: '192.168.123.1:27001',
-          serverIpQuery: 3232267009,
           serverPortQuery: 27001,
           serverPing: 75,
           serverHostName: '[EU] DevTest Server',
@@ -755,62 +821,78 @@ window.addEventListener('interop:installmock', () => {
           serverSteamId: '76561198000000002',
           serverTab: 'internet',
         },
+        /*
+          History and favorites information starts sparse, but will be filled
+          in once the server list request is complete.
+        */
         {
-          serverAddress: '192.168.123.1:27015',
-          serverIp: 3232267009,
-          serverPort: 27015,
-          serverAddressQuery: '192.168.123.1:27001',
-          serverIpQuery: 3232267009,
-          serverPortQuery: 27001,
-          serverPing: 100,
-          serverHostName: 'TheNoob\'s Custom Server',
-          serverGameDirectory: 'experiment',
-          serverMap: 'exp_desert_ruins',
-          serverGameDescription: 'Custom',
           serverAppId: 243750,
-          serverPlayers: 4,
-          serverMaxPlayers: 10,
-          serverBotPlayers: 0,
-          serverHasPassword: false,
-          serverIsSecure: true,
-          serverTimeLastPlayed: 1631870400,
-          serverVersion: 1,
-          serverGameTags: 'custom,thenoob',
-          serverSteamId: '76561198000000003',
+          serverIp: 3229318011, // 192.123.123.123
+          serverPort: 27015,
+          serverPortQuery: 27001,
           serverTab: 'favorites',
         },
         {
-          serverAddress: '192.168.123.1:27015',
-          serverIp: 3232267009,
-          serverPort: 27015,
-          serverAddressQuery: '192.168.123.1:27001',
-          serverIpQuery: 3232267009,
-          serverPortQuery: 27001,
-          serverPing: 150,
-          serverHostName: '[ASIA] Experiment Community',
-          serverGameDirectory: 'experiment',
-          serverMap: 'exp_volcano',
-          serverGameDescription: 'Team Deathmatch',
           serverAppId: 243750,
-          serverPlayers: 30,
-          serverMaxPlayers: 32,
+          serverIp: 3242345025, // 192.321.321.321
+          serverPort: 27015,
+          serverIpQuery: 3242345025,
+          serverPortQuery: 27001,
+          serverTab: 'history',
+        },
+        /*
+          Mock data to fill in the rest of the favorites and history, which
+          is matched by the serverIp and serverPort.
+         */
+        {
+          serverAddress: '192.123.123.123:27015',
+          serverIp: 3229318011,
+          serverPort: 27015,
+          serverPortQuery: 27001,
+          serverPing: 100,
+          serverHostName: 'My Favorite Server',
+          serverGameDirectory: 'experiment',
+          serverMap: 'exp_cascade_falls',
+          serverGameDescription: 'Team Deathmatch',
+          serverPlayers: 16,
+          serverMaxPlayers: 24,
           serverBotPlayers: 0,
           serverHasPassword: false,
           serverIsSecure: true,
           serverTimeLastPlayed: 1631870400,
           serverVersion: 1,
-          serverGameTags: 'teamdeathmatch,community',
+          serverGameTags: 'teamdeathmatch,favorite',
+          serverSteamId: '76561198000000003',
+          serverTab: 'internet',
+        },
+        {
+          serverAddress: '192.321.321.321:27015',
+          serverIp: 3242345025,
+          serverPort: 27015,
+          serverPortQuery: 27001,
+          serverPing: 150,
+          serverHostName: 'My History Server',
+          serverGameDirectory: 'experiment',
+          serverMap: 'exp_cascade_falls',
+          serverGameDescription: 'Team Deathmatch',
+          serverPlayers: 16,
+          serverMaxPlayers: 24,
+          serverBotPlayers: 0,
+          serverHasPassword: false,
+          serverIsSecure: true,
+          serverTimeLastPlayed: 1631870400,
+          serverVersion: 1,
+          serverGameTags: 'teamdeathmatch,history',
           serverSteamId: '76561198000000004',
-          serverTab: 'history',
+          serverTab: 'internet',
         },
       ];
 
       let index = 0;
-      let interval;
 
-      interval = setInterval(() => {
+      refreshInterval = setInterval(() => {
         if (index >= mockServerInfo.length) {
-          clearInterval(interval);
+          clearInterval(refreshInterval);
           return;
         }
 
@@ -819,6 +901,10 @@ window.addEventListener('interop:installmock', () => {
         window.ServerListAdd(serverInfo);
         index++;
       }, 300);
+    },
+
+    CancelServerListRequest: function () {
+      clearInterval(refreshInterval);
     },
   };
 });

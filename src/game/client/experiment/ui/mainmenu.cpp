@@ -19,13 +19,9 @@
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
+#include <clientmode_experimentnormal.h>
 
 using namespace vgui;
-
-// Based on: https://developer.valvesoftware.com/wiki/Override_GameUI
-// See interface.h/.cpp for specifics: basically this ensures that we actually Sys_UnloadModule the dll and that we don't call Sys_LoadModule
-//  over and over again.
-static CDllDemandLoader g_GameUIDLL( "GameUI" );
 
 CBaseMenuPanel *g_BaseMenuPanel = NULL;
 
@@ -61,34 +57,38 @@ CBaseMenuPanel::CBaseMenuPanel()
 {
     g_BaseMenuPanel = this;
 
-    SetParent( enginevgui->GetPanel( PANEL_GAMEUIDLL ) );
-
-    SetBounds( 0, 0, 640, 480 );
-    SetPaintBorderEnabled( false );
-    SetPaintBackgroundEnabled( true );
-    SetPaintEnabled( true );
-
-    SetMouseInputEnabled( true );
-    SetKeyBoardInputEnabled( true );
-
     SetVisible( true );
     SetAutoDelete( false );
-    SetProportional( true );
-    SetCursor( dc_arrow );
 
-    m_pGameUI = NULL;
     m_eBackgroundState = BACKGROUND_INITIAL;
+
+    // Set our initial size
+    int screenWide, screenTall;
+    surface()->GetScreenSize( screenWide, screenTall );
+    SetBounds( 0, 0, screenWide, screenTall );
+
+    AddActionSignalTarget( this );
 
     // Add a HTML panel that takes up the whole screen
     // This is where the main menu will be displayed
-    m_pMainMenu = new CMainMenu( this );
+    m_pHTML = new MainMenuHTML( this, "MainMenuHTML" );
+    m_pHTML->AddCustomURLHandler( "mainmenu", this );
+    m_pHTML->AddCustomURLHandler( "gamemenucommand", this );
+    m_pHTML->OpenURL( "asset://experiment/menus/main.html", NULL );
+
+    vgui::ivgui()->AddTickSignal( GetVPanel(), 50 );
+
+    AttachToGameUI();
 }
 
 CBaseMenuPanel::~CBaseMenuPanel()
 {
-    // m_pGameUI->SetMainMenuOverride( NULL );
-    // m_pGameUI = NULL;
-    g_GameUIDLL.Unload();
+    if ( GetClientModeExperimentNormal()->GameUI() )
+    {
+        GetClientModeExperimentNormal()->GameUI()->SetMainMenuOverride( NULL );
+    }
+
+    vgui::ivgui()->RemoveTickSignal( GetVPanel() );
 }
 
 CBaseMenuPanel *CBaseMenuPanel::Init()
@@ -102,33 +102,32 @@ CBaseMenuPanel *CBaseMenuPanel::Init()
 
 void CBaseMenuPanel::AttachToGameUI()
 {
-    // if ( LoadGameUI() )
-    //{
-    //     m_pGameUI->SetMainMenuOverride( GetVPanel() );
-    // }
-}
-
-bool CBaseMenuPanel::LoadGameUI()
-{
-    if ( !m_pGameUI )
+    if ( GetClientModeExperimentNormal()->GameUI() )
     {
-        CreateInterfaceFn gameUIFactory = g_GameUIDLL.GetFactory();
-
-        if ( gameUIFactory )
-        {
-            m_pGameUI = ( IGameUI * )gameUIFactory( GAMEUI_INTERFACE_VERSION, NULL );
-
-            if ( !m_pGameUI )
-            {
-                return false;
-            }
-        }
-        else
-        {
-            return false;
-        }
+        GetClientModeExperimentNormal()->GameUI()->SetMainMenuOverride( GetVPanel() );
     }
 
+    SetKeyBoardInputEnabled( true );
+    SetMouseInputEnabled( true );
+    SetCursor( dc_arrow );
+}
+
+void CBaseMenuPanel::PerformLayout()
+{
+    BaseClass::PerformLayout();
+
+    int wide, tall;
+    vgui::surface()->GetScreenSize( wide, tall );
+    SetSize( wide, tall );
+
+    if ( m_pHTML )
+    {
+        m_pHTML->SetBounds( 0, 0, wide, tall );
+    }
+}
+
+bool CBaseMenuPanel::IsVisible( void )
+{
     return true;
 }
 
@@ -141,9 +140,28 @@ void CBaseMenuPanel::SetBackgroundRenderState( EBackgroundState state )
 
     m_eBackgroundState = state;
 
-    if ( m_pMainMenu )
+    char szScript[256];
+    Q_snprintf( szScript, sizeof( szScript ), "SetBackgroundRenderState( %d )", state );
+
+    if ( m_pHTML )
+        m_pHTML->RunJavascript( szScript );
+
+    // if ( state == BACKGROUND_DISCONNECTED || state == BACKGROUND_MAINMENU )
+    // {
+    //     if ( state == BACKGROUND_MAINMENU )
+    //     {
+    //         if ( m_pHTML )
+    //             m_pHTML->RunJavascript( "SetBackgroundRenderState( BACKGROUND_MAINMENU )" );
+    //     }
+    // }
+    // else
+    if ( state == BACKGROUND_LOADING )
     {
-        m_pMainMenu->SetBackgroundRenderState( state );
+        SetAlpha( 0 );
+    }
+    else if ( state == BACKGROUND_LEVEL )
+    {
+        SetAlpha( 255 );
     }
 }
 
@@ -241,278 +259,300 @@ static void GetGamemodes( CUtlVector< CUtlString > &outGamemodes )
     g_pFullFileSystem->FindClose( findHandle );
 }
 
-class MainMenuHTML : public HTML, public ISteamMatchmakingServerListResponse
+void MainMenuHTML::OnInstallJavaScriptInterop()
 {
-    DECLARE_CLASS_SIMPLE( MainMenuHTML, HTML );
+    AddJavascriptObject( "GameUI" );
+    AddJavascriptObjectCallback( "GameUI", "LoadMountableContentInfo" );
+    AddJavascriptObjectCallback( "GameUI", "LoadServerVariables" );
+    AddJavascriptObjectCallback( "GameUI", "MountGameContent" );
+    AddJavascriptObjectCallback( "GameUI", "UnmountGameContent" );
+    AddJavascriptObjectCallback( "GameUI", "HostServer" );
+    AddJavascriptObjectCallback( "GameUI", "RequestServerList" );
+    AddJavascriptObjectCallback( "GameUI", "CancelServerListRequest" );
+    AddJavascriptObjectCallback( "GameUI", "ModifyFavoriteGame" );
+    AddJavascriptObjectCallback( "GameUI", "ConnectToServer" );
+}
 
-   public:
-    MainMenuHTML( Panel *parent, const char *name, bool allowJavaScript = true )
-        : HTML( parent, name, allowJavaScript )
+void MainMenuHTML::OnJavaScriptCallback( KeyValues *pData )
+{
+    const char *pszObject = pData->GetString( "object" );
+    const char *pszProperty = pData->GetString( "property" );
+    int callbackId = pData->GetInt( "callbackId" );
+    // KeyValues *pArguments = pData->FindKey( "arguments" );
+
+    // for ( KeyValues *pArg = pArguments->GetFirstSubKey(); pArg; pArg = pArg->GetNextKey() )
+    //{
+    //     DevMsg( "Argument: %s (inside %s.%s call)\n", pArg->GetName(), pszObject, pszProperty );
+    // }
+
+    // This panel only handles GameUI callbacks
+    if ( Q_strcmp( pszObject, "GameUI" ) != 0 )
+        return;
+
+    if ( Q_strcmp( pszProperty, "LoadMountableContentInfo" ) == 0 )
     {
+        KeyValues *pParameters = new KeyValues( "parameters" );
+        CUtlVector< mountableGame_t > &mountableGames = GetMountableGames();
+
+        KeyValues *pMountableGames = new KeyValues( "mountableGames" );
+        pParameters->AddSubKey( pMountableGames );
+
+        for ( int i = 0; i < mountableGames.Count(); i++ )
+        {
+            mountableGame_t &game = mountableGames[i];
+
+            char icon[MAX_PATH];
+            Q_snprintf( icon, sizeof( icon ), "images/game-icons/%s.png", game.directoryName );
+
+            KeyValues *pGame = new KeyValues( "" );
+            pGame->SetString( "icon", icon );
+            pGame->SetString( "name", game.name );
+            pGame->SetInt( "id", game.appId );
+            pGame->SetBool( "mounted", game.isMounted );
+            pMountableGames->AddSubKey( pGame );
+        }
+
+        CallJavascriptObjectCallback( callbackId, pParameters );
     }
-
-    void RequestServerList( GameServerType iType = GameServerType::GS_INTERNET );
-
-    // ISteamMatchmakingServerListResponse
-    virtual void ServerResponded( HServerListRequest hRequest, int iServer );
-    virtual void ServerFailedToRespond( HServerListRequest hRequest, int iServer );
-    virtual void RefreshComplete( HServerListRequest hRequest, EMatchMakingServerResponse response );
-
-   private:
-    void AddServerToList( GameServerType iType, const gameserveritem_t &serverInfo );
-
-    HServerListRequest m_hSteamRequest;
-    GameServerType m_iRequestType;
-    bool m_bIsSearching;
-
-   protected:
-    virtual void OnInstallJavaScriptInterop() OVERRIDE
+    else if ( Q_strcmp( pszProperty, "LoadServerVariables" ) == 0 )
     {
-        AddJavascriptObject( "GameUI" );
-        AddJavascriptObjectCallback( "GameUI", "LoadMountableContentInfo" );
-        AddJavascriptObjectCallback( "GameUI", "LoadServerVariables" );
-        AddJavascriptObjectCallback( "GameUI", "MountGameContent" );
-        AddJavascriptObjectCallback( "GameUI", "UnmountGameContent" );
-        AddJavascriptObjectCallback( "GameUI", "HostServer" );
-        AddJavascriptObjectCallback( "GameUI", "RequestServerList" );
-        AddJavascriptObjectCallback( "GameUI", "ModifyFavoriteGame" );
-        AddJavascriptObjectCallback( "GameUI", "ConnectToServer" );
+        KeyValues *pParameters = new KeyValues( "parameters" );
+
+        CUtlVector< CUtlString > maps;
+        GetMaps( maps );
+
+        KeyValues *pMaps = new KeyValues( "maps" );
+        pParameters->AddSubKey( pMaps );
+
+        for ( int i = 0; i < maps.Count(); i++ )
+        {
+            CUtlString map = maps[i];
+
+            KeyValues *pMap = new KeyValues( "" );
+            pMap->SetString( "id", map );
+            pMaps->AddSubKey( pMap );
+        }
+
+        KeyValues *pGamemodes = new KeyValues( "gamemodes" );
+        pParameters->AddSubKey( pGamemodes );
+
+        CUtlVector< CUtlString > gamemodes;
+        GetGamemodes( gamemodes );
+
+        for ( int i = 0; i < gamemodes.Count(); i++ )
+        {
+            CUtlString gamemode = gamemodes[i];
+
+            KeyValues *pGamemode = new KeyValues( "" );
+            pGamemode->SetString( "id", gamemode );
+            pGamemodes->AddSubKey( pGamemode );
+        }
+
+        CallJavascriptObjectCallback( callbackId, pParameters );
     }
-
-    virtual void OnJavaScriptCallback( KeyValues *pData ) OVERRIDE
+    else if ( Q_strcmp( pszProperty, "MountGameContent" ) == 0 )
     {
-        const char *pszObject = pData->GetString( "object" );
-        const char *pszProperty = pData->GetString( "property" );
-        int callbackId = pData->GetInt( "callbackId" );
-        // KeyValues *pArguments = pData->FindKey( "arguments" );
+        KeyValues *pArguments = pData->FindKey( "arguments" );
+        int nGameAppId = pArguments->GetInt( "1" );
 
-        // for ( KeyValues *pArg = pArguments->GetFirstSubKey(); pArg; pArg = pArg->GetNextKey() )
+        KeyValues *pResponse = new KeyValues( "parameters" );
+        pResponse->SetBool( "wasSuccessful", MountGameContentByAppId( nGameAppId ) );
+        CallJavascriptObjectCallback( callbackId, pResponse );
+    }
+    else if ( Q_strcmp( pszProperty, "UnmountGameContent" ) == 0 )
+    {
+        KeyValues *pArguments = pData->FindKey( "arguments" );
+        int nGameAppId = pArguments->GetInt( "1" );
+
+        KeyValues *pResponse = new KeyValues( "parameters" );
+        pResponse->SetBool( "wasSuccessful", UnmountGameContentByAppId( nGameAppId ) );
+        CallJavascriptObjectCallback( callbackId, pResponse );
+    }
+    else if ( Q_strcmp( pszProperty, "HostServer" ) == 0 )
+    {
+        KeyValues *pArguments = pData->FindKey( "arguments" );
+        KeyValues *config = pArguments->FindKey( "1" );
+
+        const char *hostName = config->GetString( "name" );
+        const char *gamemode = config->GetString( "gamemode" );
+        const char *map = config->GetString( "map" );
+        const char *maxPlayers = config->GetString( "maxPlayers" );
+        const char *password = config->GetString( "password" );
+
+        // TODO: Save preferences for map and gamemode (copy logic from game\client\experiment\ui\createmultiplayergamedialog.cpp)
+        // if ( m_pSavedData )
         //{
-        //     DevMsg( "Argument: %s (inside %s.%s call)\n", pArg->GetName(), pszObject, pszProperty );
-        // }
+        //    if ( m_pServerPage->IsRandomMapSelected() )
+        //    {
+        //        // it's set to random map, just save an
+        //        m_pSavedData->SetString( "map", "" );
+        //    }
+        //    else
+        //    {
+        //        m_pSavedData->SetString( "map", map );
+        //    }
 
-        // This panel only handles GameUI callbacks
-        if ( Q_strcmp( pszObject, "GameUI" ) != 0 )
-            return;
+        //    // save config to a file
+        //    m_pSavedData->SaveToFile( g_pFullFileSystem, "ServerConfig.vdf", "GAME" );
+        //}
 
-        if ( Q_strcmp( pszProperty, "LoadMountableContentInfo" ) == 0 )
-        {
-            KeyValues *pParameters = new KeyValues( "parameters" );
-            CUtlVector< mountableGame_t > &mountableGames = GetMountableGames();
+        // reset server enforced cvars
+        g_pCVar->RevertFlaggedConVars( FCVAR_REPLICATED );
 
-            KeyValues *pMountableGames = new KeyValues( "mountableGames" );
-            pParameters->AddSubKey( pMountableGames );
+        // Cheats were disabled; revert all cheat cvars to their default values.
+        // This must be done heading into multiplayer games because people can play
+        // demos etc and set cheat cvars with sv_cheats 0.
+        g_pCVar->RevertFlaggedConVars( FCVAR_CHEAT );
 
-            for ( int i = 0; i < mountableGames.Count(); i++ )
-            {
-                mountableGame_t &game = mountableGames[i];
+        char startCommand[1024];
 
-                char icon[MAX_PATH];
-                Q_snprintf( icon, sizeof( icon ), "images/game-icons/%s.png", game.directoryName );
+        // create the command to execute
+        Q_snprintf(
+            startCommand,
+            sizeof( startCommand ),
+            "disconnect\n"
+            "wait\n"
+            "wait\n"
+            "sv_lan 1\n"
+            "setmaster enable\n"
 
-                KeyValues *pGame = new KeyValues( "" );
-                pGame->SetString( "icon", icon );
-                pGame->SetString( "name", game.name );
-                pGame->SetInt( "id", game.appId );
-                pGame->SetBool( "mounted", game.isMounted );
-                pMountableGames->AddSubKey( pGame );
-            }
+            "maxplayers %i\n"
+            "sv_password \"%s\"\n"
+            "gamemode \"%s\"\n"
+            "hostname \"%s\"\n"
+            "progress_enable\n"
+            "map %s\n",
+            maxPlayers,
+            password,
+            gamemode,
+            hostName,
+            map );
 
-            CallJavascriptObjectCallback( callbackId, pParameters );
-        }
-        else if ( Q_strcmp( pszProperty, "LoadServerVariables" ) == 0 )
-        {
-            KeyValues *pParameters = new KeyValues( "parameters" );
+        engine->ClientCmd_Unrestricted( startCommand );
 
-            CUtlVector< CUtlString > maps;
-            GetMaps( maps );
-
-            KeyValues *pMaps = new KeyValues( "maps" );
-            pParameters->AddSubKey( pMaps );
-
-            for ( int i = 0; i < maps.Count(); i++ )
-            {
-                CUtlString map = maps[i];
-
-                KeyValues *pMap = new KeyValues( "" );
-                pMap->SetString( "id", map );
-                pMaps->AddSubKey( pMap );
-            }
-
-            KeyValues *pGamemodes = new KeyValues( "gamemodes" );
-            pParameters->AddSubKey( pGamemodes );
-
-            CUtlVector< CUtlString > gamemodes;
-            GetGamemodes( gamemodes );
-
-            for ( int i = 0; i < gamemodes.Count(); i++ )
-            {
-                CUtlString gamemode = gamemodes[i];
-
-                KeyValues *pGamemode = new KeyValues( "" );
-                pGamemode->SetString( "id", gamemode );
-                pGamemodes->AddSubKey( pGamemode );
-            }
-
-            CallJavascriptObjectCallback( callbackId, pParameters );
-        }
-        else if ( Q_strcmp( pszProperty, "MountGameContent" ) == 0 )
-        {
-            KeyValues *pArguments = pData->FindKey( "arguments" );
-            int nGameAppId = pArguments->GetInt( "1" );
-
-            KeyValues *pResponse = new KeyValues( "parameters" );
-            pResponse->SetBool( "wasSuccessful", MountGameContentByAppId( nGameAppId ) );
-            CallJavascriptObjectCallback( callbackId, pResponse );
-        }
-        else if ( Q_strcmp( pszProperty, "UnmountGameContent" ) == 0 )
-        {
-            KeyValues *pArguments = pData->FindKey( "arguments" );
-            int nGameAppId = pArguments->GetInt( "1" );
-
-            KeyValues *pResponse = new KeyValues( "parameters" );
-            pResponse->SetBool( "wasSuccessful", UnmountGameContentByAppId( nGameAppId ) );
-            CallJavascriptObjectCallback( callbackId, pResponse );
-        }
-        else if ( Q_strcmp( pszProperty, "HostServer" ) == 0 )
-        {
-            KeyValues *pArguments = pData->FindKey( "arguments" );
-            KeyValues *config = pArguments->FindKey( "1" );
-
-            const char *hostName = config->GetString( "name" );
-            const char *gamemode = config->GetString( "gamemode" );
-            const char *map = config->GetString( "map" );
-            const char *maxPlayers = config->GetString( "maxPlayers" );
-            const char *password = config->GetString( "password" );
-
-            // TODO: Save preferences for map and gamemode (copy logic from game\client\experiment\ui\createmultiplayergamedialog.cpp)
-            // if ( m_pSavedData )
-            //{
-            //    if ( m_pServerPage->IsRandomMapSelected() )
-            //    {
-            //        // it's set to random map, just save an
-            //        m_pSavedData->SetString( "map", "" );
-            //    }
-            //    else
-            //    {
-            //        m_pSavedData->SetString( "map", map );
-            //    }
-
-            //    // save config to a file
-            //    m_pSavedData->SaveToFile( g_pFullFileSystem, "ServerConfig.vdf", "GAME" );
-            //}
-
-            // reset server enforced cvars
-            g_pCVar->RevertFlaggedConVars( FCVAR_REPLICATED );
-
-            // Cheats were disabled; revert all cheat cvars to their default values.
-            // This must be done heading into multiplayer games because people can play
-            // demos etc and set cheat cvars with sv_cheats 0.
-            g_pCVar->RevertFlaggedConVars( FCVAR_CHEAT );
-
-            char startCommand[1024];
-
-            // create the command to execute
-            Q_snprintf(
-                startCommand,
-                sizeof( startCommand ),
-                "disconnect\n"
-                "wait\n"
-                "wait\n"
-                "sv_lan 1\n"
-                "setmaster enable\n"
-
-                "maxplayers %i\n"
-                "sv_password \"%s\"\n"
-                "gamemode \"%s\"\n"
-                "hostname \"%s\"\n"
-                "progress_enable\n"
-                "map %s\n",
-                maxPlayers,
-                password,
-                gamemode,
-                hostName,
-                map );
-
-            engine->ClientCmd_Unrestricted( startCommand );
-
-            KeyValues *pResponse = new KeyValues( "parameters" );
-            pResponse->SetBool( "wasSuccessful", true );
-            CallJavascriptObjectCallback( callbackId, pResponse );
-        }
-        else if ( Q_strcmp( pszProperty, "RequestServerList" ) == 0 )
-        {
-            RequestServerList();
-
-            KeyValues *pResponse = new KeyValues( "parameters" );
-            pResponse->SetBool( "wasSuccessful", true );
-            CallJavascriptObjectCallback( callbackId, pResponse );
-        }
-        else if ( Q_strcmp( pszProperty, "ModifyFavoriteGame" ) == 0 )
-        {
-            KeyValues *pArguments = pData->FindKey( "arguments" );
-            KeyValues *serverToAdd = pArguments->FindKey( "1" );
-
-            int appId = serverToAdd->GetInt( "appId" );
-            int ip = serverToAdd->GetInt( "ip" );
-            int port = serverToAdd->GetInt( "port" );
-            int portQuery = serverToAdd->GetInt( "portQuery" );
-            bool isHistory = serverToAdd->GetBool( "isHistory", false );
-            bool isRemoving = serverToAdd->GetBool( "isRemoving", false );
-
-            ISteamMatchmaking *steamMM = SteamMatchmaking();
-            bool wasSuccessful;
-
-            if ( !isRemoving )
-            {
-                steamMM->AddFavoriteGame(
-                    appId,
-                    ip,
-                    port,
-                    portQuery,
-                    isHistory ? k_unFavoriteFlagHistory : k_unFavoriteFlagFavorite,
-                    time( NULL ) );
-                wasSuccessful = true;
-            }
-            else
-            {
-                wasSuccessful = steamMM->RemoveFavoriteGame(
-                    appId,
-                    ip,
-                    port,
-                    portQuery,
-                    isHistory ? k_unFavoriteFlagHistory : k_unFavoriteFlagFavorite );
-            }
-
-            KeyValues *pResponse = new KeyValues( "parameters" );
-            pResponse->SetBool( "wasSuccessful", wasSuccessful );
-            CallJavascriptObjectCallback( callbackId, pResponse );
-        }
-        else if ( Q_strcmp( pszProperty, "ConnectToServer" ) == 0 )
-        {
-            KeyValues *pArguments = pData->FindKey( "arguments" );
-            KeyValues *serverToConnect = pArguments->FindKey( "1" );
-
-            const char *address = serverToConnect->GetString( "address" );
-
-            char command[256];
-            Q_snprintf( command, sizeof( command ), "connect %s %s_%d\n", address );
-            engine->ClientCmd_Unrestricted( command );
-
-            KeyValues *pResponse = new KeyValues( "parameters" );
-            pResponse->SetBool( "wasSuccessful", true );
-            CallJavascriptObjectCallback( callbackId, pResponse );
-        }
+        KeyValues *pResponse = new KeyValues( "parameters" );
+        pResponse->SetBool( "wasSuccessful", true );
+        CallJavascriptObjectCallback( callbackId, pResponse );
     }
-};
+    else if ( Q_strcmp( pszProperty, "RequestServerList" ) == 0 )
+    {
+        RequestServerList();
+
+        // Fetch all favorited games
+        ISteamMatchmaking *steamMM = SteamMatchmaking();
+        int favoriteGameCount = steamMM->GetFavoriteGameCount();
+
+        for ( size_t i = 0; i < favoriteGameCount; i++ )
+        {
+            AppId_t appId;
+            uint32 ip;
+            uint16 port;
+            uint16 portQuery;
+            uint32 flags;
+            uint32 timeLastPlayed;
+
+            if ( steamMM->GetFavoriteGame( i, &appId, &ip, &port, &portQuery, &flags, &timeLastPlayed ) )
+            {
+                KeyValues *pServerInfo = new KeyValues( "" );
+
+                // This is the minimal data that will be displayed, once the server list refresh gathers
+                // more data, the HTML will update the row.
+                pServerInfo->SetInt( "serverAppId", appId );
+                pServerInfo->SetInt( "serverIp", ip );
+                pServerInfo->SetInt( "serverPort", port );
+                pServerInfo->SetInt( "serverPortQuery", portQuery );
+
+                if ( flags & k_unFavoriteFlagFavorite )
+                {
+                    pServerInfo->SetString( "serverTab", "favorites" );
+                }
+                else if ( flags & k_unFavoriteFlagHistory )
+                {
+                    pServerInfo->SetString( "serverTab", "history" );
+                }
+
+                char szJson[8096];
+                CJsonToKeyValues::ConvertKeyValuesToJson( pServerInfo, szJson, sizeof( szJson ) );
+
+                char szScript[8096];
+                Q_snprintf( szScript, sizeof( szScript ), "ServerListAdd(%s);", szJson );
+
+                RunJavascript( szScript );
+            }
+        }
+
+        KeyValues *pResponse = new KeyValues( "parameters" );
+        pResponse->SetBool( "wasSuccessful", true );
+        CallJavascriptObjectCallback( callbackId, pResponse );
+    }
+    else if ( Q_strcmp( pszProperty, "CancelServerListRequest" ) == 0 )
+    {
+        ISteamMatchmakingServers *steamMM = steamapicontext->SteamMatchmakingServers();
+        steamMM->CancelQuery( m_hSteamRequest );
+    }
+    else if ( Q_strcmp( pszProperty, "ModifyFavoriteGame" ) == 0 )
+    {
+        KeyValues *pArguments = pData->FindKey( "arguments" );
+        KeyValues *serverToAdd = pArguments->FindKey( "1" );
+
+        int appId = serverToAdd->GetInt( "appId" );
+        int ip = serverToAdd->GetInt( "ip" );
+        int port = serverToAdd->GetInt( "port" );
+        int portQuery = serverToAdd->GetInt( "portQuery" );
+        bool isHistory = serverToAdd->GetBool( "isHistory", false );
+        bool isRemoving = serverToAdd->GetBool( "isRemoving", false );
+
+        ISteamMatchmaking *steamMM = SteamMatchmaking();
+        bool wasSuccessful;
+
+        if ( !isRemoving )
+        {
+            steamMM->AddFavoriteGame(
+                appId,
+                ip,
+                port,
+                portQuery,
+                isHistory ? k_unFavoriteFlagHistory : k_unFavoriteFlagFavorite,
+                time( NULL ) );
+            wasSuccessful = true;
+        }
+        else
+        {
+            wasSuccessful = steamMM->RemoveFavoriteGame(
+                appId,
+                ip,
+                port,
+                portQuery,
+                isHistory ? k_unFavoriteFlagHistory : k_unFavoriteFlagFavorite );
+        }
+
+        KeyValues *pResponse = new KeyValues( "parameters" );
+        pResponse->SetBool( "wasSuccessful", wasSuccessful );
+        CallJavascriptObjectCallback( callbackId, pResponse );
+    }
+    else if ( Q_strcmp( pszProperty, "ConnectToServer" ) == 0 )
+    {
+        KeyValues *pArguments = pData->FindKey( "arguments" );
+        KeyValues *serverToConnect = pArguments->FindKey( "1" );
+
+        const char *address = serverToConnect->GetString( "address" );
+
+        char command[256];
+        Q_snprintf( command, sizeof( command ), "connect %s\n", address );
+        engine->ClientCmd_Unrestricted( command );
+
+        KeyValues *pResponse = new KeyValues( "parameters" );
+        pResponse->SetBool( "wasSuccessful", true );
+        CallJavascriptObjectCallback( callbackId, pResponse );
+    }
+}
 
 // Source: https://github.com/NeotokyoRebuild/neo/blob/1d2dc708d1d950ba5a4eb20f95280f0bf8e0d4b7/src/game/client/neo/ui/neo_root_serverbrowser.cpp#L92
 void MainMenuHTML::RequestServerList( GameServerType iType )
 {
     static MatchMakingKeyValuePair_t mmFilters[] = {
-        { "hasplayers", "" },  // For testing with many servers
-        // { "gamedir", "mod_tf" }, // 504?
-        //{ "gamedir", "experiment" },  // Commented because for testing we need a game with servers
+        // { "hasplayers", "" },  // Uncomment this and comment the next line for testing with many servers
+        { "gamedir", "experiment" },
     };
     MatchMakingKeyValuePair_t *pMMFilters = mmFilters;
 
@@ -575,8 +615,8 @@ void MainMenuHTML::AddServerToList( GameServerType iType, const gameserveritem_t
     pServerInfo->SetString( "serverAddress", serverInfo.m_NetAdr.GetConnectionAddressString() );
     pServerInfo->SetInt( "serverIp", serverInfo.m_NetAdr.GetIP() );
     pServerInfo->SetInt( "serverPort", serverInfo.m_NetAdr.GetConnectionPort() );
-    pServerInfo->SetString( "serverAddressQuery", serverInfo.m_NetAdr.GetQueryAddressString() );
-    pServerInfo->SetInt( "serverIpQuery", serverInfo.m_NetAdr.GetIP() );
+    // pServerInfo->SetString( "serverAddressQuery", serverInfo.m_NetAdr.GetQueryAddressString() );
+    // pServerInfo->SetInt( "serverIpQuery", serverInfo.m_NetAdr.GetIP() );
     pServerInfo->SetInt( "serverPortQuery", serverInfo.m_NetAdr.GetQueryPort() );
     pServerInfo->SetInt( "serverPing", serverInfo.m_nPing );
     pServerInfo->SetString( "serverHostName", serverInfo.GetName() );
@@ -640,92 +680,14 @@ void CBaseMenuPanel::OnThink()
         engine->GetScreenSize( screenWide, screenTall );
         SetBounds( 0, 0, screenWide, screenTall );
     }
+
+    // Experiment; We had this so the options and console were always in front,
+    //             but let's try find a less hacky way so we can have inputs
+    //             in the HTML that we can focus.
+    // surface()->MovePopupToBack( GetVPanel() );
 }
 
-CMainMenu::CMainMenu( CBaseMenuPanel *pParent )
-    : BaseClass( pParent, "MainMenuPanel" )
-{
-    m_pBaseMenuPanel = pParent;
-
-    MakePopup( false );
-    SetProportional( false );
-    SetMouseInputEnabled( true );
-    SetKeyBoardInputEnabled( true );
-    SetPaintBorderEnabled( false );
-    SetPaintBackgroundEnabled( false );
-    AddActionSignalTarget( this );
-    SetZPos( 0 );
-
-    // Set our initial size
-    int screenWide, screenTall;
-    surface()->GetScreenSize( screenWide, screenTall );
-    SetBounds( 0, 0, screenWide, screenTall );
-
-    // Add a HTML panel that takes up the whole screen
-    // This is where the main menu will be displayed
-    m_pHTML = new MainMenuHTML( this, "MainMenuHTML" );
-    m_pHTML->AddCustomURLHandler( "mainmenu", this );
-    m_pHTML->AddCustomURLHandler( "gamemenucommand", this );
-    m_pHTML->OpenURL( "asset://experiment/menus/main.html", NULL );
-
-    MakeReadyForUse();
-    InvalidateLayout( true );
-    RequestFocus();
-}
-
-CMainMenu::~CMainMenu()
-{
-}
-
-void CMainMenu::PerformLayout()
-{
-    BaseClass::PerformLayout();
-
-    int wide, tall;
-    vgui::surface()->GetScreenSize( wide, tall );
-    SetSize( wide, tall );
-
-    if ( m_pHTML )
-    {
-        m_pHTML->SetBounds( 0, 0, wide, tall );
-    }
-}
-
-void CMainMenu::SetBackgroundRenderState( EBackgroundState state )
-{
-    char szScript[256];
-    Q_snprintf( szScript, sizeof( szScript ), "SetBackgroundRenderState( %d )", state );
-
-    if ( m_pHTML )
-        m_pHTML->RunJavascript( szScript );
-
-    // if ( state == BACKGROUND_DISCONNECTED || state == BACKGROUND_MAINMENU )
-    // {
-    //     if ( state == BACKGROUND_MAINMENU )
-    //     {
-    //         if ( m_pHTML )
-    //             m_pHTML->RunJavascript( "SetBackgroundRenderState( BACKGROUND_MAINMENU )" );
-    //     }
-    // }
-    // else
-    if ( state == BACKGROUND_LOADING )
-    {
-        SetAlpha( 0 );
-    }
-    else if ( state == BACKGROUND_LEVEL )
-    {
-        SetAlpha( 255 );
-    }
-}
-
-void CMainMenu::OnThink()
-{
-    BaseClass::OnThink();
-
-    surface()->MovePopupToBack( GetVPanel() );
-}
-
-void CMainMenu::OnCustomURLHandler( const char *pszUrl )
+void CBaseMenuPanel::OnCustomURLHandler( const char *pszUrl )
 {
     const char *pszMainMenu = "mainmenu://";
     const char *pszGameMenuCommand = "gamemenucommand://";
@@ -747,7 +709,7 @@ void CMainMenu::OnCustomURLHandler( const char *pszUrl )
     }
 }
 
-bool CMainMenu::OnKnownCommand( const char *command )
+bool CBaseMenuPanel::OnKnownCommand( const char *command )
 {
     // if ( !Q_stricmp( command, "OpenCreateMultiplayerGameDialog" ) )
     //{
@@ -758,7 +720,7 @@ bool CMainMenu::OnKnownCommand( const char *command )
     return false;
 }
 
-void CMainMenu::OnKeyCodeUnhandled( int code )
+void CBaseMenuPanel::OnKeyCodeUnhandled( int code )
 {
     if ( !m_pHTML )
         return;

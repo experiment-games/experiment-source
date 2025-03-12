@@ -211,7 +211,10 @@
                         <option>Control Point</option>
                         <option>Custom</option>
                     </select>
-                    <button class="bg-white/10 hover:bg-white/20 px-4 py-2 transition">Refresh</button>
+                    <button class="bg-white/10 hover:bg-white/20 px-4 py-2 transition"
+                            id="refreshAction">
+                        Refresh
+                    </button>
                 </div>
             </div>
 
@@ -293,14 +296,6 @@
                     </table>
                 </div>
             </div>
-
-            <div class="flex justify-between items-center mt-4">
-                <div class="text-sm text-white/60">Showing 7 of 124 servers (filtered from 243 total)</div>
-                <!-- <div class="flex gap-4">
-                    <button class="bg-primary-600 hover:bg-primary-500 px-6 py-2 transition">Join Selected</button>
-                    <button class="bg-white/10 hover:bg-white/20 px-6 py-2 transition">Add to Favorites</button>
-                </div> -->
-            </div>
         </div>
     </game-page>
 
@@ -327,7 +322,7 @@
             <td class="server-ping p-2 text-center border-b border-white/10"></td>
             <td class="server-actions p-2 text-center border-b border-white/10">
                 <button class="server-action-favorite group bg-primary transition font-bold rounded-md w-8 h-8"
-                    title="Favorite">
+                        title="Favorite">
                     <img src="images/icon-star.png"
                          alt="Favorite"
                          class="w-full h-full group-hover:hidden">
@@ -336,7 +331,7 @@
                          class="w-full h-full hidden group-hover:block">
                 </button>
                 <button class="server-action-unfavorite group bg-primary transition font-bold rounded-md w-8 h-8"
-                    title="Favorite">
+                        title="Favorite">
                     <img src="images/icon-star.png"
                          alt="Favorite"
                          class="w-full h-full hidden group-hover:block">

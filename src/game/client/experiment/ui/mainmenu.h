@@ -39,7 +39,7 @@ void PositionDialog( vgui::PHandle dialog );
 
 class CMainMenu;  // Forward declaration
 
-class CBaseMenuPanel : public EditablePanel
+class CBaseMenuPanel : public EditablePanel, public IViewPortPanel
 {
     DECLARE_CLASS_SIMPLE( CBaseMenuPanel, EditablePanel );
 
@@ -59,27 +59,47 @@ class CBaseMenuPanel : public EditablePanel
     // MESSAGE_FUNC( OnGameUIActivated, "OnGameUIActivated" );
     // MESSAGE_FUNC( OnGameUIHidden, "GameUIHidden" );
 
-   protected:
-    void OnThink() OVERRIDE;
+    // both vgui::Frame and IViewPortPanel define these, so explicitly define them here as passthroughs to vgui
+    vgui::VPANEL GetVPanel( void )
+    {
+        return BaseClass::GetVPanel();
+    }
+    virtual bool IsVisible();
+    virtual void SetParent( vgui::VPANEL parent )
+    {
+        BaseClass::SetParent( parent );
+    }
+    virtual const char* GetName( void )
+    {
+        return "MainMenuOverride";
+    }
+    virtual void SetData( KeyValues* data ) {}
+    virtual void Reset()
+    {
+        Update();
+        SetVisible( true );
+    }
+    virtual void Update()
+    {
+        return;
+    }
+    virtual bool NeedsUpdate( void )
+    {
+        return false;
+    }
+    virtual bool HasInputElements( void )
+    {
+        return true;
+    }
+    virtual void ShowPanel( bool bShow )
+    {
+        SetVisible( true );
+    }  // Refuses to hide
 
-   private:
-    void SetBackgroundRenderState( EBackgroundState state );
-    bool LoadGameUI();
-    void UpdateBackgroundState();
-    EBackgroundState m_eBackgroundState;
-
-    IGameUI* m_pGameUI;
-
-    CMainMenu* m_pMainMenu;
-};
-
-class CMainMenu : public Panel
-{
-    DECLARE_CLASS_SIMPLE( CMainMenu, Panel );
-
-   public:
-    CMainMenu( CBaseMenuPanel* pParent );
-    virtual ~CMainMenu();
+    virtual GameActionSet_t GetPreferredActionSet()
+    {
+        return GAME_ACTION_SET_NONE;
+    }  // Seems like this should be GAME_ACTION_SET_MENU, but it's not because it's apparently visible *all* *the* *time*
 
     void SetBackgroundRenderState( EBackgroundState state );
     virtual bool OnKnownCommand( const char* command );
@@ -93,8 +113,39 @@ class CMainMenu : public Panel
     virtual void PerformLayout() OVERRIDE;
 
    private:
-    CBaseMenuPanel* m_pBaseMenuPanel;
+    void UpdateBackgroundState();
+    EBackgroundState m_eBackgroundState;
+
     HTML* m_pHTML;
+};
+
+class MainMenuHTML : public HTML, public ISteamMatchmakingServerListResponse
+{
+    DECLARE_CLASS_SIMPLE( MainMenuHTML, HTML );
+
+   public:
+    MainMenuHTML( Panel *parent, const char *name, bool allowJavaScript = true )
+        : HTML( parent, name, allowJavaScript )
+    {
+    }
+
+    void RequestServerList( GameServerType iType = GameServerType::GS_INTERNET );
+
+    // ISteamMatchmakingServerListResponse
+    virtual void ServerResponded( HServerListRequest hRequest, int iServer );
+    virtual void ServerFailedToRespond( HServerListRequest hRequest, int iServer );
+    virtual void RefreshComplete( HServerListRequest hRequest, EMatchMakingServerResponse response );
+
+   private:
+    void AddServerToList( GameServerType iType, const gameserveritem_t &serverInfo );
+
+    HServerListRequest m_hSteamRequest;
+    GameServerType m_iRequestType;
+    bool m_bIsSearching;
+
+   protected:
+    virtual void OnInstallJavaScriptInterop() OVERRIDE;
+    virtual void OnJavaScriptCallback( KeyValues* pData ) OVERRIDE;
 };
 
 extern CBaseMenuPanel* g_BaseMenuPanel;

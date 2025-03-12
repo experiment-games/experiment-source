@@ -2059,12 +2059,12 @@ LUA_BINDING_BEGIN( Panels, Panel, "library", "Creates a new Panel object" )
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( Panels, GetGameUiPanel, "library", "Gets the game UI panel" )
-{
-    Panel::PushLuaInstanceSafe( L, VGui_GetGameUIPanel() );
-    return 1;
-}
-LUA_BINDING_END()
+//LUA_BINDING_BEGIN( Panels, GetGameUiPanel, "library", "Gets the game UI panel" )
+//{
+//    Panel::PushLuaInstanceSafe( L, VGui_GetGameUIPanel() );
+//    return 1;
+//}
+//LUA_BINDING_END()
 
 LUA_BINDING_BEGIN( Panels, GetClientLuaRootPanel, "library", "Gets the client Lua root panel" )
 {
