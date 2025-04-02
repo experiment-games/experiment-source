@@ -1,0 +1,157 @@
+:root {
+    --md-primary-fg-color: #ce4534;
+    --md-primary-fg-color--light: #f5b4ac;
+    --md-primary-fg-color--dark: #772e25;
+}
+
+.lua .lua__search__keywords {
+    /* Hack while we wait for: https://github.com/squidfunk/mkdocs-material/issues/6307 */
+    display: none;
+}
+
+.lua .lua__title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: start;
+    /* word-break: break-all; */
+}
+
+.lua .lua__symbol__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+.lua .lua__symbol, .lua .lua__type {
+    font-family: monospace;
+    padding: 0.2em 0.5em;
+    border-radius: 0.2em;
+    color: var(--md-code-fg-color);
+}
+
+.lua .lua__type .lua__type__enum::before {
+    content: "enumeration: ";
+    font-size: 0.8em;
+}
+
+.lua .lua__type .lua__type__class::before {
+    content: "class: ";
+    font-size: 0.8em;
+}
+
+.lua .lua__symbol {
+    font-weight: bolder;
+    background-color:  var(--md-code-bg-color);
+}
+
+.lua .lua__type::before {
+    content: "(";
+}
+
+.lua .lua__type::after {
+    content: ")";
+}
+.lua h1 .lua__type::before, .lua h1 .lua__type::after{
+    content: "";
+}
+
+.lua .lua__realm {
+    display: inline-block;
+    font-family: monospace;
+    font-weight: bolder;
+    padding: 0.2em 0.5em;
+    border-radius: 0.2em;
+    color: var(--md-code-bg-color);
+    word-break: keep-all;
+}
+
+.lua__icon {
+    display: inline-block;
+    width: 10px !important;
+    height: 10px !important;
+    margin: auto 0;
+    border-radius: 0.2em;
+}
+
+.lua .lua__realm--client, .lua__icon.lua__realm--client {
+    background-color: rgba(255, 202, 58, 0.8);
+}
+
+.lua .lua__realm--server, .lua__icon.lua__realm--server {
+    background-color: rgba(120, 205, 215, 0.8);
+}
+
+.lua .lua__realm--shared, .lua__icon.lua__realm--shared {
+    background: linear-gradient(-40deg, rgba(255, 202, 58, 0.8) 50%, rgba(120, 205, 215, 0.8) 50%);
+}
+
+.lua .lua__realm--unknown, .lua__icon.lua__realm--unknown {
+    background: #b3b3b3;
+}
+
+.lua .lua__variable_list, .lua .lua__index__list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.lua .lua__variable_list li {
+    margin-bottom: 0.5em;
+}
+
+.lua .lua__variable_list li::before {
+    content: "•";
+    font-size: 1rem;
+    color: var(--md-primary-fg-color);
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+}
+
+.lua .lua__variable_list__description::before {
+    content: "— ";
+    margin-right: 0.5em;
+}
+
+.lua .lua__variable_list__default, .lua .lua__variable_list__nillable {
+    font-family: monospace;
+    font-weight: bolder;
+    font-size: 0.8em;
+}
+
+.lua .lua__variable_list .lua__variable_list__enum {
+    font-family: monospace;
+    color: var(--md-code-fg-color);
+    background: var(--md-code-bg-color);
+    padding: 0.1em 1em;
+    border-radius: 0.2em;
+    width: fit-content;
+}
+
+.lua .lua__variable_list .lua__variable_list__enum::before {
+    content: "";
+}
+
+.lua .lua__variable_list .lua__variable_list__enum .lua__variable_list__enum__key {
+    display: inline-block;
+    font-weight: bolder;
+    min-width: 200px;
+}
+
+.lua .lua__variable_list .lua__variable_list__enum .lua__variable_list__enum__value {
+    font-weight: normal;
+}
+
+.lua .lua__variable_list .lua__variable_list__enum .lua__variable_list__enum__value::before {
+    content: " = ";
+}
+
+.lua .lua__variable_list__default::before {
+    content: "[defaults to: ";
+    font-weight: normal;
+}
+
+.lua .lua__variable_list__default::after {
+    content: "]";
+    font-weight: normal;
+}
