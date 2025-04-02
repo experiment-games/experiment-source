@@ -144,7 +144,7 @@ bool MenuButton::CanBeDefaultButton( void )
 void MenuButton::DoClick()
 {
     if ( IsDropMenuButtonStyle() &&
-        m_pDropMenuImage )
+         m_pDropMenuImage )
     {
         int mx, my;
         // force the menu to appear where the mouse button was pressed
@@ -237,7 +237,11 @@ void MenuButton::OnCursorEntered()
     // forward the message on to the parent of this menu.
     KeyValues *msg = new KeyValues( "CursorEnteredMenuButton" );
     // tell the parent this menuitem is the one that was entered so it can open the menu if it wants
+#ifdef PLATFORM_64BITS
+    msg->SetPtr( "VPanel", ( void * )GetVPanel() );
+#else
     msg->SetInt( "VPanel", GetVPanel() );
+#endif
     ivgui()->PostMessage( GetVParent(), msg, NULL );
 }
 

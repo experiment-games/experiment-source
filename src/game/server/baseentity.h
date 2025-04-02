@@ -57,10 +57,10 @@ struct IsSame< T, T >
 typedef CHandle< CBaseEntity > EHANDLE;
 
 #define MANUALMODE_GETSET_PROP( type, accessorName, varName ) \
-    private:                                                   \
+   private:                                                   \
     type varName;                                             \
-                                                            \
-    public:                                                    \
+                                                              \
+   public:                                                    \
     inline const type &Get##accessorName##() const            \
     {                                                         \
         return varName;                                       \
@@ -76,10 +76,10 @@ typedef CHandle< CBaseEntity > EHANDLE;
     }
 
 #define MANUALMODE_GETSET_EHANDLE( type, accessorName, varName ) \
-    private:                                                      \
+   private:                                                      \
     CHandle< type > varName;                                     \
-                                                                \
-    public:                                                       \
+                                                                 \
+   public:                                                       \
     inline type *Get##accessorName##()                           \
     {                                                            \
         return varName.Get();                                    \
@@ -392,7 +392,7 @@ class CBaseEntity : public IServerEntity
     LUA_DECLARE_SINGLE_LUA_INSTANCE( CBaseEntity, LUA_BASEENTITYMETANAME );
 #endif
 
-    public:
+   public:
     DECLARE_CLASS_NOBASE( CBaseEntity );
 
     //----------------------------------------
@@ -407,15 +407,15 @@ class CBaseEntity : public IServerEntity
     static bool m_bInDebugSelect;
     static int m_nDebugPlayer;
 
-    protected:
+   protected:
     static bool m_bDebugPause;  // Whether entity i/o is paused for debugging.
     static int m_nDebugSteps;   // Number of entity outputs to fire before pausing again.
 
     static bool sm_bDisableTouchFuncs;  // Disables PhysicsTouch and PhysicsStartTouch function calls
-    public:
+   public:
     static bool sm_bAccurateTriggerBboxChecks;  // SOLID_BBOX entities do a fully accurate trigger vs bbox check when this is set
 
-    public:
+   public:
     // If bServerOnly is true, then the ent never goes to the client. This is used
     // by logical entities.
     CBaseEntity( bool bServerOnly = false );
@@ -459,7 +459,7 @@ class CBaseEntity : public IServerEntity
     static CBaseEntity *CreatePredictedEntityByName( const char *classname, const char *module, int line, bool persist = false );
 
     // IHandleEntity overrides.
-    public:
+   public:
     virtual void SetRefEHandle( const CBaseHandle &handle );
     virtual const CBaseHandle &GetRefEHandle() const;
 
@@ -469,7 +469,7 @@ class CBaseEntity : public IServerEntity
     virtual CBaseEntity *GetBaseEntity();
 
     // IServerEntity overrides.
-    public:
+   public:
     virtual void SetModelIndex( int index );
     virtual int GetModelIndex( void ) const;
     virtual string_t GetModelName( void ) const;
@@ -478,14 +478,14 @@ class CBaseEntity : public IServerEntity
     void ClearModelIndexOverrides( void );
     virtual void SetModelIndexOverride( int index, int nValue );
 
-    public:
+   public:
     // virtual methods for derived classes to override
     virtual bool TestCollision( const Ray_t &ray, unsigned int mask, trace_t &trace );
     virtual bool TestHitboxes( const Ray_t &ray, unsigned int fContentsMask, trace_t &tr );
     virtual void ComputeWorldSpaceSurroundingBox( Vector *pWorldMins, Vector *pWorldMaxs );
 
     // non-virtual methods. Don't override these!
-    public:
+   public:
     // An inline version the game code can use
     CCollisionProperty *CollisionProp();
     const CCollisionProperty *CollisionProp() const;
@@ -552,11 +552,11 @@ class CBaseEntity : public IServerEntity
     void DestroyDataObject( int type );
     void DestroyAllDataObjects( void );
 
-    public:
+   public:
     void SetScaledPhysics( IPhysicsObject *pNewObject );
 
     // virtual methods; you can override these
-    public:
+   public:
     // Owner entity.
     // FIXME: These are virtual only because of CNodeEnt
     CBaseEntity *GetOwnerEntity() const;
@@ -607,7 +607,7 @@ class CBaseEntity : public IServerEntity
     void SetSimulatedEveryTick( bool sim );
     void SetAnimatedEveryTick( bool anim );
 
-    public:
+   public:
     virtual const char *GetTracerType( void );
 
     // returns a pointer to the entities edict, if it has one.  should be removed!
@@ -640,12 +640,12 @@ class CBaseEntity : public IServerEntity
 
     virtual void SetModel( const char *szModelName );
 
-    protected:
+   protected:
     // Notification on model load. May be called multiple times for dynamic models.
     // Implementations must call BaseClass::OnNewModel and pass return value through.
     virtual CStudioHdr *OnNewModel();
 
-    public:
+   public:
     virtual void PostConstructor( const char *szClassname );
     virtual void PostClientActive( void );
     virtual void ParseMapData( CEntityMapData *mapData );
@@ -703,14 +703,14 @@ class CBaseEntity : public IServerEntity
     bool NameMatches( string_t nameStr );
     bool ClassMatches( string_t nameStr );
 
-    private:
+   private:
     bool NameMatchesComplex( const char *pszNameOrWildcard );
     bool ClassMatchesComplex( const char *pszClassOrWildcard );
     void TransformStepData_WorldToParent( CBaseEntity *pParent );
     void TransformStepData_ParentToParent( CBaseEntity *pOldParent, CBaseEntity *pNewParent );
     void TransformStepData_ParentToWorld( CBaseEntity *pParent );
 
-    public:
+   public:
     void MarkNeedsNamePurge();
 
     EHANDLE ScriptGetEHandle( void );
@@ -867,16 +867,16 @@ class CBaseEntity : public IServerEntity
     void SetAIWalkable( bool bBlocksLOS );
     bool IsAIWalkable( void );
 
-    private:
+   private:
     int SaveDataDescBlock( ISave &save, datamap_t *dmap );
     int RestoreDataDescBlock( IRestore &restore, datamap_t *dmap );
 
-    public:
+   public:
     // Networking related methods
     void NetworkStateChanged();
     void NetworkStateChanged( void *pVar );
 
-    public:
+   public:
     void CalcAbsolutePosition();
 
     // returns the edict index the entity requires when used in save/restore (eg players, world)
@@ -924,11 +924,11 @@ class CBaseEntity : public IServerEntity
     void SetRenderMode( RenderMode_t nRenderMode );
     RenderMode_t GetRenderMode() const;
 
-    private:
+   private:
     // NOTE: Keep this near vtable so it's in cache with vtable.
     CServerNetworkProperty m_Network;
 
-    public:
+   public:
     // members
     string_t m_iClassname;   // identifier for entity creation and save/restore
     string_t m_iGlobalname;  // identifier for carrying entity across level transitions
@@ -936,7 +936,7 @@ class CBaseEntity : public IServerEntity
 
     int m_iHammerID;  // Hammer unique edit id number
 
-    public:
+   public:
     // was pev->speed
     float m_flSpeed;
     // was pev->renderfx
@@ -999,7 +999,7 @@ class CBaseEntity : public IServerEntity
     }
 #endif
 
-    protected:
+   protected:
     // think function handling
     enum thinkmethods_t
     {
@@ -1023,16 +1023,16 @@ class CBaseEntity : public IServerEntity
     bool ContextExpired( int index ) const;
     int FindContextByName( const char *name ) const;
 
-    public:
+   public:
     void AddContext( const char *nameandvalue );
 
-    protected:
+   protected:
     CUtlVector< ResponseContext_t > m_ResponseContexts;
 
     // Map defined context sets
     string_t m_iszResponseContext;
 
-    private:
+   private:
     CBaseEntity( CBaseEntity & );
 
     // list handling
@@ -1046,7 +1046,7 @@ class CBaseEntity : public IServerEntity
 
     ////////////////////////////////////////////////////////////////////////////
 
-    public:
+   public:
     // Returns a CBaseAnimating if the entity is derived from CBaseAnimating.
     virtual CBaseAnimating *GetBaseAnimating()
     {
@@ -1076,10 +1076,10 @@ class CBaseEntity : public IServerEntity
     void DispatchTraceAttack( const CTakeDamageInfo &info, const Vector &vecDir, trace_t *ptr, CDmgAccumulator *pAccumulator = NULL );
     virtual bool PassesDamageFilter( const CTakeDamageInfo &info );
 
-    protected:
+   protected:
     virtual void TraceAttack( const CTakeDamageInfo &info, const Vector &vecDir, trace_t *ptr, CDmgAccumulator *pAccumulator = NULL );
 
-    public:
+   public:
     virtual bool CanBeHitByMeleeAttack( CBaseEntity *pAttacker )
     {
         return true;
@@ -1125,6 +1125,12 @@ class CBaseEntity : public IServerEntity
     {
         return false;
     }
+#ifdef NEXT_BOT
+    virtual bool IsNextBot( void ) const
+    {
+        return false;
+    }
+#endif
     CAI_BaseNPC *MyNPCPointer( void );
     virtual CBaseCombatCharacter *MyCombatCharacterPointer( void )
     {
@@ -1280,7 +1286,7 @@ class CBaseEntity : public IServerEntity
     // Physics simulation
     virtual void PhysicsSimulate( void );
 
-    public:
+   public:
     // HACKHACK:Get the trace_t from the last physics touch call (replaces the even-hackier global trace vars)
     static const trace_t &GetTouchTrace( void );
 
@@ -1442,15 +1448,15 @@ class CBaseEntity : public IServerEntity
         return m_pAttributes;
     }
 
-    protected:
+   protected:
     // NOTE: m_pAttributes needs to be set in the leaf class constructor.
     IHasAttributes *m_pAttributes;
 
-    private:
+   private:
     friend class CAI_Senses;
     CBaseEntity *m_pLink;  // used for temporary link-list operations.
 
-    public:
+   public:
     // variables promoted from edict_t
     string_t m_target;
     CNetworkVarForDerived( int, m_iMaxHealth );  // CBaseEntity doesn't care about changes to this variable, but there are derived classes that do.
@@ -1860,7 +1866,7 @@ class CBaseEntity : public IServerEntity
 
     //	void Relink() {}
 
-    public:
+   public:
     // VPHYSICS Integration -----------------------------------------------
     //
     // --------------------------------------------------------------------
@@ -1886,11 +1892,11 @@ class CBaseEntity : public IServerEntity
         return false;
     }
 
-    private:
+   private:
     // called by all vphysics inits
     bool VPhysicsInitSetup();
 
-    public:
+   public:
     void VPhysicsSetObject( IPhysicsObject *pPhysics );
     // destroy and remove the physics object for this entity
     virtual void VPhysicsDestroyObject( void );
@@ -1917,7 +1923,7 @@ class CBaseEntity : public IServerEntity
     virtual bool VPhysicsIsFlesh( void );
     // --------------------------------------------------------------------
 
-    public:
+   public:
 #if !defined( NO_ENTITY_PREDICTION )
     // The player drives simulation of this entity
     void SetPlayerSimulated( CBasePlayer *pOwner );
@@ -1958,7 +1964,7 @@ class CBaseEntity : public IServerEntity
 
     void SetPredictionEligible( bool canpredict );
 
-    protected:
+   protected:
     // Invalidates the abs state of all children
     void InvalidatePhysicsRecursive( int nChangeFlags );
 
@@ -1971,7 +1977,7 @@ class CBaseEntity : public IServerEntity
     void ResolveFlyCollisionSlide( trace_t &trace, Vector &vecVelocity );
     virtual void ResolveFlyCollisionCustom( trace_t &trace, Vector &vecVelocity );
 
-    private:
+   private:
     // Physics-related private methods
     void PhysicsStep( void );
     void PhysicsPusher( void );
@@ -2022,18 +2028,18 @@ class CBaseEntity : public IServerEntity
     void StepSimulationThink( float dt );
 
     // Compute network origin
-    private:
+   private:
     void ComputeStepSimulationNetwork( StepSimulationData *step );
 
-    public:
+   public:
     bool UseStepSimulationNetworkOrigin( const Vector **out_v );
     bool UseStepSimulationNetworkAngles( const QAngle **out_a );
 
-    public:
+   public:
     // Add a discontinuity to a step
     bool AddStepDiscontinuity( float flTime, const Vector &vecOrigin, const QAngle &vecAngles );
     int GetFirstThinkTick();  // get first tick thinking on any context
-    private:
+   private:
     // origin and angles to use in step calculations
     virtual Vector GetStepOrigin( void ) const;
     virtual QAngle GetStepAngles( void ) const;
@@ -2082,14 +2088,14 @@ class CBaseEntity : public IServerEntity
     static void PrecacheModelComponents( int nModelIndex );
     static void PrecacheSoundHelper( const char *pName );
 
-    protected:
+   protected:
     // Which frame did I simulate?
     int m_nSimulationTick;
 
     // FIXME: Make this private! Still too many references to do so...
     CNetworkVar( int, m_spawnflags );
 
-    private:
+   private:
     int m_iEFlags;  // entity flags EFL_*
     // was pev->flags
     CNetworkVarForDerived( int, m_fFlags );
@@ -2207,7 +2213,7 @@ class CBaseEntity : public IServerEntity
 
     CUtlVector< EHANDLE > m_EntitiesToDeleteOnRemove;
 
-    private:
+   private:
     // dynamic model state tracking
     bool m_bDynamicModelAllowed;
     bool m_bDynamicModelPending;
@@ -2215,13 +2221,13 @@ class CBaseEntity : public IServerEntity
     void OnModelLoadComplete( const model_t *model );
     friend class CBaseEntityModelLoadProxy;
 
-    protected:
+   protected:
     void EnableDynamicModels()
     {
         m_bDynamicModelAllowed = true;
     }
 
-    public:
+   public:
     bool IsDynamicModelLoading() const
     {
         return m_bDynamicModelPending;
@@ -2240,14 +2246,14 @@ class CBaseEntity : public IServerEntity
     friend class CCollisionEvent;
 
     // Methods shared by client and server
-    public:
+   public:
     void SetSize( const Vector &vecMin, const Vector &vecMax );  // UTIL_SetSize( this, mins, maxs );
     static int PrecacheModel( const char *name, bool bPreload = true );
     static bool PrecacheSound( const char *name );
     static void PrefetchSound( const char *name );
     virtual void Remove();  // UTIL_Remove( this );
 
-    private:
+   private:
     // This is a random seed used by the networking code to allow client - side prediction code
     //  randon number generators to spit out the same random numbers on both sides for a particular
     //  usercmd input.
@@ -2266,7 +2272,7 @@ class CBaseEntity : public IServerEntity
 
     bool m_bForcePurgeFixedupStrings;  // For template entites so we don't leak strings.
 
-    public:
+   public:
     // Accessors for above
     static int GetPredictionRandomSeed( bool bUseUnSyncedServerPlatTime = false );
     static void SetPredictionRandomSeed( const CUserCmd *cmd );
@@ -2337,7 +2343,7 @@ class CBaseEntity : public IServerEntity
         return true;
     }
 
-    private:
+   private:
     CThreadFastMutex m_CalcAbsolutePositionMutex;
 
     bool m_bTruceValidForEnt;
@@ -3175,7 +3181,7 @@ inline bool FClassnameIs( CBaseEntity *pEntity, const char *szClassname )
 
 class CPointEntity : public CBaseEntity
 {
-    public:
+   public:
     DECLARE_CLASS( CPointEntity, CBaseEntity );
 
     void Spawn( void );
@@ -3185,7 +3191,7 @@ class CPointEntity : public CBaseEntity
     }
     virtual bool KeyValue( const char *szKeyName, const char *szValue );
 
-    private:
+   private:
 };
 
 // Has a position + size
@@ -3193,7 +3199,7 @@ class CServerOnlyEntity : public CBaseEntity
 {
     DECLARE_CLASS( CServerOnlyEntity, CBaseEntity );
 
-    public:
+   public:
     CServerOnlyEntity()
         : CBaseEntity( true ) {}
 
@@ -3208,7 +3214,7 @@ class CServerOnlyPointEntity : public CServerOnlyEntity
 {
     DECLARE_CLASS( CServerOnlyPointEntity, CServerOnlyEntity );
 
-    public:
+   public:
     virtual bool KeyValue( const char *szKeyName, const char *szValue );
 };
 
@@ -3217,7 +3223,7 @@ class CLogicalEntity : public CServerOnlyEntity
 {
     DECLARE_CLASS( CLogicalEntity, CServerOnlyEntity );
 
-    public:
+   public:
     virtual bool KeyValue( const char *szKeyName, const char *szValue );
 };
 

@@ -188,8 +188,8 @@ inputfunc_t *UTIL_FunctionFromName( datamap_t *pMap, const char *pName )
 
 CSave::CSave( CSaveRestoreData *pdata )
     : m_pData( pdata ),
-    m_pGameInfo( pdata ),
-    m_bAsync( pdata->bAsync )
+      m_pGameInfo( pdata ),
+      m_bAsync( pdata->bAsync )
 {
     m_BlockStartStack.EnsureCapacity( 32 );
 
@@ -323,6 +323,7 @@ void CSave::Log( const char *pName, fieldtype_t fieldType, void *value, int coun
                 char chValue = pValue[iCount];
                 Q_snprintf( szTempBuf, sizeof( szTempBuf ), "%c", chValue );
                 Q_strncat( szBuf, szTempBuf, sizeof( szTempBuf ), COPY_ALL_CHARACTERS );
+                break;
             }
             case FIELD_COLOR32:
             {
@@ -1322,9 +1323,9 @@ bool CSave::WriteGameField( const char *pname, void *pData, datamap_t *pRootMap,
 
 CRestore::CRestore( CSaveRestoreData *pdata )
     : m_pData( pdata ),
-    m_pGameInfo( pdata ),
-    m_global( 0 ),
-    m_precache( true )
+      m_pGameInfo( pdata ),
+      m_global( 0 ),
+      m_precache( true )
 {
     m_BlockEndStack.EnsureCapacity( 32 );
 }
@@ -2258,7 +2259,7 @@ DEFINE_FIELD( id, FIELD_INTEGER ),
     //-----------------------------------------------------------------------------
     class CEntitySaveUtils : public IEntitySaveUtils
 {
-    public:
+   public:
     // Call these in pre-save + post save
     void PreSave();
     void PostSave();
@@ -2268,7 +2269,7 @@ DEFINE_FIELD( id, FIELD_INTEGER ),
     virtual int GetEntityDependencyCount( CBaseEntity *pEntity );
     virtual int GetEntityDependencies( CBaseEntity *pEntity, int nCount, CBaseEntity **ppEntList );
 
-    private:
+   private:
     IPhysicsObjectPairHash *m_pLevelAdjacencyDependencyHash;
 };
 
@@ -2320,7 +2321,7 @@ void CEntitySaveUtils::AddLevelTransitionSaveDependency( CBaseEntity *pEntity1, 
 //-----------------------------------------------------------------------------
 class CEntitySaveRestoreBlockHandler : public ISaveRestoreBlockHandler
 {
-    public:
+   public:
     const char *GetBlockName();
     void PreSave( CSaveRestoreData *pSaveData );
     void Save( ISave *pSave );
@@ -2337,7 +2338,7 @@ class CEntitySaveRestoreBlockHandler : public ISaveRestoreBlockHandler
         return &m_EntitySaveUtils;
     }
 
-    private:
+   private:
     friend int CreateEntityTransitionList( CSaveRestoreData *pSaveData, int levelMask );
     bool SaveInitEntities( CSaveRestoreData *pSaveData );
     bool DoRestoreEntity( CBaseEntity *pEntity, IRestore *pRestore );
@@ -2352,7 +2353,7 @@ class CEntitySaveRestoreBlockHandler : public ISaveRestoreBlockHandler
     int RestoreGlobalEntity( CBaseEntity *pEntity, CSaveRestoreData *pSaveData, entitytable_t *pEntInfo );
 #endif
 
-    private:
+   private:
     CEntitySaveUtils m_EntitySaveUtils;
 };
 
@@ -2450,9 +2451,9 @@ void CEntitySaveRestoreBlockHandler::Save( ISave *pSave )
             MDLCACHE_CRITICAL_SECTION();
 #if !defined( CLIENT_DLL )
             AssertMsg( !pEnt->edict() || ( pEnt->m_iClassname != NULL_STRING &&
-                                            ( STRING( pEnt->m_iClassname )[0] != 0 ) &&
-                                            FStrEq( STRING( pEnt->m_iClassname ), pEnt->GetClassname() ) ),
-                        "Saving entity with invalid classname" );
+                                           ( STRING( pEnt->m_iClassname )[0] != 0 ) &&
+                                           FStrEq( STRING( pEnt->m_iClassname ), pEnt->GetClassname() ) ),
+                       "Saving entity with invalid classname" );
 #endif
 
             pSaveData->SetCurrentEntityContext( pEnt );
@@ -3057,7 +3058,7 @@ struct SaveRestoreBlockHeader_t
 
 class CSaveRestoreBlockSet : public ISaveRestoreBlockSet
 {
-    public:
+   public:
     CSaveRestoreBlockSet( const char *pszName )
     {
         Q_strncpy( m_Name, pszName, sizeof( m_Name ) );
@@ -3220,7 +3221,7 @@ class CSaveRestoreBlockSet : public ISaveRestoreBlockSet
 
     //---------------------------------
 
-    private:
+   private:
     int GetBlockBodyLoc( const char *pszName )
     {
         for ( int i = 0; i < m_BlockHeaders.Count(); i++ )

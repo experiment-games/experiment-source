@@ -35,7 +35,7 @@ DECLARE_BUILD_FACTORY( MenuBar );
 //-----------------------------------------------------------------------------
 MenuBar::MenuBar( Panel *parent, const char *panelName )
     : Panel( parent, panelName ),
-    m_nRightEdge( 0 )
+      m_nRightEdge( 0 )
 {
 }
 
@@ -216,7 +216,11 @@ void MenuBar::OnMenuClose()
 //-----------------------------------------------------------------------------
 // Purpose: Message map
 //-----------------------------------------------------------------------------
+#ifdef PLATFORM_64BITS
+void MenuBar::OnCursorEnteredMenuButton( vgui::Panel *VPanel )
+#else
 void MenuBar::OnCursorEnteredMenuButton( int VPanel )
+#endif
 {
     VPANEL menuButton = ( VPANEL )VPanel;
     // see if we had a menu open

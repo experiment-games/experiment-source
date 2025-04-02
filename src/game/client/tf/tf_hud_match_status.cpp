@@ -224,8 +224,8 @@ void CRoundCounterPanel::FireGameEvent( IGameEvent *event )
         m_bCountDirty = true;
     }
     else if ( FStrEq( event->GetName(), "winpanel_show_scores" )       // Conditionally hide the win markers
-            || FStrEq( event->GetName(), "stop_watch_changed" )      // Match the timing of the win panel "Ding!" when the scores update
-            || FStrEq( event->GetName(), "teamplay_round_start" ) )  // Make sure we're accurate when the round starts in case the hud event didnt happen
+              || FStrEq( event->GetName(), "stop_watch_changed" )      // Match the timing of the win panel "Ding!" when the scores update
+              || FStrEq( event->GetName(), "teamplay_round_start" ) )  // Make sure we're accurate when the round starts in case the hud event didnt happen
     {
         InvalidateLayout( true );
     }
@@ -248,7 +248,7 @@ void CRoundCounterPanel::LayoutPanels( ImageVector &vecImages, EAlignment eAlign
         const int nXOffset = nStep * i;
         // Step out the panels by the steph width
         int nXPos = eAlignment == ALIGN_EAST ? nXStartPos + nXOffset - ( pPanel->GetWide() / 2 ) + ( nStep / 2 )
-                                            : nXStartPos - nXOffset - ( pPanel->GetWide() / 2 ) - ( nStep / 2 );
+                                             : nXStartPos - nXOffset - ( pPanel->GetWide() / 2 ) - ( nStep / 2 );
         pPanel->SetPos( nXPos, pPanel->GetYPos() );
     }
 }
@@ -563,6 +563,17 @@ void CTFHudMatchStatus::FireGameEvent( IGameEvent *event )
         }
 
         const IMatchGroupDescription *pMatchDesc = GetMatchGroupDescription( TFGameRules()->GetCurrentMatchGroup() );
+
+        // FIX: Refresh versus doors so late-joiners do not see the wrong skin
+        int nSkin = 0;
+        int nSubModel = 0;
+        if ( pMatchDesc->BGetRoundDoorParameters( nSkin, nSubModel ) )
+        {
+            m_pMatchStartModelPanel->SetBodyGroup( "logos", nSubModel );
+            m_pMatchStartModelPanel->UpdateModel();
+            m_pMatchStartModelPanel->SetSkin( nSkin );
+        }
+
         bool bForceDoors = false;
         if ( bForceDoors || ( pMatchDesc && pMatchDesc->BUsesPostRoundDoors() ) )
         {
@@ -663,7 +674,7 @@ void CTFHudMatchStatus::ShowMatchStartDoors()
                 // then you're on the threshold of a rank up.  You could have secondary 6 and tertiary 11, meaning you lost a couple
                 // times while on the threshold, but the message is still valid.
                 bool bOnRankUpThreshold = pRank->GetRatingData().unRatingSecondary >= ( k_nLadder_MinGamesInThresholdToRank - 1 ) &&
-                                        pRank->GetRatingData().unRatingTertiary >= ( k_nLadder_MinGamesBetweenRankChanges - 1 );
+                                          pRank->GetRatingData().unRatingTertiary >= ( k_nLadder_MinGamesBetweenRankChanges - 1 );
 
                 if ( bTrendingUp && bOnRankUpThreshold )
                 {

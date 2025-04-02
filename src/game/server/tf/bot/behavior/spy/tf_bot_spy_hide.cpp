@@ -67,7 +67,14 @@ ActionResult< CTFBot > CTFBotSpyHide::Update( CTFBot *me, float interval )
     if ( m_talkTimer.IsElapsed() )
     {
         m_talkTimer.Start( RandomFloat( 5.0f, 10.0f ) );
-        me->EmitSound( "Spy.TeaseVictim" );
+        if ( TFGameRules()->IsMannVsMachineMode() && me->GetTeamNumber() == TF_TEAM_PVE_INVADERS )
+        {
+            me->EmitSound( "Spy.MVM_TeaseVictim" );
+        }
+        else
+        {
+            me->EmitSound( "Spy.TeaseVictim" );
+        }
     }
 
     if ( m_isAtGoal )
@@ -151,7 +158,7 @@ struct IncursionEntry_t
 //---------------------------------------------------------------------------------------------
 class SpyHideIncursionDistanceLess
 {
-    public:
+   public:
     bool Less( const IncursionEntry_t &src1, const IncursionEntry_t &src2, void *pCtx )
     {
         return src1.area->GetIncursionDistance( src1.team ) < src2.area->GetIncursionDistance( src2.team );

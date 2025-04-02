@@ -19,7 +19,7 @@ using namespace vgui;
 //-----------------------------------------------------------------------------
 class vgui::MenuSeparator : public Panel
 {
-    public:
+   public:
     DECLARE_CLASS_SIMPLE( MenuSeparator, Panel );
 
     MenuSeparator( Panel *parent, char const *panelName )
@@ -752,7 +752,7 @@ void Menu::PerformLayout()
     int maxVisibleItems = CountVisibleItems();
 
     if ( m_iNumVisibleLines > 0 &&
-        maxVisibleItems > m_iNumVisibleLines )
+         maxVisibleItems > m_iNumVisibleLines )
     {
         bNeedScrollbar = true;
         maxVisibleItems = m_iNumVisibleLines;
@@ -1664,7 +1664,7 @@ namespace vgui
 
 class CMenuManager
 {
-    public:
+   public:
     void AddMenu( Menu *m )
     {
         if ( !m )
@@ -1817,7 +1817,7 @@ class CMenuManager
     }
 #endif
 
-    private:
+   private:
     // List of visible menus
     CUtlVector< DHANDLE< Menu > > m_Menus;
 };
@@ -2335,7 +2335,7 @@ void Menu::SetCurrentlyHighlightedItem( int itemID )
         // by hand or set the item off the list
         // so just snap the scroll bar straight to the item.
         if ( ( row > m_pScroller->GetValue() + m_iNumVisibleLines - 1 ) ||
-            ( row < m_pScroller->GetValue() ) )
+             ( row < m_pScroller->GetValue() ) )
         {
             if ( !m_pScroller->IsVisible() )
                 return;
@@ -2365,16 +2365,15 @@ int Menu::GetCurrentlyHighlightedItem()
 // Purpose: Respond to cursor entering a menuItem.
 //-----------------------------------------------------------------------------
 //
-// Josh: Slightly annoying, but need to completely ensure compatiblity with the SDK + GameUI interactions.
+// Josh: Slightly annoying, but need to completely ensure compatibility with the SDK + GameUI interactions.
 #ifdef PLATFORM_64BITS
 void Menu::OnCursorEnteredMenuItem( vgui::Panel *VPanel )
-{
-    VPANEL menuItem = ( VPANEL )VPanel;
 #else
 void Menu::OnCursorEnteredMenuItem( int VPanel )
+#endif
 {
     VPANEL menuItem = ( VPANEL )VPanel;
-#endif
+
     // if we are in mouse mode
     if ( m_iInputMode == MOUSE )
     {
@@ -2398,13 +2397,12 @@ void Menu::OnCursorEnteredMenuItem( int VPanel )
 //-----------------------------------------------------------------------------
 #ifdef PLATFORM_64BITS
 void Menu::OnCursorExitedMenuItem( vgui::Panel *VPanel )
-{
-    VPANEL menuItem = ( VPANEL )VPanel;
 #else
 void Menu::OnCursorExitedMenuItem( int VPanel )
+#endif
 {
     VPANEL menuItem = ( VPANEL )VPanel;
-#endif
+
     // only care if we are in mouse mode
     if ( m_iInputMode == MOUSE )
     {
@@ -2489,7 +2487,7 @@ void Menu::MoveAlongMenuItemList( int direction, int loopCount )
         // scroll bar is already too far down and should scroll up or vice versa
         // so just snap the scroll bar straight to the item.
         if ( ( row > m_pScroller->GetValue() + m_iNumVisibleLines - 1 ) ||
-            ( row < m_pScroller->GetValue() ) )
+             ( row < m_pScroller->GetValue() ) )
         {
             m_pScroller->SetValue( row );
         }
