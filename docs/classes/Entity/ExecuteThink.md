@@ -12,13 +12,13 @@ lua:
   function: ExecuteThink
   realm: shared
   description: "Think."
-
+  
   arguments:
   - position: 1
     name: "entity"
     type: Entity
   returns:
-
+    
 ---
 
 <div class="lua__search__keywords">

@@ -1,6 +1,6 @@
 ---
 template: lua-class-function.html
-title: SetUseType
+title: SetArmor
 icon: lua-server
 tags:
   - lua
@@ -8,22 +8,22 @@ tags:
   - needs-verification
   - needs-example
 lua:
-  library: Entity
-  function: SetUseType
+  library: Player
+  function: SetArmor
   realm: server
-  description: "Set use type."
+  description: "Sets the armor value for a player."
   
   arguments:
   - position: 1
-    name: "entity"
-    type: Entity
+    name: "player"
+    type: Player
   - position: 2
-    name: "useType"
-    type: enumeration/USABILITY_TYPE
+    name: "armorValue"
+    type: number
   returns:
     
 ---
 
 <div class="lua__search__keywords">
-Entity:SetUseType &#x2013; Set use type.
+Player:SetArmor &#x2013; Sets the armor value for a player.
 </div>

@@ -12,7 +12,7 @@ lua:
   function: AddRecipientsByPas
   realm: shared
   description: "Adds recipients by potentially audible set"
-
+  
   arguments:
   - position: 1
     name: "filter"
@@ -21,7 +21,7 @@ lua:
     name: "position"
     type: Vector
   returns:
-
+    
 ---
 
 <div class="lua__search__keywords">

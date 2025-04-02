@@ -1,6 +1,6 @@
 ---
 template: lua-hook.html
-title: UpdateAnimation
+title: PhysgunDrop
 icon: lua-shared
 tags:
   - lua
@@ -8,20 +8,17 @@ tags:
   - needs-verification
   - needs-example
 lua:
-  function: UpdateAnimation
+  function: PhysgunDrop
   realm: shared
   description: ""
   arguments:
-    - name: "vecVelocity"
-      description: ""
-      type: Vector
-    - name: "flMaxGroundSpeed"
-      description: ""
-      type: number
+    - name: "weapon"
+      description: "The entity being dropped"
+      type: Entity
   returns:
     
 ---
 
 <div class="lua__search__keywords">
-hook UpdateAnimation &#x2013; ""
+hook PhysgunDrop &#x2013; ""
 </div>

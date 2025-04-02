@@ -1,6 +1,6 @@
 ---
 template: lua-class-function.html
-title: SetParent
+title: SetMaxArmor
 icon: lua-shared
 tags:
   - lua
@@ -8,27 +8,22 @@ tags:
   - needs-verification
   - needs-example
 lua:
-  library: Entity
-  function: SetParent
+  library: Player
+  function: SetMaxArmor
   realm: shared
-  description: "Set parent."
+  description: "Set the armor for this player."
   
   arguments:
   - position: 1
     name: "entity"
-    type: Entity
+    type: Player
   - position: 2
-    name: "parent"
-    type: Entity
-    default: "NULL"
-  - position: 3
-    name: "attachment"
-    type: number
-    default: "-1"
+    name: "maxArmor"
+    type: integer
   returns:
     
 ---
 
 <div class="lua__search__keywords">
-Entity:SetParent &#x2013; Set parent.
+Player:SetMaxArmor &#x2013; Set the armor for this player.
 </div>

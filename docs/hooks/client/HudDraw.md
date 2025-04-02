@@ -12,9 +12,9 @@ lua:
   realm: client
   description: ""
   arguments:
-
+  
   returns:
-
+    
 ---
 
 <div class="lua__search__keywords">

@@ -1,15 +1,15 @@
 ---
 template: lua-hook.html
-title: ScoreboardDraw
-icon: lua-client
+title: PostEntitiesLoaded
+icon: lua-shared
 tags:
   - lua
-  - client
+  - shared
   - needs-verification
   - needs-example
 lua:
-  function: ScoreboardDraw
-  realm: client
+  function: PostEntitiesLoaded
+  realm: shared
   description: ""
   arguments:
   
@@ -18,5 +18,5 @@ lua:
 ---
 
 <div class="lua__search__keywords">
-hook ScoreboardDraw &#x2013; ""
+hook PostEntitiesLoaded &#x2013; ""
 </div>

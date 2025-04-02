@@ -93,6 +93,8 @@ function fromPushFunction(functionName, line) {
       return 'CGameTrace';
     case 'pushsurfacedata':
       return 'surfacedata_t';
+    case 'pushphysicsobject':
+      return 'PhysicsObject';
 
     // For the PushLuaInstanceSafe function
     case 'CBaseEntity':

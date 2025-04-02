@@ -1,6 +1,6 @@
 ---
 template: lua-library-function.html
-title: GetGameUiPanel
+title: DrawTexturedPolygon
 icon: lua-client
 tags:
   - lua
@@ -8,10 +8,10 @@ tags:
   - needs-verification
   - needs-example
 lua:
-  library: Panels
-  function: GetGameUiPanel
+  library: Surfaces
+  function: DrawTexturedPolygon
   realm: client
-  description: "Gets the game UI panel"
+  description: "Draws a textured polygon"
   
   arguments:
   
@@ -20,5 +20,5 @@ lua:
 ---
 
 <div class="lua__search__keywords">
-Panels.GetGameUiPanel &#x2013; Gets the game UI panel
+Surfaces.DrawTexturedPolygon &#x2013; Draws a textured polygon
 </div>

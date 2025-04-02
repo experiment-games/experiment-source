@@ -1,6 +1,6 @@
 ---
 template: lua-hook.html
-title: UpdateAnimation
+title: SearchPathSetup
 icon: lua-shared
 tags:
   - lua
@@ -8,20 +8,17 @@ tags:
   - needs-verification
   - needs-example
 lua:
-  function: UpdateAnimation
+  function: SearchPathSetup
   realm: shared
   description: ""
   arguments:
-    - name: "vecVelocity"
+    - name: "rootPath"
       description: ""
-      type: Vector
-    - name: "flMaxGroundSpeed"
-      description: ""
-      type: number
+      type: string
   returns:
     
 ---
 
 <div class="lua__search__keywords">
-hook UpdateAnimation &#x2013; ""
+hook SearchPathSetup &#x2013; ""
 </div>

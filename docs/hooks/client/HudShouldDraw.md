@@ -12,7 +12,7 @@ lua:
   realm: client
   description: ""
   arguments:
-
+  
   returns:
     - type: unknown
       description: ""

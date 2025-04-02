@@ -1,5 +1,5 @@
 ---
-template: lua-class-function.html
+template: lua-library-function.html
 title: KeyCodeToString
 icon: lua-client
 tags:
@@ -8,12 +8,11 @@ tags:
   - needs-verification
   - needs-example
 lua:
-  library: Panel
+  library: Inputs
   function: KeyCodeToString
   realm: client
-  description: "Converts a key code to a string"
+  description: "Converts a key code to its string representation, e.g: KEY_W -> 'KEY_W'"
   
-  static: true
   arguments:
   - position: 1
     name: "keyCode"
@@ -24,5 +23,5 @@ lua:
 ---
 
 <div class="lua__search__keywords">
-_R.Panel.KeyCodeToString &#x2013; Converts a key code to a string
+Inputs.KeyCodeToString &#x2013; Converts a key code to its string representation, e.g: KEY_W -> 'KEY_W'
 </div>

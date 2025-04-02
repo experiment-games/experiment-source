@@ -514,6 +514,8 @@ function fromTypeChecker(typeChecker) {
       return 'enumeration/STENCIL_OPERATION';
     case 'STENCIL_COMPARISON_FUNCTION':
       return 'enumeration/STENCIL_COMPARISON_FUNCTION';
+    case 'USABILITY_TYPE::TYPE':
+      return 'enumeration/USABILITY_TYPE';
 
     default:
       return 'unknown';
