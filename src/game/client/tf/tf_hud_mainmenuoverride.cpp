@@ -396,8 +396,8 @@ void CHudMainMenuOverride::FireGameEvent( IGameEvent *event )
         // If the contents of the store have changed since the last time we went in and/or launched
         // the game, change the button color so that players know there's new content available.
         if ( EconUI() &&
-            EconUI()->GetStorePanel() &&
-            EconUI()->GetStorePanel()->GetPriceSheet() )
+             EconUI()->GetStorePanel() &&
+             EconUI()->GetStorePanel()->GetPriceSheet() )
         {
             const CEconStorePriceSheet *pPriceSheet = EconUI()->GetStorePanel()->GetPriceSheet();
 
@@ -767,7 +767,7 @@ void CHudMainMenuOverride::LoadCharacterImageFile( void )
 //-----------------------------------------------------------------------------
 void CHudMainMenuOverride::LoadMenuEntries( void )
 {
-    KeyValues *datafile = new KeyValues( "GameMenu" );
+    KeyValuesAD datafile( "GameMenu" );
     datafile->UsesEscapeSequences( true );  // VGUI uses escape sequences
     bool bLoaded = datafile->LoadFromFile( g_pFullFileSystem, "Resource/GameMenu.res", "custom_mod" );
     if ( !bLoaded )
@@ -807,7 +807,7 @@ void CHudMainMenuOverride::LoadMenuEntries( void )
         if ( !pPanel )
         {
             Assert( false );  // We don't want to do this anymore.  We need an actual hierarchy so things can slide
-                            // around when the play buttin is pressed and the play options expand
+                              // around when the play buttin is pressed and the play options expand
             pPanel = new vgui::EditablePanel( this, name );
         }
         else
@@ -1656,7 +1656,7 @@ void CHudMainMenuOverride::AdjustNotificationsPanelHeight()
     if ( m_pNotificationsScroller )
     {
         if ( m_pNotificationsScroller->GetScrollbar()->GetSlider() &&
-            m_pNotificationsScroller->GetScrollbar()->GetSlider()->IsSliderVisible() )
+             m_pNotificationsScroller->GetScrollbar()->GetSlider()->IsSliderVisible() )
         {
             m_pNotificationsPanel->SetWide( m_iNotiPanelWide + m_pNotificationsScroller->GetScrollbar()->GetSlider()->GetWide() );
             m_pNotificationsScroller->GetScrollbar()->SetScrollbarButtonsVisible( true );
@@ -2255,7 +2255,7 @@ void CHudMainMenuOverride::PerformKeyRebindings( void )
 //-----------------------------------------------------------------------------
 class CGCMOTDRequestResponse : public GCSDK::CGCClientJob
 {
-    public:
+   public:
     CGCMOTDRequestResponse( GCSDK::CGCClient *pClient )
         : GCSDK::CGCClientJob( pClient ) {}
 
@@ -2279,7 +2279,7 @@ class CGCMOTDRequestResponse : public GCSDK::CGCClientJob
 
         // V_strcpy_safe( uilanguage, "german" );
 
-        KeyValues *pEntriesKV = new KeyValues( "motd_entries" );
+        KeyValuesAD pEntriesKV( "motd_entries" );
 
         // Try and load the cache file. If we fail, we'll just create a new one.
         if ( !pMMPanel->ReloadedAllMOTDs() )

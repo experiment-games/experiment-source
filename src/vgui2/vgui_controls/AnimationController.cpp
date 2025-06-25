@@ -445,7 +445,7 @@ bool AnimationController::ParseScriptFile( char *pMem, int length )
                     }
                 }
                 else if ( cmdAnimate.variable == m_sWide ||
-                        cmdAnimate.variable == m_sTall )
+                          cmdAnimate.variable == m_sTall )
                 {
                     if ( IsProportional() )
                     {
@@ -886,9 +886,9 @@ bool AnimationController::UpdateScreenSize()
     }
 
     bool changed = m_nScreenBounds[0] != sx ||
-                    m_nScreenBounds[1] != sy ||
-                    m_nScreenBounds[2] != screenWide ||
-                    m_nScreenBounds[3] != screenTall;
+                   m_nScreenBounds[1] != sy ||
+                   m_nScreenBounds[2] != screenWide ||
+                   m_nScreenBounds[3] != screenTall;
 
     m_nScreenBounds[0] = sx;
     m_nScreenBounds[1] = sy;
@@ -1142,14 +1142,14 @@ void AnimationController::CancelAnimationsForPanel( Panel *pWithinParent )
 // Purpose: Runs a custom command from code, not from a script file
 //-----------------------------------------------------------------------------
 void AnimationController::RunAnimationCommand( vgui::Panel *panel,
-                                                const char *variable,
-                                                float targetValue,
-                                                float startDelaySeconds,
-                                                float duration,
-                                                Interpolators_e interpolator,
-                                                float animParameter /* = 0 */,
-                                                bool bClearValueQueue /* = true */,
-                                                bool bCanBeCancelled /* = true */ )
+                                               const char *variable,
+                                               float targetValue,
+                                               float startDelaySeconds,
+                                               float duration,
+                                               Interpolators_e interpolator,
+                                               float animParameter /* = 0 */,
+                                               bool bClearValueQueue /* = true */,
+                                               bool bCanBeCancelled /* = true */ )
 {
     UtlSymId_t var = g_ScriptSymbols.AddString( variable );
     if ( bClearValueQueue )
@@ -1177,14 +1177,14 @@ void AnimationController::RunAnimationCommand( vgui::Panel *panel,
 // Purpose: Runs a custom command from code, not from a script file
 //-----------------------------------------------------------------------------
 void AnimationController::RunAnimationCommand( vgui::Panel *panel,
-                                                const char *variable,
-                                                Color targetValue,
-                                                float startDelaySeconds,
-                                                float duration,
-                                                Interpolators_e interpolator,
-                                                float animParameter /* = 0 */,
-                                                bool bClearValueQueue /* = true */,
-                                                bool bCanBeCancelled /* = true */ )
+                                               const char *variable,
+                                               Color targetValue,
+                                               float startDelaySeconds,
+                                               float duration,
+                                               Interpolators_e interpolator,
+                                               float animParameter /* = 0 */,
+                                               bool bClearValueQueue /* = true */,
+                                               bool bCanBeCancelled /* = true */ )
 {
     UtlSymId_t var = g_ScriptSymbols.AddString( variable );
 
@@ -1249,7 +1249,7 @@ void AnimationController::RemoveQueuedAnimationCommands( UtlSymId_t seqName, Pan
         for ( int i = 0; i < m_PostedMessages.Count(); i++ )
         {
             if ( ( m_PostedMessages[i].seqName == seqName ) &&
-                ( !pWithinParent || ( m_PostedMessages[i].parent == pWithinParent ) ) )
+                 ( !pWithinParent || ( m_PostedMessages[i].parent == pWithinParent ) ) )
             {
                 m_PostedMessages.Remove( i );
                 --i;
@@ -1344,6 +1344,10 @@ void AnimationController::StartCmd_Animate( UtlSymId_t seqName, AnimCmdAnimate_t
         }
     }
     if ( !panel )
+        return;
+
+    // Block some panels (like HudScope). Unfortunately players are abusing animations with broad/null parents.
+    if ( !panel->CanAnimate() )
         return;
 
     StartCmd_Animate( panel, seqName, cmd, bCanBeCancelled );
@@ -1722,7 +1726,7 @@ void AnimationController::SetValue( ActiveAnimation_t &anim, Panel *panel, UtlSy
 
 class CPanelAnimationDictionary
 {
-    public:
+   public:
     CPanelAnimationDictionary()
         : m_PanelAnimationMapPool( 32 )
     {
@@ -1737,7 +1741,7 @@ class CPanelAnimationDictionary
     PanelAnimationMap *FindPanelAnimationMap( char const *className );
     void PanelAnimationDumpVars( char const *className );
 
-    private:
+   private:
     struct PanelAnimationMapDictionaryEntry
     {
         PanelAnimationMap *map;

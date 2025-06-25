@@ -138,7 +138,7 @@ ConVar voice_vox( "voice_vox", "0", FCVAR_ARCHIVE, "Voice chat uses a vox-style 
 // //
 class CVoxManager : public CAutoGameSystem
 {
-    public:
+   public:
     CVoxManager()
         : CAutoGameSystem( "VoxManager" )
     {
@@ -203,7 +203,7 @@ CON_COMMAND_F(
 #endif
         default:
             Msg( "Unknown variety of crash. You have now failed to crash. I "
-                "hope you're happy.\n" );
+                 "hope you're happy.\n" );
             break;
     }
 }
@@ -259,7 +259,7 @@ static void __MsgFunc_VGUIMenu( bf_read &msg )
 
         // !KLUDGE! Whitelist of URL protocols formats for MOTD
         if ( !V_stricmp( panelname, PANEL_INFO )  // MOTD
-            && keys->GetInt( "type", 0 ) == 2    // URL message type
+             && keys->GetInt( "type", 0 ) == 2    // URL message type
         )
         {
             const char *pszURL = keys->GetString( "msg", "" );
@@ -691,7 +691,7 @@ bool ClientModeShared::ShouldDrawLocalPlayer( C_BasePlayer *pPlayer )
 #endif
 
     if ( ( pPlayer->index == render->GetViewEntity() ) &&
-        !C_BasePlayer::ShouldDrawLocalPlayer() )
+         !C_BasePlayer::ShouldDrawLocalPlayer() )
         return false;
 
     return true;
@@ -799,7 +799,7 @@ void ClientModeShared::Update()
         int nCount = 0;
 
         for ( int i = 0; i < g_pParticleSystemMgr->GetParticleSystemCount();
-            i++ )
+              i++ )
         {
             const char *pParticleSystemName =
                 g_pParticleSystemMgr->GetParticleSystemNameFromIndex( i );
@@ -809,10 +809,10 @@ void ClientModeShared::Update()
                 continue;
 
             for ( CParticleCollection *pCurCollection =
-                    pParticleSystem->FirstCollection();
-                pCurCollection != NULL;
-                pCurCollection =
-                    pCurCollection->GetNextCollectionUsingSameDef() )
+                      pParticleSystem->FirstCollection();
+                  pCurCollection != NULL;
+                  pCurCollection =
+                      pCurCollection->GetNextCollectionUsingSameDef() )
             {
                 ++nCount;
             }
@@ -865,7 +865,7 @@ int ClientModeShared::KeyInput( int down, ButtonCode_t keynum, const char *pszCu
         return 0;
     }
     else if ( pszCurrentBinding &&
-            ( Q_strcmp( pszCurrentBinding, "messagemode2" ) == 0 ||
+              ( Q_strcmp( pszCurrentBinding, "messagemode2" ) == 0 ||
                 Q_strcmp( pszCurrentBinding, "say_team" ) == 0 ) )
     {
         if ( down )
@@ -875,7 +875,7 @@ int ClientModeShared::KeyInput( int down, ButtonCode_t keynum, const char *pszCu
         return 0;
     }
     else if ( pszCurrentBinding &&
-            ( Q_strcmp( pszCurrentBinding, "messagemode3" ) == 0 ||
+              ( Q_strcmp( pszCurrentBinding, "messagemode3" ) == 0 ||
                 Q_strcmp( pszCurrentBinding, "say_party" ) == 0 ) )
     {
         if ( down && BCanSendPartyChatMessages() )
@@ -901,7 +901,7 @@ int ClientModeShared::KeyInput( int down, ButtonCode_t keynum, const char *pszCu
 
     // if ingame spectator mode, let spectator input intercept key event here
     if ( pPlayer && ( pPlayer->GetObserverMode() > OBS_MODE_DEATHCAM ) &&
-        !HandleSpectatorKeyInput( down, keynum, pszCurrentBinding ) )
+         !HandleSpectatorKeyInput( down, keynum, pszCurrentBinding ) )
     {
         return 0;
     }
@@ -928,31 +928,31 @@ int ClientModeShared::HandleSpectatorKeyInput( int down, ButtonCode_t keynum, co
 {
     // we are in spectator mode, open spectator menu
     if ( down && pszCurrentBinding &&
-        Q_strcmp( pszCurrentBinding, "+duck" ) == 0 )
+         Q_strcmp( pszCurrentBinding, "+duck" ) == 0 )
     {
         m_pViewport->ShowPanel( PANEL_SPECMENU, true );
         return 0;  // we handled it, don't handle twice or send to server
     }
     else if ( down && pszCurrentBinding &&
-            Q_strcmp( pszCurrentBinding, "+attack" ) == 0 )
+              Q_strcmp( pszCurrentBinding, "+attack" ) == 0 )
     {
         engine->ClientCmd( "spec_next" );
         return 0;
     }
     else if ( down && pszCurrentBinding &&
-            Q_strcmp( pszCurrentBinding, "+attack2" ) == 0 )
+              Q_strcmp( pszCurrentBinding, "+attack2" ) == 0 )
     {
         engine->ClientCmd( "spec_prev" );
         return 0;
     }
     else if ( down && pszCurrentBinding &&
-            Q_strcmp( pszCurrentBinding, "+jump" ) == 0 )
+              Q_strcmp( pszCurrentBinding, "+jump" ) == 0 )
     {
         engine->ClientCmd( "spec_mode" );
         return 0;
     }
     else if ( down && pszCurrentBinding &&
-            Q_strcmp( pszCurrentBinding, "+strafe" ) == 0 )
+              Q_strcmp( pszCurrentBinding, "+strafe" ) == 0 )
     {
         HLTVCamera()->SetAutoDirector( true );
 #if defined( REPLAY_ENABLED )
@@ -1012,7 +1012,7 @@ bool ClientModeShared::DoPostScreenSpaceEffects( const CViewSetup *pSetup )
 vgui::Panel *ClientModeShared::GetMessagePanel()
 {
     if ( m_pChatElement && m_pChatElement->GetInputPanel() &&
-        m_pChatElement->GetInputPanel()->IsVisible() )
+         m_pChatElement->GetInputPanel()->IsVisible() )
         return m_pChatElement->GetInputPanel();
 
     return NULL;
@@ -1030,23 +1030,26 @@ void ClientModeShared::StartMessageMode( int iMessageModeType )
     }
 
 #if defined( TF_CLIENT_DLL )
-    bool bSuspensionInMatch = GTFGCClientSystem() && GTFGCClientSystem()->BHaveChatSuspensionInCurrentMatch();
-    if ( !cl_enable_text_chat.GetBool() || bSuspensionInMatch )
+    if ( iMessageModeType == MM_SAY || iMessageModeType == MM_SAY_TEAM )
     {
-        CBaseHudChat *pHUDChat = ( CBaseHudChat * )GET_HUDELEMENT( CHudChat );
-        if ( pHUDChat )
+        bool bSuspensionInMatch = GTFGCClientSystem() && GTFGCClientSystem()->BHaveChatSuspensionInCurrentMatch();
+        if ( !cl_enable_text_chat.GetBool() || bSuspensionInMatch )
         {
-            const char *pszReason = "#TF_Chat_Disabled";
-            if ( bSuspensionInMatch )
+            CBaseHudChat *pHUDChat = ( CBaseHudChat * )GET_HUDELEMENT( CHudChat );
+            if ( pHUDChat )
             {
-                pszReason = "#TF_Chat_Unavailable";
-            }
+                const char *pszReason = "#TF_Chat_Disabled";
+                if ( bSuspensionInMatch )
+                {
+                    pszReason = "#TF_Chat_Unavailable";
+                }
 
-            char szLocalized[100];
-            g_pVGuiLocalize->ConvertUnicodeToANSI( g_pVGuiLocalize->Find( pszReason ), szLocalized, sizeof( szLocalized ) );
-            pHUDChat->ChatPrintf( 0, CHAT_FILTER_NONE, "%s ", szLocalized );
+                char szLocalized[100];
+                g_pVGuiLocalize->ConvertUnicodeToANSI( g_pVGuiLocalize->Find( pszReason ), szLocalized, sizeof( szLocalized ) );
+                pHUDChat->ChatPrintf( 0, CHAT_FILTER_NONE, "%s ", szLocalized );
+            }
+            return;
         }
-        return;
     }
 #endif  // TF_CLIENT_DLL
 
@@ -1605,7 +1608,7 @@ void ClientModeShared::FireGameEvent( IGameEvent *event )
                 loc_scpy_safe(
                     szItemname,
                     CConstructLocalizedString( g_pVGuiLocalize->Find( "TFUI_InvTooltip_ItemFound_Itemname" ),
-                                                CEconItemLocalizedFullNameGenerator( GLocalizationProvider(), pItemDefinition, iItemQuality ).GetFullName() ) );
+                                               CEconItemLocalizedFullNameGenerator( GLocalizationProvider(), pItemDefinition, iItemQuality ).GetFullName() ) );
 
                 /*g_pVGuiLocalize->ConstructString_safe(
                 szItemname,
@@ -1696,10 +1699,10 @@ void ClientModeShared::UpdateReplayMessages()
     if ( m_flReplayStartRecordTime != 0.0f )
     {
         DisplayReplayMessage( "#Replay_StartRecord",
-                            replay_msgduration_startrecord.GetFloat(),
-                            true,
-                            "replay\\startrecord.mp3",
-                            false );
+                              replay_msgduration_startrecord.GetFloat(),
+                              true,
+                              "replay\\startrecord.mp3",
+                              false );
 
         m_flReplayStartRecordTime = 0.0f;
         m_flReplayStopRecordTime = 0.0f;
@@ -1709,10 +1712,10 @@ void ClientModeShared::UpdateReplayMessages()
     if ( m_flReplayStopRecordTime != 0.0f )
     {
         DisplayReplayMessage( "#Replay_EndRecord",
-                            replay_msgduration_stoprecord.GetFloat(),
-                            true,
-                            "replay\\stoprecord.wav",
-                            false );
+                              replay_msgduration_stoprecord.GetFloat(),
+                              true,
+                              "replay\\stoprecord.wav",
+                              false );
 
         // Hide the replay reminder
         if ( m_pReplayReminderPanel )
@@ -1738,10 +1741,10 @@ void ClientModeShared::ClearReplayMessageList()
 }
 
 void ClientModeShared::DisplayReplayMessage( const char *pLocalizeName,
-                                            float flDuration,
-                                            bool bUrgent,
-                                            const char *pSound,
-                                            bool bDlg )
+                                             float flDuration,
+                                             bool bUrgent,
+                                             const char *pSound,
+                                             bool bDlg )
 {
 #if defined( REPLAY_ENABLED )
     // Don't display during replay playback, and don't allow more than 4 at a
@@ -1800,9 +1803,9 @@ void ClientModeShared::DisplayReplayReminder()
         // the given life
         CReplay *pCurLifeReplay =
             static_cast< CReplay * >( g_pClientReplayContext->GetReplayManager()
-                                        ->GetReplayForCurrentLife() );
+                                          ->GetReplayForCurrentLife() );
         if ( pCurLifeReplay && !pCurLifeReplay->m_bRequestedByUser &&
-            !pCurLifeReplay->m_bSaved )
+             !pCurLifeReplay->m_bSaved )
         {
             m_pReplayReminderPanel->Show();
         }
@@ -1816,7 +1819,7 @@ void ClientModeShared::DisplayReplayReminder()
 void ClientModeShared::ActivateInGameVGuiContext( vgui::Panel *pPanel )
 {
     vgui::ivgui()->AssociatePanelWithContext( s_hVGuiContext,
-                                            pPanel->GetVPanel() );
+                                              pPanel->GetVPanel() );
     vgui::ivgui()->ActivateContext( s_hVGuiContext );
 }
 

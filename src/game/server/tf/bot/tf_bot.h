@@ -51,7 +51,7 @@ extern void BotGenerateAndWearItem( CTFPlayer *pBot, const char *itemName );
 //----------------------------------------------------------------------------
 class CTFBot : public NextBotPlayer< CTFPlayer >, public CGameEventListener
 {
-    public:
+   public:
     DECLARE_CLASS( CTFBot, NextBotPlayer< CTFPlayer > );
 
     DECLARE_ENT_SCRIPTDESC();
@@ -246,13 +246,13 @@ class CTFBot : public NextBotPlayer< CTFPlayer >, public CGameEventListener
 
     class SuspectedSpyInfo_t
     {
-        public:
+       public:
         bool IsCurrentlySuspected();
         void Suspect();  // The verb form of the word, not the noun.
         bool TestForRealizing();
         CHandle< CTFPlayer > m_suspectedSpy;
 
-        private:
+       private:
         CUtlVector< int > m_touchTimes;
     };
 
@@ -382,6 +382,18 @@ class CTFBot : public NextBotPlayer< CTFPlayer >, public CGameEventListener
     void SetBehaviorFlag( unsigned int flags );
     void ClearBehaviorFlag( unsigned int flags );
     bool IsBehaviorFlagSet( unsigned int flags ) const;
+    void ScriptSetBehaviorFlag( int flags )
+    {
+        this->SetBehaviorFlag( ( unsigned int )flags );
+    }
+    void ScriptClearBehaviorFlag( int flags )
+    {
+        this->ClearBehaviorFlag( ( unsigned int )flags );
+    }
+    bool ScriptIsBehaviorFlagSet( int flags ) const
+    {
+        return this->IsBehaviorFlagSet( ( unsigned int )flags );
+    }
 
     bool FindSplashTarget( CBaseEntity *target, float maxSplashRadius, Vector *splashTarget ) const;
 
@@ -412,23 +424,23 @@ class CTFBot : public NextBotPlayer< CTFPlayer >, public CGameEventListener
     CBaseEntity *GetMissionTarget( void ) const;
     void SetMissionString( CUtlString string );
     CUtlString *GetMissionString( void );
-    void ScriptSetMission( unsigned int mission, bool resetBehaviorSystem = true )
+    void ScriptSetMission( int mission, bool resetBehaviorSystem = true )
     {
         this->SetMission( ( MissionType )mission, resetBehaviorSystem );
     }
-    void ScriptSetPrevMission( unsigned int mission )
+    void ScriptSetPrevMission( int mission )
     {
         this->SetPrevMission( ( MissionType )mission );
     }
-    unsigned int ScriptGetMission( void ) const
+    int ScriptGetMission( void ) const
     {
-        return ( unsigned int )this->GetMission();
+        return ( int )this->GetMission();
     }
-    unsigned int ScriptGetPrevMission( void ) const
+    int ScriptGetPrevMission( void ) const
     {
-        return ( unsigned int )this->GetPrevMission();
+        return ( int )this->GetPrevMission();
     }
-    bool ScriptHasMission( unsigned int mission ) const
+    bool ScriptHasMission( int mission ) const
     {
         return this->HasMission( ( MissionType )mission );
     }
@@ -586,7 +598,7 @@ class CTFBot : public NextBotPlayer< CTFPlayer >, public CGameEventListener
     bool ShouldReEvaluateCurrentClass( void ) const;
     void ReEvaluateCurrentClass( void );
 
-    private:
+   private:
     CTFBotLocomotion *m_locomotor;
     CTFBotBody *m_body;
     CTFBotVision *m_vision;
@@ -995,7 +1007,7 @@ inline const CTFBot *ToTFBot( const CBaseEntity *pEntity )
  */
 class CTFBotPathCost : public IPathCost
 {
-    public:
+   public:
     CTFBotPathCost( CTFBot *me, RouteType routeType )
     {
         m_me = me;
@@ -1025,16 +1037,16 @@ class CTFBotPathCost : public IPathCost
 
             // in training, avoid capturing the point until the human trainee does so
             if ( TFGameRules()->IsInTraining() &&
-                area->HasAttributeTF( TF_NAV_CONTROL_POINT ) &&
-                !m_me->IsAnyPointBeingCaptured() &&
-                !m_me->IsPlayerClass( TF_CLASS_ENGINEER ) )  // allow engineers to path so they can test travel distance for sentry placement
+                 area->HasAttributeTF( TF_NAV_CONTROL_POINT ) &&
+                 !m_me->IsAnyPointBeingCaptured() &&
+                 !m_me->IsPlayerClass( TF_CLASS_ENGINEER ) )  // allow engineers to path so they can test travel distance for sentry placement
             {
                 return -1.0f;
             }
 
             // don't path through enemy spawn rooms
             if ( ( m_me->GetTeamNumber() == TF_TEAM_RED && area->HasAttributeTF( TF_NAV_SPAWN_ROOM_BLUE ) ) ||
-                ( m_me->GetTeamNumber() == TF_TEAM_BLUE && area->HasAttributeTF( TF_NAV_SPAWN_ROOM_RED ) ) )
+                 ( m_me->GetTeamNumber() == TF_TEAM_BLUE && area->HasAttributeTF( TF_NAV_SPAWN_ROOM_RED ) ) )
             {
                 if ( !TFGameRules()->RoundHasBeenWon() )
                 {
@@ -1102,7 +1114,7 @@ class CTFBotPathCost : public IPathCost
                 // if this area exposes us to enemy sentry fire, avoid it
                 const float sentryDangerCost = 5.0f;
                 if ( ( m_me->GetTeamNumber() == TF_TEAM_RED && area->HasAttributeTF( TF_NAV_BLUE_SENTRY_DANGER ) ) ||
-                    ( m_me->GetTeamNumber() == TF_TEAM_BLUE && area->HasAttributeTF( TF_NAV_RED_SENTRY_DANGER ) ) )
+                     ( m_me->GetTeamNumber() == TF_TEAM_BLUE && area->HasAttributeTF( TF_NAV_RED_SENTRY_DANGER ) ) )
                 {
                     dist *= sentryDangerCost;
                 }
@@ -1118,7 +1130,7 @@ class CTFBotPathCost : public IPathCost
                     CBaseObject *enemyObj = static_cast< CBaseObject * >( IBaseObjectAutoList::AutoList()[oit] );
 
                     if ( ( enemyObj->ObjectType() == OBJ_SENTRYGUN ) &&
-                        ( enemyObj->GetTeamNumber() == enemyTeam ) )
+                         ( enemyObj->GetTeamNumber() == enemyTeam ) )
                     {
                         enemyObj->UpdateLastKnownArea();
 
@@ -1162,7 +1174,7 @@ class CTFBotPathCost : public IPathCost
 //---------------------------------------------------------------------------------------------
 class CClosestTFPlayer
 {
-    public:
+   public:
     CClosestTFPlayer( const Vector &where, int team = TEAM_ANY )
     {
         m_where = where;

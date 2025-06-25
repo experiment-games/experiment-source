@@ -19,7 +19,7 @@ struct SlideKeywordList_t
 
 class CSlideshowDisplay : public CBaseEntity
 {
-    public:
+   public:
     DECLARE_CLASS( CSlideshowDisplay, CBaseEntity );
     DECLARE_DATADESC();
     DECLARE_SERVERCLASS();
@@ -53,7 +53,7 @@ class CSlideshowDisplay : public CBaseEntity
     void InputSetCycleType( inputdata_t &inputdata );
     void InputSetNoListRepeats( inputdata_t &inputdata );
 
-    private:
+   private:
     // Control panel
     void GetControlPanelInfo( int nPanelIndex, const char *&pPanelName );
     void GetControlPanelClassName( int nPanelIndex, const char *&pPanelName );
@@ -61,7 +61,7 @@ class CSlideshowDisplay : public CBaseEntity
     void RestoreControlPanels( void );
     void BuildSlideShowImagesList( void );
 
-    private:
+   private:
     CNetworkVar( bool, m_bEnabled );
 
     CNetworkString( m_szDisplayText, 128 );
@@ -510,7 +510,7 @@ void CSlideshowDisplay::BuildSlideShowImagesList( void )
         char szFullFileName[_MAX_PATH];
         Q_snprintf( szFullFileName, sizeof( szFullFileName ), "materials/vgui/%s/%s", m_szSlideshowDirectory.Get(), szMatFileName );
 
-        KeyValues *pMaterialKeys = new KeyValues( "material" );
+        KeyValuesAD pMaterialKeys( "material" );
         bool bLoaded = pMaterialKeys->LoadFromFile( g_pFullFileSystem, szFullFileName, NULL );
 
         if ( bLoaded )

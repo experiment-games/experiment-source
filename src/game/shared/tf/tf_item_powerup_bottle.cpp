@@ -82,14 +82,14 @@ void CTFPowerupBottle::Reset( void )
 #ifdef GAME_DLL
     class CAttributeIterator_ZeroRefundableCurrency : public IEconItemUntypedAttributeIterator
     {
-        public:
+       public:
         CAttributeIterator_ZeroRefundableCurrency( CAttributeList *pAttrList )
             : m_pAttrList( pAttrList )
         {
             Assert( m_pAttrList );
         }
 
-        private:
+       private:
         virtual bool OnIterateAttributeValueUntyped( const CEconItemAttributeDefinition *pAttrDef )
         {
             if ( ::FindAttribute( m_pAttrList, pAttrDef ) )
@@ -274,7 +274,7 @@ void CTFPowerupBottle::ReapplyProvision( void )
                     // Refill weapon clips
                     for ( int i = 0; i < MAX_WEAPONS; i++ )
                     {
-                        CBaseCombatWeapon *pWeapon = pTFPlayer->GetWeapon( i );
+                        CTFWeaponBase *pWeapon = dynamic_cast< CTFWeaponBase * >( pTFPlayer->GetWeapon( i ) );
                         if ( !pWeapon )
                             continue;
 
@@ -282,7 +282,8 @@ void CTFPowerupBottle::ReapplyProvision( void )
                         if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() )
                         {
                             if ( ( pWeapon->UsesPrimaryAmmo() && !pWeapon->HasPrimaryAmmo() ) ||
-                                ( pWeapon->UsesSecondaryAmmo() && !pWeapon->HasSecondaryAmmo() ) )
+                                 ( pWeapon->UsesSecondaryAmmo() && !pWeapon->HasSecondaryAmmo() ) ||
+                                 ( pWeapon->IsEnergyWeapon() && !pWeapon->Energy_HasEnergy() ) )
                             {
                                 pTFPlayer->AwardAchievement( ACHIEVEMENT_TF_MVM_USE_AMMO_BOTTLE );
                             }
@@ -292,7 +293,7 @@ void CTFPowerupBottle::ReapplyProvision( void )
 
                         if ( iShareBottle && pHealTarget )
                         {
-                            CBaseCombatWeapon *pPatientWeapon = pHealTarget->GetWeapon( i );
+                            CTFWeaponBase *pPatientWeapon = dynamic_cast< CTFWeaponBase * >( pHealTarget->GetWeapon( i ) );
                             if ( !pPatientWeapon )
                                 continue;
 
@@ -400,7 +401,7 @@ bool CTFPowerupBottle::Use()
         // Use up one charge worth of refundable money when a charge is used
         class CAttributeIterator_ConsumeOneRefundableCharge : public IEconItemUntypedAttributeIterator
         {
-            public:
+           public:
             CAttributeIterator_ConsumeOneRefundableCharge( CAttributeList *pAttrList, int iNumCharges )
                 : m_pAttrList( pAttrList ), m_iNumCharges( iNumCharges )
             {
@@ -408,7 +409,7 @@ bool CTFPowerupBottle::Use()
                 Assert( m_iNumCharges > 0 );
             }
 
-            private:
+           private:
             virtual bool OnIterateAttributeValueUntyped( const CEconItemAttributeDefinition *pAttrDef )
             {
                 if ( ::FindAttribute( m_pAttrList, pAttrDef ) )
