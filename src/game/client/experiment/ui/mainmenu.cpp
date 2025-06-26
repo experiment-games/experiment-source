@@ -110,6 +110,10 @@ void CBaseMenuPanel::AttachToGameUI()
     SetKeyBoardInputEnabled( true );
     SetMouseInputEnabled( true );
     SetCursor( dc_arrow );
+
+    // This will fix text inputs not having focus (issue #27), however it will allow it to be placed in front
+    // of the console, which is not ideal.
+    MakePopup( false );
 }
 
 void CBaseMenuPanel::PerformLayout()
