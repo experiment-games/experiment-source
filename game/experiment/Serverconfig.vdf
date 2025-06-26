@@ -1,4 +1,7 @@
 "ServerConfig"
 {
 	"map"		"sb_wasteland"
+	"name"		"My Awesome Server"
+	"max_players"		"16"
+	"gamemode"		"sandbox"
 }

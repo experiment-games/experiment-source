@@ -432,11 +432,17 @@ function initialize() {
         const option = document.createElement('option');
         option.value = gamemode.id;
         option.textContent = gamemode.id;
+
+        if (gamemode.selected) {
+          option.selected = true;
+        }
+
         gameModeSelect.appendChild(option);
       });
     }
 
     function populateMaps(maps) {
+      let selectedMap = null;
       mapSelect.innerHTML = '';
 
       maps.forEach(map => {
@@ -444,16 +450,26 @@ function initialize() {
         option.value = map.id;
         option.textContent = map.id;
         map.preview = option.dataset.preview = 'images/maps/' + map.id + '.jpg';
+
+        if (map.selected) {
+          option.selected = true;
+          selectedMap = map;
+        }
+
         mapSelect.appendChild(option);
       });
 
       // Initialize with first map
-      if (maps.length > 0) {
+      if (maps.length > 0 && !selectedMap) {
         updateMapPreview(maps[0]);
+      } else if (selectedMap) {
+        updateMapPreview(selectedMap);
       }
     }
 
-    GameUI.LoadServerVariables(function (availableMaps, availableGamemodes) {
+    GameUI.LoadServerVariables(function (serverInfo, availableMaps, availableGamemodes) {
+      console.log('Loaded server info', serverInfo.name, serverInfo.password, serverInfo.maxPlayers);
+
       populateGameModes(availableGamemodes);
       populateMaps(availableMaps);
     });
@@ -704,6 +720,12 @@ window.addEventListener('interop:installmock', () => {
     },
 
     LoadServerVariables: function (callback) {
+      const mockServerInfo = {
+        name: 'Mock Server',
+        password: '',
+        maxPlayers: 16,
+      };
+
       const mockMaps = [
         { id: 'gm_flatgrass' },
         { id: 'gm_construct' },
@@ -722,7 +744,7 @@ window.addEventListener('interop:installmock', () => {
 
       console.log(`Loading server variables (mock)`);
       setTimeout(() => {
-        callback(mockMaps, mockGamemodes);
+        callback(mockServerInfo, mockMaps, mockGamemodes);
       }, 500);
     },
 

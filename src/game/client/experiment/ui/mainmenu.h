@@ -124,10 +124,7 @@ class MainMenuHTML : public HTML, public ISteamMatchmakingServerListResponse
     DECLARE_CLASS_SIMPLE( MainMenuHTML, HTML );
 
    public:
-    MainMenuHTML( Panel *parent, const char *name, bool allowJavaScript = true )
-        : HTML( parent, name, allowJavaScript )
-    {
-    }
+    MainMenuHTML( Panel* parent, const char* name, bool allowJavaScript = true );
 
     void RequestServerList( GameServerType iType = GameServerType::GS_INTERNET );
 
@@ -146,6 +143,8 @@ class MainMenuHTML : public HTML, public ISteamMatchmakingServerListResponse
    protected:
     virtual void OnInstallJavaScriptInterop() OVERRIDE;
     virtual void OnJavaScriptCallback( KeyValues* pData ) OVERRIDE;
+
+    KeyValues* m_pSavedData;
 };
 
 extern CBaseMenuPanel* g_BaseMenuPanel;

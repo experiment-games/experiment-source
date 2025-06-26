@@ -259,6 +259,18 @@ static void GetGamemodes( CUtlVector< CUtlString > &outGamemodes )
     g_pFullFileSystem->FindClose( findHandle );
 }
 
+MainMenuHTML::MainMenuHTML( Panel *parent, const char *name, bool allowJavaScript )
+    : HTML( parent, name, allowJavaScript )
+{
+    m_pSavedData = new KeyValues( "ServerConfig" );
+
+    // Load the config data
+    if ( m_pSavedData )
+    {
+        m_pSavedData->LoadFromFile( g_pFullFileSystem, "ServerConfig.vdf", "GAME" );  // this is game-specific data, so it should live in GAME, not CONFIG
+    }
+}
+
 void MainMenuHTML::OnInstallJavaScriptInterop()
 {
     AddJavascriptObject( "GameUI" );
@@ -318,6 +330,13 @@ void MainMenuHTML::OnJavaScriptCallback( KeyValues *pData )
     {
         KeyValues *pParameters = new KeyValues( "parameters" );
 
+        KeyValues *pServerInfo = new KeyValues( "serverInfo" );
+        pParameters->AddSubKey( pServerInfo );
+
+        pServerInfo->SetString( "name", m_pSavedData ? m_pSavedData->GetString( "name", "" ) : "" );
+        pServerInfo->SetString( "password", m_pSavedData ? m_pSavedData->GetString( "password", "" ) : "" );
+        pServerInfo->SetInt( "maxPlayers", m_pSavedData ? m_pSavedData->GetInt( "max_players", 16 ) : 16 );
+
         CUtlVector< CUtlString > maps;
         GetMaps( maps );
 
@@ -330,6 +349,17 @@ void MainMenuHTML::OnJavaScriptCallback( KeyValues *pData )
 
             KeyValues *pMap = new KeyValues( "" );
             pMap->SetString( "id", map );
+
+            if ( m_pSavedData )
+            {
+                const char *savedMap = m_pSavedData->GetString( "map", "" );
+
+                if ( Q_strcmp( savedMap, map ) == 0 )
+                {
+                    pMap->SetBool( "selected", true );
+                }
+            }
+
             pMaps->AddSubKey( pMap );
         }
 
@@ -345,6 +375,17 @@ void MainMenuHTML::OnJavaScriptCallback( KeyValues *pData )
 
             KeyValues *pGamemode = new KeyValues( "" );
             pGamemode->SetString( "id", gamemode );
+
+            if ( m_pSavedData )
+            {
+                const char *savedGamemode = m_pSavedData->GetString( "gamemode", "" );
+
+                if ( Q_strcmp( savedGamemode, gamemode ) == 0 )
+                {
+                    pGamemode->SetBool( "selected", true );
+                }
+            }
+
             pGamemodes->AddSubKey( pGamemode );
         }
 
@@ -379,24 +420,30 @@ void MainMenuHTML::OnJavaScriptCallback( KeyValues *pData )
         const char *maxPlayers = config->GetString( "maxPlayers" );
         const char *password = config->GetString( "password" );
 
-        // TODO: Save preferences for map and gamemode (copy logic from game\client\experiment\ui\createmultiplayergamedialog.cpp)
-        // if ( m_pSavedData )
-        //{
-        //    if ( m_pServerPage->IsRandomMapSelected() )
-        //    {
-        //        // it's set to random map, just save an
-        //        m_pSavedData->SetString( "map", "" );
-        //    }
-        //    else
-        //    {
-        //        m_pSavedData->SetString( "map", map );
-        //    }
+        if ( m_pSavedData )
+        {
+            m_pSavedData->SetString( "name", hostName );
+            m_pSavedData->SetString( "password", password );
+            m_pSavedData->SetInt( "max_players", Q_atoi( maxPlayers ) );
 
-        //    // save config to a file
-        //    m_pSavedData->SaveToFile( g_pFullFileSystem, "ServerConfig.vdf", "GAME" );
-        //}
+            // TODO: Random maps
+            //if ( m_pServerPage->IsRandomMapSelected() )
+            //{
+            //    // it's set to random map, just save an
+            //    m_pSavedData->SetString( "map", "" );
+            //}
+            //else
+            {
+                m_pSavedData->SetString( "map", map );
+            }
 
-        // reset server enforced cvars
+            m_pSavedData->SetString( "gamemode", gamemode );
+
+            // Save config to a file
+            m_pSavedData->SaveToFile( g_pFullFileSystem, "ServerConfig.vdf", "GAME" );
+        }
+
+        // Reset server enforced cvars
         g_pCVar->RevertFlaggedConVars( FCVAR_REPLICATED );
 
         // Cheats were disabled; revert all cheat cvars to their default values.
@@ -406,7 +453,7 @@ void MainMenuHTML::OnJavaScriptCallback( KeyValues *pData )
 
         char startCommand[1024];
 
-        // create the command to execute
+        // Create the command to execute
         Q_snprintf(
             startCommand,
             sizeof( startCommand ),
