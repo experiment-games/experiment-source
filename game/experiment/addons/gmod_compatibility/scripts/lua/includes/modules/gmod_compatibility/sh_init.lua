@@ -858,6 +858,8 @@ if (SERVER) then
 end
 
 local PHYSICS_OBJECT_META = FindMetaTable("PhysicsObject")
+PHYSICS_OBJECT_META.SetAngleVelocity = PHYSICS_OBJECT_META.SetAngularVelocity
+PHYSICS_OBJECT_META.SetAngularVelocityInstantaneous = PHYSICS_OBJECT_META.SetAngularVelocityInstantaneous
 
 function PHYSICS_OBJECT_META:GetPos()
 	return select(1, self:GetPosition())

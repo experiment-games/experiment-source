@@ -1198,22 +1198,38 @@ LUA_BINDING_BEGIN( PhysicsObject, SetShadow, "class", "Sets the shadow parameter
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( PhysicsObject, SetVelocity, "class", "Sets the velocity" )
+LUA_BINDING_BEGIN( PhysicsObject, SetVelocity, "class", "Sets the linear velocity" )
 {
     lua_IPhysicsObject *physicsObject = LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" );
     Vector linearVelocity = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "linearVelocity" );
-    Vector angularVelocity = LUA_BINDING_ARGUMENT( luaL_checkvector, 3, "angularVelocity" );
-    physicsObject->SetVelocity( &linearVelocity, &angularVelocity );
+    physicsObject->SetVelocity( &linearVelocity, nullptr );
     return 0;
 }
 LUA_BINDING_END()
 
-LUA_BINDING_BEGIN( PhysicsObject, SetVelocityInstantaneous, "class", "Sets the velocity instantaneously" )
+LUA_BINDING_BEGIN( PhysicsObject, SetAngularVelocity, "class", "Sets the angular velocity" )
+{
+    lua_IPhysicsObject *physicsObject = LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" );
+    Vector angularVelocity = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "angularVelocity" );
+    physicsObject->SetVelocity( nullptr, &angularVelocity );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( PhysicsObject, SetVelocityInstantaneous, "class", "Sets the linear velocity instantaneously" )
 {
     lua_IPhysicsObject *physicsObject = LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" );
     Vector linearVelocity = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "linearVelocity" );
-    Vector angularVelocity = LUA_BINDING_ARGUMENT( luaL_checkvector, 3, "angularVelocity" );
-    physicsObject->SetVelocityInstantaneous( &linearVelocity, &angularVelocity );
+    physicsObject->SetVelocityInstantaneous( &linearVelocity, nullptr );
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( PhysicsObject, SetAngularVelocityInstantaneous, "class", "Sets the angular velocity instantaneously" )
+{
+    lua_IPhysicsObject *physicsObject = LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" );
+    Vector angularVelocity = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "angularVelocity" );
+    physicsObject->SetVelocityInstantaneous( nullptr, &angularVelocity );
     return 0;
 }
 LUA_BINDING_END()
@@ -1258,7 +1274,7 @@ LUA_BINDING_END( "Vector", "The local vector." )
 
 LUA_BINDING_BEGIN( PhysicsObject, IsValid, "class", "Check if physics object is valid." )
 {
-    lua_IPhysicsObject *physicsObject = LUA_BINDING_ARGUMENT( luaL_checkphysicsobject, 1, "physicsObject" );
+    lua_IPhysicsObject *physicsObject = LUA_BINDING_ARGUMENT( lua_tophysicsobject, 1, "physicsObject" );
 
     if ( physicsObject == NULL )
     {
