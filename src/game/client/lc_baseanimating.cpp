@@ -349,16 +349,6 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetServerIntendedCycle, "class", "Get the ser
 }
 LUA_BINDING_END( "number", "The server intended cycle" )
 
-LUA_BINDING_BEGIN( CBaseAnimating, GetSkin, "class", "Get the skin." )
-{
-    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
-
-    lua_pushinteger( L, pAnimating->GetSkin() );
-
-    return 1;
-}
-LUA_BINDING_END( "integer", "The skin" )
-
 LUA_BINDING_BEGIN( CBaseAnimating, IgniteRagdoll, "class", "Ignite the ragdoll." )
 {
     lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );

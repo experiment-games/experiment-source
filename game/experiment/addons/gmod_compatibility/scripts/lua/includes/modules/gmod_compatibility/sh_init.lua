@@ -127,7 +127,7 @@ end
 util.SharedRandom = Randoms.SharedRandomFloat
 
 ents = {
-    Create = Entities.CreateByName,
+	Create = Entities.CreateByName,
 	-- TODO: Probably not correct, since CreateClientProp creates an ent with physics
 	CreateClientProp = Entities.CreateClientEntity,
 
@@ -732,12 +732,6 @@ function ENTITY_META:SetDTVector(index, value)
 	self:SetNetworkDataValue(_E.NETWORK_VARIABLE_TYPE.VECTOR, index, value)
 end
 
-if (SERVER) then
-	function ENTITY_META:FrameAdvance()
-		-- TODO: Should this be implemented server-side? It isn't in engine.
-	end
-end
-
 function ENTITY_META:IsNextBot()
 	return false -- TODO: Implement (low priority)
 end
@@ -851,6 +845,16 @@ end
 
 function ENTITY_META:HasBoneManipulations()
 	return false
+end
+
+if (SERVER) then
+	function ENTITY_META:FrameAdvance()
+		-- TODO: Should this be implemented server-side? I can't find it in the engine.
+	end
+
+	function ENTITY_META:IsPlayerHolding()
+		return self:GetPhysicsObject():GetGameFlags() == _E.FVPHYSICS.PLAYER_HELD
+	end
 end
 
 local PHYSICS_OBJECT_META = FindMetaTable("PhysicsObject")
@@ -1813,7 +1817,7 @@ end
 unpack = unpack or table.unpack
 
 MsgC = function(...)
-    local currentColor = debug.GetRealmColor()
+	local currentColor = debug.GetRealmColor()
 
 	for k, stringOrColor in ipairs({ ... }) do
 		if (IsColor(stringOrColor)) then
@@ -1935,15 +1939,15 @@ if (CLIENT) then
 
 	hook.Add("LevelInitPostEntity", "GModCompatibility.CallInitPostEntityHook", function()
 		hook.Run("InitPostEntity")
-    end)
+	end)
 
 	hook.Add("HudDraw", "GModCompatibility.CallHUDPaintHook", function()
 		hook.Run("HUDPaint")
-    end)
+	end)
 
 	hook.Add("HudShouldDraw", "GModCompatibility.CallHUDShouldDrawHook", function()
 		hook.Run("HUDShouldDraw")
-    end)
+	end)
 
 	hook.Add("ScoreboardDraw", "GModCompatibility.CallHUDDrawScoreBoardHook", function()
 		hook.Run("HUDDrawScoreBoard")
@@ -1980,7 +1984,7 @@ hook.Add("PreRegisterSENT", "GModCompatibility.RegisterSENT", function(entityTab
 end)
 
 hook.Add("PostEntitiesLoaded", "GModCompatibility.CallOnLoaded", function()
-    scripted_ents.OnLoaded()
+	scripted_ents.OnLoaded()
 	weapons.OnLoaded()
 end)
 
@@ -2141,16 +2145,16 @@ local differentBase = {
 	["manhack_welder"] = "weapon_base",
 	["weapon_fists"] = "weapon_base",
 	["weapon_flechettegun"] = "weapon_base",
-    ["weapon_medkit"] = "weapon_base",
+	["weapon_medkit"] = "weapon_base",
 
-    -- Entities
-    ["base_edit"] = "base_entity",
-    ["edit_fog"] = false, -- "base_edit",
-    ["edit_sky"] = false, -- "base_edit",
-    ["base_gmodentity"] = false, -- "base_anim",
-    ["gmod_anchor"] = false, -- "base_anim",
-    ["gmod_balloon"] = "base_entity",
-    ["gmod_button"] = "base_entity",
+	-- Entities
+	["base_edit"] = "base_entity",
+	["edit_fog"] = false,     -- "base_edit",
+	["edit_sky"] = false,     -- "base_edit",
+	["base_gmodentity"] = false, -- "base_anim",
+	["gmod_anchor"] = false,  -- "base_anim",
+	["gmod_balloon"] = "base_entity",
+	["gmod_button"] = "base_entity",
 	["gmod_cameraprop"] = false, -- "base_anim",
 	["gmod_dynamite"] = "base_entity",
 	["gmod_emitter"] = "base_entity",
@@ -2159,28 +2163,28 @@ local differentBase = {
 	["gmod_lamp"] = "base_entity",
 	["gmod_light"] = "base_entity",
 	["gmod_thruster"] = "base_entity",
-    ["gmod_wheel"] = "base_entity",
-    ["gmod_winch_controller"] = false, -- "base_point",
-    ["sent_ball"] = "base_entity",
+	["gmod_wheel"] = "base_entity",
+	["gmod_winch_controller"] = false, -- "base_point",
+	["sent_ball"] = "base_entity",
 	["widget_base"] = "base_entity",
-	["env_skypaint"] = false, -- "base_point",
-	["gmod_hands"] = false, -- "base_anim",
+	["env_skypaint"] = false,   -- "base_point",
+	["gmod_hands"] = false,     -- "base_anim",
 	["gmod_player_start"] = false, -- "base_point",
-	["lua_run"] = false, -- "base_point",
-	["prop_effect"] = false, -- "base_anim",
+	["lua_run"] = false,        -- "base_point",
+	["prop_effect"] = false,    -- "base_anim",
 	["ragdoll_motion"] = false, -- "base_anim",
 }
 
 hook.Add(
 	"ScriptedEntityRegistered",
 	"GModCompatibility.ScriptedEntityRegistered.SyncWithGMod",
-    function(className, scriptedEntity)
-        if (differentBase[className]) then
-            scriptedEntity.Base = differentBase[className]
-        elseif (differentBase[className] == false) then
+	function(className, scriptedEntity)
+		if (differentBase[className]) then
+			scriptedEntity.Base = differentBase[className]
+		elseif (differentBase[className] == false) then
 			-- Let the gmod module set the Base
 			scriptedEntity.Base = nil
-        end
+		end
 
 		scripted_ents.Register(scriptedEntity, className)
 	end
@@ -2190,11 +2194,11 @@ hook.Add(
 	"ScriptedWeaponRegistered",
 	"GModCompatibility.ScriptedWeaponRegistered.SyncWithGMod",
 	function(className, scriptedWeapon)
-        if (differentBase[className]) then
-            scriptedWeapon.Base = differentBase[className]
-        elseif (differentBase[className] == false) then
+		if (differentBase[className]) then
+			scriptedWeapon.Base = differentBase[className]
+		elseif (differentBase[className] == false) then
 			scriptedEntity.Base = nil
-        end
+		end
 
 		weapons.Register(scriptedWeapon, className)
 	end

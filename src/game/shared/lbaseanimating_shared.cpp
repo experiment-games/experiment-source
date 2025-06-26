@@ -197,15 +197,26 @@ LUA_BINDING_BEGIN( CBaseAnimating, GetModelName, "class", "Get the model path of
 
     if ( !pstudiohdr )
     {
-        Warning( "CBaseAnimating::GetModelName failed: no model\n" );
-        return 0;
+        lua_pushstring( L, "models/error.mdl" );
     }
-
-    lua_pushstring( L, pstudiohdr->pszName() );
+    else
+    {
+        lua_pushstring( L, pstudiohdr->pszName() );
+    }
 
     return 1;
 }
 LUA_BINDING_END( "string", "The model name" )
+
+LUA_BINDING_BEGIN( CBaseAnimating, GetSkin, "class", "Get the skin." )
+{
+    lua_CBaseAnimating *pAnimating = LUA_BINDING_ARGUMENT( luaL_checkanimating, 1, "entity" );
+
+    lua_pushinteger( L, pAnimating->GetSkin() );
+
+    return 1;
+}
+LUA_BINDING_END( "integer", "The skin" )
 
 LUA_BINDING_BEGIN( CBaseAnimating, GetAnimTimeInterval, "class", "Get the animation time interval." )
 {

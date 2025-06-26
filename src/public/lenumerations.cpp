@@ -38,5 +38,21 @@ LUALIB_API int luaopen_ServerEnumerations( lua_State *L )
     lua_pushenum( L, NUM_AI_CLASSES, "COUNT" );
     LUA_SET_ENUM_LIB_END( L );
 
+    LUA_SET_ENUM_LIB_BEGIN( L, "FVPHYSICS" );
+    lua_pushenum( L, FVPHYSICS_DMG_SLICE, "DMG_SLICE" );
+    lua_pushenum( L, FVPHYSICS_CONSTRAINT_STATIC, "CONSTRAINT_STATIC" );
+    lua_pushenum( L, FVPHYSICS_PLAYER_HELD, "PLAYER_HELD" );
+    lua_pushenum( L, FVPHYSICS_PART_OF_RAGDOLL, "PART_OF_RAGDOLL" );
+    lua_pushenum( L, FVPHYSICS_MULTIOBJECT_ENTITY, "MULTIOBJECT_ENTITY" );
+    lua_pushenum( L, FVPHYSICS_HEAVY_OBJECT, "HEAVY_OBJECT" );
+    lua_pushenum( L, FVPHYSICS_PENETRATING, "PENETRATING" );
+    lua_pushenum( L, FVPHYSICS_NO_PLAYER_PICKUP, "NO_PLAYER_PICKUP" );
+    lua_pushenum( L, FVPHYSICS_WAS_THROWN, "WAS_THROWN" );
+    lua_pushenum( L, FVPHYSICS_DMG_DISSOLVE, "DMG_DISSOLVE" );
+    lua_pushenum( L, FVPHYSICS_NO_IMPACT_DMG, "NO_IMPACT_DMG" );
+    lua_pushenum( L, FVPHYSICS_NO_NPC_IMPACT_DMG, "NO_NPC_IMPACT_DMG" );
+    lua_pushenum( L, FVPHYSICS_NO_SELF_COLLISIONS, "NO_SELF_COLLISIONS" );
+    LUA_SET_ENUM_LIB_END( L );
+
     return 0;
 }

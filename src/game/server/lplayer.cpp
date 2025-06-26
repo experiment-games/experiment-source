@@ -36,6 +36,24 @@ LUA_BINDING_BEGIN( Player, GiveAmmo, "class", "Give ammo to the player." )
 }
 LUA_BINDING_END( "integer", "The amount of ammo actually given." )
 
+LUA_BINDING_BEGIN( Player, GetHeldObject, "class", "Get the held object of the player." )
+{
+    lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
+    CBaseEntity *heldObject = player->GetHeldObject();
+
+    if ( heldObject )
+    {
+        CBaseEntity::PushLuaInstanceSafe( L, heldObject );
+    }
+    else
+    {
+        lua_pushnil( L );
+    }
+
+    return 1;
+}
+LUA_BINDING_END( "Entity", "The held object, or nil if none." )
+
 LUA_BINDING_BEGIN( Player, SetArmor, "class", "Sets the armor value for a player." )
 {
     lua_CBasePlayer *player = LUA_BINDING_ARGUMENT( luaL_checkplayer, 1, "player" );
