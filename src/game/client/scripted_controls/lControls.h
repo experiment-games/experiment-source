@@ -9,6 +9,7 @@
 LUALIB_API int luaopen_vgui_AnalogBar( lua_State *L );
 LUALIB_API int luaopen_vgui_AnimatingImagePanel( lua_State *L );
 LUALIB_API int luaopen_vgui_AnimationController( lua_State *L );
+LUALIB_API int luaopen_vgui_AvatarImage( lua_State *L );
 LUALIB_API int luaopen_vgui_BuildModeDialog( lua_State *L );
 LUALIB_API int luaopen_vgui_Button( lua_State *L );
 LUALIB_API int luaopen_vgui_CheckButton( lua_State *L );

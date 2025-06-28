@@ -632,6 +632,8 @@ $Project
 
         $Folder	"Scripted Controls"
         {
+            $File "$SRCDIR\game\client\scripted_controls\lAvatarImage.cpp"
+            $File "$SRCDIR\game\client\scripted_controls\lAvatarImage.h"
             $File "$SRCDIR\game\client\scripted_controls\lButton.cpp"
             $File "$SRCDIR\game\client\scripted_controls\lButton.h"
             $File "$SRCDIR\game\client\scripted_controls\lCheckButton.cpp"
