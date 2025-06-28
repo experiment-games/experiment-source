@@ -715,12 +715,11 @@ void IN_ScoreDown( const CCommand &args )
         if ( L )
         {
             LUA_CALL_HOOK_BEGIN( "ScoreboardShow" );
-            LUA_CALL_HOOK_END( 0, 1 );
-
-            LUA_RETURN_NONE_IF_TRUE();
+            LUA_CALL_HOOK_END( 0, 0 );
         }
 
-        gViewPortInterface->ShowPanel( PANEL_SCOREBOARD, true );
+        // Experiment; We disabled the default Source scoreboard, since with Lua we implement our own.
+        // gViewPortInterface->ShowPanel( PANEL_SCOREBOARD, true );
     }
 }
 

@@ -14,10 +14,10 @@ CGameInfoStore *g_pGameInfoStore;
 CGameInfoStore::CGameInfoStore()
 {
     ListenForGameEvent( "game_newmap" );
+    ListenForGameEvent( "server_spawn" );
 #ifdef CLIENT_DLL
     ListenForGameEvent( "client_beginconnect" );
 #else
-    ListenForGameEvent( "server_spawn" );
     ListenForGameEvent( "player_connect" );
 #endif
 }
