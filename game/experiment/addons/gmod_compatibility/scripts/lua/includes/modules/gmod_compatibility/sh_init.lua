@@ -923,6 +923,8 @@ PLAYER_META.SetDSP = PLAYER_META.SetDsp
 PLAYER_META.ShouldDropWeapon = PLAYER_META.SetDropActiveWeaponOnDeath
 PLAYER_META.Armor = PLAYER_META.GetArmor
 PLAYER_META.ConCommand = PLAYER_META.RunConsoleCommand
+PLAYER_META.Frags = PLAYER_META.GetFrags
+PLAYER_META.Deaths = PLAYER_META.GetDeaths
 
 function PLAYER_META:LagCompensation(shouldStart)
 	if (shouldStart) then
@@ -1099,6 +1101,18 @@ function PLAYER_META:IsListenServerHost()
 	end
 
 	return self == Engines.GetListenServerHost()
+end
+
+if (CLIENT) then
+	-- TODO: Implement this properly (possibly in CHLClient::ClientAdjustStartSoundParams)
+	function PLAYER_META:GetVoiceVolumeScale()
+		return self.__voiceVolumeScale or 1.0
+	end
+
+	-- TODO: Implement this properly
+	function PLAYER_META:SetVoiceVolumeScale(scale)
+		self.__voiceVolumeScale = scale
+	end
 end
 
 local MOVE_DATA_META = FindMetaTable("MoveData")
