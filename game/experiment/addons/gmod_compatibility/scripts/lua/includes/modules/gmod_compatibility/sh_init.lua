@@ -661,6 +661,16 @@ ENTITY_META.GetSequenceList = ENTITY_META.GetSequences
 ENTITY_META.NextThink = ENTITY_META.SetNextThink
 ENTITY_META.PhysicsDestroy = ENTITY_META.DestroyPhysicsObject
 
+function ENTITY_META:SetColor4Part(r, g, b, a)
+	self:SetRenderColor(Color(r, g, b, a))
+end
+
+function ENTITY_META:GetColor4Part()
+	local color = self:GetRenderColor()
+
+	return color.r, color.g, color.b, color.a
+end
+
 function ENTITY_META:GetForward()
 	local forward, _, _ = self:GetVectors()
 	return forward
