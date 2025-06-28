@@ -33,6 +33,7 @@
 #include <datacache/imdlcache.h>
 #include <filesystem.h>
 #include <utlbuffer.h>
+#include <saverestore.h>
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -68,6 +69,38 @@ LUALIB_API lua_CBaseEntity *luaL_optentity( lua_State *L, int narg, CBaseEntity 
 }
 
 LUA_REGISTRATION_INIT( Entity )
+
+LUA_BINDING_BEGIN( Entity, GetSaveTable, "class", "Gets all data that would be saved for the entity. Not implemented for: FIELD_CLASSPTR, FIELD_EDICT, FIELD_CUSTOM" )
+{
+    lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
+    bool showAll = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optboolean, 2, false, "showAll" );
+
+    PushLuaSaveTable( L, pEntity, pEntity->GetDataDescMap(), showAll );
+
+    return 1;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Entity, SetSaveValue, "class", "Sets a value in the entity's save table. Not implemented for: FIELD_EHANDLE, FIELD_FUNCTION, FIELD_EMBEDDED, FIELD_CLASSPTR, FIELD_EDICT, FIELD_CUSTOM" )
+{
+    lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
+    const char *pVariableName = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "variableName" );
+
+    lua_pushboolean( L, SetLuaSaveTableField( L, pEntity, pEntity->GetDataDescMap(), pVariableName ) );
+
+    return 1;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Entity, GetInternalVariable, "class", "Gets an internal variable of the entity." )
+{
+    lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
+    const char *pVariableName = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "variableName" );
+
+    PushLuaSaveTableField( L, pEntity, pEntity->GetDataDescMap(), pVariableName );
+    return 1;
+}
+LUA_BINDING_END( "any", "The value of the internal variable." )
 
 LUA_BINDING_BEGIN( Entity, Activate, "class", "Activate the entity." )
 {
