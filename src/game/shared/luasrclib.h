@@ -54,6 +54,9 @@ LUALIB_API int( luaopen_Players )( lua_State *L );
 #define LUA_EFFECTDATAMETANAME "EffectData"
 LUALIB_API int( luaopen_CEffectData )( lua_State *L );
 
+#define LUA_ENEMYAILIBNAME "EnemyAi"
+LUALIB_API int( luaopen_EnemyAi )( lua_State *L );
+
 #define LUA_GAMETRACEMETANAME "Trace"
 #define LUA_GAMETRACESLIBNAME "Traces"
 LUALIB_API int( luaopen_CGameTrace )( lua_State *L );

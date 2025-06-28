@@ -284,6 +284,12 @@ system.IsOSX = Systems.IsOsx
 system.SteamTime = Systems.GetSteamServerRealTime
 system.UpTime = Systems.GetSecondsSinceComputerActive
 
+if (SERVER) then
+	ai = EnemyAi
+	ai.GetScheduleID = EnemyAi.GetScheduleId
+	ai.GetTaskID = EnemyAi.GetTaskId
+end
+
 local function convertPlaySoundFlags(flagsAsString)
 	local flags = _E.PLAY_SOUND_FLAG.STREAM_BLOCK
 

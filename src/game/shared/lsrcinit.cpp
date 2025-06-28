@@ -107,6 +107,7 @@ static const luaL_RegForState luasrclibs[] = {
     //
     // Server only
     //
+    { LUA_ENEMYAILIBNAME, luaopen_EnemyAi, REALM_SERVER },
     { LUA_SERVERENUMNAME, luaopen_ServerEnumerations, REALM_SERVER },
     { LUA_NETCHANNELINFOMETANAME, luaopen_INetChannelInfo, REALM_SERVER },
     { LUA_RESOURCESLIBNAME, luaopen_resources, REALM_SERVER },
