@@ -120,6 +120,15 @@ LUA_BINDING_BEGIN( Label, SetContentAlignment, "class", "Sets the content alignm
 }
 LUA_BINDING_END()
 
+LUA_BINDING_BEGIN( Label, GetContentAlignment, "class", "Gets the content alignment of the label" )
+{
+    lua_Label *label = LUA_BINDING_ARGUMENT( luaL_checklabel, 1, "label" );
+    vgui::Label::Alignment alignment = label->GetContentAlignment();
+    lua_pushinteger( L, alignment );
+    return 1;
+}
+LUA_BINDING_END( "integer", "The content alignment of the label" )
+
 LUA_BINDING_BEGIN( Label, SetFont, "class", "Sets the font of the label" )
 {
     lua_Label *label = LUA_BINDING_ARGUMENT( luaL_checklabel, 1, "label" );

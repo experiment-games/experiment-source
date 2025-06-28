@@ -700,6 +700,11 @@ void Label::SetContentAlignment( Alignment alignment )
     Repaint();
 }
 
+vgui::Label::Alignment Label::GetContentAlignment()
+{
+    return _contentAlignment;
+}
+
 //-----------------------------------------------------------------------------
 // Purpose: Size the width of the label to its contents - only works from in ApplySchemeSettings or PerformLayout()
 //-----------------------------------------------------------------------------

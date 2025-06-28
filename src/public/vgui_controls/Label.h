@@ -69,6 +69,7 @@ class Label : public Panel
     };
 
     virtual void SetContentAlignment( Alignment alignment );
+    virtual Alignment GetContentAlignment();
     virtual void SetEnabled( bool state );
     // Additional offset at the Start of the text (from whichever sides it is aligned)
     virtual void SetTextInset( int xInset, int yInset );
