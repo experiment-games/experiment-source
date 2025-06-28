@@ -372,6 +372,36 @@ LUA_BINDING_BEGIN( Utilities, IsValidPhysicsProp, "library", "Check if the given
 }
 LUA_BINDING_END( "boolean", "True if the model is a valid physics prop" )
 
+LUA_BINDING_BEGIN( Utilities, IsValidRagdoll, "library", "Check if the given string is a valid ragdoll model. TODO: Unsure if this is implemented correctly (checks if it has more than 1 bones)" )
+{
+    const char *pszModel = LUA_BINDING_ARGUMENT( luaL_checkstring, 1, "model" );
+    const MDLHandle_t modelHandle = g_pMDLCache->FindMDL( pszModel );
+
+    if ( modelHandle == MDLHANDLE_INVALID )
+    {
+        lua_pushboolean( L, false );
+        return 1;
+    }
+
+    studiohdr_t *pStudioModel = g_pMDLCache->GetStudioHdr( modelHandle );
+
+    if ( !pStudioModel || Q_strcmp( pStudioModel->name, "error.mdl" ) == 0 )
+    {
+        lua_pushboolean( L, false );
+        return 1;
+    }
+
+    if ( pStudioModel->numbones <= 1 )
+    {
+        lua_pushboolean( L, false );
+        return 1;
+    }
+
+    lua_pushboolean( L, true );
+    return 1;
+}
+LUA_BINDING_END( "boolean", "True if the model is a valid ragdoll" )
+
 LUA_BINDING_BEGIN( Utilities, ShouldShowBlood, "library", "Check if blood of the given color should be shown" )
 {
     int bloodColor = LUA_BINDING_ARGUMENT( luaL_checknumber, 1, "bloodColor" );
