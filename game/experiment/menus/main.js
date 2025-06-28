@@ -468,8 +468,6 @@ function initialize() {
     }
 
     GameUI.LoadServerVariables(function (serverInfo, availableMaps, availableGamemodes) {
-      console.log('Loaded server info', serverInfo.name, serverInfo.password, serverInfo.maxPlayers);
-
       populateGameModes(availableGamemodes);
       populateMaps(availableMaps);
     });
@@ -513,6 +511,7 @@ function initialize() {
         };
 
         window.GameUI.HostServer(serverConfig, function (wasSuccessful) {
+          currentPage.hide();
           finish();
         });
       });

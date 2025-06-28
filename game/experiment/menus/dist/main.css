@@ -2431,10 +2431,6 @@ video {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
-.text-white\/60 {
-  color: rgb(255 255 255 / 0.6);
-}
-
 .text-yellow-500 {
   --tw-text-opacity: 1;
   color: rgb(234 179 8 / var(--tw-text-opacity));
@@ -2494,16 +2490,12 @@ video {
   opacity: 0.25;
 }
 
-.opacity-50 {
-  opacity: 0.5;
+.opacity-70 {
+  opacity: 0.7;
 }
 
 .opacity-75 {
   opacity: 0.75;
-}
-
-.opacity-70 {
-  opacity: 0.7;
 }
 
 .bg-blend-normal {
@@ -2977,9 +2969,10 @@ body.loaded .overlay {
   opacity: 0.5;
 }
 
-body.in-level::before {
+body.in-level #background-container .background,
+body.in-level #background-container .background-next {
   background: rgba(0, 0, 0, 0.2);
-  background-image: none;
+  background-image: none !important;
 }
 
 @media (min-width: 640px) {
