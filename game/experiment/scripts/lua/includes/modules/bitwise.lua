@@ -1,11 +1,19 @@
 local MODULE = {}
 
-function MODULE.band(a, b)
-	return a & b
+function MODULE.band(first, ...)
+	for _, v in ipairs({ ... }) do
+		first = first & v
+	end
+
+	return first
 end
 
-function MODULE.bor(a, b)
-	return a | b
+function MODULE.bor(first, ...)
+	for _, v in ipairs({ ... }) do
+		first = first | v
+	end
+
+	return first
 end
 
 function MODULE.bxor(a, b)
