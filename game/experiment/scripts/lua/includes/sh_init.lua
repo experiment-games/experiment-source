@@ -34,8 +34,9 @@ function ispanel(variable)
 end
 
 function isentity(variable)
-    return type(variable) == "Entity"
+	return type(variable) == "Entity"
 end
+
 IsEntity = isentity
 
 function isfunction(variable)
@@ -97,15 +98,15 @@ if (CLIENT) then
 	Include("extensions/text_entry.lua")
 
 	-- GUI elements
-    Include("gui/cl_image_panel.lua")
+	Include("gui/cl_image_panel.lua")
 
 	-- Annoyingly, Garry's Mod doesn't really have Label nor EditablePanel metatables.
 	-- That messes with the expectation of things like vgui.Register, which for example depend on SetText
 	-- existing in Panel, whilst for us it exists in Label.
-    -- So we merge those metatables here into Panel for compatibility.
-    -- For reference, in gmod the GetValue is the same function for TextEntry and Label. So perhaps it does some type
-    -- checking internally. We'll resort to hacking about it in Lua for now.
-    -- TODO: clean this. Rework inheritance completely. This is a mess that I keep adding more mess to.
+	-- So we merge those metatables here into Panel for compatibility.
+	-- For reference, in gmod the GetValue is the same function for TextEntry and Label. So perhaps it does some type
+	-- checking internally. We'll resort to hacking about it in Lua for now.
+	-- TODO: clean this. Rework inheritance completely. This is a mess that I keep adding more mess to.
 	-- These duplicates are neccessary because TextEntry doesn't inherit from Label and we need to merge them into Panel.
 	local collapsedMethods = {}
 
@@ -114,26 +115,26 @@ if (CLIENT) then
 			collapsedMethods[methodName] = {}
 		end
 
-        collapsedMethods[methodName][metatable] = metatable[methodName]
+		collapsedMethods[methodName][metatable] = metatable[methodName]
 		metatable[methodName] = nil -- Clear it so we don't have duplicates.
 	end
 
-    addCollapsedMethod("GetText", _R.Label)
-    addCollapsedMethod("GetText", _R.TextEntry)
-    addCollapsedMethod("SetText", _R.Label)
-    addCollapsedMethod("SetText", _R.TextEntry)
-    addCollapsedMethod("GetValue", _R.Label)
-    addCollapsedMethod("GetValue", _R.TextEntry)
-    addCollapsedMethod("SetValue", _R.Label)
-    addCollapsedMethod("SetValue", _R.TextEntry)
-    addCollapsedMethod("SetFont", _R.Label)
-    addCollapsedMethod("SetFont", _R.TextEntry)
-    addCollapsedMethod("SetWrap", _R.Label)
-    addCollapsedMethod("SetWrap", _R.TextEntry)
-    addCollapsedMethod("SetFontByName", _R.Label)
-    addCollapsedMethod("SetFontByName", _R.TextEntry)
-    addCollapsedMethod("GetFontName", _R.Label)
-    addCollapsedMethod("GetFontName", _R.TextEntry)
+	addCollapsedMethod("GetText", _R.Label)
+	addCollapsedMethod("GetText", _R.TextEntry)
+	addCollapsedMethod("SetText", _R.Label)
+	addCollapsedMethod("SetText", _R.TextEntry)
+	addCollapsedMethod("GetValue", _R.Label)
+	addCollapsedMethod("GetValue", _R.TextEntry)
+	addCollapsedMethod("SetValue", _R.Label)
+	addCollapsedMethod("SetValue", _R.TextEntry)
+	addCollapsedMethod("SetFont", _R.Label)
+	addCollapsedMethod("SetFont", _R.TextEntry)
+	addCollapsedMethod("SetWrap", _R.Label)
+	addCollapsedMethod("SetWrap", _R.TextEntry)
+	addCollapsedMethod("SetFontByName", _R.Label)
+	addCollapsedMethod("SetFontByName", _R.TextEntry)
+	addCollapsedMethod("GetFontName", _R.Label)
+	addCollapsedMethod("GetFontName", _R.TextEntry)
 
 	for methodName, metatables in pairs(collapsedMethods) do
 		_R.Panel[methodName] = function(self, ...)
@@ -145,28 +146,29 @@ if (CLIENT) then
 		end
 	end
 
-	Metatables.CollapseSkipMetamethods(_R.Panel, _R.EditablePanel, _R.Label, _R.Button, _R.Frame, _R.Html, _R.CheckButton, _R.ModelImagePanel, _R.TextEntry)
+	Metatables.CollapseSkipMetamethods(_R.Panel, _R.EditablePanel, _R.Label, _R.Button, _R.Frame, _R.Html, _R
+	.CheckButton, _R.ModelImagePanel, _R.TextEntry)
 
-    -- TODO: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH
-    -- TODO: THINK ABOUT HOW WE WANT TO DO INHERITANCE IN A WAY THAT IS MAINTAINABLE >.<"
+	-- TODO: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH
+	-- TODO: THINK ABOUT HOW WE WANT TO DO INHERITANCE IN A WAY THAT IS MAINTAINABLE >.<"
 	-- TODO: This doesnt work!
 	-- -- Setup our inheritance structures so the __index metamethods exist.
 	-- -- Then we merge the vgui element metatables into a single panel metatable.
 	-- -- The __index of merged metatables will be the __index of the metatable
 	-- -- that is merged into.
 	-- Metatables.SetupSpecialInheritance(_R.EditablePanel, _R.Panel)
-    -- Metatables.SetupSpecialInheritance(_R.Frame, _R.EditablePanel)
+	-- Metatables.SetupSpecialInheritance(_R.Frame, _R.EditablePanel)
 
-    -- Metatables.SetupSpecialInheritance(_R.TextEntry, _R.Panel)
-    -- Metatables.SetupSpecialInheritance(_R.Label, _R.Panel)
-    -- Metatables.SetupSpecialInheritance(_R.Button, _R.Label)
+	-- Metatables.SetupSpecialInheritance(_R.TextEntry, _R.Panel)
+	-- Metatables.SetupSpecialInheritance(_R.Label, _R.Panel)
+	-- Metatables.SetupSpecialInheritance(_R.Button, _R.Label)
 
-    -- -- Metatables.SetupSpecialInheritance(_R.CheckButton, _R.ToggleButton)
-    -- -- Metatables.SetupSpecialInheritance(_R.ToggleButton, _R.Button)
-    -- Metatables.SetupSpecialInheritance(_R.CheckButton, _R.Button)
+	-- -- Metatables.SetupSpecialInheritance(_R.CheckButton, _R.ToggleButton)
+	-- -- Metatables.SetupSpecialInheritance(_R.ToggleButton, _R.Button)
+	-- Metatables.SetupSpecialInheritance(_R.CheckButton, _R.Button)
 
 	-- Metatables.SetupSpecialInheritance(_R.Html, _R.Panel)
-    -- Metatables.SetupSpecialInheritance(_R.ModelImagePanel, _R.EditablePanel)
+	-- Metatables.SetupSpecialInheritance(_R.ModelImagePanel, _R.EditablePanel)
 end
 
 local json = require("json")
@@ -198,12 +200,12 @@ encodeTableSpecialTypes = function(table)
 				roll = value.roll,
 			}
 		elseif (type(value) == "Entity") then
-            table[key] = {
+			table[key] = {
 				__type = NET_TYPE_ENTITY,
 				id = value:GetEntityIndex()
 			}
 		elseif (type(value) == "table") then
-            encodeTableSpecialTypes(value)
+			encodeTableSpecialTypes(value)
 		end
 	end
 end
@@ -217,8 +219,8 @@ decodeTableSpecialTypes = function(table)
 			elseif (value.__type == NET_TYPE_VECTOR) then
 				table[key] = Vectors.Create(value.x, value.y, value.z)
 			elseif (value.__type == NET_TYPE_ANGLE) then
-                table[key] = Angles.Create(value.pitch, value.yaw, value.roll)
-            elseif (value.__type == NET_TYPE_ENTITY) then
+				table[key] = Angles.Create(value.pitch, value.yaw, value.roll)
+			elseif (value.__type == NET_TYPE_ENTITY) then
 				table[key] = Entities.Find(value.id)
 			else
 				decodeTableSpecialTypes(value)
@@ -228,11 +230,11 @@ decodeTableSpecialTypes = function(table)
 end
 
 Json = {
-    Encode = function(value)
-        local copy = table.Copy(value)
-        encodeTableSpecialTypes(copy)
+	Encode = function(value)
+		local copy = table.Copy(value)
+		encodeTableSpecialTypes(copy)
 		return json.encode(copy)
-    end,
+	end,
 	Decode = function(value)
 		local decoded = json.decode(value)
 		decodeTableSpecialTypes(decoded)
@@ -264,6 +266,11 @@ function RunConsoleCommand(command, ...)
 	else
 		return Engines.ServerCommand(commandString)
 	end
+end
+
+-- TODO: Currently no concommand blocking is implemented.
+function IsConCommandBlocked(command)
+	return false
 end
 
 if (not GAMEUI) then
