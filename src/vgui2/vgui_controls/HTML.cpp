@@ -368,13 +368,20 @@ void HTML::CallJavascriptObjectCallback( int callbackId, KeyValues *args )
     if ( !m_SteamAPIContext.SteamHTMLSurface() )
         return;
 
-    char szJson[8096];
-    CJsonToKeyValues::ConvertKeyValuesToJson( args, szJson, sizeof( szJson ) );
+    CUtlString szJson = CJsonToKeyValues::ConvertKeyValuesToJson( args );
 
-    char szScript[8096];
-    Q_snprintf( szScript, sizeof( szScript ), "if (typeof window.g_Interop.__callbackQueue[%i] === 'function') window.g_Interop.__callbackQueue[%i].apply(null, Object.values(%s));", callbackId, callbackId, szJson );
+    char szCallbackIdStr[32];
+    Q_snprintf( szCallbackIdStr, sizeof( szCallbackIdStr ), "%i", callbackId );
 
-    m_SteamAPIContext.SteamHTMLSurface()->ExecuteJavascript( m_unBrowserHandle, szScript );
+    CUtlString szScript( "if (typeof window.g_Interop.__callbackQueue[" );
+    szScript += szCallbackIdStr;
+    szScript += "] === 'function') window.g_Interop.__callbackQueue[";
+    szScript += szCallbackIdStr;
+    szScript += "].apply(null, Object.values(";
+    szScript += szJson;
+    szScript += "));";
+
+    m_SteamAPIContext.SteamHTMLSurface()->ExecuteJavascript( m_unBrowserHandle, szScript.Get() );
 }
 
 /// <summary>

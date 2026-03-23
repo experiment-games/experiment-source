@@ -201,3 +201,14 @@ void CJsonToKeyValues::ConvertKeyValuesToJson( KeyValues *pKV, char *pOut, int n
 
     Q_strncpy( pOut, buffer.GetString(), nMaxLen );
 }
+
+CUtlString CJsonToKeyValues::ConvertKeyValuesToJson( KeyValues *pKV )
+{
+    StringBuffer buffer;
+    buffer.Clear();
+    PrettyWriter< StringBuffer > writer( buffer );
+
+    WriteObjectOrArray( pKV, writer );
+
+    return CUtlString( buffer.GetString() );
+}
