@@ -1361,6 +1361,9 @@ else
 	PANEL_META.ChildrenSize = PANEL_META.GetChildrenSize
 	PANEL_META.NoClipping = PANEL_META.SetPaintClippingEnabled
 
+	-- Deprecated:
+	PANEL_META.SetKeyBoardInputEnabled = PANEL_META.SetKeyboardInputEnabled
+
 	function PANEL_META:SizeToContents(sizeWidth, sizeHeight)
 		-- For some reason DTree_Node uses SizeToContents on a DListLayout, which doesn't have a SizeToContents function.
 		-- :/
