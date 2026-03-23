@@ -1472,6 +1472,8 @@ else
 	local HTML_PANEL_META = FindMetaTable("Html")
 	HTML_PANEL_META.OpenURL = HTML_PANEL_META.OpenUrl
 	HTML_PANEL_META.SetHTML = HTML_PANEL_META.SetHtml
+	HTML_PANEL_META.NewObject = HTML_PANEL_META.AddJavascriptObject
+	HTML_PANEL_META.NewObjectCallback = HTML_PANEL_META.AddJavascriptObjectCallback
 
 	local TEXT_ENTRY_PANEL_META = FindMetaTable("TextEntry")
 	TEXT_ENTRY_PANEL_META._OriginalSetFont = TEXT_ENTRY_PANEL_META._OriginalSetFont or TEXT_ENTRY_PANEL_META.SetFont
