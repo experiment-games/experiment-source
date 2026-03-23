@@ -1280,7 +1280,7 @@ else
 
 	function render.Clear(r, g, b, a, clearDepth, clearStencil)
 		Renders.ClearBuffers(true, clearDepth or false, clearStencil or false)
-		Renders.ClearColor(r, g, b, a)
+		Renders.ClearColor(Color(r, g, b, a))
 	end
 
 	function render.ClearDepth(clearStencil)
