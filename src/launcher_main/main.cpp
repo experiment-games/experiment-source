@@ -27,11 +27,19 @@
 
 #include "tier0/basetypes.h"
 
-#ifdef WIN32
+/* #ifdef WIN32
 #define PATH_SEPERATOR "\\"
 typedef int ( *LauncherMain_t )( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow );
 #elif POSIX
 #define PATH_SEPERATOR "/"
+typedef int ( *LauncherMain_t )( int argc, char **argv );
+#else
+#error
+#endif*/
+
+#ifdef WIN32
+typedef int ( *LauncherMain_t )( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow );
+#elif POSIX
 typedef int ( *LauncherMain_t )( int argc, char **argv );
 #else
 #error
@@ -464,15 +472,15 @@ int APIENTRY WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 
     char szGameInstallDir[4096];
     // Experiment; We commented this since we include the SDK content in our mod.
-    //if ( !GetGameInstallDir( pRootDir, szGameInstallDir, 4096 ) )
-    //{
-    //    return 1;
-    //}
-    //pBinaryGameDir = szGameInstallDir;
+    if ( !GetGameInstallDir( pRootDir, szGameInstallDir, 4096 ) )
+    {
+        return 1;
+    }
+    pBinaryGameDir = szGameInstallDir;
 
     // Experiment; TODO: Is this risky? Anyone can just come in and change the contents of this directory.
     //_snprintf( szGameInstallDir, sizeof( szGameInstallDir ), "%s%sexperiment", pRootDir, PATH_SEPERATOR );
-    strcpy_s( szGameInstallDir, pRootDir );
+    //strcpy_s( szGameInstallDir, pRootDir );
 
     SetEnvironmentVariableA( "SDK_EXEC_DIR", szGameInstallDir );
 
