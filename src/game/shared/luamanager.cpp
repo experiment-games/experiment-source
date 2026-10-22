@@ -1846,12 +1846,7 @@ LUA_API int luasrc_pcall( lua_State *L, int amountOfArguments, int amountOfResul
         SHOW_LUA_ERROR( "pcall error: %s\n", lua_tostring( L, -1 ) );
         lua_pop( L, 1 );
 
-        // If the caller requested results, leave a nil placeholder for each
-        // one so the stack keeps the shape lua_pcall promises. Callers that
-        // read the result window after an error would otherwise index below
-        // the call frame and pick up an unrelated value from the stack.
-        // Convention after this change: nresults slots are always present,
-        // nil on error.
+        // Leave nils in place of the requested results, so callers can always read and pop them
         for ( int i = 0; i < amountOfResults; i++ )
         {
             lua_pushnil( L );

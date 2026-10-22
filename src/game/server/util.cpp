@@ -189,27 +189,29 @@ IServerNetworkable *CEntityFactoryDictionary::Create( const char *pClassName )
 
             lua_pushstring( L, pClassName );
 
-            if ( luasrc_pcall( L, 1, 1 ) == LUA_OK )
+            luasrc_pcall( L, 1, 1 );
+
+            bool bIsRegistered = lua_istable( L, -1 );
+            lua_pop( L, 2 );  // Remove the result and the library table
+
+            if ( bIsRegistered )
             {
-                if ( lua_istable( L, -1 ) )
+                // Experiment:
+                // We have a table registered, create and return the scripted entity
+                if ( Q_strcmp( g_szLuaExpectedScriptedLibrary, LUA_SCRIPTEDENTITIESLIBNAME ) == 0 )
                 {
-                    // Experiment:
-                    // We have a table registered, create and return the scripted entity
-                    if ( Q_strcmp( g_szLuaExpectedScriptedLibrary, LUA_SCRIPTEDENTITIESLIBNAME ) == 0 )
-                    {
-                        CBaseScripted *pEnt = _CreateEntityTemplate( ( CBaseScripted * )NULL, pClassName );
-                        // TODO: CBaseScripted should probably get the same treatment that the scripted weapons got (with regards to setting up the reftable)
-                        return pEnt->NetworkProp();
-                    }
-                    else if ( Q_strcmp( g_szLuaExpectedScriptedLibrary, LUA_SCRIPTEDWEAPONSLIBNAME ) == 0 )
-                    {
-                        CExperimentScriptedWeapon *pEnt = _CreateEntityTemplate( ( CExperimentScriptedWeapon * )NULL, pClassName );
-                        return pEnt->NetworkProp();
-                    }
-                    else
-                    {
-                        Assert( !"Unknown Lua factory library name!" );
-                    }
+                    CBaseScripted *pEnt = _CreateEntityTemplate( ( CBaseScripted * )NULL, pClassName );
+                    // TODO: CBaseScripted should probably get the same treatment that the scripted weapons got (with regards to setting up the reftable)
+                    return pEnt->NetworkProp();
+                }
+                else if ( Q_strcmp( g_szLuaExpectedScriptedLibrary, LUA_SCRIPTEDWEAPONSLIBNAME ) == 0 )
+                {
+                    CExperimentScriptedWeapon *pEnt = _CreateEntityTemplate( ( CExperimentScriptedWeapon * )NULL, pClassName );
+                    return pEnt->NetworkProp();
+                }
+                else
+                {
+                    Assert( !"Unknown Lua factory library name!" );
                 }
             }
         }

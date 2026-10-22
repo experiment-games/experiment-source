@@ -202,16 +202,10 @@
     LUA_CALL_PANEL_METHOD_FOR_BEGIN( this, functionName )
 
 // Will call the function if it exists, leaving the specified amount of
-// return values on the stack (or nils if the function doesn't exist).
+// return values on the stack (or nils if the function doesn't exist or errors).
 #define LUA_CALL_PANEL_METHOD_END( nArgs, nresults )       \
     args += nArgs;                                         \
-    if ( luasrc_pcall( m_lua_State, args, nresults ) > 0 ) \
-    {                                                      \
-        for ( int i = 0; i < nresults; i++ )               \
-        {                                                  \
-            lua_pushnil( m_lua_State );                    \
-        }                                                  \
-    }                                                      \
+    luasrc_pcall( m_lua_State, args, nresults );           \
     }                                                      \
     else                                                   \
     {                                                      \
