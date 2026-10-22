@@ -1406,7 +1406,7 @@ else
 
 	-- Change casing and add functionality to pass individual color components.
 	function PANEL_META:SetBGColor(rOrColor, g, b, a)
-		if (istable(rOrColor)) then
+		if (istable(rOrColor) or IsColor(rOrColor)) then
 			self:SetBackgroundColor(rOrColor)
 		else
 			self:SetBackgroundColor(Colors.Create(rOrColor, g, b, a))
@@ -1415,7 +1415,7 @@ else
 
 	-- Change casing and add functionality to pass individual color components.
 	function PANEL_META:SetFGColor(rOrColor, g, b, a)
-		if (istable(rOrColor)) then
+		if (istable(rOrColor) or IsColor(rOrColor)) then
 			self:SetForegroundColor(rOrColor)
 		else
 			self:SetForegroundColor(Colors.Create(rOrColor, g, b, a))
