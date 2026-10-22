@@ -2491,6 +2491,34 @@ LUA_BINDING_BEGIN( Entity, SetSolidFlags, "class", "Set solid flags." )
 }
 LUA_BINDING_END()
 
+LUA_BINDING_BEGIN( Entity, SetNotSolid, "class", "Sets whether the entity should collide with anything. Keeps the solid type intact and only toggles the FSOLID_NOT_SOLID flag, so the solid type still reads the same afterwards." )
+{
+    lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
+    bool bNotSolid = LUA_BINDING_ARGUMENT( luaL_checkboolean, 2, "notSolid" );
+
+    if ( bNotSolid )
+        pEntity->SetSolidFlags( pEntity->GetSolidFlags() | FSOLID_NOT_SOLID );
+    else
+        pEntity->SetSolidFlags( pEntity->GetSolidFlags() & ~FSOLID_NOT_SOLID );
+
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Entity, WorldSpaceAABB, "class", "Returns the world axis-aligned bounding box of the entity as two vectors." )
+{
+    lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
+
+    Vector vecMins, vecMaxs;
+    pEntity->CollisionProp()->WorldSpaceAABB( &vecMins, &vecMaxs );
+
+    lua_pushvector( L, vecMins );
+    lua_pushvector( L, vecMaxs );
+
+    return 2;
+}
+LUA_BINDING_END( "Vector", "The minimum world position", "Vector", "The maximum world position" )
+
 LUA_BINDING_BEGIN( Entity, SetTextureFrameIndex, "class", "Set texture frame index." )
 {
     lua_CBaseEntity *pEntity = LUA_BINDING_ARGUMENT( luaL_checkentity, 1, "entity" );
