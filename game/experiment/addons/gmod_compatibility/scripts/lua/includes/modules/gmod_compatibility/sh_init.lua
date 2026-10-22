@@ -806,20 +806,11 @@ function ENTITY_META:GetPhysicsObjectNum(physicsObjectNumber)
 end
 
 --[[
-	We implement SetNotSolid and DrawShadow using engine flags/effects, but I'm not sure
+	We implement DrawShadow using engine effects, but I'm not sure
 	if that's the way gmod does it. If it isn't, these flags may be unexpectedly set by
 	some scripts.
-	TODO: Check if DrawShadow/SetNotSolid on gmod, causes any flags to be set.
+	TODO: Check if DrawShadow on gmod, causes any flags to be set.
 --]]
-function ENTITY_META:SetNotSolid(bBool)
-	if (bBool) then
-		self:AddSolidFlags(SOLID_NONE)
-	else
-		print("ENTITY_META:SetNotSolid - Not sure if SOLID_VPHYSICS is correct for SetNotSolid(false)")
-		self:RemoveSolidFlags(SOLID_VPHYSICS)
-	end
-end
-
 function ENTITY_META:DrawShadow(bBool)
 	if (bBool) then
 		self:RemoveEffects(_E.ENTITY_EFFECT.NO_SHADOW)
