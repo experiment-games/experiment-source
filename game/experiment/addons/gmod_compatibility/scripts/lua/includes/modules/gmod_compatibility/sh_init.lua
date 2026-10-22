@@ -221,6 +221,7 @@ sql = {
 	IndexExists = function() end,
 	LastError = function() end,
 	Query = function() end,
+	QueryTyped = function() end,
 	QueryRow = function() end,
 	QueryValue = function() end,
 	SQLStr = function() end,
@@ -2102,6 +2103,11 @@ include("includes/init.lua")
 include = originalInclude
 require = originalRequire
 
+-- Garry's Mod's extensions/entity.lua replaced Entity.__index with a Lua implementation (which also tolerates NULL
+-- entities). CBaseAnimating and CBaseFlex copied the original __index in includes/sh_init.lua, so give them the new one.
+_R.CBaseAnimating.__index = _R.Entity.__index
+_R.CBaseFlex.__index = _R.Entity.__index
+
 if (CLIENT) then
 	Panels.HTML = Panels.Html
 
@@ -2218,7 +2224,7 @@ hook.Add(
 		if (differentBase[className]) then
 			scriptedWeapon.Base = differentBase[className]
 		elseif (differentBase[className] == false) then
-			scriptedEntity.Base = nil
+			scriptedWeapon.Base = nil
 		end
 
 		weapons.Register(scriptedWeapon, className)

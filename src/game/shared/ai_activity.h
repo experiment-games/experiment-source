@@ -2683,6 +2683,8 @@ typedef enum
     ACT_ZOMBIE_LEAP_START,
     ACT_ZOMBIE_LEAPING,
 
+    ACT_MP_SWIM_IDLE,
+
     // this is the end of the global activities, private per-monster activities start here.
     LAST_SHARED_ACTIVITY,
 } Activity;

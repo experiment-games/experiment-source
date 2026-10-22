@@ -14,7 +14,7 @@ function IsValid(target)
 		return false
 	end
 
-	return isValidChecker(object)
+	return isValidChecker(target)
 end
 
 function isangle(variable)
