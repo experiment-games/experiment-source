@@ -46,7 +46,7 @@ Please keep in mind that this project has been developed on Windows. It is possi
 ### Requirements
 
 - Source SDK 2013 Multiplayer Base (Installed through Steam)
-- Visual Studio 2022 (or newer)
+- Visual Studio 2026 or 2022, with the "Desktop development with C++" workload (MSVC build tools, Windows SDK, and C++ MFC)
 - Visual Studio 2013 (for the Source SDK 2013 solution) ([`microsoft.com`](https://go.microsoft.com/fwlink/?LinkId=532504&type=ISO&clcid=0x409), [`archive.org mirror`](https://archive.org/details/en_visual_studio_community_2013_with_update_5_x86_dvd_6816332), [`alternative mirror`](https://mega.nz/file/Agw1zCyL#DhQtvdfir0CnusR2qMpGKxKx2LvnjhmWDhEcB029Dak))
 - Perl (e.g. [Strawberry Perl](https://strawberryperl.com/))
 - (Not required, but recommended) [Git Bash](https://git-scm.com/downloads) for running `bash` scripts
