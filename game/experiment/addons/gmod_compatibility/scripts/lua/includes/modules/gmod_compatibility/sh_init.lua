@@ -1562,9 +1562,11 @@ else
 	GetRenderTarget = function(name, width, height)
 		return Renders.CreateRenderTargetTextureEx(name, width, height)
 	end
-	EyePos = render.MainViewOrigin
-	EyeAngles = render.MainViewAngles
-	EyeVector = render.MainViewForward
+	EyePos = render.CurrentViewOrigin
+	EyeAngles = render.CurrentViewAngles
+	EyeVector = render.CurrentViewForward
+	MainEyePos = render.MainViewOrigin
+	MainEyeAngles = render.MainViewAngles
 
 	LocalPlayer = Players.GetLocalPlayer
 

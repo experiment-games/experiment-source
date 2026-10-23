@@ -498,6 +498,28 @@ LUA_BINDING_BEGIN( Renders, MainViewForward, "library", "Get the main view forwa
 }
 LUA_BINDING_END( "Vector", "The main view forward." )
 
+// The current view is only valid while a view is being rendered, so we fall back to the main view outside of that.
+LUA_BINDING_BEGIN( Renders, CurrentViewOrigin, "library", "Get the origin of the view currently being rendered (e.g: a monitor or water reflection). Outside of rendering this returns the main view origin.", "client" )
+{
+    lua_pushvector( L, IsCurrentViewAccessAllowed() ? CurrentViewOrigin() : MainViewOrigin() );
+    return 1;
+}
+LUA_BINDING_END( "Vector", "The current view origin." )
+
+LUA_BINDING_BEGIN( Renders, CurrentViewAngles, "library", "Get the angles of the view currently being rendered (e.g: a monitor or water reflection). Outside of rendering this returns the main view angles.", "client" )
+{
+    lua_pushangle( L, IsCurrentViewAccessAllowed() ? CurrentViewAngles() : MainViewAngles() );
+    return 1;
+}
+LUA_BINDING_END( "Angle", "The current view angles." )
+
+LUA_BINDING_BEGIN( Renders, CurrentViewForward, "library", "Get the forward direction of the view currently being rendered (e.g: a monitor or water reflection). Outside of rendering this returns the main view forward.", "client" )
+{
+    lua_pushvector( L, IsCurrentViewAccessAllowed() ? CurrentViewForward() : MainViewForward() );
+    return 1;
+}
+LUA_BINDING_END( "Vector", "The current view forward." )
+
 static ShaderTexFilterMode_t FilterModeFromEnumeration( int enumeration )
 {
     switch ( enumeration )
