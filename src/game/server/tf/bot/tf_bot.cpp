@@ -4484,15 +4484,15 @@ Action< CTFBot > *CTFBot::OpportunisticallyUseWeaponAbilities( void )
                 }
             }
         }
-        else if ( weapon->GetWeaponID() == TF_WEAPON_BAT_WOOD )
+        else if ( ( weapon->GetWeaponID() == TF_WEAPON_BAT_WOOD ) || ( weapon->GetWeaponID() == TF_WEAPON_BAT_GIFTWRAP ) )
         {
-            // sandman
+            // sandman or wrap assassin
             if ( GetAmmoCount( TF_AMMO_GRENADES1 ) > 0 )
             {
                 const CKnownEntity *threat = GetVisionInterface()->GetPrimaryKnownThreat();
                 if ( threat && threat->IsVisibleInFOVNow() )
                 {
-                    // hit a stunball
+                    // hit a stunball or bauble
                     PressAltFireButton();
                 }
             }
@@ -4779,9 +4779,16 @@ void CTFBot::AddItem( const char *pszItemName )
     criteria.SetQuality( AE_USE_SCRIPT_VALUE );
     criteria.BAddCondition( "name", k_EOperator_String_EQ, pszItemName, true );
 
-    CBaseEntity *pItem = ItemGeneration()->GenerateRandomItem( &criteria, WorldSpaceCenter(), vec3_angle );
+    int classNum = GetPlayerClass()->GetClassIndex();
+    CBaseEntity *pItem = ItemGeneration()->GenerateRandomItem( &criteria, WorldSpaceCenter(), vec3_angle, NULL, classNum );
     if ( pItem )
     {
+        CTFWeaponBuilder *pBuilder = dynamic_cast< CTFWeaponBuilder * >( pItem );
+        if ( pBuilder )
+        {
+            pBuilder->SetSubType( GetPlayerClass()->GetData()->m_aBuildable[0] );
+        }
+
         CEconItemView *pScriptItem = static_cast< CBaseCombatWeapon * >( pItem )->GetAttributeContainer()->GetItem();
 
         // If we already have an item in that slot, remove it

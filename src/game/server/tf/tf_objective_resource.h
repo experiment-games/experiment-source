@@ -53,6 +53,15 @@ class CTFObjectiveResource : public CBaseTeamObjectiveResource
         return m_nMannVsMachineWaveEnemyCount.Get();
     }
 
+    void SetMannVsMachineWaveHasTanks( bool bTanks )
+    {
+        m_nMannVsMachineWaveHasTanks = bTanks;
+    }
+    bool GetMannVsMachineWaveHasTanks( void )
+    {
+        return m_nMannVsMachineWaveHasTanks.Get();
+    }
+
     void AddMvMWorldMoney( int nCurrency )
     {
         m_nMvMWorldMoney += nCurrency;
@@ -137,6 +146,10 @@ class CTFObjectiveResource : public CBaseTeamObjectiveResource
     {
         m_nMvMEventPopfileType.Set( nType );
     }
+    int GetMvMEventPopfileType( void )
+    {
+        return m_nMvMEventPopfileType;
+    }
 
     string_t GetTeleporterString() const
     {
@@ -147,6 +160,7 @@ class CTFObjectiveResource : public CBaseTeamObjectiveResource
     CNetworkVar( int, m_nMannVsMachineMaxWaveCount );
     CNetworkVar( int, m_nMannVsMachineWaveCount );
     CNetworkVar( int, m_nMannVsMachineWaveEnemyCount );
+    CNetworkVar( bool, m_nMannVsMachineWaveHasTanks );
 
     CNetworkVar( int, m_nMvMWorldMoney );
 

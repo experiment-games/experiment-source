@@ -46,6 +46,8 @@ class CTFBotMvMEngineerIdle : public Action< CTFBot >
 
     void TryToDetonateStaleNest();
     bool m_bTriedToDetonateStaleNest;
+
+    bool DoesBuildingRequireAttention( CBaseObject *pObj );
 };
 
 class CTFBotMvMEngineerHintFinder

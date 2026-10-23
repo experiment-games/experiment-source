@@ -843,6 +843,8 @@ abstract_class IPhysicsObject
 
     // dumps info about the object to Msg()
     virtual void OutputDebugInfo() const = 0;
+
+    virtual float GetBuoyancyRatio( void ) const = 0;
 };
 
 abstract_class IPhysicsSpring

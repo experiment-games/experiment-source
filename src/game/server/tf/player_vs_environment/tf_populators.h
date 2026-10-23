@@ -235,6 +235,8 @@ class CWaveSpawnPopulator : public IPopulator
     CUtlString m_name;
     CUtlString m_waitForAllSpawned;
     CUtlString m_waitForAllDead;
+    CUtlString m_spawnUntilAllSpawned;
+    CUtlString m_spawnUntilAllDead;
 
     bool IsDone( void ) const
     {
@@ -254,6 +256,9 @@ class CWaveSpawnPopulator : public IPopulator
         m_remainingCount = m_totalCount;
         m_state = PENDING;
     }
+
+    // Mark the populator finished
+    void Finish( void );
 
     bool IsSupportWave( void ) const
     {
@@ -357,6 +362,7 @@ class CWave : public IPopulator
     string_t GetClassIconName( int nIndex ) const;
     unsigned int GetClassFlags( int nIndex ) const;
 
+    bool HasTanks( void ) const;
     int NumTanksSpawned( void ) const;
     void IncrementTanksSpawned( void );
 
@@ -381,6 +387,7 @@ class CWave : public IPopulator
     bool m_isStarted;
     bool m_bFiredInitWaveOutput;
     int m_iEnemyCount;
+    bool m_bHasTanks;
     int m_nTanksSpawned;
     int m_nSentryBustersSpawned;
     int m_nNumEngineersTeleportSpawned;
@@ -439,6 +446,11 @@ inline string_t CWave::GetClassIconName( int nIndex ) const
 inline unsigned int CWave::GetClassFlags( int nIndex ) const
 {
     return m_nWaveClassCounts[nIndex].iFlags;
+}
+
+inline bool CWave::HasTanks( void ) const
+{
+    return m_bHasTanks;
 }
 
 inline int CWave::NumTanksSpawned( void ) const

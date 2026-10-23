@@ -425,7 +425,8 @@ void EmitFace( face_t *f, qboolean onNode )
         return;
 
     // don't emit NODRAW faces for runtime
-    if ( texinfo[f->texinfo].flags & SURF_NODRAW )
+    if (
+        ( texinfo[f->texinfo].flags & SURF_NODRAW ) )
     {
         // keep NODRAW terrain surfaces though
         if ( f->dispinfo == -1 )
@@ -1235,8 +1236,10 @@ void EndBSPFile( void )
     Overlay_EmitOverlayFaces();
     OverlayTransition_EmitOverlayFaces();
 
-    // phys collision needs dispinfo to operate (needs to generate phys collision for displacement surfs)
-    EmitPhysCollision();
+    {
+        // phys collision needs dispinfo to operate (needs to generate phys collision for displacement surfs)
+        EmitPhysCollision();
+    }
 
     // We can't calculate this properly until vvis (since we need vis to do this), so we set
     // to zero everywhere by default.

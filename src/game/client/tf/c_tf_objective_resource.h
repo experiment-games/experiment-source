@@ -44,6 +44,10 @@ class C_TFObjectiveResource : public C_BaseTeamObjectiveResource
     {
         return m_nMannVsMachineWaveEnemyCount;
     }
+    bool GetMannVsMachineWaveHasTanks( void )
+    {
+        return m_nMannVsMachineWaveHasTanks;
+    }
     int GetMvMInWorldMoney( void )
     {
         return m_nMvMWorldMoney;
@@ -93,6 +97,7 @@ class C_TFObjectiveResource : public C_BaseTeamObjectiveResource
     int m_nMannVsMachineMaxWaveCount;
     int m_nMannVsMachineWaveCount;
     int m_nMannVsMachineWaveEnemyCount;
+    bool m_nMannVsMachineWaveHasTanks;
 
     int m_nMvMWorldMoney;
 

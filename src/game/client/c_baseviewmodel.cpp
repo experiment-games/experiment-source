@@ -19,6 +19,7 @@
 #include <KeyValues.h>
 #include "hltvcamera.h"
 #ifdef TF_CLIENT_DLL
+#include "c_tf_player.h"
 #include "tf_weaponbase.h"
 #endif
 
@@ -91,6 +92,23 @@ void FormatViewModelAttachment( Vector &vOrigin, bool bInverse )
                 ( MainViewForward() * vTransformed.z );
     vOrigin = pViewSetup->origin + vOut;
 }
+
+#ifdef TF_CLIENT_DLL
+bool TeamFortress_ShouldFlipClientViewModel( void )
+{
+    if ( IsLocalPlayerSpectator() )
+    {
+        // Use spectated client's handedness preference
+        C_TFPlayer *pSpecTarget = ToTFPlayer( UTIL_PlayerByIndex( GetSpectatorTarget() ) );
+        if ( pSpecTarget )
+        {
+            return pSpecTarget->m_bFlipViewModels;
+        }
+    }
+
+    return cl_flipviewmodels.GetBool();
+}
+#endif  // TF_CLIENT_DLL
 
 void C_BaseViewModel::FormatViewModelAttachment(
     int nAttachment,
@@ -215,7 +233,7 @@ bool C_BaseViewModel::ShouldFlipViewModel()
     CBaseCombatWeapon *pWeapon = m_hWeapon.Get();
     if ( pWeapon )
     {
-        return pWeapon->m_bFlipViewModel != cl_flipviewmodels.GetBool();
+        return pWeapon->m_bFlipViewModel != TeamFortress_ShouldFlipClientViewModel();
     }
 #endif
 

@@ -247,6 +247,7 @@ class CGameMovement : public IGameMovement
     void FinishUnDuckJump( trace_t &trace );
     void SetDuckedEyeOffset( float duckFraction );
     void FixPlayerCrouchStuck( bool moveup );
+    void ResetDuckLatched();
 
     float SplineFraction( float value, float scale );
 

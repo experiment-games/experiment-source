@@ -1180,7 +1180,7 @@ void CBaseHudChat::StartMessageMode( int iMessageModeType )
             pszPrompt = g_pVGuiLocalize->Find( "#chat_say_team" );
             break;
         case MM_SAY_PARTY:
-            pszPrompt = g_pVGuiLocalize->Find( "#chat_party" );
+            pszPrompt = g_pVGuiLocalize->Find( "#chat_say_party" );
             break;
     }
 

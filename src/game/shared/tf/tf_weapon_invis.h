@@ -46,6 +46,7 @@ class CTFWeaponInvis : public CTFWeaponBase
     virtual bool Deploy( void );
 
     virtual void HideThink( void );
+    void CheckHideTime();
     virtual bool Holster( CBaseCombatWeapon *pSwitchingTo );
 
     virtual int GetWeaponID( void ) const
@@ -77,6 +78,7 @@ class CTFWeaponInvis : public CTFWeaponBase
 
     virtual void SetWeaponVisible( bool visible );
 
+    virtual void ItemPostFrame( void );
     virtual void ItemBusyFrame( void );
 
     int GetInvisType( void )
@@ -116,6 +118,8 @@ class CTFWeaponInvis : public CTFWeaponBase
 #endif
 
     private:
+    float m_flHideTime;
+
     CTFWeaponInvis( const CTFWeaponInvis & ) {}
 };
 

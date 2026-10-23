@@ -214,10 +214,7 @@ class CTankSpawner : public IPopulationSpawner
     public:
     CTankSpawner( IPopulator *populator );
 
-    virtual string_t GetClassIcon( int nSpawnNum = -1 )
-    {
-        return MAKE_STRING( "tank" );
-    }
+    virtual string_t GetClassIcon( int nSpawnNum = -1 );
     virtual int GetHealth( int nSpawnNum = -1 )
     {
         return m_health;
@@ -249,6 +246,7 @@ class CTankSpawner : public IPopulationSpawner
     int m_skin;
     EventInfo *m_onKilledOutput;
     EventInfo *m_onBombDroppedOutput;
+    string_t m_iszClassIcon;
 };
 
 //-----------------------------------------------------------------------

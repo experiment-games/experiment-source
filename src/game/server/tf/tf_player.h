@@ -1455,6 +1455,8 @@ class CTFPlayer : public CBaseMultiplayerPlayer, public IHasAttributes, public I
     CTFWeaponBase *Weapon_OwnsThisID( int iWeaponID ) const;
     CTFWeaponBase *Weapon_GetWeaponByType( int iType );
 
+    virtual void PlayStepSound( Vector &vecOrigin, surfacedata_t *psurface, float fvol, bool force );
+
     medigun_charge_types GetChargeEffectBeingProvided( void );
 
     // Achievements
@@ -1514,7 +1516,7 @@ class CTFPlayer : public CBaseMultiplayerPlayer, public IHasAttributes, public I
 
     int m_iOldStunFlags;
 
-    bool m_bFlipViewModels;
+    CNetworkVar( bool, m_bFlipViewModels );
     int m_iBlastJumpState;
     float m_flBlastJumpLandTime;
     bool m_bTakenBlastDamageSinceLastMovement;

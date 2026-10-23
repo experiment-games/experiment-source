@@ -735,6 +735,7 @@ class CTFWeaponBase : public CBaseCombatWeapon, public IHasOwner, public IHasGen
     {
         return ( m_iState == WEAPON_IS_ACTIVE ) && !IsBeingRepurposedForTaunt();
     }
+    virtual void UpdateAttachmentModels( void ) OVERRIDE;
 
     virtual bool ShouldEjectBrass()
     {

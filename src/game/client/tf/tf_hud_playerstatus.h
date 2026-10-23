@@ -82,6 +82,7 @@ class CTFHudPlayerClass : public vgui::EditablePanel, public CGameEventListener
     int m_nCloakLevel;
     int m_nLoadoutPosition;
     int m_nKillStreak;
+    int m_nVisionFilterFlags;
 
     bool m_bUsePlayerModel;
 };

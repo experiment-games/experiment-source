@@ -58,6 +58,15 @@ class CTFTankBoss : public CTFBaseBoss
 
     void UpdatePingSound( void );
 
+    string_t GetClassIconName( void ) const
+    {
+        return m_iszClassIcon.Get();
+    }
+    void SetClassIconName( string_t iszClassIcon )
+    {
+        m_iszClassIcon = iszClassIcon;
+    }
+
     protected:
     virtual void ModifyDamage( CTakeDamageInfo *info ) const;
 
@@ -115,6 +124,7 @@ class CTFTankBoss : public CTFBaseBoss
     static float m_flLastTankAlert;
 
     CHistoryVector< EntityHistory_t, CEntityHistoryLess, 12 > m_vecDamagers;
+    CNetworkVar( string_t, m_iszClassIcon );
 };
 
 inline void CTFTankBoss::DefineOnKilledOutput( EventInfo *eventInfo )

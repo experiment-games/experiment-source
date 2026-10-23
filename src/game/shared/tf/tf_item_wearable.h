@@ -18,6 +18,10 @@
 #if defined( CLIENT_DLL )
 #define CTFWearable C_TFWearable
 #define CTFWearableVM C_TFWearableVM
+class C_TFPlayer;
+#define CTFPlayer C_TFPlayer
+#else
+class CTFPlayer;
 #endif
 
 #if defined( CLIENT_DLL )
@@ -35,9 +39,9 @@ class CTFWearable : public CEconWearable, public IHasGenericMeter
 
     CTFWearable();
 
-    virtual void Equip( CBasePlayer* pOwner );
-    virtual void UnEquip( CBasePlayer* pOwner );
-    virtual bool CanEquip( CBaseEntity* pOther );
+    virtual void Equip( CBasePlayer *pOwner );
+    virtual void UnEquip( CBasePlayer *pOwner );
+    virtual bool CanEquip( CBaseEntity *pOther );
     void SetDisguiseWearable( bool bState )
     {
         m_bDisguiseWearable = bState;
@@ -46,22 +50,22 @@ class CTFWearable : public CEconWearable, public IHasGenericMeter
     {
         return m_bDisguiseWearable;
     }
-    void SetWeaponAssociatedWith( CBaseEntity* pWeapon )
+    void SetWeaponAssociatedWith( CBaseEntity *pWeapon )
     {
         m_hWeaponAssociatedWith = pWeapon;
     }
-    CBaseEntity* GetWeaponAssociatedWith( void ) const
+    CBaseEntity *GetWeaponAssociatedWith( void ) const
     {
         return m_hWeaponAssociatedWith.Get();
     }
-    virtual bool UpdateBodygroups( CBaseCombatCharacter* pOwner, int iState );
+    virtual bool UpdateBodygroups( CBaseCombatCharacter *pOwner, int iState );
     virtual void ReapplyProvision( void );
 
 #if defined( GAME_DLL )
     void Break( void );
-    virtual int CalculateVisibleClassFor( CBaseCombatCharacter* pPlayer );
+    virtual int CalculateVisibleClassFor( CBaseCombatCharacter *pPlayer );
     virtual int UpdateTransmitState();
-    virtual int ShouldTransmit( const CCheckTransmitInfo* pInfo );
+    virtual int ShouldTransmit( const CCheckTransmitInfo *pInfo );
 
     int GetKillStreak()
     {
@@ -85,21 +89,22 @@ class CTFWearable : public CEconWearable, public IHasGenericMeter
     virtual void ValidateModelIndex( void );
 
     virtual void OnDataChanged( DataUpdateType_t updateType );
-    virtual void FireGameEvent( IGameEvent* event );
+    virtual void FireGameEvent( IGameEvent *event );
 #endif
 
     virtual int GetSkin( void );
 
-    void AddHiddenBodyGroup( const char* bodygroup );
+    void AddHiddenBodyGroup( const char *bodygroup );
 
     protected:
     virtual void InternalSetPlayerDisplayModel( void );
 
     private:
+    void UpdateDisguiseBodygroups( CTFPlayer *pTFOwner, CTFPlayer *pDisguiseTarget, CEconItemView *pItem, int iTeam, int iState );
     CNetworkVar( bool, m_bDisguiseWearable );
     CNetworkHandle( CBaseEntity, m_hWeaponAssociatedWith );
 
-    CUtlVector< const char* > m_HiddenBodyGroups;
+    CUtlVector< const char * > m_HiddenBodyGroups;
 
 #ifdef GAME_DLL
     int m_iKillStreak;

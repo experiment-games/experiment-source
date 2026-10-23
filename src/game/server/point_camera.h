@@ -29,7 +29,9 @@ class CPointCamera : public CBaseEntity
 
     // Tell the client that this camera needs to be rendered
     void SetActive( bool bActive );
+    int ShouldTransmit( const CCheckTransmitInfo *pInfo );
     int UpdateTransmitState( void );
+    void TransmitToPlayer( int nPlayerIndex, bool bTransmit );
 
     void ChangeFOVThink( void );
 
@@ -55,6 +57,8 @@ class CPointCamera : public CBaseEntity
 
     // Allows the mapmaker to control whether a camera is active or not
     bool m_bIsOn;
+
+    CBitVec< MAX_PLAYERS > m_bitsTransmitPlayers;
 
     public:
     CPointCamera *m_pNext;
