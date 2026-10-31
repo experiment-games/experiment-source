@@ -395,11 +395,13 @@ LUA_BINDING_BEGIN( Vector, Rotate, "class", "Rotates the vector around its origi
     lua_Vector &vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
     lua_QAngle angle = LUA_BINDING_ARGUMENT( luaL_checkangle, 2, "angle" );
 
-    //  The rotation is applied as a change of basis built from the angle's
-    //  forward, right and up vectors.
+    //  Equivalent to building the angle's rotation matrix and multiplying:
+    //  the matrix column for y is the negated right vector (the reference
+    //  implementation rotates via AngleMatrix + VectorRotate), and the
+    //  vector is modified in place without a return value.
     lua_Vector forward, right, up;
     AngleVectors( angle, &forward, &right, &up );
-    vec = forward * vec.x + right * vec.y + up * vec.z;
+    vec = forward * vec.x - right * vec.y + up * vec.z;
 
     return 0;
 }

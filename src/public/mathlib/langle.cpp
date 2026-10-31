@@ -220,11 +220,11 @@ LUA_BINDING_BEGIN( Angle, Normalize, "class", "Modifies the existing angle, norm
 }
 LUA_BINDING_END( "Angle", "The same angle, now normalized." )
 
-LUA_BINDING_BEGIN( Angle, Random, "class", "Modifies the existing angle, randomizing every component between the given bounds." )
+LUA_BINDING_BEGIN( Angle, Random, "class", "Modifies the existing angle, randomizing every component between the given bounds. Both bounds are optional and default to -360 and 360." )
 {
     lua_QAngle &angle = LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angle" );
-    float min = LUA_BINDING_ARGUMENT( luaL_checknumber, 2, "min" );
-    float max = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "max" );
+    float min = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 2, -360.0f, "min" );
+    float max = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 3, 360.0f, "max" );
     angle.x = RandomFloat( min, max );
     angle.y = RandomFloat( min, max );
     angle.z = RandomFloat( min, max );
