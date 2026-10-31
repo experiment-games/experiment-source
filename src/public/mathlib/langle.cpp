@@ -220,17 +220,93 @@ LUA_BINDING_BEGIN( Angle, Normalize, "class", "Modifies the existing angle, norm
 }
 LUA_BINDING_END( "Angle", "The same angle, now normalized." )
 
+LUA_BINDING_BEGIN( Angle, Random, "class", "Modifies the existing angle, randomizing every component between the given bounds. Both bounds are optional and default to -360 and 360." )
+{
+    lua_QAngle &angle = LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angle" );
+    float min = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 2, -360.0f, "min" );
+    float max = LUA_BINDING_ARGUMENT_WITH_DEFAULT( luaL_optnumber, 3, 360.0f, "max" );
+    angle.x = RandomFloat( min, max );
+    angle.y = RandomFloat( min, max );
+    angle.z = RandomFloat( min, max );
+
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Angle, Zero, "class", "Modifies the existing angle, setting every component to zero." )
+{
+    lua_QAngle &angle = LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angle" );
+    angle.Init( 0.0f, 0.0f, 0.0f );
+
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Angle, IsZero, "class", "Checks if all components of the angle are zero." )
+{
+    lua_QAngle angle = LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angle" );
+    lua_pushboolean( L, angle.x == 0.0f && angle.y == 0.0f && angle.z == 0.0f );
+
+    return 1;
+}
+LUA_BINDING_END( "boolean", "True if the angle is zero, false otherwise." )
+
+LUA_BINDING_BEGIN( Angle, Unpack, "class", "Returns the pitch, yaw and roll components of the angle as three numbers." )
+{
+    lua_QAngle angle = LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angle" );
+    lua_pushnumber( L, angle.x );
+    lua_pushnumber( L, angle.y );
+    lua_pushnumber( L, angle.z );
+
+    return 3;
+}
+LUA_BINDING_END( "number", "The pitch, yaw and roll components." )
+
+LUA_BINDING_BEGIN( Angle, ToTable, "class", "Returns the angle as a table with the pitch, yaw and roll components at indexes 1, 2 and 3." )
+{
+    lua_QAngle angle = LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angle" );
+    lua_createtable( L, 3, 0 );
+    lua_pushnumber( L, angle.x );
+    lua_rawseti( L, -2, 1 );
+    lua_pushnumber( L, angle.y );
+    lua_rawseti( L, -2, 2 );
+    lua_pushnumber( L, angle.z );
+    lua_rawseti( L, -2, 3 );
+
+    return 1;
+}
+LUA_BINDING_END( "table", "The angle components as a table." )
+
 LUA_BINDING_BEGIN( Angle, __index, "class", "Metatable that is called when a key is not found in the table." )
 {
     lua_QAngle &angle = LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angle" );
-    const char *field = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "field" );
 
-    if ( strcmp( field, "x" ) == 0 || strcmp( field, "p" ) == 0 || strcmp( field, "pitch" ) == 0 || strcmp( field, "1" ) == 0 )
-        lua_pushnumber( L, angle.x );
-    else if ( strcmp( field, "y" ) == 0 || strcmp( field, "y" ) == 0 || strcmp( field, "yaw" ) == 0 || strcmp( field, "2" ) == 0 )
-        lua_pushnumber( L, angle.y );
-    else if ( strcmp( field, "z" ) == 0 || strcmp( field, "r" ) == 0 || strcmp( field, "roll" ) == 0 || strcmp( field, "3" ) == 0 )
-        lua_pushnumber( L, angle.z );
+    //  Numeric keys index the components directly (1 is pitch, 2 is yaw, 3 is
+    //  roll, fractional values truncate). String keys map by name; unknown
+    //  names consult the metatable and answer nil.
+    int component = -1;
+    if ( lua_type( L, 2 ) == LUA_TNUMBER )
+    {
+        int index = ( int )lua_tonumber( L, 2 ) - 1;
+        if ( index >= 0 && index < 3 )
+            component = index;
+    }
+    else
+    {
+        const char *field = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "field" );
+
+        if ( strcmp( field, "x" ) == 0 || strcmp( field, "p" ) == 0 || strcmp( field, "pitch" ) == 0 )
+            component = 0;
+        else if ( strcmp( field, "y" ) == 0 || strcmp( field, "yaw" ) == 0 )
+            component = 1;
+        else if ( strcmp( field, "z" ) == 0 || strcmp( field, "r" ) == 0 || strcmp( field, "roll" ) == 0 )
+            component = 2;
+    }
+
+    if ( component >= 0 )
+    {
+        lua_pushnumber( L, angle[component] );
+    }
     else
     {
         if ( lua_getmetatable( L, 1 ) )
@@ -248,14 +324,30 @@ LUA_BINDING_END( "any", "The value of the key." )
 LUA_BINDING_BEGIN( Angle, __newindex, "class", "Metatable that is called to set a value to a key that is not found in the table." )
 {
     lua_QAngle &angle = LUA_BINDING_ARGUMENT( luaL_checkangle, 1, "angle" );
-    const char *field = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "field" );
 
-    if ( strcmp( field, "x" ) == 0 || strcmp( field, "p" ) == 0 || strcmp( field, "pitch" ) == 0 || strcmp( field, "1" ) == 0 )
-        angle.x = ( vec_t )luaL_checknumber( L, 3 );
-    else if ( strcmp( field, "y" ) == 0 || strcmp( field, "y" ) == 0 || strcmp( field, "yaw" ) == 0 || strcmp( field, "2" ) == 0 )
-        angle.y = ( vec_t )luaL_checknumber( L, 3 );
-    else if ( strcmp( field, "z" ) == 0 || strcmp( field, "r" ) == 0 || strcmp( field, "roll" ) == 0 || strcmp( field, "3" ) == 0 )
-        angle.z = ( vec_t )luaL_checknumber( L, 3 );
+    //  Same key mapping as __index; unknown keys and out-of-range component
+    //  indexes drop the write.
+    int component = -1;
+    if ( lua_type( L, 2 ) == LUA_TNUMBER )
+    {
+        int index = ( int )lua_tonumber( L, 2 ) - 1;
+        if ( index >= 0 && index < 3 )
+            component = index;
+    }
+    else
+    {
+        const char *field = LUA_BINDING_ARGUMENT( luaL_checkstring, 2, "field" );
+
+        if ( strcmp( field, "x" ) == 0 || strcmp( field, "p" ) == 0 || strcmp( field, "pitch" ) == 0 )
+            component = 0;
+        else if ( strcmp( field, "y" ) == 0 || strcmp( field, "yaw" ) == 0 )
+            component = 1;
+        else if ( strcmp( field, "z" ) == 0 || strcmp( field, "r" ) == 0 || strcmp( field, "roll" ) == 0 )
+            component = 2;
+    }
+
+    if ( component >= 0 )
+        angle[component] = ( vec_t )luaL_checknumber( L, 3 );
 
     return 0;
 }

@@ -334,6 +334,79 @@ LUA_BINDING_BEGIN( Vector, Add, "class", "Modify the existing vector, adding ano
 }
 LUA_BINDING_END()
 
+LUA_BINDING_BEGIN( Vector, Sub, "class", "Modify the existing vector, subtracting another vector from it." )
+{
+    lua_Vector &vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
+    lua_Vector vecToSubtract = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "vectorToSubtract" );
+    vec -= vecToSubtract;
+
+    return 0;
+}
+LUA_BINDING_END()
+
+LUA_BINDING_BEGIN( Vector, Unpack, "class", "Returns the x, y and z components of the vector as three numbers." )
+{
+    lua_Vector vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
+    lua_pushnumber( L, vec.x );
+    lua_pushnumber( L, vec.y );
+    lua_pushnumber( L, vec.z );
+
+    return 3;
+}
+LUA_BINDING_END( "number", "The x, y and z components." )
+
+LUA_BINDING_BEGIN( Vector, ToTable, "class", "Returns the vector as a table with the x, y and z components at indexes 1, 2 and 3." )
+{
+    lua_Vector vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
+    lua_createtable( L, 3, 0 );
+    lua_pushnumber( L, vec.x );
+    lua_rawseti( L, -2, 1 );
+    lua_pushnumber( L, vec.y );
+    lua_rawseti( L, -2, 2 );
+    lua_pushnumber( L, vec.z );
+    lua_rawseti( L, -2, 3 );
+
+    return 1;
+}
+LUA_BINDING_END( "table", "The vector components as a table." )
+
+LUA_BINDING_BEGIN( Vector, IsZero, "class", "Checks if all components of the vector are zero." )
+{
+    lua_Vector vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
+    lua_pushboolean( L, vec.x == 0.0f && vec.y == 0.0f && vec.z == 0.0f );
+
+    return 1;
+}
+LUA_BINDING_END( "boolean", "True if the vector is zero, false otherwise." )
+
+LUA_BINDING_BEGIN( Vector, IsEqualTol, "class", "Checks if two vectors are equal within a tolerance." )
+{
+    lua_Vector vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
+    lua_Vector other = LUA_BINDING_ARGUMENT( luaL_checkvector, 2, "other" );
+    float tolerance = LUA_BINDING_ARGUMENT( luaL_checknumber, 3, "tolerance" );
+    lua_pushboolean( L, fabs( vec.x - other.x ) <= tolerance && fabs( vec.y - other.y ) <= tolerance && fabs( vec.z - other.z ) <= tolerance );
+
+    return 1;
+}
+LUA_BINDING_END( "boolean", "True if the vectors are equal within the tolerance, false otherwise." )
+
+LUA_BINDING_BEGIN( Vector, Rotate, "class", "Rotates the vector around its origin by the given angle, in place." )
+{
+    lua_Vector &vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );
+    lua_QAngle angle = LUA_BINDING_ARGUMENT( luaL_checkangle, 2, "angle" );
+
+    //  Equivalent to building the angle's rotation matrix and multiplying:
+    //  the matrix column for y is the negated right vector (the reference
+    //  implementation rotates via AngleMatrix + VectorRotate), and the
+    //  vector is modified in place without a return value.
+    lua_Vector forward, right, up;
+    AngleVectors( angle, &forward, &right, &up );
+    vec = forward * vec.x - right * vec.y + up * vec.z;
+
+    return 0;
+}
+LUA_BINDING_END()
+
 LUA_BINDING_BEGIN( Vector, Divide, "class", "Modify the existing vector, dividing it by a number." )
 {
     lua_Vector &vec = LUA_BINDING_ARGUMENT( luaL_checkvector, 1, "vector" );

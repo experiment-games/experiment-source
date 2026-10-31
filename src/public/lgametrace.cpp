@@ -384,7 +384,7 @@ LUA_API void lua_pushtrace_t( lua_State *L, trace_t *trace, bool bNoNewTable /* 
     lua_settable( L, -3 );
 
     lua_pushstring( L, "HitNoDraw" );
-    lua_pushboolean( L, trace->DidHitNonWorldEntity() );
+    lua_pushboolean( L, ( trace->surface.flags & SURF_NODRAW ) != 0 );
     lua_settable( L, -3 );
 
     lua_pushstring( L, "HitNonWorld" );
@@ -411,12 +411,69 @@ LUA_API void lua_pushtrace_t( lua_State *L, trace_t *trace, bool bNoNewTable /* 
     lua_pushboolean( L, trace->DidHitWorld() );
     lua_settable( L, -3 );
 
-    lua_pushstring( L, "MatType" );
-    lua_pushinteger( L, pSurfaceData->game.material );
-    lua_settable( L, -3 );
+    //  MatType is only present when the trace actually hit something (fraction
+    //  below 1, or it started/ended inside a solid). On a miss the key stays
+    //  unwritten (reads as nil) instead of answering the worldspawn default
+    //  material, and the surface-property lookup result is honored as well.
+    if ( ( trace->fraction < 1.0f || trace->allsolid || trace->startsolid ) && pSurfaceData != NULL )
+    {
+        lua_pushstring( L, "MatType" );
+        lua_pushinteger( L, pSurfaceData->game.material );
+        lua_settable( L, -3 );
+    }
 
+    //  Bone that owns the traced hitbox, only for a studio-model (non-world)
+    //  hit: the hitbox bone at the hit entity's current hitbox set. The key
+    //  stays unwritten (reads as nil) for every other case, and an
+    //  out-of-range hitbox set or hitbox index warns to the console instead
+    //  of writing the key.
+    if ( trace->DidHitNonWorldEntity() && trace->m_pEnt != NULL && trace->m_pEnt->GetBaseAnimating() != NULL )
+    {
+        const model_t *pModel = trace->m_pEnt->GetModel();
+        const studiohdr_t *pStudioHdr = ( pModel != NULL ) ? modelinfo->GetStudiomodel( ( model_t * )pModel ) : NULL;
+        const int iHitboxSet = trace->m_pEnt->GetBaseAnimating()->GetHitboxSet();
+        if ( pStudioHdr != NULL && pStudioHdr->numhitboxsets > 0 )
+        {
+            if ( iHitboxSet < 0 || iHitboxSet >= pStudioHdr->numhitboxsets )
+            {
+                Warning( "[UH-OH!] Invalid HitboxSet %i of %i on model %s.\n", iHitboxSet, pStudioHdr->numhitboxsets, pStudioHdr->pszName() );
+            }
+            else
+            {
+                const mstudiohitboxset_t *pHitboxSet = pStudioHdr->pHitboxSet( iHitboxSet );
+                if ( pHitboxSet != NULL && pHitboxSet->numhitboxes > 0 )
+                {
+                    if ( trace->hitbox < 0 || trace->hitbox >= pHitboxSet->numhitboxes )
+                    {
+                        Warning( "[UH-OH!] Invalid pHitbox %i of %i (Sorry model name not available).\n", trace->hitbox, pHitboxSet->numhitboxes );
+                    }
+                    else
+                    {
+                        lua_pushstring( L, "HitBoxBone" );
+                        lua_pushinteger( L, pHitboxSet->pHitbox( trace->hitbox )->bone );
+                        lua_settable( L, -3 );
+                    }
+                }
+            }
+        }
+    }
+
+    //  The direction of the trace as a unit vector (endpos - startpos). On a
+    //  zero-length trace it falls back to the negated hit plane normal, and
+    //  if that is zero too, to straight up, instead of producing garbage.
     Vector normal = trace->endpos - trace->startpos;
-    VectorNormalizeFast( normal );
+    if ( normal.LengthSqr() != 0.0f )
+    {
+        normal /= normal.Length();
+    }
+    else if ( trace->plane.normal.LengthSqr() != 0.0f )
+    {
+        normal.Init( -trace->plane.normal.x, -trace->plane.normal.y, -trace->plane.normal.z );
+    }
+    else
+    {
+        normal.Init( 0.0f, 0.0f, 1.0f );
+    }
     lua_pushstring( L, "Normal" );
     lua_pushvector( L, normal );
     lua_settable( L, -3 );
@@ -612,13 +669,23 @@ LUA_BINDING_END( "TraceResult", "The trace result." )
 LUA_BINDING_BEGIN( Traces, TraceHull, "library", "Trace a hull." )
 {
     Vector vecStart, vecEnd;
-    Vector vecMins, vecMaxs;
     int mask, collisionGroup;
     bool bIgnoreWorld, bFilterTableInverted, bOutput;
     CTraceLuaFilter *filter = nullptr;
 
     LUA_BINDING_ARGUMENT( lua_checktracestruct, 1, "trace" );
     lua_checktracestruct( L, 1, vecStart, vecEnd, mask, collisionGroup, bIgnoreWorld, bFilterTableInverted, bOutput, &filter );
+
+    //  The hull extents are required fields of the trace structure; reading
+    //  them loudly (instead of silently tracing with a leftover garbage
+    //  hull) surfaces missing fields as a script error.
+    GET_FIELD_WITH_COMPATIBILITY( L, 1, "Mins", "mins" );
+    Vector vecMins = LUA_BINDING_ARGUMENT( luaL_checkvector, -1, "mins" );
+    lua_pop( L, 1 );  // pop the mins value
+
+    GET_FIELD_WITH_COMPATIBILITY( L, 1, "Maxs", "maxs" );
+    Vector vecMaxs = LUA_BINDING_ARGUMENT( luaL_checkvector, -1, "maxs" );
+    lua_pop( L, 1 );  // pop the maxs value
 
     trace_t gameTrace;
     Ray_t ray;
@@ -658,6 +725,42 @@ LUA_BINDING_BEGIN( Traces, TraceEntity, "library", "Runs a trace using the entit
     {
         // Let users pass a table to get the output placed in, instead of returning it
         lua_getfield( L, 2, "output" );
+        lua_pushtrace_t( L, &gameTrace, true );
+        return 0;
+    }
+
+    lua_newtable( L );
+    lua_pushtrace_t( L, &gameTrace );
+
+    return 1;
+}
+LUA_BINDING_END( "TraceResult", "The trace result." )
+
+LUA_BINDING_BEGIN( Traces, TraceEntityHull, "library", "Runs a trace using the entity's bounding box instead of its collision model, ignoring the entity's rotation. The table's mins and maxs are ignored; the traced entity itself is never hit." )
+{
+    lua_CBaseEntity *entity = LUA_BINDING_ARGUMENT( luaL_checkentity, 2, "entity" );
+    Vector vecStart, vecEnd;
+    int mask, collisionGroup;
+    bool bIgnoreWorld, bFilterTableInverted, bOutput;
+    CTraceLuaFilter *filter = nullptr;
+
+    LUA_BINDING_ARGUMENT( lua_checktracestruct, 1, "trace" );
+    lua_checktracestruct( L, 1, vecStart, vecEnd, mask, collisionGroup, bIgnoreWorld, bFilterTableInverted, bOutput, &filter );
+
+    //  Hull is the entity's oriented bounding box centered on its origin, so
+    //  the sweep ignores the entity's rotation entirely.
+    Vector vecMins, vecMaxs;
+    Vector vecHalf = entity->CollisionProp()->OBBSize() * 0.5f;
+    vecMins.Init( -vecHalf.x, -vecHalf.y, -vecHalf.z );
+    vecMaxs.Init( vecHalf.x, vecHalf.y, vecHalf.z );
+
+    trace_t gameTrace;
+    UTIL_TraceHull( vecStart, vecEnd, vecMins, vecMaxs, mask, entity, collisionGroup, &gameTrace );
+
+    if ( bOutput )
+    {
+        // Let users pass a table to get the output placed in, instead of returning it
+        lua_getfield( L, 1, "output" );
         lua_pushtrace_t( L, &gameTrace, true );
         return 0;
     }

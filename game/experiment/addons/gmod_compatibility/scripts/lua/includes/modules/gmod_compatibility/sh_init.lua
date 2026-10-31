@@ -605,6 +605,8 @@ VECTOR_META.Div = VECTOR_META.Divide
 VECTOR_META.Mul = VECTOR_META.Scale
 VECTOR_META.Normalize = VECTOR_META.NormalizeInPlace
 VECTOR_META.SetUnpacked = VECTOR_META.Initialize
+VECTOR_META.DotProduct = VECTOR_META.Dot
+VECTOR_META.GetNormal = VECTOR_META.GetNormalized
 
 function VECTOR_META:Set(vectorToCopy)
 	self:Initialize(vectorToCopy.x, vectorToCopy.y, vectorToCopy.z)
@@ -620,6 +622,7 @@ local ANGLE_META = FindMetaTable("Angle")
 ANGLE_META.Div = ANGLE_META.Divide
 ANGLE_META.Mul = ANGLE_META.Scale
 ANGLE_META.SetUnpacked = ANGLE_META.Initialize
+ANGLE_META.IsEqualTol = ANGLE_META.IsEqualWithTolerance
 
 function ANGLE_META:Set(angleToCopy)
 	self:Initialize(angleToCopy.p, angleToCopy.y, angleToCopy.r)
